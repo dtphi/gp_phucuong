@@ -1,0 +1,3 @@
+export const SET_ERRORS = 'SET_ERRORS';
+export const SET_TOKEN = 'SET_TOKEN';
+export const SET_PASSWORD_LAST_CHANGED_AT = 'SET_PASSWORD_LAST_CHANGED_AT';
