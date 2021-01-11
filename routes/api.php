@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Store\AuthController as StoreAuthController;
 use App\Http\Controllers\Api\Store\CatalogController;
 use App\Http\Controllers\Api\Store\PurchaseHistoryController;
 use App\Http\Controllers\Api\Store\SettingController as StoreSettingController;
+use App\Http\Controllers\Api\Admin\NewsGroupController as AdminNewsGroupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +46,10 @@ Route::prefix('v1')->group(function() {
                 Route::put('update', [ AdminRepresentativeController::class, 'update' ]);
                 Route::put('reset-password', [ AdminRepresentativeController::class, 'resetPassword' ]);
                 Route::delete('delete/{id}', [ AdminRepresentativeController::class, 'delete' ]);
+            });
+
+            Route::prefix('news-groups')->group(function() {
+                Route::get('/', [ AdminNewsGroupController::class, 'index' ]);
             });
 
             Route::prefix('stores')->group(function() {

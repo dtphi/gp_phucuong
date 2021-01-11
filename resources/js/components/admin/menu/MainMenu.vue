@@ -36,6 +36,20 @@
                             </div>
                         </b-card-header>
                     </b-card>
+
+                    <b-card class="menu-block-item" no-body>
+                        <b-card-header role="tab" class="menu-block-item-header">
+                            <div @click="$router.push({ name: 'admin.newsgroups.list' })">
+                                <span class="menu-first-icon h2">
+                                    <i class="fas fa-store"></i>
+                                </span>
+                                <h4 class="menu-block-title">News Group</h4>
+                                <span class="menu-last-icon h3">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                            </div>
+                        </b-card-header>
+                    </b-card>
                 </div>
             </div>
         </div>

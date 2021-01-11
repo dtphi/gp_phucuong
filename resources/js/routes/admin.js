@@ -9,6 +9,7 @@ import StoresCreate from '../components/admin/stores/StoresCreate';
 import StoresList from '../components/admin/stores/StoresList';
 import StoresShowMessage from '../components/admin/stores/StoresShowMessage';
 import StoresUpdate from '../components/admin/stores/StoresUpdate';
+import NewsGroupList from '../components/admin/newsgroups/NewsGroupList';
 
 import { config } from '../common/config';
 
@@ -52,6 +53,83 @@ export default [
                     },
                     title: '管理者 | メインメニュー | ' + config.site_name
                 }
+            },
+            {
+                path: 'news-groups',
+                component: {render: c => c('router-view')},
+                children: [
+                    {
+                        path: '',
+                        component: NewsGroupList,
+                        name: 'admin.newsgroups.list',
+                        meta: {
+                            auth: true,
+                            breadcrumbs: [
+                                {
+                                    name: 'メインメニュー',
+                                    link: 'admin.menu.main.menu'
+                                },
+                                {
+                                    name: '営業担当者'
+                                }
+                            ],
+                            header: '営業担当者',
+                            layout: AdminLayout,
+                            role: 'admin',
+                            title: '管理者 | 営業担当者 | ' + config.site_name
+                        }
+                    },
+                    {
+                        path: 'create',
+                        component: RepresentativesCreate,
+                        name: 'admin.representatives.create',
+                        meta: {
+                            auth: true,
+                            breadcrumbs: [
+                                {
+                                    name: 'メインメニュー',
+                                    link: 'admin.menu.main.menu'
+                                },
+                                {
+                                    name: '営業担当者',
+                                    link: 'admin.representatives.list'
+                                },
+                                {
+                                    name: '新規登録'
+                                }
+                            ],
+                            header: '営業担当者',
+                            layout: AdminLayout,
+                            role: 'admin',
+                            title: '管理者 | 新規登録 | ' + config.site_name
+                        }
+                    },
+                    {
+                        path: ':id',
+                        component: RepresentativesUpdate,
+                        name: 'admin.representatives.update',
+                        meta: {
+                            auth: true,
+                            breadcrumbs: [
+                                {
+                                    name: 'メインメニュー',
+                                    link: 'admin.menu.main.menu'
+                                },
+                                {
+                                    name: '営業担当者',
+                                    link: 'admin.representatives.list'
+                                },
+                                {
+                                    name: '詳細'
+                                }
+                            ],
+                            header: '営業担当者',
+                            layout: AdminLayout,
+                            role: 'admin',
+                            title: '管理者 | 詳細 | ' + config.site_name
+                        }
+                    }
+                ]
             },
             {
                 path: 'sales-representatives',

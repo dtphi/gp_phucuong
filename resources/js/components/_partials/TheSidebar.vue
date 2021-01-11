@@ -26,6 +26,16 @@
                             </b-link>
                         </li>
                     </router-link>
+
+                    <router-link :to="{ name: 'admin.newsgroups.list' }" v-slot="{ href, isActive }">
+                        <li class="nav-item" :class="{ active: isActive }">
+                            <b-link :href="href" class="nav-link">
+                                <span class="menu-first-icon">
+                                    <i class="fas fa-store"></i>
+                                </span> News Group
+                            </b-link>
+                        </li>
+                    </router-link>
                 </ul>
             </div>
         </template>

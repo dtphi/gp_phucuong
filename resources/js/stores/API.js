@@ -13,6 +13,7 @@ export const API_ADMIN_REPRESENTATIVES_SHOW = 'admin/sales-representatives/show'
 export const API_ADMIN_REPRESENTATIVES_UPDATE = 'admin/sales-representatives/update';
 export const API_ADMIN_REPRESENTATIVES_RESET_PASSWORD = 'admin/sales-representatives/reset-password';
 export const API_ADMIN_REPRESENTATIVES_DELETE = 'admin/sales-representatives/delete';
+export const API_ADMIN_NEWSGROUP_LIST = 'admin/news-groups';
 
 // ADMIN STORES
 export const API_ADMIN_STORES_LIST = 'admin/stores';
