@@ -94,7 +94,7 @@ Vue.use(ServerTable, {}, false, 'bootstrap4', {});
 Vue.mixin(mixin);
 
 new Vue({
-    el: '#app',
+    el: '#gp-phu-cuong',
     router,
     store,
     data() {
