@@ -88,11 +88,11 @@ body {
 .icheck-primary>input:first-child:checked+label::before,
 .icheck-primary>input:first-child:not(:checked):not(:disabled):focus+input[type=hidden]+label::before,
 .icheck-primary>input:first-child:not(:checked):not(:disabled):focus+label::before {
-    border-color: #28a745;
+    border-color: #28a745 !important;
 }
 .icheck-primary>input:first-child:checked+input[type=hidden]+label::before,
 .icheck-primary>input:first-child:checked+label::before {
-    background: #28a745;
+    background: #28a745 !important;
 }
 /* ---------- END Reset ---------- */
 
@@ -195,6 +195,10 @@ body {
 }
 /* ---------- END Sidebar ---------- */
 
+.breadcrumb a {
+	color: #28a745;
+}
+
 .user-lst {
 	
 }
@@ -276,4 +280,36 @@ body {
 	color: #333;
 	position: relative;
 	transform: rotate(180deg);
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before {
+	background-color: #28a745;
+	top: 16px;
+}
+
+.tbl-custom {
+
+}
+.tbl-custom input[type="checkbox"] {
+	height: 15px;
+	width: 15px;
+}
+.tbl-custom td .icheck-primary {
+	display: inline-block;
+	margin: 6px auto;
+	max-width: 15px;
+	text-align: center;
+}
+.dataTables_paginate .page-item.active .page-link {
+	background-color: #28a745;
+	border-color: #28a745;
+}
+.dataTables_paginate .page-link,
+.dataTables_paginate .page-link:hover {
+	color: #28a745;
+}
+
+.main-footer a {
+	color: #28a745;
 }
