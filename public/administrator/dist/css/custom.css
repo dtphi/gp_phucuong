@@ -296,7 +296,6 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before 
 	width: 15px;
 }
 .tbl-custom td .icheck-primary {
-	display: inline-block;
 	margin: 6px auto;
 	max-width: 15px;
 	text-align: center;
