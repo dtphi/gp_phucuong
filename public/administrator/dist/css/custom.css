@@ -50,16 +50,20 @@ a, a:hover {
 	-ms-transition: all 0.5s ease;
 	transition: all 0.5s ease
 }
-input[type="text"], select {
+/* input[type="text"], select {
 	height: 50px;
 	width: 100%;
 	font-size: 1.6rem;
 	padding: 0 1rem;
 	color: #333;
-}
-input[type="checkbox"], input[type="radio"] {
+} */
+/* input[type="checkbox"], input[type="radio"] {
 	padding: 0;
 	margin: 0;
+} */
+button,
+button:focus {
+	outline: none !important;
 }
 textarea {
 	resize: none;
