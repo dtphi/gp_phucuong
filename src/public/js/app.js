@@ -2774,6 +2774,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Home',
@@ -22709,10 +22762,84 @@ var staticRenderFns = [
       _c("div", { staticClass: "card-header login-card-header" }, [
         _c("div", { staticClass: "login-logo" }, [
           _c("a", { attrs: { href: "#!", title: "Admin" } }, [
-            _c("img", { attrs: { src: "/front/img/logo.png", alt: "logo" } })
+            _vm._v("\n<<<<<<< HEAD\n            "),
+            _c("img", { attrs: { src: "/front/img/logo.png", alt: "logo" } }),
+            _vm._v("\n=======\n            "),
+            _c("img", { attrs: { src: "/img/logo.png", alt: "logo" } }),
+            _vm._v(
+              "\n>>>>>>> 3e0527d68a5e97980a452c1a15a673c568ca2de2\n          "
+            )
           ])
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _vm._v("\n<<<<<<< HEAD\n=======\n\n      "),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body login-card-body" }, [
+        _c("form", { attrs: { action: "#!", method: "post" } }, [
+          _c("div", { staticClass: "input-group mb-4" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "User" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group-append" }, [
+              _c("div", { staticClass: "input-group-text" }, [
+                _c("span", { staticClass: "fas fa-user" })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group mb-5" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "password", placeholder: "Password" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group-append" }, [
+              _c("div", { staticClass: "input-group-text" }, [
+                _c("span", { staticClass: "fas fa-lock" })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-4" }, [
+            _c("div", { staticClass: "col-8" }, [
+              _c("div", { staticClass: "icheck-primary" }, [
+                _c("input", { attrs: { type: "checkbox", id: "remember" } }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "remember" } }, [
+                  _vm._v("\n                  Remember Me\n                ")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success btn-block",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("Login")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "mb-1 text-center" }, [
+          _c(
+            "a",
+            {
+              staticClass: "login-link",
+              attrs: { href: "#!", title: "Link to Reset Pasword" }
+            },
+            [_vm._v("I forgot my password")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._v("\n\n\n>>>>>>> 3e0527d68a5e97980a452c1a15a673c568ca2de2\n    ")
     ])
   }
 ]
