@@ -1,6 +1,6 @@
 <?php
 namespace App\AppGlobals;
-
+use Request;
 
 class CSS {
     public $css = []; // all my css filename and path is store in here
@@ -83,11 +83,15 @@ class CSS {
         $cssStype = $this->mapCss();
         $scripts = $this->mapScript();
 
-        if (request()->is('admin/user*')) {
+        if (Request::is('admin/user*')) {
             $cssStype = $this->mapCssUser();
             $scripts = $this->mapScriptUser();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (request()->is('admin/news-groups*')) {
+        } elseif (Request::is('admin/news*')) {
+            $cssStype = $this->mapCssUser();
+            $scripts = $this->mapScriptUser();
+            $optionClass = 'hold-transition sidebar-mini layout-fixed';
+        } elseif (Request::is('admin/news-groups*')) {
             $cssStype = $this->mapCssNewsGroups();
             $scripts = $this->mapScriptNewsGroups();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';

@@ -537,7 +537,7 @@
     import Breadcrumb from '../../../components/admin/Breadcrumb';
 
     export default {
-        name: 'Login',
+        name: 'News',
         components: {Breadcrumb, UserAddForm},
         data() {
             return {
