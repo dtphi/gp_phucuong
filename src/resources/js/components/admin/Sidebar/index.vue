@@ -14,7 +14,7 @@
         <nav class="mt-4">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item has-treeview menu-open">
-              <a href="#!" class="nav-link active" title="Users">
+              <a href="/admin/users" class="nav-link active" title="Users">
                 <i class="nav-icon fas fa-user"></i>
                 <p>Users <i class="right fas fa-angle-left"></i></p>
               </a>
@@ -40,7 +40,7 @@
               </ul>
             </li>
             <li class="nav-item has-treeview">
-              <a href="#!" class="nav-link" title="News Group">
+              <a href="/admin/news-groups" class="nav-link" title="News Group">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
                   News Group
