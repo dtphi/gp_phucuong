@@ -2,6 +2,7 @@ import AuthLayout from '../views/admin/layouts/auth';
 import MainLayout from '../views/admin/layouts/Main';
 import Login from '../views/admin/auth/Login';
 import Users from '../views/admin/users';
+import NewsGroups from '../views/admin/newsgroups';
 
 import { config } from '../common/config';
 
@@ -39,6 +40,33 @@ export default [
                         path: '',
                         component: Users,
                         name: 'admin.users.list',
+                        meta: {
+                            auth: true,
+                            breadcrumbs: [
+                                {
+                                    name: 'メインメニュー',
+                                    link: 'admin.menu.main.menu'
+                                },
+                                {
+                                    name: '営業担当者'
+                                }
+                            ],
+                            header: '営業担当者',
+                            layout: MainLayout,
+                            role: 'admin',
+                            title: '管理者 | 営業担当者 | ' + config.site_name
+                        }
+                    }
+                ]
+            },
+            {
+                path: 'news-groups',
+                component: {render: c => c('router-view')},
+                children: [
+                    {
+                        path: '',
+                        component: NewsGroups,
+                        name: 'admin.newsgroups.list',
                         meta: {
                             auth: true,
                             breadcrumbs: [

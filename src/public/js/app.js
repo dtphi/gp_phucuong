@@ -1964,6 +1964,112 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'UserAddForm',
+  data: function data() {
+    return {
+      form: {
+        email: null,
+        password: null
+      },
+      systemError: null
+    };
+  },
+  methods: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Navbar/index.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/Navbar/index.vue?vue&type=script&lang=js& ***!
@@ -2134,6 +2240,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2416,10 +2523,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/layouts/auth/index.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/layouts/auth/index.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/layouts/auth.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/layouts/auth.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2434,16 +2541,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'AuthLayout',
+  name: 'Layout',
   components: {}
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/users/index.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/users/index.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/newsgroups/index.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/newsgroups/index.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2728,9 +2835,591 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Login',
+  data: function data() {
+    return {
+      form: {
+        email: null,
+        password: null
+      },
+      systemError: null
+    };
+  },
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/users/index.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/users/index.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_admin_Modal_users_AddForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/admin/Modal/users/AddForm */ "./resources/js/components/admin/Modal/users/AddForm.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Login',
+  components: {
+    UserAddForm: _components_admin_Modal_users_AddForm__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       form: {
@@ -21300,6 +21989,242 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=template&id=3378393e&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=template&id=3378393e& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal fade", attrs: { id: "modal-lg" } }, [
+      _c("div", { staticClass: "modal-dialog modal-lg" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c("h4", { staticClass: "modal-title" }, [_vm._v("Edit Users")]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close"
+                }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("form", { staticClass: "form-horizontal" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "inputEmail3" }
+                    },
+                    [_vm._v("Role")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c(
+                      "select",
+                      {
+                        staticClass: "form-control select2",
+                        staticStyle: { width: "50%" }
+                      },
+                      [
+                        _c("option", { attrs: { selected: "selected" } }, [
+                          _vm._v("Admin")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("option", [_vm._v("Visitor")]),
+                        _vm._v(" "),
+                        _c("option", [_vm._v("cc 1")]),
+                        _vm._v(" "),
+                        _c("option", [_vm._v("cc 2")]),
+                        _vm._v(" "),
+                        _c("option", [_vm._v("cc 3")]),
+                        _vm._v(" "),
+                        _c("option", [_vm._v("cc 4")])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "name" }
+                    },
+                    [_vm._v("Name")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "name", placeholder: "Name" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "email" }
+                    },
+                    [_vm._v("Email")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "email",
+                        id: "email",
+                        placeholder: "Email"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "password" }
+                    },
+                    [_vm._v("Password")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "password",
+                        id: "password",
+                        placeholder: "Password"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "inputPassword3" }
+                    },
+                    [_vm._v("Option")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("div", { staticClass: "icheck-primary mb-3" }, [
+                      _c("input", {
+                        attrs: {
+                          type: "radio",
+                          id: "option_1",
+                          name: "option",
+                          value: ""
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { attrs: { for: "option_1" } }, [
+                        _vm._v("Option 01")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "icheck-primary" }, [
+                      _c("input", {
+                        attrs: {
+                          type: "radio",
+                          id: "option_2",
+                          name: "option",
+                          value: ""
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { attrs: { for: "option_2" } }, [
+                        _vm._v("Option 02")
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-sm-2 col-form-label",
+                      attrs: { for: "name" }
+                    },
+                    [_vm._v("Note")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-10" }, [
+                    _c("textarea", {
+                      staticClass: "form-control",
+                      attrs: { rows: "6", placeholder: "Type text ..." }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer justify-content-between" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("Close")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-success", attrs: { type: "button" } },
+              [_vm._v("Save changes")]
+            )
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Navbar/index.vue?vue&type=template&id=d13c3604&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/Navbar/index.vue?vue&type=template&id=d13c3604& ***!
@@ -21700,7 +22625,10 @@ var staticRenderFns = [
       _c("a", { staticClass: "brand-link", attrs: { href: "#!" } }, [
         _c("img", {
           staticClass: "brand-image",
-          attrs: { src: "img/logo.png", alt: "Diocese of Phu Cuong Logo" }
+          attrs: {
+            src: "/administrator/img/logo.png",
+            alt: "Diocese of Phu Cuong Logo"
+          }
         }),
         _vm._v(" "),
         _c("span", { staticClass: "brand-text font-weight-bold" }, [
@@ -22022,10 +22950,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/layouts/auth/index.vue?vue&type=template&id=67e78d30&":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/layouts/auth/index.vue?vue&type=template&id=67e78d30& ***!
-  \**********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/layouts/auth.vue?vue&type=template&id=a8466726&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/layouts/auth.vue?vue&type=template&id=a8466726& ***!
+  \****************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -22046,10 +22974,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/users/index.vue?vue&type=template&id=14ac1a48&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/users/index.vue?vue&type=template&id=14ac1a48& ***!
-  \***************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/newsgroups/index.vue?vue&type=template&id=30bb90a9&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/newsgroups/index.vue?vue&type=template&id=30bb90a9& ***!
+  \********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -22099,9 +23027,7 @@ var staticRenderFns = [
                 _c("div", { staticClass: "card-header" }, [
                   _c("h3", { staticClass: "card-title" }, [
                     _c("i", { staticClass: "fas fa-user mr-2" }),
-                    _vm._v(
-                      "\n\t                  Users List\n\t                "
-                    )
+                    _vm._v("\n                Users List\n              ")
                   ])
                 ]),
                 _vm._v(" "),
@@ -22282,7 +23208,7 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("p", [
                               _vm._v(
-                                "\n\t                        Cat 02 v1\n\t                        "
+                                "\n                      Cat 02 v1\n                      "
                               ),
                               _c("i", {
                                 staticClass: "right fas fa-angle-left"
@@ -22445,7 +23371,7 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("p", [
                               _vm._v(
-                                "\n\t                        Cat 05 v1\n\t                        "
+                                "\n                      Cat 05 v1\n                      "
                               ),
                               _c("i", {
                                 staticClass: "right fas fa-angle-left"
@@ -22727,6 +23653,1119 @@ var staticRenderFns = [
           ])
         ])
       ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/users/index.vue?vue&type=template&id=14ac1a48&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/admin/users/index.vue?vue&type=template&id=14ac1a48& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "content-wrapper" },
+    [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("UserAddForm")],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "content-header" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("h1", { staticClass: "m-0 text-dark" }, [_vm._v("Users")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("ol", { staticClass: "breadcrumb float-sm-right" }, [
+              _c("li", { staticClass: "breadcrumb-item" }, [
+                _c("a", { attrs: { href: "#" } }, [_vm._v("Home")])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "breadcrumb-item active" }, [
+                _vm._v("Users v1")
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "content" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [_vm._v("Users List")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass:
+                      "table table-bordered table-striped tbl-custom",
+                    attrs: { id: "example1" }
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [_vm._v("Name")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Role")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Phone")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Created by")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Created from")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Last login")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Key")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody", [
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 01")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0123456789")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("24/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("18/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_01",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_01" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 02")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_02",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_02" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 03")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("5467891230")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("23/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_03",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_03" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 04")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_04",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_04" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 05")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0123456789")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("24/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("18/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_05",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_05" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 06")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_06",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_06" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 07")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("5467891230")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("23/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_07",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_07" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 08")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_08",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_08" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 09")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0123456789")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("24/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("18/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_09",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_09" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 10")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_10",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_10" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 11")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("5467891230")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("23/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_11",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_11" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 12")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_12",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_12" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 13")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0123456789")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("24/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("18/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_13",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_13" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 14")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_14",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_14" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 15")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("5467891230")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("23/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_15",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_15" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 16")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_16",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_16" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 17")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0123456789")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("24/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("18/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_17",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_17" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 18")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_18",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_18" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 19")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("5467891230")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("23/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_19",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_19" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 20")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_20",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_20" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 21")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0123456789")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("24/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("18/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_21",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_21" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 22")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_22",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_22" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 23")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("5467891230")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("23/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_23",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_23" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 24")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_24",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_24" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 25")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0123456789")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("24/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("18/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_25",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_25" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 26")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_26",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_26" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 27")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("5467891230")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("23/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_27",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_27" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 28")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_28",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_28" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 29")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0123456789")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("24/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("18/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_29",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_29" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 30")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_30",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_30" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 31")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("admin@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("5467891230")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("23/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_31",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_31" } })
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_vm._v("Name 32")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("User")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("user@mail.com")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("0987654321")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("Admin")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("25/12/2020")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("12/01/2021")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "icheck-primary" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "checkbox",
+                                id: "key_32",
+                                name: "Key",
+                                value: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "key_32" } })
+                          ])
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default mb-3",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#modal-lg"
+          }
+        },
+        [_vm._v("\n      Launch Large Modal\n    ")]
+      )
     ])
   }
 ]
@@ -39549,6 +41588,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/Modal/users/AddForm.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/admin/Modal/users/AddForm.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AddForm_vue_vue_type_template_id_3378393e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddForm.vue?vue&type=template&id=3378393e& */ "./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=template&id=3378393e&");
+/* harmony import */ var _AddForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddForm.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AddForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AddForm_vue_vue_type_template_id_3378393e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AddForm_vue_vue_type_template_id_3378393e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/Modal/users/AddForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=template&id=3378393e&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=template&id=3378393e& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddForm_vue_vue_type_template_id_3378393e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddForm.vue?vue&type=template&id=3378393e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Modal/users/AddForm.vue?vue&type=template&id=3378393e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddForm_vue_vue_type_template_id_3378393e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddForm_vue_vue_type_template_id_3378393e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/Navbar/index.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/admin/Navbar/index.vue ***!
@@ -39836,11 +41944,13 @@ router.beforeEach( /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _views_admin_layouts_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../views/admin/layouts/auth */ "./resources/js/views/admin/layouts/auth/index.vue");
+/* harmony import */ var _views_admin_layouts_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../views/admin/layouts/auth */ "./resources/js/views/admin/layouts/auth.vue");
 /* harmony import */ var _views_admin_layouts_Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../views/admin/layouts/Main */ "./resources/js/views/admin/layouts/Main.vue");
 /* harmony import */ var _views_admin_auth_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/admin/auth/Login */ "./resources/js/views/admin/auth/Login.vue");
 /* harmony import */ var _views_admin_users__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../views/admin/users */ "./resources/js/views/admin/users/index.vue");
-/* harmony import */ var _common_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../common/config */ "./resources/js/common/config.js");
+/* harmony import */ var _views_admin_newsgroups__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../views/admin/newsgroups */ "./resources/js/views/admin/newsgroups/index.vue");
+/* harmony import */ var _common_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../common/config */ "./resources/js/common/config.js");
+
 
 
 
@@ -39863,7 +41973,7 @@ __webpack_require__.r(__webpack_exports__);
       show: {
         footer: true
       },
-      title: '管理者 | ログイン | ' + _common_config__WEBPACK_IMPORTED_MODULE_4__["config"].site_name
+      title: '管理者 | ログイン | ' + _common_config__WEBPACK_IMPORTED_MODULE_5__["config"].site_name
     }
   }, {
     path: 'login',
@@ -39892,7 +42002,32 @@ __webpack_require__.r(__webpack_exports__);
         header: '営業担当者',
         layout: _views_admin_layouts_Main__WEBPACK_IMPORTED_MODULE_1__["default"],
         role: 'admin',
-        title: '管理者 | 営業担当者 | ' + _common_config__WEBPACK_IMPORTED_MODULE_4__["config"].site_name
+        title: '管理者 | 営業担当者 | ' + _common_config__WEBPACK_IMPORTED_MODULE_5__["config"].site_name
+      }
+    }]
+  }, {
+    path: 'news-groups',
+    component: {
+      render: function render(c) {
+        return c('router-view');
+      }
+    },
+    children: [{
+      path: '',
+      component: _views_admin_newsgroups__WEBPACK_IMPORTED_MODULE_4__["default"],
+      name: 'admin.newsgroups.list',
+      meta: {
+        auth: true,
+        breadcrumbs: [{
+          name: 'メインメニュー',
+          link: 'admin.menu.main.menu'
+        }, {
+          name: '営業担当者'
+        }],
+        header: '営業担当者',
+        layout: _views_admin_layouts_Main__WEBPACK_IMPORTED_MODULE_1__["default"],
+        role: 'admin',
+        title: '管理者 | 営業担当者 | ' + _common_config__WEBPACK_IMPORTED_MODULE_5__["config"].site_name
       }
     }]
   }]
@@ -40719,18 +42854,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/views/admin/layouts/auth/index.vue":
-/*!*********************************************************!*\
-  !*** ./resources/js/views/admin/layouts/auth/index.vue ***!
-  \*********************************************************/
+/***/ "./resources/js/views/admin/layouts/auth.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/views/admin/layouts/auth.vue ***!
+  \***************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_67e78d30___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=67e78d30& */ "./resources/js/views/admin/layouts/auth/index.vue?vue&type=template&id=67e78d30&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/js/views/admin/layouts/auth/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _auth_vue_vue_type_template_id_a8466726___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.vue?vue&type=template&id=a8466726& */ "./resources/js/views/admin/layouts/auth.vue?vue&type=template&id=a8466726&");
+/* harmony import */ var _auth_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth.vue?vue&type=script&lang=js& */ "./resources/js/views/admin/layouts/auth.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -40739,9 +42874,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_67e78d30___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_67e78d30___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _auth_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _auth_vue_vue_type_template_id_a8466726___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _auth_vue_vue_type_template_id_a8466726___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -40751,38 +42886,107 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/views/admin/layouts/auth/index.vue"
+component.options.__file = "resources/js/views/admin/layouts/auth.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/views/admin/layouts/auth/index.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/views/admin/layouts/auth/index.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************/
+/***/ "./resources/js/views/admin/layouts/auth.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/views/admin/layouts/auth.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/layouts/auth/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auth_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./auth.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/layouts/auth.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auth_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/views/admin/layouts/auth/index.vue?vue&type=template&id=67e78d30&":
-/*!****************************************************************************************!*\
-  !*** ./resources/js/views/admin/layouts/auth/index.vue?vue&type=template&id=67e78d30& ***!
-  \****************************************************************************************/
+/***/ "./resources/js/views/admin/layouts/auth.vue?vue&type=template&id=a8466726&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/views/admin/layouts/auth.vue?vue&type=template&id=a8466726& ***!
+  \**********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_67e78d30___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=67e78d30& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/layouts/auth/index.vue?vue&type=template&id=67e78d30&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_67e78d30___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_auth_vue_vue_type_template_id_a8466726___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./auth.vue?vue&type=template&id=a8466726& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/layouts/auth.vue?vue&type=template&id=a8466726&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_auth_vue_vue_type_template_id_a8466726___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_67e78d30___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_auth_vue_vue_type_template_id_a8466726___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/admin/newsgroups/index.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/views/admin/newsgroups/index.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index_vue_vue_type_template_id_30bb90a9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=30bb90a9& */ "./resources/js/views/admin/newsgroups/index.vue?vue&type=template&id=30bb90a9&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/js/views/admin/newsgroups/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _index_vue_vue_type_template_id_30bb90a9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _index_vue_vue_type_template_id_30bb90a9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/admin/newsgroups/index.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/admin/newsgroups/index.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/views/admin/newsgroups/index.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/newsgroups/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/admin/newsgroups/index.vue?vue&type=template&id=30bb90a9&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/views/admin/newsgroups/index.vue?vue&type=template&id=30bb90a9& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_30bb90a9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=30bb90a9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/admin/newsgroups/index.vue?vue&type=template&id=30bb90a9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_30bb90a9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_30bb90a9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

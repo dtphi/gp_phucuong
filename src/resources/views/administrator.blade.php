@@ -10,16 +10,16 @@
   <!-- Fav Icon -->
   <link href="{{ url('favicon/favicon.ico') }}" rel="shortcut icon" />
   
-  <?php $css->mapCss() ?>
+  <?php echo $css->cssSetting['mapCss']; ?>
 </head>
-<body class="hold-transition login-page">
-<div id="gp-phu-cuong">
-  <component :is="this.$route.meta.layout || 'div'">
-    <router-view></router-view>
-  </component>
-</div>
-<!-- Scripts -->
-<?php $css->mapScript() ?>
-<script src="{{ asset('js/app.js') }}" defer></script>
+<body class="{{ $css->cssSetting['bodyClass'] }}">
+  <div id="gp-phu-cuong">
+    <component :is="this.$route.meta.layout || 'div'">
+      <router-view></router-view>
+    </component>
+  </div>
+  <!-- Scripts -->
+  <?php echo $css->cssSetting['mapScript']; ?>
+  <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
