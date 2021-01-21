@@ -89,7 +89,7 @@ class CSS {
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         } elseif (Request::is('admin/news*')) {
             $cssStype = $this->mapCssUser();
-            $scripts = $this->mapScriptUser();
+            $scripts = $this->mapScriptNews();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         } elseif (Request::is('admin/news-groups*')) {
             $cssStype = $this->mapCssNewsGroups();
@@ -224,6 +224,24 @@ class CSS {
                         });
                       });
                     </script>";
+
+        return $output;
+    }
+
+    public function mapScriptNews() {
+        /*<!-- jQuery -->*/
+        $output = $this->getPluginPathScript('jquery/jquery.min.js');
+        /*<!-- Bootstrap 4 -->*/
+        $output .= $this->getPluginPathScript('bootstrap/js/bootstrap.bundle.min.js');
+        /*<!-- DataTables -->*/
+        $output .= $this->getPluginPathScript('datatables/jquery.dataTables.min.js');
+        $output .= $this->getPluginPathScript('datatables-bs4/js/dataTables.bootstrap4.min.js');
+        $output .= $this->getPluginPathScript('datatables-responsive/js/dataTables.responsive.min.js');
+        $output .= $this->getPluginPathScript('datatables-responsive/js/responsive.bootstrap4.min.js');
+        /*<!-- AdminLTE App -->*/
+        $output .= $this->getDistJsScript('adminlte.js');
+
+        $output .= $this->getDistJsScript('demo.js');
 
         return $output;
     }
