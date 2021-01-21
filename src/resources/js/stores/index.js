@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import adminAuth from './admin/auth.module';
-import adminMessages from './admin/messages.module';
 
 Vue.use(Vuex);
 
@@ -42,8 +41,7 @@ export default new Vuex.Store({
         }
     },
     modules: {
-        'admin.auth': adminAuth,
-        'admin.messages': adminMessages
+        'admin.auth': adminAuth
     },
     plugins: [ createPersistedState() ]
 });
