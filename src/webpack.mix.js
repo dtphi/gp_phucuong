@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-alias');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,6 +12,9 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.alias('com@admin', '/resources/js/components/admin');
+mix.alias('store@admin', '/resources/js/stores/admin');
+mix.alias('v@admin', '/resources/js/views/admin');
 mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //

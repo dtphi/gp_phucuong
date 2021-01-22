@@ -14,7 +14,20 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="example1_length"><label>Show <select name="example1_length" aria-controls="example1" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label></div></div></div><div class="row"><List /></div><Paginate /></div>
+                  <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6">
+                        <Perpage />
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <ListSearch />
+                        </div>
+                      </div>
+                    <div class="row">
+                      <List />
+                    </div>
+                    <Paginate />
+                </div>
               </div>
               <!-- /.card-body -->
             </div>
@@ -38,14 +51,16 @@
 
 <script>
     import { mapActions } from 'vuex';
-    import UserAddForm from '../../../components/admin/Modal/users/AddForm';
-    import Breadcrumb from '../../../components/admin/Breadcrumb';
-    import Paginate from '../../../components/admin/Pagination';
-    import List from '../../../components/admin/News/List';
+    import UserAddForm from 'com@admin/Modal/users/AddForm';
+    import Breadcrumb from 'com@admin/Breadcrumb';
+    import Perpage from 'com@admin/Pagination/SelectPerpage';
+    import ListSearch from 'com@admin/Search';
+    import Paginate from 'com@admin/Pagination';
+    import List from 'com@admin/News/List';
 
     export default {
         name: 'News',
-        components: {Breadcrumb, UserAddForm, List, Paginate},
+        components: {Breadcrumb, Perpage, ListSearch, UserAddForm, List, Paginate},
         data() {
             return {
                 form: {

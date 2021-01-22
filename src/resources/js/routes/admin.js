@@ -1,9 +1,9 @@
-import AuthLayout from '../views/admin/layouts/auth';
-import MainLayout from '../views/admin/layouts/Main';
-import Login from '../views/admin/auth/Login';
-import Users from '../views/admin/users';
-import NewsGroups from '../views/admin/newsgroups';
-import News from '../views/admin/news';
+import AuthLayout from 'v@admin/layouts/auth';
+import MainLayout from 'v@admin/layouts/Main';
+import Login from 'v@admin/auth/Login';
+import Users from 'v@admin/users';
+import NewsGroups from 'v@admin/newsgroups';
+import News from 'v@admin/news';
 
 import { config } from '../common/config';
 
