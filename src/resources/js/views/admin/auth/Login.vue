@@ -18,9 +18,9 @@
       <div class="card-body login-card-body">
         <!-- <p class="login-box-msg">Login</p> -->
 
-        <form action="#!" method="post">
+        <form @submit.prevent="login">
           <div class="input-group mb-4">
-            <input type="text" class="form-control" placeholder="User">
+            <input ref="email" required type="email" class="form-control" placeholder="User">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class="input-group mb-5">
-            <input type="password" class="form-control" placeholder="Password">
+            <input ref="password" required type="password" class="form-control" placeholder="Password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -64,39 +64,42 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import {mapGetters, mapActions} from 'vuex';
 
     export default {
         name: 'Login',
         data() {
             return {
-                form: {
-                    email: null,
-                    password: null
-                },
-                systemError: null
+                errorMessage: null,
+                form : {
+                    email: '',
+                    password: '',
+                }
             };
         },
+        computed: {
+            ...mapGetters('auth', ['authenticated'])
+        },
         methods: {
-            ...mapActions('admin.auth', [ 'login' ]),
-            getValidationState({ dirty, validated, valid = null }) {
-                return dirty || validated ? valid : null;
-            },
-            onEmailChange() {
-                if (this.errorMessages && this.errorMessages.email) {
-                    this.errorMessages.email = null;
-                }
-            },
-            onPasswordChange() {
-                if (this.errorMessages && this.errorMessages.password) {
-                    this.errorMessages.password = null;
-                }
-            },
-            async onSubmit() {
-                const status = await this.login(this.form);
+            ...mapActions({
+                signIn: 'auth/signIn',
+                redirectLogin: 'auth/redirectLoginSuccess'
+              }),
+            async submit () {
+                await this.signIn(this.form);
 
-                if (status === 200) {
-                    this.$router.push({ name: 'admin.menu.main.menu' });
+                if (this.authenticated) {
+                  this.redirectLogin();
+                }
+            },
+            login() {
+                const email = this.$refs.email.value;
+                const password = this.$refs.password.value;
+
+                if (email.length !== 0 && password.length !== 0) {
+                    this.form.email = email;
+                    this.form.password = password;
+                    this.submit();
                 }
             }
         }

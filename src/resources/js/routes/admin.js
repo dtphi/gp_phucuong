@@ -16,6 +16,12 @@ export default [
         children: [
             {
                 path: '',
+                redirect: {
+                    name: 'admin.auth.login'
+                }
+            },
+            {
+                path: 'login',
                 component: Login,
                 name: 'admin.auth.login',
                 meta: {
@@ -25,12 +31,6 @@ export default [
                         footer: true
                     },
                     title: '管理者 | ログイン | ' + config.site_name
-                }
-            },
-            {
-                path: 'login',
-                redirect: {
-                    name: 'admin.auth.login'
                 }
             },
             {
