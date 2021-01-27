@@ -15,18 +15,19 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-    		$credentials = $request->only('email', 'password');
+    	$credentials = $request->only('email', 'password');
         $json = [
             'message' => '',
             'errors'  => '',
-            'code'    => 200
+            'code'    => 500
         ];
 
-        $guard = Auth::guard('web');
+        $guard = Auth::guard('admin');
 
         if ($guard->attempt($credentials)) {
         	$request->session()->regenerate();
-				}
+            $json['code'] = 200;
+		}
 
         return \response()->json($json);
     }
@@ -42,7 +43,7 @@ class AuthController extends Controller
           'message' => '',
           'errors'  => '',
           'code'    => 200
-      ];
+        ];
     	Auth::logout();
 
 	    $request->session()->invalidate();

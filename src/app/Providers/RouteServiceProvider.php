@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
            
             if ($request->is('ad' . 'min' . '*')) {
                 $rPath = 'rout' . 'es' . '/' . 'ad' . 'min.php';
-                Route::middleware('we' . 'b')
+                Route::middleware('ad' . 'min')
                     ->namespace($this->namespace)
                     ->group(base_path($rPath));
             } else {
