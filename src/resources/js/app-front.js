@@ -3,7 +3,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import Router from 'vue-router';
 import routes from './routes/front';
-import store from './stores';
+import store from 'store@front';
 
 Vue.use(Router);
 window.vue = Vue;

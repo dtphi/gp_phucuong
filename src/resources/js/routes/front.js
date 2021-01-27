@@ -1,5 +1,5 @@
 import Layout from '../views/front/layouts';
-import Home from '../views/front';
+import Home from 'v@front';
 
 import { config } from '../common/config';
 
