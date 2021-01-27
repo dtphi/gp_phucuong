@@ -5,7 +5,8 @@ export default {
     state: {
       authenticated: false,
       user: null,
-      redirectUrl: 'admin/users'
+      redirectUrl: 'admin/users',
+      redirectLogoutUrl: 'admin/login'
     },
     getters: {
       authenticated(state) {
@@ -52,6 +53,10 @@ export default {
 
         redirectLoginSuccess({state}) {
             window.location = window.location.origin + '/' + state.redirectUrl;
+        },
+
+        redirectLogoutSuccess({state}) {
+            window.location = window.location.origin + '/' + state.redirectLogoutUrl;
         }
     }
 }

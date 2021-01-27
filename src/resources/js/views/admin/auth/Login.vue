@@ -6,7 +6,7 @@
       <div class="card-header login-card-header">
         <!-- Login Logo -->
         <div class="login-logo">
-          <a href="#!" title="Admin">
+          <a href="#!" alt="admin@gmail.com/password" title="Admin">
             <img src="/administrator/img/logo.png" alt="logo">
           </a>
         </div>

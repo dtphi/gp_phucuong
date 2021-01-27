@@ -25,18 +25,6 @@
                     <p>User v1</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="#!" class="nav-link" title="User v2">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>User v2</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#!" class="nav-link" title="User v3">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>User v3</p>
-                  </a>
-                </li>
               </ul>
             </li>
             <li class="nav-item has-treeview">
@@ -54,26 +42,16 @@
                     <p>News Group v1</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="#!" class="nav-link" title="News Group v2">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>News Group v2</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#!" class="nav-link" title="News Group v3">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>News Group v3</p>
-                  </a>
-                </li>
               </ul>
             </li>
             <li class="nav-item">
-              <a href="#!" class="nav-link" title="News">
+              <a href="/admin/news" class="nav-link" title="News">
                 <i class="nav-icon fas fa-file"></i>
                 <p>News</p>
               </a>
             </li>
+            
+            <Logout v-if="authenticated"/>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -83,10 +61,16 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex';
+  import Logout from './Logout';
 
     export default {
         name: 'Sidebar',
         components: {
-        }
+          Logout
+        },
+        computed: {
+            ...mapGetters('auth', ['authenticated'])
+        },
     };
 </script>
