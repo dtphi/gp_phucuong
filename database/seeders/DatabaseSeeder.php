@@ -4,11 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-/**
- * Class DatabaseSeeder
- *
- * @package Database\Seeders
- */
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,11 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-                        AdminSeeder::class,
-                        CatalogSeeder::class,
-                        RepresentativeSeeder::class,
-                        StoreSeeder::class
-                    ]);
+        //\App\Models\User::factory(2)->create();
     }
 }

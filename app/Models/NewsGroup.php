@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\Constants;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class NewsGroup extends Model

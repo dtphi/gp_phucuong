@@ -2,26 +2,15 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Sanctum\HasApiTokens;
 
-/**
- * Class Admin
- *
- * @package App\Models
- */
-class Admin extends Authenticatable implements JWTSubject
+class Admin extends Authenticatable
 {
-    use Notifiable;
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'admins';
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -32,15 +21,7 @@ class Admin extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'last_logged_in_at'
     ];
-
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var string[]|bool
-     */
-    protected $guarded = [ 'admins' ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -50,55 +31,4 @@ class Admin extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password'
     ];
-
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
-    /**
-     * Get admin by email.
-     *
-     * @param string $email
-     * @param bool   $includeDeleted
-     *
-     * @return mixed
-     */
-    public static function getAdminByEmail(string $email = '', bool $includeDeleted = false)
-    {
-        if (empty($email)) {
-            return self::whereNull('deleted_at')->first();
-        }
-        $query = self::where('email', $email);
-
-        if (!$includeDeleted) {
-            $query->whereNull('deleted_at');
-        }
-        return $query->first();
-    }
-
-    /**
-     * Update last logged in.
-     *
-     * @param int $id
-     */
-    public static function updateLastLoggedIn(int $id)
-    {
-        self::where('id', $id)->update([ 'last_logged_in_at' => Carbon::now() ]);
-    }
 }

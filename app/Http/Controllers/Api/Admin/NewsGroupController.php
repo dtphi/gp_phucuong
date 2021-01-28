@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Helpers\Helper;
 use App\Models\NewsGroup;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
+use Request;
 
 /**
  * Class NewsGroupController
@@ -71,15 +67,5 @@ class NewsGroupController extends Controller
         }
 
         return $newsGroupTree;
-    }
-
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
-     */
-    private function guard()
-    {
-        return Auth::guard('admins');
     }
 }
