@@ -9,31 +9,30 @@
 
       <!-- Sidebar -->
       <div class="sidebar">
-
         <!-- Sidebar Menu -->
         <nav class="mt-4">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item has-treeview menu-open">
-              <a href="/admin/users" class="nav-link active" title="Users">
-                <i class="nav-icon fas fa-user"></i>
-                <p>Users <i class="right fas fa-angle-left"></i></p>
-              </a>
-            </li>
-            <li class="nav-item has-treeview">
-              <a href="/admin/news-groups" class="nav-link" title="News Group">
-                <i class="nav-icon fas fa-copy"></i>
-                <p>
-                  News Group
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/admin/news" class="nav-link" title="News">
-                <i class="nav-icon fas fa-file"></i>
-                <p>News</p>
-              </a>
-            </li>
+            <NavLink 
+              label="Users"
+              link="/admin/users"
+              index="users"
+              iconName="fa-user"
+              :active-item="activeItem"
+            />
+            <NavLink 
+              label="News Groups"
+              link="/admin/news-groups"
+              index="news-groups"
+              iconName="fa-copy"
+              :active-item="activeItem"
+            />
+            <NavLink 
+              label="News"
+              link="/admin/news"
+              index="infomations"
+              iconName="fa-info"
+              :active-item="activeItem"
+            />
             
             <Logout v-if="authenticated"/>
           </ul>
@@ -45,16 +44,38 @@
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex';
+  import {mapState, mapGetters, mapActions} from 'vuex';
   import Logout from './Logout';
+  import NavLink from './NavLink';
 
     export default {
         name: 'Sidebar',
         components: {
-          Logout
+          Logout,NavLink
         },
         computed: {
-            ...mapGetters('auth', ['authenticated'])
+            ...mapGetters('auth', ['authenticated']),
+            ...mapState('layout', {
+              sidebarStatic: state => state.sidebarStatic,
+              sidebarOpened: state => !state.sidebarClose,
+              activeItem: state => state.sidebarActiveElement,
+            }),
+            ...mapState(['cfApp']),
+        },
+        methods: {
+          ...mapActions('layout', ['changeSidebarActive', 'switchSidebar']),
+          setActiveByRoute() {
+            const paths = this.$route.fullPath.split('/admin');
+            var pathActive = paths.pop();
+
+            if (pathActive === '/news') {
+              pathActive = '/infomations';
+            }
+            this.changeSidebarActive(pathActive);
+          },
+        },
+        created() {
+          this.setActiveByRoute();
         },
     };
 </script>

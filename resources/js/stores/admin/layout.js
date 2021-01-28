@@ -2,12 +2,12 @@
 export default {
     namespaced: true,
     state: {
-    sidebarClose: false,
-    sidebarStatic: false,
-    sidebarActiveElement: null,
-    chatOpen: false,
-    chatNotificationIcon: false,
-    chatNotificationPopover: false,
+      sidebarClose: false,
+      sidebarStatic: false,
+      sidebarActiveElement: null,
+      chatOpen: false,
+      chatNotificationIcon: false,
+      chatNotificationPopover: false,
   },
   mutations: {
     toggleSidebar(state) {

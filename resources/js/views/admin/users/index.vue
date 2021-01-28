@@ -533,8 +533,8 @@
 
 <script>
     import { mapActions } from 'vuex';
-    import UserAddForm from '../../../components/admin/Modal/users/AddForm';
-    import Breadcrumb from '../../../components/admin/Breadcrumb';
+    import UserAddForm from 'com@admin/Modal/users/AddForm';
+    import Breadcrumb from 'com@admin/Breadcrumb';
 
     export default {
         name: 'Login',

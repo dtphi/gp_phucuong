@@ -264,7 +264,7 @@
 
 <script>
     import { mapActions } from 'vuex';
-    import Breadcrumb from '../../../components/admin/Breadcrumb';
+    import Breadcrumb from 'com@admin/Breadcrumb';
 
     export default {
         name: 'Login',
