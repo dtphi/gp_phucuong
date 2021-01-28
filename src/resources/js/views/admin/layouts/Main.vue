@@ -9,10 +9,10 @@
 </template>
 
 <script>
-    import Navbar from '../../../components/admin/Navbar';
-    import Sidebar from '../../../components/admin/Sidebar';
-    import Footer from '../../../components/admin/Footer';
-    import ControlSideBar from '../../../components/admin/Sidebar/ControlSideBar';
+    import Navbar from 'com@admin/Navbar';
+    import Sidebar from 'com@admin/Sidebar';
+    import Footer from 'com@admin/Footer';
+    import ControlSideBar from 'com@admin/Sidebar/ControlSideBar';
 
     export default {
         name: 'MainLayout',

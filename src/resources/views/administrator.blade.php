@@ -19,7 +19,7 @@
     </component>
   </div>
   <!-- Scripts -->
-  <?php echo $css->cssSetting['mapScript']; ?>
   <script src="{{ asset('js/app-admin.js') }}" defer></script>
+  <?php echo $css->cssSetting['mapScript']; ?>
 </body>
 </html>

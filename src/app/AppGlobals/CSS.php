@@ -87,7 +87,7 @@ class CSS {
             $cssStype = $this->mapCssUser();
             $scripts = $this->mapScriptUser();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/news*')) {
+        } elseif (Request::is('admin/news*') && !Request::is('*-groups*')) {
             $cssStype = $this->mapCssUser();
             $scripts = $this->mapScriptNews();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
