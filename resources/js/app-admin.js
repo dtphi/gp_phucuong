@@ -44,7 +44,7 @@ router.beforeEach(async (to, from, next) => {
     next();
 });
 
-store.dispatch('auth/admin').then(() => {
+store.dispatch('auth/admin', {'type':'init'}).then(() => {
 	return new Vue({
     el: '#gp-phu-cuong',
     router,

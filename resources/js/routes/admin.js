@@ -30,7 +30,20 @@ export default [
                     show: {
                         footer: true
                     },
-                    title: '管理者 | ログイン | ' + config.site_name
+                    title: 'Login | ' + config.site_name
+                }
+            },
+            {
+                path: 'dashboard',
+                component: Users,
+                name: 'admin.dashboard',
+                meta: {
+                    layout: MainLayout,
+                    role: 'admin',
+                    show: {
+                        footer: true
+                    },
+                    title: 'Dashboard | ' + config.site_name
                 }
             },
             {
@@ -45,17 +58,17 @@ export default [
                             auth: true,
                             breadcrumbs: [
                                 {
-                                    name: 'メインメニュー',
-                                    link: 'admin.menu.main.menu'
+                                    name: 'Users List',
+                                    link: 'admin.dashboard'
                                 },
                                 {
-                                    name: '営業担当者'
+                                    name: 'Users'
                                 }
                             ],
-                            header: '営業担当者',
+                            header: 'Users List',
                             layout: MainLayout,
                             role: 'admin',
-                            title: '管理者 | 営業担当者 | ' + config.site_name
+                            title: 'Users | ' + config.site_name
                         }
                     }
                 ]
@@ -72,17 +85,17 @@ export default [
                             auth: true,
                             breadcrumbs: [
                                 {
-                                    name: 'メインメニュー',
-                                    link: 'admin.menu.main.menu'
+                                    name: 'News Groups List',
+                                    link: 'admin.dashboard'
                                 },
                                 {
-                                    name: '営業担当者'
+                                    name: 'News Groups'
                                 }
                             ],
-                            header: '営業担当者',
+                            header: 'News Groups List',
                             layout: MainLayout,
                             role: 'admin',
-                            title: '管理者 | 営業担当者 | ' + config.site_name
+                            title: 'News Groups | ' + config.site_name
                         }
                     }
                 ]
@@ -99,17 +112,17 @@ export default [
                             auth: true,
                             breadcrumbs: [
                                 {
-                                    name: 'メインメニュー',
-                                    link: 'admin.menu.main.menu'
+                                    name: 'News List',
+                                    link: 'admin.dashboard'
                                 },
                                 {
-                                    name: '営業担当者'
+                                    name: 'News'
                                 }
                             ],
-                            header: '営業担当者',
+                            header: 'News List',
                             layout: MainLayout,
                             role: 'admin',
-                            title: '管理者 | 営業担当者 | ' + config.site_name
+                            title: 'News | ' + config.site_name
                         }
                     }
                 ]

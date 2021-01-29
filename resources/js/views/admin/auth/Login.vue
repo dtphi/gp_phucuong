@@ -17,6 +17,7 @@
       <!-- Card Body -->
       <div class="card-body login-card-body">
         <!-- <p class="login-box-msg">Login</p> -->
+        <p v-if="isError" class="mb-1 text-center text-red">{{errors[0].msgCommon}}</p>
 
         <form @submit.prevent="login">
           <div class="input-group mb-4">
@@ -52,9 +53,9 @@
           </div>
         </form>
 
-        <p class="mb-1 text-center">
+        <!-- <p class="mb-1 text-center">
           <a class="login-link" href="#!" title="Link to Reset Pasword">I forgot my password</a>
-        </p>
+        </p> -->
       </div>
       <!-- Card Body -->
 
@@ -78,7 +79,7 @@
             };
         },
         computed: {
-            ...mapGetters('auth', ['authenticated'])
+            ...mapGetters('auth', ['authenticated', 'isError', 'errors']),
         },
         methods: {
             ...mapActions({
