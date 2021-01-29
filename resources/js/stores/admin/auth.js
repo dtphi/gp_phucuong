@@ -66,7 +66,10 @@ export default {
                 commit('SET_USER', null);
                 if (typeof options === 'object') {
                   const type = options.hasOwnProperty('type');
-                  type ? ((options.type==='login') ? commit('SET_ERROR', [{msgCommon: 'Login failed!'}]):null): null;
+                  type ? ((options.type==='login') ? commit('SET_ERROR',
+                  [
+                    {msgCommon: 'Login failed!'}
+                  ]):null): null;
                 }
             })
         },

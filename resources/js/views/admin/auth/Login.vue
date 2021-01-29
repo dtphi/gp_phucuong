@@ -47,7 +47,8 @@
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <button type="submit" class="btn btn-success btn-block">Login</button>
+              <a v-if="isSubmit" class="btn btn-success btn-block">Login<FontAwesomeIcon icon="spinner" pulse /></a>
+              <button v-else type="submit" class="btn btn-success btn-block">Login</button>
             </div>
             <!-- /.col -->
           </div>
@@ -59,23 +60,30 @@
       </div>
       <!-- Card Body -->
 
-
     </div>
     <!-- Login Card -->
 </template>
 
 <script>
+    import Vue from 'vue';
     import {mapGetters, mapActions} from 'vuex';
+    import { library } from '@fortawesome/fontawesome-svg-core';
+    import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+    library.add(faSpinner);
+    Vue.config.productionTip = false;
 
     export default {
         name: 'Login',
+        components: {FontAwesomeIcon},
         data() {
             return {
                 errorMessage: null,
                 form : {
                     email: '',
                     password: '',
-                }
+                },
+                isSubmit: false
             };
         },
         computed: {
@@ -91,9 +99,12 @@
 
                 if (this.authenticated) {
                   this.redirectLogin();
+                } else {
+                  this.isSubmit = false;
                 }
             },
             login() {
+                this.isSubmit = true;
                 const email = this.$refs.email.value;
                 const password = this.$refs.password.value;
 

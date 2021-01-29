@@ -9,8 +9,6 @@
 <script>
 
     export default {
-        name: 'AuthLayout',
-        components: {
-        }
+        name: 'AuthLayout'
     };
 </script>
