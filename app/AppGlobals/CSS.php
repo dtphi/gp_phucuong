@@ -81,7 +81,7 @@ class CSS {
     public function init() {
         $optionClass = 'hold-transition login-page';
         $cssStype = $this->mapCss();
-        $scripts = $this->mapScript();
+        $scripts = '';
 
         if (Request::is('admin/user*')) {
             $cssStype = $this->mapCssUser();

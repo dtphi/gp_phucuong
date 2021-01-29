@@ -1,5 +1,6 @@
 <template>
-  <div class="modal fade" id="modal-lg">
+	<transition name="modal">
+  <div class="modal fade show" id="modal-lg">
 	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -10,22 +11,8 @@
 	      </div>
 	      <div class="modal-body">
 	        <!-- form start -->
-	        <form class="form-horizontal">
+	        <div class="form-horizontal">
 	          <div class="card-body">
-	            <div class="form-group row">
-	              <label for="inputEmail3" class="col-sm-2 col-form-label">Role</label>
-	              <div class="col-sm-10">
-	                <select class="form-control select2" style="width: 50%;">
-	                  <option selected="selected">Admin</option>
-	                  <option>User</option>
-	                  <option>Visitor</option>
-	                  <option>cc 1</option>
-	                  <option>cc 2</option>
-	                  <option>cc 3</option>
-	                  <option>cc 4</option>
-	                </select>
-	              </div>
-	            </div>
 	            <div class="form-group row">
 	              <label for="name" class="col-sm-2 col-form-label">Name</label>
 	              <div class="col-sm-10">
@@ -44,37 +31,19 @@
 	                <input type="password" class="form-control" id="password" placeholder="Password">
 	              </div>
 	            </div>
-	            <div class="form-group row">
-	              <label for="inputPassword3" class="col-sm-2 col-form-label">Option</label>
-	              <div class="col-sm-10">
-	                <div class="icheck-primary mb-3">
-	                  <input type="radio" id="option_1" name="option" value="">
-	                  <label for="option_1">Option 01</label>
-	                </div>
-	                <div class="icheck-primary">
-	                  <input type="radio" id="option_2" name="option" value="">
-	                  <label for="option_2">Option 02</label>
-	                </div>
-	              </div>
-	            </div>
-	            <div class="form-group row">
-	              <label for="name" class="col-sm-2 col-form-label">Note</label>
-	              <div class="col-sm-10">
-	                <textarea class="form-control" rows="6" placeholder="Type text ..."></textarea>
-	              </div>
-	            </div>
 	          </div>
-	        </form>
+	        </div>
 	      </div>
 	      <div class="modal-footer justify-content-between">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-success">Save changes</button>
+	        <button type="button" class="btn btn-success">Save</button>
 	      </div>
 	    </div>
 	    <!-- /.modal-content -->
 	  </div>
 	  <!-- /.modal-dialog -->
 	</div>
+</transition>
 </template>
 
 <script>
