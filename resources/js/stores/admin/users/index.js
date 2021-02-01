@@ -1,12 +1,11 @@
-import axios from 'axios'
+import axios from 'axios';
+import modals from './modal';
 
 export default {
     namespaced: true,
     state: {
       authenticated: false,
       user: null,
-      redirectUrl: 'admin/users',
-      redirectLogoutUrl: 'admin/login',
       errors:[]
     },
     getters: {
@@ -68,14 +67,10 @@ export default {
                   ]):null): null;
                 }
             })
-        },
-
-        redirectLoginSuccess({state}) {
-            window.location = window.location.origin + '/' + state.redirectUrl;
-        },
-
-        redirectLogoutSuccess({state}) {
-            window.location = window.location.origin + '/' + state.redirectLogoutUrl;
         }
+    },
+
+    modules: {
+    	modal: modals
     }
 }

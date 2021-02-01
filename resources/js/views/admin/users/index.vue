@@ -11,10 +11,13 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Users List</h3>
+                <div>
+                  <BtnAdd />
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped tbl-custom">
+                <table class="table table-bordered table-striped tbl-custom">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -27,24 +30,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Admin</td>
-                      <td>admin@mail.com</td>
-                      <td>24/12/2020</td>
-                      <td>18/01/2021</td>
-                      <td>
-                        <div class="icheck-primary">
-                          <input type="checkbox" id="key_01" name="Key" value="">
-                          <label for="key_01"></label>
-                        </div>
-                      </td>
-                      <td>
-                        <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-lg"><font-awesome-icon icon="plus"  size="xs" /></button>
-                        <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-lg"><font-awesome-icon icon="edit"  size="xs" /></button>
-                      </td>
-                    </tr>
-                    
+                    <Item />
                   </tbody>
                 </table>
               </div>
@@ -60,27 +46,27 @@
     </section>
     <!-- /.content -->
     
-    <UserAddForm />
+    <UserForm v-if="isOpen"/>
   </div>
   <!-- /.content-wrapper -->
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
-    import UserAddForm from 'com@admin/Modal/Users/AddForm';
+    import { mapGetters,mapActions } from 'vuex';
+    import UserForm from 'com@admin/Modal/Users/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
+    import Item from './components/Item';
+    import BtnAdd from './components/BtnAdd';
 
     export default {
         name: 'UserList',
-        components: {Breadcrumb, UserAddForm},
+        components: {Breadcrumb, UserForm, Item, BtnAdd},
         data() {
             return {
-                form: {
-                    email: null,
-                    password: null
-                },
-                systemError: null
             };
+        },
+        computed: {
+            ...mapGetters('user/modal', ['isOpen']),
         },
         methods: {
         }

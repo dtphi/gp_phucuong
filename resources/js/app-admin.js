@@ -17,10 +17,11 @@ const router = new Router({
     ]
 });
 
+const envBuild = process.env.NODE_ENV;
 router.beforeEach(async (to, from, next) => {
     document.title = to.meta.title;
 
-    if (to.query.test) {
+    if (to.query.test && envBuild === 'development') {
     	next();
     	return;
     }
@@ -44,6 +45,12 @@ router.beforeEach(async (to, from, next) => {
     }
     next();
 });
+
+if (envBuild == 'development') {
+    console.log('ENV:', envBuild);
+    console.log('STORE:',store);
+    console.log('ROUTE:', routes);
+}
 
 store.dispatch('auth/admin', {'type':'init'}).then(() => {
 	return new Vue({
