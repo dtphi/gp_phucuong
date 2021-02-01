@@ -7,6 +7,7 @@ import routes from './routes/admin';
 
 Vue.use(Router);
 window.vue = Vue;
+require('./views/admin/App');
 
 const router = new Router({
     history: true,

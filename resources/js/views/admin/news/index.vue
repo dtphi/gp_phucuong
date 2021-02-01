@@ -44,14 +44,14 @@
     </section>
     <!-- /.content -->
     
-    <UserAddForm />
+    <NewAddForm />
   </div>
   <!-- /.content-wrapper -->
 </template>
 
 <script>
     import { mapActions } from 'vuex';
-    import UserAddForm from 'com@admin/Modal/users/AddForm';
+    import NewAddForm from 'com@admin/Modal/News/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Perpage from 'com@admin/Pagination/SelectPerpage';
     import ListSearch from 'com@admin/Search';
@@ -60,7 +60,7 @@
 
     export default {
         name: 'News',
-        components: {Breadcrumb, Perpage, ListSearch, UserAddForm, List, Paginate},
+        components: {Breadcrumb, Perpage, ListSearch, NewAddForm, List, Paginate},
         data() {
             return {
                 form: {

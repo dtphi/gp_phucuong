@@ -47,7 +47,7 @@
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <a v-if="isSubmit" class="btn btn-success btn-block">Login<FontAwesomeIcon icon="spinner" pulse /></a>
+              <a v-if="isSubmit" class="btn btn-success btn-block">Login<font-awesome-icon icon="spinner" pulse /></a>
               <button v-else type="submit" class="btn btn-success btn-block">Login</button>
             </div>
             <!-- /.col -->
@@ -65,17 +65,10 @@
 </template>
 
 <script>
-    import Vue from 'vue';
     import {mapGetters, mapActions} from 'vuex';
-    import { library } from '@fortawesome/fontawesome-svg-core';
-    import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-    library.add(faSpinner);
-    Vue.config.productionTip = false;
 
     export default {
         name: 'Login',
-        components: {FontAwesomeIcon},
         data() {
             return {
                 errorMessage: null,

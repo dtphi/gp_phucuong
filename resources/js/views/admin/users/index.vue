@@ -40,8 +40,8 @@
                         </div>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-lg"><FontAwesomeIcon icon="plus"  size="xs" /></button>
-                        <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-lg"><FontAwesomeIcon icon="edit"  size="xs" /></button>
+                        <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-lg"><font-awesome-icon icon="plus"  size="xs" /></button>
+                        <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-lg"><font-awesome-icon icon="edit"  size="xs" /></button>
                       </td>
                     </tr>
                     
@@ -66,18 +66,13 @@
 </template>
 
 <script>
-    import Vue from 'vue';
-    import { library } from '@fortawesome/fontawesome-svg-core';
-    import { faSpinner, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
-    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-    library.add(faSpinner, faEdit, faPlus);
     import { mapActions } from 'vuex';
-    import UserAddForm from 'com@admin/Modal/users/AddForm';
+    import UserAddForm from 'com@admin/Modal/Users/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
 
     export default {
-        name: 'User List',
-        components: {Breadcrumb, UserAddForm, FontAwesomeIcon},
+        name: 'UserList',
+        components: {Breadcrumb, UserAddForm},
         data() {
             return {
                 form: {
