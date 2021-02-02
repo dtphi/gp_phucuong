@@ -133,17 +133,19 @@ export default {
         	commit('USERS_MODAL_SET_LOADING', isLoading);
         },
 
-        insertUser ({commit}, user) {
+        insertUser ({ dispatch, commit }, user) {
         	setTimeout(() => {
         		commit(USERS_MODAL_INSERT_USER_SUCCESS, 'insert success')
         		commit(USERS_MODAL_SET_LOADING, false)
+        		dispatch('closeModal')
         	}, 3 * 1000)
         },
 
-        updateUser ({commit}, user) {
+        updateUser ({ dispatch, commit }, user) {
         	setTimeout(() => {
         		commit(USERS_MODAL_UPDATE_USER_SUCCESS, 'update success')
         		commit(USERS_MODAL_SET_LOADING, false)
+        		dispatch('closeModal')
         	}, 3 * 1000)
         }
     }
