@@ -10,5 +10,8 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate';
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
 
+import LoadingOverLay from 'vue-loading-overlay';
+Vue.component('LoadingOverLay', LoadingOverLay);
+
 import utilMixin from '../../mixins/util';
 Vue.mixin(utilMixin);

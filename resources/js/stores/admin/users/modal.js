@@ -23,6 +23,7 @@ export default {
       user: null,
       userId: 0,
       loading: false,
+      updateSuccess: false,
       errors: []
     },
     getters: {
@@ -41,6 +42,9 @@ export default {
       loading(state) {
       	return state.loading
       },
+      updateSuccess(state) {
+        return state.updateSuccess
+      },
       errors(state) {
         return state.errors
       },
@@ -54,6 +58,7 @@ export default {
     			state.action = payload;
     			state.classShow = 'modal fade show';
     			state.styleCss = 'display:block';
+          state.updateSuccess = false;
     		},
 
     		[USERS_MODAL_SET_CLOSE_MODAL](state) {
@@ -91,7 +96,7 @@ export default {
         },
 
         [USERS_MODAL_UPDATE_USER_SUCCESS](state, payload) {
-        	
+        	state.updateSuccess = true
         },
 
         [USERS_MODAL_SET_ERROR](state, payload) {
@@ -142,11 +147,13 @@ export default {
         },
 
         updateUser ({ dispatch, commit }, user) {
-        	setTimeout(() => {
-        		commit(USERS_MODAL_UPDATE_USER_SUCCESS, 'update success')
-        		commit(USERS_MODAL_SET_LOADING, false)
-        		dispatch('closeModal')
-        	}, 3 * 1000)
+          return new Promise((resolve, reject) => {
+            resolve({})
+          }).then(() => {
+            commit(USERS_MODAL_UPDATE_USER_SUCCESS, 'update success');
+            commit(USERS_MODAL_SET_LOADING, false);
+            dispatch('closeModal');
+          })
         }
     }
 }

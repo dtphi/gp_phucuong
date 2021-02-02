@@ -1,6 +1,7 @@
 <template>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
     <Breadcrumb />
 
     <!-- Main content -->
@@ -63,22 +64,29 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Item from './components/Item';
     import BtnAdd from './components/BtnAdd';
+    import 'vue-loading-overlay/dist/vue-loading.css';
 
     export default {
         name: 'UserList',
+        beforeCreate() {
+          this.$store.dispatch('user/getUserList');
+        },
         components: {Breadcrumb, UserForm, Item, BtnAdd},
         data() {
-            return {
-            };
+          return {
+            fullPage: true
+          };
         },
         computed: {
-            ...mapGetters('user/modal', ['isOpen']),
-            userList () {
-              return [{id:1, name:'Phi', email: 'admin@mail.com', createdAt: '24/12/2020'}];
-            }
+          ...mapGetters('user', ['users', 'loading']),
+          ...mapGetters('user/modal', ['isOpen']),
+
+          userList () {
+            return this.users;
+          }
         },
         methods: {
-
+          ...mapActions('user', ['setLoading']),
         }
     };
 </script>

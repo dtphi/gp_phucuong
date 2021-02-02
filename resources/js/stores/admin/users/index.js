@@ -1,19 +1,26 @@
 import axios from 'axios';
 import modals from './modal';
+import {
+  USERS_SET_LOADING,
+  USERS_GET_USER_LIST_SUCCESS,
+  USERS_GET_USER_LIST_FAILED,
+  USERS_SET_USER_LIST,
+  USERS_SET_ERROR 
+} from '../mutation-types';
 
 export default {
     namespaced: true,
     state: {
-      authenticated: false,
-      user: null,
+      users: [],
+      loading: false,
       errors:[]
     },
     getters: {
-      authenticated(state) {
-        return state.authenticated
+      users(state) {
+        return state.users
       },
-      user(state) {
-        return state.user
+      loading(state) {
+        return state.loading
       },
       errors(state) {
         return state.errors
@@ -24,53 +31,42 @@ export default {
     },
 
     mutations: {
-        SET_AUTHENTICATED(state, value) {
-            state.authenticated = value
+        [USERS_SET_USER_LIST](state, payload) {
+            state.users = payload
         },
 
-        SET_USER(state, value) {
-            state.user = value
+        [USERS_GET_USER_LIST_SUCCESS](state, payload) {
+
         },
 
-        SET_ERROR(state, value) {
-          state.errors = value
+        [USERS_SET_LOADING](state, payload) {
+          state.loading = payload
+        },
+
+        [USERS_SET_ERROR](state, payload) {
+          state.errors = payload
         }
     },
 
     actions: {
-        async signIn ({ dispatch }, credentials) {
-            await axios.get('/sanctum/csrf-cookie');
-            await axios.post('/api/login', credentials);
+        async getUserList ({ dispatch, commit }) {
+          dispatch('setLoading', true);
+            commit(USERS_SET_USER_LIST, [
+              {id:1, name:'Phi', email: 'phi@mail.com', createdAt: '24/12/2020'},
+              {id:2, name:'Fei', email: 'fei@mail.com', createdAt: '24/12/2020'},
+              {id:3, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'}
+            ]);
+            commit(USERS_GET_USER_LIST_SUCCESS, 'get users success')
 
-            return dispatch('admin', {type: options.login})
+            dispatch('setLoading', false);
         },
 
-        async signOut ({ dispatch }) {
-          await axios.post('/api/logout')
-
-          return dispatch('admin', {type:options.logout});
+        setLoading ({commit} , isLoading) {
+          commit(USERS_SET_LOADING, isLoading);
         },
-
-        admin ({ commit }, options) {
-            return axios.get('/api/user').then((response) => {
-                commit('SET_AUTHENTICATED', true);
-                commit('SET_USER', response.data);
-                commit('SET_ERROR', []);
-            }).catch((error) => {
-                commit('SET_AUTHENTICATED', false);
-                commit('SET_USER', null);
-                if (typeof options === 'object') {
-                  const type = options.hasOwnProperty('type');
-                  type ? ((options.type==='login') ? commit('SET_ERROR',
-                  [
-                    {msgCommon: 'Login failed!'}
-                  ]):null): null;
-                }
-            })
-        }
     },
 
     modules: {
-    	modal: modals
+      modal: modals
     }
 }

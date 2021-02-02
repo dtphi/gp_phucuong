@@ -4,7 +4,7 @@
       <div class="modal-dialog modal-lg">
         <ValidationObserver ref="observerUser" @submit.prevent="submitUser">
           <div class="modal-content">
-            <Loading :active.sync="loading" :is-full-page="fullPage"></Loading>
+            <LoadingOverLay :active.sync="loading" :is-full-page="fullPage" />
             <div class="modal-header">
               <h4 class="modal-title">{{title}}</h4>
               <button type="button" class="close" aria-label="Close" @click="closeModal"><span aria-hidden="true">&times;</span>
@@ -59,12 +59,10 @@
 
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex';
-    import Loading from 'vue-loading-overlay';
     import 'vue-loading-overlay/dist/vue-loading.css';
 
     export default {
         name: 'UserAddForm',
-        components: {Loading},
         data() {
             return {
               name: '',
@@ -80,7 +78,8 @@
             'classShow',
             'styleCss',
             'user',
-            'loading'
+            'loading',
+            'updateSuccess'
           ]),
         },
         created() {
@@ -98,8 +97,10 @@
             'closeModal',
             'setLoading',
             'insertUser',
-            'updateUser'
+            'updateUser',
           ]),
+
+          ...mapActions('user', ['getUserList']),
 
           async submitUser() {
             const _self = this;
@@ -112,6 +113,7 @@
                     email: _self.email,
                     password: _self.password
                   });
+
                 } else {
                   _self.insertUser({
                     name: _self.name,
@@ -124,11 +126,11 @@
 
                 return false;
               }
+            }).then(() => {
+              console.log('then promise', _self.updateSuccess)
             });
 
-            /*requestAnimationFrame(() => {
-              _self.$refs.observerUser.reset();
-            });*/
+            if (_self.updateSuccess) _self.getUserList();
           }
         },
         setting: {
