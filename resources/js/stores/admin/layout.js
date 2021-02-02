@@ -1,3 +1,9 @@
+import { 
+  LAYOUT_TOGGLE_SIDEBAR, 
+  LAYOUT_SWITCH_SIDEBAR, 
+  LAYOUT_HANDLE_SWIPE,
+  LAYOUT_CHANGE_SIDEBAR_ACTIVE 
+} from './mutation-types';
 
 export default {
     namespaced: true,
@@ -10,7 +16,7 @@ export default {
       chatNotificationPopover: false,
   },
   mutations: {
-    toggleSidebar(state) {
+    [LAYOUT_TOGGLE_SIDEBAR](state) {
       const nextState = !state.sidebarStatic;
 
       localStorage.sidebarStatic = nextState;
@@ -20,14 +26,14 @@ export default {
         state.sidebarClose = true;
       }
     },
-    switchSidebar(state, value) {
+    [LAYOUT_SWITCH_SIDEBAR](state, value) {
       if (value) {
         state.sidebarClose = value;
       } else {
         state.sidebarClose = !state.sidebarClose;
       }
     },
-    handleSwipe(state, e) {
+    [LAYOUT_HANDLE_SWIPE](state, e) {
       if ('ontouchstart' in window) {
         if (e.direction === 4) {
           state.sidebarClose = false;
@@ -38,22 +44,22 @@ export default {
         }
       }
     },
-    changeSidebarActive(state, index) {
+    [LAYOUT_CHANGE_SIDEBAR_ACTIVE](state, index) {
       state.sidebarActiveElement = index;
     },
   },
   actions: {
     toggleSidebar({ commit }) {
-      commit('toggleSidebar');
+      commit('LAYOUT_TOGGLE_SIDEBAR');
     },
     switchSidebar({ commit }, value) {
-      commit('switchSidebar', value);
+      commit('LAYOUT_SWITCH_SIDEBAR', value);
     },
     handleSwipe({ commit }, e) {
-      commit('handleSwipe', e);
+      commit('LAYOUT_HANDLE_SWIPE', e);
     },
     changeSidebarActive({ commit }, index) {
-      commit('changeSidebarActive', index);
+      commit('LAYOUT_CHANGE_SIDEBAR_ACTIVE', index);
     },
   }
 }
