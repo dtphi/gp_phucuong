@@ -30,7 +30,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <Item />
+                    <Item v-for="item in userList" 
+                    :user-id="item.id" 
+                    :name="item.name"
+                    :email="item.email"
+                    :created-at="item.createdAt"
+                    :key="item.id"
+                    />
                   </tbody>
                 </table>
               </div>
@@ -67,8 +73,12 @@
         },
         computed: {
             ...mapGetters('user/modal', ['isOpen']),
+            userList () {
+              return [{id:1, name:'Phi', email: 'admin@mail.com', createdAt: '24/12/2020'}];
+            }
         },
         methods: {
+
         }
     };
 </script>

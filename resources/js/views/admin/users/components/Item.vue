@@ -1,18 +1,18 @@
 <template>
   <tr>
     <td>1</td>
-    <td>Admin</td>
-    <td>admin@mail.com</td>
-    <td>24/12/2020</td>
+    <td>{{name}}</td>
+    <td>{{email}}</td>
+    <td>{{createdAt}}</td>
     <td>18/01/2021</td>
     <td>
       <div class="icheck-primary">
-        <input type="checkbox" id="key_01" name="Key" value="">
-        <label for="key_01"></label>
+        <input type="checkbox" :id="`key_${userId}`" name="Key" :value="userId">
+        <label :for="`key_${userId}`"></label>
       </div>
     </td>
     <td>
-      <BtnEdit />
+      <BtnEdit :user-id="userId"/>
     </td>
   </tr>
 </template>
@@ -24,6 +24,12 @@
     export default {
         name: 'ItemUser',
         components: {BtnEdit},
+        props: {
+            userId: { type: Number, dafault: 0 },
+            name: { type: String, default: '' },
+            email: { type: String, default: '' },
+            createdAt: { type: String, default: '' }
+        },
         data() {
             return {
             };

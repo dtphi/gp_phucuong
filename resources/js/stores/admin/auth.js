@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { 
-  SET_AUTHENTICATED, 
-  SET_USER, 
-  SET_ERROR 
+  AUTH_SET_AUTHENTICATED, 
+  AUTH_SET_USER, 
+  AUTH_SET_ERROR 
 } from './mutation-types';
 import {
   API_AUTH_SANCTUM_CSRF_COOKIE,
@@ -42,15 +42,15 @@ export default {
     },
 
     mutations: {
-        [SET_AUTHENTICATED](state, value) {
+        [AUTH_SET_AUTHENTICATED](state, value) {
             state.authenticated = value
         },
 
-        [SET_USER](state, value) {
+        [AUTH_SET_USER](state, value) {
             state.user = value
         },
 
-        [SET_ERROR](state, value) {
+        [AUTH_SET_ERROR](state, value) {
           state.errors = value
         }
     },
@@ -71,15 +71,15 @@ export default {
 
         admin ({ commit }, options) {
             return axios.get(API_AUTH_USER).then((response) => {
-                commit(SET_AUTHENTICATED, true);
-                commit(SET_USER, response.data);
-                commit(SET_ERROR, []);
+                commit(AUTH_SET_AUTHENTICATED, true);
+                commit(AUTH_SET_USER, response.data);
+                commit(AUTH_SET_ERROR, []);
             }).catch((error) => {
-                commit(SET_AUTHENTICATED, false);
-                commit(SET_USER, null);
+                commit(AUTH_SET_AUTHENTICATED, false);
+                commit(AUTH_SET_USER, null);
                 if (typeof options === 'object') {
                   const type = options.hasOwnProperty('type');
-                  type ? ((options.type==='login') ? commit(SET_ERROR,
+                  type ? ((options.type==='login') ? commit(AUTH_SET_ERROR,
                   [
                     {msgCommon: 'Login failed!'}
                   ]):null): null;
