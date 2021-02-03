@@ -1,5 +1,6 @@
 import axios from 'axios';
 import modals from './modal';
+import ApiUser from 'api@admin/user';
 import {
   USERS_SET_LOADING,
   USERS_GET_USER_LIST_SUCCESS,
@@ -51,14 +52,22 @@ export default {
     actions: {
         async getUserList ({ dispatch, commit }) {
           dispatch('setLoading', true);
-            commit(USERS_SET_USER_LIST, [
-              {id:1, name:'Phi', email: 'phi@mail.com', createdAt: '24/12/2020'},
-              {id:2, name:'Fei', email: 'fei@mail.com', createdAt: '24/12/2020'},
-              {id:3, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'}
-            ]);
-            commit(USERS_GET_USER_LIST_SUCCESS, 'get users success')
+          await ApiUser.getUsers(
+            (users) => {
+              commit(USERS_SET_USER_LIST, users)
+              commit(USERS_GET_USER_LIST_SUCCESS, 'get users success')
+            },
+            (errors) => {
+              commit(USERS_GET_USER_LIST_FAILED, 'get users faild')
+            }
+          );
+          dispatch('setLoading', false);
+        },
 
-            dispatch('setLoading', false);
+        reloadGetUserList ({dispatch}, isReload) {
+          if (isReload) {
+            dispatch('getUserList');
+          }
         },
 
         setLoading ({commit} , isLoading) {

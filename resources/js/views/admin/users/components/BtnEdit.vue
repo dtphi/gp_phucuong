@@ -4,6 +4,9 @@
 
 <script>
     import { mapActions } from 'vuex';
+    import {
+      MODULE_USER_MODAL
+    } from 'store@admin/module-types';
 
     export default {
         name: 'ButtonEdit',
@@ -17,7 +20,7 @@
             };
         },
         methods: {
-            ...mapActions('user/modal', [
+            ...mapActions(MODULE_USER_MODAL, [
                 'showModalEdit'
             ]),
         }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ApiUser from 'api@admin/user';
 import { 
   USERS_MODAL_SET_OPEN_MODAL, 
   USERS_MODAL_SET_CLOSE_MODAL, 
@@ -96,7 +97,11 @@ export default {
         },
 
         [USERS_MODAL_UPDATE_USER_SUCCESS](state, payload) {
-        	state.updateSuccess = true
+        	state.updateSuccess = payload
+        },
+
+        [USERS_MODAL_UPDATE_USER_FAILED](state, payload) {
+          state.updateSuccess = payload
         },
 
         [USERS_MODAL_SET_ERROR](state, payload) {
@@ -115,13 +120,19 @@ export default {
         	commit(USERS_MODAL_SET_USER_ID, userId);
         	commit(USERS_MODAL_SET_OPEN_MODAL, 'edit');
 
-        	dispatch('getUserById', userId)
-        	dispatch('isOpenModal', true);
+        	dispatch('getUserById', userId);
         },
 
-        getUserById ({commit}, userId) {
-        	const user = {id:1,name:'Phi', email: 'dtphi.khtn@gmail.com', createAt: '02/02/2021'};
-        	commit(USERS_MODAL_SET_USER, user);
+        async getUserById ({dispatch, commit}, userId) {
+          dispatch('setLoading', true);
+          await ApiUser.getUserById(
+            userId,
+            (result) => {
+              commit(USERS_MODAL_SET_USER, result.data);
+              dispatch('setLoading', false);
+            }
+          );
+          dispatch('isOpenModal', true);
         },
 
         closeModal ({ dispatch, commit }) {
@@ -141,19 +152,26 @@ export default {
         insertUser ({ dispatch, commit }, user) {
         	setTimeout(() => {
         		commit(USERS_MODAL_INSERT_USER_SUCCESS, 'insert success')
-        		commit(USERS_MODAL_SET_LOADING, false)
+
+        		dispatch('setLoading', false);
         		dispatch('closeModal')
         	}, 3 * 1000)
         },
 
         updateUser ({ dispatch, commit }, user) {
-          return new Promise((resolve, reject) => {
-            resolve({})
-          }).then(() => {
-            commit(USERS_MODAL_UPDATE_USER_SUCCESS, 'update success');
-            commit(USERS_MODAL_SET_LOADING, false);
-            dispatch('closeModal');
-          })
+          ApiUser.updateUser(user,
+            (result) => {
+              commit(USERS_MODAL_UPDATE_USER_SUCCESS, true);
+              
+              dispatch('setLoading', false);
+              dispatch('closeModal');
+            },
+            (errors) => {
+              commit(USERS_MODAL_UPDATE_USER_FAILED, false)
+
+              dispatch('setLoading', false);
+            }
+          )
         }
     }
 }

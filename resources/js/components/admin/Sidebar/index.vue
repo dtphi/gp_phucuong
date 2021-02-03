@@ -47,6 +47,10 @@
   import {mapState, mapGetters, mapActions} from 'vuex';
   import Logout from './Logout';
   import NavLink from './NavLink';
+  import {
+      MODULE_AUTH,
+      MODULE_LAYOUT
+    } from 'store@admin/module-types';
 
     export default {
         name: 'Sidebar',
@@ -54,8 +58,8 @@
           Logout,NavLink
         },
         computed: {
-            ...mapGetters('auth', ['authenticated']),
-            ...mapState('layout', {
+            ...mapGetters(MODULE_AUTH, ['authenticated']),
+            ...mapState(MODULE_LAYOUT, {
               sidebarStatic: state => state.sidebarStatic,
               sidebarOpened: state => !state.sidebarClose,
               activeItem: state => state.sidebarActiveElement,
@@ -63,7 +67,7 @@
             ...mapState(['cfApp']),
         },
         methods: {
-          ...mapActions('layout', ['changeSidebarActive', 'switchSidebar']),
+          ...mapActions(MODULE_LAYOUT, ['changeSidebarActive', 'switchSidebar']),
           setActiveByRoute() {
             const paths = this.$route.fullPath.split('/admin');
             var pathActive = paths.pop();

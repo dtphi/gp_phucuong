@@ -6,6 +6,9 @@
 
 <script>
     import { mapActions } from 'vuex';
+    import {
+      MODULE_USER_MODAL
+    } from 'store@admin/module-types';
 
     export default {
         name: 'ButtonAdd',
@@ -14,7 +17,7 @@
             };
         },
         methods: {
-        	...mapActions('user/modal', ['showModal']),
+        	...mapActions(MODULE_USER_MODAL, ['showModal']),
         }
     };
 </script>

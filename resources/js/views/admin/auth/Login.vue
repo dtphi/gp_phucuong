@@ -66,6 +66,9 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
+    import {
+      MODULE_AUTH
+    } from 'store@admin/module-types';
 
     export default {
         name: 'Login',
@@ -80,7 +83,7 @@
             };
         },
         computed: {
-            ...mapGetters('auth', ['authenticated', 'isError', 'errors']),
+            ...mapGetters(MODULE_AUTH, ['authenticated', 'isError', 'errors']),
         },
         methods: {
             ...mapActions({

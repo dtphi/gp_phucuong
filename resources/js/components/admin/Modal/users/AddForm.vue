@@ -7,7 +7,8 @@
             <LoadingOverLay :active.sync="loading" :is-full-page="fullPage" />
             <div class="modal-header">
               <h4 class="modal-title">{{title}}</h4>
-              <button type="button" class="close" aria-label="Close" @click="closeModal"><span aria-hidden="true">&times;</span>
+              <button type="button" class="close" aria-label="Close" @click="closeModal">
+                <span aria-hidden="true"><font-awesome-icon icon="times" /></span>
               </button>
             </div>
             <div class="modal-body">
@@ -60,6 +61,10 @@
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex';
     import 'vue-loading-overlay/dist/vue-loading.css';
+    import {
+      MODULE_USER,
+      MODULE_USER_MODAL
+    } from 'store@admin/module-types';
 
     export default {
         name: 'UserAddForm',
@@ -74,7 +79,7 @@
             };
         },
         computed: {
-          ...mapGetters('user/modal', [
+          ...mapGetters(MODULE_USER_MODAL, [
             'classShow',
             'styleCss',
             'user',
@@ -88,24 +93,28 @@
           if (this.user) {
             this.title = this.$options.setting.EditTitle;
             this.btnSubmitTxt = this.$options.setting.BtnUpdateText;
+
             this.name = this.user.name;
             this.email = this.user.email;
           }
         },
+        beforeDestroy() {
+          if (this.updateSuccess) {
+            this.reloadGetUserList(this.updateSuccess);
+          }
+        },
         methods: {
-          ...mapActions('user/modal', [
+          ...mapActions(MODULE_USER_MODAL, [
             'closeModal',
             'setLoading',
             'insertUser',
             'updateUser',
           ]),
-
-          ...mapActions('user', ['getUserList']),
-
+          ...mapActions(MODULE_USER, ['getUserList', 'reloadGetUserList']),
           async submitUser() {
             const _self = this;
             _self.setLoading(true);
-            await _self.$refs.observerUser.validate().then((isValid) => {
+            _self.$refs.observerUser.validate().then((isValid) => {
               if (isValid) {
                 if (_self.user) {
                   _self.updateUser({
@@ -113,7 +122,6 @@
                     email: _self.email,
                     password: _self.password
                   });
-
                 } else {
                   _self.insertUser({
                     name: _self.name,
@@ -126,11 +134,7 @@
 
                 return false;
               }
-            }).then(() => {
-              console.log('then promise', _self.updateSuccess)
             });
-
-            if (_self.updateSuccess) _self.getUserList();
           }
         },
         setting: {

@@ -31,8 +31,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <Item v-for="item in userList" 
-                    :user-id="item.id" 
+                    <Item v-for="(item,index) in userList" 
+                    :user-id="index" 
                     :name="item.name"
                     :email="item.email"
                     :created-at="item.createdAt"
@@ -64,6 +64,10 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Item from './components/Item';
     import BtnAdd from './components/BtnAdd';
+    import {
+      MODULE_USER,
+      MODULE_USER_MODAL
+    } from 'store@admin/module-types';
     import 'vue-loading-overlay/dist/vue-loading.css';
 
     export default {
@@ -78,15 +82,15 @@
           };
         },
         computed: {
-          ...mapGetters('user', ['users', 'loading']),
-          ...mapGetters('user/modal', ['isOpen']),
+          ...mapGetters(MODULE_USER, ['users', 'loading']),
+          ...mapGetters(MODULE_USER_MODAL, ['isOpen']),
 
           userList () {
             return this.users;
           }
         },
         methods: {
-          ...mapActions('user', ['setLoading']),
+          ...mapActions(MODULE_USER, ['setLoading']),
         }
     };
 </script>
