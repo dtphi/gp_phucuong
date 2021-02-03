@@ -18,7 +18,7 @@
                   <div class="form-group row">
                     <label for="name" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                      <ValidationProvider rules="required|max:191" v-slot="{ errors }">
+                      <ValidationProvider name="Name" rules="required|max:191" v-slot="{ errors }">
                         <input v-model="name" type="text" class="form-control" placeholder="Name">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
@@ -27,7 +27,7 @@
                   <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                      <ValidationProvider rules="required|max:191" v-slot="{ errors }">
+                      <ValidationProvider name="Email" rules="required|max:191" v-slot="{ errors }">
                         <input v-model="email" type="email" class="form-control" placeholder="Email">
                       <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
@@ -36,7 +36,7 @@
                   <div class="form-group row">
                     <label for="password" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
-                      <ValidationProvider rules="requiredPassword|minPassword:8" v-slot="{ errors }">
+                      <ValidationProvider name="Password" rules="required|minLength:8|max:191" v-slot="{ errors }">
                         <input v-model="password" type="password" class="form-control" placeholder="Password">
                       <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>

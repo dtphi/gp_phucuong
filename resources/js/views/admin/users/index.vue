@@ -12,7 +12,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Users List</h3>
-                <div>
+                <div style="float:right">
                   <BtnAdd />
                 </div>
               </div>

@@ -13,5 +13,5 @@ Vue.component('ValidationProvider', ValidationProvider);
 import LoadingOverLay from 'vue-loading-overlay';
 Vue.component('LoadingOverLay', LoadingOverLay);
 
-import utilMixin from '../../mixins/util';
+import utilMixin from '../../mixins';
 Vue.mixin(utilMixin);
