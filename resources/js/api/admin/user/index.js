@@ -51,5 +51,20 @@ export default {
   		}
   	})
   	.catch(errors => errResole(errors))
+  },
+  insertUser (user, resolve, errResole) {
+    return axios.get('/api/user')
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        var json = {};
+        json['data'] = response.data;
+        json['status'] = 1000;
+        resolve(json);
+      } else {
+        errResole([{status:response.status, msg:'error test'}]);
+      }
+    })
+    .catch(errors => errResole(errors))
   }
 }

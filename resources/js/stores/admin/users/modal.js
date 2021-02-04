@@ -93,7 +93,11 @@ export default {
         },
 
         [USERS_MODAL_INSERT_USER_SUCCESS](state, payload) {
+          state.updateSuccess = payload
+        },
 
+        [USERS_MODAL_INSERT_USER_FAILED](state, payload) {
+          state.updateSuccess = payload
         },
 
         [USERS_MODAL_UPDATE_USER_SUCCESS](state, payload) {
@@ -146,16 +150,24 @@ export default {
         },
 
         setLoading ({commit} , isLoading) {
-        	commit('USERS_MODAL_SET_LOADING', isLoading);
+        	commit(USERS_MODAL_SET_LOADING, isLoading);
         },
 
         insertUser ({ dispatch, commit }, user) {
-        	setTimeout(() => {
-        		commit(USERS_MODAL_INSERT_USER_SUCCESS, 'insert success')
+          ApiUser.insertUser(
+            user,
+            (result) => {
+              commit(USERS_MODAL_INSERT_USER_SUCCESS, true);
+              
+              dispatch('setLoading', false);
+              dispatch('closeModal');
+            },
+            (errors) => {
+              commit(USERS_MODAL_INSERT_USER_FAILED, false)
 
-        		dispatch('setLoading', false);
-        		dispatch('closeModal')
-        	}, 3 * 1000)
+              dispatch('setLoading', false);
+            }
+          )
         },
 
         updateUser ({ dispatch, commit }, user) {

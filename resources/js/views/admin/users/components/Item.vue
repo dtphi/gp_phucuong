@@ -13,6 +13,7 @@
     </td>
     <td>
       <BtnEdit :user-id="userId"/>
+      <BtnDelete :user-id="userId"/>
     </td>
   </tr>
 </template>
@@ -20,10 +21,11 @@
 <script>
     import { mapActions } from 'vuex';
     import BtnEdit from './BtnEdit';
+    import BtnDelete from './BtnDelete';
 
     export default {
         name: 'ItemUser',
-        components: {BtnEdit},
+        components: {BtnEdit, BtnDelete},
         props: {
             userId: { type: Number, dafault: 0 },
             name: { type: String, default: '' },
