@@ -10,6 +10,7 @@
 <script>
     import { mapActions } from 'vuex';
     import {
+      MODULE_USER,
       MODULE_USER_MODAL
     } from 'store@admin/module-types';
 
@@ -23,12 +24,14 @@
             };
         },
         methods: {
-            ...mapActions(MODULE_USER_MODAL, [
-                'showModalEdit'
+            ...mapActions(MODULE_USER, [
+                'setUserDeleteById',
+                'deleteUserById'
             ]),
 
             showDiaglogConfirm() {
                 console.log(this);
+                this.setUserDeleteById(this.userId);
                 this.$modal.show('dialog', {
                   title: 'Delete Confirm',
                   text: 'Are you sure delete !',
@@ -42,7 +45,7 @@
                     {
                       title: 'Delete',
                       handler: () => {
-                        alert('Delete User ID : '+ this.userId);
+                        this.deleteUserById();
                         this.$modal.hide('dialog')
                       }
                     }

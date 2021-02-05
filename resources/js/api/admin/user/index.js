@@ -7,58 +7,14 @@ const _users = [
               {id:3, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'},
               {id:4, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'}
             ]
-
-export default {
-	getUserById (userId, resolve, errResole) {
-		return axios.get('/api/user')
-  	.then((response) => {
-  		console.log(response)
-  		if (response.status === 200) {
-  			var json = {};
-  			json['data'] = _users[userId];
-  			json['status'] = 1000;
-  			resolve(json);
-  		} else {
-  			errResole([{status:response.status, msg:'error test'}]);
-  		}
-  	})
-  	.catch(errors => errResole(errors))
-	},
-  getUsers (resolve, errResole) {
-  	return axios.get('/api/user')
-  	.then((response) => {
-  		console.log(response)
-  		if (response.status === 200) {
-  			const data = _users;
-  			resolve(data);
-  		} else {
-  			errResole([{status:response.status, msg:'error test'}]);
-  		}
-  	})
-  	.catch(errors => errResole(errors))
-  },
-  updateUser (user, resolve, errResole) {
-  	return axios.get('/api/user')
-  	.then((response) => {
-  		console.log(response)
-  		if (response.status === 200) {
-  			var json = {};
-  			json['data'] = response.data;
-  			json['status'] = 1000;
-  			resolve(json);
-  		} else {
-  			errResole([{status:response.status, msg:'error test'}]);
-  		}
-  	})
-  	.catch(errors => errResole(errors))
-  },
-  insertUser (user, resolve, errResole) {
-    return axios.get('/api/user')
+            
+export const apiGetUserById = (userId, resolve, errResole) => {
+  axios.get('/api/user')
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = response.data;
+        json['data'] = _users[userId];
         json['status'] = 1000;
         resolve(json);
       } else {
@@ -66,5 +22,66 @@ export default {
       }
     })
     .catch(errors => errResole(errors))
-  }
+}
+
+export const apiGetUsers = (resolve, errResole) => {
+  return axios.get('/api/user')
+  .then((response) => {
+    console.log(response)
+    if (response.status === 200) {
+      const data = _users;
+      resolve(data);
+    } else {
+      errResole([{status:response.status, msg:'error test'}]);
+    }
+  })
+  .catch(errors => errResole(errors))
+}
+
+export const apiUpdateUser = (user, resolve, errResole) => {
+  return axios.get('/api/user')
+  .then((response) => {
+    console.log(response)
+    if (response.status === 200) {
+      var json = {};
+      json['data'] = response.data;
+      json['status'] = 1000;
+      resolve(json);
+    } else {
+      errResole([{status:response.status, msg:'error test'}]);
+    }
+  })
+  .catch(errors => errResole(errors))
+}
+
+export const apiInsertUser = (user, resolve, errResole) => {
+  return axios.get('/api/user')
+  .then((response) => {
+    console.log(response)
+    if (response.status === 200) {
+      var json = {};
+      json['data'] = response.data;
+      json['status'] = 1000;
+      resolve(json);
+    } else {
+      errResole([{status:response.status, msg:'error test'}]);
+    }
+  })
+  .catch(errors => errResole(errors))
+}
+
+export const apiDeleteUser = (userId, resolve, errResole) => {
+  return axios.get('/api/user')
+  .then((response) => {
+    console.log(response)
+    if (response.status === 200) {
+      var json = {};
+      json['data'] = response.data;
+      json['status'] = 1000;
+      resolve(json);
+    } else {
+      errResole([{status:response.status, msg:'error test'}]);
+    }
+  })
+  .catch(errors => errResole(errors))
 }

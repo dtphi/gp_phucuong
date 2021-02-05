@@ -1,5 +1,9 @@
 import axios from 'axios';
-import ApiUser from 'api@admin/user';
+import {
+  apiGetUserById, 
+  apiUpdateUser, 
+  apiInsertUser
+} from 'api@admin/user';
 import { 
   USERS_MODAL_SET_OPEN_MODAL, 
   USERS_MODAL_SET_CLOSE_MODAL, 
@@ -129,7 +133,7 @@ export default {
 
         async getUserById ({dispatch, commit}, userId) {
           dispatch('setLoading', true);
-          await ApiUser.getUserById(
+          await apiGetUserById(
             userId,
             (result) => {
               commit(USERS_MODAL_SET_USER, result.data);
@@ -154,7 +158,7 @@ export default {
         },
 
         insertUser ({ dispatch, commit }, user) {
-          ApiUser.insertUser(
+          apiInsertUser(
             user,
             (result) => {
               commit(USERS_MODAL_INSERT_USER_SUCCESS, true);
@@ -171,7 +175,7 @@ export default {
         },
 
         updateUser ({ dispatch, commit }, user) {
-          ApiUser.updateUser(user,
+          apiUpdateUser(user,
             (result) => {
               commit(USERS_MODAL_UPDATE_USER_SUCCESS, true);
               
