@@ -131,16 +131,17 @@ export default {
         	dispatch('getUserById', userId);
         },
 
-        async getUserById ({dispatch, commit}, userId) {
+        getUserById ({dispatch, commit}, userId) {
           dispatch('setLoading', true);
-          await apiGetUserById(
+          apiGetUserById(
             userId,
             (result) => {
               commit(USERS_MODAL_SET_USER, result.data);
+
               dispatch('setLoading', false);
+              dispatch('isOpenModal', true);
             }
           );
-          dispatch('isOpenModal', true);
         },
 
         closeModal ({ dispatch, commit }) {
