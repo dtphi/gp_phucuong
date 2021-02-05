@@ -17,3 +17,6 @@ Vue.component('LoadingOverLay', LoadingOverLay);
 
 import utilMixin from '../../mixins';
 Vue.mixin(utilMixin);
+
+import VModal from 'vue-js-modal';
+Vue.use(VModal, { dialog: true });

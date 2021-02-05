@@ -54,6 +54,7 @@
     <!-- /.content -->
     
     <UserForm v-if="isOpen"/>
+    <v-dialog />
   </div>
   <!-- /.content-wrapper -->
 </template>
