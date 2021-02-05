@@ -12,7 +12,11 @@
     import {
       MODULE_USER,
       MODULE_USER_MODAL
-    } from 'store@admin/module-types';
+    } from 'store@admin/types/module-types';
+    import {
+      ACTION_SET_USER_DELETE_BY_ID,
+      ACTION_DELETE_USER_BY_ID
+    } from 'store@admin/types/action-types';
 
     export default {
         name: 'ButtonDelete',
@@ -25,8 +29,8 @@
         },
         methods: {
             ...mapActions(MODULE_USER, [
-                'setUserDeleteById',
-                'deleteUserById'
+                ACTION_SET_USER_DELETE_BY_ID,
+                ACTION_DELETE_USER_BY_ID
             ]),
 
             showDiaglogConfirm() {

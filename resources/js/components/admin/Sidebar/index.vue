@@ -50,7 +50,7 @@
   import {
       MODULE_AUTH,
       MODULE_LAYOUT
-    } from 'store@admin/module-types';
+    } from 'store@admin/types/module-types';
 
     export default {
         name: 'Sidebar',

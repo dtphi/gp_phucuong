@@ -14,7 +14,14 @@ import {
   USERS_SET_USER_LIST,
   USERS_USER_DELETE_BY_ID,
   USERS_SET_ERROR 
-} from '../mutation-types';
+} from '../types/mutation-types';
+import {
+  ACTION_GET_USER_LIST,
+  ACTION_DELETE_USER_BY_ID,
+  ACTION_SET_USER_DELETE_BY_ID,
+  ACTION_RELOAD_GET_USER_LIST,
+  ACTION_SET_LOADING
+} from '../types/action-types';
 
 export default {
     namespaced: true,
@@ -76,8 +83,8 @@ export default {
     },
 
     actions: {
-        async getUserList ({ dispatch, commit }) {
-          dispatch('setLoading', true);
+        async [ACTION_GET_USER_LIST] ({ dispatch, commit }) {
+          dispatch(ACTION_SET_LOADING, true);
           await apiGetUsers(
             (users) => {
               commit(USERS_SET_USER_LIST, users)
@@ -87,15 +94,15 @@ export default {
               commit(USERS_GET_USER_LIST_FAILED, false)
             }
           );
-          dispatch('setLoading', false);
+          dispatch(ACTION_SET_LOADING, false);
         },
 
-        async deleteUserById ({state, dispatch, commit}) {
+        async [ACTION_DELETE_USER_BY_ID] ({state, dispatch, commit}) {
           await apiDeleteUser(
             state.userDelete,
             (users) => {
               commit(USERS_DELETE_USER_BY_ID_SUCCESS, true)
-              dispatch('getUserList')
+              dispatch(ACTION_GET_USER_LIST)
               commit(USERS_USER_DELETE_BY_ID, null)
             },
             (errors) => {
@@ -104,7 +111,7 @@ export default {
           );
         },
 
-        setUserDeleteById ({commit}, userId) {
+        [ACTION_SET_USER_DELETE_BY_ID] ({commit}, userId) {
           apiGetUserById(
             userId,
             (result) => {
@@ -114,13 +121,13 @@ export default {
           );
         },
 
-        reloadGetUserList ({dispatch}, isReload) {
+        [ACTION_RELOAD_GET_USER_LIST] ({dispatch}, isReload) {
           if (isReload) {
-            dispatch('getUserList');
+            dispatch(ACTION_GET_USER_LIST);
           }
         },
 
-        setLoading ({commit} , isLoading) {
+        [ACTION_SET_LOADING] ({commit} , isLoading) {
           commit(USERS_SET_LOADING, isLoading);
         },
     },

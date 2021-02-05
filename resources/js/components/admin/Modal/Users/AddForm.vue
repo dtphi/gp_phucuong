@@ -60,11 +60,10 @@
 
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex';
-    import 'vue-loading-overlay/dist/vue-loading.css';
     import {
       MODULE_USER,
       MODULE_USER_MODAL
-    } from 'store@admin/module-types';
+    } from 'store@admin/types/module-types';
 
     export default {
         name: 'UserAddForm',

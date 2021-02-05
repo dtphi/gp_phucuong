@@ -68,7 +68,7 @@
     import {mapGetters, mapActions} from 'vuex';
     import {
       MODULE_AUTH
-    } from 'store@admin/module-types';
+    } from 'store@admin/types/module-types';
 
     export default {
         name: 'Login',

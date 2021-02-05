@@ -16,7 +16,17 @@ import {
   USERS_MODAL_INSERT_USER_FAILED,
   USERS_MODAL_UPDATE_USER_FAILED,
   USERS_MODAL_SET_ERROR 
-} from '../mutation-types';
+} from '../types/mutation-types';
+import {
+  ACTION_GET_USER_BY_ID,
+  ACTION_SET_LOADING,
+  ACTION_SHOW_MODAL,
+  ACTION_SHOW_MODAL_EDIT,
+  ACTION_CLOSE_MODAL,
+  ACTION_IS_OPEN_MODAL,
+  ACTION_INSERT_USER,
+  ACTION_UPDATE_USER
+} from '../types/action-types';
 
 export default {
     namespaced: true,
@@ -118,75 +128,75 @@ export default {
     },
 
     actions: {
-        showModal ({ dispatch, commit }, actionName) {
+        [ACTION_SHOW_MODAL] ({ dispatch, commit }, actionName) {
         	commit(USERS_MODAL_SET_OPEN_MODAL, actionName);
 
-        	dispatch('isOpenModal', true);
+        	dispatch(ACTION_IS_OPEN_MODAL, true);
         },
 
-        showModalEdit ({ dispatch, commit }, userId) {
+        [ACTION_SHOW_MODAL_EDIT] ({ dispatch, commit }, userId) {
         	commit(USERS_MODAL_SET_USER_ID, userId);
         	commit(USERS_MODAL_SET_OPEN_MODAL, 'edit');
 
-        	dispatch('getUserById', userId);
+        	dispatch(ACTION_GET_USER_BY_ID, userId);
         },
 
-        getUserById ({dispatch, commit}, userId) {
-          dispatch('setLoading', true);
+        [ACTION_GET_USER_BY_ID] ({dispatch, commit}, userId) {
+          dispatch(ACTION_SET_LOADING, true);
           apiGetUserById(
             userId,
             (result) => {
               commit(USERS_MODAL_SET_USER, result.data);
 
-              dispatch('setLoading', false);
-              dispatch('isOpenModal', true);
+              dispatch(ACTION_SET_LOADING, false);
+              dispatch(ACTION_IS_OPEN_MODAL, true);
             }
           );
         },
 
-        closeModal ({ dispatch, commit }) {
+        [ACTION_CLOSE_MODAL] ({ dispatch, commit }) {
         	commit(USERS_MODAL_SET_CLOSE_MODAL);
 
-        	dispatch('isOpenModal', false);
+        	dispatch(ACTION_IS_OPEN_MODAL, false);
         },
 
-        isOpenModal ({commit}, payload) {
+        [ACTION_IS_OPEN_MODAL] ({commit}, payload) {
         	commit(USERS_MODAL_SET_IS_OPEN_MODAL, payload);
         },
 
-        setLoading ({commit} , isLoading) {
+        [ACTION_SET_LOADING] ({commit} , isLoading) {
         	commit(USERS_MODAL_SET_LOADING, isLoading);
         },
 
-        insertUser ({ dispatch, commit }, user) {
+        [ACTION_INSERT_USER] ({ dispatch, commit }, user) {
           apiInsertUser(
             user,
             (result) => {
               commit(USERS_MODAL_INSERT_USER_SUCCESS, true);
               
-              dispatch('setLoading', false);
-              dispatch('closeModal');
+              dispatch(ACTION_SET_LOADING, false);
+              dispatch(ACTION_CLOSE_MODAL);
             },
             (errors) => {
               commit(USERS_MODAL_INSERT_USER_FAILED, false)
 
-              dispatch('setLoading', false);
+              dispatch(ACTION_SET_LOADING, false);
             }
           )
         },
 
-        updateUser ({ dispatch, commit }, user) {
+        [ACTION_UPDATE_USER] ({ dispatch, commit }, user) {
           apiUpdateUser(user,
             (result) => {
               commit(USERS_MODAL_UPDATE_USER_SUCCESS, true);
               
-              dispatch('setLoading', false);
-              dispatch('closeModal');
+              dispatch(ACTION_SET_LOADING, false);
+              dispatch(ACTION_CLOSE_MODAL);
             },
             (errors) => {
               commit(USERS_MODAL_UPDATE_USER_FAILED, false)
 
-              dispatch('setLoading', false);
+              dispatch(ACTION_SET_LOADING, false);
             }
           )
         }

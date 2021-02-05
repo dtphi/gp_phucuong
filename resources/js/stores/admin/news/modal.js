@@ -11,7 +11,7 @@ import {
   NEWS_MODAL_INSERT_NEWS_FAILED,
   NEWS_MODAL_UPDATE_NEWS_FAILED,
   NEWS_MODAL_SET_ERROR 
-} from '../mutation-types';
+} from '../types/mutation-types';
 
 export default {
     namespaced: true,

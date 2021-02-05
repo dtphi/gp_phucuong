@@ -13,6 +13,7 @@ Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
 
 import LoadingOverLay from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 Vue.component('LoadingOverLay', LoadingOverLay);
 
 import utilMixin from '../../mixins';

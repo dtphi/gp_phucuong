@@ -3,13 +3,13 @@ import {
   AUTH_SET_AUTHENTICATED, 
   AUTH_SET_USER, 
   AUTH_SET_ERROR 
-} from './mutation-types';
+} from './types/mutation-types';
 import {
   API_AUTH_SANCTUM_CSRF_COOKIE,
   API_AUTH_LOGIN,
   API_AUTH_LOGOUT,
   API_AUTH_USER
-} from './api-paths';
+} from './types/api-paths';
 
 const options = {
     init: 'init',

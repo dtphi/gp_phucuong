@@ -3,7 +3,7 @@ import {
   LAYOUT_SWITCH_SIDEBAR, 
   LAYOUT_HANDLE_SWIPE,
   LAYOUT_CHANGE_SIDEBAR_ACTIVE 
-} from './mutation-types';
+} from './types/mutation-types';
 
 export default {
     namespaced: true,

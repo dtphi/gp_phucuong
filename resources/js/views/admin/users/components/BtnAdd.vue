@@ -8,7 +8,10 @@
     import { mapActions } from 'vuex';
     import {
       MODULE_USER_MODAL
-    } from 'store@admin/module-types';
+    } from 'store@admin/types/module-types';
+    import {
+      ACTION_SHOW_MODAL
+    } from 'store@admin/types/action-types';
 
     export default {
         name: 'ButtonAdd',
@@ -17,7 +20,7 @@
             };
         },
         methods: {
-        	...mapActions(MODULE_USER_MODAL, ['showModal']),
+        	...mapActions(MODULE_USER_MODAL, [ACTION_SHOW_MODAL]),
         }
     };
 </script>

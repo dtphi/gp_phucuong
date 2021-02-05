@@ -6,14 +6,15 @@
     import { mapActions } from 'vuex';
     import {
       MODULE_USER_MODAL
-    } from 'store@admin/module-types';
+    } from 'store@admin/types/module-types';
+    import {
+      ACTION_SHOW_MODAL_EDIT
+    } from 'store@admin/types/action-types';
 
     export default {
         name: 'ButtonEdit',
         props: {
-            userId: { type: Number, dafault: 0 },
-            iconName: { type: String, default: '' },
-            className: { type: String, default: '' }
+            userId: { type: Number, dafault: 0 }
         },
         data() {
             return {
@@ -21,7 +22,7 @@
         },
         methods: {
             ...mapActions(MODULE_USER_MODAL, [
-                'showModalEdit'
+                ACTION_SHOW_MODAL_EDIT
             ]),
         }
     };

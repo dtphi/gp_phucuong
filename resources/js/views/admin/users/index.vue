@@ -68,13 +68,16 @@
     import {
       MODULE_USER,
       MODULE_USER_MODAL
-    } from 'store@admin/module-types';
-    import 'vue-loading-overlay/dist/vue-loading.css';
+    } from 'store@admin/types/module-types';
+    import {
+      ACTION_GET_USER_LIST,
+      ACTION_SET_LOADING
+    } from 'store@admin/types/action-types';
 
     export default {
         name: 'UserList',
         beforeCreate() {
-          this.$store.dispatch('user/getUserList');
+          this.$store.dispatch(MODULE_USER+'/'+ ACTION_GET_USER_LIST);
         },
         components: {Breadcrumb, UserForm, Item, BtnAdd},
         data() {
@@ -91,7 +94,7 @@
           }
         },
         methods: {
-          ...mapActions(MODULE_USER, ['setLoading']),
+          ...mapActions(MODULE_USER, [ACTION_SET_LOADING]),
         }
     };
 </script>
