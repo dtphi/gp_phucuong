@@ -23,7 +23,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.34",
         "@fortawesome/free-solid-svg-icons": "^5.15.2",
         "@fortawesome/vue-fontawesome": "^2.0.2",
-        "axios": "^0.20.0",
+        "axios": "^0.21.1",
         "axios-auth-refresh": "^3.0.0",
         "file-saver": "^2.0.5",
         "laravel-mix-alias": "^1.0.2",
