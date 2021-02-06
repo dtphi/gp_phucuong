@@ -11,6 +11,9 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Users List</h3>
+                <div style="float:right">
+                  <BtnAdd />
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -24,7 +27,49 @@
                         </div>
                       </div>
                     <div class="row">
-                      <List />
+                      <div class="col-sm-12">
+                        <table id="example1" class="table table-bordered table-striped tbl-custom dataTable no-footer dtr-inline" role="grid" aria-describedby="example1_info">
+                          <thead>
+                            <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Name</th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Role</th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Created by: activate to sort column ascending">Created by</th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Key: activate to sort column ascending">Key</th>
+                            </tr>
+                          </thead> 
+                            <tbody>                               
+                              <!-- <tr role="row" class="odd">
+                                <td tabindex="0" class="sorting_1">Name 01</td> 
+                                <td>Admin</td> 
+                                <td>Admin</td> 
+                                <td>
+                                  <div class="icheck-primary">
+                                    <input type="checkbox" id="key_01" name="Key" value=""> 
+                                    <label for="key_01"></label>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr role="row" class="even">
+                                <td tabindex="0" class="sorting_1">Name 02</td> 
+                                <td>User</td> 
+                                <td>user@mail.com</td> 
+                                <td>
+                                  <div class="icheck-primary">
+                                    <input type="checkbox" id="key_02" name="Key" value=""> 
+                                    <label for="key_02"></label>
+                                  </div>
+                                </td>
+                              </tr> -->
+                              <Item v-for="(item,index) in infoList" 
+                                        :user-id="index" 
+                                        :name="item.name"
+                                        :email="item.email"
+                                        :created-at="item.createdAt"
+                                        :key="index"
+                                        />
+                            </tbody>
+                          </table>
+                        </div>
                     </div>
                     <Paginate />
                 </div>
@@ -50,27 +95,41 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
-    import NewAddForm from 'com@admin/Modal/News/AddForm';
+    import { mapGetters, mapActions } from 'vuex';
+    import Item from './components/TheItem';
+
+    import NewAddForm from 'com@admin/Modal/Infos/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Perpage from 'com@admin/Pagination/SelectPerpage';
     import ListSearch from 'com@admin/Search';
     import Paginate from 'com@admin/Pagination';
-    import List from 'com@admin/News/List';
+    import BtnAdd from './components/TheBtnAdd';
+    import {
+      MODULE_INFO,
+      MODULE_INFO_MODAL
+    } from 'store@admin/types/module-types';
+    import {
+      ACTION_GET_INFO_LIST,
+      ACTION_SET_LOADING
+    } from 'store@admin/types/action-types';
 
     export default {
-        name: 'News',
-        components: {Breadcrumb, Perpage, ListSearch, NewAddForm, List, Paginate},
-        data() {
-            return {
-                form: {
-                    email: null,
-                    password: null
-                },
-                systemError: null
-            };
+        name: 'InformationList',
+        components: {Breadcrumb,BtnAdd, Perpage, ListSearch, NewAddForm,Item, Paginate},
+        beforeCreate() {
+          this.$store.dispatch(MODULE_INFO+'/'+ ACTION_GET_INFO_LIST);
         },
-        methods: {
-        }
+        data() {
+          return {
+            fullPage: true
+          };
+        },
+        computed: {
+          ...mapGetters(MODULE_INFO, ['infos', 'loading']),
+
+          infoList () {
+            return this.infos;
+          }
+        },
     };
 </script>
