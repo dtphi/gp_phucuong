@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-default mb-3" @click="showModal('add')">
+    <button type="button" class="btn btn-default mb-3" @click="_showModal()">
     	<font-awesome-icon icon="plus"  size="xs" />
     </button>
 </template>
@@ -14,13 +14,17 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'ButtonAdd',
+        name: 'TheButtonAdd',
         data() {
             return {
             };
         },
         methods: {
         	...mapActions(MODULE_USER_MODAL, [ACTION_SHOW_MODAL]),
+
+            _showModal() {
+                this.[ACTION_SHOW_MODAL]('add');
+            }
         }
     };
 </script>

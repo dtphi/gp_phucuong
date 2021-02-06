@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-default mb-3" @click="showDiaglogConfirm()">
+    <button type="button" class="btn btn-default mb-3" @click="_showConfirm()">
     	<font-awesome-layers class="fa-1x" style="background:MistyRose">
 			  <font-awesome-icon icon="circle" style="color:Tomato" />
 			  <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-6" />
@@ -19,7 +19,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'ButtonDelete',
+        name: 'TheButtonDelete',
         props: {
             userId: { type: Number, dafault: 0 }
         },
@@ -33,9 +33,9 @@
                 ACTION_DELETE_USER_BY_ID
             ]),
 
-            showDiaglogConfirm() {
+            _showConfirm() {
                 console.log(this);
-                this.setUserDeleteById(this.userId);
+                this.[ACTION_SET_USER_DELETE_BY_ID](this.userId);
                 this.$modal.show('dialog', {
                   title: 'Delete Confirm',
                   text: 'Are you sure delete !',
@@ -49,7 +49,7 @@
                     {
                       title: 'Delete',
                       handler: () => {
-                        this.deleteUserById();
+                        this.[ACTION_DELETE_USER_BY_ID]();
                         this.$modal.hide('dialog')
                       }
                     }

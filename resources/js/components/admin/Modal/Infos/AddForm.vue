@@ -2,12 +2,12 @@
   <transition name="modal">
     <div :class="classShow" :style="styleCss" data-keyboard="false" data-backdrop="static">
       <div class="modal-dialog modal-lg">
-        <ValidationObserver ref="observerInfo" @submit.prevent="submitInfo">
+        <ValidationObserver ref="observerInfo" @submit.prevent="_submitInfo">
           <div class="modal-content">
             <LoadingOverLay :active.sync="loading" :is-full-page="fullPage" />
             <div class="modal-header">
               <h4 class="modal-title">{{title}}</h4>
-              <button type="button" class="close" aria-label="Close" @click="closeModal">
+              <button type="button" class="close" aria-label="Close" @click="_close">
                 <span aria-hidden="true"><font-awesome-icon icon="times" /></span>
               </button>
             </div>
@@ -46,8 +46,8 @@
               </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" @click="closeModal">Close</button>
-              <button type="button" class="btn btn-success" @click="submitInfo">{{btnSubmitTxt}}</button>
+              <button type="button" class="btn btn-default" @click="_close">Close</button>
+              <button type="button" class="btn btn-success" @click="_submitInfo">{{btnSubmitTxt}}</button>
             </div>
           </div>
         </ValidationObserver>
@@ -59,11 +59,19 @@
 </template>
 
 <script>
-    import { mapGetters, mapMutations, mapActions } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
     import {
       MODULE_INFO,
       MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
+    import {
+      ACTION_CLOSE_MODAL,
+      ACTION_SET_LOADING,
+      ACTION_INSERT_INFO,
+      ACTION_UPDATE_INFO,
+      ACTION_GET_INFO_LIST,
+      ACTION_RELOAD_GET_INFO_LIST,
+    } from 'store@admin/types/action-types';
 
     export default {
         name: 'TheModalAddForm',
@@ -99,37 +107,45 @@
         },
         beforeDestroy() {
           if (this.updateSuccess) {
-            this.reloadGetInfoList(this.updateSuccess);
+            this.[ACTION_RELOAD_GET_INFO_LIST](this.updateSuccess);
           }
         },
         methods: {
           ...mapActions(MODULE_INFO_MODAL, [
-            'closeModal',
-            'setLoading',
-            'insertInfo',
-            'updateInfo',
+            ACTION_CLOSE_MODAL,
+            ACTION_SET_LOADING,
+            ACTION_INSERT_INFO,
+            ACTION_UPDATE_INFO
           ]),
-          ...mapActions(MODULE_INFO, ['getInfoList', 'reloadGetInfoList']),
-          async submitInfo() {
+          ...mapActions(MODULE_INFO, [
+            ACTION_GET_INFO_LIST, 
+            ACTION_RELOAD_GET_INFO_LIST
+          ]),
+
+          _close() {
+            this.[ACTION_CLOSE_MODAL]()
+          },
+
+          async _submitInfo() {
             const _self = this;
-            _self.setLoading(true);
+            _self.[ACTION_SET_LOADING](true);
             _self.$refs.observerInfo.validate().then((isValid) => {
               if (isValid) {
                 if (_self.info) {
-                  _self.updateInfo({
+                  _self.[ACTION_UPDATE_INFO]({
                     name: _self.name,
                     email: _self.email,
                     password: _self.password
                   });
                 } else {
-                  _self.insertInfo({
+                  _self.[ACTION_INSERT_INFO]({
                     name: _self.name,
                     email: _self.email,
                     password: _self.password
                   });
                 }
               } else {
-                _self.setLoading(false);
+                _self.[ACTION_SET_LOADING](false);
 
                 return false;
               }

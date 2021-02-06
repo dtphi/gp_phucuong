@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-default mb-3" @click="showAddModal()">
+    <button type="button" class="btn btn-default mb-3" @click="_showModal()">
     	<font-awesome-icon icon="plus"  size="xs" />
     </button>
 </template>
@@ -21,8 +21,7 @@
         },
         methods: {
         	...mapActions(MODULE_INFO_MODAL, [ACTION_SHOW_MODAL]),
-        	showAddModal() {
-        		console.log('show modal')
+        	_showModal() {
         		this.[ACTION_SHOW_MODAL]('add');
         	}
         }

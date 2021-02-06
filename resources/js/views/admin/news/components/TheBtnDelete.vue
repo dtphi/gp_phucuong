@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-default mb-3" @click="showDiaglogConfirm()">
+    <button type="button" class="btn btn-default mb-3" @click="_showDiaglogConfirm()">
     	<font-awesome-layers class="fa-1x" style="background:MistyRose">
 			  <font-awesome-icon icon="circle" style="color:Tomato" />
 			  <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-6" />
@@ -33,8 +33,7 @@
                 ACTION_DELETE_INFO_BY_ID
             ]),
 
-            showDiaglogConfirm() {
-                console.log(this);
+            _showDiaglogConfirm() {
                 this.[ACTION_SET_INFO_DELETE_BY_ID](this.infoId);
                 this.$modal.show('dialog', {
                   title: 'Delete Confirm',

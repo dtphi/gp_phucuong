@@ -1,5 +1,7 @@
 <template>
-    <button type="button" class="btn btn-default mb-3" @click="showModalEdit(userId)"><font-awesome-icon icon="edit"  size="xs" /></button>
+    <button type="button" class="btn btn-default mb-3" @click="_showModal()">
+        <font-awesome-icon icon="edit"  size="xs" />
+    </button>
 </template>
 
 <script>
@@ -24,6 +26,9 @@
             ...mapActions(MODULE_INFO_MODAL, [
                 ACTION_SHOW_MODAL_EDIT
             ]),
+            _showModal() {
+                this.[ACTION_SHOW_MODAL_EDIT](this.infoId);
+            }
         }
     };
 </script>

@@ -20,11 +20,11 @@
 
 <script>
     import { mapActions } from 'vuex';
-    import BtnEdit from './BtnEdit';
-    import BtnDelete from './BtnDelete';
+    import BtnEdit from './TheBtnEdit';
+    import BtnDelete from './TheBtnDelete';
 
     export default {
-        name: 'ItemUser',
+        name: 'TheItemUser',
         components: {BtnEdit, BtnDelete},
         props: {
             userId: { type: Number, dafault: 0 },

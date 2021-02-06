@@ -63,8 +63,8 @@
     import { mapGetters,mapActions } from 'vuex';
     import UserForm from 'com@admin/Modal/Users/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
-    import Item from './components/Item';
-    import BtnAdd from './components/BtnAdd';
+    import Item from './components/TheItem';
+    import BtnAdd from './components/TheBtnAdd';
     import {
       MODULE_USER,
       MODULE_USER_MODAL

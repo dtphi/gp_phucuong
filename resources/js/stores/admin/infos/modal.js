@@ -143,7 +143,7 @@ export default {
 
         [ACTION_GET_INFO_BY_ID] ({dispatch, commit}, infoId) {
           dispatch(ACTION_SET_LOADING, true);
-          apiGetUserById(
+          apiGetInfoById(
             infoId,
             (result) => {
               commit(INFOS_MODAL_SET_INFO, result.data);
@@ -169,7 +169,7 @@ export default {
         },
 
         [ACTION_INSERT_INFO] ({ dispatch, commit }, info) {
-          apiInsertUser(
+          apiInsertInfo(
             info,
             (result) => {
               commit(INFOS_MODAL_INSERT_INFO_SUCCESS, true);
@@ -186,7 +186,7 @@ export default {
         },
 
         [ACTION_UPDATE_INFO] ({ dispatch, commit }, info) {
-          apiUpdateUser(info,
+          apiUpdateInfo(info,
             (result) => {
               commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, true);
               

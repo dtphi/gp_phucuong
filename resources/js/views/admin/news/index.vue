@@ -10,7 +10,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Users List</h3>
+                <h3 class="card-title">News List</h3>
                 <div style="float:right">
                   <BtnAdd />
                 </div>
@@ -61,11 +61,11 @@
                                 </td>
                               </tr> -->
                               <Item v-for="(item,index) in infoList" 
-                                        :user-id="index" 
+                                        :user-id="item.id" 
                                         :name="item.name"
                                         :email="item.email"
                                         :created-at="item.createdAt"
-                                        :key="index"
+                                        :key="item.id"
                                         />
                             </tbody>
                           </table>
@@ -89,7 +89,7 @@
     </section>
     <!-- /.content -->
     
-    <NewAddForm />
+    <InfoAddForm />
   </div>
   <!-- /.content-wrapper -->
 </template>
@@ -98,7 +98,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import Item from './components/TheItem';
 
-    import NewAddForm from 'com@admin/Modal/Infos/AddForm';
+    import InfoAddForm from 'com@admin/Modal/Infos/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Perpage from 'com@admin/Pagination/SelectPerpage';
     import ListSearch from 'com@admin/Search';
@@ -106,16 +106,14 @@
     import BtnAdd from './components/TheBtnAdd';
     import {
       MODULE_INFO,
-      MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
     import {
       ACTION_GET_INFO_LIST,
-      ACTION_SET_LOADING
     } from 'store@admin/types/action-types';
 
     export default {
         name: 'InformationList',
-        components: {Breadcrumb,BtnAdd, Perpage, ListSearch, NewAddForm,Item, Paginate},
+        components: {Breadcrumb,BtnAdd, Perpage, ListSearch, InfoAddForm,Item, Paginate},
         beforeCreate() {
           this.$store.dispatch(MODULE_INFO+'/'+ ACTION_GET_INFO_LIST);
         },

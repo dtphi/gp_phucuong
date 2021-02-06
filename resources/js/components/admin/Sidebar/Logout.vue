@@ -1,6 +1,6 @@
 <template>
   <li class="nav-item">
-    <a @click="logout()" href="#" class="nav-link" title="Logout Admin">
+    <a @click="_logout()" href="#" class="nav-link" title="Logout Admin">
       <i class="nav-icon fas fa-file"></i>
       <p>Logout</p>
     </a>
@@ -19,14 +19,14 @@
                 signOut: 'auth/signOut',
                 redirectLogout: 'auth/redirectLogoutSuccess'
               }),
-            async submit () {
+            async _submit () {
               await this.signOut();
               if (!this.authenticated) {
               	this.redirectLogout();
               }
             },
-            logout() {
-                this.submit();
+            _logout() {
+                this._submit();
             }
         }
     };

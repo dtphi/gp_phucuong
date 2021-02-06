@@ -19,7 +19,7 @@
         <!-- <p class="login-box-msg">Login</p> -->
         <p v-if="isError" class="mb-1 text-center text-red">{{errors[0].msgCommon}}</p>
 
-        <form @submit.prevent="login">
+        <form @submit.prevent="_login">
           <div class="input-group mb-4">
             <input ref="email" required type="email" class="form-control" placeholder="User">
             <div class="input-group-append">
@@ -90,7 +90,7 @@
                 signIn: 'auth/signIn',
                 redirectLogin: 'auth/redirectLoginSuccess'
               }),
-            async submit () {
+            async _submit () {
                 await this.signIn(this.form);
 
                 if (this.authenticated) {
@@ -99,7 +99,7 @@
                   this.isSubmit = false;
                 }
             },
-            login() {
+            _login() {
                 this.isSubmit = true;
                 const email = this.$refs.email.value;
                 const password = this.$refs.password.value;
@@ -107,7 +107,7 @@
                 if (email.length !== 0 && password.length !== 0) {
                     this.form.email = email;
                     this.form.password = password;
-                    this.submit();
+                    this._submit();
                 }
             }
         }
