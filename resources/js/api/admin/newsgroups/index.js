@@ -29,6 +29,20 @@ const _infos = {
                   }
                 ]
               }
+
+const _newsGroups = [
+  {id: 0, name: 'Danh mục'},
+  { id: 1,name: "Ơn gọi linh mục" },
+  { id: 2,name: "Dòng tu" },
+  { id: 3, name: "Giáo phận" },
+  { id: 4, name: "Nhà thờ chánh tòa"},
+  { id: 5, name: "Năm thánh" },
+  { id: 6, name: "Giám mục" },
+  { id: 7, name: "Giáo hạc - Giáo sứ"},
+  { id: 8, name: "Hạt Bến Cát" }, 
+  { id: 9, name: "Hạt Bình Long" }, 
+  { id: 10, name: "Hạt Củ Chi" }
+]
             
 export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
   axios.get('/api/user')
@@ -36,7 +50,7 @@ export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = _infos[newsGroupId];
+        json['data'] = _newsGroups[newsGroupId];
         json['status'] = 1000;
         resolve(json);
       } else {

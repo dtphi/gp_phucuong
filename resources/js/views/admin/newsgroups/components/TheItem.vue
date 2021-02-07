@@ -4,7 +4,9 @@
 		v-on:mouseleave.prevent="_hideAction">
     <i v-if="isFolder" class="fas fa-plus"></i>
     <span>{{ group.name }}</span>
-    <BtnGroupAction :current-group="group" v-show="active" 
+    <BtnGroupAction 
+      :current-group="group" 
+      v-show="active" 
     	class="float-sm-right center" 
     	style="margin-top:0px"/>
   </a>
@@ -15,7 +17,7 @@
   import {
     MODULE_NEWS_GROUP_MODAL
   } from 'store@admin/types/module-types';
-import BtnGroupAction from './TheActionGroup';
+  import BtnGroupAction from './TheActionGroup';
 
 export default {
   name: 'TheItem',

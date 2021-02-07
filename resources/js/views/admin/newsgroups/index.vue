@@ -48,6 +48,7 @@
     import FormModal from 'com@admin/Modal/NewsGroups/AddForm';
     import {
       MODULE_NEWS_GROUP,
+      MODULE_NEWS_GROUP_MODAL
     } from 'store@admin/types/module-types';
     import {
       ACTION_GET_NEWS_GROUP_LIST,
@@ -65,6 +66,7 @@
         },
         computed: {
           ...mapGetters(MODULE_NEWS_GROUP, ['newsGroups', 'loading']),
+          ...mapGetters(MODULE_NEWS_GROUP_MODAL, ['isOpen']),
           lists () {
             return this.newsGroups
           }

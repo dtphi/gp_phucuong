@@ -112,7 +112,7 @@ export default {
         },
 
         [ACTION_SET_NEWS_GROUP_DELETE_BY_ID] ({commit}, newsGroupId) {
-          apiGetInfoById(
+          apiGetNewsGroupById(
             newsGroupId,
             (result) => {
               commit(NEWSGROUPS_GROUP_DELETE_BY_ID, result.data);

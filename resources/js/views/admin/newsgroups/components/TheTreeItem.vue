@@ -1,6 +1,6 @@
 <template>
   <li>
-  	<Item :group="item" :is-folder="isFolder"/>
+  	<TheItem :group="item" :is-folder="isFolder"/>
   	
     <ul class="nested" v-if="isFolder">
       <TheTreeItem
@@ -14,13 +14,13 @@
 </template>
 
 <script>
-	import Item from './TheItem';
+	import TheItem from './TheItem';
 
 export default {
   name: 'TheTreeItem',
   components: {
     'TheTreeItem': this,
-    'Item' : Item
+    'TheItem' : TheItem
   },
   props: {
     item: [Object, Array]

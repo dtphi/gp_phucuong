@@ -46,6 +46,9 @@ export default {
       isOpen(state) {
         return state.isOpen
       },
+      action(state) {
+      	return state.action
+      },
       classShow(state) {
       	return state.classShow
       },
@@ -78,6 +81,9 @@ export default {
     			state.classShow = 'modal fade show';
     			state.styleCss = 'display:block';
           state.updateSuccess = false;
+          state.newsGroup = null;
+      		state.parentInfo = null;
+      		state.newsGroupId = 0;
     		},
 
     		[NEWSGROUPS_MODAL_SET_CLOSE_MODAL](state) {
@@ -85,6 +91,8 @@ export default {
     				state.action = null;
 	    			state.classShow = 'modal fade';
 	    			state.styleCss = 'display:none';
+	    			state.parentInfo = null;
+      			state.newsGroupId = 0;
     			} else {
     				state.action = null;
 	    			state.classShow = 'modal fade';

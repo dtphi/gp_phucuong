@@ -8,7 +8,9 @@
             <div class="modal-header">
               <h4 class="modal-title">{{title}}</h4>
               <button type="button" class="close" aria-label="Close" @click="_close">
-                <span aria-hidden="true"><font-awesome-icon icon="times" /></span>
+                <span aria-hidden="true">
+                  <font-awesome-icon icon="times" />
+                </span>
               </button>
             </div>
             <NewsGroupCurrent v-if="parentInfo" :parent-info="parentInfo"/>
@@ -17,29 +19,17 @@
               <div class="form-horizontal">
                 <div class="card-body">
                   <div class="form-group row">
-                    <label for="name" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm-10">
-                      <ValidationProvider name="Name" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="name" type="text" class="form-control" placeholder="Name">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10" v-if="newsGroup">
+                      <ValidationProvider name="News Group Name" rules="required|max:191" v-slot="{ errors }">
+                        <input v-model="newsGroup.name" type="text" class="form-control" placeholder="News Group Name">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
-                      <ValidationProvider name="Email" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="email" type="email" class="form-control" placeholder="Email">
-                      <span class="text-red">{{ errors[0] }}</span>
-                      </ValidationProvider>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="password" class="col-sm-2 col-form-label">Password</label>
-                    <div class="col-sm-10">
-                      <ValidationProvider name="Password" rules="required|minLength:8|max:191" v-slot="{ errors }">
-                        <input v-model="password" type="password" class="form-control" placeholder="Password">
-                      <span class="text-red">{{ errors[0] }}</span>
+                    <div class="col-sm-10" v-if="parentInfo">
+                      <ValidationProvider name="News Group Name" rules="required|max:191" v-slot="{ errors }">
+                        <input v-model="parentInfo.name" type="text" class="form-control" placeholder="News Group Name">
+                        <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
                   </div>
@@ -81,8 +71,6 @@
         data() {
             return {
               name: '',
-              email: '',
-              password: '',
               fullPage: false,
               title: '',
               btnSubmitTxt: ''
@@ -92,24 +80,18 @@
           ...mapGetters(MODULE_NEWS_GROUP_MODAL, [
             'classShow',
             'styleCss',
+            'action',
             'newsGroup',
             'parentInfo',
             'loading',
             'updateSuccess'
-          ]),
+          ])
         },
         created() {
           this.title = this.$options.setting.AddTitle;
           this.btnSubmitTxt = this.$options.setting.BtnSaveText;
-          if (this.newsGroup) {
-            this.title = this.$options.setting.EditTitle;
-            this.btnSubmitTxt = this.$options.setting.BtnUpdateText;
-
-            this.name = this.newsGroup.name;
-            this.email = this.newsGroup.email;
-          }
         },
-        beforeDestroy() {
+        beforeDestroy() {console.log('destroy')
           if (this.updateSuccess) {
             this.[ACTION_RELOAD_GET_NEWS_GROUP_LIST](this.updateSuccess);
           }
@@ -137,15 +119,11 @@
               if (isValid) {
                 if (_self.newsGroup) {
                   _self.[ACTION_UPDATE_NEWS_GROUP]({
-                    name: _self.name,
-                    email: _self.email,
-                    password: _self.password
+                    name: _self.name
                   });
                 } else {
                   _self.[ACTION_INSERT_NEWS_GROUP]({
-                    name: _self.name,
-                    email: _self.email,
-                    password: _self.password
+                    name: _self.name
                   });
                 }
               } else {
