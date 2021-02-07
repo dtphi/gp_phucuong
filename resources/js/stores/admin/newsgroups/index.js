@@ -1,41 +1,41 @@
 import axios from 'axios';
 import modals from './modal';
 import {
-  apiGetInfoById, 
-  apiGetInfos,
-  apiDeleteInfo
-} from 'api@admin/information';
+  apiGetNewsGroupById, 
+  apiGetNewsGroups,
+  apiDeleteNewsGroup
+} from 'api@admin/newsgroups';
 import {
-  INFOS_SET_LOADING,
-  INFOS_GET_INFO_LIST_SUCCESS,
-  INFOS_GET_INFO_LIST_FAILED,
-  INFOS_DELETE_INFO_BY_ID_SUCCESS,
-  INFOS_DELETE_INFO_BY_ID_FAILED,
-  INFOS_SET_INFO_LIST,
-  INFOS_INFO_DELETE_BY_ID,
-  INFOS_SET_ERROR 
+  NEWSGROUPS_SET_LOADING,
+  NEWSGROUPS_GET_NEWS_GROUP_LIST_SUCCESS,
+  NEWSGROUPS_GET_NEWS_GROUP_LIST_FAILED,
+  NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS,
+  NEWSGROUPS_DELETE_GROUP_BY_ID_FAILED,
+  NEWSGROUPS_SET_NEWS_GROUP_LIST,
+  NEWSGROUPS_GROUP_DELETE_BY_ID,
+  NEWSGROUPS_SET_ERROR 
 } from '../types/mutation-types';
 import {
-  ACTION_GET_INFO_LIST,
-  ACTION_DELETE_INFO_BY_ID,
-  ACTION_SET_INFO_DELETE_BY_ID,
-  ACTION_RELOAD_GET_INFO_LIST,
+  ACTION_GET_NEWS_GROUP_LIST,
+  ACTION_DELETE_NEWS_GROUP_BY_ID,
+  ACTION_SET_NEWS_GROUP_DELETE_BY_ID,
+  ACTION_RELOAD_GET_NEWS_GROUP_LIST,
   ACTION_SET_LOADING
 } from '../types/action-types';
 
 export default {
     namespaced: true,
     state: {
-      infos: [],
-      infoDelete: null,
+      newsGroups: [],
+      newsGroupDelete: null,
       isDelete: false,
       isList: false,
       loading: false,
       errors:[]
     },
     getters: {
-      infos(state) {
-        return state.infos
+      newsGroups(state) {
+        return state.newsGroups
       },
       loading(state) {
         return state.loading
@@ -49,86 +49,86 @@ export default {
     },
 
     mutations: {
-        [INFOS_SET_INFO_LIST](state, payload) {
-            state.infos = payload
+        [NEWSGROUPS_SET_NEWS_GROUP_LIST](state, payload) {
+            state.newsGroups = payload
         },
 
-        [INFOS_INFO_DELETE_BY_ID](state, payload) {
-          state.infoDelete = payload
+        [NEWSGROUPS_GROUP_DELETE_BY_ID](state, payload) {
+          state.newsGroupDelete = payload
         },
 
-        [INFOS_GET_INFO_LIST_SUCCESS](state, payload) {
+        [NEWSGROUPS_GET_NEWS_GROUP_LIST_SUCCESS](state, payload) {
           state.isList = payload
         },
 
-        [INFOS_GET_INFO_LIST_FAILED](state, payload) {
+        [NEWSGROUPS_GET_NEWS_GROUP_LIST_FAILED](state, payload) {
           state.isList = payload
         },
 
-        [INFOS_DELETE_INFO_BY_ID_SUCCESS](state, payload) {
+        [NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS](state, payload) {
           state.isDelete = payload
         },
 
-        [INFOS_DELETE_INFO_BY_ID_FAILED](state, payload) {
+        [NEWSGROUPS_DELETE_GROUP_BY_ID_FAILED](state, payload) {
           state.isDelete = payload
         },
 
-        [INFOS_SET_LOADING](state, payload) {
+        [NEWSGROUPS_SET_LOADING](state, payload) {
           state.loading = payload
         },
 
-        [INFOS_SET_ERROR](state, payload) {
+        [NEWSGROUPS_SET_ERROR](state, payload) {
           state.errors = payload
         }
     },
 
     actions: {
-        async [ACTION_GET_INFO_LIST] ({ dispatch, commit }) {
+        async [ACTION_GET_NEWS_GROUP_LIST] ({ dispatch, commit }) {
           dispatch(ACTION_SET_LOADING, true);
-          await apiGetInfos(
-            (infos) => {
-              commit(INFOS_SET_INFO_LIST, infos)
-              commit(INFOS_GET_INFO_LIST_SUCCESS, true)
+          await apiGetNewsGroups(
+            (newsGroups) => {
+              commit(NEWSGROUPS_SET_NEWS_GROUP_LIST, newsGroups)
+              commit(NEWSGROUPS_GET_NEWS_GROUP_LIST_SUCCESS, true)
             },
             (errors) => {
-              commit(INFOS_GET_INFO_LIST_FAILED, false)
+              commit(NEWSGROUPS_GET_NEWS_GROUP_LIST_FAILED, false)
             }
           );
           dispatch(ACTION_SET_LOADING, false);
         },
 
-        async [ACTION_DELETE_INFO_BY_ID] ({state, dispatch, commit}) {
+        async [ACTION_DELETE_NEWS_GROUP_BY_ID] ({state, dispatch, commit}) {
           await apiDeleteInfo(
-            state.infoDelete,
-            (infos) => {
-              commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
-              dispatch(ACTION_GET_INFO_LIST)
-              commit(INFOS_INFO_DELETE_BY_ID, null)
+            state.newsGroupDelete,
+            (newsGroups) => {
+              commit(NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS, true)
+              dispatch(ACTION_GET_NEWS_GROUP_LIST)
+              commit(NEWSGROUPS_GROUP_DELETE_BY_ID, null)
             },
             (errors) => {
-              commit(INFOS_DELETE_INFO_BY_ID_FAILED, false);
+              commit(NEWSGROUPS_DELETE_GROUP_BY_ID_FAILED, false);
             }
           );
         },
 
-        [ACTION_SET_INFO_DELETE_BY_ID] ({commit}, infoId) {
+        [ACTION_SET_NEWS_GROUP_DELETE_BY_ID] ({commit}, newsGroupId) {
           apiGetInfoById(
-            infoId,
+            newsGroupId,
             (result) => {
-              commit(INFOS_INFO_DELETE_BY_ID, result.data);
-              commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, false);
+              commit(NEWSGROUPS_GROUP_DELETE_BY_ID, result.data);
+              commit(NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS, false);
             }
           );
         },
 
-        [ACTION_RELOAD_GET_INFO_LIST] ({dispatch}, isReload) {
+        [ACTION_RELOAD_GET_NEWS_GROUP_LIST] ({dispatch}, isReload) {
           if (isReload) {
-            dispatch(ACTION_GET_INFO_LIST);
+            dispatch(ACTION_GET_NEWS_GROUP_LIST);
           }
         },
 
         [ACTION_SET_LOADING] ({commit} , isLoading) {
-          commit(INFOS_SET_LOADING, isLoading);
+          commit(NEWSGROUPS_SET_LOADING, isLoading);
         },
     },
 

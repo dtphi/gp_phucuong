@@ -14,6 +14,14 @@ export const ACTION_RELOAD_GET_INFO_LIST = 'reloadGetInfoList';
 export const ACTION_INSERT_INFO = 'insertInfo';
 export const ACTION_UPDATE_INFO = 'updateInfo';
 
+export const ACTION_GET_NEWS_GROUP_LIST = 'getNewsGroupList';
+export const ACTION_GET_NEWS_GROUP_BY_ID = 'getNewsGroupById';
+export const ACTION_DELETE_NEWS_GROUP_BY_ID = 'deleteNewsGroupById';
+export const ACTION_SET_NEWS_GROUP_DELETE_BY_ID = 'setNewsGroupDeleteById';
+export const ACTION_RELOAD_GET_NEWS_GROUP_LIST = 'reloadGetNewsGroupList';
+export const ACTION_INSERT_NEWS_GROUP = 'insertNewsGroup';
+export const ACTION_UPDATE_NEWS_GROUP = 'updateNewsGroup';
+
 export const ACTION_SET_LOADING = 'setLoading';
 export const ACTION_SHOW_MODAL = 'showModal';
 export const ACTION_SHOW_MODAL_EDIT = 'showModalEdit';

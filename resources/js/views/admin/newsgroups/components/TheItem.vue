@@ -3,40 +3,44 @@
 		v-on:mouseover.prevent="_showAction" 
 		v-on:mouseleave.prevent="_hideAction">
     <i v-if="isFolder" class="fas fa-plus"></i>
-    <span>{{ name }}</span>
-    <div v-show="active" class="float-sm-right">
-	    <button type="button" class="btn btn-default mb-3" >
-	    	<font-awesome-icon icon="plus"  size="xs" />
-	    </button>
-	    <button type="button" class="btn btn-default mb-3">
-	    	<font-awesome-icon icon="edit"  size="xs" />
-	    </button>
-    	<button type="button" class="btn btn-default mb-3">
-    		<font-awesome-layers class="fa-1x" style="background:MistyRose">
-				  <font-awesome-icon icon="circle" style="color:Tomato" />
-				  <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-6" />
-				</font-awesome-layers>
-    	</button>
-  	</div>
+    <span>{{ group.name }}</span>
+    <BtnGroupAction :current-group="group" v-show="active" 
+    	class="float-sm-right center" 
+    	style="margin-top:0px"/>
   </a>
 </template>
 
 <script>
+	import { mapGetters, mapActions } from 'vuex';
+  import {
+    MODULE_NEWS_GROUP_MODAL
+  } from 'store@admin/types/module-types';
+import BtnGroupAction from './TheActionGroup';
 
 export default {
   name: 'TheItem',
+  components: {BtnGroupAction},
   props: {
-  	id: Number,
-    name: String,
+  	group: [Object, Array],
     isFolder : Number
   },
   data: function() {
     return {
-      isOpen: false,
       active: false
     };
   },
   computed: {
+  	...mapGetters(MODULE_NEWS_GROUP_MODAL, [
+  		'isOpen'
+  	]),
+
+  	activeStyle: (app) => {
+  		if (app.isOpen && app.active) {
+  			return app.$options.setting.activeStyle
+  		}
+
+  		return '';
+  	}
   },
   methods: {
   	_showAction() {
@@ -47,6 +51,8 @@ export default {
     	this.active = false;
     }
   },
-  txtMsg: { }
+  setting: { 
+  	activeStyle: 'background-color:#93d3a2'
+  }
 };
 </script>

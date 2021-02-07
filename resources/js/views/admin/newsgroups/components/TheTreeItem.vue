@@ -1,6 +1,6 @@
 <template>
   <li>
-  	<Item :name="item.name" :is-folder="isFolder"/>
+  	<Item :group="item" :is-folder="isFolder"/>
   	
     <ul class="nested" v-if="isFolder">
       <TheTreeItem
@@ -23,20 +23,16 @@ export default {
     'Item' : Item
   },
   props: {
-    item: Object
+    item: [Object, Array]
   },
   data: function() {
     return {
-      isOpen: false
     };
   },
   computed: {
-    isFolder: function() {
+    isFolder () {
       return this.item.children && Object.keys(this.item.children).length;
     }
-  },
-  methods: {
-  },
-  txtMsg: { }
+  }
 };
 </script>

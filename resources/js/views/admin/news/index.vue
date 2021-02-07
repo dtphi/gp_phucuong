@@ -90,6 +90,8 @@
     <!-- /.content -->
     
     <InfoAddForm />
+
+    <v-dialog />
   </div>
   <!-- /.content-wrapper -->
 </template>

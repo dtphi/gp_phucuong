@@ -13,7 +13,7 @@
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-user mr-2"></i>
-                  News Groups List
+                  {{$options.setting.title}}
                 </h3>
               </div>
               <!-- /.card-header -->
@@ -33,51 +33,46 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    <FormModal />
+
+    <v-dialog />
   </div>
   <!-- /.content-wrapper -->
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TreeItem from './components/TheTreeItem';
+    import FormModal from 'com@admin/Modal/NewsGroups/AddForm';
+    import {
+      MODULE_NEWS_GROUP,
+    } from 'store@admin/types/module-types';
+    import {
+      ACTION_GET_NEWS_GROUP_LIST,
+    } from 'store@admin/types/action-types';
 
     export default {
-        name: 'Login',
-        components: {Breadcrumb, TreeItem},
+        name: 'NewsGroupsList',
+        components: {Breadcrumb, TreeItem, FormModal},
+        beforeCreate() {
+          this.$store.dispatch(MODULE_NEWS_GROUP+'/'+ ACTION_GET_NEWS_GROUP_LIST);
+        },
         data() {
             return {
-              treeData:{
-                name: "Danh Mục :",
-                children: [
-                  { name: "Ơn gọi linh mục" },
-                  { name: "Dòng tu" },
-                  {
-                    name: "Giáo phận",
-                    children: [
-                      {
-                        name: "Nhà thờ chánh tòa"
-                      },
-                      { name: "Năm thánh" },
-                      { name: "Giám mục" },
-                      {
-                        name: "Giáo hạc - Giáo sứ",
-                        children: [
-                          { name: "Hạt Bến Cát" }, { name: "Hạt Bình Long" }, { name: "Hạt Củ Chi" }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
             };
         },
         computed: {
+          ...mapGetters(MODULE_NEWS_GROUP, ['newsGroups', 'loading']),
           lists () {
-            return this.treeData
+            return this.newsGroups
           }
         },
         methods: {
+        },
+        setting: {
+          title: 'News Groups List'
         }
     };
 </script>

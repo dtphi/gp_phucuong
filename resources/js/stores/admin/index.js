@@ -5,6 +5,7 @@ import auth from './auth';
 import layout from './layout';
 import user from './users';
 import info from './infos';
+import newsgroup from './newsgroups';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -27,6 +28,7 @@ export default new Vuex.Store({
       layout,
       user,
       info,
+      newsgroup
     },
     strict: debug,
     plugins: debug ? [createLogger()] : []
