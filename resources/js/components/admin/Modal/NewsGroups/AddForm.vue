@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-sm-10" v-if="parentInfo">
                       <ValidationProvider name="News Group Name" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="parentInfo.name" type="text" class="form-control" placeholder="News Group Name">
+                        <input v-model="newsGroupAdd.name" type="text" class="form-control" placeholder="News Group Name">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
@@ -84,17 +84,13 @@
             'newsGroup',
             'parentInfo',
             'loading',
-            'updateSuccess'
+            'updateSuccess',
+            'newsGroupAdd'
           ])
         },
         created() {
           this.title = this.$options.setting.AddTitle;
           this.btnSubmitTxt = this.$options.setting.BtnSaveText;
-        },
-        beforeDestroy() {console.log('destroy')
-          if (this.updateSuccess) {
-            this.[ACTION_RELOAD_GET_NEWS_GROUP_LIST](this.updateSuccess);
-          }
         },
         methods: {
           ...mapActions(MODULE_NEWS_GROUP_MODAL, [
@@ -118,13 +114,9 @@
             _self.$refs.observerInfo.validate().then((isValid) => {
               if (isValid) {
                 if (_self.newsGroup) {
-                  _self.[ACTION_UPDATE_NEWS_GROUP]({
-                    name: _self.name
-                  });
+                  _self.[ACTION_UPDATE_NEWS_GROUP](_self.newsGroupAdd);
                 } else {
-                  _self.[ACTION_INSERT_NEWS_GROUP]({
-                    name: _self.name
-                  });
+                  _self.[ACTION_INSERT_NEWS_GROUP](_self.newsGroup);
                 }
               } else {
                 _self.[ACTION_SET_LOADING](false);

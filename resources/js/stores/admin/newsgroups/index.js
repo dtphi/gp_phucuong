@@ -98,7 +98,7 @@ export default {
         },
 
         async [ACTION_DELETE_NEWS_GROUP_BY_ID] ({state, dispatch, commit}) {
-          await apiDeleteInfo(
+          await apiDeleteNewsGroup(
             state.newsGroupDelete,
             (newsGroups) => {
               commit(NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS, true)
@@ -121,15 +121,16 @@ export default {
           );
         },
 
-        [ACTION_RELOAD_GET_NEWS_GROUP_LIST] ({dispatch}, isReload) {
-          if (isReload) {
-            dispatch(ACTION_GET_NEWS_GROUP_LIST);
-          }
-        },
-
         [ACTION_SET_LOADING] ({commit} , isLoading) {
           commit(NEWSGROUPS_SET_LOADING, isLoading);
         },
+
+        [ACTION_RELOAD_GET_NEWS_GROUP_LIST]: {
+          root: true,
+          handler (namespacedContext, payload) { 
+            namespacedContext.dispatch(ACTION_GET_NEWS_GROUP_LIST)
+          }
+        }
     },
 
     modules: {

@@ -121,9 +121,10 @@ export default {
           );
         },
 
-        [ACTION_RELOAD_GET_INFO_LIST] ({dispatch}, isReload) {
-          if (isReload) {
-            dispatch(ACTION_GET_INFO_LIST);
+        [ACTION_RELOAD_GET_INFO_LIST]: {
+          root: true,
+          handler (namespacedContext, payload) { 
+            namespacedContext.dispatch(ACTION_GET_INFO_LIST)
           }
         },
 

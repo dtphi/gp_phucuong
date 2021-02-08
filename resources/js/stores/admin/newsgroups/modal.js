@@ -15,6 +15,8 @@ import {
   NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS,
   NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED,
   NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED,
+  NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED,
+  NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS,
   NEWSGROUPS_MODAL_SET_ERROR 
 } from '../types/mutation-types';
 import {
@@ -25,7 +27,8 @@ import {
   ACTION_CLOSE_MODAL,
   ACTION_IS_OPEN_MODAL,
   ACTION_INSERT_NEWS_GROUP,
-  ACTION_UPDATE_NEWS_GROUP
+  ACTION_UPDATE_NEWS_GROUP,
+  ACTION_RELOAD_GET_NEWS_GROUP_LIST
 } from '../types/action-types';
 
 export default {
@@ -37,12 +40,19 @@ export default {
       styleCss: '',
       newsGroup: null,
       parentInfo: null,
+      newsGroupAdd: {
+      	id: null,
+      	name: ''
+      },
       newsGroupId: 0,
       loading: false,
       updateSuccess: false,
       errors: []
     },
     getters: {
+    	newsGroupAdd(state) {
+    		return state.newsGroupAdd
+    	},
       isOpen(state) {
         return state.isOpen
       },
@@ -110,6 +120,14 @@ export default {
         	state.newsGroupId = payload
         },
 
+        [NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED](state, payload) {
+
+        },
+
+        [NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS](state, payload) {
+        	
+        },
+
         [NEWSGROUPS_MODAL_SET_NEWS_GROUP](state, payload) {
         	if (state.action === 'add') {
         		state.parentInfo = payload
@@ -123,7 +141,7 @@ export default {
         },
 
         [NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS](state, payload) {
-          state.updateSuccess = payload
+          state.updateSuccess = payload;
         },
 
         [NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED](state, payload) {
@@ -163,10 +181,16 @@ export default {
           apiGetNewsGroupById(
             newsGroupId,
             (result) => {
+            	commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS, true)
               commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP, result.data);
 
               dispatch(ACTION_SET_LOADING, false);
               dispatch(ACTION_IS_OPEN_MODAL, true);
+            },
+            (errors) => {
+            	commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED, errors)
+
+              dispatch(ACTION_SET_LOADING, false);
             }
           );
         },
@@ -190,7 +214,8 @@ export default {
             newsGroup,
             (result) => {
               commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, true);
-              
+
+              dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {root:true});
               dispatch(ACTION_SET_LOADING, false);
               dispatch(ACTION_CLOSE_MODAL);
             },
@@ -207,11 +232,12 @@ export default {
             (result) => {
               commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS, true);
               
+              dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {root:true});
               dispatch(ACTION_SET_LOADING, false);
               dispatch(ACTION_CLOSE_MODAL);
             },
             (errors) => {
-              commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED, false)
+              commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED, errors)
 
               dispatch(ACTION_SET_LOADING, false);
             }

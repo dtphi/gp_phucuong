@@ -61,16 +61,13 @@
 <script>
     import { mapGetters, mapActions } from 'vuex';
     import {
-      MODULE_INFO,
       MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
     import {
       ACTION_CLOSE_MODAL,
       ACTION_SET_LOADING,
       ACTION_INSERT_INFO,
-      ACTION_UPDATE_INFO,
-      ACTION_GET_INFO_LIST,
-      ACTION_RELOAD_GET_INFO_LIST,
+      ACTION_UPDATE_INFO
     } from 'store@admin/types/action-types';
 
     export default {
@@ -105,21 +102,13 @@
             this.email = this.info.email;
           }
         },
-        beforeDestroy() {
-          if (this.updateSuccess) {
-            this.[ACTION_RELOAD_GET_INFO_LIST](this.updateSuccess);
-          }
-        },
+
         methods: {
           ...mapActions(MODULE_INFO_MODAL, [
             ACTION_CLOSE_MODAL,
             ACTION_SET_LOADING,
             ACTION_INSERT_INFO,
             ACTION_UPDATE_INFO
-          ]),
-          ...mapActions(MODULE_INFO, [
-            ACTION_GET_INFO_LIST, 
-            ACTION_RELOAD_GET_INFO_LIST
           ]),
 
           _close() {

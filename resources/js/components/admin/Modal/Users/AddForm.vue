@@ -97,11 +97,6 @@
             this.email = this.user.email;
           }
         },
-        beforeDestroy() {
-          if (this.updateSuccess) {
-            this.reloadGetUserList(this.updateSuccess);
-          }
-        },
         methods: {
           ...mapActions(MODULE_USER_MODAL, [
             'closeModal',
@@ -109,7 +104,6 @@
             'insertUser',
             'updateUser',
           ]),
-          ...mapActions(MODULE_USER, ['getUserList', 'reloadGetUserList']),
           async submitUser() {
             const _self = this;
             _self.setLoading(true);

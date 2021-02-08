@@ -25,7 +25,8 @@ import {
   ACTION_CLOSE_MODAL,
   ACTION_IS_OPEN_MODAL,
   ACTION_INSERT_USER,
-  ACTION_UPDATE_USER
+  ACTION_UPDATE_USER,
+  ACTION_RELOAD_GET_USER_LIST
 } from '../types/action-types';
 
 export default {
@@ -174,6 +175,7 @@ export default {
             (result) => {
               commit(USERS_MODAL_INSERT_USER_SUCCESS, true);
               
+              dispatch(ACTION_RELOAD_GET_USER_LIST, null, {root: true});
               dispatch(ACTION_SET_LOADING, false);
               dispatch(ACTION_CLOSE_MODAL);
             },
@@ -190,6 +192,7 @@ export default {
             (result) => {
               commit(USERS_MODAL_UPDATE_USER_SUCCESS, true);
               
+              dispatch(ACTION_RELOAD_GET_USER_LIST, null, {root: true});
               dispatch(ACTION_SET_LOADING, false);
               dispatch(ACTION_CLOSE_MODAL);
             },
