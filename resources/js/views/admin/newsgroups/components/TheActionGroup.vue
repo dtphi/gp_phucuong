@@ -1,21 +1,27 @@
 <template>
   <div>
     <span class="mb-1" @click="_showModal()">
-    	<font-awesome-layers class="fa-1x" style="background:#FFF">
-    	<font-awesome-icon icon="plus"  size="xs" />
-    	</font-awesome-layers>
+      <font-awesome-layers class="fa-1x" style="background:#FFF">
+      <font-awesome-icon icon="plus"  size="xs" />
+      </font-awesome-layers>
     </span>
-    <span class="mb-1" @click="_showModalEdit()">
-    	<font-awesome-layers class="fa-1x" style="background:#FFF">
-    	<font-awesome-icon icon="edit"  size="xs" />
-    	</font-awesome-layers>
-    </span>
-  	<span class="mb-1" @click="_showConfirm()">
-  		<font-awesome-layers class="fa-1x" style="background:#FFF">
-			  <font-awesome-icon icon="circle" style="color:Tomato" />
-			  <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-6" />
-			</font-awesome-layers>
-  	</span>
+    
+    <transition name="action_show" v-if="!isActionShow">
+      <span class="mb-1" @click="_showModalEdit()">
+      	<font-awesome-layers class="fa-1x" style="background:#FFF">
+      	<font-awesome-icon icon="edit"  size="xs" />
+      	</font-awesome-layers>
+      </span>
+    </transition>
+
+    <transition name="action_show" v-if="!isActionShow">
+    	<span class="mb-1" @click="_showConfirm()">
+    		<font-awesome-layers class="fa-1x" style="background:#FFF">
+  			  <font-awesome-icon icon="circle" style="color:Tomato" />
+  			  <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-6" />
+  			</font-awesome-layers>
+    	</span>
+    </transition>
 	</div>
 </template>
 
@@ -35,6 +41,7 @@
 export default {
   name: 'TheActionGroup',
   props: {
+    isActionShow: 0,
   	currentGroup: [Object, Array]
   },
   data: function() {
@@ -67,7 +74,8 @@ export default {
     _showModal() {
         this.[ACTION_SHOW_MODAL]({
         	action:'add', 
-        	groupId:this.currentGroup.id
+        	groupId:this.currentGroup.id,
+          itemRoot: this.isActionShow
       });
     },
 

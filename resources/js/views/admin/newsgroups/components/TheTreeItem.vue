@@ -1,6 +1,6 @@
 <template>
   <li>
-  	<TheItem :group="item" :is-folder="isFolder"/>
+  	<TheItem :is-item-root="isRoot" :group="item" :is-folder="isFolder"/>
   	
     <ul class="nested" v-if="isFolder">
       <TheTreeItem
@@ -23,6 +23,7 @@ export default {
     'TheItem' : TheItem
   },
   props: {
+    isRoot: 0,
     item: [Object, Array]
   },
   data: function() {

@@ -13,7 +13,19 @@
 export default {
   name: 'TheGroupInfo',
   props: {
-    parentInfo: Object
+    parentInfo: {
+      type: Object,
+      default: {
+        id: 0,
+        name: ''
+      },
+      /*validator: function(value) {
+        var id = (value.id && Number.isInteger(value.id));
+        var name = (value.name && value.name.length);
+
+        return (id && name);
+      }*/
+    }
   }
 };
 </script>

@@ -5,6 +5,7 @@
     <i v-if="isFolder" class="fas fa-plus"></i>
     <span>{{ group.name }}</span>
     <BtnGroupAction 
+      :is-action-show="isItemRoot"
       :current-group="group" 
       v-show="active" 
     	class="float-sm-right center" 
@@ -23,6 +24,7 @@ export default {
   name: 'TheItem',
   components: {BtnGroupAction},
   props: {
+    isItemRoot: 0,
   	group: [Object, Array],
     isFolder : Number
   },

@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" @click="_close">Close</button>
+              <button type="button" class="btn btn-default" @click="_close">{{$options.setting.btnCancelTxt}}</button>
               <button type="button" class="btn btn-success" @click="_submitInfo">{{btnSubmitTxt}}</button>
             </div>
           </div>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex';
+    import { mapState, mapGetters, mapActions } from 'vuex';
     import {
       MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
@@ -77,29 +77,22 @@
               name: '',
               email: '',
               password: '',
-              fullPage: false,
-              title: '',
-              btnSubmitTxt: ''
+              fullPage: false
             };
         },
         computed: {
+          ...mapState(MODULE_INFO_MODAL, {
+            formAction: state => state.action
+          }),
           ...mapGetters(MODULE_INFO_MODAL, [
             'classShow',
             'styleCss',
             'info',
-            'loading',
-            'updateSuccess'
+            'loading'
           ]),
-        },
-        created() {
-          this.title = this.$options.setting.AddTitle;
-          this.btnSubmitTxt = this.$options.setting.BtnSaveText;
-          if (this.info) {
-            this.title = this.$options.setting.EditTitle;
-            this.btnSubmitTxt = this.$options.setting.BtnUpdateText;
 
-            this.name = this.info.name;
-            this.email = this.info.email;
+          getSetForm() {console.log('getSetForm')
+            return this.formAction?this.$options.setting[this.formAction]:this.$options.setting.add
           }
         },
 
@@ -142,10 +135,15 @@
           }
         },
         setting: {
-          EditTitle: 'Edit News',
-          AddTitle: 'Add News',
-          BtnSaveText: 'Save',
-          BtnUpdateText: 'Update'
+          btnCancelTxt: 'Close',
+          add: {
+            title: 'Add News',
+            btnSubmitTxt: 'Save'
+          },
+          edit: {
+            title: 'Edit News',
+            btnSubmitTxt: 'Update'
+          }
         }
     };
 </script>

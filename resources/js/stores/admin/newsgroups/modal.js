@@ -30,6 +30,10 @@ import {
   ACTION_UPDATE_NEWS_GROUP,
   ACTION_RELOAD_GET_NEWS_GROUP_LIST
 } from '../types/action-types';
+const NEWS_GROUP = {
+  id: null,
+  name: ''
+}
 
 export default {
     namespaced: true,
@@ -38,13 +42,11 @@ export default {
       action: null,
       classShow: 'modal fade',
       styleCss: '',
-      newsGroup: null,
-      parentInfo: null,
-      newsGroupAdd: {
-      	id: null,
-      	name: ''
-      },
+      newsGroup: NEWS_GROUP,
+      parentInfo: NEWS_GROUP,
+      newsGroupAdd: NEWS_GROUP,
       newsGroupId: 0,
+      itemRoot: 0,
       loading: false,
       updateSuccess: false,
       errors: []
@@ -91,24 +93,24 @@ export default {
     			state.classShow = 'modal fade show';
     			state.styleCss = 'display:block';
           state.updateSuccess = false;
-          state.newsGroup = null;
-      		state.parentInfo = null;
+          state.newsGroup = NEWS_GROUP;
+      		state.parentInfo = NEWS_GROUP;
       		state.newsGroupId = 0;
     		},
 
     		[NEWSGROUPS_MODAL_SET_CLOSE_MODAL](state) {
     			if (state.action === 'add') {
-    				state.action = null;
+    				state.action = 'close_modal';
 	    			state.classShow = 'modal fade';
 	    			state.styleCss = 'display:none';
-	    			state.parentInfo = null;
+	    			state.parentInfo = NEWS_GROUP;
       			state.newsGroupId = 0;
     			} else {
-    				state.action = null;
+    				state.action = 'close_modal';
 	    			state.classShow = 'modal fade';
 	    			state.styleCss = 'display:none';
 	    			state.newsGroupId = 0;
-	    			state.newsGroup = null;
+	    			state.newsGroup = NEWS_GROUP;
     			}
     		},
 
@@ -162,7 +164,8 @@ export default {
     },
 
     actions: {
-        [ACTION_SHOW_MODAL] ({ dispatch, commit }, payload) {
+        [ACTION_SHOW_MODAL] ({ state, dispatch, commit }, payload) {
+          state.itemRoot = payload.itemRoot;
         	commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_ID, payload.groupId);
         	commit(NEWSGROUPS_MODAL_SET_OPEN_MODAL, payload.action);
 

@@ -26,5 +26,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
+
+        Route::apiResource('news-groups', 'NewsGroupController');
     });
 

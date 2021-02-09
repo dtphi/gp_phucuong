@@ -53,8 +53,7 @@ extend('minLength', {
 export default {
   data: () => {
       return {
-        isToggle: false,
-        achivementAddLists: []
+        isToggle: false
       }
   },
   methods: {
@@ -73,9 +72,9 @@ export default {
             return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
         });
     },
-    joinDivistionNameArray(division) {
-      if(division.length) {
-        let result = division.map(val => val.name);
+    joinNameArray(nameArray) {
+      if(nameArray.length) {
+        let result = nameArray.map(val => val.name);
         return result.join(', ')
       } else {
         return '';
@@ -129,7 +128,7 @@ export default {
 
       return [this.$options.css.showClass, this.$options.css.notShowClass];
     },
-    addSelectAchivement(data) {
+    addSelect(data) {
       data['index'] = this.generateUUID();
       data['id'] = data['index'];
 

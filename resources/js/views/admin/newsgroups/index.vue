@@ -21,8 +21,9 @@
                 <div class="treeview-animated mx-4 my-4">
                   <ul class="treeview-animated-list">
                     <TreeItem
-                        class="treeview-animated-items"
-                        :item="lists" />
+                      :is-root="rootKey"
+                      class="treeview-animated-items"
+                      :item="_lists.root" />
                   </ul>
                 </div>
               </div>
@@ -42,7 +43,7 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex';
+    import { mapState, mapGetters, mapActions } from 'vuex';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TreeItem from './components/TheTreeItem';
     import FormModal from 'com@admin/Modal/NewsGroups/AddForm';
@@ -62,13 +63,22 @@
         },
         data() {
             return {
+              rootKey: 1
             };
         },
         computed: {
-          ...mapGetters(MODULE_NEWS_GROUP, ['newsGroups', 'loading']),
+          ...mapState(MODULE_NEWS_GROUP,
+          [
+            'newsGroups'
+          ]),
+          ...mapGetters(MODULE_NEWS_GROUP, ['loading']),
           ...mapGetters(MODULE_NEWS_GROUP_MODAL, ['isOpen']),
-          lists () {
-            return this.newsGroups
+          _lists () {
+            let rootTree = {...this.newsGroups};
+
+            return {
+              root: rootTree
+            }
           }
         },
         methods: {
