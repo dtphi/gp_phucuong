@@ -1,6 +1,6 @@
 <template>
   <transition name="modal">
-    <div :class="classShow" :style="styleCss" data-keyboard="false" data-backdrop="static">
+    <div :class="classShow" :style="styleCss" data-keyboard="false">
       <div class="modal-dialog modal-lg">
         <ValidationObserver ref="observerInfo" @submit.prevent="_submitInfo">
           <div class="modal-content">
@@ -80,7 +80,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'TheModalAddForm',
+        name: 'ModalAddForm',
         components: {NewsGroupCurrent},
         data() {
             return {

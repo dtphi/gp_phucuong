@@ -29,19 +29,21 @@ import {
   ACTION_RELOAD_GET_USER_LIST
 } from '../types/action-types';
 
+const INIT_STATE = {
+  isOpen: false,
+  action: null,
+  classShow: 'modal fade',
+  styleCss: '',
+  user: null,
+  userId: 0,
+  loading: false,
+  updateSuccess: false,
+  errors: []
+}
+
 export default {
     namespaced: true,
-    state: {
-      isOpen: false,
-      action: null,
-      classShow: 'modal fade',
-      styleCss: '',
-      user: null,
-      userId: 0,
-      loading: false,
-      updateSuccess: false,
-      errors: []
-    },
+    state: Object.assign({}, INIT_STATE),
     getters: {
       isOpen(state) {
         return state.isOpen
@@ -78,17 +80,11 @@ export default {
     		},
 
     		[USERS_MODAL_SET_CLOSE_MODAL](state) {
-    			if (state.action === 'add') {
-    				state.action = null;
-	    			state.classShow = 'modal fade';
-	    			state.styleCss = 'display:none';
-    			} else {
-    				state.action = null;
-	    			state.classShow = 'modal fade';
-	    			state.styleCss = 'display:none';
-	    			state.userId = 0;
-	    			state.user = null;
-    			}
+          state.action = null;
+          state.classShow = 'modal fade';
+          state.styleCss = 'display:none';
+          state.userId = 0;
+          state.user = null;
     		},
 
         [USERS_MODAL_SET_IS_OPEN_MODAL](state, payload) {

@@ -25,19 +25,14 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Created from</th>
-                      <th>Last login</th>
                       <th>Key</th>
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <Item v-for="(item,index) in userList" 
-                    :user-id="index" 
-                    :name="item.name"
-                    :email="item.email"
-                    :created-at="item.createdAt"
-                    :key="item.id"
-                    />
+                  <tbody v-if="_notEmpty">
+                    <Item v-for="(item,index) in _userList" 
+                      :user="item"
+                      :key="item.id"/>
                   </tbody>
                 </table>
               </div>
@@ -53,21 +48,20 @@
     </section>
     <!-- /.content -->
     
-    <UserForm v-if="isOpen"/>
+    <UserForm />
     <v-dialog />
   </div>
   <!-- /.content-wrapper -->
 </template>
 
 <script>
-    import { mapGetters,mapActions } from 'vuex';
+    import { mapState, mapGetters, mapActions } from 'vuex';
     import UserForm from 'com@admin/Modal/Users/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Item from './components/TheItem';
     import BtnAdd from './components/TheBtnAdd';
     import {
-      MODULE_USER,
-      MODULE_USER_MODAL
+      MODULE_USER
     } from 'store@admin/types/module-types';
     import {
       ACTION_GET_USER_LIST,
@@ -77,20 +71,31 @@
     export default {
         name: 'UserList',
         beforeCreate() {
-          this.$store.dispatch(MODULE_USER+'/'+ ACTION_GET_USER_LIST);
+          this.$store.dispatch(MODULE_USER + '/' + ACTION_GET_USER_LIST);
         },
-        components: {Breadcrumb, UserForm, Item, BtnAdd},
+        components: {
+          Breadcrumb, 
+          UserForm, 
+          Item, 
+          BtnAdd
+        },
         data() {
           return {
             fullPage: true
           };
         },
         computed: {
-          ...mapGetters(MODULE_USER, ['users', 'loading']),
-          ...mapGetters(MODULE_USER_MODAL, ['isOpen']),
+          ...mapState(MODULE_USER, [
+            'users', 
+            'loading'
+          ]),
 
-          userList () {
+          _userList () {
             return this.users;
+          },
+
+          _notEmpty () {
+            return this.users && Object.keys(this.users).length;
           }
         },
         methods: {

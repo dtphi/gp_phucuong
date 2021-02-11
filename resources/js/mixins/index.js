@@ -1,5 +1,5 @@
 import { extend } from 'vee-validate';
-import { required, max, min } from 'vee-validate/dist/rules';
+import { required, max, min, email } from 'vee-validate/dist/rules';
 
 extend('url', {
   validate: (value) => {
@@ -23,7 +23,10 @@ extend('extPdf', {
     return false;
   }
 });
-
+extend('email', {
+  ...email,
+  message: 'This field must be a valid email'
+});
 extend('required', {
   ...required,
   message: 'This {_field_} is required'

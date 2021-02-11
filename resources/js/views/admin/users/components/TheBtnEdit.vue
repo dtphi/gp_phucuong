@@ -1,5 +1,7 @@
 <template>
-    <button type="button" class="btn btn-default mb-3" @click="_showModal()"><font-awesome-icon icon="edit"  size="xs" /></button>
+    <button type="button" class="btn btn-default mb-3" @click="_showModal()">
+        <font-awesome-icon icon="edit"  size="xs" />
+    </button>
 </template>
 
 <script>
@@ -15,10 +17,6 @@
         name: 'TheButtonEdit',
         props: {
             userId: { type: Number, dafault: 0 }
-        },
-        data() {
-            return {
-            };
         },
         methods: {
             ...mapActions(MODULE_USER_MODAL, [
