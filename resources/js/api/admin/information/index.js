@@ -1,3 +1,7 @@
+import {
+  API_INFOMATIONS_RESOURCE
+} from 'store@admin/types/api-paths';
+
 /**
  * Mocking client-server processing
  */
@@ -13,7 +17,7 @@ const _infos = [
  ]
             
 export const apiGetInfoById = (infoId, resolve, errResole) => {
-  axios.get('/api/user')
+  axios.get(API_INFOMATIONS_RESOURCE + '/' + infoId)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -29,7 +33,7 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
 }
 
 export const apiGetInfos = (resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.get(API_INFOMATIONS_RESOURCE)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
@@ -43,7 +47,7 @@ export const apiGetInfos = (resolve, errResole) => {
 }
 
 export const apiUpdateInfo = (info, resolve, errResole) => {
-  return axios.get('/api/info')
+  return axios.put(API_INFOMATIONS_RESOURCE + '/' + info.id, info)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
@@ -59,7 +63,7 @@ export const apiUpdateInfo = (info, resolve, errResole) => {
 }
 
 export const apiInsertInfo = (info, resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.post(API_INFOMATIONS_RESOURCE, info)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
@@ -75,7 +79,7 @@ export const apiInsertInfo = (info, resolve, errResole) => {
 }
 
 export const apiDeleteInfo = (infoId, resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.delete(API_INFOMATIONS_RESOURCE + '/' + infoId)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {

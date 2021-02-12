@@ -13,6 +13,8 @@ import {
   INFOS_DELETE_INFO_BY_ID_FAILED,
   INFOS_SET_INFO_LIST,
   INFOS_INFO_DELETE_BY_ID,
+  INFOS_SET_INFO_DELETE_BY_ID_FAILED,
+  INFOS_SET_INFO_DELETE_BY_ID_SUCCESS,
   INFOS_SET_ERROR 
 } from '../types/mutation-types';
 import {
@@ -57,6 +59,16 @@ export default {
           state.infoDelete = payload
         },
 
+        [INFOS_SET_INFO_DELETE_BY_ID_FAILED](state, payload) {
+          state.isDelete = false;
+          state.errors = payload;
+        },
+
+        [INFOS_SET_INFO_DELETE_BY_ID_SUCCESS](state, payload) {
+          state.isDelete = true;
+          state.errors = payload;
+        },
+
         [INFOS_GET_INFO_LIST_SUCCESS](state, payload) {
           state.isList = payload
         },
@@ -70,7 +82,8 @@ export default {
         },
 
         [INFOS_DELETE_INFO_BY_ID_FAILED](state, payload) {
-          state.isDelete = payload
+          state.isDelete = false;
+          state.errors = payload;
         },
 
         [INFOS_SET_LOADING](state, payload) {
@@ -99,14 +112,14 @@ export default {
 
         async [ACTION_DELETE_INFO_BY_ID] ({state, dispatch, commit}) {
           await apiDeleteInfo(
-            state.infoDelete,
+            state.infoDelete.id,
             (infos) => {
               commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
               dispatch(ACTION_GET_INFO_LIST)
               commit(INFOS_INFO_DELETE_BY_ID, null)
             },
             (errors) => {
-              commit(INFOS_DELETE_INFO_BY_ID_FAILED, false);
+              commit(INFOS_DELETE_INFO_BY_ID_FAILED, Object.values(errors));
             }
           );
         },
@@ -116,7 +129,10 @@ export default {
             infoId,
             (result) => {
               commit(INFOS_INFO_DELETE_BY_ID, result.data);
-              commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, false);
+              commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, false);
+            },
+            (errors) => {
+              commit(INFOS_SET_INFO_DELETE_BY_ID_FAILED, Object.values(errors));
             }
           );
         },

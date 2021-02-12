@@ -108,19 +108,21 @@
             if (this.formAction) {
               setting = this.$options.setting[this.formAction];
 
-              if (this.formAction === 'edit') this.groupData = {...this.newsGroup};
+              if (this._isEditAction()) this.groupData = {...this.newsGroup};
 
-              if (this.formAction === 'add') this.groupData = {...this.newsGroupAdd};
+              if (this._isAddAction()) this.groupData = {...this.newsGroupAdd};
             }
 
             return setting;
           }
         },
+
         updated() {
-          if (this.formAction == 'close_modal') {
+          if (this._isModalClose()) {
             this._resetModalClose()
           }
         },
+        
         methods: {
           ...mapActions(MODULE_NEWS_GROUP_MODAL, [
             ACTION_CLOSE_MODAL,
@@ -144,12 +146,24 @@
             this.[ACTION_CLOSE_MODAL]()
           },
 
+          _isAddAction() {
+            return (this.formAction === this.$options.setting.add.actionName)
+          },
+
+          _isEditAction() {
+            return (this.formAction === this.$options.setting.edit.actionName)
+          },
+
+          _isModalClose() {
+            return (this.formAction === this.$options.setting.closeModal.actionName)
+          },
+
           async _submitInfo() {
             const _self = this;
             _self.[ACTION_SET_LOADING](true);
             await _self.$refs.observerNewsGroup.validate().then((isValid) => {
               if (isValid) {
-                if (_self.formAction === 'edit') {
+                if (_self._isEditAction()) {
                   _self.[ACTION_UPDATE_NEWS_GROUP](_self.newsGroup);
                 } else {
                   _self.[ACTION_INSERT_NEWS_GROUP](_self.newsGroupAdd);
@@ -163,18 +177,21 @@
         setting: {
           btnCancelTxt: 'Close',
           add: {
+            actionName: 'add',
             isParentShow: true,
             isAddFrom: true,
             title: 'Add News Group',
             btnSubmitTxt: 'Save'
           },
           edit: {
+            actionName: 'edit',
             isParentShow: false,
             isAddFrom: false,
             title: 'Edit News Group',
             btnSubmitTxt: 'Update'
           },
-          close_modal: {
+          closeModal: {
+            actionName: 'close_modal',
             isParentShow: false,
             isAddFrom: false,
             title: '',

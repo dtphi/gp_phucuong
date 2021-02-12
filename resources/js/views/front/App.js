@@ -21,7 +21,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 Vue.component('LoadingOverLay', LoadingOverLay);
 
 /*Add mixin global*/
-import utilMixin from '@app/mixins/admin';
+import utilMixin from '@app/mixins/front';
 Vue.mixin(utilMixin);
 
 /*Add vue js modal and dialog*/

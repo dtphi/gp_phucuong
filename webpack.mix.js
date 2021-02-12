@@ -11,6 +11,7 @@ require('laravel-mix-alias');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.alias('@app', '/resources/js');
 mix.alias('com@front', '/resources/js/components/front');
 mix.alias('store@front', '/resources/js/stores/front');
 mix.alias('v@front', '/resources/js/views/front');

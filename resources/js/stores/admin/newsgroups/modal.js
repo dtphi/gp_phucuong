@@ -99,7 +99,7 @@ export default {
     		},
 
     		[NEWSGROUPS_MODAL_SET_CLOSE_MODAL](state) {
-          state.action = 'close_modal';
+          state.action = 'closeModal';
           state.classShow = 'modal fade';
           state.styleCss = 'display:none';
           state.parentInfo = NEWS_GROUP;

@@ -6,3 +6,4 @@ export const API_AUTH_USER = '/api/user';
 
 export const API_USERS_RESOURCE = '/api/users';
 export const API_NEWS_GROUPS_RESOURCE = '/api/news-groups';
+export const API_INFOMATIONS_RESOURCE = '/api/news';

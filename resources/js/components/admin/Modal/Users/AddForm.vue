@@ -99,7 +99,7 @@
             if (this.formAction) {
               setting = this.$options.setting[this.formAction];
 
-              if (this.formAction === 'close_modal') {
+              if (this._isModalClose()) {
                 this.userData = {}
               } else {
                 this.userData = {...this.user}
@@ -110,7 +110,7 @@
           }
         },
         updated() {
-          if (this.formAction == 'close_modal') {
+          if (this._isModalClose()) {
             this._resetModalClose()
           }
         },
@@ -131,7 +131,19 @@
           },
 
           _isShowBody() {
-            return (this.formAction === 'add' || this.formAction === 'edit')
+            return (this._isAddAction() || this._isEditAction())
+          },
+
+          _isAddAction() {
+            return (this.formAction === this.$options.setting.add.actionName)
+          },
+
+          _isEditAction() {
+            return (this.formAction === this.$options.setting.edit.actionName)
+          },
+
+          _isModalClose() {
+            return (this.formAction === this.$options.setting.closeModal.actionName)
           },
 
           _close() {
@@ -143,7 +155,7 @@
             _self.setLoading(true);
             _self.$refs.observerUser.validate().then((isValid) => {
               if (isValid) {
-                if (_self.user) {
+                if (_self._isEditAction()) {
                   _self.[ACTION_UPDATE_USER](_self.userData)
                 } else {
                   _self.[ACTION_INSERT_USER](_self.userData)
@@ -171,7 +183,7 @@
             title: 'Edit User',
             btnSubmitTxt: 'Update'
           },
-          close_modal: {
+          closeModal: {
             actionName: 'close_modal',
             isAddFrom: false,
             title: '',

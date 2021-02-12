@@ -137,12 +137,22 @@
         setting: {
           btnCancelTxt: 'Close',
           add: {
+            actionName: 'add',
+            isAddFrom: true,
             title: 'Add News',
             btnSubmitTxt: 'Save'
           },
           edit: {
+            actionName: 'edit',
+            isAddFrom: false,
             title: 'Edit News',
             btnSubmitTxt: 'Update'
+          },
+          closeModal: {
+            actionName: 'close_modal',
+            isAddFrom: false,
+            title: '',
+            btnSubmitTxt: ''
           }
         }
     };

@@ -7,6 +7,7 @@ import store from 'store@front';
 
 Vue.use(Router);
 window.vue = Vue;
+require('./views/front/App');
 
 const router = new Router({
     history: true,
