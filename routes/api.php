@@ -13,20 +13,23 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::namespace('App\Http\Controllers\Api\Admin')
+define('API_ADMIN_NAMESPACE', 'App\Http\Controllers\Api\Admin');
+
+Route::namespace(API_ADMIN_NAMESPACE)
     ->middleware('web')
     ->group(function () {
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout');
 	});
 
-Route::namespace('App\Http\Controllers\Api\Admin')
+Route::namespace(API_ADMIN_NAMESPACE)
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
 
+        Route::apiResource('users', 'AdminController');
         Route::apiResource('news-groups', 'NewsGroupController');
     });
 

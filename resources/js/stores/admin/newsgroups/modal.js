@@ -99,19 +99,12 @@ export default {
     		},
 
     		[NEWSGROUPS_MODAL_SET_CLOSE_MODAL](state) {
-    			if (state.action === 'add') {
-    				state.action = 'close_modal';
-	    			state.classShow = 'modal fade';
-	    			state.styleCss = 'display:none';
-	    			state.parentInfo = NEWS_GROUP;
-      			state.newsGroupId = 0;
-    			} else {
-    				state.action = 'close_modal';
-	    			state.classShow = 'modal fade';
-	    			state.styleCss = 'display:none';
-	    			state.newsGroupId = 0;
-	    			state.newsGroup = NEWS_GROUP;
-    			}
+          state.action = 'close_modal';
+          state.classShow = 'modal fade';
+          state.styleCss = 'display:none';
+          state.parentInfo = NEWS_GROUP;
+          state.newsGroupId = 0;
+          state.newsGroup = NEWS_GROUP;
     		},
 
         [NEWSGROUPS_MODAL_SET_IS_OPEN_MODAL](state, payload) {

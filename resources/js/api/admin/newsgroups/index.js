@@ -1,3 +1,8 @@
+import {
+  API_NEWS_GROUPS_RESOURCE
+} from 'store@admin/types/api-paths';
+
+
 /**
  * Mocking client-server processing
  */
@@ -45,7 +50,7 @@ const _newsGroups = [
 ]
             
 export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
-  axios.get('/api/user')
+  axios.get(API_NEWS_GROUPS_RESOURCE + '/' + newsGroupId)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -61,7 +66,7 @@ export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
 }
 
 export const apiGetNewsGroups = (resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.get(API_NEWS_GROUPS_RESOURCE)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
@@ -75,7 +80,7 @@ export const apiGetNewsGroups = (resolve, errResole) => {
 }
 
 export const apiUpdateNewsGroup = (newsGroup, resolve, errResole) => {
-  return axios.get('/api/info')
+  return axios.put(API_NEWS_GROUPS_RESOURCE + '/' + newsGroup.id, newsGroup)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
@@ -91,7 +96,7 @@ export const apiUpdateNewsGroup = (newsGroup, resolve, errResole) => {
 }
 
 export const apiInsertNewsGroup = (newsGroup, resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.post(API_NEWS_GROUPS_RESOURCE, newsGroup)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
@@ -107,7 +112,7 @@ export const apiInsertNewsGroup = (newsGroup, resolve, errResole) => {
 }
 
 export const apiDeleteNewsGroup = (newsGroupId, resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.delete(API_NEWS_GROUPS_RESOURCE + '/' + newsGroupId)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {

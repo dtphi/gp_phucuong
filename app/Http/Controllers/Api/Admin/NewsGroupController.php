@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
 use App\Models\NewsGroup;
-use Request;
+use Illuminate\Http\Request;
 
 /**
  * Class NewsGroupController
@@ -67,5 +67,21 @@ class NewsGroupController extends Controller
         }
 
         return $newsGroupTree;
+    }
+
+    public function show(Request $request, $id = null) {
+        return $request->user();
+    }
+
+    public function store (Request $request) {
+        return $request->user();
+    }
+
+    public function update (Request $request, $id = null) {
+        return $request->user();
+    }
+
+    public function destroy (Request $request, $id = null) {
+        return $request->user();
     }
 }

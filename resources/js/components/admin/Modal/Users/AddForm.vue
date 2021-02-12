@@ -7,7 +7,7 @@
             <LoadingOverLay :active.sync="loading" :is-full-page="fullPage" />
             <div class="modal-header">
               <h4 class="modal-title">{{_getSetForm.title}}</h4>
-              <button type="button" class="close" aria-label="Close" @click="_close">
+              <button type="button" class="close" @click="_close">
                 <span aria-hidden="true">
                   <font-awesome-icon icon="times" />
                 </span>
@@ -18,28 +18,28 @@
               <div class="form-horizontal">
                 <div class="card-body" v-if="_isShowBody">
                   <div class="form-group row">
-                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                    <label for="user_name" class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
                     <div class="col-sm-10">
-                      <ValidationProvider name="Name" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="userData.name" type="text" class="form-control" placeholder="Name">
+                      <ValidationProvider name="user_name" rules="required|max:191" v-slot="{ errors }">
+                        <input v-model="userData.name" type="text" class="form-control" :placeholder="$options.setting.nameTxt">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <label for="user_email" class="col-sm-2 col-form-label">{{$options.setting.emailTxt}}</label>
                     <div class="col-sm-10">
-                      <ValidationProvider name="Email" rules="required|email|max:191" v-slot="{ errors }">
-                        <input v-model="userData.email" type="email" class="form-control" placeholder="Email">
+                      <ValidationProvider name="user_email" rules="required|email|max:191" v-slot="{ errors }">
+                        <input v-model="userData.email" type="email" class="form-control" :placeholder="$options.setting.emailTxt">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <label for="user_password" class="col-sm-2 col-form-label">{{$options.setting.passwordTxt}}</label>
                     <div class="col-sm-10">
-                      <ValidationProvider name="Password" rules="required|minLength:8|max:191" v-slot="{ errors }">
-                        <input v-model="userData.password" type="password" class="form-control" placeholder="Password">
+                      <ValidationProvider name="user_password" rules="required|minLength:8|max:191" v-slot="{ errors }">
+                        <input v-model="userData.password" type="password" class="form-control" :placeholder="$options.setting.passwordTxt">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
@@ -48,7 +48,7 @@
               </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" @click="_close">Close</button>
+              <button type="button" class="btn btn-default" @click="_close">{{$options.setting.btnCancelTxt}}</button>
               <button type="button" class="btn btn-success" @click="_submitUser">{{_getSetForm.btnSubmitTxt}}</button>
             </div>
           </div>
@@ -69,7 +69,9 @@
     } from 'store@admin/types/module-types';
     import {
       ACTION_CLOSE_MODAL,
-      ACTION_SET_LOADING
+      ACTION_SET_LOADING,
+      ACTION_INSERT_USER,
+      ACTION_UPDATE_USER
     } from 'store@admin/types/action-types';
 
     export default {
@@ -109,22 +111,26 @@
         },
         updated() {
           if (this.formAction == 'close_modal') {
-            requestAnimationFrame(() => {
-              this.$refs.observerUser.reset();
-              this.$data.userData = {};
-            });
+            this._resetModalClose()
           }
         },
         methods: {
           ...mapActions(MODULE_USER_MODAL, [
             ACTION_CLOSE_MODAL,
             ACTION_SET_LOADING,
-            'insertUser',
-            'updateUser',
+            ACTION_INSERT_USER,
+            ACTION_UPDATE_USER
           ]),
 
+          async _resetModalClose() {
+            this.$data.userData = {};
+            requestAnimationFrame(() => {
+              this.$refs.observerUser.reset()
+              this.$refs.observer.reset()
+            });
+          },
+
           _isShowBody() {
-            console.log('setting', this.formAction)
             return (this.formAction === 'add' || this.formAction === 'edit')
           },
 
@@ -138,9 +144,9 @@
             _self.$refs.observerUser.validate().then((isValid) => {
               if (isValid) {
                 if (_self.user) {
-                  _self.updateUser(_self.userData)
+                  _self.[ACTION_UPDATE_USER](_self.userData)
                 } else {
-                  _self.insertUser(_self.userData)
+                  _self.[ACTION_INSERT_USER](_self.userData)
                 }
               } else {
                 _self.setLoading(false)
@@ -150,6 +156,9 @@
         },
         setting: {
           btnCancelTxt: 'Close',
+          passwordTxt: 'Password',
+          emailTxt: 'Email',
+          nameTxt: 'Name',
           add: {
             actionName: 'add',
             isAddFrom: true,

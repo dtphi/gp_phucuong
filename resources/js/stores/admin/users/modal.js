@@ -9,6 +9,7 @@ import {
   USERS_MODAL_SET_CLOSE_MODAL, 
   USERS_MODAL_SET_IS_OPEN_MODAL,
   USERS_MODAL_SET_USER_ID,
+  USERS_MODAL_SET_USER_ID_FAILED,
   USERS_MODAL_SET_USER,
   USERS_MODAL_SET_LOADING,
   USERS_MODAL_INSERT_USER_SUCCESS,
@@ -95,6 +96,10 @@ export default {
         	state.userId = payload
         },
 
+        [USERS_MODAL_SET_USER_ID_FAILED](state, payload) {
+          state.errors = payload
+        },
+
         [USERS_MODAL_SET_USER](state, payload) {
         	state.user = payload
         },
@@ -125,8 +130,8 @@ export default {
     },
 
     actions: {
-        [ACTION_SHOW_MODAL] ({ dispatch, commit }, actionName) {
-        	commit(USERS_MODAL_SET_OPEN_MODAL, actionName);
+        [ACTION_SHOW_MODAL] ({ dispatch, commit }, payload) {
+        	commit(USERS_MODAL_SET_OPEN_MODAL, payload.action);
 
         	dispatch(ACTION_IS_OPEN_MODAL, true);
         },
@@ -147,6 +152,11 @@ export default {
 
               dispatch(ACTION_SET_LOADING, false);
               dispatch(ACTION_IS_OPEN_MODAL, true);
+            },
+            (errors) => {
+              commit(USERS_MODAL_SET_USER_ID_FAILED, Object.values(errors))
+
+              dispatch(ACTION_SET_LOADING, false);
             }
           );
         },
@@ -184,7 +194,8 @@ export default {
         },
 
         [ACTION_UPDATE_USER] ({ dispatch, commit }, user) {
-          apiUpdateUser(user,
+          apiUpdateUser(
+            user,
             (result) => {
               commit(USERS_MODAL_UPDATE_USER_SUCCESS, true);
               

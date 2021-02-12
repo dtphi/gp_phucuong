@@ -2,7 +2,7 @@
   <transition name="modal">
     <div :class="classShow" :style="styleCss" data-keyboard="false">
       <div class="modal-dialog modal-lg">
-        <ValidationObserver ref="observerInfo" @submit.prevent="_submitInfo">
+        <ValidationObserver ref="observerNewsGroup" @submit.prevent="_submitInfo">
           <div class="modal-content">
             <LoadingOverLay :active.sync="loading" :is-full-page="fullPage" />
             <div class="modal-header">
@@ -118,9 +118,7 @@
         },
         updated() {
           if (this.formAction == 'close_modal') {
-            requestAnimationFrame(() => {
-              this.$refs.observerInfo.reset()
-            });
+            this._resetModalClose()
           }
         },
         methods: {
@@ -135,6 +133,13 @@
             ACTION_RELOAD_GET_NEWS_GROUP_LIST
           ]),
 
+          async _resetModalClose() {
+            this.$data.groupData = null;
+            requestAnimationFrame(() => {
+              this.$refs.observerNewsGroup.reset()
+            });
+          },
+
           _close() {
             this.[ACTION_CLOSE_MODAL]()
           },
@@ -142,12 +147,12 @@
           async _submitInfo() {
             const _self = this;
             _self.[ACTION_SET_LOADING](true);
-            await _self.$refs.observerInfo.validate().then((isValid) => {
+            await _self.$refs.observerNewsGroup.validate().then((isValid) => {
               if (isValid) {
-                if (_self.newsGroup) {
-                  _self.[ACTION_UPDATE_NEWS_GROUP](_self.newsGroupAdd);
+                if (_self.formAction === 'edit') {
+                  _self.[ACTION_UPDATE_NEWS_GROUP](_self.newsGroup);
                 } else {
-                  _self.[ACTION_INSERT_NEWS_GROUP](_self.newsGroup);
+                  _self.[ACTION_INSERT_NEWS_GROUP](_self.newsGroupAdd);
                 }
               } else {
                 _self.[ACTION_SET_LOADING](false);

@@ -1,3 +1,7 @@
+import {
+  API_USERS_RESOURCE
+} from 'store@admin/types/api-paths';
+
 /**
  * Mocking client-server processing
  */
@@ -9,23 +13,24 @@ const _users = [
             ]
             
 export const apiGetUserById = (userId, resolve, errResole) => {
-  axios.get('/api/user')
+  axios.get(API_USERS_RESOURCE + '/' + userId)
     .then((response) => {
-      console.log(response)
       if (response.status === 200) {
         var json = {};
         json['data'] = _users[userId];
         json['status'] = 1000;
         resolve(json);
       } else {
-        errResole([{status:response.status, msg:'error test'}]);
+        errResole([
+          {status:response.status, msg:'error test'}
+        ]);
       }
     })
     .catch(errors => errResole(errors))
 }
 
 export const apiGetUsers = (resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.get(API_USERS_RESOURCE)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
@@ -39,7 +44,7 @@ export const apiGetUsers = (resolve, errResole) => {
 }
 
 export const apiUpdateUser = (user, resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.put(API_USERS_RESOURCE + '/' + user.id, user)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
@@ -54,24 +59,31 @@ export const apiUpdateUser = (user, resolve, errResole) => {
   .catch(errors => errResole(errors))
 }
 
+/**
+ * [description]
+ * @param  {[type]} user      [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @return {[type]}           [description]
+ */
 export const apiInsertUser = (user, resolve, errResole) => {
-  return axios.get('/api/user')
-  .then((response) => {
-    console.log(response)
-    if (response.status === 200) {
-      var json = {};
-      json['data'] = response.data;
-      json['status'] = 1000;
-      resolve(json);
-    } else {
-      errResole([{status:response.status, msg:'error test'}]);
-    }
-  })
-  .catch(errors => errResole(errors))
+  return axios.post(API_USERS_RESOURCE, user)
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        var json = {};
+        json['data'] = response.data;
+        json['status'] = 1000;
+        resolve(json);
+      } else {
+        errResole([{status:response.status, msg:'error test'}]);
+      }
+    })
+    .catch(errors => errResole(errors))
 }
 
 export const apiDeleteUser = (userId, resolve, errResole) => {
-  return axios.get('/api/user')
+  return axios.delete(API_USERS_RESOURCE + '/' + userId)
   .then((response) => {
     console.log(response)
     if (response.status === 200) {

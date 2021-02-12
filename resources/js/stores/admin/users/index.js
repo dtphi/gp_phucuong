@@ -99,7 +99,7 @@ export default {
 
         async [ACTION_DELETE_USER_BY_ID] ({state, dispatch, commit}) {
           await apiDeleteUser(
-            state.userDelete,
+            state.userDelete.id,
             (users) => {
               commit(USERS_DELETE_USER_BY_ID_SUCCESS, true)
               dispatch(ACTION_GET_USER_LIST)

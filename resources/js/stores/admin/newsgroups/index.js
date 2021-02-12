@@ -99,7 +99,7 @@ export default {
 
         async [ACTION_DELETE_NEWS_GROUP_BY_ID] ({state, dispatch, commit}) {
           await apiDeleteNewsGroup(
-            state.newsGroupDelete,
+            state.newsGroupDelete.id,
             (newsGroups) => {
               commit(NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS, true)
               dispatch(ACTION_GET_NEWS_GROUP_LIST)
