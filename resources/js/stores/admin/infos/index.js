@@ -111,17 +111,19 @@ export default {
         },
 
         async [ACTION_DELETE_INFO_BY_ID] ({state, dispatch, commit}) {
-          await apiDeleteInfo(
-            state.infoDelete.id,
-            (infos) => {
-              commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
-              dispatch(ACTION_GET_INFO_LIST)
-              commit(INFOS_INFO_DELETE_BY_ID, null)
-            },
-            (errors) => {
-              commit(INFOS_DELETE_INFO_BY_ID_FAILED, Object.values(errors));
-            }
-          );
+          if (state.infoDelete) {
+            await apiDeleteInfo(
+              state.infoDelete.id,
+              (infos) => {
+                commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
+                dispatch(ACTION_GET_INFO_LIST)
+                commit(INFOS_INFO_DELETE_BY_ID, null)
+              },
+              (errors) => {
+                commit(INFOS_DELETE_INFO_BY_ID_FAILED, Object.values(errors));
+              }
+            );
+          }
         },
 
         [ACTION_SET_INFO_DELETE_BY_ID] ({commit}, infoId) {

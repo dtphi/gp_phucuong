@@ -21,7 +21,13 @@
     export default {
         name: 'TheButtonDelete',
         props: {
-            infoId: { type: Number, dafault: 0 }
+          infoId: {
+            type: Number,
+            default: 0,
+            validator: function(value) {
+                return (value && Number.isInteger(value))
+            }
+          }
         },
         data() {
             return {

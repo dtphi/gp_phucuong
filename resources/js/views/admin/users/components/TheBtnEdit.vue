@@ -16,7 +16,13 @@
     export default {
         name: 'TheButtonEdit',
         props: {
-            userId: { type: Number, dafault: 0 }
+            userId: {
+                type: Number,
+                default: 0,
+                validator: function(value) {
+                    return (value && Number.isInteger(value))
+                }
+            }
         },
         methods: {
             ...mapActions(MODULE_USER_MODAL, [

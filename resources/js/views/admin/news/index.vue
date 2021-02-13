@@ -28,10 +28,10 @@
                       </div>
                     <div class="row">
                       <div class="col-sm-12">
-                        <table id="example1" class="table table-bordered table-striped tbl-custom dataTable no-footer dtr-inline" role="grid" aria-describedby="example1_info">
+                        <table class="table table-bordered table-striped tbl-custom dataTable no-footer dtr-inline" role="grid" aria-describedby="example1_info">
                           <thead>
                             <tr role="row">
-                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Name</th>
+                              <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Name</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending">Role</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Created by: activate to sort column ascending">Created by</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Key: activate to sort column ascending">Key</th>
@@ -60,13 +60,9 @@
                                   </div>
                                 </td>
                               </tr> -->
-                              <Item v-for="(item,index) in infoList" 
-                                        :user-id="item.id" 
-                                        :name="item.name"
-                                        :email="item.email"
-                                        :created-at="item.createdAt"
-                                        :key="item.id"
-                                        />
+                              <Item v-for="(item,index) in _infoList" 
+                                :info="item"
+                                :key="item.id"/>
                             </tbody>
                           </table>
                         </div>
@@ -83,9 +79,6 @@
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
-      <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-lg">
-        Launch Large Modal
-      </button>
     </section>
     <!-- /.content -->
     
@@ -97,7 +90,7 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
     import Item from './components/TheItem';
 
     import InfoAddForm from 'com@admin/Modal/Infos/AddForm';
@@ -115,20 +108,38 @@
 
     export default {
         name: 'InformationList',
-        components: {Breadcrumb,BtnAdd, Perpage, ListSearch, InfoAddForm,Item, Paginate},
+        components: {
+          Breadcrumb,
+          BtnAdd, 
+          Perpage, 
+          ListSearch, 
+          InfoAddForm,
+          Item, 
+          Paginate
+        },
+
         beforeCreate() {
           this.$store.dispatch(MODULE_INFO+'/'+ ACTION_GET_INFO_LIST);
         },
+
         data() {
           return {
             fullPage: true
-          };
+          }
         },
-        computed: {
-          ...mapGetters(MODULE_INFO, ['infos', 'loading']),
 
-          infoList () {
+        computed: {
+          ...mapState(MODULE_INFO, [
+            'infos', 
+            'loading'
+          ]),
+
+          _infoList () {
             return this.infos;
+          },
+
+          _notEmpty () {
+            return this.infos && Object.keys(this.infos).length
           }
         },
     };

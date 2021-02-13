@@ -1,19 +1,18 @@
 <template>
   <tr>
-    <td>{{infoId}}</td>
-    <td>{{name}}</td>
-    <td>{{email}}</td>
-    <td>{{createdAt}}</td>
-    <td>18/01/2021</td>
+    <td>{{info.id}}</td>
+    <td>{{info.news_name}}</td>
+    <td>{{info.description}}</td>
+    <td>{{info.createdAt}}</td>
     <td>
       <div class="icheck-primary">
-        <input type="checkbox" :id="`key_${infoId}`" name="Key" :value="infoId">
-        <label :for="`key_${infoId}`"></label>
+        <input type="checkbox" :id="`info_id_${info.id}`" :value="info.id">
+        <label :for="`info_id_${info.id}`"></label>
       </div>
     </td>
     <td>
-      <BtnEdit :info-id="infoId"/>
-      <BtnDelete :info-id="infoId"/>
+      <BtnEdit :info-id="info.id"/>
+      <BtnDelete :info-id="info.id"/>
     </td>
   </tr>
 </template>
@@ -25,12 +24,21 @@
 
     export default {
         name: 'TheItemInfo',
-        components: {BtnEdit, BtnDelete},
+        components: {
+            BtnEdit, 
+            BtnDelete
+        },
         props: {
-            infoId: { type: Number, dafault: 0 },
-            name: { type: String, default: '' },
-            email: { type: String, default: '' },
-            createdAt: { type: String, default: '' }
+            info: {
+                type: Object,
+                default: {},
+                validator: function(value) {
+                    var id = (value.id && Number.isInteger(value.id));
+                    var name = (value.news_name && value.news_name.length);
+
+                    return (id && name)
+                }
+            }
         },
         data() {
             return {

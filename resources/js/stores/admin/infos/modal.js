@@ -9,6 +9,8 @@ import {
   INFOS_MODAL_SET_CLOSE_MODAL, 
   INFOS_MODAL_SET_IS_OPEN_MODAL,
   INFOS_MODAL_SET_INFO_ID,
+  INFOS_MODAL_SET_INFO_ID_SUCCESS,
+  INFOS_MODAL_SET_INFO_ID_FAILED,
   INFOS_MODAL_SET_INFO,
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -78,17 +80,11 @@ export default {
     		},
 
     		[INFOS_MODAL_SET_CLOSE_MODAL](state) {
-    			if (state.action === 'add') {
-    				state.action = null;
-	    			state.classShow = 'modal fade';
-	    			state.styleCss = 'display:none';
-    			} else {
-    				state.action = null;
-	    			state.classShow = 'modal fade';
-	    			state.styleCss = 'display:none';
-	    			state.infoId = 0;
-	    			state.info = null;
-    			}
+    			state.action = null;
+          state.classShow = 'modal fade';
+          state.styleCss = 'display:none';
+          state.infoId = 0;
+          state.info = null;
     		},
 
         [INFOS_MODAL_SET_IS_OPEN_MODAL](state, payload) {
@@ -97,6 +93,10 @@ export default {
 
         [INFOS_MODAL_SET_INFO_ID](state, payload) {
         	state.infoId = payload
+        },
+
+        [INFOS_MODAL_SET_INFO_ID_FAILED](state, payload) {
+          state.errors = payload
         },
 
         [INFOS_MODAL_SET_INFO](state, payload) {
@@ -151,6 +151,11 @@ export default {
 
               dispatch(ACTION_SET_LOADING, false);
               dispatch(ACTION_IS_OPEN_MODAL, true);
+            },
+            (errors) => {
+              commit(INFOS_MODAL_SET_INFO_ID_FAILED, Object.values(errors))
+
+              dispatch(ACTION_SET_LOADING, false);
             }
           );
         },

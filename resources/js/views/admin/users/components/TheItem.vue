@@ -6,7 +6,7 @@
     <td>{{user.createdAt}}</td>
     <td>
       <div class="icheck-primary">
-        <input type="checkbox" :id="`user_id_${user.id}`" name="Key" :value="user.id">
+        <input type="checkbox" :id="`user_id_${user.id}`" :value="user.id">
         <label :for="`user_id_${user.id}`"></label>
       </div>
     </td>

@@ -1,43 +1,43 @@
 <template>
-  <transition name="modal">
-    <div :class="classShow" :style="styleCss" data-keyboard="false" data-backdrop="static">
+  <transition name="modal-news-add">
+    <div :class="classShow" :style="styleCss" data-keyboard="false">
       <div class="modal-dialog modal-lg">
         <ValidationObserver ref="observerInfo" @submit.prevent="_submitInfo">
           <div class="modal-content">
             <LoadingOverLay :active.sync="loading" :is-full-page="fullPage" />
             <div class="modal-header">
-              <h4 class="modal-title">{{title}}</h4>
-              <button type="button" class="close" aria-label="Close" @click="_close">
+              <h4 class="modal-title">{{_getSetForm.title}}</h4>
+              <button type="button" class="close" @click="_close">
                 <span aria-hidden="true"><font-awesome-icon icon="times" /></span>
               </button>
             </div>
             <div class="modal-body">
               <!-- form start -->
               <div class="form-horizontal">
-                <div class="card-body">
+                <div class="card-body" v-if="_isShowBody">
                   <div class="form-group row">
-                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                    <label for="news_name" class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
                     <div class="col-sm-10">
-                      <ValidationProvider name="Name" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="name" type="text" class="form-control" placeholder="Name">
+                      <ValidationProvider name="news_name" rules="required|max:191" v-slot="{ errors }">
+                        <input v-model="newsData.news_name" type="text" class="form-control" :placeholder="$options.setting.nameTxt">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <label for="news_description" class="col-sm-2 col-form-label">{{$options.setting.descriptionTxt}}</label>
                     <div class="col-sm-10">
-                      <ValidationProvider name="Email" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="email" type="email" class="form-control" placeholder="Email">
-                      <span class="text-red">{{ errors[0] }}</span>
+                      <ValidationProvider name="news_description" rules="required|max:191" v-slot="{ errors }">
+                        <input v-model="newsData.news_description" class="form-control" :placeholder="$options.setting.descriptionTxt">
+                        <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <label for="news_newslink" class="col-sm-2 col-form-label">{{$options.setting.newslinkTxt}}</label>
                     <div class="col-sm-10">
-                      <ValidationProvider name="Password" rules="required|minLength:8|max:191" v-slot="{ errors }">
-                        <input v-model="password" type="password" class="form-control" placeholder="Password">
+                      <ValidationProvider name="news_newslink" rules="required|minLength:8|max:191" v-slot="{ errors }">
+                        <input v-model="newsData.newslink" class="form-control" :placeholder="$options.setting.newslinkTxt">
                       <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
                     </div>
@@ -47,7 +47,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" @click="_close">{{$options.setting.btnCancelTxt}}</button>
-              <button type="button" class="btn btn-success" @click="_submitInfo">{{btnSubmitTxt}}</button>
+              <button type="button" class="btn btn-success" @click="_submitInfo">{{_getSetForm.btnSubmitTxt}}</button>
             </div>
           </div>
         </ValidationObserver>
@@ -74,25 +74,42 @@
         name: 'TheModalAddForm',
         data() {
             return {
-              name: '',
-              email: '',
-              password: '',
-              fullPage: false
+              fullPage: false,
+              newsData: {}
             };
         },
         computed: {
           ...mapState(MODULE_INFO_MODAL, {
-            formAction: state => state.action
+            formAction: state => state.action,
+            loading: state => state.loading
           }),
+
           ...mapGetters(MODULE_INFO_MODAL, [
             'classShow',
             'styleCss',
             'info',
-            'loading'
           ]),
 
-          getSetForm() {console.log('getSetForm')
-            return this.formAction?this.$options.setting[this.formAction]:this.$options.setting.add
+          _getSetForm() {console.log('getSetForm')
+            let setting = this.$options.setting.add;
+
+            if (this.formAction) {
+              setting = this.$options.setting[this.formAction];
+
+              if (this._isModalClose()) {
+                this.newsData = {}
+              } else {
+                this.newsData = {...this.info}
+              }
+            }
+
+            return setting;
+          }
+        },
+
+        updated() {
+          if (this._isModalClose()) {
+            this._resetModalClose()
           }
         },
 
@@ -104,6 +121,29 @@
             ACTION_UPDATE_INFO
           ]),
 
+          async _resetModalClose() {
+            this.$data.newsData = {};
+            requestAnimationFrame(() => {
+              this.$refs.observerInfo.reset()
+            });
+          },
+
+          _isShowBody() {
+            return (this._isAddAction() || this._isEditAction())
+          },
+
+          _isAddAction() {
+            return (this.formAction === this.$options.setting.add.actionName)
+          },
+
+          _isEditAction() {
+            return (this.formAction === this.$options.setting.edit.actionName)
+          },
+
+          _isModalClose() {
+            return (this.formAction === this.$options.setting.closeModal.actionName)
+          },
+
           _close() {
             this.[ACTION_CLOSE_MODAL]()
           },
@@ -113,21 +153,13 @@
             _self.[ACTION_SET_LOADING](true);
             _self.$refs.observerInfo.validate().then((isValid) => {
               if (isValid) {
-                if (_self.info) {
-                  _self.[ACTION_UPDATE_INFO]({
-                    name: _self.name,
-                    email: _self.email,
-                    password: _self.password
-                  });
+                if (_self._isEditAction()) {
+                  _self.[ACTION_UPDATE_INFO](_self.newsData)
                 } else {
-                  _self.[ACTION_INSERT_INFO]({
-                    name: _self.name,
-                    email: _self.email,
-                    password: _self.password
-                  });
+                  _self.[ACTION_INSERT_INFO](_self.newsData)
                 }
               } else {
-                _self.[ACTION_SET_LOADING](false);
+                _self.[ACTION_SET_LOADING](false)
 
                 return false;
               }
@@ -136,6 +168,9 @@
         },
         setting: {
           btnCancelTxt: 'Close',
+          nameTxt: 'Name',
+          descriptionTxt: 'Description',
+          newslinkTxt: 'News Link',
           add: {
             actionName: 'add',
             isAddFrom: true,

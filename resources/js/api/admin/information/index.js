@@ -6,20 +6,20 @@ import {
  * Mocking client-server processing
  */
 const _infos = [
-              {id:1, name:'Phi', email: 'phi@mail.com', createdAt: '24/12/2020'},
-              {id:2, name:'Fei', email: 'fei@mail.com', createdAt: '24/12/2020'},
-              {id:3, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'},
-              {id:4, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'},
-               {id:5, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'},
-                {id:6, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'},
-                 {id:7, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'},
-                  {id:8, name:'Admin', email: 'admin@mail.com', createdAt: '24/12/2020'},
- ]
-            
+    {id:1, news_name:'News 1', description: 'Description 1', createdAt: '24/12/2020'},
+    {id:2, news_name:'News 2', description: 'Description 2', createdAt: '24/12/2020'},
+    {id:3, news_name:'News 3', description: 'Description 3', createdAt: '24/12/2020'},
+    {id:4, news_name:'News 4', description: 'Description 4', createdAt: '24/12/2020'},
+    {id:5, news_name:'News 5', description: 'Description 5', createdAt: '24/12/2020'},
+    {id:6, news_name:'News 6', description: 'Description 6', createdAt: '24/12/2020'},
+    {id:7, news_name:'News 7', description: 'Descriptio4 7', createdAt: '24/12/2020'},
+    {id:8, news_name:'News 8', description: 'Descriptio 8', createdAt: '24/12/2020'},
+  ];
+
 export const apiGetInfoById = (infoId, resolve, errResole) => {
-  axios.get(API_INFOMATIONS_RESOURCE + '/' + infoId)
-    .then((response) => {
-      console.log(response)
+ return axios.get(API_INFOMATIONS_RESOURCE + '/' + infoId)
+   .then((response) => {
+     console.log(response)
       if (response.status === 200) {
         var json = {};
         json['data'] = _infos[infoId];

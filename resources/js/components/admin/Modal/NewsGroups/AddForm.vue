@@ -1,5 +1,5 @@
 <template>
-  <transition name="modal">
+  <transition name="modal-news-group-add">
     <div :class="classShow" :style="styleCss" data-keyboard="false">
       <div class="modal-dialog modal-lg">
         <ValidationObserver ref="observerNewsGroup" @submit.prevent="_submitInfo">
