@@ -55,7 +55,7 @@ export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = _newsGroups[newsGroupId];
+        json['data'] = response.data.newsgroup;
         json['status'] = 1000;
         resolve(json);
       } else {
@@ -70,7 +70,12 @@ export const apiGetNewsGroups = (resolve, errResole) => {
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
-      const data = _infos;
+      const data = {
+                name: "Danh Mục :",
+                id: 0,
+                children: response.data.data.results
+                
+      };
       resolve(data);
     } else {
       errResole([{status:response.status, msg:'error test'}]);

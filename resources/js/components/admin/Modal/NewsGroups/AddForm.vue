@@ -108,6 +108,8 @@
             if (this.formAction) {
               setting = this.$options.setting[this.formAction];
 
+              if (this._isModalClose()) this._resetModal();
+
               if (this._isEditAction()) this.groupData = {...this.newsGroup};
 
               if (this._isAddAction()) this.groupData = {...this.newsGroupAdd};
@@ -117,10 +119,8 @@
           }
         },
 
-        updated() {
-          if (this._isModalClose()) {
-            this._resetModalClose()
-          }
+        mounted() {
+          this._close()
         },
         
         methods: {
@@ -135,7 +135,7 @@
             ACTION_RELOAD_GET_NEWS_GROUP_LIST
           ]),
 
-          async _resetModalClose() {
+          async _resetModal() {
             this.$data.groupData = null;
             requestAnimationFrame(() => {
               this.$refs.observerNewsGroup.reset()
@@ -191,7 +191,7 @@
             btnSubmitTxt: 'Update'
           },
           closeModal: {
-            actionName: 'close_modal',
+            actionName: 'closeModal',
             isParentShow: false,
             isAddFrom: false,
             title: '',

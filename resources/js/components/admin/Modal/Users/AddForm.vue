@@ -29,7 +29,7 @@
                   <div class="form-group row">
                     <label for="user_email" class="col-sm-2 col-form-label">{{$options.setting.emailTxt}}</label>
                     <div class="col-sm-10">
-                      <ValidationProvider name="user_email" rules="required|email|max:191" v-slot="{ errors }">
+                      <ValidationProvider :immediate="false" name="user_email" rules="required|email|max:191" v-slot="{ errors }">
                         <input v-model="userData.email" type="email" class="form-control" :placeholder="$options.setting.emailTxt">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
@@ -38,7 +38,7 @@
                   <div class="form-group row">
                     <label for="user_password" class="col-sm-2 col-form-label">{{$options.setting.passwordTxt}}</label>
                     <div class="col-sm-10">
-                      <ValidationProvider name="user_password" rules="required|minLength:8|max:191" v-slot="{ errors }">
+                      <ValidationProvider :immediate="false" name="user_password" rules="required|minLength:8|max:191" v-slot="{ errors }">
                         <input v-model="userData.password" type="password" class="form-control" :placeholder="$options.setting.passwordTxt">
                         <span class="text-red">{{ errors[0] }}</span>
                       </ValidationProvider>
@@ -48,8 +48,10 @@
               </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" @click="_close">{{$options.setting.btnCancelTxt}}</button>
-              <button type="button" class="btn btn-success" @click="_submitUser">{{_getSetForm.btnSubmitTxt}}</button>
+              <button type="button" class="btn btn-default" 
+                @click="_close">{{$options.setting.btnCancelTxt}}</button>
+              <button type="button" class="btn btn-success" 
+                @click="_submitUser">{{_getSetForm.btnSubmitTxt}}</button>
             </div>
           </div>
         </ValidationObserver>
@@ -100,7 +102,7 @@
               setting = this.$options.setting[this.formAction];
 
               if (this._isModalClose()) {
-                this.userData = {}
+                this._resetModal()
               } else {
                 this.userData = {...this.user}
               }
@@ -109,10 +111,8 @@
             return setting;
           }
         },
-        updated() {
-          if (this._isModalClose()) {
-            this._resetModalClose()
-          }
+        mounted() {
+          this._close()
         },
         methods: {
           ...mapActions(MODULE_USER_MODAL, [
@@ -122,11 +122,10 @@
             ACTION_UPDATE_USER
           ]),
 
-          async _resetModalClose() {
+          async _resetModal() {
             this.$data.userData = {};
             requestAnimationFrame(() => {
               this.$refs.observerUser.reset()
-              this.$refs.observer.reset()
             });
           },
 
@@ -153,7 +152,7 @@
           async _submitUser() {
             const _self = this;
             _self.setLoading(true);
-            _self.$refs.observerUser.validate().then((isValid) => {
+            await _self.$refs.observerUser.validate().then((isValid) => {
               if (isValid) {
                 if (_self._isEditAction()) {
                   _self.[ACTION_UPDATE_USER](_self.userData)
@@ -163,7 +162,7 @@
               } else {
                 _self.setLoading(false)
               }
-            });
+            })
           }
         },
         setting: {
@@ -184,7 +183,7 @@
             btnSubmitTxt: 'Update'
           },
           closeModal: {
-            actionName: 'close_modal',
+            actionName: 'closeModal',
             isAddFrom: false,
             title: '',
             btnSubmitTxt: ''

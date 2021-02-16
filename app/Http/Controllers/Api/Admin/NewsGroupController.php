@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
 use App\Models\NewsGroup;
 use Illuminate\Http\Request;
+use App\Http\Resources\NewsGroups\NewsGroupResource;
 
 /**
  * Class NewsGroupController
@@ -42,9 +43,8 @@ class NewsGroupController extends Controller
         $newsGroups = NewsGroup::getNewsGroups($data);
         $newsGroupTrees = $this->generateTree($newsGroups['data']);
 
-        return Helper::successResponse([ 
-            'newsGroups' => $newsGroups ,
-            'newsGroupTrees' => $newsGroupTrees
+        return Helper::successResponse([
+            'results' => $newsGroupTrees
         ]);
     }
 
@@ -61,6 +61,8 @@ class NewsGroupController extends Controller
         
         for ($i = 0, $ni = count($data); $i < $ni; $i++) {
             if ($data[$i]['father_id'] == $parent) {
+                $newsGroupTree[$data[$i]['id']]['id'] = $data[$i]['id'];
+                $newsGroupTree[$data[$i]['id']]['parentId'] = $data[$i]['father_id'];
                 $newsGroupTree[$data[$i]['id']]['name'] = $data[$i]['newsgroupname'];
                 $newsGroupTree[$data[$i]['id']]['children'] = $this->generateTree($data, $data[$i]['id'], $depth + 1);
             }
@@ -70,7 +72,7 @@ class NewsGroupController extends Controller
     }
 
     public function show(Request $request, $id = null) {
-        return $request->user();
+        return new NewsGroupResource(NewsGroup::findOrFail($id));
     }
 
     public function store (Request $request) {

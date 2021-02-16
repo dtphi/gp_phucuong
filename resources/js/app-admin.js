@@ -52,7 +52,7 @@ if (envBuild == 'development') {
     console.log('ROUTE:', routes);
 }
 
-store.dispatch('auth/admin', {'type':'init'}).then(() => {
+store.dispatch('auth/admin', {type:'init'}).then(() => {
 	return new Vue({
     el: '#gp-phu-cuong',
     router,

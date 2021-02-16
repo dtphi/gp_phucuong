@@ -90,14 +90,14 @@
             'info',
           ]),
 
-          _getSetForm() {console.log('getSetForm')
+          _getSetForm() {
             let setting = this.$options.setting.add;
 
             if (this.formAction) {
               setting = this.$options.setting[this.formAction];
 
               if (this._isModalClose()) {
-                this.newsData = {}
+                this._resetModal()
               } else {
                 this.newsData = {...this.info}
               }
@@ -107,10 +107,8 @@
           }
         },
 
-        updated() {
-          if (this._isModalClose()) {
-            this._resetModalClose()
-          }
+        mounted() {
+          this._close()
         },
 
         methods: {
@@ -121,7 +119,7 @@
             ACTION_UPDATE_INFO
           ]),
 
-          async _resetModalClose() {
+          async _resetModal() {
             this.$data.newsData = {};
             requestAnimationFrame(() => {
               this.$refs.observerInfo.reset()
@@ -160,8 +158,6 @@
                 }
               } else {
                 _self.[ACTION_SET_LOADING](false)
-
-                return false;
               }
             });
           }
@@ -184,7 +180,7 @@
             btnSubmitTxt: 'Update'
           },
           closeModal: {
-            actionName: 'close_modal',
+            actionName: 'closeModal',
             isAddFrom: false,
             title: '',
             btnSubmitTxt: ''

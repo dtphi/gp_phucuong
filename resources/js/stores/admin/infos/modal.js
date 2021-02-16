@@ -80,7 +80,7 @@ export default {
     		},
 
     		[INFOS_MODAL_SET_CLOSE_MODAL](state) {
-    			state.action = null;
+    			state.action = 'closeModal';
           state.classShow = 'modal fade';
           state.styleCss = 'display:none';
           state.infoId = 0;
