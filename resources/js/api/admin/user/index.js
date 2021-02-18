@@ -70,10 +70,10 @@ export const apiInsertUser = (user, resolve, errResole) => {
   return axios.post(API_USERS_RESOURCE, user)
     .then((response) => {
       console.log(response)
-      if (response.status === 200) {
+      if (response.status === 201) {
         var json = {};
-        json['data'] = response.data;
-        json['status'] = 1000;
+        json['data'] = response.data.result;
+        json['code'] = response.data.code;
         resolve(json);
       } else {
         errResole([{status:response.status, msg:'error test'}]);

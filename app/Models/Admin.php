@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 
 class Admin extends Authenticatable
 {
@@ -31,4 +32,17 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    /**
+     *  Mutator to hash password to bcrypt.
+     *
+     * @param string $pass
+     */
+    public function setPasswordAttribute($pass)
+    {
+        $bcrypt_password = Hash::make($pass);
+        $this->attributes['password'] = $bcrypt_password;
+
+        return $bcrypt_password;
+    }
 }
