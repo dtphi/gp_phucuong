@@ -8,6 +8,7 @@ use App\Http\Resources\Admins\AdminCollection;
 use App\Http\Resources\Admins\AdminResource;
 use App\Models\Admin;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use DB;
 
 class AdminController extends ApiController
@@ -35,14 +36,30 @@ class AdminController extends ApiController
   }
 
   public function update (Request $request, $id = null) {
-  	return $request->user();
+    try {
+        $user = Admin::findOrFail($id);
+
+    } catch (ModelNotFoundException $e) {
+        Log::debug('User not found, Request ID = '. $id);
+        return $this->respondNotFound();
+    }
+
+    return $this->__handleStore($user, $request);
   }
 
   public function destroy (Request $request, $id = null) {
-  	return $request->user();
+  	try {
+        $user = Admin::findOrFail($id);
+    } catch (ModelNotFoundException $e) {
+        return $this->respondNotFound("No {$this->resourceName} found.");
+    }
+
+    $user->destroy($id);
+
+    return $this->respondDeleted("{$this->resourceName} deleted.");
   }
 
-  private function __handleStore(Admin $user, $request)
+  private function __handleStore(Admin $user, &$request)
     {
         $requestParams = $request->all();
         $user->fill($requestParams);

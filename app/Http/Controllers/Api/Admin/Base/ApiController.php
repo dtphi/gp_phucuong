@@ -97,6 +97,20 @@ class ApiController extends Controller
     }
 
     /**
+     * @param $message
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function respondDeleted($message = 'Deleted')
+    {
+        return $this->setStatusCode(IlluminateResponse::HTTP_OK)
+            ->setReturnCode(self::RESPONSE_DELETED)
+            ->respond([
+                'message' => $message,
+            ]);
+    }
+
+    /**
      * @param string|null $message
      * @param int         $returnCode
      * @param array|null  $data       An optional associative array of data to be returned
