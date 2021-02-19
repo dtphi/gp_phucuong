@@ -22,7 +22,7 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
      console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = _infos[infoId];
+        json['data'] = response.data.information;
         json['status'] = 1000;
         resolve(json);
       } else {
@@ -37,7 +37,7 @@ export const apiGetInfos = (resolve, errResole) => {
   .then((response) => {
     console.log(response)
     if (response.status === 200) {
-      const data = _infos;
+      const data = response.data.data.results;
       resolve(data);
     } else {
       errResole([{status:response.status, msg:'error test'}]);
@@ -66,10 +66,10 @@ export const apiInsertInfo = (info, resolve, errResole) => {
   return axios.post(API_INFOMATIONS_RESOURCE, info)
   .then((response) => {
     console.log(response)
-    if (response.status === 200) {
+    if (response.status === 201) {
       var json = {};
-      json['data'] = response.data;
-      json['status'] = 1000;
+      json['data'] = response.data.result;
+      json['code'] = response.data.code;
       resolve(json);
     } else {
       errResole([{status:response.status, msg:'error test'}]);
