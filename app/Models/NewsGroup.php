@@ -8,6 +8,17 @@ class NewsGroup extends Model
 {
 	protected $table = 'news_groups';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'father_id',
+        'newsgroupname',
+        'user_id'
+    ];
+
 	/**
 	 * [getNewsGroups description]
 	 * @param  array  $data [description]

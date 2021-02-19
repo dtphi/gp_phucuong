@@ -3,7 +3,7 @@
 		v-on:mouseover.prevent="_showAction" 
 		v-on:mouseleave.prevent="_hideAction">
     <i v-if="isFolder" class="fas fa-plus"></i>
-    <span>{{ group.name }}</span>
+    <span>{{ group.newsgroupname }}</span>
     <BtnGroupAction 
       :is-action-show="isItemRoot"
       :current-group="group" 

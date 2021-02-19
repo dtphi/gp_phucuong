@@ -71,7 +71,7 @@ export const apiGetNewsGroups = (resolve, errResole) => {
     console.log(response)
     if (response.status === 200) {
       const data = {
-                name: "Danh Mục :",
+                newsgroupname: "Danh Mục :",
                 id: 0,
                 children: response.data.data.results
                 
@@ -104,10 +104,10 @@ export const apiInsertNewsGroup = (newsGroup, resolve, errResole) => {
   return axios.post(API_NEWS_GROUPS_RESOURCE, newsGroup)
   .then((response) => {
     console.log(response)
-    if (response.status === 200) {
+    if (response.status === 201) {
       var json = {};
-      json['data'] = response.data;
-      json['status'] = 1000;
+      json['data'] = response.data.result;
+      json['code'] = response.data.code;
       resolve(json);
     } else {
       errResole([{status:response.status, msg:'error test'}]);

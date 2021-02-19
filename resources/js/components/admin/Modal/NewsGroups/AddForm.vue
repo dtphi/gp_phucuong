@@ -13,7 +13,7 @@
                 </span>
               </button>
             </div>
-            <transition v-if="_getSetForm.isAddFrom && (!itemRoot)">
+            <transition v-if="isShowParentInfo">
               <NewsGroupCurrent :parent-info="parentInfo"/>
             </transition>
             <div class="modal-body" v-if="groupData">
@@ -26,7 +26,7 @@
                       <label class="col-sm-2 col-form-label">Name</label>
                       <div class="col-sm-10">
                         <ValidationProvider name="news_group_name" rules="required|max:191" v-slot="{ errors }">
-                          <input v-model="groupData.name" type="text" class="form-control" placeholder="News Group Name">
+                          <input v-model="groupData.newsgroupname" type="text" class="form-control" placeholder="News Group Name">
                           <span class="text-red">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
@@ -40,7 +40,7 @@
                       <label class="col-sm-2 col-form-label">Name</label>
                       <div class="col-sm-10">
                         <ValidationProvider name="news_group_name" rules="required|max:191" v-slot="{ errors }">
-                          <input v-model="groupData.name" type="text" class="form-control" placeholder="News Group Name">
+                          <input v-model="groupData.newsgroupname" type="text" class="form-control" placeholder="News Group Name">
                           <span class="text-red">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
@@ -85,7 +85,8 @@
         data() {
             return {
               fullPage: false,
-              groupData: null
+              groupData: null,
+              isShowParentInfo: false
             };
         },
         computed: {
@@ -112,7 +113,12 @@
 
               if (this._isEditAction()) this.groupData = {...this.newsGroup};
 
-              if (this._isAddAction()) this.groupData = {...this.newsGroupAdd};
+              if (this._isAddAction()) {
+                this.groupData = {...this.newsGroupAdd};
+                this.isShowParentInfo = !this.itemRoot && this.parentInfo.id;
+              } else {
+                this.isShowParentInfo = false;
+              }
             }
 
             return setting;
@@ -164,9 +170,10 @@
             await _self.$refs.observerNewsGroup.validate().then((isValid) => {
               if (isValid) {
                 if (_self._isEditAction()) {
-                  _self.[ACTION_UPDATE_NEWS_GROUP](_self.newsGroup);
+                  _self.[ACTION_UPDATE_NEWS_GROUP](_self.groupData);
                 } else {
-                  _self.[ACTION_INSERT_NEWS_GROUP](_self.newsGroupAdd);
+                  _self.groupData['father_id'] = (_self.parentInfo.id) ? _self.parentInfo.id: -1;
+                  _self.[ACTION_INSERT_NEWS_GROUP](_self.groupData);
                 }
               } else {
                 _self.[ACTION_SET_LOADING](false);

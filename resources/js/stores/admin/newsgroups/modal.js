@@ -32,7 +32,7 @@ import {
 } from '../types/action-types';
 const NEWS_GROUP = {
   id: null,
-  name: ''
+  newsgroupname: ''
 }
 
 export default {
@@ -174,21 +174,25 @@ export default {
 
         [ACTION_GET_NEWS_GROUP_BY_ID] ({dispatch, commit}, newsGroupId) {
           dispatch(ACTION_SET_LOADING, true);
-          apiGetNewsGroupById(
-            newsGroupId,
-            (result) => {
-            	commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS, true)
-              commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP, result.data);
+          if (newsGroupId) {
+            apiGetNewsGroupById(
+              newsGroupId,
+              (result) => {
+                commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS, true)
+                commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP, result.data);
 
-              dispatch(ACTION_SET_LOADING, false);
-              dispatch(ACTION_IS_OPEN_MODAL, true);
-            },
-            (errors) => {
-            	commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED, errors)
+                dispatch(ACTION_SET_LOADING, false);
+                dispatch(ACTION_IS_OPEN_MODAL, true);
+              },
+              (errors) => {
+                commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED, errors)
 
-              dispatch(ACTION_SET_LOADING, false);
-            }
-          );
+                dispatch(ACTION_SET_LOADING, false);
+              }
+            );
+          } else {
+            dispatch(ACTION_SET_LOADING, false);
+          }
         },
 
         [ACTION_CLOSE_MODAL] ({ dispatch, commit }) {

@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Helpers\Helper;
 use App\Models\NewsGroup;
 use Illuminate\Http\Request;
 use App\Http\Resources\NewsGroups\NewsGroupResource;
+use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use DB;
+
 
 /**
  * Class NewsGroupController
  *
  * @package App\Http\Controllers\Api\Admin
  */
-class NewsGroupController extends Controller
+class NewsGroupController extends ApiController
 {
+    protected $resourceName = 'newsgroup';
+
     /**
      * @param Request $request
      *
@@ -62,8 +68,8 @@ class NewsGroupController extends Controller
         for ($i = 0, $ni = count($data); $i < $ni; $i++) {
             if ($data[$i]['father_id'] == $parent) {
                 $newsGroupTree[$data[$i]['id']]['id'] = $data[$i]['id'];
-                $newsGroupTree[$data[$i]['id']]['parentId'] = $data[$i]['father_id'];
-                $newsGroupTree[$data[$i]['id']]['name'] = $data[$i]['newsgroupname'];
+                $newsGroupTree[$data[$i]['id']]['fatherId'] = $data[$i]['father_id'];
+                $newsGroupTree[$data[$i]['id']]['newsgroupname'] = $data[$i]['newsgroupname'];
                 $newsGroupTree[$data[$i]['id']]['children'] = $this->generateTree($data, $data[$i]['id'], $depth + 1);
             }
         }
@@ -76,14 +82,60 @@ class NewsGroupController extends Controller
     }
 
     public function store (Request $request) {
-        return $request->user();
+    $model = new NewsGroup();
+
+    $storeResponse = $this->__handleStore($model, $request);
+
+    if ($storeResponse->getStatusCode() === HttpResponse::HTTP_BAD_REQUEST) {
+        return $storeResponse;
     }
 
-    public function update (Request $request, $id = null) {
-        return $request->user();
+    return $this->respondCreated("New {$this->resourceName} created.", $model->id);
+  }
+
+  public function update (Request $request, $id = null) {
+    try {
+        $model = NewsGroup::findOrFail($id);
+
+    } catch (ModelNotFoundException $e) {
+        Log::debug('User not found, Request ID = '. $id);
+        return $this->respondNotFound();
     }
 
-    public function destroy (Request $request, $id = null) {
-        return $request->user();
+    return $this->__handleStore($model, $request);
+  }
+
+  public function destroy (Request $request, $id = null) {
+    try {
+        $model = NewsGroup::findOrFail($id);
+    } catch (ModelNotFoundException $e) {
+        return $this->respondNotFound("No {$this->resourceName} found.");
+    }
+
+    $model->destroy($id);
+
+    return $this->respondDeleted("{$this->resourceName} deleted.");
+  }
+
+  private function __handleStore(NewsGroup $model, &$request)
+    {
+        $requestParams = $request->all();
+        $requestParams['user_id'] = $request->user()->id;
+        $model->fill($requestParams);
+
+        /**
+         * Save news group with transaction to make sure all data stored correctly
+         */
+        DB::beginTransaction();
+
+        if (!$model->save()) {
+            DB::rollBack();
+
+            return $this->respondBadRequest();
+        }
+
+        DB::commit();
+
+        return $this->respondUpdated();
     }
 }
