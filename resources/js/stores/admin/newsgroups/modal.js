@@ -32,7 +32,9 @@ import {
 } from '../types/action-types';
 const NEWS_GROUP = {
   id: null,
-  newsgroupname: ''
+  father_id: -1,
+  newsgroupname: '',
+  description: ''
 }
 
 export default {

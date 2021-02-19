@@ -31,6 +31,14 @@
                         </ValidationProvider>
                       </div>
                     </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Description</label>
+                      <div class="col-sm-10">
+                        <ValidationProvider name="news_group_description" rules="max:200" v-slot="{ errors }">
+                          <textarea v-model="groupData.description" class="form-control" placeholder="Description"></textarea><span class="text-red">{{ errors[0] }}</span>
+                        </ValidationProvider>
+                      </div>
+                    </div>
                   </div>
                 </transition>
 
@@ -41,6 +49,15 @@
                       <div class="col-sm-10">
                         <ValidationProvider name="news_group_name" rules="required|max:191" v-slot="{ errors }">
                           <input v-model="groupData.newsgroupname" type="text" class="form-control" placeholder="News Group Name">
+                          <span class="text-red">{{ errors[0] }}</span>
+                        </ValidationProvider>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Description</label>
+                      <div class="col-sm-10">
+                        <ValidationProvider name="news_group_description" rules="max:200" v-slot="{ errors }">
+                          <textarea v-model="groupData.description" class="form-control" placeholder="Description"></textarea> 
                           <span class="text-red">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>

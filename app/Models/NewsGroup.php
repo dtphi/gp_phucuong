@@ -16,7 +16,8 @@ class NewsGroup extends Model
     protected $fillable = [
         'father_id',
         'newsgroupname',
-        'user_id'
+        'user_id',
+        'description'
     ];
 
 	/**
@@ -26,7 +27,7 @@ class NewsGroup extends Model
 	 */
 	public static function getNewsGroups(array $data)
     {
-    	$query = self::select('id', 'father_id', 'newsgroupname');
+    	$query = self::select('id', 'father_id', 'newsgroupname')->orderByDesc('id');
 
         return [
             'total' => $query->count(),
