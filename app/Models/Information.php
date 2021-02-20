@@ -18,6 +18,7 @@ class Information extends Model
         'newsgroup_id',
         'newsname',
         'user_id',
-        'description'
+        'description',
+        'newslink'
     ];
 }

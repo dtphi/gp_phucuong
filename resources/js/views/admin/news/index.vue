@@ -37,7 +37,7 @@
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Key: activate to sort column ascending">Key</th>
                             </tr>
                           </thead> 
-                            <tbody>                               
+                            <tbody v-if="_notEmpty">                               
                               <!-- <tr role="row" class="odd">
                                 <td tabindex="0" class="sorting_1">Name 01</td> 
                                 <td>Admin</td> 

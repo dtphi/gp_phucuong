@@ -11,37 +11,25 @@
                 <span aria-hidden="true"><font-awesome-icon icon="times" /></span>
               </button>
             </div>
+            
             <div class="modal-body">
-              <!-- form start -->
-              <div class="form-horizontal">
-                <div class="card-body" v-if="_isShowBody">
-                  <div class="form-group row">
-                    <label for="news_name" class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
-                    <div class="col-sm-10">
-                      <ValidationProvider name="news_name" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="newsData.news_name" type="text" class="form-control" :placeholder="$options.setting.nameTxt">
-                        <span class="text-red">{{ errors[0] }}</span>
-                      </ValidationProvider>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="news_description" class="col-sm-2 col-form-label">{{$options.setting.descriptionTxt}}</label>
-                    <div class="col-sm-10">
-                      <ValidationProvider name="news_description" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="newsData.news_description" class="form-control" :placeholder="$options.setting.descriptionTxt">
-                        <span class="text-red">{{ errors[0] }}</span>
-                      </ValidationProvider>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="news_newslink" class="col-sm-2 col-form-label">{{$options.setting.newslinkTxt}}</label>
-                    <div class="col-sm-10">
-                      <ValidationProvider name="news_newslink" rules="required|minLength:8|max:191" v-slot="{ errors }">
-                        <input v-model="newsData.newslink" class="form-control" :placeholder="$options.setting.newslinkTxt">
-                      <span class="text-red">{{ errors[0] }}</span>
-                      </ValidationProvider>
-                    </div>
-                  </div>
+              <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                      <a href="#generalTab" aria-controls="generalTab" role="tab" data-toggle="tab">General</a>|
+                    </li>
+                    <li role="presentation">
+                      <a href="#settingTab" aria-controls="settingTab" role="tab" data-toggle="tab">Setting</a>
+                    </li>
+                </ul>
+                <!-- form start -->
+                <div class="tab-content form-horizontal" v-if="_isShowBody">
+                  <TabGeneral role="tabpanel" class="tab-pane active" id="generalTab" 
+                    :general-data="newsData"/>
+
+                  <TabSetting role="tabpanel" class="tab-pane" id="settingTab" 
+                    :setting-data="newsData"/>
                 </div>
               </div>
             </div>
@@ -69,9 +57,12 @@
       ACTION_INSERT_INFO,
       ACTION_UPDATE_INFO
     } from 'store@admin/types/action-types';
+    import TabGeneral from './TabGeneral';
+    import TabSetting from './TabSetting';
 
     export default {
         name: 'TheModalAddForm',
+        components: {TabGeneral, TabSetting},
         data() {
             return {
               fullPage: false,

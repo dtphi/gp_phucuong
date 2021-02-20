@@ -30,6 +30,12 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RELOAD_GET_INFO_LIST
 } from '../types/action-types';
+const NEWS = {
+  id: 0,
+  newsname: '',
+  description: '',
+  newslink: '',
+}
 
 export default {
     namespaced: true,
@@ -38,7 +44,7 @@ export default {
       action: null,
       classShow: 'modal fade',
       styleCss: '',
-      info: null,
+      info: Object.assign({}, NEWS),
       infoId: 0,
       loading: false,
       updateSuccess: false,
@@ -84,7 +90,7 @@ export default {
           state.classShow = 'modal fade';
           state.styleCss = 'display:none';
           state.infoId = 0;
-          state.info = null;
+          state.info = Object.assign({}, NEWS);
     		},
 
         [INFOS_MODAL_SET_IS_OPEN_MODAL](state, payload) {

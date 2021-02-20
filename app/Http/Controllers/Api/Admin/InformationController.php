@@ -62,6 +62,7 @@ class InformationController extends ApiController
   private function __handleStore(Information $model, &$request)
     {
         $requestParams = $request->all();
+        $requestParams['user_id'] = $request->user()->id;
         $model->fill($requestParams);
 
         /**

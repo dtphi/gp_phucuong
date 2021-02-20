@@ -1,9 +1,9 @@
 <template>
   <tr>
     <td>{{info.id}}</td>
-    <td>{{info.news_name}}</td>
+    <td>{{info.newsname}}</td>
     <td>{{info.description}}</td>
-    <td>{{info.createdAt}}</td>
+    <td></td>
     <td>
       <div class="icheck-primary">
         <input type="checkbox" :id="`info_id_${info.id}`" :value="info.id">
@@ -23,7 +23,7 @@
     import BtnDelete from './TheBtnDelete';
 
     export default {
-        name: 'TheItemInfo',
+        name: 'TheItem',
         components: {
             BtnEdit, 
             BtnDelete
@@ -31,10 +31,9 @@
         props: {
             info: {
                 type: Object,
-                default: {},
                 validator: function(value) {
                     var id = (value.id && Number.isInteger(value.id));
-                    var name = (value.news_name && value.news_name.length);
+                    var name = (value.newsname && value.newsname.length);
 
                     return (id && name)
                 }

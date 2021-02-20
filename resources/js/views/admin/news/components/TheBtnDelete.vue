@@ -43,7 +43,7 @@
                 this.[ACTION_SET_INFO_DELETE_BY_ID](this.infoId);
                 this.$modal.show('dialog', {
                   title: 'Delete Confirm',
-                  text: 'Are you sure delete !',
+                  text: 'Are you sure delete news?',
                   buttons: [
                     {
                       title: 'Cancel',

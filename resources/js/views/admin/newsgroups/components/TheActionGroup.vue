@@ -90,7 +90,7 @@ export default {
         this.[ACTION_SET_NEWS_GROUP_DELETE_BY_ID](this.currentGroup.id);
         this.$modal.show('dialog', {
           title: 'Delete Confirm',
-          text: 'Are you sure delete !',
+          text: 'Are you sure delete news group?',
           buttons: [
             {
               title: 'Cancel',
