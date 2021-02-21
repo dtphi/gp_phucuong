@@ -1,16 +1,16 @@
 <template>
     <button type="button" class="btn btn-default mb-3" @click="_showModal()">
-        <font-awesome-icon icon="edit"  size="xs" />
+        <font-awesome-icon icon="edit" size="xs"/>
     </button>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import {mapActions} from 'vuex';
     import {
-      MODULE_INFO_MODAL
+        MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
     import {
-      ACTION_SHOW_MODAL_EDIT
+        ACTION_SHOW_MODAL_EDIT
     } from 'store@admin/types/action-types';
 
     export default {
@@ -19,14 +19,13 @@
             infoId: {
                 type: Number,
                 default: 0,
-                validator: function(value) {
+                validator: function (value) {
                     return (value && Number.isInteger(value))
                 }
             }
         },
         data() {
-            return {
-            };
+            return {};
         },
         methods: {
             ...mapActions(MODULE_INFO_MODAL, [

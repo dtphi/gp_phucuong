@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-		// Success
-    const RESPONSE_OK          = 2000;
-    const RESPONSE_CREATED     = 2001;
-    const RESPONSE_UPDATED     = 2002;
-    const RESPONSE_DELETED     = 2003;
+    // Success
+    const RESPONSE_OK = 2000;
+    const RESPONSE_CREATED = 2001;
+    const RESPONSE_UPDATED = 2002;
+    const RESPONSE_DELETED = 2003;
     const RESPONSE_IN_PROGRESS = 2004;
 
-		/**
+    /**
      * @var int
      */
     protected $statusCode = IlluminateResponse::HTTP_OK;
@@ -25,7 +25,7 @@ class ApiController extends Controller
      */
     protected $returnCode = self::RESPONSE_OK;
 
-		 /**
+    /**
      * @return mixed
      */
     public function getStatusCode()
@@ -33,7 +33,7 @@ class ApiController extends Controller
         return $this->statusCode;
     }
 
-		/**
+    /**
      * @param mixed $statusCode
      *
      * @return $this
@@ -91,7 +91,7 @@ class ApiController extends Controller
             ->respond([
                 'result' => [
                     'message' => $message,
-                    'id' => $newId,
+                    'id'      => $newId,
                 ],
             ]);
     }
@@ -112,8 +112,8 @@ class ApiController extends Controller
 
     /**
      * @param string|null $message
-     * @param int         $returnCode
-     * @param array|null  $data       An optional associative array of data to be returned
+     * @param int $returnCode
+     * @param array|null $data An optional associative array of data to be returned
      *
      * @return \Illuminate\Http\JsonResponse
      */

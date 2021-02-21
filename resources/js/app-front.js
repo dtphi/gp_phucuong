@@ -10,15 +10,15 @@ window.vue = Vue;
 require('./views/front/App');
 
 const router = new Router({
-    history: true,
-    mode: 'history',
-    routes: [
-        ...routes
-    ]
+  history: true,
+  mode: 'history',
+  routes: [
+    ...routes
+  ]
 });
 
 new Vue({
-    el: '#gp-phu-cuong',
-    router,
-    store
+  el: '#gp-phu-cuong',
+  router,
+  store
 });

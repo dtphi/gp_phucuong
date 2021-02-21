@@ -1,8 +1,11 @@
 <?php
+
 namespace App\AppGlobals;
+
 use Request;
 
-class CSS {
+class CSS
+{
     public $css = []; // all my css filename and path is store in here
     public $cssSetting = [];
     private $pathPlugin = '';
@@ -10,96 +13,105 @@ class CSS {
     private $pathInfo = '';
     public $testInfo = [];
 
-    public function __construct() {
-        $this->pathInfo = trim(request()->getPathInfo(),'/');
-        $this->pathPlugin = asset('administrator/plugins');
+    public function __construct()
+    {
+        $this->pathInfo     = trim(request()->getPathInfo(), '/');
+        $this->pathPlugin   = asset('administrator/plugins');
         $this->pathAdminCss = asset('administrator/dist/css');
 
         list($css, $script, $bodyClass) = $this->init();
-        $this->cssSetting['mapCss'] = $css;
+        $this->cssSetting['mapCss']    = $css;
         $this->cssSetting['mapScript'] = $script;
         $this->cssSetting['bodyClass'] = $bodyClass;
 
         /*Test information*/
-        $testInfos = [
+        $testInfos      = [
             'cssSetting' => $this->cssSetting,
-            'pathInfo' => $this->pathInfo
+            'pathInfo'   => $this->pathInfo
         ];
         $this->testInfo = json_encode($testInfos);
     }
 
-    public function getDistJsScript($src) {
+    public function getDistJsScript($src)
+    {
         $path = asset('administrator/dist/js/' . $src);
 
         return "<script src='" . $path . "'></script>\n";
     }
 
-    public function getPluginPathScript($src) {
+    public function getPluginPathScript($src)
+    {
         $path = asset('administrator/plugins/' . $src);
 
         return "<script src='" . $path . "'></script>\n";
     }
 
-    public function getDistPathCss($src) {
+    public function getDistPathCss($src)
+    {
         $path = asset('administrator/dist/css/' . $src);
 
         return "<link rel='stylesheet' href='" . $path . "'>\n";
     }
 
-    public function getPluginPathCss($src) {
+    public function getPluginPathCss($src)
+    {
         $path = asset('administrator/plugins/' . $src);
 
         return "<link rel='stylesheet' href='" . $path . "'>\n";
     }
 
     // add css
-    public function add($path, $filename) {
-        $path = asset($path);
+    public function add($path, $filename)
+    {
+        $path                 = asset($path);
         $this->css[$filename] = $path;
 
         return $this->css;
     }
 
     // remove css
-    public function remove($filename) {
-        if(array_key_exists($filename, $this->css)) {
+    public function remove($filename)
+    {
+        if (array_key_exists($filename, $this->css)) {
             unset($this->css[$filename]);
         }
     }
 
     // print css
-    public function print() {
+    public function print()
+    {
         $output = '';
-        if(count($this->css)) {
-            foreach($this->css as $filename => $path) {
+        if (count($this->css)) {
+            foreach ($this->css as $filename => $path) {
                 $output .= "<link rel='stylesheet' href='{$path}/{$filename}'>\n";
             }
         }
         echo $output;
     }
 
-    public function init() {
+    public function init()
+    {
         $optionClass = 'hold-transition login-page';
-        $cssStype = $this->mapCss();
-        $scripts = '';
+        $cssStype    = $this->mapCss();
+        $scripts     = '';
 
         if (Request::is('admin/dashboard')) {
-            $cssStype = $this->mapCssUser();
-            $scripts = $this->mapScriptUser();
+            $cssStype    = $this->mapCssUser();
+            $scripts     = $this->mapScriptUser();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         }
 
         if (Request::is('admin/user*')) {
-            $cssStype = $this->mapCssUser();
-            $scripts = $this->mapScriptUser();
+            $cssStype    = $this->mapCssUser();
+            $scripts     = $this->mapScriptUser();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         } elseif (Request::is('admin/news*') && !Request::is('*-groups*')) {
-            $cssStype = $this->mapCssUser();
-            $scripts = $this->mapScriptNews();
+            $cssStype    = $this->mapCssUser();
+            $scripts     = $this->mapScriptNews();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         } elseif (Request::is('admin/news-groups*')) {
-            $cssStype = $this->mapCssNewsGroups();
-            $scripts = $this->mapScriptNewsGroups();
+            $cssStype    = $this->mapCssNewsGroups();
+            $scripts     = $this->mapScriptNewsGroups();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         }
 
@@ -110,7 +122,8 @@ class CSS {
         ];
     }
 
-    private function _initCss() {
+    private function _initCss()
+    {
         $cssStype = $this->mapCss();
 
         if (request()->is('admin/user*')) {
@@ -120,7 +133,8 @@ class CSS {
         return $cssStype;
     }
 
-    private function _initScript() {
+    private function _initScript()
+    {
         $scripts = $this->mapScript();
 
         if (request()->is('admin/user*')) {
@@ -130,25 +144,27 @@ class CSS {
         return $scripts;
     }
 
-    public function mapCss() {
-    	$output = '';
-    	/*Font Awesome*/
-    	$output .= "<link rel='stylesheet' href='/administrator/plugins/fontawesome-free/css/all.min.css'>\n";
-    	/*Ionicons*/
-    	$output .= "<link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>\n";
-    	/*icheck bootstrap*/
-    	$output .= "<link rel='stylesheet' href='/administrator/plugins/icheck-bootstrap/icheck-bootstrap.min.css'>\n";
-    	/*Theme style*/
-    	$output .= "<link rel='stylesheet' href='/administrator/dist/css/adminlte.min.css'>\n";
-    	/*Google Font: Source Sans Pro*/
-    	$output .= "<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700' rel='stylesheet'>\n";
+    public function mapCss()
+    {
+        $output = '';
+        /*Font Awesome*/
+        $output .= "<link rel='stylesheet' href='/administrator/plugins/fontawesome-free/css/all.min.css'>\n";
+        /*Ionicons*/
+        $output .= "<link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>\n";
+        /*icheck bootstrap*/
+        $output .= "<link rel='stylesheet' href='/administrator/plugins/icheck-bootstrap/icheck-bootstrap.min.css'>\n";
+        /*Theme style*/
+        $output .= "<link rel='stylesheet' href='/administrator/dist/css/adminlte.min.css'>\n";
+        /*Google Font: Source Sans Pro*/
+        $output .= "<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700' rel='stylesheet'>\n";
 
-    	$output .= "<link rel='stylesheet' href='/administrator/dist/css/custom.css'>\n";
+        $output .= "<link rel='stylesheet' href='/administrator/dist/css/custom.css'>\n";
 
-    	return $output;
+        return $output;
     }
 
-    public function mapCssUser() {
+    public function mapCssUser()
+    {
         /*<!-- Font Awesome -->*/
         $output = $this->getPluginPathCss('fontawesome-free/css/all.min.css');
         /*<!-- DataTables -->*/
@@ -166,7 +182,8 @@ class CSS {
         return $output;
     }
 
-    public function mapCssNewsGroups() {
+    public function mapCssNewsGroups()
+    {
         /*<!-- Font Awesome -->*/
         $output = $this->getPluginPathCss('fontawesome-free/css/all.min.css');
         /*<!-- Ionicons -->*/
@@ -193,16 +210,18 @@ class CSS {
         return $output;
     }
 
-    public function mapScript() {
-    	$output = '';
-    	$output .= "<script src='/administrator/plugins/jquery/jquery.min.js'></script>\n";
-    	$output .= "<script src='/administrator/plugins/bootstrap/js/bootstrap.bundle.min.js'></script>\n";
-    	$output .= "<script src='/administrator/dist/js/adminlte.min.js'></script>\n";
+    public function mapScript()
+    {
+        $output = '';
+        $output .= "<script src='/administrator/plugins/jquery/jquery.min.js'></script>\n";
+        $output .= "<script src='/administrator/plugins/bootstrap/js/bootstrap.bundle.min.js'></script>\n";
+        $output .= "<script src='/administrator/dist/js/adminlte.min.js'></script>\n";
 
-    	return $output;
+        return $output;
     }
 
-    public function mapScriptUser() {
+    public function mapScriptUser()
+    {
         /*<!-- jQuery -->*/
         $output = $this->getPluginPathScript('jquery/jquery.min.js');
         /*<!-- Bootstrap 4 -->*/
@@ -234,7 +253,8 @@ class CSS {
         return $output;
     }
 
-    public function mapScriptNews() {
+    public function mapScriptNews()
+    {
         /*<!-- jQuery -->*/
         $output = $this->getPluginPathScript('jquery/jquery.min.js');
         /*<!-- Bootstrap 4 -->*/
@@ -252,7 +272,8 @@ class CSS {
         return $output;
     }
 
-    public function mapScriptNewsGroups() {
+    public function mapScriptNewsGroups()
+    {
         /*<!-- jQuery -->*/
         $output = $this->getPluginPathScript('jquery/jquery.min.js');
         /*<!-- Bootstrap 4 -->*/
@@ -305,7 +326,8 @@ class CSS {
         return $output;
     }
 
-    public function mapBodyClass() {
+    public function mapBodyClass()
+    {
         $optionClass = 'hold-transition login-page';
         if (request()->is('admin/user*')) {
             $optionClass = 'hold-transition sidebar-mini layout-fixed';

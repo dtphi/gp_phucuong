@@ -1,6 +1,7 @@
 <template>
     <div id="example1_filter" class="dataTables_filter">
-      <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label>
+        <label>Search:
+            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label>
     </div>
 </template>
 
@@ -8,7 +9,6 @@
 
     export default {
         name: 'ListSearch',
-        components: {
-        }
+        components: {}
     };
 </script>

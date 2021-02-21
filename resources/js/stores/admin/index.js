@@ -13,23 +13,23 @@ Vue.use(Vuex);
 const debug = process.env.NODE_ENV === 'debuger';
 
 export default new Vuex.Store({
-    state: {
-      cfApp: null
-    },
-    getters: {
-      cfApp(state) {
-        return state;
-      }
-    },
-    mutations: {},
-    actions: {},
-    modules: {
-      auth,
-      layout,
-      user,
-      info,
-      newsgroup
-    },
-    strict: debug,
-    plugins: debug ? [createLogger()] : []
+  state: {
+    cfApp: null
+  },
+  getters: {
+    cfApp(state) {
+      return state;
+    }
+  },
+  mutations: {},
+  actions: {},
+  modules: {
+    auth,
+    layout,
+    user,
+    info,
+    newsgroup
+  },
+  strict: debug,
+  plugins: debug ? [createLogger()] : []
 });

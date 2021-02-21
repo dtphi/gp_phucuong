@@ -1,29 +1,28 @@
 <template>
     <button type="button" class="btn btn-default mb-3" @click="_showModal()">
-    	<font-awesome-icon icon="plus"  size="xs" />
+        <font-awesome-icon icon="plus" size="xs"/>
     </button>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import {mapActions} from 'vuex';
     import {
-      MODULE_INFO_MODAL
+        MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
     import {
-      ACTION_SHOW_MODAL
+        ACTION_SHOW_MODAL
     } from 'store@admin/types/action-types';
 
     export default {
         name: 'TheButtonAdd',
         data() {
-            return {
-            };
+            return {};
         },
         methods: {
-        	...mapActions(MODULE_INFO_MODAL, [ACTION_SHOW_MODAL]),
-        	_showModal() {
-        		this.[ACTION_SHOW_MODAL]('add');
-        	}
+            ...mapActions(MODULE_INFO_MODAL, [ACTION_SHOW_MODAL]),
+            _showModal() {
+                this.[ACTION_SHOW_MODAL]('add');
+            }
         }
     };
 </script>

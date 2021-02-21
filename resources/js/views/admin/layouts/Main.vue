@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper">
-        <Navbar />
-        <Sidebar />
+        <Navbar/>
+        <Sidebar/>
         <slot></slot>
-        <Footer />
-        <ControlSideBar />
+        <Footer/>
+        <ControlSideBar/>
     </div>
 </template>
 
@@ -16,6 +16,11 @@
 
     export default {
         name: 'MainLayout',
-        components: {Navbar, Sidebar, Footer, ControlSideBar}
+        components: {
+            Navbar,
+            Sidebar,
+            Footer,
+            ControlSideBar
+        }
     };
 </script>

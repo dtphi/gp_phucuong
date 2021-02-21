@@ -15,7 +15,7 @@ class Helper
      * Return success response
      *
      * @param array $data
-     * @param int   $status
+     * @param int $status
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -34,7 +34,7 @@ class Helper
      * Return error response
      *
      * @param array $errors
-     * @param int   $status
+     * @param int $status
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -56,14 +56,15 @@ class Helper
      */
     public static function randomPassword()
     {
-        $alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        $pass = [];
+        $alphabet    = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        $pass        = [];
         $alphaLength = strlen($alphabet) - 1;
 
         for ($i = 0; $i < 8; $i++) {
-            $n = rand(0, $alphaLength);
+            $n      = rand(0, $alphaLength);
             $pass[] = $alphabet[$n];
         }
+
         return implode($pass);
     }
 }

@@ -1,8 +1,8 @@
 <template>
     <!-- Login Box -->
-      <div class="login-box">
+    <div class="login-box">
         <slot></slot>
-      </div>
+    </div>
     <!-- Login Box -->
 </template>
 

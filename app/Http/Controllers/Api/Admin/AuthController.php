@@ -15,8 +15,8 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-    	$credentials = $request->only('email', 'password');
-        $json = [
+        $credentials = $request->only('email', 'password');
+        $json        = [
             'message' => '',
             'errors'  => '',
             'code'    => 500
@@ -25,9 +25,9 @@ class AuthController extends Controller
         $guard = Auth::guard('admin');
 
         if ($guard->attempt($credentials)) {
-        	$request->session()->regenerate();
+            $request->session()->regenerate();
             $json['code'] = 200;
-		}
+        }
 
         return \response()->json($json);
     }
@@ -39,19 +39,19 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-    	$json = [
-          'message' => '',
-          'errors'  => '',
-          'code'    => 200
+        $json = [
+            'message' => '',
+            'errors'  => '',
+            'code'    => 200
         ];
-    	Auth::logout();
+        Auth::logout();
 
-	    $request->session()->invalidate();
+        $request->session()->invalidate();
 
-	    $request->session()->regenerateToken();
+        $request->session()->regenerateToken();
 
-      //Auth::logoutOtherDevices($currentPassword);
+        //Auth::logoutOtherDevices($currentPassword);
 
-      return \response()->json($json);
+        return \response()->json($json);
     }
 }

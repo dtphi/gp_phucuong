@@ -1,19 +1,19 @@
-import { 
-  LAYOUT_TOGGLE_SIDEBAR, 
-  LAYOUT_SWITCH_SIDEBAR, 
+import {
+  LAYOUT_TOGGLE_SIDEBAR,
+  LAYOUT_SWITCH_SIDEBAR,
   LAYOUT_HANDLE_SWIPE,
-  LAYOUT_CHANGE_SIDEBAR_ACTIVE 
+  LAYOUT_CHANGE_SIDEBAR_ACTIVE
 } from './types/mutation-types';
 
 export default {
-    namespaced: true,
-    state: {
-      sidebarClose: false,
-      sidebarStatic: false,
-      sidebarActiveElement: null,
-      chatOpen: false,
-      chatNotificationIcon: false,
-      chatNotificationPopover: false,
+  namespaced: true,
+  state: {
+    sidebarClose: false,
+    sidebarStatic: false,
+    sidebarActiveElement: null,
+    chatOpen: false,
+    chatNotificationIcon: false,
+    chatNotificationPopover: false,
   },
   mutations: {
     [LAYOUT_TOGGLE_SIDEBAR](state) {
@@ -49,16 +49,24 @@ export default {
     },
   },
   actions: {
-    toggleSidebar({ commit }) {
+    toggleSidebar({
+      commit
+    }) {
       commit('LAYOUT_TOGGLE_SIDEBAR');
     },
-    switchSidebar({ commit }, value) {
+    switchSidebar({
+      commit
+    }, value) {
       commit('LAYOUT_SWITCH_SIDEBAR', value);
     },
-    handleSwipe({ commit }, e) {
+    handleSwipe({
+      commit
+    }, e) {
       commit('LAYOUT_HANDLE_SWIPE', e);
     },
-    changeSidebarActive({ commit }, index) {
+    changeSidebarActive({
+      commit
+    }, index) {
       commit('LAYOUT_CHANGE_SIDEBAR_ACTIVE', index);
     },
   }

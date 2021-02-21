@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class NewsGroup extends Model
 {
-	protected $table = 'news_groups';
+    protected $table = 'news_groups';
 
     /**
      * The attributes that are mass assignable.
@@ -20,19 +20,18 @@ class NewsGroup extends Model
         'description'
     ];
 
-	/**
-	 * [getNewsGroups description]
-	 * @param  array  $data [description]
-	 * @return [type]       [description]
-	 */
-	public static function getNewsGroups(array $data)
+    /**
+     * [getNewsGroups description]
+     * @param  array $data [description]
+     * @return [type]       [description]
+     */
+    public static function getNewsGroups(array $data)
     {
-    	$query = self::select('id', 'father_id', 'newsgroupname')->orderByDesc('id');
+        $query = self::select('id', 'father_id', 'newsgroupname')->orderByDesc('id');
 
         return [
             'total' => $query->count(),
-            'data'  => $query->get()
-                             ->toArray()
+            'data'  => $query->get()->toArray()
         ];
     }
 }

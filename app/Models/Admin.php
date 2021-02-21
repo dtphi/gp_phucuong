@@ -41,6 +41,7 @@ class Admin extends Authenticatable
     public function setPasswordAttribute($pass)
     {
         $bcrypt_password = Hash::make($pass);
+
         $this->attributes['password'] = $bcrypt_password;
 
         return $bcrypt_password;
