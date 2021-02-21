@@ -17,7 +17,10 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
-                      <a href="#generalTab" aria-controls="generalTab" role="tab" data-toggle="tab">General</a>|
+                      <a href="#generalTab" aria-controls="generalTab" role="tab" data-toggle="tab">General</a> | 
+                    </li>
+                    <li role="presentation" class="active">
+                      <a href="#newsGroupTab" aria-controls="newsGroupTab" role="tab" data-toggle="tab">News Group</a> | 
                     </li>
                     <li role="presentation">
                       <a href="#settingTab" aria-controls="settingTab" role="tab" data-toggle="tab">Setting</a>
@@ -27,6 +30,8 @@
                 <div class="tab-content form-horizontal" v-if="_isShowBody">
                   <TabGeneral role="tabpanel" class="tab-pane active" id="generalTab" 
                     :general-data="newsData"/>
+
+                  <TabNewsGroup role="tabpanel" class="tab-pane" id="newsGroupTab" />
 
                   <TabSetting role="tabpanel" class="tab-pane" id="settingTab" 
                     :setting-data="newsData"/>
@@ -59,10 +64,11 @@
     } from 'store@admin/types/action-types';
     import TabGeneral from './TabGeneral';
     import TabSetting from './TabSetting';
+    import TabNewsGroup from './TabNewsGroup';
 
     export default {
         name: 'TheModalAddForm',
-        components: {TabGeneral, TabSetting},
+        components: {TabGeneral, TabNewsGroup, TabSetting},
         data() {
             return {
               fullPage: false,
