@@ -35,16 +35,29 @@ export default [
             },
             {
                 path: 'dashboard',
-                component: Users,
-                name: 'admin.dashboard',
-                meta: {
-                    layout: MainLayout,
-                    role: 'admin',
-                    show: {
-                        footer: true
-                    },
-                    title: 'Dashboard | ' + config.site_name
-                }
+                component: {render: c => c('router-view')},
+                children: [
+                    {
+                        path: '',
+                        component: Users,
+                        name: 'admin.dashboard',
+                        meta: {
+                            auth: true,
+                            breadcrumbs: [
+                                {
+                                    name: 'Dashboard'
+                                }
+                            ],
+                            header: 'Dashboard',
+                            layout: MainLayout,
+                            role: 'admin',
+                            title: 'Users | ' + config.site_name,
+                            show: {
+                                footer: true
+                            }
+                        }
+                    }
+                ]
             },
             {
                 path: 'users',
@@ -58,8 +71,9 @@ export default [
                             auth: true,
                             breadcrumbs: [
                                 {
-                                    name: 'Users List',
-                                    link: 'admin.dashboard'
+                                    name: 'Dashboard',
+                                    linkName: 'admin.dashboard',
+                                    linkPath: '/dashboard'
                                 },
                                 {
                                     name: 'Users'
@@ -85,8 +99,9 @@ export default [
                             auth: true,
                             breadcrumbs: [
                                 {
-                                    name: 'News Groups List',
-                                    link: 'admin.dashboard'
+                                    name: 'Dashboard',
+                                    linkName: 'admin.dashboard',
+                                    linkPath: '/dashboard'
                                 },
                                 {
                                     name: 'News Groups'
@@ -112,8 +127,9 @@ export default [
                             auth: true,
                             breadcrumbs: [
                                 {
-                                    name: 'News List',
-                                    link: 'admin.dashboard'
+                                    name: 'Dashboard',
+                                    linkName: 'admin.dashboard',
+                                    linkPath: '/dashboard'
                                 },
                                 {
                                     name: 'News'

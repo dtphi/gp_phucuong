@@ -83,6 +83,12 @@ class CSS {
         $cssStype = $this->mapCss();
         $scripts = '';
 
+        if (Request::is('admin/dashboard')) {
+            $cssStype = $this->mapCssUser();
+            $scripts = $this->mapScriptUser();
+            $optionClass = 'hold-transition sidebar-mini layout-fixed';
+        }
+
         if (Request::is('admin/user*')) {
             $cssStype = $this->mapCssUser();
             $scripts = $this->mapScriptUser();
