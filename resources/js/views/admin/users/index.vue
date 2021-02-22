@@ -1,8 +1,8 @@
 <template>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
-        <Breadcrumb/>
+        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+        <breadcrumb></breadcrumb>
 
         <!-- Main content -->
         <section class="content">
@@ -13,7 +13,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Users List</h3>
                                 <div style="float:right">
-                                    <BtnAdd/>
+                                    <btn-add></btn-add>
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -30,9 +30,10 @@
                                     </tr>
                                     </thead>
                                     <tbody v-if="_notEmpty">
-                                    <Item v-for="(item,index) in _userList"
-                                          :user="item"
-                                          :key="item.id"/>
+                                    <item
+                                            v-for="(item,index) in _userList"
+                                            :user="item"
+                                            :key="item.id"></item>
                                     </tbody>
                                 </table>
                             </div>
@@ -48,8 +49,8 @@
         </section>
         <!-- /.content -->
 
-        <UserForm/>
-        <v-dialog/>
+        <user-form></user-form>
+        <v-dialog></v-dialog>
     </div>
     <!-- /.content-wrapper -->
 </template>

@@ -4,12 +4,12 @@
        v-on:mouseleave.prevent="_hideAction">
         <i v-if="isFolder" class="fas fa-plus"></i>
         <span>{{ group.newsgroupname }}</span>
-        <BtnGroupAction
+        <btn-group-action
             :is-action-show="isItemRoot"
             :current-group="group"
             v-show="active"
             class="float-sm-right center"
-            style="margin-top:0px"/>
+            style="margin-top:0px"></btn-group-action>
     </a>
 </template>
 

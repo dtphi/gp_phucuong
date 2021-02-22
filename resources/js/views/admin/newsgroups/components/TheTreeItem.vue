@@ -1,14 +1,16 @@
 <template>
     <li>
-        <TheItem :is-item-root="isRoot" :group="item" :is-folder="isFolder"/>
+        <the-item
+            :is-item-root="isRoot"
+            :group="item"
+            :is-folder="isFolder"></the-item>
 
         <ul class="nested" v-if="isFolder">
-            <TheTreeItem
+            <the-tree-item
                 class="treeview-animated-items"
                 v-for="(child, index) in item.children"
                 :key="index"
-                :item="child"
-            />
+                :item="child"></the-tree-item>
         </ul>
     </li>
 </template>

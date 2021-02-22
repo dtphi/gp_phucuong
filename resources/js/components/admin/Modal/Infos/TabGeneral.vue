@@ -4,32 +4,32 @@
             <div class="form-group row">
                 <label for="news_name" class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
                 <div class="col-sm-10">
-                    <ValidationProvider name="news_name" rules="required|max:191" v-slot="{ errors }">
+                    <validation-provider name="news_name" rules="required|max:191" v-slot="{ errors }">
                         <input v-model="generalData.newsname" type="text" class="form-control"
                                :placeholder="$options.setting.nameTxt">
                         <span class="text-red">{{ errors[0] }}</span>
-                    </ValidationProvider>
+                    </validation-provider>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="news_description"
                        class="col-sm-2 col-form-label">{{$options.setting.descriptionTxt}}</label>
                 <div class="col-sm-10">
-                    <ValidationProvider name="news_description" rules="required|max:191" v-slot="{ errors }">
+                    <validation-provider name="news_description" rules="required|max:191" v-slot="{ errors }">
                         <input v-model="generalData.description" class="form-control"
                                :placeholder="$options.setting.descriptionTxt">
                         <span class="text-red">{{ errors[0] }}</span>
-                    </ValidationProvider>
+                    </validation-provider>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="news_newslink" class="col-sm-2 col-form-label">{{$options.setting.newsLinkTxt}}</label>
                 <div class="col-sm-10">
-                    <ValidationProvider name="news_newslink" rules="required|max:191" v-slot="{ errors }">
+                    <validation-provider name="news_newslink" rules="required|max:191" v-slot="{ errors }">
                         <input v-model="generalData.newslink" class="form-control"
                                :placeholder="$options.setting.newsLinkTxt">
                         <span class="text-red">{{ errors[0] }}</span>
-                    </ValidationProvider>
+                    </validation-provider>
                 </div>
             </div>
         </div>

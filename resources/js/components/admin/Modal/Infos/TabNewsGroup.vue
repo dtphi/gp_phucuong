@@ -1,10 +1,10 @@
 <template>
     <transition name="modal-tab-general">
         <div class="card-body">
-            <div class="form-group row">
+            <div class="form-group row" style="background: #dddddd">
                 <label class="col-sm-3 col-form-label">Group Selected: </label>
                 <div class="col-sm-9">
-                    <span>{{_selectedGroup}}</span>
+                    <span class="form-control">{{_selectedGroup}}</span>
                 </div>
             </div>
             <div class="form-group row" style="height:350px;overflow-y: scroll;">

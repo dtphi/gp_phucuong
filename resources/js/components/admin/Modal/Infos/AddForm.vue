@@ -2,9 +2,9 @@
     <transition name="modal-news-add">
         <div :class="classShow" :style="styleCss" data-keyboard="false">
             <div class="modal-dialog" style="min-width: 1000px">
-                <ValidationObserver ref="observerInfo" @submit.prevent="_submitInfo">
+                <validation-observer ref="observerInfo" @submit.prevent="_submitInfo">
                     <div class="modal-content">
-                        <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
+                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
                         <div class="modal-header">
                             <h4 class="modal-title">{{_getSetForm.title}}</h4>
                             <button type="button" class="close" @click="_close">
@@ -59,7 +59,7 @@
                             </button>
                         </div>
                     </div>
-                </ValidationObserver>
+                </validation-observer>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->

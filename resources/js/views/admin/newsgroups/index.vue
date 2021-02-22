@@ -1,7 +1,7 @@
 <template>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <Breadcrumb/>
+        <breadcrumb></breadcrumb>
 
         <!-- Main content -->
         <section class="content">
@@ -20,10 +20,10 @@
                             <div class="card-body">
                                 <div class="treeview-animated mx-4 my-4">
                                     <ul class="treeview-animated-list">
-                                        <TreeItem
+                                        <tree-item
                                             :is-root="rootKey"
                                             class="treeview-animated-items"
-                                            :item="_lists.root"/>
+                                            :item="_lists.root"></tree-item>
                                     </ul>
                                 </div>
                             </div>
@@ -35,9 +35,9 @@
         </section>
         <!-- /.content -->
 
-        <FormModal/>
+        <form-modal></form-modal>
 
-        <v-dialog/>
+        <v-dialog></v-dialog>
     </div>
     <!-- /.content-wrapper -->
 </template>

@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper">
-        <Navbar/>
-        <Sidebar/>
+        <navbar></navbar>
+        <sidebar></sidebar>
         <slot></slot>
-        <Footer/>
-        <ControlSideBar/>
+        <footer></footer>
+        <control-side-bar></control-side-bar>
     </div>
 </template>
 

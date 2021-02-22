@@ -11,8 +11,8 @@
             </div>
         </td>
         <td>
-            <BtnEdit :user-id="user.id"/>
-            <BtnDelete :user-id="user.id"/>
+            <btn-edit :user-id="user.id"></btn-edit>
+            <btn-delete :user-id="user.id"></btn-delete>
         </td>
     </tr>
 </template>

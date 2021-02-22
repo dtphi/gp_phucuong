@@ -2,9 +2,9 @@
     <transition name="modal-user-add">
         <div :class="classShow" :style="styleCss" data-keyboard="false">
             <div class="modal-dialog modal-lg">
-                <ValidationObserver ref="observerUser" @submit.prevent="_submitUser">
+                <validation-observer ref="observerUser" @submit.prevent="_submitUser">
                     <div class="modal-content">
-                        <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
+                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
                         <div class="modal-header">
                             <h4 class="modal-title">{{_getSetForm.title}}</h4>
                             <button type="button" class="close" @click="_close">
@@ -21,7 +21,7 @@
                                         <label for="user_name"
                                                class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
                                         <div class="col-sm-10">
-                                            <ValidationProvider
+                                            <validation-provider
                                                 name="user_name"
                                                 rules="required|max:191"
                                                 v-slot="{ errors }">
@@ -31,7 +31,7 @@
                                                     class="form-control"
                                                     :placeholder="$options.setting.nameTxt">
                                                 <span class="text-red">{{ errors[0] }}</span>
-                                            </ValidationProvider>
+                                            </validation-provider>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -39,7 +39,7 @@
                                             for="user_email"
                                             class="col-sm-2 col-form-label">{{$options.setting.emailTxt}}</label>
                                         <div class="col-sm-10">
-                                            <ValidationProvider
+                                            <validation-provider
                                                 :immediate="false"
                                                 name="user_email"
                                                 rules="required|email|max:191"
@@ -50,7 +50,7 @@
                                                     class="form-control"
                                                     :placeholder="$options.setting.emailTxt">
                                                 <span class="text-red">{{ errors[0] }}</span>
-                                            </ValidationProvider>
+                                            </validation-provider>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -58,7 +58,7 @@
                                             for="user_password"
                                             class="col-sm-2 col-form-label">{{$options.setting.passwordTxt}}</label>
                                         <div class="col-sm-10">
-                                            <ValidationProvider
+                                            <validation-provider
                                                 :immediate="false"
                                                 name="user_password"
                                                 rules="required|minLength:8|max:191"
@@ -69,7 +69,7 @@
                                                     class="form-control"
                                                     :placeholder="$options.setting.passwordTxt">
                                                 <span class="text-red">{{ errors[0] }}</span>
-                                            </ValidationProvider>
+                                            </validation-provider>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                             </button>
                         </div>
                     </div>
-                </ValidationObserver>
+                </validation-observer>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->

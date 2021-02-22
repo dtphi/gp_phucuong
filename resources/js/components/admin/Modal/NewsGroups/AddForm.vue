@@ -2,9 +2,9 @@
     <transition name="modal-news-group-add">
         <div :class="classShow" :style="styleCss" data-keyboard="false">
             <div class="modal-dialog modal-lg">
-                <ValidationObserver ref="observerNewsGroup" @submit.prevent="_submitInfo">
+                <validation-observer ref="observerNewsGroup" @submit.prevent="_submitInfo">
                     <div class="modal-content">
-                        <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
+                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
                         <div class="modal-header">
                             <h4 class="modal-title">{{_getSetForm.title}}</h4>
                             <button type="button" class="close" aria-label="Close" @click="_close">
@@ -13,19 +13,19 @@
                                 </span>
                             </button>
                         </div>
-                        <transition v-if="isShowParentInfo">
-                            <NewsGroupCurrent :parent-info="parentInfo"/>
-                        </transition>
+                        <template v-if="isShowParentInfo">
+                            <news-group-current :parent-info="parentInfo"></news-group-current>
+                        </template>
                         <div class="modal-body" v-if="groupData">
                             <!-- form start -->
                             <div class="form-horizontal">
 
-                                <transition name="card-body-add" v-if="_getSetForm.isAddFrom">
+                                <template name="card-body-add" v-if="_getSetForm.isAddFrom">
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
-                                                <ValidationProvider
+                                                <validation-provider
                                                     name="news_group_name"
                                                     rules="required|max:191"
                                                     v-slot="{ errors }">
@@ -35,13 +35,13 @@
                                                         class="form-control"
                                                         placeholder="News Group Name">
                                                     <span class="text-red">{{ errors[0] }}</span>
-                                                </ValidationProvider>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Description</label>
                                             <div class="col-sm-10">
-                                                <ValidationProvider
+                                                <validation-provider
                                                     name="news_group_description"
                                                     rules="max:200"
                                                     v-slot="{ errors }">
@@ -51,18 +51,18 @@
                                                         placeholder="Description"></textarea>
                                                     <span
                                                         class="text-red">{{ errors[0] }}</span>
-                                                </ValidationProvider>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                     </div>
-                                </transition>
+                                </template>
 
-                                <transition name="card-body-edit" class="card-body" v-else>
+                                <template name="card-body-edit" class="card-body" v-else>
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
-                                                <ValidationProvider
+                                                <validation-provider
                                                     name="news_group_name"
                                                     rules="required|max:191"
                                                     v-slot="{ errors }">
@@ -72,13 +72,13 @@
                                                         class="form-control"
                                                         placeholder="News Group Name">
                                                     <span class="text-red">{{ errors[0] }}</span>
-                                                </ValidationProvider>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Description</label>
                                             <div class="col-sm-10">
-                                                <ValidationProvider
+                                                <validation-provider
                                                     name="news_group_description"
                                                     rules="max:200"
                                                     v-slot="{ errors }">
@@ -87,11 +87,11 @@
                                                         class="form-control"
                                                         placeholder="Description"></textarea>
                                                     <span class="text-red">{{ errors[0] }}</span>
-                                                </ValidationProvider>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                     </div>
-                                </transition>
+                                </template>
 
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                             </button>
                         </div>
                     </div>
-                </ValidationObserver>
+                </validation-observer>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
@@ -113,7 +113,11 @@
 </template>
 
 <script>
-    import {mapState, mapGetters, mapActions} from 'vuex';
+    import {
+        mapState, 
+        mapGetters, 
+        mapActions
+    } from 'vuex';
     import NewsGroupCurrent from './TheGroupInfo';
     import {
         MODULE_NEWS_GROUP,

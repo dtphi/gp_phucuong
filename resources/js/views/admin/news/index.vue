@@ -1,7 +1,7 @@
 <template>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <Breadcrumb/>
+        <breadcrumb></breadcrumb>
 
         <!-- Main content -->
         <section class="content">
@@ -12,7 +12,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">News List</h3>
                                 <div style="float:right">
-                                    <BtnAdd/>
+                                    <btn-add></btn-add>
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -20,10 +20,10 @@
                                 <div class="dataTables_wrapper dt-bootstrap4 no-footer">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
-                                            <Perpage/>
+                                            <perpage></perpage>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
-                                            <ListSearch/>
+                                            <list-search></list-search>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -87,7 +87,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <Paginate/>
+                                    <paginate></paginate>
                                 </div>
                             </div>
                             <!-- /.card-body -->
