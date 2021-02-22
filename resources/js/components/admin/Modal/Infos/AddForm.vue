@@ -1,7 +1,7 @@
 <template>
     <transition name="modal-news-add">
         <div :class="classShow" :style="styleCss" data-keyboard="false">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog" style="min-width: 1000px">
                 <ValidationObserver ref="observerInfo" @submit.prevent="_submitInfo">
                     <div class="modal-content">
                         <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
@@ -30,22 +30,23 @@
                                 </ul>
                                 <!-- form start -->
                                 <div class="tab-content form-horizontal" v-if="_isShowBody">
-                                    <TabGeneral
+                                    <tab-general
                                         role="tabpanel"
                                         class="tab-pane active"
                                         id="generalTab"
-                                        :general-data="newsData"/>
+                                        :general-data="newsData"></tab-general>
 
-                                    <TabNewsGroup
+                                    <tab-news-group
                                         role="tabpanel"
                                         class="tab-pane"
-                                        id="newsGroupTab"/>
+                                        :group-data="newsData"
+                                        id="newsGroupTab"></tab-news-group>
 
-                                    <TabSetting
+                                    <tab-setting
                                         role="tabpanel"
                                         class="tab-pane"
                                         id="settingTab"
-                                        :setting-data="newsData"/>
+                                        :setting-data="newsData"></tab-setting>
                                 </div>
                             </div>
                         </div>
@@ -67,6 +68,7 @@
 </template>
 
 <script>
+    import { EventBus } from '@app/api/utils/event-bus';
     import {
         mapState,
         mapGetters,
@@ -128,7 +130,15 @@
         },
 
         mounted() {
-            this._close()
+            const _self = this;
+            _self._close();
+            EventBus.$on('item-selected-group', (groupItem) => {
+                if ((typeof groupItem === 'object') && groupItem.hasOwnProperty('id')) {
+                    _self.newsData.newsgroup_id = groupItem.id;
+                    _self.newsData.newsgroupname = groupItem.newsgroupname;
+                }
+                console.log(`Oh, that's nice. It's gotten ${groupItem.id} clicks! :)`)
+            });
         },
 
         methods: {

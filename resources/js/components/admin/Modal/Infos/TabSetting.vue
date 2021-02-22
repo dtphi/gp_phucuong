@@ -14,7 +14,7 @@
     import { MM } from 'com@admin/libs/mm/mm.min';
 
     export default {
-        name: 'TabGeneralForm',
+        name: 'TabSettingForm',
 
         props: {
             settingData: {

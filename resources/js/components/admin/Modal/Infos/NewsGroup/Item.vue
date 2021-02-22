@@ -1,5 +1,6 @@
 <template>
     <a class="treeview-animated-items-header"
+        @click="_selectGroup"
        v-on:mouseover.prevent="_showAction"
        v-on:mouseleave.prevent="_hideAction">
         <i v-if="isFolder" class="fas fa-plus"></i>
@@ -9,6 +10,7 @@
 </template>
 
 <script>
+    import { EventBus } from '@app/api/utils/event-bus';
     import {
         mapGetters,
         mapActions
@@ -44,12 +46,19 @@
             }
         },
         methods: {
-            _showAction() {
+            _showAction () {
                 this.active = true;
             },
 
-            _hideAction() {
+            _hideAction () {
                 this.active = false;
+            },
+
+            _selectGroup () {
+                EventBus.$emit('item-selected-group', { ...{id: 0, newsgroupname: ''}, ...{
+                    id: this.group.id,
+                    newsgroupname: this.group.newsgroupname
+                }});
             }
         },
         setting: {

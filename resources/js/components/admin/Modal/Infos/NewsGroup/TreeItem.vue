@@ -1,14 +1,16 @@
 <template>
     <li>
-        <NewsGroupItem :is-item-root="isRoot" :group="item" :is-folder="isFolder"/>
+        <news-group-item
+            :is-item-root="isRoot"
+            :group="item" 
+            :is-folder="isFolder"></news-group-item>
 
         <ul class="nested" v-if="isFolder">
-            <NewsGroupTreeItem
+            <news-group-tree-item
                 class="treeview-animated-items"
                 v-for="(child, index) in item.children"
                 :key="index"
-                :item="child"
-            />
+                :item="child"></news-group-tree-item>
         </ul>
     </li>
 </template>
@@ -27,7 +29,9 @@
             item: [Object, Array]
         },
         data: function () {
-            return {};
+            return {
+                selectedGroup: {}
+            };
         },
         computed: {
             isFolder() {
