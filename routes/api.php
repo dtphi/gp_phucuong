@@ -32,5 +32,6 @@ Route::namespace(API_ADMIN_NAMESPACE)
         Route::apiResource('users', 'AdminController');
         Route::apiResource('news-groups', 'NewsGroupController');
         Route::apiResource('news', 'InformationController');
-    });
 
+        Route::any('/mmedia/{any}', function () {});
+    });

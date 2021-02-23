@@ -87,4 +87,13 @@ class InformationController extends ApiController
 
         return $this->respondUpdated();
     }
+
+    public function uploadImage(Request $request) 
+    {
+        if ($request->method === 'OPTIONS') {
+            return;
+        }
+
+        return $this->respondBadRequest();
+    }
 }

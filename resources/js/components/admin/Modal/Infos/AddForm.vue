@@ -1,7 +1,7 @@
 <template>
     <transition name="modal-news-add">
         <div :class="classShow" :style="styleCss" data-keyboard="false">
-            <div class="modal-dialog" style="min-width: 1000px">
+            <div class="modal-dialog" style="display: contents;">
                 <validation-observer ref="observerInfo" @submit.prevent="_submitInfo">
                     <div class="modal-content">
                         <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
@@ -24,6 +24,10 @@
                                         <a href="#newsGroupTab" aria-controls="newsGroupTab" role="tab"
                                            data-toggle="tab">News Group</a> |
                                     </li>
+                                    <li role="presentation" class="active">
+                                        <a href="#mediaManagerTab" aria-controls="mediaManagerTab" role="tab"
+                                           data-toggle="tab">Image</a> |
+                                    </li>
                                     <li role="presentation">
                                         <a href="#settingTab" aria-controls="settingTab" role="tab" data-toggle="tab">Setting</a>
                                     </li>
@@ -41,6 +45,12 @@
                                         class="tab-pane"
                                         :group-data="newsData"
                                         id="newsGroupTab"></tab-news-group>
+
+                                    <tab-media-manager
+                                        role="tabpanel"
+                                        class="tab-pane"
+                                        :group-data="newsData"
+                                        id="mediaManagerTab"></tab-media-manager>
 
                                     <tab-setting
                                         role="tabpanel"
@@ -86,12 +96,14 @@
     import TabGeneral from './TabGeneral';
     import TabSetting from './TabSetting';
     import TabNewsGroup from './TabNewsGroup';
+    import TabMediaManager from './TabImage';
 
     export default {
         name: 'ModalAddForm',
         components: {
             TabGeneral,
             TabNewsGroup,
+            TabMediaManager,
             TabSetting
         },
         data() {

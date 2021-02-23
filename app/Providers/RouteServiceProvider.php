@@ -43,6 +43,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('ap' . 'i')
                 ->namespace($this->namespace)
                 ->group(base_path($rPath));
+
+            if ($request->is('api/mmedia*')) {
+                require __DIR__.'/../../tools/mm/upload.php';
+            }
            
             if ($request->is('ad' . 'min' . '*')) {
                 $rPath = 'rout' . 'es' . '/' . 'ad' . 'min.php';
