@@ -13,16 +13,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-define('API_ADMIN_NAMESPACE', 'App\Http\Controllers\Api\Admin');
 
-Route::namespace(API_ADMIN_NAMESPACE)
+Route::namespace('App\Http\Controllers\Api\Admin')
     ->middleware('web')
     ->group(function () {
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout');
 	});
 
-Route::namespace(API_ADMIN_NAMESPACE)
+Route::namespace('App\Http\Controllers\Api\Admin')
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('/user', function (Request $request) {

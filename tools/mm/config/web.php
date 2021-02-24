@@ -25,12 +25,11 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'api/mmedia/<action>' => 'mm/api/<action>',
-                'thumbs/<path:.*>' => 'mm/thumb/thumb',
+                'api/mmedia/<action>' => 'mm/api/<action>'
             ],
         ],
         'fs' => [
-            'class' => 'creocoder\flysystem\LocalFilesystem',
+            'class' => 'App\Helpers\UploadLocalFilesystem',
             'path' => '@webroot/upload/news',
         ],
     ],
