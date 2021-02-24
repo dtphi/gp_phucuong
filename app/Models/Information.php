@@ -27,7 +27,8 @@ class Information extends Model
         'newsname',
         'user_id',
         'description',
-        'newslink'
+        'newslink',
+        'picture'
     ];
 
     /**

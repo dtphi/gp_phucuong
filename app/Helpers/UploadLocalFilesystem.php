@@ -11,7 +11,7 @@ use creocoder\flysystem\LocalFilesystem;
 class UploadLocalFilesystem extends LocalFilesystem
 {
     /**
-     * @return Local
+     * @return AdapterLocal
      */
     protected function prepareAdapter()
     {

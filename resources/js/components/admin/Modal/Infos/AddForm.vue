@@ -151,6 +151,13 @@
                 }
                 console.log(`Oh, that's nice. It's gotten ${groupItem.id} clicks! :)`)
             });
+
+            EventBus.$on('on-selected-image', (imgItem) => {
+                if ((typeof imgItem === 'object') && imgItem.hasOwnProperty('selected')) {
+                    _self.newsData.picture = groupItem.path;
+                }
+                console.log(`Oh, that's nice. It's gotten ${groupItem.id} clicks! :)`)
+            });
         },
 
         methods: {

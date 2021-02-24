@@ -6,13 +6,13 @@ use Yii;
 use iutbay\yii2\mm\models\Thumb;
 
 /**
- * LocalFilesystem
+ * AdapterLocal
  *
  * @author Phi
  */
 class AdapterLocal extends Local
 {
-		const SIZE_THUMB = 'thumb';
+	const SIZE_THUMB = 'thumb';
     const SIZE_MEDIUM = 'medium';
     const SIZE_LARGE = 'large';
     const SIZE_FULL = 'full';
@@ -31,12 +31,12 @@ class AdapterLocal extends Local
         self::SIZE_LARGE => [600, 600],
     ];
 
-		/**
+	/**
      * @var string thumbs default size
      */
     public static $thumbsSize = self::SIZE_THUMB;
 
-		/**
+	/**
      * @inheritdoc
      */
     public function listContents($directory = '', $recursive = false)
@@ -56,16 +56,20 @@ class AdapterLocal extends Local
             if (preg_match('#(^|/|\\\\)\.{1,2}$#', $path)) {
                 continue;
             }
-					
-		        $thumb = Yii::createObject([
-		            'class' => Thumb::className(),
-		            'path' => self::getThumbSrc($path),
-		        ]);
-		        if ($thumb->validate() && $thumb->save()) {
-		        } else {
-		            throw new \yii\web\NotFoundHttpException();
-		        }
-            $result[] = $this->normalizeFileInfo($file);
+
+            $node = $this->normalizeFileInfo($file);
+            if ($node['type'] === 'file') {
+                $thumb = Yii::createObject([
+                    'class' => Thumb::className(),
+                    'path' => self::getThumbSrc($path),
+                ]);
+                if ($thumb->validate() && $thumb->save()) {
+                } else {
+                    throw new \yii\web\NotFoundHttpException();
+                }
+            }
+
+            $result[] = $node;
         }
 
         unset($iterator);
@@ -87,6 +91,7 @@ class AdapterLocal extends Local
         if (preg_match($regexp, $path, $matches) && in_array($size, array_keys(self::$sizes))) {
             $size = self::$sizes[$size];
             $dstPath = "{$matches[1]}_{$size[0]}x{$size[1]}.{$matches[2]}";
+            
             return $dstPath;
         } else {
             throw new \yii\base\InvalidParamException();
