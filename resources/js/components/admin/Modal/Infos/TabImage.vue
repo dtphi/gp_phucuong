@@ -14,8 +14,8 @@
 </template>
 
 <script>
-    require ('../../libs/mm/style.css');
-    import { MM } from 'com@admin/libs/mm/mm.min';
+    require ('@app/tools/mm/dist/style.css');
+    import { MM } from '@app/tools/mm/dist/mm.min';
     import { EventBus } from '@app/api/utils/event-bus';
 
     export default {
