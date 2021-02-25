@@ -153,8 +153,7 @@
             });
 
             EventBus.$on('on-selected-image', (imgItem) => {
-                console.log(imgItem,(typeof imgItem.selected === 'object'), imgItem.selected.hasOwnProperty('path'))
-                if ((typeof imgItem.selected === 'object') && imgItem.selected.hasOwnProperty('path')) {
+                if (imgItem.selected) {
                     _self.newsData.picture = imgItem.selected.path;
                 } else {
                     _self.newsData.picture = null;
