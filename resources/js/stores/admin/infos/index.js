@@ -99,16 +99,25 @@ export default {
     async [ACTION_GET_INFO_LIST]({
       dispatch,
       commit
-    }) {
+    }, params) {
       dispatch(ACTION_SET_LOADING, true);
       await apiGetInfos(
         (infos) => {
-          commit(INFOS_SET_INFO_LIST, infos)
+          commit(INFOS_SET_INFO_LIST, infos.data.results)
+          dispatch('setConfigApp', {
+            links: { ...infos.links
+            },
+            meta: { ...infos.meta
+            }
+          }, {
+            root: true
+          })
           commit(INFOS_GET_INFO_LIST_SUCCESS, true)
         },
         (errors) => {
           commit(INFOS_GET_INFO_LIST_FAILED, false)
-        }
+        },
+        params
       );
       dispatch(ACTION_SET_LOADING, false);
     },

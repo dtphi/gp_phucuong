@@ -14,15 +14,45 @@ const debug = process.env.NODE_ENV === 'debuger';
 
 export default new Vuex.Store({
   state: {
-    cfApp: null
+    cfApp: {
+      errors: [],
+      links: {},
+      meta: {}
+    }
   },
   getters: {
     cfApp(state) {
-      return state;
+      return state.cfApp;
+    },
+    resourcePaginationData(state) {
+      return {
+        links: state.cfApp.links,
+        meta: state.cfApp.meta
+      }
     }
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    configApp(state, configs) {
+      state.cfApp.links = configs.links;
+      state.cfApp.meta = configs.meta;
+    }
+  },
+  actions: {
+    setConfigApp({
+      commit
+    }, configs) {
+      commit('configApp', {
+        ...{
+          links: {},
+          meta: {}
+        },
+        ...{
+          links: configs.links,
+          meta: configs.meta
+        }
+      });
+    }
+  },
   modules: {
     auth,
     layout,

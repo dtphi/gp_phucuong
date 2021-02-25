@@ -29,6 +29,7 @@
         "axios-auth-refresh": "^3.0.0",
         "file-saver": "^2.0.5",
         "laravel-mix-alias": "^1.0.2",
+        "laravel-vue-pagination": "^2.3.1",
         "linkifyjs": "^2.1.9",
         "lodash": "^4.17.20",
         "moment": "^2.29.1",

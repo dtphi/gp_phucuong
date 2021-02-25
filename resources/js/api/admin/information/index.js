@@ -66,12 +66,14 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
-export const apiGetInfos = (resolve, errResole) => {
-  return axios.get(API_INFOMATIONS_RESOURCE)
+export const apiGetInfos = (resolve, errResole, params) => {
+  return axios.get(API_INFOMATIONS_RESOURCE, {
+      params: params
+    })
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
-        const data = response.data.data.results;
+        const data = response.data;
         resolve(data);
       } else {
         errResole([{
