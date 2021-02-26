@@ -3,7 +3,13 @@
         <td>{{info.id}}</td>
         <td>{{info.newsname}}</td>
         <td>{{info.description}}</td>
-        <td></td>
+        <td>
+            <div class="file animated fadeIn">
+                <div class="file-preview">
+                    <img :src="_getImgUrl()" class="thumb" />
+                </div>
+            </div>
+        </td>
         <td>
             <div class="icheck-primary">
                 <input type="checkbox" :id="`info_id_${info.id}`" :value="info.id">
@@ -23,6 +29,9 @@
     import {mapActions} from 'vuex';
     import BtnEdit from './TheBtnEdit';
     import BtnDelete from './TheBtnDelete';
+    import {
+        fn_get_base_url_image
+    } from '@app/api/utils/fn-helper';
 
     export default {
         name: 'TheItem',
@@ -44,6 +53,10 @@
         data() {
             return {};
         },
-        methods: {}
+        methods: {
+            _getImgUrl() {
+                return fn_get_base_url_image(this.info.picture);
+            }
+        }
     };
 </script>
