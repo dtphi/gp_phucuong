@@ -18,7 +18,7 @@ class InformationController extends ApiController
 
     public function index(Request $request)
     {
-        return new InformationCollection(Information::orderByDesc('id')->paginate(2));
+        return new InformationCollection(Information::orderByDesc('id')->paginate($this->_getPerPage()));
     }
 
     public function show(Request $request, $id = null)

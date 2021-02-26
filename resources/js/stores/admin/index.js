@@ -17,7 +17,11 @@ export default new Vuex.Store({
     cfApp: {
       errors: [],
       links: {},
-      meta: {}
+      meta: {},
+      moduleActive: {
+        name: '',
+        actionList: ''
+      },
     }
   },
   getters: {
@@ -29,12 +33,22 @@ export default new Vuex.Store({
         links: state.cfApp.links,
         meta: state.cfApp.meta
       }
+    },
+    isNotEmptyList(state) {
+      return (state.cfApp.meta.total > 0);
+    },
+    moduleNameActive(state) {
+      return state.cfApp.moduleActive.name;
+    },
+    moduleActionListActive(state) {
+      return state.cfApp.moduleActive.actionList;
     }
   },
   mutations: {
     configApp(state, configs) {
       state.cfApp.links = configs.links;
       state.cfApp.meta = configs.meta;
+      state.cfApp.moduleActive = configs.moduleActive;
     }
   },
   actions: {
@@ -44,11 +58,16 @@ export default new Vuex.Store({
       commit('configApp', {
         ...{
           links: {},
-          meta: {}
+          meta: {},
+          moduleActive: {
+            name: '',
+            actionList: ''
+          }
         },
         ...{
           links: configs.links,
-          meta: configs.meta
+          meta: configs.meta,
+          moduleActive: configs.moduleActive
         }
       });
     }

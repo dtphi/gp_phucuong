@@ -194,4 +194,8 @@ class ApiController extends Controller
             'error' => $payload,
         ]);
     }
+
+    protected function _getPerPage() {
+        return (int)request()->query('perPage', 5);
+    }
 }

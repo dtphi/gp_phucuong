@@ -98,8 +98,10 @@ export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
-export const apiGetNewsGroups = (resolve, errResole) => {
-  return axios.get(API_NEWS_GROUPS_RESOURCE)
+export const apiGetNewsGroups = (resolve, errResole, params) => {
+  return axios.get(API_NEWS_GROUPS_RESOURCE, {
+      params: params
+    })
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -107,7 +109,6 @@ export const apiGetNewsGroups = (resolve, errResole) => {
           newsgroupname: "Danh Mục :",
           id: 0,
           children: response.data.data.results
-
         };
         resolve(data);
       } else {

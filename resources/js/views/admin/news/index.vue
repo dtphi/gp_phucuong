@@ -57,32 +57,15 @@
                                                     </th>
                                                 </tr>
                                                 </thead>
-                                                <tbody v-if="_notEmpty">
-                                                <!-- <tr role="row" class="odd">
-                                                  <td tabindex="0" class="sorting_1">Name 01</td>
-                                                  <td>Admin</td>
-                                                  <td>Admin</td>
-                                                  <td>
-                                                    <div class="icheck-primary">
-                                                      <input type="checkbox" id="key_01" name="Key" value="">
-                                                      <label for="key_01"></label>
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                                <tr role="row" class="even">
-                                                  <td tabindex="0" class="sorting_1">Name 02</td>
-                                                  <td>User</td>
-                                                  <td>user@mail.com</td>
-                                                  <td>
-                                                    <div class="icheck-primary">
-                                                      <input type="checkbox" id="key_02" name="Key" value="">
-                                                      <label for="key_02"></label>
-                                                    </div>
-                                                  </td>
-                                                </tr> -->
-                                                <Item v-for="(item,index) in _infoList"
-                                                      :info="item"
-                                                      :key="item.id"/>
+                                                <tbody>
+                                                    <template v-if="loading">
+                                                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+                                                    </template>
+                                                    <template v-if="_notEmpty">
+                                                        <item v-for="(item,index) in _infoList"
+                                                          :info="item"
+                                                          :key="item.id"></item>
+                                                    </template>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -110,7 +93,11 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex';
+    import {
+        mapState, 
+        mapGetters, 
+        mapActions
+    } from 'vuex';
     import Item from './components/TheItem';
 
     import InfoAddForm from 'com@admin/Modal/Infos/AddForm';
@@ -144,11 +131,12 @@
 
         data() {
             return {
-                fullPage: true
+                fullPage: false
             }
         },
 
         computed: {
+            ...mapGetters(['isNotEmptyList']),
             ...mapState(MODULE_INFO, [
                 'infos',
                 'loading'
@@ -159,8 +147,8 @@
             },
 
             _notEmpty() {
-                return this.infos && Object.keys(this.infos).length
+                return this.isNotEmptyList;
             }
-        },
+        }
     };
 </script>

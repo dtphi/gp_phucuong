@@ -18,7 +18,7 @@ class AdminController extends ApiController
 
     public function index(Request $request)
     {
-        return new AdminCollection(Admin::orderByDesc('id')->paginate());
+        return new AdminCollection(Admin::orderByDesc('id')->paginate($this->_getPerPage()));
     }
 
     public function show(Request $request, $id = null)

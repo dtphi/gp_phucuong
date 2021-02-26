@@ -73,8 +73,7 @@ export const apiGetInfos = (resolve, errResole, params) => {
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
-        const data = response.data;
-        resolve(data);
+        resolve(response.data);
       } else {
         errResole([{
           status: response.status,

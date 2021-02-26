@@ -45,13 +45,14 @@ export const apiGetUserById = (userId, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
-export const apiGetUsers = (resolve, errResole) => {
-  return axios.get(API_USERS_RESOURCE)
+export const apiGetUsers = (resolve, errResole, params) => {
+  return axios.get(API_USERS_RESOURCE,{
+      params: params
+    })
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
-        const data = response.data.data.results;
-        resolve(data);
+        resolve(response.data);
       } else {
         errResole([{
           status: response.status,

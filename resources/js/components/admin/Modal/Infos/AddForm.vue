@@ -46,7 +46,7 @@
                                         :group-data="newsData"
                                         id="newsGroupTab"></tab-news-group>
 
-                                    <tab-media-manager
+                                    <tab-media-manager ref="mediaManagerTab"
                                         role="tabpanel"
                                         class="tab-pane"
                                         :group-data="newsData"
@@ -109,7 +109,8 @@
         data() {
             return {
                 fullPage: false,
-                newsData: {}
+                newsData: {},
+                file: null
             };
         },
         computed: {
@@ -155,6 +156,7 @@
             EventBus.$on('on-selected-image', (imgItem) => {
                 if (imgItem.selected) {
                     _self.newsData.picture = imgItem.selected.path;
+                    _self.file = imgItem;
                 } else {
                     _self.newsData.picture = null;
                 }
@@ -171,6 +173,7 @@
 
             async _resetModal() {
                 this.$data.newsData = {};
+                this.$refs.mediaManagerTab.mediaMM.vm.$mmc.unselectFile(this.$data.file)
                 requestAnimationFrame(() => {
                     this.$refs.observerInfo.reset()
                 });

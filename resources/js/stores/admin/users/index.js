@@ -6,6 +6,9 @@ import {
   apiDeleteUser
 } from 'api@admin/user';
 import {
+    MODULE_USER
+} from '../types/module-types';
+import {
   USERS_SET_LOADING,
   USERS_GET_USER_LIST_SUCCESS,
   USERS_GET_USER_LIST_FAILED,
@@ -86,16 +89,29 @@ export default {
     async [ACTION_GET_USER_LIST]({
       dispatch,
       commit
-    }) {
+    }, params) {
       dispatch(ACTION_SET_LOADING, true);
       await apiGetUsers(
         (users) => {
-          commit(USERS_SET_USER_LIST, users)
+          commit(USERS_SET_USER_LIST, users.data.results)
+          dispatch('setConfigApp', {
+            links: { ...users.links
+            },
+            meta: { ...users.meta
+            },
+            moduleActive: {
+              name: MODULE_USER,
+              actionList: ACTION_GET_USER_LIST
+            }
+          }, {
+            root: true
+          })
           commit(USERS_GET_USER_LIST_SUCCESS, true)
         },
         (errors) => {
           commit(USERS_GET_USER_LIST_FAILED, false)
-        }
+        },
+        params
       );
       dispatch(ACTION_SET_LOADING, false);
     },

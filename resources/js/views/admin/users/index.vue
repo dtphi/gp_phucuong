@@ -1,7 +1,6 @@
 <template>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
         <breadcrumb></breadcrumb>
 
         <!-- Main content -->
@@ -18,24 +17,45 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table class="table table-bordered table-striped tbl-custom">
-                                    <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Created from</th>
-                                        <th>Key</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody v-if="_notEmpty">
-                                    <item
-                                            v-for="(item,index) in _userList"
-                                            :user="item"
-                                            :key="item.id"></item>
-                                    </tbody>
-                                </table>
+                                <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <perpage></perpage>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <list-search></list-search>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-bordered table-striped tbl-custom">
+                                                <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Created from</th>
+                                                    <th>Key</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template v-if="loading">
+                                                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+                                                    </template>
+                                                    <template v-if="_notEmpty">
+                                                        <item
+                                                            v-for="(item,index) in _userList"
+                                                            :user="item"
+                                                            :key="item.id"></item>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <paginate></paginate>
+                                </div>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -56,11 +76,18 @@
 </template>
 
 <script>
-    import {mapState, mapGetters, mapActions} from 'vuex';
+    import {
+        mapState, 
+        mapGetters, 
+        mapActions
+    } from 'vuex';
     import UserForm from 'com@admin/Modal/Users/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Item from './components/TheItem';
     import BtnAdd from './components/TheBtnAdd';
+    import Paginate from 'com@admin/Pagination';
+    import Perpage from 'com@admin/Pagination/SelectPerpage';
+    import ListSearch from 'com@admin/Search';
     import {
         MODULE_USER
     } from 'store@admin/types/module-types';
@@ -78,14 +105,18 @@
             Breadcrumb,
             UserForm,
             Item,
-            BtnAdd
+            BtnAdd,
+            Perpage,
+            ListSearch,
+            Paginate
         },
         data() {
             return {
-                fullPage: true
+                fullPage: false
             };
         },
         computed: {
+            ...mapGetters(['isNotEmptyList']),
             ...mapState(MODULE_USER, [
                 'users',
                 'loading'
@@ -96,7 +127,7 @@
             },
 
             _notEmpty() {
-                return this.users && Object.keys(this.users).length;
+                return this.isNotEmptyList;
             }
         },
         methods: {

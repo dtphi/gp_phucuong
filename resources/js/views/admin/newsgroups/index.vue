@@ -18,6 +18,9 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
+                                <template v-if="loading">
+                                    <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+                                </template>
                                 <div class="treeview-animated mx-4 my-4">
                                     <ul class="treeview-animated-list">
                                         <tree-item
@@ -57,21 +60,26 @@
 
     export default {
         name: 'NewsGroupsList',
-        components: {Breadcrumb, TreeItem, FormModal},
+        components: {
+            Breadcrumb, 
+            TreeItem, 
+            FormModal
+        },
         beforeCreate() {
             this.$store.dispatch(MODULE_NEWS_GROUP + '/' + ACTION_GET_NEWS_GROUP_LIST);
         },
         data() {
             return {
-                rootKey: 1
+                rootKey: 1,
+                fullPage: false
             };
         },
         computed: {
             ...mapState(MODULE_NEWS_GROUP,
                 [
-                    'newsGroups'
+                    'newsGroups',
+                    'loading'
                 ]),
-            ...mapGetters(MODULE_NEWS_GROUP, ['loading']),
             ...mapGetters(MODULE_NEWS_GROUP_MODAL, ['isOpen']),
             _lists() {
                 let rootTree = {...this.newsGroups};

@@ -6,6 +6,9 @@ import {
   apiDeleteInfo
 } from 'api@admin/information';
 import {
+      MODULE_INFO,
+  } from '../types/module-types';
+import {
   INFOS_SET_LOADING,
   INFOS_GET_INFO_LIST_SUCCESS,
   INFOS_GET_INFO_LIST_FAILED,
@@ -108,6 +111,10 @@ export default {
             links: { ...infos.links
             },
             meta: { ...infos.meta
+            },
+            moduleActive: {
+              name: MODULE_INFO,
+              actionList: ACTION_GET_INFO_LIST
             }
           }, {
             root: true

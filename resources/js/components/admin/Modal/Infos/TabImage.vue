@@ -6,7 +6,7 @@
             			<div id="media-info-manager"></div>
             		</div>
             		<div class="col-sm-12">
-            			<input type="text" id="file-input">
+            			<input type="text" id="file-input" disabled>
             		</div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 
         methods: {
             _changeImage(fi) {
-                EventBus.$emit('on-selected-image', fi);
+                EventBus.$emit('on-selected-image', fi)
             }
         },
 

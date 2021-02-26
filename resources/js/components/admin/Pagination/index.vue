@@ -21,16 +21,9 @@
 
 <script>
     import {
-        mapGetters,
-        mapActions
+        mapGetters
     } from 'vuex';
     import ResourcePagination from './ResourcePagination';
-    import {
-        MODULE_INFO,
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_INFO_LIST,
-    } from 'store@admin/types/action-types';
 
     export default {
         name: 'Pagination',
@@ -39,7 +32,7 @@
 
         data () {
             return {
-                limit: 15,
+                limit: 5,
                 showDisabled: true,
                 size: 'default',
                 align: 'right'
@@ -47,7 +40,7 @@
         },
 
         computed: {
-            ...mapGetters(['resourcePaginationData']),
+            ...mapGetters(['resourcePaginationData', 'moduleNameActive', 'moduleActionListActive']),
 
             _resourceData() {
                 return this.resourcePaginationData;
@@ -55,7 +48,6 @@
         },
 
         methods: {
-            ...mapActions(MODULE_INFO, [ACTION_GET_INFO_LIST]),
 
             _getTextPagination() {
                 //console.log(`I ${'>:D<'} C#`)
@@ -71,7 +63,11 @@
                 if (!page) {
                     page = 1;
                 }
-                _self.[ACTION_GET_INFO_LIST]({page: page});
+                const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
+                _self.$store.dispatch(actionName, {
+                    perPage: _self.resourcePaginationData.meta.per_page,
+                    page: page
+                });
             }
         },
 
