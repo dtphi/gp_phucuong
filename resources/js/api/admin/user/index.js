@@ -1,4 +1,8 @@
 import {
+  fn_get_base_api_url,
+  fn_get_base_api_detail_url
+} from '@app/api/utils/fn-helper';
+import {
   API_USERS_RESOURCE
 } from 'store@admin/types/api-paths';
 
@@ -27,8 +31,15 @@ const _users = [{
   createdAt: '24/12/2020'
 }]
 
+/**
+ * [description]
+ * @param  {[type]} userId    [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @return {[type]}           [description]
+ */
 export const apiGetUserById = (userId, resolve, errResole) => {
-  axios.get(API_USERS_RESOURCE + '/' + userId)
+  axios.get(fn_get_base_api_detail_url(API_USERS_RESOURCE, userId))
     .then((response) => {
       if (response.status === 200) {
         var json = {};
@@ -45,8 +56,15 @@ export const apiGetUserById = (userId, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
+/**
+ * [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @param  {[type]} params    [description]
+ * @return {[type]}           [description]
+ */
 export const apiGetUsers = (resolve, errResole, params) => {
-  return axios.get(API_USERS_RESOURCE,{
+  return axios.get(fn_get_base_api_url(API_USERS_RESOURCE),{
       params: params
     })
     .then((response) => {
@@ -63,8 +81,15 @@ export const apiGetUsers = (resolve, errResole, params) => {
     .catch(errors => errResole(errors))
 }
 
+/**
+ * [description]
+ * @param  {[type]} user      [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @return {[type]}           [description]
+ */
 export const apiUpdateUser = (user, resolve, errResole) => {
-  return axios.put(API_USERS_RESOURCE + '/' + user.id, user)
+  return axios.put(fn_get_base_api_detail_url(API_USERS_RESOURCE, user.id), user)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -90,7 +115,7 @@ export const apiUpdateUser = (user, resolve, errResole) => {
  * @return {[type]}           [description]
  */
 export const apiInsertUser = (user, resolve, errResole) => {
-  return axios.post(API_USERS_RESOURCE, user)
+  return axios.post(fn_get_base_api_url(API_USERS_RESOURCE), user)
     .then((response) => {
       console.log(response)
       if (response.status === 201) {
@@ -108,8 +133,15 @@ export const apiInsertUser = (user, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
+/**
+ * [description]
+ * @param  {[type]} userId    [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @return {[type]}           [description]
+ */
 export const apiDeleteUser = (userId, resolve, errResole) => {
-  return axios.delete(API_USERS_RESOURCE + '/' + userId)
+  return axios.delete(fn_get_base_api_detail_url(API_USERS_RESOURCE, userId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
