@@ -50,6 +50,7 @@
                                         role="tabpanel"
                                         class="tab-pane"
                                         :group-data="newsData"
+                                        :config-form="_getSetForm"
                                         id="mediaManagerTab"></tab-media-manager>
 
                                     <tab-setting
