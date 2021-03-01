@@ -27,7 +27,6 @@ class InformationRequest extends FormRequest
             'newsname'        => 'required|max:200',
             'description'    => 'required|max:200',
             'newslink'     => 'required|max:200',
-            'picture'    => 'required|max:64',
         ];
     }
 }
