@@ -34,6 +34,13 @@
                         iconName="fa-info"
                         :active-item="activeItem"
                     />
+                    <nav-link
+                        label="FileManagers"
+                        link="/admin/filemanagers"
+                        index="filemanagers"
+                        iconName="fa-file"
+                        :active-item="activeItem"
+                    />
 
                     <logout v-if="authenticated"/>
                 </ul>

@@ -113,6 +113,10 @@ class CSS
             $cssStype    = $this->mapCssNewsGroups();
             $scripts     = $this->mapScriptNewsGroups();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
+        } elseif (Request::is('admin/filemanagers*')) {
+            $cssStype    = $this->mapCssUser();
+            $scripts     = $this->mapScriptUser();
+            $optionClass = 'hold-transition sidebar-mini layout-fixed';
         }
 
         return [

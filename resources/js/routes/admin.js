@@ -4,6 +4,7 @@ import Login from 'v@admin/auth/Login';
 import Users from 'v@admin/users';
 import NewsGroups from 'v@admin/newsgroups';
 import News from 'v@admin/news';
+import FileManager from 'v@admin/filemanagers';
 
 import {
     config
@@ -124,6 +125,30 @@ export default [{
                 layout: MainLayout,
                 role: 'admin',
                 title: 'News | ' + config.site_name
+            }
+        }]
+    }, {
+        path: 'filemanagers',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: FileManager,
+            name: 'admin.filemanagers.list',
+            meta: {
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Dashboard',
+                    linkName: 'admin.dashboard',
+                    linkPath: '/dashboard'
+                }, {
+                    name: 'Filemanagers'
+                }],
+                header: 'Filemanagers List',
+                layout: MainLayout,
+                role: 'admin',
+                title: 'Filemanagers | ' + config.site_name
             }
         }]
     }]
