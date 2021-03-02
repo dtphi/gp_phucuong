@@ -22,3 +22,11 @@ export function fn_get_base_url_image(path) {
 	}
 	return NoImage;
 }
+
+export function fn_get_news_file_connector_url() {
+	return config.baseUrl + '/admin/filemanagers/news/connector';
+}
+
+export function fn_get_news_file_sound_url() {
+	return config.baseUrl + '/packages/barryvdh/elfinder/sounds';
+}

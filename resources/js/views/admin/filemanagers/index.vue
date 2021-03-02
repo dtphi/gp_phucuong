@@ -16,7 +16,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                
+                                <div id="elfinder"></div>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -34,26 +34,18 @@
 </template>
 
 <script>
-    import {
-        mapState, 
-        mapGetters, 
-        mapActions
-    } from 'vuex';
     import Breadcrumb from 'com@admin/Breadcrumb';
-    
     import {
-        MODULE_USER
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_USER_LIST,
-        ACTION_SET_LOADING
-    } from 'store@admin/types/action-types';
+        fn_get_news_file_connector_url,
+        fn_get_news_file_sound_url
+    } from '@app/api/utils/fn-helper';
+
+    require ('@app/tools/barryvdh/jqueryui-1.10.4/jquery-ui.css');
+    require ('@app/tools/barryvdh/css/elfinder.min.css');
+    require ('@app/tools/barryvdh/css/theme.css');
 
     export default {
         name: 'FileManagerList',
-        beforeCreate() {
-            this.$store.dispatch(MODULE_USER + '/' + ACTION_GET_USER_LIST);
-        },
         components: {
             Breadcrumb
         },
@@ -62,23 +54,19 @@
                 fullPage: false
             };
         },
-        computed: {
-            ...mapGetters(['isNotEmptyList']),
-            ...mapState(MODULE_USER, [
-                'users',
-                'loading'
-            ]),
+        mounted () {
+            const self = this;
 
-            _userList() {
-                return this.users;
-            },
-
-            _notEmpty() {
-                return this.isNotEmptyList;
-            }
-        },
-        methods: {
-            ...mapActions(MODULE_USER, [ACTION_SET_LOADING]),
+            $().ready(function() {
+                $('#elfinder').elfinder({
+                    lang: 'vi',
+                    customData: { 
+                        _token: ''
+                    },
+                    url : fn_get_news_file_connector_url(),
+                    soundPath: fn_get_news_file_sound_url()
+                });
+            });
         }
     };
 </script>

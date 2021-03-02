@@ -10,7 +10,7 @@ return array(
     | The dir where to store the images (relative from public)
     |
     */
-    'dir' => ['upload'],
+    'dir' => ['upload/news'],
 
     /*
     |--------------------------------------------------------------------------
@@ -39,8 +39,8 @@ return array(
     */
 
     'route' => [
-        'prefix' => 'elfinder',
-        'middleware' => array('web', 'auth'), //Set to null to disable middleware filter
+        'prefix' => 'admin/filemanagers/news',
+        'middleware' => array('web'), //Set to null to disable middleware filter
     ],
 
     /*
@@ -52,7 +52,7 @@ return array(
     |
     */
 
-    'access' => 'Barryvdh\Elfinder\Elfinder::checkAccess',
+    'access' => 'App\Providers\FileManagerServiceProvider::checkAccess',
 
     /*
     |--------------------------------------------------------------------------

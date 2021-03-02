@@ -114,8 +114,8 @@ class CSS
             $scripts     = $this->mapScriptNewsGroups();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         } elseif (Request::is('admin/filemanagers*')) {
-            $cssStype    = $this->mapCssUser();
-            $scripts     = $this->mapScriptUser();
+            $cssStype    = $this->mapCss();
+            $scripts     = $this->mapScriptFileManager();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         }
 
@@ -153,16 +153,28 @@ class CSS
         $output = '';
         /*Font Awesome*/
         $output .= "<link rel='stylesheet' href='/administrator/plugins/fontawesome-free/css/all.min.css'>\n";
-        /*Ionicons*/
-        $output .= "<link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>\n";
-        /*icheck bootstrap*/
-        $output .= "<link rel='stylesheet' href='/administrator/plugins/icheck-bootstrap/icheck-bootstrap.min.css'>\n";
         /*Theme style*/
         $output .= "<link rel='stylesheet' href='/administrator/dist/css/adminlte.min.css'>\n";
         /*Google Font: Source Sans Pro*/
         $output .= "<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700' rel='stylesheet'>\n";
 
         $output .= "<link rel='stylesheet' href='/administrator/dist/css/custom.css'>\n";
+
+        return $output;
+    }
+
+    public function mapScriptFileManager()
+    {
+        $output = '';
+        /*<!-- jQuery and jQuery UI (REQUIRED) -->*/
+        
+        $output .= "<script src='/packages/barryvdh/elfinder/jquery-1.11.0/jquery.min.js'></script>\n";
+        $output .= "<script src='/packages/barryvdh/elfinder/jqueryui-1.10.4/jquery-ui.min.js'></script>\n";
+        /*<!-- elFinder CSS (REQUIRED) -->*/
+        
+        /*<!-- elFinder JS (REQUIRED) -->*/
+        $output .= "<script src='/packages/barryvdh/elfinder/js/elfinder.min.js'></script>\n";
+        $output .= "<script src='/packages/barryvdh/elfinder/js/i18n/elfinder.vi.js'></script>\n";
 
         return $output;
     }

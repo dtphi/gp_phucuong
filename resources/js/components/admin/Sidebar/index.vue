@@ -35,7 +35,7 @@
                         :active-item="activeItem"
                     />
                     <nav-link
-                        label="FileManagers"
+                        label="News Files"
                         link="/admin/filemanagers"
                         index="filemanagers"
                         iconName="fa-file"
