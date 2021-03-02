@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td>{{info.id}}</td>
+        <td>{{_getNo()}}</td>
         <td>{{info.newsname}}</td>
         <td>{{info.description}}</td>
         <td>
@@ -26,7 +26,10 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {
+        mapState,
+        mapActions
+    } from 'vuex';
     import BtnEdit from './TheBtnEdit';
     import BtnDelete from './TheBtnDelete';
     import {
@@ -48,7 +51,15 @@
 
                     return (id && name)
                 }
+            },
+            no : {
+                default: 1
             }
+        },
+        computed: {
+            ...mapState({
+                meta: state => state.cfApp.meta
+            })
         },
         data() {
             return {};
@@ -56,6 +67,10 @@
         methods: {
             _getImgUrl() {
                 return fn_get_base_url_image(this.info.picture);
+            },
+
+            _getNo() {
+                return (this.no + this.meta.from);
             }
         }
     };

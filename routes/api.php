@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::post('/test', function (Request $request) {
+            return ['test' => 'ok'];die;
+        });
 Route::namespace('App\Http\Controllers\Api\Admin')
     ->middleware('web')
     ->group(function () {

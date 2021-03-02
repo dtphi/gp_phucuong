@@ -46,6 +46,7 @@
                                                     <template v-if="_notEmpty">
                                                         <item
                                                             v-for="(item,index) in _userList"
+                                                            :no="index"
                                                             :user="item"
                                                             :key="item.id"></item>
                                                     </template>
@@ -117,6 +118,7 @@
         },
         computed: {
             ...mapGetters(['isNotEmptyList']),
+
             ...mapState(MODULE_USER, [
                 'users',
                 'loading'
@@ -131,7 +133,8 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_USER, [ACTION_SET_LOADING]),
+            ...mapActions(['getNo']),
+            ...mapActions(MODULE_USER, [ACTION_SET_LOADING])
         }
     };
 </script>

@@ -64,6 +64,7 @@
                                                     <template v-if="_notEmpty">
                                                         <item v-for="(item,index) in _infoList"
                                                           :info="item"
+                                                          :no="index"
                                                           :key="item.id"></item>
                                                     </template>
                                                 </tbody>

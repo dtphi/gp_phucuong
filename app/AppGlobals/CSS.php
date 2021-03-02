@@ -229,8 +229,11 @@ class CSS
     public function mapScript()
     {
         $output = '';
+        /*<!-- jQuery -->*/
         $output .= "<script src='/administrator/plugins/jquery/jquery.min.js'></script>\n";
+        /*<!-- Bootstrap 4 -->*/
         $output .= "<script src='/administrator/plugins/bootstrap/js/bootstrap.bundle.min.js'></script>\n";
+        /*<!-- AdminLTE App -->*/
         $output .= "<script src='/administrator/dist/js/adminlte.min.js'></script>\n";
 
         return $output;
@@ -242,29 +245,8 @@ class CSS
         $output = $this->getPluginPathScript('jquery/jquery.min.js');
         /*<!-- Bootstrap 4 -->*/
         $output .= $this->getPluginPathScript('bootstrap/js/bootstrap.bundle.min.js');
-        /*<!-- DataTables -->*/
-        $output .= $this->getPluginPathScript('datatables/jquery.dataTables.min.js');
-        $output .= $this->getPluginPathScript('datatables-bs4/js/dataTables.bootstrap4.min.js');
-        $output .= $this->getPluginPathScript('datatables-responsive/js/dataTables.responsive.min.js');
-        $output .= $this->getPluginPathScript('datatables-responsive/js/responsive.bootstrap4.min.js');
         /*<!-- AdminLTE App -->*/
-        $output .= $this->getDistJsScript('adminlte.js');
-
-        $output .= $this->getDistJsScript('demo.js');
-
-        $output .= "<script>
-                      $(function () {
-                        $('#example1').DataTable({
-                          'paging': true,
-                          'lengthChange': true,
-                          'searching': true,
-                          'ordering': true,
-                          'info': true,
-                          'autoWidth': false,
-                          'responsive': true,
-                        });
-                      });
-                    </script>";
+        $output .= $this->getDistJsScript('adminlte.min.js');
 
         return $output;
     }
@@ -275,15 +257,8 @@ class CSS
         $output = $this->getPluginPathScript('jquery/jquery.min.js');
         /*<!-- Bootstrap 4 -->*/
         $output .= $this->getPluginPathScript('bootstrap/js/bootstrap.bundle.min.js');
-        /*<!-- DataTables -->*/
-        $output .= $this->getPluginPathScript('datatables/jquery.dataTables.min.js');
-        $output .= $this->getPluginPathScript('datatables-bs4/js/dataTables.bootstrap4.min.js');
-        $output .= $this->getPluginPathScript('datatables-responsive/js/dataTables.responsive.min.js');
-        $output .= $this->getPluginPathScript('datatables-responsive/js/responsive.bootstrap4.min.js');
         /*<!-- AdminLTE App -->*/
-        $output .= $this->getDistJsScript('adminlte.js');
-
-        $output .= $this->getDistJsScript('demo.js');
+        $output .= $this->getDistJsScript('adminlte.min.js');
 
         return $output;
     }
@@ -295,9 +270,7 @@ class CSS
         /*<!-- Bootstrap 4 -->*/
         $output .= $this->getPluginPathScript('bootstrap/js/bootstrap.bundle.min.js');
         /*<!-- AdminLTE App -->*/
-        $output .= $this->getDistJsScript('adminlte.js');
-
-        $output .= $this->getDistJsScript('demo.js');
+        $output .= $this->getDistJsScript('adminlte.min.js');
 
         $output .= "<script>
                        (function ($) {

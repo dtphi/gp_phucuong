@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td>{{user.id}}</td>
+        <td>{{_getNo()}}</td>
         <td>{{user.name}}</td>
         <td>{{user.email}}</td>
         <td>{{user.createdAt}}</td>
@@ -18,7 +18,10 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {
+        mapState,
+        mapActions
+    } from 'vuex';
     import BtnEdit from './TheBtnEdit';
     import BtnDelete from './TheBtnDelete';
 
@@ -38,11 +41,23 @@
 
                     return (id && name);
                 }
+            },
+            no : {
+                default: 1
             }
+        },
+        computed: {
+            ...mapState({
+                meta: state => state.cfApp.meta
+            })
         },
         data() {
             return {};
         },
-        methods: {}
+        methods: {
+            _getNo() {
+                return (this.no + this.meta.from);
+            }
+        }
     };
 </script>

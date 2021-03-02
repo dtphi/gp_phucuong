@@ -93,7 +93,6 @@ export default {
       dispatch(ACTION_SET_LOADING, true);
       await apiGetUsers(
         (users) => {
-          commit(USERS_SET_USER_LIST, users.data.results)
           dispatch('setConfigApp', {
             links: { ...users.links
             },
@@ -106,6 +105,8 @@ export default {
           }, {
             root: true
           })
+          commit(USERS_SET_USER_LIST, users.data.results)
+          
           commit(USERS_GET_USER_LIST_SUCCESS, true)
         },
         (errors) => {
