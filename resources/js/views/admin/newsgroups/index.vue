@@ -12,9 +12,15 @@
                         <div class="card user-lst">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    <i class="fas fa-user mr-2"></i>
                                     {{$options.setting.title}}
                                 </h3>
+                                <div style="float:right">
+                                    <a href="javascript:void(0);">
+                                        <font-awesome-layers size="xs" @click="_showAddModal()" style="background:honeydew">
+                                            <font-awesome-icon icon="plus" size="xs"/>
+                                        </font-awesome-layers>
+                                    </a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -50,6 +56,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TreeItem from './components/TheTreeItem';
     import FormModal from 'com@admin/Modal/NewsGroups/AddForm';
+    import { EventBus } from '@app/api/utils/event-bus';
     import {
         MODULE_NEWS_GROUP,
         MODULE_NEWS_GROUP_MODAL
@@ -89,7 +96,11 @@
                 }
             }
         },
-        methods: {},
+        methods: {
+            _showAddModal() {
+                EventBus.$emit('on-add-group', true)
+            }
+        },
         setting: {
             title: 'News Groups List'
         }

@@ -5,22 +5,27 @@ import {
   library
 } from '@fortawesome/fontawesome-svg-core';
 import {
+  faHome,
   faSpinner,
   faEdit,
   faPlus,
   faUser,
   faCopy,
+  faInfo,
+  faFile,
   faBars,
   faSearch,
   faTimes,
-  faCircle
+  faCircle,
+  faPowerOff,
+  faFolder,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   FontAwesomeIcon,
   FontAwesomeLayers,
   FontAwesomeLayersText
 } from '@fortawesome/vue-fontawesome'
-library.add(faSpinner, faEdit, faPlus, faUser, faCopy, faBars, faSearch, faTimes, faCircle);
+library.add(faHome, faSpinner, faEdit, faPlus, faUser, faCopy, faInfo, faFile, faBars, faSearch, faTimes, faCircle, faPowerOff, faFolder);
 Vue.config.productionTip = false;
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('font-awesome-layers', FontAwesomeLayers);

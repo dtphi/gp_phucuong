@@ -5,7 +5,7 @@
             class="nav-link"
             :class="{active: isActive}"
             :title="label">
-            <i :class="fullIconName"></i>
+            <font-awesome-icon :icon="fullIconName" size="xs"/>
             <p>{{label}} <i class="right fas fa-angle-left"></i></p>
         </a>
         <!-- <ul class="nav nav-treeview">
@@ -58,7 +58,7 @@
         },
         computed: {
             fullIconName() {
-                return `nav-icon fas ${this.iconName}`;
+                return `${this.iconName}`;
             },
             isActive() {
                 return (this.activeItem

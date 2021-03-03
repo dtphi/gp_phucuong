@@ -8,6 +8,7 @@
                         <li class="breadcrumb-item" v-for="(item,index) in breadcrumbs"
                             :class="{'active': !!item.linkPath}"
                             :key="index">
+                            <font-awesome-icon v-if="!index" icon="home" size="xs"/>
                             <a href="javascript:void(0);" @click="_redirectTo(index)">{{item.name}}</a>
                         </li>
                     </ol>

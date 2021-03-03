@@ -26,7 +26,11 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {
+        mapGetters, 
+        mapActions
+    } from 'vuex';
+    import { EventBus } from '@app/api/utils/event-bus';
     import {
         MODULE_NEWS_GROUP,
         MODULE_NEWS_GROUP_MODAL
@@ -106,6 +110,15 @@
                         }
                     ]
                 })
+            }
+        },
+        mounted() {
+            const _self = this;
+
+            if (Object.keys(_self.currentGroup).length === 0) {
+                EventBus.$on('on-add-group', () => {
+                    _self._showModal();
+                });
             }
         },
         setting: {
