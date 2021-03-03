@@ -27,7 +27,8 @@ class Information extends BaseModel
         'user_id',
         'description',
         'newslink',
-        'picture'
+        'picture',
+        'context'
     ];
 
     /**

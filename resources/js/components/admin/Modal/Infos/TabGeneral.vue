@@ -32,6 +32,15 @@
                     </validation-provider>
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="news-context" class="col-sm-2 col-form-label">{{$options.setting.newsContextTxt}}</label>
+                <div class="col-sm-10">
+                    <tinymce 
+                        id="news-context" 
+                        :other_options="options"
+                        v-model="generalData.context"></tinymce>
+                </div>
+            </div>
         </div>
     </transition>
 </template>
@@ -51,16 +60,37 @@
         ACTION_INSERT_INFO,
         ACTION_UPDATE_INFO
     } from 'store@admin/types/action-types';
+    import tinymce from 'vue-tinymce-editor';
+    import {
+        fn_get_tinymce_langs_url
+    } from '@app/api/utils/fn-helper';
 
     export default {
         name: 'TabGeneralForm',
+        components: { tinymce },
         props: {
             generalData: {
                 type: Object
             }
         },
         data() {
-            return {};
+            return {
+                options: {
+                    language_url: fn_get_tinymce_langs_url('vi_VN'),
+                }
+            };
+        },
+
+        watch: {
+            generalData: {
+                immediate: true,
+                deep: true,
+                handler(newValue, oldValue) {
+                    if (Object.keys(newValue).length) {
+                        return newValue.context = (newValue.context === null) ? "": newValue.context;
+                    }
+                }
+            }
         },
 
         methods: {
@@ -76,6 +106,7 @@
             nameTxt: 'Name',
             descriptionTxt: 'Description',
             newsLinkTxt: 'News Link',
+            newsContextTxt: 'Content',
             add: {
                 actionName: 'add',
                 isAddFrom: true,

@@ -30,3 +30,7 @@ export function fn_get_news_file_connector_url() {
 export function fn_get_news_file_sound_url() {
 	return config.baseUrl + '/packages/barryvdh/elfinder/sounds';
 }
+
+export function fn_get_tinymce_langs_url(langName) {
+	return config.baseUrl + '/administrator/langs/' + langName + '.js';
+}
