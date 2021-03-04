@@ -42,34 +42,12 @@
 
     import InfoAddForm from 'com@admin/Form/Infos/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
-    import {
-        MODULE_INFO,
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_INFO_LIST,
-    } from 'store@admin/types/action-types';
 
     export default {
         name: 'InformationAdd',
         components: {
             Breadcrumb,
             InfoAddForm
-        },
-
-        beforeCreate() {
-            this.$store.dispatch(MODULE_INFO + '/' + ACTION_GET_INFO_LIST);
-        },
-
-        data() {
-            return {
-                fullPage: false
-            }
-        },
-
-        computed: {
-            ...mapState(MODULE_INFO, [
-                'loading'
-            ])        
         }
     };
 </script>

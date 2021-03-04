@@ -11,6 +11,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Edit News</h3>
+                                <span class="text-green" style="float:right">{{updateSuccess}}</span>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -41,7 +42,7 @@
     import InfoEditForm from 'com@admin/Form/Infos/EditForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
-        MODULE_INFO_MODAL,
+        MODULE_INFO_EDIT,
     } from 'store@admin/types/module-types';
     import {
         ACTION_SHOW_MODAL_EDIT,
@@ -55,8 +56,8 @@
         },
 
         beforeCreate() {
-        		const infoId = parseInt(this.$route.params.infoId);
-            this.$store.dispatch(MODULE_INFO_MODAL + '/' + ACTION_SHOW_MODAL_EDIT, infoId);
+        	const infoId = parseInt(this.$route.params.infoId);
+            this.$store.dispatch(MODULE_INFO_EDIT + '/' + ACTION_SHOW_MODAL_EDIT, infoId);
         },
 
         data() {
@@ -66,8 +67,9 @@
         },
 
         computed: {
-            ...mapState(MODULE_INFO_MODAL, [
-                'loading'
+            ...mapState(MODULE_INFO_EDIT, [
+                'loading',
+                'updateSuccess'
             ])
         }
     };

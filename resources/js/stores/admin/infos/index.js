@@ -1,13 +1,15 @@
 import axios from 'axios';
 import modals from './modal';
+import adds from './add';
+import edits from './edit';
 import {
   apiGetInfoById,
   apiGetInfos,
   apiDeleteInfo
 } from 'api@admin/information';
 import {
-      MODULE_INFO,
-  } from '../types/module-types';
+  MODULE_INFO,
+} from '../types/module-types';
 import {
   INFOS_SET_LOADING,
   INFOS_GET_INFO_LIST_SUCCESS,
@@ -27,6 +29,9 @@ import {
   ACTION_RELOAD_GET_INFO_LIST,
   ACTION_SET_LOADING
 } from '../types/action-types';
+import {
+  fn_redirect_url
+} from '@app/api/utils/fn-helper';
 
 export default {
   namespaced: true,
@@ -167,7 +172,11 @@ export default {
     [ACTION_RELOAD_GET_INFO_LIST]: {
       root: true,
       handler(namespacedContext, payload) {
-        namespacedContext.dispatch(ACTION_GET_INFO_LIST)
+        if (isNaN(payload)) {
+          return fn_redirect_url('admin/news');
+        } else {
+          namespacedContext.dispatch(ACTION_GET_INFO_LIST);
+        }
       }
     },
 
@@ -179,6 +188,8 @@ export default {
   },
 
   modules: {
-    modal: modals
+    modal: modals,
+    add: adds,
+    edit: edits
   }
 }

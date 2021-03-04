@@ -19,21 +19,21 @@ export function fn_get_base_url_thumb(thumbPath) {
 
 export function fn_get_base_url_image(path) {
 	if (path) {
-		return config.baseUrl + '/upload/news/' + path;
+		return config.baseUrl + AppConfig.newsUploadDir + '/' + path.replace(/^\//, "");
 	}
 	return NoImage;
 }
 
 export function fn_get_news_file_connector_url() {
-	return config.baseUrl + '/admin/filemanagers/news/connector';
+	return config.baseUrl + AppConfig.newsFileConnectUrlPath;
 }
 
 export function fn_get_news_file_sound_url() {
-	return config.baseUrl + '/packages/barryvdh/elfinder/sounds';
+	return config.baseUrl + AppConfig.elFinderSoundPath;
 }
 
 export function fn_get_tinymce_langs_url(langName) {
-	return config.baseUrl + '/administrator/langs/' + langName + '.js';
+	return config.baseUrl + AppConfig.tinymceLangPath + '/' + langName + '.js';
 }
 
 export function fn_redirect_url(path) {

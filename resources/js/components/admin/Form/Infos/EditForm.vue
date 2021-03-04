@@ -76,7 +76,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO_MODAL
+        MODULE_INFO_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_LOADING,
@@ -105,11 +105,11 @@
             };
         },
         computed: {
-            ...mapState(MODULE_INFO_MODAL, {
+            ...mapState(MODULE_INFO_EDIT, {
                 loading: state => state.loading
             }),
 
-            ...mapGetters(MODULE_INFO_MODAL, [
+            ...mapGetters(MODULE_INFO_EDIT, [
                 'info',
             ])
         },
@@ -135,7 +135,7 @@
         },
 
         methods: {
-            ...mapActions(MODULE_INFO_MODAL, [
+            ...mapActions(MODULE_INFO_EDIT, [
                 ACTION_SET_LOADING,
                 ACTION_UPDATE_INFO
             ]),
