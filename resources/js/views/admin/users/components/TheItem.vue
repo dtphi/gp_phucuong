@@ -3,7 +3,7 @@
         <td>{{_getNo()}}</td>
         <td>{{user.name}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.createdAt}}</td>
+        <td>{{_formatDate(user.created_at)}}</td>
         <td>
             <div class="icheck-primary">
                 <input type="checkbox" :id="`user_id_${user.id}`" :value="user.id">
@@ -26,6 +26,9 @@
     } from 'vuex';
     import BtnEdit from './TheBtnEdit';
     import BtnDelete from './TheBtnDelete';
+    import {
+        fn_format_dd_mm_yyyy
+    } from '@app/api/utils/fn-helper';
 
     export default {
         name: 'TheItemUser',
@@ -59,6 +62,10 @@
         methods: {
             _getNo() {
                 return (this.no + this.meta.from);
+            },
+
+            _formatDate(date) {
+                return fn_format_dd_mm_yyyy(date);
             }
         }
     };

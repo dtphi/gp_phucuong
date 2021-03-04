@@ -7,12 +7,6 @@
                     <font-awesome-icon icon="bars"/>
                 </a>
             </li>
-            <!-- <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
-            </li> -->
         </ul>
 
         <!-- SEARCH FORM -->
@@ -114,6 +108,7 @@
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
+            <login-user></login-user>
             <li class="nav-item">
                 <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                     <i class="fas fa-th-large"></i>
@@ -124,9 +119,13 @@
 </template>
 
 <script>
+    import {
+        mapState
+    } from 'vuex';
+    import LoginUser from '../Profile';
 
     export default {
         name: 'Navbar',
-        components: {}
+        components: {LoginUser}
     };
 </script>

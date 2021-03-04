@@ -69,6 +69,7 @@
         computed: {
             ...mapState(MODULE_INFO, [
                 'loading'
-            ])        }
+            ])        
+        }
     };
 </script>

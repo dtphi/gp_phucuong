@@ -128,8 +128,7 @@ export default [{
                 role: 'admin',
                 title: 'News | ' + config.site_name
             }
-        },
-        {
+        }, {
             path: 'add',
             component: NewsAdd,
             name: 'admin.news.add',
@@ -143,7 +142,7 @@ export default [{
                     name: 'News',
                     linkName: 'admin.news.list',
                     linkPath: '/news'
-                },{
+                }, {
                     name: 'News Add'
                 }],
                 header: 'News Add',
@@ -151,8 +150,7 @@ export default [{
                 role: 'admin',
                 title: 'News Add | ' + config.site_name
             }
-        },
-        {
+        }, {
             path: 'edit/:infoId',
             component: NewsEdit,
             name: 'admin.news.edit',
@@ -166,7 +164,7 @@ export default [{
                     name: 'News',
                     linkName: 'admin.news.list',
                     linkPath: '/news'
-                },{
+                }, {
                     name: 'News Edit'
                 }],
                 header: 'News Edit',

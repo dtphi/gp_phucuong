@@ -3,6 +3,7 @@
         <td>{{_getNo()}}</td>
         <td>{{info.newsname}}</td>
         <td>{{info.description}}</td>
+        <td>{{_formatDate(info.created_at)}}</td>
         <td>
             <div class="file animated fadeIn">
                 <div class="file-preview">
@@ -33,7 +34,8 @@
     import BtnEdit from './TheBtnEdit';
     import BtnDelete from './TheBtnDelete';
     import {
-        fn_get_base_url_image
+        fn_get_base_url_image,
+        fn_format_dd_mm_yyyy
     } from '@app/api/utils/fn-helper';
 
     export default {
@@ -71,6 +73,10 @@
 
             _getNo() {
                 return (this.no + this.meta.from);
+            },
+
+            _formatDate(date) {
+                return fn_format_dd_mm_yyyy(date);
             }
         }
     };

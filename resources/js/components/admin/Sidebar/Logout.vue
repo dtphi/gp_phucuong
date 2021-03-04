@@ -6,7 +6,7 @@
             class="nav-link"
             title="Logout Admin">
             <font-awesome-icon icon="power-off" size="xs"/>
-            <p>Logout</p>
+            Logout
         </a>
     </li>
 </template>

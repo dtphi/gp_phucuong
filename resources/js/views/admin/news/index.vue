@@ -50,11 +50,20 @@
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Created by: activate to sort column ascending">
-                                                        Created by
+                                                        Created from
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Created by: activate to sort column ascending">
+                                                        Picture
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Key: activate to sort column ascending">Key
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Key: activate to sort column ascending">Action
                                                     </th>
                                                 </tr>
                                                 </thead>

@@ -3,6 +3,7 @@ import {
 	config
 	} from '../admin/config';
 import NoImage from 'v@admin/assets/img/no-photo.jpg';
+import moment from 'moment';
 
 export function fn_get_base_api_url(apiPath) {
   return AppConfig.apiUrl + apiPath;
@@ -37,4 +38,8 @@ export function fn_get_tinymce_langs_url(langName) {
 
 export function fn_redirect_url(path) {
 	return window.location = config.baseUrl + '/' + path.replace(/^\//, "");
+}
+
+export function fn_format_dd_mm_yyyy(date) {
+	return moment(date).format(AppConfig.formatDateString);
 }
