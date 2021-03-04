@@ -94,10 +94,10 @@
         ACTION_INSERT_INFO,
         ACTION_UPDATE_INFO
     } from 'store@admin/types/action-types';
-    import TabGeneral from './TabGeneral';
-    import TabSetting from './TabSetting';
-    import TabNewsGroup from './TabNewsGroup';
-    import TabMediaManager from './TabImage';
+    import TabGeneral from 'com@admin/Form/Infos/TabGeneral';
+    import TabSetting from 'com@admin/Form/Infos/TabSetting';
+    import TabNewsGroup from 'com@admin/Form/Infos/TabNewsGroup';
+    import TabMediaManager from 'com@admin/Form/Infos/TabImage';
 
     export default {
         name: 'ModalAddForm',

@@ -12,6 +12,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">News List</h3>
                                 <div style="float:right">
+                                    <!-- test : <btn-add :is-redirect="!!(1 != 1)"></btn-add> -->
                                     <btn-add></btn-add>
                                 </div>
                             </div>

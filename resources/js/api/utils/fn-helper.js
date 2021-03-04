@@ -34,3 +34,7 @@ export function fn_get_news_file_sound_url() {
 export function fn_get_tinymce_langs_url(langName) {
 	return config.baseUrl + '/administrator/langs/' + langName + '.js';
 }
+
+export function fn_redirect_url(path) {
+	return window.location = config.baseUrl + '/' + path.replace(/^\//, "");
+}
