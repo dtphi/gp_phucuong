@@ -4,7 +4,9 @@
             <div class="modal-dialog modal-lg">
                 <validation-observer ref="observerUser" @submit.prevent="_submitUser">
                     <div class="modal-content">
-                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+                        <loading-over-lay 
+                            :active.sync="loading" 
+                            :is-full-page="fullPage"></loading-over-lay>
                         <div class="modal-header">
                             <h4 class="modal-title">{{_getSetForm.title}}</h4>
                             <button type="button" class="close" @click="_close">

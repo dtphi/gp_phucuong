@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AppConfig from 'api@admin/constants/app-config';
 import {
   apiGetUserById,
   apiUpdateUser,
@@ -27,7 +28,8 @@ import {
   ACTION_IS_OPEN_MODAL,
   ACTION_INSERT_USER,
   ACTION_UPDATE_USER,
-  ACTION_RELOAD_GET_USER_LIST
+  ACTION_RELOAD_GET_USER_LIST,
+  ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
 
 const INIT_STATE = {
@@ -198,7 +200,7 @@ export default {
       apiInsertUser(
         user,
         (result) => {
-          commit(USERS_MODAL_INSERT_USER_SUCCESS, true);
+          commit(USERS_MODAL_INSERT_USER_SUCCESS, AppConfig.comInsertNoSuccess);
 
           dispatch(ACTION_RELOAD_GET_USER_LIST, null, {
             root: true
@@ -207,7 +209,7 @@ export default {
           dispatch(ACTION_CLOSE_MODAL);
         },
         (errors) => {
-          commit(USERS_MODAL_INSERT_USER_FAILED, false)
+          commit(USERS_MODAL_INSERT_USER_FAILED, AppConfig.comInsertNoFail);
 
           dispatch(ACTION_SET_LOADING, false);
         }
@@ -221,7 +223,7 @@ export default {
       apiUpdateUser(
         user,
         (result) => {
-          commit(USERS_MODAL_UPDATE_USER_SUCCESS, true);
+          commit(USERS_MODAL_UPDATE_USER_SUCCESS, AppConfig.comUpdateNoSuccess);
 
           dispatch(ACTION_RELOAD_GET_USER_LIST, null, {
             root: true
@@ -230,11 +232,17 @@ export default {
           dispatch(ACTION_CLOSE_MODAL);
         },
         (errors) => {
-          commit(USERS_MODAL_UPDATE_USER_FAILED, false)
+          commit(USERS_MODAL_UPDATE_USER_FAILED, AppConfig.comUpdateNoFail)
 
           dispatch(ACTION_SET_LOADING, false);
         }
       )
+    },
+
+    [ACTION_RESET_NOTIFICATION_INFO]({
+      commit
+    }, values) {
+      commit(USERS_MODAL_UPDATE_USER_SUCCESS, values)
     }
   }
 }

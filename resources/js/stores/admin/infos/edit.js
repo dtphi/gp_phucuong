@@ -20,7 +20,7 @@ import {
   ACTION_SHOW_MODAL_EDIT,
   ACTION_UPDATE_INFO,
   ACTION_RELOAD_GET_INFO_LIST,
-  ACTION_RESET_UPDATE_INFO
+  ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
 const NEWS = {
   id: 0,
@@ -148,7 +148,7 @@ export default {
       )
     },
 
-    [ACTION_RESET_UPDATE_INFO]({
+    [ACTION_RESET_NOTIFICATION_INFO]({
       commit
     }, values) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);

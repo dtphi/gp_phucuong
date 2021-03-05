@@ -41,7 +41,9 @@
                                                 </thead>
                                                 <tbody>
                                                     <template v-if="loading">
-                                                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+                                                        <loading-over-lay 
+                                                            :active.sync="loading" 
+                                                            :is-full-page="fullPage"></loading-over-lay>
                                                     </template>
                                                     <template v-if="_notEmpty">
                                                         <item
@@ -90,11 +92,13 @@
     import Perpage from 'com@admin/Pagination/SelectPerpage';
     import ListSearch from 'com@admin/Search';
     import {
-        MODULE_USER
+        MODULE_USER,
+        MODULE_USER_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_USER_LIST,
-        ACTION_SET_LOADING
+        ACTION_SET_LOADING,
+        ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
     export default {
@@ -124,6 +128,10 @@
                 'loading'
             ]),
 
+            ...mapState(MODULE_USER_MODAL, [
+                'updateSuccess'
+            ]),
+
             _userList() {
                 return this.users;
             },
@@ -132,9 +140,19 @@
                 return this.isNotEmptyList;
             }
         },
+        watch: {
+            'updateSuccess'( newValue, oldValue ) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            }
+        },
         methods: {
             ...mapActions(['getNo']),
-            ...mapActions(MODULE_USER, [ACTION_SET_LOADING])
+            _notificationUpdate(notification) {
+                this.$notify(notification);
+                this.$store.dispatch(MODULE_USER_MODAL + '/' + ACTION_RESET_NOTIFICATION_INFO, '');
+            }
         }
     };
 </script>

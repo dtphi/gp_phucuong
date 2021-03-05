@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AppConfig from 'api@admin/constants/app-config';
 import {
   apiGetNewsGroupById,
   apiUpdateNewsGroup,
@@ -28,7 +29,8 @@ import {
   ACTION_IS_OPEN_MODAL,
   ACTION_INSERT_NEWS_GROUP,
   ACTION_UPDATE_NEWS_GROUP,
-  ACTION_RELOAD_GET_NEWS_GROUP_LIST
+  ACTION_RELOAD_GET_NEWS_GROUP_LIST,
+  ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
 const NEWS_GROUP = {
   id: null,
@@ -235,7 +237,7 @@ export default {
       apiInsertNewsGroup(
         newsGroup,
         (result) => {
-          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, true);
+          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, AppConfig.comInsertNoSuccess);
 
           dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
             root: true
@@ -244,7 +246,7 @@ export default {
           dispatch(ACTION_CLOSE_MODAL);
         },
         (errors) => {
-          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED, false)
+          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED, AppConfig.comInsertNoFail)
 
           dispatch(ACTION_SET_LOADING, false);
         }
@@ -257,7 +259,7 @@ export default {
     }, newsGroup) {
       apiUpdateNewsGroup(newsGroup,
         (result) => {
-          commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS, true);
+          commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS, AppConfig.comUpdateNoSuccess);
 
           dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
             root: true
@@ -266,11 +268,17 @@ export default {
           dispatch(ACTION_CLOSE_MODAL);
         },
         (errors) => {
-          commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED, errors)
+          commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED, AppConfig.comUpdateNoFail)
 
           dispatch(ACTION_SET_LOADING, false);
         }
       )
+    },
+
+    [ACTION_RESET_NOTIFICATION_INFO]({
+      commit
+    }, values) {
+      commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS, values)
     }
   }
 }

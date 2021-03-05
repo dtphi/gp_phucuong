@@ -23,7 +23,15 @@ const AppConfig = {
 	comUpdateNoFail: {
 		group: noGrType.comUpdate,
 		text: 'Updated failed'
-	}
+	},
+	comInsertNoSuccess: {
+		group: noGrType.comUpdate,
+		text: 'Inserted success'
+	},
+	comInsertNoFail: {
+		group: noGrType.comUpdate,
+		text: 'Inserted failed'
+	},
 }
 
 export default AppConfig;

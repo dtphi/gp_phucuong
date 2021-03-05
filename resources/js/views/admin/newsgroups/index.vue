@@ -63,6 +63,7 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_NEWS_GROUP_LIST,
+        ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
     export default {
@@ -87,7 +88,7 @@
                     'newsGroups',
                     'loading'
                 ]),
-            ...mapGetters(MODULE_NEWS_GROUP_MODAL, ['isOpen']),
+            ...mapGetters(MODULE_NEWS_GROUP_MODAL, ['isOpen', 'updateSuccess']),
             _lists() {
                 let rootTree = {...this.newsGroups};
 
@@ -96,9 +97,20 @@
                 }
             }
         },
+        watch: {
+            'updateSuccess'( newValue, oldValue ) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            }
+        },
         methods: {
             _showAddModal() {
                 EventBus.$emit('on-add-group', true)
+            },
+            _notificationUpdate(notification) {
+                this.$notify(notification);
+                this.$store.dispatch(MODULE_NEWS_GROUP_MODAL + '/' + ACTION_RESET_NOTIFICATION_INFO, '');
             }
         },
         setting: {

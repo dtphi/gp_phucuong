@@ -45,7 +45,7 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_SHOW_MODAL_EDIT,
-        ACTION_RESET_UPDATE_INFO
+        ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
     export default {
@@ -82,7 +82,7 @@
         methods: {
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.$store.dispatch(MODULE_INFO_EDIT + '/' + ACTION_RESET_UPDATE_INFO, '');
+                this.$store.dispatch(MODULE_INFO_EDIT + '/' + ACTION_RESET_NOTIFICATION_INFO, '');
             }
         }
     };
