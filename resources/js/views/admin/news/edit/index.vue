@@ -11,7 +11,6 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Edit News</h3>
-                                <span class="text-green" style="float:right">{{updateSuccess}}</span>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -46,6 +45,7 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_SHOW_MODAL_EDIT,
+        ACTION_RESET_UPDATE_INFO
     } from 'store@admin/types/action-types';
 
     export default {
@@ -71,6 +71,19 @@
                 'loading',
                 'updateSuccess'
             ])
+        },
+        watch: {
+            'updateSuccess'( newValue, oldValue ) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            }
+        },
+        methods: {
+            _notificationUpdate(notification) {
+                this.$notify(notification);
+                this.$store.dispatch(MODULE_INFO_EDIT + '/' + ACTION_RESET_UPDATE_INFO, '');
+            }
         }
     };
 </script>

@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper">
+        <notifications group="common-update"></notifications>
         <navbar></navbar>
         <sidebar></sidebar>
         <slot></slot>

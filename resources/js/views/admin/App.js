@@ -53,3 +53,7 @@ import VModal from 'vue-js-modal';
 Vue.use(VModal, {
   dialog: true
 });
+
+/*Add vue notification*/
+import Notifications from 'vue-notification';
+Vue.use(Notifications);

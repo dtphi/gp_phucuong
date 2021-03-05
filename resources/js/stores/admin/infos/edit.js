@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AppConfig from 'api@admin/constants/app-config';
 import {
   apiGetInfoById,
   apiUpdateInfo
@@ -18,7 +19,8 @@ import {
   ACTION_SET_LOADING,
   ACTION_SHOW_MODAL_EDIT,
   ACTION_UPDATE_INFO,
-  ACTION_RELOAD_GET_INFO_LIST
+  ACTION_RELOAD_GET_INFO_LIST,
+  ACTION_RESET_UPDATE_INFO
 } from '../types/action-types';
 const NEWS = {
   id: 0,
@@ -134,19 +136,22 @@ export default {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
       apiUpdateInfo(info,
         (result) => {
-          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, 'Update success');
+          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
 
-          dispatch(ACTION_RELOAD_GET_INFO_LIST, null, {
-            root: true
-          });
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
-          commit(INFOS_MODAL_UPDATE_INFO_FAILED, 'Update failed')
+          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
 
           dispatch(ACTION_SET_LOADING, false);
         }
       )
+    },
+
+    [ACTION_RESET_UPDATE_INFO]({
+      commit
+    }, values) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
     }
   }
 }

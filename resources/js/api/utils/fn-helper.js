@@ -1,12 +1,12 @@
 import AppConfig from '../admin/constants/app-config';
 import {
 	config
-	} from '../admin/config';
+} from '../admin/config';
 import NoImage from 'v@admin/assets/img/no-photo.jpg';
 import moment from 'moment';
 
 export function fn_get_base_api_url(apiPath) {
-  return AppConfig.apiUrl + apiPath;
+	return AppConfig.apiUrl + apiPath;
 }
 
 export function fn_get_base_api_detail_url(apiPath, id) {
@@ -42,4 +42,19 @@ export function fn_redirect_url(path) {
 
 export function fn_format_dd_mm_yyyy(date) {
 	return moment(date).format(AppConfig.formatDateString);
+}
+
+export function fn_get_com_update_no() {
+	return AppConfig.comUpdateNoSuccess;
+}
+
+export function fn_get_com_no_by_group(groupType) {
+	switch (groupType) {
+		case AppConfig.noGroupType.comUpdate:
+			return AppConfig.comUpdateNoSuccess;
+			break;
+		default:
+			return AppConfig.comSuccessNo;
+			break;
+	}
 }
