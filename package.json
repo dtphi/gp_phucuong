@@ -1,5 +1,7 @@
 {
     "private": true,
+    "author": "dtphi",
+    "license": "ISC",
     "scripts": {
         "debug": "npm run debuger",
         "debuger": "cross-env NODE_ENV=debuger node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -28,12 +30,14 @@
         "axios": "^0.21.1",
         "axios-auth-refresh": "^3.0.0",
         "file-saver": "^2.0.5",
+        "laravel-echo": "^1.10.0",
         "laravel-mix-alias": "^1.0.2",
         "laravel-vue-pagination": "^2.3.1",
         "linkifyjs": "^2.1.9",
         "lodash": "^4.17.20",
         "moment": "^2.29.1",
         "popper.js": "^1.16.1",
+        "pusher-js": "^7.0.3",
         "unorm": "^1.6.0",
         "v-click-outside": "^3.1.2",
         "vee-validate": "^3.4.3",

@@ -97,7 +97,6 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_USER_LIST,
-        ACTION_SET_LOADING,
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
@@ -146,6 +145,12 @@
                     this._notificationUpdate(newValue);
                 }
             }
+        },
+        mounted() {
+            window.Echo.channel('search-user')
+            .listen('.searchAllResults', (e) => {
+                this.$store.commit(MODULE_USER + '/' + 'USERS_SET_USER_LIST', e.users.results)
+            })
         },
         methods: {
             ...mapActions(['getNo']),

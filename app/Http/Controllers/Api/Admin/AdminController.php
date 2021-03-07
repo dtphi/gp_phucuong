@@ -11,6 +11,7 @@ use App\Models\Admin;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use DB;
+use App\Events\SearchUserEvent;
 
 class AdminController extends ApiController
 {
@@ -85,5 +86,13 @@ class AdminController extends ApiController
         DB::commit();
 
         return $this->respondUpdated();
+    }
+
+    public function search () {
+        $users = new AdminCollection(Admin::orderByDesc('id')->paginate(2));
+
+        event(new SearchUserEvent($users));
+
+        return response()->json("ok");
     }
 }

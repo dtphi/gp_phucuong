@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Broadcast;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/test', function (Request $request) {
             return ['test' => 'ok'];die;
         });
+
 Route::namespace('App\Http\Controllers\Api\Admin')
     ->middleware('web')
     ->group(function () {
@@ -31,6 +32,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
         });
 
         Route::apiResource('users', 'AdminController');
+        Route::get('/search-user','AdminController@search');
         Route::apiResource('news-groups', 'NewsGroupController');
         Route::apiResource('news', 'InformationController');
 

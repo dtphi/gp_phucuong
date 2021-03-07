@@ -159,6 +159,21 @@ export default {
     }, isLoading) {
       commit(USERS_SET_LOADING, isLoading);
     },
+
+    SEARCH_PRODUCTS({commit}, query) {
+        let params = {
+            query
+        };
+        axios.get(`/api/search-user`, {params})
+            .then(res => {
+              console.log(res)
+                if (res.data === 'ok')
+                    console.log('request sent successfully')
+
+            }).catch(err => {
+            console.log(err)
+        })
+    },
   },
 
   modules: {

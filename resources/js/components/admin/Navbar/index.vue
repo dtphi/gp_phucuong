@@ -10,16 +10,9 @@
         </ul>
 
         <!-- SEARCH FORM -->
-        <form class="form-inline ml-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <font-awesome-icon icon="search"/>
-                    </button>
-                </div>
-            </div>
-        </form>
+        <div class="form-inline ml-3">
+            <all-search></all-search>
+        </div>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
@@ -123,9 +116,10 @@
         mapState
     } from 'vuex';
     import LoginUser from '../Profile';
+    import AllSearch from '../Search/AllSearch';
 
     export default {
         name: 'Navbar',
-        components: {LoginUser}
+        components: {LoginUser, AllSearch}
     };
 </script>
