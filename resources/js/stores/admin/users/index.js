@@ -3,10 +3,11 @@ import modals from './modal';
 import {
   apiGetUserById,
   apiGetUsers,
-  apiDeleteUser
+  apiDeleteUser,
+  apiSearchAll
 } from 'api@admin/user';
 import {
-    MODULE_USER
+  MODULE_USER
 } from '../types/module-types';
 import {
   USERS_SET_LOADING,
@@ -23,7 +24,8 @@ import {
   ACTION_DELETE_USER_BY_ID,
   ACTION_SET_USER_DELETE_BY_ID,
   ACTION_RELOAD_GET_USER_LIST,
-  ACTION_SET_LOADING
+  ACTION_SET_LOADING,
+  ACTION_SEARCH_ALL
 } from '../types/action-types';
 
 export default {
@@ -106,7 +108,7 @@ export default {
             root: true
           })
           commit(USERS_SET_USER_LIST, users.data.results)
-          
+
           commit(USERS_GET_USER_LIST_SUCCESS, true)
         },
         (errors) => {
@@ -160,19 +162,21 @@ export default {
       commit(USERS_SET_LOADING, isLoading);
     },
 
-    SEARCH_PRODUCTS({commit}, query) {
-        let params = {
-            query
-        };
-        axios.get(`/api/search-user`, {params})
-            .then(res => {
-              console.log(res)
-                if (res.data === 'ok')
-                    console.log('request sent successfully')
-
-            }).catch(err => {
-            console.log(err)
-        })
+    [ACTION_SEARCH_ALL]({
+      dispatch,
+      commit
+    }, query) {
+      dispatch(ACTION_SET_LOADING, true);
+      apiSearchAll(query,
+        (result) => {
+          commit(USERS_GET_USER_LIST_SUCCESS, true);
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          commit(USERS_GET_USER_LIST_FAILED, false);
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
     },
   },
 

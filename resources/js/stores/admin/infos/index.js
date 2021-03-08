@@ -5,7 +5,8 @@ import edits from './edit';
 import {
   apiGetInfoById,
   apiGetInfos,
-  apiDeleteInfo
+  apiDeleteInfo,
+  apiSearchAll
 } from 'api@admin/information';
 import {
   MODULE_INFO,
@@ -27,7 +28,8 @@ import {
   ACTION_DELETE_INFO_BY_ID,
   ACTION_SET_INFO_DELETE_BY_ID,
   ACTION_RELOAD_GET_INFO_LIST,
-  ACTION_SET_LOADING
+  ACTION_SET_LOADING,
+  ACTION_SEARCH_ALL
 } from '../types/action-types';
 import {
   fn_redirect_url
@@ -184,6 +186,23 @@ export default {
       commit
     }, isLoading) {
       commit(INFOS_SET_LOADING, isLoading);
+    },
+
+    [ACTION_SEARCH_ALL]({
+      dispatch,
+      commit
+    }, query) {
+      dispatch(ACTION_SET_LOADING, true);
+      apiSearchAll(query,
+        (result) => {
+          commit(INFOS_GET_INFO_LIST_SUCCESS, true);
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          commit(INFOS_GET_INFO_LIST_FAILED, false);
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
     },
   },
 

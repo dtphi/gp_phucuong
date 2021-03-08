@@ -89,7 +89,7 @@ class AdminController extends ApiController
     }
 
     public function search () {
-        $users = new AdminCollection(Admin::orderByDesc('id')->paginate(2));
+        $users = new AdminCollection(Admin::orderByDesc('email')->paginate());
 
         event(new SearchUserEvent($users));
 

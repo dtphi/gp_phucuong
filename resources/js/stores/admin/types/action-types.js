@@ -29,3 +29,4 @@ export const ACTION_SHOW_MODAL_EDIT = 'showModalEdit';
 export const ACTION_CLOSE_MODAL = 'closeModal';
 export const ACTION_IS_OPEN_MODAL = 'isOpenModal';
 export const ACTION_RESET_NOTIFICATION_INFO = 'resetNotificationInfo';
+export const ACTION_SEARCH_ALL = 'searchAll';

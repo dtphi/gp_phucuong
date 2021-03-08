@@ -158,3 +158,29 @@ export const apiDeleteUser = (userId, resolve, errResole) => {
     })
     .catch(errors => errResole(errors))
 }
+
+/**
+ * [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @param  {[type]} params    [description]
+ * @return {[type]}           [description]
+ */
+export const apiSearchAll = (query, resolve, errResole) => {
+  let params = {
+          query
+      };
+  return axios.get(fn_get_base_api_url(`/api/search-user`),{params})
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        resolve(response.data);
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test'
+        }]);
+      }
+    })
+    .catch(errors => errResole(errors))
+}

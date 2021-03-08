@@ -96,6 +96,9 @@
         MODULE_USER_MODAL
     } from 'store@admin/types/module-types';
     import {
+      USERS_SET_USER_LIST
+    } from 'store@admin/types/mutation-types';
+    import {
         ACTION_GET_USER_LIST,
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
@@ -149,7 +152,7 @@
         mounted() {
             window.Echo.channel('search-user')
             .listen('.searchAllResults', (e) => {
-                this.$store.commit(MODULE_USER + '/' + 'USERS_SET_USER_LIST', e.users.results)
+                this.$store.commit(MODULE_USER + '/' + USERS_SET_USER_LIST, e.users.results)
             })
         },
         methods: {

@@ -10,11 +10,11 @@
 </template>
 
 <script>
-	import {
-      MODULE_USER
-  } from 'store@admin/types/module-types';
+    import {
+        mapGetters
+    } from 'vuex';
   import {
-    ACTION_GET_USER_LIST
+    ACTION_SEARCH_ALL
     } from 'store@admin/types/action-types';
   import lodash from 'lodash';
 
@@ -26,6 +26,9 @@
                 query: '',
             }
         },
+        computed: {
+            ...mapGetters(['moduleNameActive', 'moduleActionListActive'])
+        },
         watch: {
             /*query: {
                 handler: _.debounce(function () {
@@ -36,9 +39,9 @@
         methods: {
             searchProducts() {
                 if (this.query && this.query.length) {
-                    this.$store.dispatch(MODULE_USER + '/' +'SEARCH_PRODUCTS', this.query)
+                    this.$store.dispatch(this.moduleNameActive + '/' + ACTION_SEARCH_ALL, this.query);
                 } else {
-                    this.$store.dispatch(MODULE_USER + '/' + ACTION_GET_USER_LIST)
+                    this.$store.dispatch(this.moduleNameActive + '/' + this.moduleActionListActive);
                 }
             }
         }
