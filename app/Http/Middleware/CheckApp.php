@@ -11,7 +11,7 @@ class CheckApp
     /**
      * @var string
      */
-    public $appName = 'gp.phu.cuong';
+    public $appName = 'gp-phu-cuong';
 
     /**
      * @author : Phi .

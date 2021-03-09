@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Events\SearchUserEvent;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
-use Illuminate\Http\Request;
-use App\Http\Requests\AdminRequest;
-use App\Http\Resources\Admins\AdminCollection;
-use App\Http\Resources\Admins\AdminResource;
-use App\Models\Admin;
-use Illuminate\Http\Response as HttpResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use DB;
-use App\Events\SearchUserEvent;
 use App\Http\Controllers\Api\Admin\Services\Contracts\AdminModel as AdminSv;
+use App\Http\Requests\AdminRequest;
+use App\Models\Admin;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
 
 class AdminController extends ApiController
 {
@@ -42,29 +39,35 @@ class AdminController extends ApiController
     /**
      * @author : dtphi .
      * @param Request $request
-     * @return AdminCollection|array
+     * @return mixed
      */
     public function index(Request $request)
     {
         try {
-            $limit = $this->_getPerPage();
-            $json = $this->adSv->apiGetList([], $limit);
+            $limit       = $this->_getPerPage();
+            $collections = $this->adSv->apiGetResourceCollection([], $limit);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        return $this->respondWithCollectionPagination($json);
+        return $this->respondWithCollectionPagination($collections);
     }
 
     /**
      * @author : dtphi .
      * @param Request $request
      * @param null $id
-     * @return AdminResource
+     * @return mixed
      */
     public function show(Request $request, $id = null)
     {
-        return new AdminResource(Admin::findOrFail($id));
+        try {
+            $json = $this->adSv->apiGetResourceDetail($id);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+        }
+
+        return $json;
     }
 
     /**
@@ -74,15 +77,16 @@ class AdminController extends ApiController
      */
     public function store(AdminRequest $request)
     {
-        $user = new Admin();
 
-        $storeResponse = $this->__handleStore($user, $request);
+        $storeResponse = $this->__handleStore($request);
 
         if ($storeResponse->getStatusCode() === HttpResponse::HTTP_BAD_REQUEST) {
             return $storeResponse;
         }
 
-        return $this->respondCreated("New {$this->resourceName} created.", $user->id);
+        $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
+
+        return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
     }
 
     /**
@@ -94,15 +98,15 @@ class AdminController extends ApiController
     public function update(AdminRequest $request, $id = null)
     {
         try {
-            $user = Admin::findOrFail($id);
+            $this->adSv->apiGetDetail($id);
 
-        } catch (ModelNotFoundException $e) {
+        } catch (HandlerMsgCommon $e) {
             Log::debug('User not found, Request ID = ' . $id);
 
-            return $this->respondNotFound();
+            throw $e->render();
         }
 
-        return $this->__handleStore($user, $request);
+        return $this->__handleStore($request);
     }
 
     /**
@@ -114,9 +118,9 @@ class AdminController extends ApiController
     public function destroy(Request $request, $id = null)
     {
         try {
-            $user = Admin::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            return $this->respondNotFound("No {$this->resourceName} found.");
+            $user = $this->adSv->apiGetDetail($id);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
         }
 
         $user->destroy($id);
@@ -130,35 +134,26 @@ class AdminController extends ApiController
      * @param $request
      * @return \Illuminate\Http\JsonResponse
      */
-    private function __handleStore(Admin $user, &$request)
+    private function __handleStore(&$request)
     {
         $requestParams = $request->all();
-        $user->fill($requestParams);
 
-        /**
-         * Save user with transaction to make sure all data stored correctly
-         */
-        DB::beginTransaction();
-
-        if (!$user->save()) {
-            DB::rollBack();
-
-            return $this->respondBadRequest();
+        if ($result = $this->adSv->apiInsertOrUpdate($requestParams)) {
+            return $this->respondUpdated($result);
         }
 
-        DB::commit();
-
-        return $this->respondUpdated();
+        return $this->respondBadRequest();
     }
 
     /**
      * @author : dtphi .
      * @return \Illuminate\Http\JsonResponse
      */
-    public function search () {
-        $users = new AdminCollection(Admin::orderByDesc('email')->paginate());
+    public function search()
+    {
+        $collections = $this->adSv->apiGetResourceCollection(['email'], 0);
 
-        event(new SearchUserEvent($users));
+        event(new SearchUserEvent($collections));
 
         return response()->json("ok");
     }

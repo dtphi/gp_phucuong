@@ -53,6 +53,11 @@ class ApiController extends Controller
     public static $perPageText = 'perPage';
 
     /**
+     * @var null
+     */
+    protected $resource = null;
+
+    /**
      * @author: dtphi .
      * ApiController constructor.
      * @param array $middleware
@@ -82,6 +87,14 @@ class ApiController extends Controller
         $this->statusCode = $statusCode;
 
         return $this;
+    }
+
+    /**
+     * @author : dtphi .
+     * @return null
+     */
+    public function getResource() {
+        return $this->resource;
     }
 
     /**
@@ -167,12 +180,15 @@ class ApiController extends Controller
     }
 
     /**
-     * @param $message
-     *
+     * @author : dtphi .
+     * @param null $resource
+     * @param string $message
      * @return \Illuminate\Http\JsonResponse
      */
-    public function respondUpdated($message = 'Updated')
+    public function respondUpdated($resource = null, $message = 'Updated')
     {
+        $this->resource = $resource;
+
         return $this->setStatusCode(IlluminateResponse::HTTP_OK)
             ->setReturnCode(self::RESPONSE_UPDATED)
             ->respond([
