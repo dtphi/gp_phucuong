@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRequest;
@@ -12,21 +13,65 @@ use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use DB;
 use App\Events\SearchUserEvent;
+use App\Http\Controllers\Api\Admin\Services\Contracts\AdminModel as AdminSv;
 
 class AdminController extends ApiController
 {
+    /**
+     * @var string
+     */
     protected $resourceName = 'admin';
 
-    public function index(Request $request)
+    /**
+     * @var null
+     */
+    private $adSv = null;
+
+    /**
+     * @author: dtphi .
+     * AdminController constructor.
+     * @param AdminSv $adSv
+     * @param array $middleware
+     */
+    public function __construct(AdminSv $adSv, array $middleware = [])
     {
-        return new AdminCollection(Admin::orderByDesc('id')->paginate($this->_getPerPage()));
+        $this->adSv = $adSv;
+        parent::__construct($middleware);
     }
 
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return AdminCollection|array
+     */
+    public function index(Request $request)
+    {
+        try {
+            $limit = $this->_getPerPage();
+            $json = $this->adSv->apiGetList([], $limit);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+        }
+
+        return $this->respondWithCollectionPagination($json);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @param null $id
+     * @return AdminResource
+     */
     public function show(Request $request, $id = null)
     {
         return new AdminResource(Admin::findOrFail($id));
     }
 
+    /**
+     * @author : dtphi .
+     * @param AdminRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(AdminRequest $request)
     {
         $user = new Admin();
@@ -40,6 +85,12 @@ class AdminController extends ApiController
         return $this->respondCreated("New {$this->resourceName} created.", $user->id);
     }
 
+    /**
+     * @author : dtphi .
+     * @param AdminRequest $request
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(AdminRequest $request, $id = null)
     {
         try {
@@ -54,6 +105,12 @@ class AdminController extends ApiController
         return $this->__handleStore($user, $request);
     }
 
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Request $request, $id = null)
     {
         try {
@@ -67,6 +124,12 @@ class AdminController extends ApiController
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
 
+    /**
+     * @author : dtphi .
+     * @param Admin $user
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function __handleStore(Admin $user, &$request)
     {
         $requestParams = $request->all();
@@ -88,6 +151,10 @@ class AdminController extends ApiController
         return $this->respondUpdated();
     }
 
+    /**
+     * @author : dtphi .
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function search () {
         $users = new AdminCollection(Admin::orderByDesc('email')->paginate());
 

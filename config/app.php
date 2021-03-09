@@ -230,4 +230,6 @@ return [
 
     ],
 
+    'api_name_key' => env('APP_API_NAME_KEY'),
+
 ];

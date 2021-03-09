@@ -1,6 +1,7 @@
 <template>
     <div class="input-group input-group-sm">
-        <input v-model="query" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <input v-model="query" class="form-control form-control-navbar" type="search" placeholder="Search"
+               aria-label="Search">
         <div class="input-group-append">
             <button class="btn btn-navbar" type="button" @click="searchProducts" @keyup.enter="searchProducts">
                 <font-awesome-icon icon="search"/>
@@ -13,10 +14,10 @@
     import {
         mapGetters
     } from 'vuex';
-  import {
-    ACTION_SEARCH_ALL
+    import {
+        ACTION_SEARCH_ALL
     } from 'store@admin/types/action-types';
-  import lodash from 'lodash';
+    import lodash from 'lodash';
 
     export default {
         name: 'AllSearch',

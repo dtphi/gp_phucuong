@@ -68,15 +68,16 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <template v-if="loading">
-                                                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
-                                                    </template>
-                                                    <template v-if="_notEmpty">
-                                                        <item v-for="(item,index) in _infoList"
+                                                <template v-if="loading">
+                                                    <loading-over-lay :active.sync="loading"
+                                                                      :is-full-page="fullPage"></loading-over-lay>
+                                                </template>
+                                                <template v-if="_notEmpty">
+                                                    <item v-for="(item,index) in _infoList"
                                                           :info="item"
                                                           :no="index"
                                                           :key="item.id"></item>
-                                                    </template>
+                                                </template>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -105,8 +106,8 @@
 
 <script>
     import {
-        mapState, 
-        mapGetters, 
+        mapState,
+        mapGetters,
         mapActions
     } from 'vuex';
     import Item from './components/TheItem';

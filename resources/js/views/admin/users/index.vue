@@ -40,23 +40,23 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <template v-if="loading">
-                                                        <loading-over-lay 
-                                                            :active.sync="loading" 
-                                                            :is-full-page="fullPage"></loading-over-lay>
-                                                    </template>
-                                                    <template v-if="_notEmpty">
-                                                        <item
-                                                            v-for="(item,index) in _userList"
-                                                            :no="index"
-                                                            :user="item"
-                                                            :key="item.id"></item>
-                                                    </template>
+                                                <template v-if="loading">
+                                                    <loading-over-lay
+                                                        :active.sync="loading"
+                                                        :is-full-page="fullPage"></loading-over-lay>
+                                                </template>
+                                                <template v-if="_notEmpty">
+                                                    <item
+                                                        v-for="(item,index) in _userList"
+                                                        :no="index"
+                                                        :user="item"
+                                                        :key="item.id"></item>
+                                                </template>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    
+
                                     <paginate></paginate>
                                 </div>
                             </div>
@@ -80,8 +80,8 @@
 
 <script>
     import {
-        mapState, 
-        mapGetters, 
+        mapState,
+        mapGetters,
         mapActions
     } from 'vuex';
     import UserForm from 'com@admin/Modal/Users/AddForm';
@@ -96,7 +96,7 @@
         MODULE_USER_MODAL
     } from 'store@admin/types/module-types';
     import {
-      USERS_SET_USER_LIST
+        USERS_SET_USER_LIST
     } from 'store@admin/types/mutation-types';
     import {
         ACTION_GET_USER_LIST,
@@ -143,7 +143,7 @@
             }
         },
         watch: {
-            'updateSuccess'( newValue, oldValue ) {
+            'updateSuccess'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }

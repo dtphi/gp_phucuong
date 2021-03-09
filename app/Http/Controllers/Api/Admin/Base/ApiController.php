@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Api\Admin\Base;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\CheckApp;
 use Illuminate\Http\Response as IlluminateResponse;
-use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
+    /**
+     * @var string
+     */
+    public $appName = 'gp-phu-cuong';
+
     // Success
     const RESPONSE_OK = 2000;
     const RESPONSE_CREATED = 2001;
@@ -36,6 +41,28 @@ class ApiController extends Controller
      * @var int
      */
     protected $returnCode = self::RESPONSE_OK;
+
+    /**
+     * @var int
+     */
+    protected $limit = 5;
+
+    /**
+     * @var string
+     */
+    public static $perPageText = 'perPage';
+
+    /**
+     * @author: dtphi .
+     * ApiController constructor.
+     * @param array $middleware
+     */
+    public function __construct($middleware = [])
+    {
+        $middleware[] = CheckApp::class;
+
+        return $this->middleware($middleware);
+    }
 
     /**
      * @return mixed
@@ -168,8 +195,18 @@ class ApiController extends Controller
     }
 
     /**
-     * @param string     $message
-     * @param array|null $data    An optional associative array of data to be returned
+     * @author : dtphi .
+     * @param $data
+     * @return mixed
+     */
+    public function respondWithCollectionPagination($data)
+    {
+        return $data;
+    }
+
+    /**
+     * @param string $message
+     * @param array|null $data An optional associative array of data to be returned
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -182,7 +219,7 @@ class ApiController extends Controller
         }
 
         $payload = [
-            'message' => $message,
+            'message'     => $message,
             'status_code' => $this->getStatusCode(),
         ];
 
@@ -195,7 +232,12 @@ class ApiController extends Controller
         ]);
     }
 
-    protected function _getPerPage() {
-        return (int)request()->query('perPage', 5);
+    /**
+     * @author: dtphi .
+     * @return int
+     */
+    protected function _getPerPage()
+    {
+        return (int)request()->query(self::$perPageText, $this->limit);
     }
 }

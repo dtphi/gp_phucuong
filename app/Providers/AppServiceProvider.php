@@ -17,16 +17,16 @@ class AppServiceProvider extends ServiceProvider
     {
         Sanctum::ignoreMigrations();
         $this->app->bind(
-            App\Http\Controllers\Api\Admin\Services\Contracts\AdminModel::class,
-            App\Http\Controllers\Api\Admin\Services\AdminService::class
+            \App\Http\Controllers\Api\Admin\Services\Contracts\AdminModel::class,
+            \App\Http\Controllers\Api\Admin\Services\AdminService::class
         );
         $this->app->bind(
-            App\Http\Controllers\Api\Admin\Services\Contracts\InformationModel::class,
-            App\Http\Controllers\Api\Admin\Services\InformationService::class
+            \App\Http\Controllers\Api\Admin\Services\Contracts\InformationModel::class,
+            \App\Http\Controllers\Api\Admin\Services\InformationService::class
         );
         $this->app->bind(
-            App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel::class,
-            App\Http\Controllers\Api\Admin\Services\NewsGroupService::class
+            \App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel::class,
+            \App\Http\Controllers\Api\Admin\Services\NewsGroupService::class
         );
     }
 
@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {   
+    {
         /*$scheme = config('app.force_scheme') ?? 'https';
         if (empty($scheme)) {
             $scheme = 'https';

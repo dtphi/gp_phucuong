@@ -14,7 +14,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                 <info-edit-form></info-edit-form>
+                                <info-edit-form></info-edit-form>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -33,8 +33,8 @@
 
 <script>
     import {
-        mapState, 
-        mapGetters, 
+        mapState,
+        mapGetters,
         mapActions
     } from 'vuex';
 
@@ -56,7 +56,7 @@
         },
 
         beforeCreate() {
-        	const infoId = parseInt(this.$route.params.infoId);
+            const infoId = parseInt(this.$route.params.infoId);
             this.$store.dispatch(MODULE_INFO_EDIT + '/' + ACTION_SHOW_MODAL_EDIT, infoId);
         },
 
@@ -73,7 +73,7 @@
             ])
         },
         watch: {
-            'updateSuccess'( newValue, oldValue ) {
+            'updateSuccess'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }

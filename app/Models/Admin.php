@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
@@ -35,9 +34,9 @@ class Admin extends Authenticatable
     ];
 
     /**
-     *  Mutator to hash password to bcrypt.
-     *
-     * @param string $pass
+     * @author : dtphi .
+     * @param $pass
+     * @return string
      */
     public function setPasswordAttribute($pass)
     {
@@ -46,5 +45,15 @@ class Admin extends Authenticatable
         $this->attributes['password'] = $bcrypt_password;
 
         return $bcrypt_password;
+    }
+
+    /**
+     * @author : dtphi .
+     * @param $query
+     * @return mixed
+     */
+    public function scopeOrderByDescById($query)
+    {
+        return $query->orderByDesc('id');
     }
 }
