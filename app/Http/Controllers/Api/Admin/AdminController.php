@@ -11,6 +11,7 @@ use App\Models\Admin;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use Log;
 
 class AdminController extends ApiController
 {

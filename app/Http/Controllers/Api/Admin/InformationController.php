@@ -9,6 +9,7 @@ use App\Http\Requests\InformationRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use Log;
 
 class InformationController extends ApiController
 {
@@ -110,12 +111,12 @@ class InformationController extends ApiController
     public function destroy($id = null)
     {
         try {
-            $user = $this->infoSv->apiGetDetail($id);
+            $info = $this->infoSv->apiGetDetail($id);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        $user->destroy($id);
+        $info->destroy($id);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -136,6 +137,11 @@ class InformationController extends ApiController
         return $this->respondBadRequest();
     }
 
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|void
+     */
     public function uploadImage(Request $request)
     {
         if ($request->is('options')) {

@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Http\Controllers\Api\Admin\Base\ApiController;
+use App\Exceptions\HandlerMsgCommon;
 use App\Helpers\Helper;
-use App\Models\NewsGroup;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\Admin\Base\ApiController;
+use App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel as newsGpSv;
 use App\Http\Requests\NewsGroupRequest;
-use App\Http\Resources\NewsGroups\NewsGroupResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use DB;
-
+use Log;
 
 /**
  * Class NewsGroupController
@@ -23,32 +21,35 @@ class NewsGroupController extends ApiController
     protected $resourceName = 'newsgroup';
 
     /**
+     * @var null
+     */
+    private $newsGpSv = null;
+
+    /**
+     * @author: dtphi .
+     * NewsGroupController constructor.
+     * @param newsGpSv $newsGpSv
+     * @param array $middleware
+     */
+    public function __construct(newsGpSv $newsGpSv, array $middleware = [])
+    {
+        $this->newsGpSv = $newsGpSv;
+        parent::__construct($middleware);
+    }
+
+    /**
+     * @author : dtphi .
      * @param Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
-     *
-     * @api GET /v1/admin/stores
      */
     public function index(Request $request)
     {
-        $data = [
-            'sort'      => 'stores.code',
-            'direction' => 'desc',
-            'page'      => $request['page'] ?: 1
-        ];
-
-        if (isset($request['q']) && !empty($request['q'])) {
-            $data['search'] = $request['q'];
+        try {
+            $newsGroups     = $this->newsGpSv->apiGetNewsGroupTrees();
+            $newsGroupTrees = $this->generateTree($newsGroups['data']);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
         }
-        if (isset($request['sort']) && !empty($request['sort'])) {
-            $data['sort'] = 'stores.' . $request['sort'];
-        }
-        if (isset($request['direction']) && !empty($request['direction'])) {
-            $data['direction'] = $request['direction'];
-        }
-
-        $newsGroups     = NewsGroup::getNewsGroups($data);
-        $newsGroupTrees = $this->generateTree($newsGroups['data']);
 
         return Helper::successResponse([
             'results' => $newsGroupTrees
@@ -56,11 +57,11 @@ class NewsGroupController extends ApiController
     }
 
     /**
-     * [generateTree description]
-     * @param  [type]  $data   [description]
-     * @param  integer $parent [description]
-     * @param  integer $depth [description]
-     * @return [type]          [description]
+     * @author : dtphi .
+     * @param $data
+     * @param int $parent
+     * @param int $depth
+     * @return array
      */
     public function generateTree($data, $parent = -1, $depth = 0)
     {
@@ -79,70 +80,91 @@ class NewsGroupController extends ApiController
         return $newsGroupTree;
     }
 
-    public function show(Request $request, $id = null)
+    /**
+     * @author : dtphi .
+     * @param null $id
+     * @return mixed
+     */
+    public function show($id = null)
     {
-        return new NewsGroupResource(NewsGroup::findOrFail($id));
+        try {
+            $json = $this->newsGpSv->apiGetResourceDetail($id);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+        }
+
+        return $json;
     }
 
+    /**
+     * @author : dtphi .
+     * @param NewsGroupRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(NewsGroupRequest $request)
     {
-        $model = new NewsGroup();
-
-        $storeResponse = $this->__handleStore($model, $request);
+        $storeResponse = $this->__handleStore($request);
 
         if ($storeResponse->getStatusCode() === HttpResponse::HTTP_BAD_REQUEST) {
             return $storeResponse;
         }
 
-        return $this->respondCreated("New {$this->resourceName} created.", $model->id);
+        $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
+
+        return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
     }
 
+    /**
+     * @author : dtphi .
+     * @param NewsGroupRequest $request
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(NewsGroupRequest $request, $id = null)
     {
         try {
-            $model = NewsGroup::findOrFail($id);
+            $this->newsGpSv->apiGetDetail($id);
 
-        } catch (ModelNotFoundException $e) {
+        } catch (HandlerMsgCommon $e) {
             Log::debug('User not found, Request ID = ' . $id);
 
-            return $this->respondNotFound();
+            throw $e->render();
         }
 
-        return $this->__handleStore($model, $request);
+        return $this->__handleStore($request);
     }
 
-    public function destroy(Request $request, $id = null)
+    /**
+     * @author : dtphi .
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id = null)
     {
         try {
-            $model = NewsGroup::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            return $this->respondNotFound("No {$this->resourceName} found.");
+            $newsGroup = $this->newsGpSv->apiGetDetail($id);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
         }
 
-        $model->destroy($id);
+        $newsGroup->destroy($id);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
 
-    private function __handleStore(NewsGroup $model, &$request)
+    /**
+     * @author : dtphi .
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function __handleStore(&$request)
     {
-        $requestParams            = $request->all();
-        $requestParams['user_id'] = $request->user()->id;
-        $model->fill($requestParams);
+        $requestParams = $request->all();
 
-        /**
-         * Save news group with transaction to make sure all data stored correctly
-         */
-        DB::beginTransaction();
-
-        if (!$model->save()) {
-            DB::rollBack();
-
-            return $this->respondBadRequest();
+        if ($result = $this->newsGpSv->apiInsertOrUpdate($requestParams)) {
+            return $this->respondUpdated($result);
         }
 
-        DB::commit();
-
-        return $this->respondUpdated();
+        return $this->respondBadRequest();
     }
 }
