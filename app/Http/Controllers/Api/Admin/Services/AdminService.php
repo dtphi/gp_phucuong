@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api\Admin\Services;
 
 use App\Http\Controllers\Api\Admin\Services\Contracts\AdminModel;
+use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Resources\Admins\AdminCollection;
 use App\Http\Resources\Admins\AdminResource;
 use App\Models\Admin;
 use DB;
 
-final class AdminService implements AdminModel
+final class AdminService implements BaseModel, AdminModel
 {
     /**
      * @var Admin|null

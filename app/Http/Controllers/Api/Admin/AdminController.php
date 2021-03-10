@@ -55,11 +55,10 @@ class AdminController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param Request $request
      * @param null $id
      * @return mixed
      */
-    public function show(Request $request, $id = null)
+    public function show($id = null)
     {
         try {
             $json = $this->adSv->apiGetResourceDetail($id);
@@ -111,11 +110,10 @@ class AdminController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param Request $request
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Request $request, $id = null)
+    public function destroy($id = null)
     {
         try {
             $user = $this->adSv->apiGetDetail($id);

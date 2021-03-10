@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Api\Admin\Services\ScopeService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ScopeService;
 
     /**
      * The attributes that are mass assignable.
@@ -45,15 +46,5 @@ class Admin extends Authenticatable
         $this->attributes['password'] = $bcrypt_password;
 
         return $bcrypt_password;
-    }
-
-    /**
-     * @author : dtphi .
-     * @param $query
-     * @return mixed
-     */
-    public function scopeOrderByDescById($query)
-    {
-        return $query->orderByDesc('id');
     }
 }
