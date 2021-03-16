@@ -13,20 +13,16 @@ import {
   USERS_MODAL_SET_USER_ID_FAILED,
   USERS_MODAL_SET_USER,
   USERS_MODAL_SET_LOADING,
-  USERS_MODAL_INSERT_USER_SUCCESS,
   USERS_MODAL_UPDATE_USER_SUCCESS,
-  USERS_MODAL_INSERT_USER_FAILED,
   USERS_MODAL_UPDATE_USER_FAILED,
   USERS_MODAL_SET_ERROR
 } from '../types/mutation-types';
 import {
   ACTION_GET_USER_BY_ID,
   ACTION_SET_LOADING,
-  ACTION_SHOW_MODAL,
   ACTION_SHOW_MODAL_EDIT,
   ACTION_CLOSE_MODAL,
   ACTION_IS_OPEN_MODAL,
-  ACTION_INSERT_USER,
   ACTION_UPDATE_USER,
   ACTION_RELOAD_GET_USER_LIST,
   ACTION_RESET_NOTIFICATION_INFO
@@ -110,14 +106,6 @@ export default {
       state.loading = payload
     },
 
-    [USERS_MODAL_INSERT_USER_SUCCESS](state, payload) {
-      state.updateSuccess = payload
-    },
-
-    [USERS_MODAL_INSERT_USER_FAILED](state, payload) {
-      state.updateSuccess = payload
-    },
-
     [USERS_MODAL_UPDATE_USER_SUCCESS](state, payload) {
       state.updateSuccess = payload
     },
@@ -132,14 +120,6 @@ export default {
   },
 
   actions: {
-    [ACTION_SHOW_MODAL]({
-      dispatch,
-      commit
-    }, payload) {
-      commit(USERS_MODAL_SET_OPEN_MODAL, payload.action);
-
-      dispatch(ACTION_IS_OPEN_MODAL, true);
-    },
 
     [ACTION_SHOW_MODAL_EDIT]({
       dispatch,
@@ -191,29 +171,6 @@ export default {
       commit
     }, isLoading) {
       commit(USERS_MODAL_SET_LOADING, isLoading);
-    },
-
-    [ACTION_INSERT_USER]({
-      dispatch,
-      commit
-    }, user) {
-      apiInsertUser(
-        user,
-        (result) => {
-          commit(USERS_MODAL_INSERT_USER_SUCCESS, AppConfig.comInsertNoSuccess);
-
-          dispatch(ACTION_RELOAD_GET_USER_LIST, null, {
-            root: true
-          });
-          dispatch(ACTION_SET_LOADING, false);
-          dispatch(ACTION_CLOSE_MODAL);
-        },
-        (errors) => {
-          commit(USERS_MODAL_INSERT_USER_FAILED, AppConfig.comInsertNoFail);
-
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      )
     },
 
     [ACTION_UPDATE_USER]({

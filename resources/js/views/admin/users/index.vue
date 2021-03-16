@@ -72,7 +72,8 @@
         </section>
         <!-- /.content -->
 
-        <user-form></user-form>
+        <user-add-form></user-add-form>
+        <user-edit-form></user-edit-form>
         <v-dialog></v-dialog>
     </div>
     <!-- /.content-wrapper -->
@@ -84,7 +85,8 @@
         mapGetters,
         mapActions
     } from 'vuex';
-    import UserForm from 'com@admin/Modal/Users/AddForm';
+    import UserAddForm from 'com@admin/Modal/Users/AddForm';
+    import UserEditForm from 'com@admin/Modal/Users/EditForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Item from './components/TheItem';
     import BtnAdd from './components/TheBtnAdd';
@@ -93,7 +95,8 @@
     import ListSearch from 'com@admin/Search';
     import {
         MODULE_USER,
-        MODULE_USER_MODAL
+        MODULE_USER_MODAL,
+        MODULE_USER_EDIT_MODAL
     } from 'store@admin/types/module-types';
     import {
         USERS_SET_USER_LIST
@@ -110,7 +113,8 @@
         },
         components: {
             Breadcrumb,
-            UserForm,
+            UserAddForm,
+            UserEditForm,
             Item,
             BtnAdd,
             Perpage,
@@ -131,6 +135,10 @@
             ]),
 
             ...mapState(MODULE_USER_MODAL, [
+                'insertSuccess'
+            ]),
+
+            ...mapState(MODULE_USER_EDIT_MODAL, [
                 'updateSuccess'
             ]),
 
@@ -143,6 +151,11 @@
             }
         },
         watch: {
+            'insertSuccess'(newValue, oldValue) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            },
             'updateSuccess'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);

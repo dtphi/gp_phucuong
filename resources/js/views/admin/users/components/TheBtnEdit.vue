@@ -9,7 +9,7 @@
 <script>
     import {mapActions} from 'vuex';
     import {
-        MODULE_USER_MODAL
+        MODULE_USER_EDIT_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_SHOW_MODAL_EDIT
@@ -27,7 +27,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_USER_MODAL, [
+            ...mapActions(MODULE_USER_EDIT_MODAL, [
                 ACTION_SHOW_MODAL_EDIT
             ]),
 

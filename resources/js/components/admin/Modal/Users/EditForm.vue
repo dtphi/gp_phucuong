@@ -103,16 +103,16 @@
     import {email} from 'vee-validate/dist/rules';
     import {
         MODULE_USER,
-        MODULE_USER_MODAL
+        MODULE_USER_EDIT_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_CLOSE_MODAL,
         ACTION_SET_LOADING,
-        ACTION_INSERT_USER
+        ACTION_UPDATE_USER
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'UserAddForm',
+        name: 'UserEditForm',
         data() {
             return {
                 fullPage: false,
@@ -120,21 +120,21 @@
             };
         },
         computed: {
-            ...mapState(MODULE_USER_MODAL, {
+            ...mapState(MODULE_USER_EDIT_MODAL, {
                 formAction: state => state.action,
                 loading: state => state.loading
             }),
-            ...mapGetters(MODULE_USER_MODAL, [
+            ...mapGetters(MODULE_USER_EDIT_MODAL, [
                 'classShow',
                 'styleCss',
                 'user',
             ]),
 
             _getSetForm() {
-                let setting = this.$options.setting.add;
+                let setting = this.$options.setting.edit;
 
                 if (this.formAction) {
-                    if (!this._isAddAction()) {
+                    if (!this._isEditAction()) {
                         this._resetModal()
                     } else {
                         this.userData = {...this.user}
@@ -148,10 +148,10 @@
             this._close()
         },
         methods: {
-            ...mapActions(MODULE_USER_MODAL, [
+            ...mapActions(MODULE_USER_EDIT_MODAL, [
                 ACTION_CLOSE_MODAL,
                 ACTION_SET_LOADING,
-                ACTION_INSERT_USER
+                ACTION_UPDATE_USER
             ]),
 
             async _resetModal() {
@@ -162,11 +162,11 @@
             },
 
             _isShowBody() {
-                return this._isAddAction()
+                return this._isEditAction()
             },
 
-            _isAddAction() {
-                return (this.formAction === this.$options.setting.add.actionName)
+            _isEditAction() {
+                return (this.formAction === this.$options.setting.edit.actionName)
             },
 
             _close() {
@@ -178,7 +178,7 @@
                 _self.setLoading(true);
                 await _self.$refs.observerUser.validate().then((isValid) => {
                     if (isValid) {
-                        _self.[ACTION_INSERT_USER](_self.userData)
+                      _self.[ACTION_UPDATE_USER](_self.userData)
                     } else {
                         _self.setLoading(false)
                     }
@@ -190,11 +190,11 @@
             passwordTxt: 'Password',
             emailTxt: 'Email',
             nameTxt: 'Name',
-            add: {
-                actionName: 'add',
-                isAddFrom: true,
-                title: 'Add User',
-                btnSubmitTxt: 'Save'
+            edit: {
+                actionName: 'edit',
+                isAddFrom: false,
+                title: 'Edit User',
+                btnSubmitTxt: 'Update'
             }
         }
     };
