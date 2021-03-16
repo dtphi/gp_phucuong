@@ -15,12 +15,13 @@ import {
   faTimes,
   faCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faYoutube, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import {
   FontAwesomeIcon,
   FontAwesomeLayers,
   FontAwesomeLayersText
 } from '@fortawesome/vue-fontawesome'
-library.add(faSpinner, faEdit, faPlus, faUser, faCopy, faBars, faSearch, faTimes, faCircle);
+library.add(faSpinner, faEdit, faPlus, faUser, faCopy, faBars, faSearch, faTimes, faCircle, faFacebook, faYoutube, faGoogle, faTwitter);
 Vue.config.productionTip = false;
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('font-awesome-layers', FontAwesomeLayers);
@@ -48,3 +49,10 @@ import VModal from 'vue-js-modal';
 Vue.use(VModal, {
   dialog: true
 });
+
+/* Add BootstrapVue */
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
