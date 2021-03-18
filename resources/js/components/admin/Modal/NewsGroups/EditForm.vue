@@ -120,16 +120,16 @@
     } from 'vuex';
     import NewsGroupCurrent from './TheGroupInfo';
     import {
-        MODULE_NEWS_GROUP_MODAL
+        MODULE_NEWS_GROUP_EDIT_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_CLOSE_MODAL,
         ACTION_SET_LOADING,
-        ACTION_INSERT_NEWS_GROUP,
+        ACTION_UPDATE_NEWS_GROUP
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'ModalAddForm',
+        name: 'ModalEditForm',
         components: {NewsGroupCurrent},
         data() {
             return {
@@ -139,27 +139,26 @@
             };
         },
         computed: {
-            ...mapState(MODULE_NEWS_GROUP_MODAL, {
+            ...mapState(MODULE_NEWS_GROUP_EDIT_MODAL, {
                 formAction: state => state.action,
                 loading: state => state.loading,
                 itemRoot: state => state.itemRoot
             }),
-            ...mapGetters(MODULE_NEWS_GROUP_MODAL, [
+            ...mapGetters(MODULE_NEWS_GROUP_EDIT_MODAL, [
                 'classShow',
                 'styleCss',
-                'parentInfo',
-                'newsGroupAdd'
+                'newsGroup',
+                'parentInfo'
             ]),
 
             _getSetForm() {
-                let setting = this.$options.setting.add;
+                let setting = this.$options.setting.edit;
 
                 if (this.formAction) {
-                    if (!this._isAddAction()) {
-                        this._resetModal();
+                    if (this._isEditAction()) {
+                    	this.groupData = {...this.newsGroup};
                     } else {
-                        this.groupData = {...this.newsGroupAdd};
-                        this.isShowParentInfo = (!this.itemRoot) && this.parentInfo.id;
+                    	this._resetModal();
                     }
                 }
 
@@ -172,10 +171,10 @@
         },
 
         methods: {
-            ...mapActions(MODULE_NEWS_GROUP_MODAL, [
+            ...mapActions(MODULE_NEWS_GROUP_EDIT_MODAL, [
                 ACTION_CLOSE_MODAL,
                 ACTION_SET_LOADING,
-                ACTION_INSERT_NEWS_GROUP,
+                ACTION_UPDATE_NEWS_GROUP
             ]),
 
             async _resetModal() {
@@ -189,8 +188,8 @@
                 this.[ACTION_CLOSE_MODAL]()
             },
 
-            _isAddAction() {
-                return (this.formAction === this.$options.setting.add.actionName)
+            _isEditAction() {
+                return (this.formAction === this.$options.setting.edit.actionName)
             },
 
             async _submitInfo() {
@@ -198,8 +197,7 @@
                 _self.[ACTION_SET_LOADING](true);
                 await _self.$refs.observerNewsGroup.validate().then((isValid) => {
                     if (isValid) {
-                        _self.groupData['father_id'] = (_self.parentInfo.id) ? _self.parentInfo.id : -1;
-                        _self.[ACTION_INSERT_NEWS_GROUP](_self.groupData);
+                      _self.[ACTION_UPDATE_NEWS_GROUP](_self.groupData);
                     } else {
                         _self.[ACTION_SET_LOADING](false);
                     }
@@ -208,12 +206,12 @@
         },
         setting: {
             btnCancelTxt: 'Close',
-            add: {
-                actionName: 'add',
-                isParentShow: true,
-                isAddFrom: true,
-                title: 'Add News Group',
-                btnSubmitTxt: 'Save'
+            edit: {
+                actionName: 'edit',
+                isParentShow: false,
+                isAddFrom: false,
+                title: 'Edit News Group',
+                btnSubmitTxt: 'Update'
             }
         }
     };

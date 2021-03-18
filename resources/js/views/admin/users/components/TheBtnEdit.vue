@@ -12,7 +12,7 @@
         MODULE_USER_EDIT_MODAL
     } from 'store@admin/types/module-types';
     import {
-        ACTION_SHOW_MODAL_EDIT
+        ACTION_SHOW_MODAL
     } from 'store@admin/types/action-types';
 
     export default {
@@ -28,11 +28,11 @@
         },
         methods: {
             ...mapActions(MODULE_USER_EDIT_MODAL, [
-                ACTION_SHOW_MODAL_EDIT
+                ACTION_SHOW_MODAL
             ]),
 
             _showModal() {
-                this.[ACTION_SHOW_MODAL_EDIT](this.userId)
+                this.[ACTION_SHOW_MODAL](this.userId)
             }
         }
     };

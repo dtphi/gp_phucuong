@@ -1,11 +1,9 @@
 <template>
     <div>
-        <span class="mb-1" @click="_showModal()">
-          <font-awesome-layers class="fa-1x" style="background:#FFF">
-          <font-awesome-icon icon="plus" size="xs"/>
-          </font-awesome-layers>
-        </span>
-
+        <btn-add 
+            :current-group="currentGroup" 
+            :is-action-show="isActionShow"></btn-add>
+        
         <transition name="action_show" v-if="!isActionShow">
           <span class="mb-1" @click="_showModalEdit()">
             <font-awesome-layers class="fa-1x" style="background:#FFF">
@@ -30,20 +28,25 @@
         mapGetters, 
         mapActions
     } from 'vuex';
-    import { EventBus } from '@app/api/utils/event-bus';
+    import { 
+        EventBus 
+    } from '@app/api/utils/event-bus';
     import {
         MODULE_NEWS_GROUP,
-        MODULE_NEWS_GROUP_MODAL
+        MODULE_NEWS_GROUP_EDIT_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_NEWS_GROUP_DELETE_BY_ID,
         ACTION_DELETE_NEWS_GROUP_BY_ID,
-        ACTION_SHOW_MODAL,
-        ACTION_SHOW_MODAL_EDIT
+        ACTION_SHOW_MODAL
     } from 'store@admin/types/action-types';
+    import BtnAdd from './TheAddBtn';
 
     export default {
         name: 'TheActionGroup',
+        components: {
+            BtnAdd
+        },
         props: {
             isActionShow: 0,
             currentGroup: [Object, Array]
@@ -52,7 +55,7 @@
             return {};
         },
         computed: {
-            ...mapGetters(MODULE_NEWS_GROUP_MODAL, [
+            ...mapGetters(MODULE_NEWS_GROUP_EDIT_MODAL, [
                 'isOpen'
             ]),
 
@@ -69,21 +72,12 @@
                 ACTION_SET_NEWS_GROUP_DELETE_BY_ID,
                 ACTION_DELETE_NEWS_GROUP_BY_ID
             ]),
-            ...mapActions(MODULE_NEWS_GROUP_MODAL, [
-                ACTION_SHOW_MODAL,
-                ACTION_SHOW_MODAL_EDIT
+            ...mapActions(MODULE_NEWS_GROUP_EDIT_MODAL, [
+                ACTION_SHOW_MODAL
             ]),
 
-            _showModal() {
-                this.[ACTION_SHOW_MODAL]({
-                    action: 'add',
-                    groupId: this.currentGroup.id,
-                    itemRoot: this.isActionShow
-                });
-            },
-
             _showModalEdit() {
-                this.[ACTION_SHOW_MODAL_EDIT]({
+                this.[ACTION_SHOW_MODAL]({
                     action: 'edit',
                     groupId: this.currentGroup.id
                 });
@@ -110,15 +104,6 @@
                         }
                     ]
                 })
-            }
-        },
-        mounted() {
-            const _self = this;
-
-            if (Object.keys(_self.currentGroup).length === 0) {
-                EventBus.$on('on-add-group', () => {
-                    _self._showModal();
-                });
             }
         },
         setting: {

@@ -9,3 +9,4 @@ export const MODULE_INFO_EDIT = 'info/edit';
 export const MODULE_INFO_MODAL = 'info/modal';
 export const MODULE_NEWS_GROUP = 'newsgroup';
 export const MODULE_NEWS_GROUP_MODAL = 'newsgroup/modal';
+export const MODULE_NEWS_GROUP_EDIT_MODAL = 'newsgroup/editModal';

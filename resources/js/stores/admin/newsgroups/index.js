@@ -1,5 +1,6 @@
 import axios from 'axios';
-import modals from './modal';
+import addModal from './add-modal';
+import editModal from './edit-modal';
 import {
   apiGetNewsGroupById,
   apiGetNewsGroups,
@@ -164,6 +165,7 @@ export default {
   },
 
   modules: {
-    modal: modals
+    modal: addModal,
+    editModal: editModal
   }
 }

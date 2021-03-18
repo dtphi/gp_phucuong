@@ -44,7 +44,8 @@
         </section>
         <!-- /.content -->
 
-        <form-modal></form-modal>
+        <modal-add-form></modal-add-form>
+        <modal-edit-form></modal-edit-form>
 
         <v-dialog></v-dialog>
     </div>
@@ -55,11 +56,13 @@
     import {mapState, mapGetters, mapActions} from 'vuex';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TreeItem from './components/TheTreeItem';
-    import FormModal from 'com@admin/Modal/NewsGroups/AddForm';
+    import ModalAddForm from 'com@admin/Modal/NewsGroups/AddForm';
+    import ModalEditForm from 'com@admin/Modal/NewsGroups/EditForm';
     import { EventBus } from '@app/api/utils/event-bus';
     import {
         MODULE_NEWS_GROUP,
-        MODULE_NEWS_GROUP_MODAL
+        MODULE_NEWS_GROUP_MODAL,
+        MODULE_NEWS_GROUP_EDIT_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_NEWS_GROUP_LIST,
@@ -71,7 +74,8 @@
         components: {
             Breadcrumb, 
             TreeItem, 
-            FormModal
+            ModalAddForm,
+            ModalEditForm
         },
         beforeCreate() {
             this.$store.dispatch(MODULE_NEWS_GROUP + '/' + ACTION_GET_NEWS_GROUP_LIST);
@@ -84,11 +88,16 @@
         },
         computed: {
             ...mapState(MODULE_NEWS_GROUP,
-                [
-                    'newsGroups',
-                    'loading'
-                ]),
-            ...mapGetters(MODULE_NEWS_GROUP_MODAL, ['isOpen', 'updateSuccess']),
+            [
+                'newsGroups',
+                'loading'
+            ]),
+            ...mapState(MODULE_NEWS_GROUP_MODAL, [
+                'insertSuccess'
+            ]),
+            ...mapState(MODULE_NEWS_GROUP_EDIT_MODAL, [
+                'updateSuccess'
+            ]),
             _lists() {
                 let rootTree = {...this.newsGroups};
 
@@ -98,6 +107,11 @@
             }
         },
         watch: {
+            'insertSuccess'(newValue, oldValue) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            },
             'updateSuccess'( newValue, oldValue ) {
                 if (newValue) {
                     this._notificationUpdate(newValue);

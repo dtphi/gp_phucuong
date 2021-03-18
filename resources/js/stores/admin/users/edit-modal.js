@@ -20,7 +20,7 @@ import {
 import {
   ACTION_GET_USER_BY_ID,
   ACTION_SET_LOADING,
-  ACTION_SHOW_MODAL_EDIT,
+  ACTION_SHOW_MODAL,
   ACTION_CLOSE_MODAL,
   ACTION_IS_OPEN_MODAL,
   ACTION_UPDATE_USER,
@@ -121,7 +121,7 @@ export default {
 
   actions: {
 
-    [ACTION_SHOW_MODAL_EDIT]({
+    [ACTION_SHOW_MODAL]({
       dispatch,
       commit
     }, userId) {
