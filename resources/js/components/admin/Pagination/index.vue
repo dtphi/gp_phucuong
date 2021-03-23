@@ -55,7 +55,12 @@
                 const to = this.resourcePaginationData.meta.to;
                 const total = this.resourcePaginationData.meta.total;
 
-                return `Showing ${from} to ${to} of ${total} entries`;
+                var textShow = "Showing 0 to 0 of 0 entries";
+                if (typeof from !== "undefined" && typeof from !== null) {
+                    textShow = `Showing ${from} to ${to} of ${total} entries`;
+                }
+
+                return textShow;
             },
 
             _getResourceResults (page) {
