@@ -1,9 +1,9 @@
 <template>
     <tr>
-        <td>{{user.id}}</td>
+        <td>{{_getNo()}}</td>
         <td>{{user.name}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.createdAt}}</td>
+        <td>{{_formatDate(user.created_at)}}</td>
         <td>
             <div class="icheck-primary">
                 <input type="checkbox" :id="`user_id_${user.id}`" :value="user.id">
@@ -11,16 +11,24 @@
             </div>
         </td>
         <td>
-            <BtnEdit :user-id="user.id"/>
-            <BtnDelete :user-id="user.id"/>
+            <div>
+                <btn-edit :user-id="user.id"></btn-edit>
+                <btn-delete :user-id="user.id"></btn-delete>
+            </div>
         </td>
     </tr>
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {
+        mapState,
+        mapActions
+    } from 'vuex';
     import BtnEdit from './TheBtnEdit';
     import BtnDelete from './TheBtnDelete';
+    import {
+        fn_format_dd_mm_yyyy
+    } from '@app/api/utils/fn-helper';
 
     export default {
         name: 'TheItemUser',
@@ -38,11 +46,27 @@
 
                     return (id && name);
                 }
+            },
+            no : {
+                default: 1
             }
+        },
+        computed: {
+            ...mapState({
+                meta: state => state.cfApp.meta
+            })
         },
         data() {
             return {};
         },
-        methods: {}
+        methods: {
+            _getNo() {
+                return (this.no + this.meta.from);
+            },
+
+            _formatDate(date) {
+                return fn_format_dd_mm_yyyy(date);
+            }
+        }
     };
 </script>

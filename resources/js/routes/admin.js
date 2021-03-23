@@ -4,6 +4,9 @@ import Login from 'v@admin/auth/Login';
 import Users from 'v@admin/users';
 import NewsGroups from 'v@admin/newsgroups';
 import News from 'v@admin/news';
+import NewsAdd from 'v@admin/news/add';
+import NewsEdit from 'v@admin/news/edit';
+import FileManager from 'v@admin/filemanagers';
 
 import {
     config
@@ -124,6 +127,74 @@ export default [{
                 layout: MainLayout,
                 role: 'admin',
                 title: 'News | ' + config.site_name
+            }
+        }, {
+            path: 'add',
+            component: NewsAdd,
+            name: 'admin.news.add',
+            meta: {
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Dashboard',
+                    linkName: 'admin.dashboard',
+                    linkPath: '/dashboard'
+                }, {
+                    name: 'News',
+                    linkName: 'admin.news.list',
+                    linkPath: '/news'
+                }, {
+                    name: 'News Add'
+                }],
+                header: 'News Add',
+                layout: MainLayout,
+                role: 'admin',
+                title: 'News Add | ' + config.site_name
+            }
+        }, {
+            path: 'edit/:infoId',
+            component: NewsEdit,
+            name: 'admin.news.edit',
+            meta: {
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Dashboard',
+                    linkName: 'admin.dashboard',
+                    linkPath: '/dashboard'
+                }, {
+                    name: 'News',
+                    linkName: 'admin.news.list',
+                    linkPath: '/news'
+                }, {
+                    name: 'News Edit'
+                }],
+                header: 'News Edit',
+                layout: MainLayout,
+                role: 'admin',
+                title: 'News Edit | ' + config.site_name
+            }
+        }]
+    }, {
+        path: 'filemanagers',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: FileManager,
+            name: 'admin.filemanagers.list',
+            meta: {
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Dashboard',
+                    linkName: 'admin.dashboard',
+                    linkPath: '/dashboard'
+                }, {
+                    name: 'Filemanagers'
+                }],
+                header: 'Filemanagers List',
+                layout: MainLayout,
+                role: 'admin',
+                title: 'Filemanagers | ' + config.site_name
             }
         }]
     }]

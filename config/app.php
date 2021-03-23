@@ -171,9 +171,10 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FileManagerServiceProvider::class,
 
     ],
 
@@ -228,5 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+    'api_name_key' => env('APP_API_NAME_KEY'),
 
 ];

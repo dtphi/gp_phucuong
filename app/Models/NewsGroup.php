@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class NewsGroup extends Model
+class NewsGroup extends BaseModel
 {
     protected $table = 'news_groups';
 

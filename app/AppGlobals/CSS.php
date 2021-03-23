@@ -108,10 +108,15 @@ class CSS
         } elseif (Request::is('admin/news*') && !Request::is('*-groups*')) {
             $cssStype    = $this->mapCssUser();
             $scripts     = $this->mapScriptNews();
+            $scripts     .= $this->mapScriptFileManager();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         } elseif (Request::is('admin/news-groups*')) {
             $cssStype    = $this->mapCssNewsGroups();
             $scripts     = $this->mapScriptNewsGroups();
+            $optionClass = 'hold-transition sidebar-mini layout-fixed';
+        } elseif (Request::is('admin/filemanagers*')) {
+            $cssStype    = $this->mapCss();
+            $scripts     = $this->mapScriptFileManager();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
         }
 
@@ -149,16 +154,28 @@ class CSS
         $output = '';
         /*Font Awesome*/
         $output .= "<link rel='stylesheet' href='/administrator/plugins/fontawesome-free/css/all.min.css'>\n";
-        /*Ionicons*/
-        $output .= "<link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>\n";
-        /*icheck bootstrap*/
-        $output .= "<link rel='stylesheet' href='/administrator/plugins/icheck-bootstrap/icheck-bootstrap.min.css'>\n";
         /*Theme style*/
         $output .= "<link rel='stylesheet' href='/administrator/dist/css/adminlte.min.css'>\n";
         /*Google Font: Source Sans Pro*/
         $output .= "<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700' rel='stylesheet'>\n";
 
         $output .= "<link rel='stylesheet' href='/administrator/dist/css/custom.css'>\n";
+
+        return $output;
+    }
+
+    public function mapScriptFileManager()
+    {
+        $output = '';
+        /*<!-- jQuery and jQuery UI (REQUIRED) -->*/
+        
+        $output .= "<script src='/packages/barryvdh/elfinder/jquery-1.11.0/jquery.min.js'></script>\n";
+        $output .= "<script src='/packages/barryvdh/elfinder/jqueryui-1.10.4/jquery-ui.min.js'></script>\n";
+        /*<!-- elFinder CSS (REQUIRED) -->*/
+        
+        /*<!-- elFinder JS (REQUIRED) -->*/
+        $output .= "<script src='/packages/barryvdh/elfinder/js/elfinder.min.js'></script>\n";
+        $output .= "<script src='/packages/barryvdh/elfinder/js/i18n/elfinder.vi.js'></script>\n";
 
         return $output;
     }
@@ -213,8 +230,11 @@ class CSS
     public function mapScript()
     {
         $output = '';
+        /*<!-- jQuery -->*/
         $output .= "<script src='/administrator/plugins/jquery/jquery.min.js'></script>\n";
+        /*<!-- Bootstrap 4 -->*/
         $output .= "<script src='/administrator/plugins/bootstrap/js/bootstrap.bundle.min.js'></script>\n";
+        /*<!-- AdminLTE App -->*/
         $output .= "<script src='/administrator/dist/js/adminlte.min.js'></script>\n";
 
         return $output;
@@ -226,29 +246,8 @@ class CSS
         $output = $this->getPluginPathScript('jquery/jquery.min.js');
         /*<!-- Bootstrap 4 -->*/
         $output .= $this->getPluginPathScript('bootstrap/js/bootstrap.bundle.min.js');
-        /*<!-- DataTables -->*/
-        $output .= $this->getPluginPathScript('datatables/jquery.dataTables.min.js');
-        $output .= $this->getPluginPathScript('datatables-bs4/js/dataTables.bootstrap4.min.js');
-        $output .= $this->getPluginPathScript('datatables-responsive/js/dataTables.responsive.min.js');
-        $output .= $this->getPluginPathScript('datatables-responsive/js/responsive.bootstrap4.min.js');
         /*<!-- AdminLTE App -->*/
-        $output .= $this->getDistJsScript('adminlte.js');
-
-        $output .= $this->getDistJsScript('demo.js');
-
-        $output .= "<script>
-                      $(function () {
-                        $('#example1').DataTable({
-                          'paging': true,
-                          'lengthChange': true,
-                          'searching': true,
-                          'ordering': true,
-                          'info': true,
-                          'autoWidth': false,
-                          'responsive': true,
-                        });
-                      });
-                    </script>";
+        $output .= $this->getDistJsScript('adminlte.min.js');
 
         return $output;
     }
@@ -259,15 +258,8 @@ class CSS
         $output = $this->getPluginPathScript('jquery/jquery.min.js');
         /*<!-- Bootstrap 4 -->*/
         $output .= $this->getPluginPathScript('bootstrap/js/bootstrap.bundle.min.js');
-        /*<!-- DataTables -->*/
-        $output .= $this->getPluginPathScript('datatables/jquery.dataTables.min.js');
-        $output .= $this->getPluginPathScript('datatables-bs4/js/dataTables.bootstrap4.min.js');
-        $output .= $this->getPluginPathScript('datatables-responsive/js/dataTables.responsive.min.js');
-        $output .= $this->getPluginPathScript('datatables-responsive/js/responsive.bootstrap4.min.js');
         /*<!-- AdminLTE App -->*/
-        $output .= $this->getDistJsScript('adminlte.js');
-
-        $output .= $this->getDistJsScript('demo.js');
+        $output .= $this->getDistJsScript('adminlte.min.js');
 
         return $output;
     }
@@ -279,9 +271,7 @@ class CSS
         /*<!-- Bootstrap 4 -->*/
         $output .= $this->getPluginPathScript('bootstrap/js/bootstrap.bundle.min.js');
         /*<!-- AdminLTE App -->*/
-        $output .= $this->getDistJsScript('adminlte.js');
-
-        $output .= $this->getDistJsScript('demo.js');
+        $output .= $this->getDistJsScript('adminlte.min.js');
 
         $output .= "<script>
                        (function ($) {

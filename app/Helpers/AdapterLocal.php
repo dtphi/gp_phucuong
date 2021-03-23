@@ -1,0 +1,110 @@
+<?php
+namespace App\Helpers;
+
+use League\Flysystem\Adapter\Local;
+use Yii;
+use iutbay\yii2\mm\models\Thumb;
+
+/**
+ * AdapterLocal
+ *
+ * @author Phi
+ */
+class AdapterLocal extends Local
+{
+	const SIZE_THUMB = 'thumb';
+    const SIZE_MEDIUM = 'medium';
+    const SIZE_LARGE = 'large';
+    const SIZE_FULL = 'full';
+
+    public static $extensions = [
+        'jpg' => 'jpeg',
+        'jpeg' => 'jpeg',
+        'png' => 'png',
+        'gif' => 'gif',
+        'bmp' => 'bmp',
+    ];
+
+    public static $sizes = [
+        self::SIZE_THUMB => [150, 150],
+        self::SIZE_MEDIUM => [300, 300],
+        self::SIZE_LARGE => [600, 600],
+    ];
+
+	/**
+     * @var string thumbs default size
+     */
+    public static $thumbsSize = self::SIZE_THUMB;
+
+	/**
+     * @inheritdoc
+     */
+    public function listContents($directory = '', $recursive = false)
+    {
+        $result = [];
+        $location = $this->applyPathPrefix($directory);
+
+        if ( ! is_dir($location)) {
+            return [];
+        }
+
+        $iterator = $recursive ? $this->getRecursiveDirectoryIterator($location) : $this->getDirectoryIterator($location);
+
+        foreach ($iterator as $file) {
+            $path = $this->getFilePath($file);
+
+            if (preg_match('#(^|/|\\\\)\.{1,2}$#', $path)) {
+                continue;
+            }
+
+            $node = $this->normalizeFileInfo($file);
+            if ($node['type'] === 'file') {
+                $thumb = Yii::createObject([
+                    'class' => Thumb::className(),
+                    'path' => self::getThumbSrc($path),
+                ]);
+                if ($thumb->validate() && $thumb->save()) {
+                } else {
+                    throw new \yii\web\NotFoundHttpException();
+                }
+            }
+
+            $result[] = $node;
+        }
+
+        unset($iterator);
+
+        return array_filter($result);
+    }
+
+    /**
+     * Get thumb src
+     * @param string $path
+     * @param string $size
+     */
+    public static function getThumbSrc($path, $size = null)
+    {
+        if ($size === null)
+            $size = self::$thumbsSize;
+
+        $regexp = '#^(.*)\.(' . self::getExtensionsRegexp() . ')$#';
+        if (preg_match($regexp, $path, $matches) && in_array($size, array_keys(self::$sizes))) {
+            $size = self::$sizes[$size];
+            $dstPath = "{$matches[1]}_{$size[0]}x{$size[1]}.{$matches[2]}";
+            
+            return $dstPath;
+        } else {
+            throw new \yii\base\InvalidParamException();
+        }
+    }
+
+    /**
+     * Get extensions regexp
+     * @return string regexp
+     */
+    public static function getExtensionsRegexp()
+    {
+        $keys = array_keys(self::$extensions);
+        return '(?i)' . join('|', $keys);
+    }
+}

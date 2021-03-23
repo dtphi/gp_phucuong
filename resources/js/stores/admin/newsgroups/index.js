@@ -1,9 +1,11 @@
 import axios from 'axios';
-import modals from './modal';
+import addModal from './add-modal';
+import editModal from './edit-modal';
 import {
   apiGetNewsGroupById,
   apiGetNewsGroups,
-  apiDeleteNewsGroup
+  apiDeleteNewsGroup,
+  apiSearchAll
 } from 'api@admin/newsgroups';
 import {
   NEWSGROUPS_SET_LOADING,
@@ -20,7 +22,8 @@ import {
   ACTION_DELETE_NEWS_GROUP_BY_ID,
   ACTION_SET_NEWS_GROUP_DELETE_BY_ID,
   ACTION_RELOAD_GET_NEWS_GROUP_LIST,
-  ACTION_SET_LOADING
+  ACTION_SET_LOADING,
+  ACTION_SEARCH_ALL
 } from '../types/action-types';
 
 export default {
@@ -141,10 +144,28 @@ export default {
       handler(namespacedContext, payload) {
         namespacedContext.dispatch(ACTION_GET_NEWS_GROUP_LIST)
       }
-    }
+    },
+
+    [ACTION_SEARCH_ALL]({
+      dispatch,
+      commit
+    }, query) {
+      dispatch(ACTION_SET_LOADING, true);
+      apiSearchAll(query,
+        (result) => {
+          commit(NEWSGROUPS_GET_NEWS_GROUP_LIST_SUCCESS, true);
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          commit(NEWSGROUPS_GET_NEWS_GROUP_LIST_FAILED, false);
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
   },
 
   modules: {
-    modal: modals
+    modal: addModal,
+    editModal: editModal
   }
 }

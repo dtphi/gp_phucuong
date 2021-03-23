@@ -7,25 +7,12 @@
                     <font-awesome-icon icon="bars"/>
                 </a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
-            </li>
         </ul>
 
         <!-- SEARCH FORM -->
-        <form class="form-inline ml-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <font-awesome-icon icon="search"/>
-                    </button>
-                </div>
-            </div>
-        </form>
+        <div class="form-inline ml-3">
+            <all-search></all-search>
+        </div>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
@@ -114,6 +101,7 @@
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
+            <login-user></login-user>
             <li class="nav-item">
                 <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                     <i class="fas fa-th-large"></i>
@@ -124,9 +112,14 @@
 </template>
 
 <script>
+    import {
+        mapState
+    } from 'vuex';
+    import LoginUser from '../Profile';
+    import AllSearch from '../Search/AllSearch';
 
     export default {
         name: 'Navbar',
-        components: {}
+        components: {LoginUser, AllSearch}
     };
 </script>

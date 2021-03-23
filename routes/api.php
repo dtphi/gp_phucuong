@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Broadcast;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,16 +13,18 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-define('API_ADMIN_NAMESPACE', 'App\Http\Controllers\Api\Admin');
+Route::post('/test', function (Request $request) {
+            return ['test' => 'ok'];die;
+        });
 
-Route::namespace(API_ADMIN_NAMESPACE)
+Route::namespace('App\Http\Controllers\Api\Admin')
     ->middleware('web')
     ->group(function () {
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout');
 	});
 
-Route::namespace(API_ADMIN_NAMESPACE)
+Route::namespace('App\Http\Controllers\Api\Admin')
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('/user', function (Request $request) {
@@ -30,7 +32,9 @@ Route::namespace(API_ADMIN_NAMESPACE)
         });
 
         Route::apiResource('users', 'AdminController');
+        Route::get('/search-user','AdminController@search');
         Route::apiResource('news-groups', 'NewsGroupController');
         Route::apiResource('news', 'InformationController');
-    });
 
+        Route::any('/mmedia/{any}', function () {});
+    });

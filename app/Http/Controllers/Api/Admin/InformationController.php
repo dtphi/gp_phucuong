@@ -2,89 +2,152 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\Admin\Services\Contracts\InformationModel as InfoSv;
 use App\Http\Requests\InformationRequest;
-use App\Http\Resources\Informations\InformationCollection;
-use App\Http\Resources\Informations\InformationResource;
-use App\Models\Information;
-use Illuminate\Http\Response as HttpResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use DB;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
+use Log;
 
 class InformationController extends ApiController
 {
     protected $resourceName = 'information';
 
+    /**
+     * @var null
+     */
+    private $infoSv = null;
+
+    /**
+     * @author: dtphi .
+     * InformationController constructor.
+     * @param InfoSv $infoSv
+     * @param array $middleware
+     */
+    public function __construct(InfoSv $infoSv, array $middleware = [])
+    {
+        $this->infoSv = $infoSv;
+        parent::__construct($middleware);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
-        return new InformationCollection(Information::orderByDesc('id')->paginate());
+        try {
+            $limit       = $this->_getPerPage();
+            $collections = $this->infoSv->apiGetResourceCollection([], $limit);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+        }
+
+        return $this->respondWithCollectionPagination($collections);
     }
 
-    public function show(Request $request, $id = null)
+    /**
+     * @author : dtphi .
+     * @param null $id
+     * @return mixed
+     */
+    public function show($id = null)
     {
-        return new InformationResource(Information::findOrFail($id));
+        try {
+            $json = $this->infoSv->apiGetResourceDetail($id);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+        }
+
+        return $json;
     }
 
+    /**
+     * @author : dtphi .
+     * @param InformationRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(InformationRequest $request)
     {
-        $model = new Information();
-
-        $storeResponse = $this->__handleStore($model, $request);
+        $storeResponse = $this->__handleStore($request);
 
         if ($storeResponse->getStatusCode() === HttpResponse::HTTP_BAD_REQUEST) {
             return $storeResponse;
         }
 
-        return $this->respondCreated("New {$this->resourceName} created.", $model->id);
+        $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
+
+        return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
     }
 
+    /**
+     * @author : dtphi .
+     * @param InformationRequest $request
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(InformationRequest $request, $id = null)
     {
         try {
-            $model = Information::findOrFail($id);
+            $this->infoSv->apiGetDetail($id);
 
-        } catch (ModelNotFoundException $e) {
-            Log::debug('News not found, Request ID = ' . $id);
+        } catch (HandlerMsgCommon $e) {
+            Log::debug('User not found, Request ID = ' . $id);
 
-            return $this->respondNotFound();
+            throw $e->render();
         }
 
-        return $this->__handleStore($model, $request);
+        return $this->__handleStore($request);
     }
 
-    public function destroy(Request $request, $id = null)
+    /**
+     * @author : dtphi .
+     * @param null $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id = null)
     {
         try {
-            $model = Information::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            return $this->respondNotFound("No {$this->resourceName} found.");
+            $info = $this->infoSv->apiGetDetail($id);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
         }
 
-        $model->destroy($id);
+        $info->destroy($id);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
 
-    private function __handleStore(Information $model, &$request)
+    /**
+     * @author : dtphi .
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function __handleStore(&$request)
     {
-        $requestParams            = $request->all();
-        $requestParams['user_id'] = $request->user()->id;
-        $model->fill($requestParams);
+        $requestParams = $request->all();
 
-        /**
-         * Save news with transaction to make sure all data stored correctly
-         */
-        DB::beginTransaction();
-
-        if (!$model->save()) {
-            DB::rollBack();
-
-            return $this->respondBadRequest();
+        if ($result = $this->infoSv->apiInsertOrUpdate($requestParams)) {
+            return $this->respondUpdated($result);
         }
 
-        DB::commit();
+        return $this->respondBadRequest();
+    }
 
-        return $this->respondUpdated();
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|void
+     */
+    public function uploadImage(Request $request)
+    {
+        if ($request->is('options')) {
+            return;
+        }
+
+        return $this->respondBadRequest();
     }
 }

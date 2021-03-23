@@ -2,9 +2,9 @@
     <transition name="modal-news-group-add">
         <div :class="classShow" :style="styleCss" data-keyboard="false">
             <div class="modal-dialog modal-lg">
-                <ValidationObserver ref="observerNewsGroup" @submit.prevent="_submitInfo">
+                <validation-observer ref="observerNewsGroup" @submit.prevent="_submitInfo">
                     <div class="modal-content">
-                        <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
+                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
                         <div class="modal-header">
                             <h4 class="modal-title">{{_getSetForm.title}}</h4>
                             <button type="button" class="close" aria-label="Close" @click="_close">
@@ -13,19 +13,19 @@
                                 </span>
                             </button>
                         </div>
-                        <transition v-if="isShowParentInfo">
-                            <NewsGroupCurrent :parent-info="parentInfo"/>
-                        </transition>
+                        <template v-if="isShowParentInfo">
+                            <news-group-current :parent-info="parentInfo"></news-group-current>
+                        </template>
                         <div class="modal-body" v-if="groupData">
                             <!-- form start -->
                             <div class="form-horizontal">
 
-                                <transition name="card-body-add" v-if="_getSetForm.isAddFrom">
+                                <template name="card-body-add" v-if="_getSetForm.isAddFrom">
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
-                                                <ValidationProvider
+                                                <validation-provider
                                                     name="news_group_name"
                                                     rules="required|max:191"
                                                     v-slot="{ errors }">
@@ -35,13 +35,13 @@
                                                         class="form-control"
                                                         placeholder="News Group Name">
                                                     <span class="text-red">{{ errors[0] }}</span>
-                                                </ValidationProvider>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Description</label>
                                             <div class="col-sm-10">
-                                                <ValidationProvider
+                                                <validation-provider
                                                     name="news_group_description"
                                                     rules="max:200"
                                                     v-slot="{ errors }">
@@ -51,18 +51,18 @@
                                                         placeholder="Description"></textarea>
                                                     <span
                                                         class="text-red">{{ errors[0] }}</span>
-                                                </ValidationProvider>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                     </div>
-                                </transition>
+                                </template>
 
-                                <transition name="card-body-edit" class="card-body" v-else>
+                                <template name="card-body-edit" class="card-body" v-else>
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
-                                                <ValidationProvider
+                                                <validation-provider
                                                     name="news_group_name"
                                                     rules="required|max:191"
                                                     v-slot="{ errors }">
@@ -72,13 +72,13 @@
                                                         class="form-control"
                                                         placeholder="News Group Name">
                                                     <span class="text-red">{{ errors[0] }}</span>
-                                                </ValidationProvider>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Description</label>
                                             <div class="col-sm-10">
-                                                <ValidationProvider
+                                                <validation-provider
                                                     name="news_group_description"
                                                     rules="max:200"
                                                     v-slot="{ errors }">
@@ -87,11 +87,11 @@
                                                         class="form-control"
                                                         placeholder="Description"></textarea>
                                                     <span class="text-red">{{ errors[0] }}</span>
-                                                </ValidationProvider>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                     </div>
-                                </transition>
+                                </template>
 
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                             </button>
                         </div>
                     </div>
-                </ValidationObserver>
+                </validation-observer>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
@@ -113,19 +113,19 @@
 </template>
 
 <script>
-    import {mapState, mapGetters, mapActions} from 'vuex';
+    import {
+        mapState, 
+        mapGetters, 
+        mapActions
+    } from 'vuex';
     import NewsGroupCurrent from './TheGroupInfo';
     import {
-        MODULE_NEWS_GROUP,
         MODULE_NEWS_GROUP_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_CLOSE_MODAL,
         ACTION_SET_LOADING,
         ACTION_INSERT_NEWS_GROUP,
-        ACTION_UPDATE_NEWS_GROUP,
-        ACTION_GET_NEWS_GROUP_LIST,
-        ACTION_RELOAD_GET_NEWS_GROUP_LIST,
     } from 'store@admin/types/action-types';
 
     export default {
@@ -147,7 +147,6 @@
             ...mapGetters(MODULE_NEWS_GROUP_MODAL, [
                 'classShow',
                 'styleCss',
-                'newsGroup',
                 'parentInfo',
                 'newsGroupAdd'
             ]),
@@ -156,17 +155,11 @@
                 let setting = this.$options.setting.add;
 
                 if (this.formAction) {
-                    setting = this.$options.setting[this.formAction];
-
-                    if (this._isModalClose()) this._resetModal();
-
-                    if (this._isEditAction()) this.groupData = {...this.newsGroup};
-
-                    if (this._isAddAction()) {
-                        this.groupData = {...this.newsGroupAdd};
-                        this.isShowParentInfo = !this.itemRoot && this.parentInfo.id;
+                    if (!this._isAddAction()) {
+                        this._resetModal();
                     } else {
-                        this.isShowParentInfo = false;
+                        this.groupData = {...this.newsGroupAdd};
+                        this.isShowParentInfo = (!this.itemRoot) && this.parentInfo.id;
                     }
                 }
 
@@ -183,11 +176,6 @@
                 ACTION_CLOSE_MODAL,
                 ACTION_SET_LOADING,
                 ACTION_INSERT_NEWS_GROUP,
-                ACTION_UPDATE_NEWS_GROUP
-            ]),
-            ...mapActions(MODULE_NEWS_GROUP, [
-                ACTION_GET_NEWS_GROUP_LIST,
-                ACTION_RELOAD_GET_NEWS_GROUP_LIST
             ]),
 
             async _resetModal() {
@@ -205,25 +193,13 @@
                 return (this.formAction === this.$options.setting.add.actionName)
             },
 
-            _isEditAction() {
-                return (this.formAction === this.$options.setting.edit.actionName)
-            },
-
-            _isModalClose() {
-                return (this.formAction === this.$options.setting.closeModal.actionName)
-            },
-
             async _submitInfo() {
                 const _self = this;
                 _self.[ACTION_SET_LOADING](true);
                 await _self.$refs.observerNewsGroup.validate().then((isValid) => {
                     if (isValid) {
-                        if (_self._isEditAction()) {
-                            _self.[ACTION_UPDATE_NEWS_GROUP](_self.groupData);
-                        } else {
-                            _self.groupData['father_id'] = (_self.parentInfo.id) ? _self.parentInfo.id : -1;
-                            _self.[ACTION_INSERT_NEWS_GROUP](_self.groupData);
-                        }
+                        _self.groupData['father_id'] = (_self.parentInfo.id) ? _self.parentInfo.id : -1;
+                        _self.[ACTION_INSERT_NEWS_GROUP](_self.groupData);
                     } else {
                         _self.[ACTION_SET_LOADING](false);
                     }
@@ -238,20 +214,6 @@
                 isAddFrom: true,
                 title: 'Add News Group',
                 btnSubmitTxt: 'Save'
-            },
-            edit: {
-                actionName: 'edit',
-                isParentShow: false,
-                isAddFrom: false,
-                title: 'Edit News Group',
-                btnSubmitTxt: 'Update'
-            },
-            closeModal: {
-                actionName: 'closeModal',
-                isParentShow: false,
-                isAddFrom: false,
-                title: '',
-                btnSubmitTxt: ''
             }
         }
     };

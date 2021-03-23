@@ -1,7 +1,9 @@
 <template>
-    <button type="button" class="btn btn-default mb-3" @click="_showModal()">
-        <font-awesome-icon icon="plus" size="xs"/>
-    </button>
+    <a href="javascript:void(0);">
+        <font-awesome-layers size="xs" @click="_showModal()" style="background:honeydew">
+            <font-awesome-icon icon="plus" size="xs"/>
+        </font-awesome-layers>
+    </a>
 </template>
 
 <script>

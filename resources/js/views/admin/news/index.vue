@@ -1,7 +1,7 @@
 <template>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <Breadcrumb/>
+        <breadcrumb></breadcrumb>
 
         <!-- Main content -->
         <section class="content">
@@ -12,7 +12,8 @@
                             <div class="card-header">
                                 <h3 class="card-title">News List</h3>
                                 <div style="float:right">
-                                    <BtnAdd/>
+                                    <!-- test : <btn-add :is-redirect="!!(1 != 1)"></btn-add> -->
+                                    <btn-add></btn-add>
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -20,10 +21,10 @@
                                 <div class="dataTables_wrapper dt-bootstrap4 no-footer">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6">
-                                            <Perpage/>
+                                            <perpage></perpage>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
-                                            <ListSearch/>
+                                            <list-search></list-search>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -49,45 +50,39 @@
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Created by: activate to sort column ascending">
-                                                        Created by
+                                                        Created from
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Created by: activate to sort column ascending">
+                                                        Picture
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Key: activate to sort column ascending">Key
                                                     </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Key: activate to sort column ascending">Action
+                                                    </th>
                                                 </tr>
                                                 </thead>
-                                                <tbody v-if="_notEmpty">
-                                                <!-- <tr role="row" class="odd">
-                                                  <td tabindex="0" class="sorting_1">Name 01</td>
-                                                  <td>Admin</td>
-                                                  <td>Admin</td>
-                                                  <td>
-                                                    <div class="icheck-primary">
-                                                      <input type="checkbox" id="key_01" name="Key" value="">
-                                                      <label for="key_01"></label>
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                                <tr role="row" class="even">
-                                                  <td tabindex="0" class="sorting_1">Name 02</td>
-                                                  <td>User</td>
-                                                  <td>user@mail.com</td>
-                                                  <td>
-                                                    <div class="icheck-primary">
-                                                      <input type="checkbox" id="key_02" name="Key" value="">
-                                                      <label for="key_02"></label>
-                                                    </div>
-                                                  </td>
-                                                </tr> -->
-                                                <Item v-for="(item,index) in _infoList"
-                                                      :info="item"
-                                                      :key="item.id"/>
+                                                <tbody>
+                                                <template v-if="loading">
+                                                    <loading-over-lay :active.sync="loading"
+                                                                      :is-full-page="fullPage"></loading-over-lay>
+                                                </template>
+                                                <template v-if="_notEmpty">
+                                                    <item v-for="(item,index) in _infoList"
+                                                          :info="item"
+                                                          :no="index"
+                                                          :key="item.id"></item>
+                                                </template>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    <Paginate/>
+                                    <paginate></paginate>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -110,7 +105,11 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex';
+    import {
+        mapState,
+        mapGetters,
+        mapActions
+    } from 'vuex';
     import Item from './components/TheItem';
 
     import InfoAddForm from 'com@admin/Modal/Infos/AddForm';
@@ -144,11 +143,12 @@
 
         data() {
             return {
-                fullPage: true
+                fullPage: false
             }
         },
 
         computed: {
+            ...mapGetters(['isNotEmptyList']),
             ...mapState(MODULE_INFO, [
                 'infos',
                 'loading'
@@ -159,8 +159,8 @@
             },
 
             _notEmpty() {
-                return this.infos && Object.keys(this.infos).length
+                return this.isNotEmptyList;
             }
-        },
+        }
     };
 </script>

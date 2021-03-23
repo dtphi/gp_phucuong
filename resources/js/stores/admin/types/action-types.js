@@ -13,6 +13,7 @@ export const ACTION_SET_INFO_DELETE_BY_ID = 'setInfoDeleteById';
 export const ACTION_RELOAD_GET_INFO_LIST = 'reloadGetInfoList';
 export const ACTION_INSERT_INFO = 'insertInfo';
 export const ACTION_UPDATE_INFO = 'updateInfo';
+export const ACTION_RESET_UPDATE_INFO = 'resetUpdateInfo';
 
 export const ACTION_GET_NEWS_GROUP_LIST = 'getNewsGroupList';
 export const ACTION_GET_NEWS_GROUP_BY_ID = 'getNewsGroupById';
@@ -27,3 +28,5 @@ export const ACTION_SHOW_MODAL = 'showModal';
 export const ACTION_SHOW_MODAL_EDIT = 'showModalEdit';
 export const ACTION_CLOSE_MODAL = 'closeModal';
 export const ACTION_IS_OPEN_MODAL = 'isOpenModal';
+export const ACTION_RESET_NOTIFICATION_INFO = 'resetNotificationInfo';
+export const ACTION_SEARCH_ALL = 'searchAll';

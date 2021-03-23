@@ -13,4 +13,8 @@ npm-debug.log
 yarn-error.log
 /public/css/*
 /public/js/*
+/public/images/logo*
+/public/images/ad_logo*
+composer.lock
+package-lock.json
 src

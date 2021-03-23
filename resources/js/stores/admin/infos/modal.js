@@ -35,6 +35,10 @@ const NEWS = {
   newsname: '',
   description: '',
   newslink: '',
+  newsgroup_id: 0,
+  newsgroupname: '',
+  picture: '',
+  context: ''
 }
 
 export default {

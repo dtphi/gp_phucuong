@@ -2,9 +2,9 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar elevation-4">
         <!-- Brand Logo -->
-        <a href="#!" class="brand-link">
+        <a href="http://haydesachnoipodcast.com" class="brand-link">
             <img src="/administrator/img/logo.png" alt="Diocese of Phu Cuong Logo" class="brand-image">
-            <span class="brand-text font-weight-bold">Diocese of Phu Cuong</span>
+            <span class="brand-text font-weight-bold">Giáo Phận</span>
         </a>
 
         <!-- Sidebar -->
@@ -13,29 +13,36 @@
             <nav class="mt-4">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    <NavLink
+                    <nav-link
                         label="Users"
                         link="/admin/users"
                         index="users"
-                        iconName="fa-user"
+                        iconName="user"
                         :active-item="activeItem"
                     />
-                    <NavLink
+                    <nav-link
                         label="News Groups"
                         link="/admin/news-groups"
                         index="news-groups"
-                        iconName="fa-copy"
+                        iconName="folder"
                         :active-item="activeItem"
                     />
-                    <NavLink
+                    <nav-link
                         label="News"
                         link="/admin/news"
                         index="infomations"
-                        iconName="fa-info"
+                        iconName="info"
+                        :active-item="activeItem"
+                    />
+                    <nav-link
+                        label="News Files"
+                        link="/admin/filemanagers"
+                        index="filemanagers"
+                        iconName="file"
                         :active-item="activeItem"
                     />
 
-                    <Logout v-if="authenticated"/>
+                    <logout v-if="authenticated"/>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

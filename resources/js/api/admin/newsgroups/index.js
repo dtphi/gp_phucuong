@@ -1,4 +1,8 @@
 import {
+  fn_get_base_api_url,
+  fn_get_base_api_detail_url
+} from '@app/api/utils/fn-helper';
+import {
   API_NEWS_GROUPS_RESOURCE
 } from 'store@admin/types/api-paths';
 
@@ -79,8 +83,15 @@ const _newsGroups = [{
   name: "Hạt Củ Chi"
 }]
 
+/**
+ * [description]
+ * @param  {[type]} newsGroupId [description]
+ * @param  {[type]} resolve     [description]
+ * @param  {[type]} errResole   [description]
+ * @return {[type]}             [description]
+ */
 export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
-  axios.get(API_NEWS_GROUPS_RESOURCE + '/' + newsGroupId)
+  axios.get(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, newsGroupId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -98,8 +109,17 @@ export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
-export const apiGetNewsGroups = (resolve, errResole) => {
-  return axios.get(API_NEWS_GROUPS_RESOURCE)
+/**
+ * [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @param  {[type]} params    [description]
+ * @return {[type]}           [description]
+ */
+export const apiGetNewsGroups = (resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_url(API_NEWS_GROUPS_RESOURCE), {
+      params: params
+    })
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -107,7 +127,6 @@ export const apiGetNewsGroups = (resolve, errResole) => {
           newsgroupname: "Danh Mục :",
           id: 0,
           children: response.data.data.results
-
         };
         resolve(data);
       } else {
@@ -120,8 +139,15 @@ export const apiGetNewsGroups = (resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
+/**
+ * [description]
+ * @param  {[type]} newsGroup [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @return {[type]}           [description]
+ */
 export const apiUpdateNewsGroup = (newsGroup, resolve, errResole) => {
-  return axios.put(API_NEWS_GROUPS_RESOURCE + '/' + newsGroup.id, newsGroup)
+  return axios.put(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, newsGroup.id), newsGroup)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -139,8 +165,15 @@ export const apiUpdateNewsGroup = (newsGroup, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
+/**
+ * [description]
+ * @param  {[type]} newsGroup [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @return {[type]}           [description]
+ */
 export const apiInsertNewsGroup = (newsGroup, resolve, errResole) => {
-  return axios.post(API_NEWS_GROUPS_RESOURCE, newsGroup)
+  return axios.post(fn_get_base_api_url(API_NEWS_GROUPS_RESOURCE), newsGroup)
     .then((response) => {
       console.log(response)
       if (response.status === 201) {
@@ -158,8 +191,15 @@ export const apiInsertNewsGroup = (newsGroup, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
+/**
+ * [description]
+ * @param  {[type]} newsGroupId [description]
+ * @param  {[type]} resolve     [description]
+ * @param  {[type]} errResole   [description]
+ * @return {[type]}             [description]
+ */
 export const apiDeleteNewsGroup = (newsGroupId, resolve, errResole) => {
-  return axios.delete(API_NEWS_GROUPS_RESOURCE + '/' + newsGroupId)
+  return axios.delete(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, newsGroupId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -167,6 +207,32 @@ export const apiDeleteNewsGroup = (newsGroupId, resolve, errResole) => {
         json['data'] = response.data;
         json['status'] = 1000;
         resolve(json);
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test'
+        }]);
+      }
+    })
+    .catch(errors => errResole(errors))
+}
+
+/**
+ * [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @param  {[type]} params    [description]
+ * @return {[type]}           [description]
+ */
+export const apiSearchAll = (query, resolve, errResole) => {
+  let params = {
+          query
+      };
+  return axios.get(fn_get_base_api_url(`/api/search-news-group`),{params})
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        resolve(response.data);
       } else {
         errResole([{
           status: response.status,

@@ -1,10 +1,10 @@
 <template>
     <transition name="modal-news-add">
         <div :class="classShow" :style="styleCss" data-keyboard="false">
-            <div class="modal-dialog modal-lg">
-                <ValidationObserver ref="observerInfo" @submit.prevent="_submitInfo">
+            <div class="modal-dialog" style="display: contents;">
+                <validation-observer ref="observerInfo" @submit.prevent="_submitInfo">
                     <div class="modal-content">
-                        <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
+                        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
                         <div class="modal-header">
                             <h4 class="modal-title">{{_getSetForm.title}}</h4>
                             <button type="button" class="close" @click="_close">
@@ -24,28 +24,40 @@
                                         <a href="#newsGroupTab" aria-controls="newsGroupTab" role="tab"
                                            data-toggle="tab">News Group</a> |
                                     </li>
+                                    <li role="presentation" class="active">
+                                        <a href="#mediaManagerTab" aria-controls="mediaManagerTab" role="tab"
+                                           data-toggle="tab">Image</a> |
+                                    </li>
                                     <li role="presentation">
                                         <a href="#settingTab" aria-controls="settingTab" role="tab" data-toggle="tab">Setting</a>
                                     </li>
                                 </ul>
                                 <!-- form start -->
                                 <div class="tab-content form-horizontal" v-if="_isShowBody">
-                                    <TabGeneral
+                                    <tab-general
                                         role="tabpanel"
                                         class="tab-pane active"
                                         id="generalTab"
-                                        :general-data="newsData"/>
+                                        :general-data="newsData"></tab-general>
 
-                                    <TabNewsGroup
+                                    <tab-news-group
                                         role="tabpanel"
                                         class="tab-pane"
-                                        id="newsGroupTab"/>
+                                        :group-data="newsData"
+                                        id="newsGroupTab"></tab-news-group>
 
-                                    <TabSetting
+                                    <tab-media-manager ref="mediaManagerTab"
+                                        role="tabpanel"
+                                        class="tab-pane"
+                                        :group-data="newsData"
+                                        :config-form="_getSetForm"
+                                        id="mediaManagerTab"></tab-media-manager>
+
+                                    <tab-setting
                                         role="tabpanel"
                                         class="tab-pane"
                                         id="settingTab"
-                                        :setting-data="newsData"/>
+                                        :setting-data="newsData"></tab-setting>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +70,7 @@
                             </button>
                         </div>
                     </div>
-                </ValidationObserver>
+                </validation-observer>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
@@ -67,6 +79,7 @@
 </template>
 
 <script>
+    import { EventBus } from '@app/api/utils/event-bus';
     import {
         mapState,
         mapGetters,
@@ -81,21 +94,24 @@
         ACTION_INSERT_INFO,
         ACTION_UPDATE_INFO
     } from 'store@admin/types/action-types';
-    import TabGeneral from './TabGeneral';
-    import TabSetting from './TabSetting';
-    import TabNewsGroup from './TabNewsGroup';
+    import TabGeneral from 'com@admin/Form/Infos/TabGeneral';
+    import TabSetting from 'com@admin/Form/Infos/TabSetting';
+    import TabNewsGroup from 'com@admin/Form/Infos/TabNewsGroup';
+    import TabMediaManager from 'com@admin/Form/Infos/TabImage';
 
     export default {
         name: 'ModalAddForm',
         components: {
             TabGeneral,
             TabNewsGroup,
+            TabMediaManager,
             TabSetting
         },
         data() {
             return {
                 fullPage: false,
-                newsData: {}
+                newsData: {},
+                file: null
             };
         },
         computed: {
@@ -128,7 +144,24 @@
         },
 
         mounted() {
-            this._close()
+            const _self = this;
+            _self._close();
+            EventBus.$on('item-selected-group', (groupItem) => {
+                if ((typeof groupItem === 'object') && groupItem.hasOwnProperty('id')) {
+                    _self.newsData.newsgroup_id = groupItem.id;
+                    _self.newsData.newsgroupname = groupItem.newsgroupname;
+                }
+                console.log(`Oh, that's nice. It's gotten ${groupItem.id} clicks! :)`)
+            });
+
+            EventBus.$on('on-selected-image', (imgItem) => {
+                if (imgItem.selected) {
+                    _self.newsData.picture = imgItem.selected.path;
+                    _self.file = imgItem;
+                } else {
+                    _self.newsData.picture = null;
+                }
+            });
         },
 
         methods: {
@@ -141,6 +174,7 @@
 
             async _resetModal() {
                 this.$data.newsData = {};
+                this.$refs.mediaManagerTab.mediaMM.vm.$mmc.unselectFile(this.$data.file)
                 requestAnimationFrame(() => {
                     this.$refs.observerInfo.reset()
                 });

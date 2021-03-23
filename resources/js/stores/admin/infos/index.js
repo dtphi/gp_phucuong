@@ -1,10 +1,16 @@
 import axios from 'axios';
 import modals from './modal';
+import adds from './add';
+import edits from './edit';
 import {
   apiGetInfoById,
   apiGetInfos,
-  apiDeleteInfo
+  apiDeleteInfo,
+  apiSearchAll
 } from 'api@admin/information';
+import {
+  MODULE_INFO,
+} from '../types/module-types';
 import {
   INFOS_SET_LOADING,
   INFOS_GET_INFO_LIST_SUCCESS,
@@ -22,8 +28,12 @@ import {
   ACTION_DELETE_INFO_BY_ID,
   ACTION_SET_INFO_DELETE_BY_ID,
   ACTION_RELOAD_GET_INFO_LIST,
-  ACTION_SET_LOADING
+  ACTION_SET_LOADING,
+  ACTION_SEARCH_ALL
 } from '../types/action-types';
+import {
+  fn_redirect_url
+} from '@app/api/utils/fn-helper';
 
 export default {
   namespaced: true,
@@ -99,16 +109,29 @@ export default {
     async [ACTION_GET_INFO_LIST]({
       dispatch,
       commit
-    }) {
+    }, params) {
       dispatch(ACTION_SET_LOADING, true);
       await apiGetInfos(
         (infos) => {
-          commit(INFOS_SET_INFO_LIST, infos)
+          commit(INFOS_SET_INFO_LIST, infos.data.results)
+          dispatch('setConfigApp', {
+            links: { ...infos.links
+            },
+            meta: { ...infos.meta
+            },
+            moduleActive: {
+              name: MODULE_INFO,
+              actionList: ACTION_GET_INFO_LIST
+            }
+          }, {
+            root: true
+          })
           commit(INFOS_GET_INFO_LIST_SUCCESS, true)
         },
         (errors) => {
           commit(INFOS_GET_INFO_LIST_FAILED, false)
-        }
+        },
+        params
       );
       dispatch(ACTION_SET_LOADING, false);
     },
@@ -151,7 +174,11 @@ export default {
     [ACTION_RELOAD_GET_INFO_LIST]: {
       root: true,
       handler(namespacedContext, payload) {
-        namespacedContext.dispatch(ACTION_GET_INFO_LIST)
+        if (isNaN(payload)) {
+          return fn_redirect_url('admin/news');
+        } else {
+          namespacedContext.dispatch(ACTION_GET_INFO_LIST);
+        }
       }
     },
 
@@ -160,9 +187,28 @@ export default {
     }, isLoading) {
       commit(INFOS_SET_LOADING, isLoading);
     },
+
+    [ACTION_SEARCH_ALL]({
+      dispatch,
+      commit
+    }, query) {
+      dispatch(ACTION_SET_LOADING, true);
+      apiSearchAll(query,
+        (result) => {
+          commit(INFOS_GET_INFO_LIST_SUCCESS, true);
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          commit(INFOS_GET_INFO_LIST_FAILED, false);
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
   },
 
   modules: {
-    modal: modals
+    modal: modals,
+    add: adds,
+    edit: edits
   }
 }

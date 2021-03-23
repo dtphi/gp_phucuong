@@ -5,8 +5,8 @@
             href="javascript:void(0)"
             class="nav-link"
             title="Logout Admin">
-            <i class="nav-icon fas fa-file"></i>
-            <p>Logout</p>
+            <font-awesome-icon icon="power-off" size="xs"/>
+            Logout
         </a>
     </li>
 </template>

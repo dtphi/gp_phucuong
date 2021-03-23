@@ -1,10 +1,10 @@
 <template>
-    <button type="button" class="btn btn-default mb-3" @click="_showConfirm()">
-        <font-awesome-layers class="fa-1x" style="background:MistyRose">
+    <a href="javascript:void(0);">
+        <font-awesome-layers size="xs" style="background:MistyRose" @click="_showConfirm()">
             <font-awesome-icon icon="circle" style="color:Tomato"/>
-            <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-6"/>
+            <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
         </font-awesome-layers>
-    </button>
+    </a>
 </template>
 
 <script>

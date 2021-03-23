@@ -1,10 +1,11 @@
 <template>
     <div class="wrapper">
-        <Navbar/>
-        <Sidebar/>
+        <notifications group="common-update"></notifications>
+        <navbar></navbar>
+        <sidebar></sidebar>
         <slot></slot>
-        <Footer/>
-        <ControlSideBar/>
+        <footer></footer>
+        <control-side-bar></control-side-bar>
     </div>
 </template>
 

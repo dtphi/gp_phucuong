@@ -1,7 +1,7 @@
 <template>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <Breadcrumb/>
+        <breadcrumb></breadcrumb>
 
         <!-- Main content -->
         <section class="content">
@@ -12,18 +12,27 @@
                         <div class="card user-lst">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    <i class="fas fa-user mr-2"></i>
                                     {{$options.setting.title}}
                                 </h3>
+                                <div style="float:right">
+                                    <a href="javascript:void(0);">
+                                        <font-awesome-layers size="xs" @click="_showAddModal()" style="background:honeydew">
+                                            <font-awesome-icon icon="plus" size="xs"/>
+                                        </font-awesome-layers>
+                                    </a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
+                                <template v-if="loading">
+                                    <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+                                </template>
                                 <div class="treeview-animated mx-4 my-4">
                                     <ul class="treeview-animated-list">
-                                        <TreeItem
+                                        <tree-item
                                             :is-root="rootKey"
                                             class="treeview-animated-items"
-                                            :item="_lists.root"/>
+                                            :item="_lists.root"></tree-item>
                                     </ul>
                                 </div>
                             </div>
@@ -35,9 +44,10 @@
         </section>
         <!-- /.content -->
 
-        <FormModal/>
+        <modal-add-form></modal-add-form>
+        <modal-edit-form></modal-edit-form>
 
-        <v-dialog/>
+        <v-dialog></v-dialog>
     </div>
     <!-- /.content-wrapper -->
 </template>
@@ -46,33 +56,48 @@
     import {mapState, mapGetters, mapActions} from 'vuex';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TreeItem from './components/TheTreeItem';
-    import FormModal from 'com@admin/Modal/NewsGroups/AddForm';
+    import ModalAddForm from 'com@admin/Modal/NewsGroups/AddForm';
+    import ModalEditForm from 'com@admin/Modal/NewsGroups/EditForm';
+    import { EventBus } from '@app/api/utils/event-bus';
     import {
         MODULE_NEWS_GROUP,
-        MODULE_NEWS_GROUP_MODAL
+        MODULE_NEWS_GROUP_MODAL,
+        MODULE_NEWS_GROUP_EDIT_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_NEWS_GROUP_LIST,
+        ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
     export default {
         name: 'NewsGroupsList',
-        components: {Breadcrumb, TreeItem, FormModal},
+        components: {
+            Breadcrumb, 
+            TreeItem, 
+            ModalAddForm,
+            ModalEditForm
+        },
         beforeCreate() {
             this.$store.dispatch(MODULE_NEWS_GROUP + '/' + ACTION_GET_NEWS_GROUP_LIST);
         },
         data() {
             return {
-                rootKey: 1
+                rootKey: 1,
+                fullPage: false
             };
         },
         computed: {
             ...mapState(MODULE_NEWS_GROUP,
-                [
-                    'newsGroups'
-                ]),
-            ...mapGetters(MODULE_NEWS_GROUP, ['loading']),
-            ...mapGetters(MODULE_NEWS_GROUP_MODAL, ['isOpen']),
+            [
+                'newsGroups',
+                'loading'
+            ]),
+            ...mapState(MODULE_NEWS_GROUP_MODAL, [
+                'insertSuccess'
+            ]),
+            ...mapState(MODULE_NEWS_GROUP_EDIT_MODAL, [
+                'updateSuccess'
+            ]),
             _lists() {
                 let rootTree = {...this.newsGroups};
 
@@ -81,7 +106,27 @@
                 }
             }
         },
-        methods: {},
+        watch: {
+            'insertSuccess'(newValue, oldValue) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            },
+            'updateSuccess'( newValue, oldValue ) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            }
+        },
+        methods: {
+            _showAddModal() {
+                EventBus.$emit('on-add-group', true)
+            },
+            _notificationUpdate(notification) {
+                this.$notify(notification);
+                this.$store.dispatch(MODULE_NEWS_GROUP_MODAL + '/' + ACTION_RESET_NOTIFICATION_INFO, '');
+            }
+        },
         setting: {
             title: 'News Groups List'
         }

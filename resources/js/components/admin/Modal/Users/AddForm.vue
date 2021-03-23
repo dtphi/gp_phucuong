@@ -2,9 +2,11 @@
     <transition name="modal-user-add">
         <div :class="classShow" :style="styleCss" data-keyboard="false">
             <div class="modal-dialog modal-lg">
-                <ValidationObserver ref="observerUser" @submit.prevent="_submitUser">
+                <validation-observer ref="observerUser" @submit.prevent="_submitUser">
                     <div class="modal-content">
-                        <LoadingOverLay :active.sync="loading" :is-full-page="fullPage"/>
+                        <loading-over-lay 
+                            :active.sync="loading" 
+                            :is-full-page="fullPage"></loading-over-lay>
                         <div class="modal-header">
                             <h4 class="modal-title">{{_getSetForm.title}}</h4>
                             <button type="button" class="close" @click="_close">
@@ -21,7 +23,7 @@
                                         <label for="user_name"
                                                class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
                                         <div class="col-sm-10">
-                                            <ValidationProvider
+                                            <validation-provider
                                                 name="user_name"
                                                 rules="required|max:191"
                                                 v-slot="{ errors }">
@@ -31,7 +33,7 @@
                                                     class="form-control"
                                                     :placeholder="$options.setting.nameTxt">
                                                 <span class="text-red">{{ errors[0] }}</span>
-                                            </ValidationProvider>
+                                            </validation-provider>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -39,7 +41,7 @@
                                             for="user_email"
                                             class="col-sm-2 col-form-label">{{$options.setting.emailTxt}}</label>
                                         <div class="col-sm-10">
-                                            <ValidationProvider
+                                            <validation-provider
                                                 :immediate="false"
                                                 name="user_email"
                                                 rules="required|email|max:191"
@@ -50,7 +52,7 @@
                                                     class="form-control"
                                                     :placeholder="$options.setting.emailTxt">
                                                 <span class="text-red">{{ errors[0] }}</span>
-                                            </ValidationProvider>
+                                            </validation-provider>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -58,7 +60,7 @@
                                             for="user_password"
                                             class="col-sm-2 col-form-label">{{$options.setting.passwordTxt}}</label>
                                         <div class="col-sm-10">
-                                            <ValidationProvider
+                                            <validation-provider
                                                 :immediate="false"
                                                 name="user_password"
                                                 rules="required|minLength:8|max:191"
@@ -69,7 +71,7 @@
                                                     class="form-control"
                                                     :placeholder="$options.setting.passwordTxt">
                                                 <span class="text-red">{{ errors[0] }}</span>
-                                            </ValidationProvider>
+                                            </validation-provider>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +86,7 @@
                             </button>
                         </div>
                     </div>
-                </ValidationObserver>
+                </validation-observer>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
@@ -106,8 +108,7 @@
     import {
         ACTION_CLOSE_MODAL,
         ACTION_SET_LOADING,
-        ACTION_INSERT_USER,
-        ACTION_UPDATE_USER
+        ACTION_INSERT_USER
     } from 'store@admin/types/action-types';
 
     export default {
@@ -133,9 +134,7 @@
                 let setting = this.$options.setting.add;
 
                 if (this.formAction) {
-                    setting = this.$options.setting[this.formAction];
-
-                    if (this._isModalClose()) {
+                    if (!this._isAddAction()) {
                         this._resetModal()
                     } else {
                         this.userData = {...this.user}
@@ -152,8 +151,7 @@
             ...mapActions(MODULE_USER_MODAL, [
                 ACTION_CLOSE_MODAL,
                 ACTION_SET_LOADING,
-                ACTION_INSERT_USER,
-                ACTION_UPDATE_USER
+                ACTION_INSERT_USER
             ]),
 
             async _resetModal() {
@@ -164,19 +162,11 @@
             },
 
             _isShowBody() {
-                return (this._isAddAction() || this._isEditAction())
+                return this._isAddAction()
             },
 
             _isAddAction() {
                 return (this.formAction === this.$options.setting.add.actionName)
-            },
-
-            _isEditAction() {
-                return (this.formAction === this.$options.setting.edit.actionName)
-            },
-
-            _isModalClose() {
-                return (this.formAction === this.$options.setting.closeModal.actionName)
             },
 
             _close() {
@@ -188,11 +178,7 @@
                 _self.setLoading(true);
                 await _self.$refs.observerUser.validate().then((isValid) => {
                     if (isValid) {
-                        if (_self._isEditAction()) {
-                            _self.[ACTION_UPDATE_USER](_self.userData)
-                        } else {
-                            _self.[ACTION_INSERT_USER](_self.userData)
-                        }
+                        _self.[ACTION_INSERT_USER](_self.userData)
                     } else {
                         _self.setLoading(false)
                     }
@@ -209,18 +195,6 @@
                 isAddFrom: true,
                 title: 'Add User',
                 btnSubmitTxt: 'Save'
-            },
-            edit: {
-                actionName: 'edit',
-                isAddFrom: false,
-                title: 'Edit User',
-                btnSubmitTxt: 'Update'
-            },
-            closeModal: {
-                actionName: 'closeModal',
-                isAddFrom: false,
-                title: '',
-                btnSubmitTxt: ''
             }
         }
     };

@@ -1,10 +1,15 @@
 import axios from 'axios';
-import modals from './modal';
+import addModal from './add-modal';
+import editModal from './edit-modal';
 import {
   apiGetUserById,
   apiGetUsers,
-  apiDeleteUser
+  apiDeleteUser,
+  apiSearchAll
 } from 'api@admin/user';
+import {
+  MODULE_USER
+} from '../types/module-types';
 import {
   USERS_SET_LOADING,
   USERS_GET_USER_LIST_SUCCESS,
@@ -20,7 +25,8 @@ import {
   ACTION_DELETE_USER_BY_ID,
   ACTION_SET_USER_DELETE_BY_ID,
   ACTION_RELOAD_GET_USER_LIST,
-  ACTION_SET_LOADING
+  ACTION_SET_LOADING,
+  ACTION_SEARCH_ALL
 } from '../types/action-types';
 
 export default {
@@ -86,16 +92,30 @@ export default {
     async [ACTION_GET_USER_LIST]({
       dispatch,
       commit
-    }) {
+    }, params) {
       dispatch(ACTION_SET_LOADING, true);
       await apiGetUsers(
         (users) => {
-          commit(USERS_SET_USER_LIST, users)
+          dispatch('setConfigApp', {
+            links: { ...users.links
+            },
+            meta: { ...users.meta
+            },
+            moduleActive: {
+              name: MODULE_USER,
+              actionList: ACTION_GET_USER_LIST
+            }
+          }, {
+            root: true
+          })
+          commit(USERS_SET_USER_LIST, users.data.results)
+
           commit(USERS_GET_USER_LIST_SUCCESS, true)
         },
         (errors) => {
           commit(USERS_GET_USER_LIST_FAILED, false)
-        }
+        },
+        params
       );
       dispatch(ACTION_SET_LOADING, false);
     },
@@ -142,9 +162,27 @@ export default {
     }, isLoading) {
       commit(USERS_SET_LOADING, isLoading);
     },
+
+    [ACTION_SEARCH_ALL]({
+      dispatch,
+      commit
+    }, query) {
+      dispatch(ACTION_SET_LOADING, true);
+      apiSearchAll(query,
+        (result) => {
+          commit(USERS_GET_USER_LIST_SUCCESS, true);
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          commit(USERS_GET_USER_LIST_FAILED, false);
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
   },
 
   modules: {
-    modal: modals
+    modal: addModal,
+    editModal: editModal
   }
 }

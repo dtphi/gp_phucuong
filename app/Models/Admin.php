@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Controllers\Api\Admin\Services\ScopeService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ScopeService;
 
     /**
      * The attributes that are mass assignable.
@@ -34,9 +35,9 @@ class Admin extends Authenticatable
     ];
 
     /**
-     *  Mutator to hash password to bcrypt.
-     *
-     * @param string $pass
+     * @author : dtphi .
+     * @param $pass
+     * @return string
      */
     public function setPasswordAttribute($pass)
     {
