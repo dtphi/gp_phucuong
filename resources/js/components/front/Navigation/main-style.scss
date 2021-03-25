@@ -1,0 +1,26 @@
+#nav {
+    border: 1px solid #ED1C24;
+    .nav-item {
+        a {
+            color: #000000;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            &.active,
+            &:hover {
+                background-color: #ED1C24;
+                color: #ffffff;
+            }
+        }
+        &:first-child,
+        &:last-child {
+            a {
+                background-color: #ED1C24;
+                color: #ffffff;
+            }
+        }
+        &:nth-child(11) {
+            border-left: 1px solid #ED1C24;
+        }
+    }
+}
