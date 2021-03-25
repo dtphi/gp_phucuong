@@ -17,4 +17,5 @@ yarn-error.log
 /public/images/ad_logo*
 composer.lock
 package-lock.json
+/public/fonts/vendor
 src

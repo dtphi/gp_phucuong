@@ -1,15 +1,15 @@
-import Layout from '../views/front/layouts';
-import Home from 'v@front';
+import MainLayout from 'v@front/layouts/main';
+import HomePage from 'v@front/page_homes';
 
 import { config } from '../common/config';
 
 export default [
     {
         path: '',
-        component: Home,
-        name: 'home',
+        component: HomePage,
+        name: 'home-page',
         meta: {
-            layout: Layout,
+            layout: MainLayout,
             role: 'public',
             show: {
                 footer: true

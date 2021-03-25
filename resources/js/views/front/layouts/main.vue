@@ -1,23 +1,21 @@
 <template>
   <div class="wrapper-container">
-  	<Header />
-		<Home />
+  	<default-header></default-header>
+		<slot></slot>
 	  <Footer />
   </div>
 </template>
 
 <script>
 
-	import Header from 'com@front/Header';
+	import DefaultHeader from 'com@front/Header/Default';
 	import Footer from 'com@front/Footer';
-	import Home from '../home/index';
 
 	export default {
-		name: 'Layout',
+		name: 'MainLayout',
 		components: {
-			Header,
+			DefaultHeader,
 			Footer,
-			Home,
 		}
 	};
 </script>

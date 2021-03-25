@@ -13,10 +13,10 @@
 </template>
 
 <script>
-    import Navigation from 'com@front/Navigation';
+    import Navigation from 'com@front/Navigation/Main';
 
     export default {
-        name: 'Home',
+        name: 'HomePage',
         components: {
             Navigation,
         },
@@ -31,7 +31,7 @@
 <style lang="scss" scoped>
     #homepage {
         background-color: #E6E6E6;
-        
+
         .list-home {
             .figure {
                 width: calc((100% - 60px)/4);

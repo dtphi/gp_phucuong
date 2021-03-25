@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api\Admin\Base;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\CheckApp;
 use Illuminate\Http\Response as IlluminateResponse;
 
 class ApiController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * @var string
      */
@@ -64,9 +67,7 @@ class ApiController extends Controller
      */
     public function __construct($middleware = [])
     {
-        $middleware[] = CheckApp::class;
-
-        return $this->middleware($middleware);
+        parent::__construct($middleware);
     }
 
     /**

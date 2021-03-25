@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\URL;
 class AppServiceProvider extends ServiceProvider
 {
     /**
+     * @author : dtphi.
      * Register any application services.
      *
      * @return void
      */
     public function register()
     {
+        /*======================Admin============================.*/
         Sanctum::ignoreMigrations();
         $this->app->bind(
             \App\Http\Controllers\Api\Admin\Services\Contracts\AdminModel::class,
@@ -27,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel::class,
             \App\Http\Controllers\Api\Admin\Services\NewsGroupService::class
+        );
+
+        /*=====================Front end======================== .*/
+        $this->app->bind(
+            \App\Http\Controllers\Api\Front\Services\Contracts\HomeModel::class,
+            \App\Http\Controllers\Api\Front\Services\HomeService::class
         );
     }
 
