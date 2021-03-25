@@ -9,7 +9,7 @@
 <script>
 
 	import DefaultHeader from 'com@front/Header/Default';
-	import Footer from 'com@front/Footer';
+	import Footer from 'com@front/Footers';
 
 	export default {
 		name: 'MainLayout',

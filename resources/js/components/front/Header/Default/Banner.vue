@@ -2,7 +2,7 @@
   <div class="header-image">
       <div class="container">
           <div class="logo d-inline-block">
-              <img :src="cfApp.logo" alt="Logo Phú Cường">
+              <logo></logo>
           </div>
           <div class="banner-image d-inline-block">
               <img class="img" :src="cfApp.banner" alt="Hình ảnh Phú Cường">
@@ -13,9 +13,13 @@
 
 <script>
 	import {mapState} from 'vuex';
+  import Logo from 'com@front/Logo';
 
     export default {
         name: 'DefaultBanner',
+        components: {
+          Logo
+        },
         computed: {
         	...mapState(['cfApp'])
         }

@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
       cfApp: {
-        logo: '/images/logo.png',
+        logo: '/front/img/logo.png',
         banner: '/images/banner_image.jpg',
       }
     },

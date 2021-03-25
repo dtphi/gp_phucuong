@@ -3,7 +3,7 @@
     <aside class="main-sidebar elevation-4">
         <!-- Brand Logo -->
         <a href="http://haydesachnoipodcast.com" class="brand-link">
-            <img src="/administrator/img/logo.png" alt="Diocese of Phu Cuong Logo" class="brand-image">
+            <logo class="brand-image"></logo>
             <span class="brand-text font-weight-bold">Giáo Phận</span>
         </a>
 
@@ -63,11 +63,14 @@
         MODULE_AUTH,
         MODULE_LAYOUT
     } from 'store@admin/types/module-types';
+    import Logo from 'com@admin/Logo';
 
     export default {
         name: 'Sidebar',
         components: {
-            Logout, NavLink
+            Logo,
+            Logout, 
+            NavLink
         },
         computed: {
             ...mapGetters(MODULE_AUTH, ['authenticated']),

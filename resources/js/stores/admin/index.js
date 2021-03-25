@@ -22,6 +22,7 @@ export default new Vuex.Store({
         name: '',
         actionList: ''
       },
+      logo: '/front/img/logo.png',
     }
   },
   getters: {
