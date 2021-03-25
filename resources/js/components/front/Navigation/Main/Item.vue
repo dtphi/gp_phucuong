@@ -1,5 +1,7 @@
 <template>
-    <b-nav-item class="active">{{title}}</b-nav-item>
+    <li class="active">
+    	<a href="#">{{title}}</a>
+    </li>
 </template>
 
 <script>
