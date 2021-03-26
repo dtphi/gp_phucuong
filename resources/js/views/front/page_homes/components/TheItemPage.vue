@@ -1,12 +1,12 @@
 <template>
   <figure class="figure">
-      <img :src="cfApp.banner" class="rounded img" alt="Giáo Phận Phú Cường">
+      <img :src="bannerUrl" class="rounded img" alt="Giáo Phận Phú Cường">
       <figcaption class="figure-caption">{{captionTitle}}</figcaption>
   </figure>
 </template>
 
 <script>
-	import {mapState} from 'vuex';
+	import {mapGetters} from 'vuex';
 
     export default {
         name: 'TheItemPage',
@@ -22,7 +22,7 @@
             }
         },
         computed: {
-        	...mapState(['cfApp'])
+        	...mapGetters(['bannerUrl'])
         }
     }
 </script>

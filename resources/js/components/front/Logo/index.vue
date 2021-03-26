@@ -1,16 +1,16 @@
 <template>
   <transition>
-    <img :src="cfApp.logo" alt="Logo Phú Cường">
+    <img :src="logoUrl" alt="Logo Phú Cường">
   </transition>
 </template>
 
 <script>
-	import {mapState} from 'vuex';
+	import {mapGetters} from 'vuex';
 
     export default {
         name: 'Logo',
         computed: {
-        	...mapState(['cfApp'])
+        	...mapGetters(['logoUrl'])
         }
     };
 </script>

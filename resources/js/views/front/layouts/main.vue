@@ -2,20 +2,20 @@
   <div class="wrapper-container">
   	<default-header></default-header>
 		<slot></slot>
-	  <Footer />
+	  <default-footer></default-footer>
   </div>
 </template>
 
 <script>
 
 	import DefaultHeader from 'com@front/Header/Default';
-	import Footer from 'com@front/Footers';
+	import DefaultFooter from 'com@front/Footers';
 
 	export default {
 		name: 'MainLayout',
 		components: {
 			DefaultHeader,
-			Footer,
+			DefaultFooter,
 		}
 	};
 </script>

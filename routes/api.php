@@ -17,6 +17,12 @@ Route::post('/test', function (Request $request) {
             return ['test' => 'ok'];die;
         });
 
+Route::namespace('App\Http\Controllers\Api\Front')
+    ->middleware('web')
+    ->group(function () {
+        Route::post('/app/get-setting', 'HomeController@getSetting');
+    });
+
 Route::namespace('App\Http\Controllers\Api\Admin')
     ->middleware('web')
     ->group(function () {

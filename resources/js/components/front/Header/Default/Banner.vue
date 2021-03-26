@@ -5,14 +5,14 @@
               <logo></logo>
           </div>
           <div class="banner-image d-inline-block">
-              <img class="img" :src="cfApp.banner" alt="Hình ảnh Phú Cường">
+              <img class="img" :src="bannerUrl" alt="Hình ảnh Phú Cường">
           </div>
       </div>
   </div>
 </template>
 
 <script>
-	import {mapState} from 'vuex';
+	import {mapGetters} from 'vuex';
   import Logo from 'com@front/Logo';
 
     export default {
@@ -21,7 +21,7 @@
           Logo
         },
         computed: {
-        	...mapState(['cfApp'])
+        	...mapGetters(['bannerUrl'])
         }
     };
 </script>

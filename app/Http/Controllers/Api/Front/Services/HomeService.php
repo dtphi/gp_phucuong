@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Front\Services\Contracts\HomeModel;
 use App\Models\Information;
 use App\Http\Resources\FrontHomes\HomeCollection;
+use App\Models\NewsGroup;
 use DB;
 
 final class HomeService implements BaseModel, HomeModel
@@ -16,12 +17,19 @@ final class HomeService implements BaseModel, HomeModel
     private $model = null;
 
     /**
+     * [$modelNewGroup description]
+     * @var null
+     */
+    private $modelNewGroup = null;
+
+    /**
      * @author : dtphi .
      * AdminService constructor.
      */
     public function __construct()
     {
         $this->model = new Information();
+        $this->modelNewGroup = new NewsGroup();
     }
 
     /**
@@ -48,5 +56,20 @@ final class HomeService implements BaseModel, HomeModel
     {
         // TODO: Implement apiGetResourceCollection() method.
         return new InformationCollection($this->apiGetList($options, $limit));
+    }
+
+    /**
+     * @author : dtphi .
+     * @return array
+     */
+    public function apiGetNewsGroupTrees()
+    {
+        // TODO: Implement apiGetNewsGroupTrees() method.
+        $query = $this->modelNewGroup->select('id', 'father_id', 'newsgroupname')->orderByDescById();
+
+        return [
+            'total' => $query->count(),
+            'data'  => $query->get()->toArray()
+        ];
     }
 }

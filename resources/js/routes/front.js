@@ -7,23 +7,27 @@ import HomeLayout from 'v@front/layouts';
 
 import { config } from '../common/config';
 
-export default [
-    {
+const debug = process.env.NODE_ENV === 'debuger';
+
+let routeEnv =  {
         path: '',
         component: Home,
         name: 'home',
-        meta: {
-            layout: HomeLayout,
-            role: 'public',
-            show: {
-                footer: true
+            meta: {
+                layout: HomeLayout,
+                role: 'public',
+                show: {
+                    footer: true
+                },
+                title: 'ログイン | ' + config.site_name
             },
-            title: 'ログイン | ' + config.site_name
-        },
-        children: [{
-            path: 'home-page',
+            children: []
+        }
+if (debug) {
+    routeEnv = {
+            path: '',
             component: HomePage,
-            name: 'home-page',
+            name: 'home',
             meta: {
                 layout: MainLayout,
                 role: 'public',
@@ -32,6 +36,21 @@ export default [
                 },
                 title: 'ログイン | ' + config.site_name
             },
-        }]
-    }
-];
+            children: [{
+                path: 'home-page',
+                component: HomePage,
+                name: 'home-page',
+                meta: {
+                    layout: MainLayout,
+                    role: 'public',
+                    show: {
+                        footer: true
+                    },
+                    title: 'ログイン | ' + config.site_name
+                },
+            }]
+        }
+}
+
+export default [routeEnv];
+

@@ -17,8 +17,12 @@ const router = new Router({
   ]
 });
 
-new Vue({
-  el: '#gp-phu-cuong',
-  router,
-  store
-});
+store.dispatch('appSettings', {
+    type: 'init'
+}).then(() => {
+    return new Vue({
+        el: '#gp-phu-cuong',
+        router,
+        store
+    })
+})
