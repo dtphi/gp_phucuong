@@ -1,1 +1,1 @@
-module-types.js
+export const MODULE_HOME = 'home';

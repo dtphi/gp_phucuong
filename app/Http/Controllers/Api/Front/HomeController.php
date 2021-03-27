@@ -31,6 +31,61 @@ class HomeController extends Controller
         parent::__construct($middleware);
     }
 
+    public function index()
+    {
+        try {
+            ///$newsGroups     = $this->homeSv->apiGetNewsGroupTrees();
+            ///$newsGroupTrees = $this->generateTree($newsGroups['data']);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+        }
+
+        return response()->json([
+            'pageLists' => [
+                [
+                    'img' => '/images/banner_image.jpg',
+                    'href' => '/',
+                    'title' => '>>>Xem tin tuc'
+                ],
+                [
+                    'img' => '/images/banner_image.jpg',
+                    'href' => '/',
+                    'title' => '>>>Xem tin tuc'
+                ],
+                [
+                    'img' => '/images/banner_image.jpg',
+                    'href' => '/',
+                    'title' => '>>>Xem tin tuc'
+                ],
+                [
+                    'img' => '/images/banner_image.jpg',
+                    'href' => '/',
+                    'title' => '>>>Xem tin tuc'
+                ],
+                [
+                    'img' => '/images/banner_image.jpg',
+                    'href' => '/',
+                    'title' => '>>>Xem tin tuc'
+                ],
+                [
+                    'img' => '/images/banner_image.jpg',
+                    'href' => '/',
+                    'title' => '>>>Xem tin tuc'
+                ],
+                [
+                    'img' => '/images/banner_image.jpg',
+                    'href' => '/',
+                    'title' => '>>>Xem tin tuc'
+                ],
+                [
+                    'img' => '/images/banner_image.jpg',
+                    'href' => '/',
+                    'title' => '>>>Xem tin tuc'
+                ]      
+            ],
+        ]);
+    }
+
     public function getSetting()
     {
         try {

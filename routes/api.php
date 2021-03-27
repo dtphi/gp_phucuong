@@ -21,6 +21,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
     ->middleware('web')
     ->group(function () {
         Route::post('/app/get-setting', 'HomeController@getSetting');
+        Route::apiResource('/homes/get-list', 'HomeController');
     });
 
 Route::namespace('App\Http\Controllers\Api\Admin')

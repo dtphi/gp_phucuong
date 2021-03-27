@@ -1,8 +1,7 @@
-import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import home from './home';
+import home from './homes';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -16,7 +15,8 @@ import {
 const settings = {
   logo: '/front/img/logo.png',
   banner: '/images/banner_image.jpg',
-  navMainLists: []
+  navMainLists: [],
+  pageLists: []
 }
 
 
@@ -45,6 +45,9 @@ export default new Vuex.Store({
         };
         
         return menus;
+      },
+      pageLists(state) {
+        return state.cfApp.setting.pageLists;
       }
     },
     mutations: {
