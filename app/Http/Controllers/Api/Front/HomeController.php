@@ -175,18 +175,21 @@ class HomeController extends Controller
             'appLists' => [
                 [
                     'sort' => 0,
+                    'title' => 'App website gppc',
                     'img' => $appImgPath . '/app_website_gppc.png',
                     'hrefAppStore' => '/',
                     'hrefChPlay' => '/'
                 ],
                 [
                     'sort' => 1,
+                    'title' => 'App sách nói công giáo',
                     'img' => $appImgPath . '/app_sach_noi_cong_giao.jpg',
                     'hrefAppStore' => '/',
                     'hrefChPlay' => '/'
                 ],
                 [
                     'sort' => 2,
+                    'title' => 'App tìm nhà thờ gần nhất',
                     'img' => $appImgPath . '/app_tim_nha_tho.jpg',
                     'hrefAppStore' => '/',
                     'hrefChPlay' => '/'

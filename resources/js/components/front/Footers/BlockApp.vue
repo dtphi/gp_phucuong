@@ -4,7 +4,7 @@
             <img class="img" v-lazy="appItem.img" alt="Hình ảnh Phú Cường">
         </div>
         <div class="col-8 col-detail pl-0">
-            <h4 class="tit-app-ft mt-2">App sách nói công giáo</h4>
+            <h4 class="tit-app-ft mt-2">{{appItem.title}}</h4>
             <a class="link-app d-block mb-2" :href="appItem.hrefAppStore">- Download từ Apple Store</a>
             <a class="link-app d-block" :href="appItem.hrefChPlay">- Download từ CH Play</a>
         </div>
