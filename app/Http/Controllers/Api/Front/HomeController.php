@@ -40,47 +40,49 @@ class HomeController extends Controller
             throw $e->render();
         }
 
+        $bannerPath = '/upload/home_banners';
+
         return response()->json([
             'pageLists' => [
                 [
-                    'img' => '/images/banner_image.jpg',
+                    'img' => $bannerPath . '/news_banner.jpeg',
                     'href' => '/',
-                    'title' => '>>>Xem tin tuc'
+                    'title' => '>>>> XEM TIN TỨC'
                 ],
                 [
-                    'img' => '/images/banner_image.jpg',
+                    'img' => $bannerPath . '/loi_chua_banner.jpeg',
                     'href' => '/',
-                    'title' => '>>>Xem tin tuc'
+                    'title' => '>>>> LỜI CHÚA'
                 ],
                 [
-                    'img' => '/images/banner_image.jpg',
+                    'img' => $bannerPath . '/video_banner.jpg',
                     'href' => '/',
-                    'title' => '>>>Xem tin tuc'
+                    'title' => '>>>> VIDEO'
                 ],
                 [
-                    'img' => '/images/banner_image.jpg',
+                    'img' => $bannerPath . '/audio_podcast_banner.jpeg',
                     'href' => '/',
-                    'title' => '>>>Xem tin tuc'
+                    'title' => '>>>> AUDIO/PODCAST'
                 ],
                 [
-                    'img' => '/images/banner_image.jpg',
+                    'img' => $bannerPath . '/linh_muc_banner.jpeg',
                     'href' => '/',
-                    'title' => '>>>Xem tin tuc'
+                    'title' => '>>>> DANH SÁCH LINH MỤC'
                 ],
                 [
-                    'img' => '/images/banner_image.jpg',
+                    'img' => $bannerPath . '/gx_chanh_toa_banner.jpeg',
                     'href' => '/',
-                    'title' => '>>>Xem tin tuc'
+                    'title' => '>>>> GIÁO XỨ TRONG GIÁO PHẬN'
                 ],
                 [
-                    'img' => '/images/banner_image.jpg',
+                    'img' => $bannerPath . '/thong_bao_banner.jpeg',
                     'href' => '/',
-                    'title' => '>>>Xem tin tuc'
+                    'title' => '>>>> THÔNG BÁO'
                 ],
                 [
-                    'img' => '/images/banner_image.jpg',
+                    'img' => $bannerPath . '/phung_vu_banner.jpg',
                     'href' => '/',
-                    'title' => '>>>Xem tin tuc'
+                    'title' => '>>>> PHỤNG VỤ'
                 ]      
             ],
         ]);

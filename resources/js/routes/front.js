@@ -1,9 +1,10 @@
 import MainLayout from 'v@front/layouts/main';
 import HomePage from 'v@front/page_homes';
 
-//test
+//static html layout
 import Home from 'v@front/home';
 import HomeLayout from 'v@front/layouts';
+import Video from 'v@front/video';
 
 import { config } from '../common/config';
 
@@ -21,7 +22,21 @@ let routeEnv =  {
                 },
                 title: 'ログイン | ' + config.site_name
             },
-            children: []
+            children: [
+                {
+                    path: 'video',
+                    component: Video,
+                    name: 'video',
+                    meta: {
+                        layout: HomeLayout,
+                        role: 'public',
+                        show: {
+                            footer: true
+                        },
+                        title: 'ログイン | ' + config.site_name
+                    },
+                }
+            ]
         }
 if (debug) {
     routeEnv = {
@@ -36,19 +51,34 @@ if (debug) {
                 },
                 title: 'ログイン | ' + config.site_name
             },
-            children: [{
-                path: 'home-page',
-                component: HomePage,
-                name: 'home-page',
-                meta: {
-                    layout: MainLayout,
-                    role: 'public',
-                    show: {
-                        footer: true
+            children: [
+                {
+                    path: 'home-page',
+                    component: HomePage,
+                    name: 'home-page',
+                    meta: {
+                        layout: MainLayout,
+                        role: 'public',
+                        show: {
+                            footer: true
+                        },
+                        title: 'ログイン | ' + config.site_name
                     },
-                    title: 'ログイン | ' + config.site_name
                 },
-            }]
+                {
+                    path: 'video',
+                    component: Video,
+                    name: 'video',
+                    meta: {
+                        layout: HomeLayout,
+                        role: 'public',
+                        show: {
+                            footer: true
+                        },
+                        title: 'ログイン | ' + config.site_name
+                    },
+                }
+            ]
         }
 }
 
