@@ -16,7 +16,8 @@ const settings = {
   logo: '/front/img/logo.png',
   banner: '/images/banner_image.jpg',
   navMainLists: [],
-  pageLists: []
+  pageLists: [],
+  appLists: [],
 }
 
 
@@ -48,6 +49,9 @@ export default new Vuex.Store({
       },
       pageLists(state) {
         return state.cfApp.setting.pageLists;
+      },
+      appLists(state) {
+        return state.cfApp.setting.appLists;
       }
     },
     mutations: {

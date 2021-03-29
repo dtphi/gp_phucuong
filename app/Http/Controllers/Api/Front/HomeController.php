@@ -45,41 +45,49 @@ class HomeController extends Controller
         return response()->json([
             'pageLists' => [
                 [
+                    'sort' => 0,
                     'img' => $bannerPath . '/news_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> XEM TIN TỨC'
                 ],
                 [
+                    'sort' => 1,
                     'img' => $bannerPath . '/loi_chua_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> LỜI CHÚA'
                 ],
                 [
+                    'sort' => 2,
                     'img' => $bannerPath . '/video_banner.jpg',
-                    'href' => '/',
+                    'href' => '/video',
                     'title' => '>>>> VIDEO'
                 ],
                 [
+                    'sort' => 3,
                     'img' => $bannerPath . '/audio_podcast_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> AUDIO/PODCAST'
                 ],
                 [
+                    'sort' => 4,
                     'img' => $bannerPath . '/linh_muc_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> DANH SÁCH LINH MỤC'
                 ],
                 [
+                    'sort' => 5,
                     'img' => $bannerPath . '/gx_chanh_toa_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> GIÁO XỨ TRONG GIÁO PHẬN'
                 ],
                 [
+                    'sort' => 6,
                     'img' => $bannerPath . '/thong_bao_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> THÔNG BÁO'
                 ],
                 [
+                    'sort' => 7,
                     'img' => $bannerPath . '/phung_vu_banner.jpg',
                     'href' => '/',
                     'title' => '>>>> PHỤNG VỤ'
@@ -97,10 +105,93 @@ class HomeController extends Controller
             throw $e->render();
         }
 
+        $appImgPath = '/upload/app';
+
         return response()->json([
             'logo' => '/front/img/logo.png',
             'banner' => '/images/banner_image.jpg',
-            'navMainLists' => $newsGroupTrees
+            'navMainLists' => [
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 205,
+                    'newsgroupname' => "Tin giáo phận"
+                ],
+[
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 204,
+                    'newsgroupname' => "Giáo hội hoàn vũ"
+                ],
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 203,
+                    'newsgroupname' => "Giáo hội việt nam"
+                ],
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 203,
+                    'newsgroupname' => "Lời chúa"
+                ],
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 203,
+                    'newsgroupname' => "Tài liệu"
+                ],
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 203,
+                    'newsgroupname' => "Đáp ca"
+                ],
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 203,
+                    'newsgroupname' => "Hôn nhân"
+                ],
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 203,
+                    'newsgroupname' => "Tiếng việt"
+                ],
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 203,
+                    'newsgroupname' => "Tài liệu"
+                ],
+                [
+                    'children' => [],
+                    'fatherId'=> -1,
+                    'id' => 203,
+                    'newsgroupname' => "Văn kiện"
+                ]
+            ],
+            'appLists' => [
+                [
+                    'sort' => 0,
+                    'img' => $appImgPath . '/app_website_gppc.png',
+                    'hrefAppStore' => '/',
+                    'hrefChPlay' => '/'
+                ],
+                [
+                    'sort' => 1,
+                    'img' => $appImgPath . '/app_sach_noi_cong_giao.jpg',
+                    'hrefAppStore' => '/',
+                    'hrefChPlay' => '/'
+                ],
+                [
+                    'sort' => 2,
+                    'img' => $appImgPath . '/app_tim_nha_tho.jpg',
+                    'hrefAppStore' => '/',
+                    'hrefChPlay' => '/'
+                ],
+            ]
         ]);
     }
 

@@ -1,4 +1,13 @@
 import Vue from 'vue';
+import VueLazyload from 'vue-lazyload'
+
+import loadingLazy from '@app/views/front/assets/loading/fading-loading-lazy.svg';
+/*Add vue lazyload*/ 
+Vue.use(VueLazyload, {
+  error: loadingLazy,
+  loading: loadingLazy,
+  attempt: 1
+});
 
 /*Add fontawesome free*/
 import {
