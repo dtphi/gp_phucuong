@@ -100,7 +100,14 @@ class HomeController extends Controller
     {
         try {
             $newsGroups     = $this->homeSv->apiGetNewsGroupTrees();
-            $newsGroupTrees = $this->generateTree($newsGroups['data']);
+            $homeMenus = [];
+            foreach ($newsGroups['data'] as $key => $newsGroup) {
+                if (isset($newsGroup['displays']['home_page']) && $newsGroup['displays']['home_page']) {
+                    $homeMenus[] = $newsGroup;
+                }
+            }
+
+            //$newsGroupTrees = $this->generateTree($homeMenus);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -110,68 +117,7 @@ class HomeController extends Controller
         return response()->json([
             'logo' => '/front/img/logo.png',
             'banner' => '/images/banner_image.jpg',
-            'navMainLists' => [
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 205,
-                    'newsgroupname' => "Tin giáo phận"
-                ],
-[
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 204,
-                    'newsgroupname' => "Giáo hội hoàn vũ"
-                ],
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 203,
-                    'newsgroupname' => "Giáo hội việt nam"
-                ],
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 203,
-                    'newsgroupname' => "Lời chúa"
-                ],
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 203,
-                    'newsgroupname' => "Tài liệu"
-                ],
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 203,
-                    'newsgroupname' => "Đáp ca"
-                ],
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 203,
-                    'newsgroupname' => "Hôn nhân"
-                ],
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 203,
-                    'newsgroupname' => "Tiếng việt"
-                ],
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 203,
-                    'newsgroupname' => "Tài liệu"
-                ],
-                [
-                    'children' => [],
-                    'fatherId'=> -1,
-                    'id' => 203,
-                    'newsgroupname' => "Văn kiện"
-                ]
-            ],
+            'navMainLists' => $homeMenus,
             'appLists' => [
                 [
                     'sort' => 0,
@@ -211,9 +157,16 @@ class HomeController extends Controller
 
         for ($i = 0, $ni = count($data); $i < $ni; $i++) {
             if ($data[$i]['father_id'] == $parent) {
-                $newsGroupTree[$data[$i]['id']]['id']            = $data[$i]['id'];
-                $newsGroupTree[$data[$i]['id']]['fatherId']      = $data[$i]['father_id'];
-                $newsGroupTree[$data[$i]['id']]['newsgroupname'] = $data[$i]['newsgroupname'];
+                $newsGroupTree[$data[$i]['id']]['id']            = null;
+                $newsGroupTree[$data[$i]['id']]['fatherId']      = null;
+                $newsGroupTree[$data[$i]['id']]['newsgroupname'] = '';
+
+                if (isset($data[$i]['displays']['home_page']) && ($data[$i]['displays']['home_page'])) {
+                    $newsGroupTree[$data[$i]['id']]['id']            = $data[$i]['id'];
+                    $newsGroupTree[$data[$i]['id']]['fatherId']      = $data[$i]['father_id'];
+                    $newsGroupTree[$data[$i]['id']]['newsgroupname'] = $data[$i]['newsgroupname'];
+                }
+
                 $newsGroupTree[$data[$i]['id']]['children']      = $this->generateTree($data, $data[$i]['id'],
                     $depth + 1);
             }
