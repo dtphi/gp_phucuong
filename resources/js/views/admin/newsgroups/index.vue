@@ -132,3 +132,7 @@
         }
     };
 </script>
+
+<style lang="css" type="text/css">
+   @import "./custom-styles.css"; 
+</style>

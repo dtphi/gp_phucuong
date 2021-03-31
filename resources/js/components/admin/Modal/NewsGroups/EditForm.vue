@@ -19,80 +19,73 @@
                         <div class="modal-body" v-if="groupData">
                             <!-- form start -->
                             <div class="form-horizontal">
-
-                                <template name="card-body-add" v-if="_getSetForm.isAddFrom">
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Name</label>
-                                            <div class="col-sm-10">
-                                                <validation-provider
-                                                    name="news_group_name"
-                                                    rules="required|max:191"
-                                                    v-slot="{ errors }">
-                                                    <input
-                                                        v-model="groupData.newsgroupname"
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="News Group Name">
-                                                    <span class="text-red">{{ errors[0] }}</span>
-                                                </validation-provider>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Description</label>
-                                            <div class="col-sm-10">
-                                                <validation-provider
-                                                    name="news_group_description"
-                                                    rules="max:200"
-                                                    v-slot="{ errors }">
-                                                    <textarea
-                                                        v-model="groupData.description"
-                                                        class="form-control"
-                                                        placeholder="Description"></textarea>
-                                                    <span
-                                                        class="text-red">{{ errors[0] }}</span>
-                                                </validation-provider>
-                                            </div>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Name</label>
+                                        <div class="col-sm-10">
+                                            <validation-provider
+                                                name="news_group_name"
+                                                rules="required|max:191"
+                                                v-slot="{ errors }">
+                                                <input
+                                                    v-model="groupData.newsgroupname"
+                                                    type="text"
+                                                    class="form-control"
+                                                    placeholder="News Group Name">
+                                                <span class="text-red">{{ errors[0] }}</span>
+                                            </validation-provider>
                                         </div>
                                     </div>
-                                </template>
-
-                                <template name="card-body-edit" class="card-body" v-else>
-                                    <div class="card-body">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Name</label>
-                                            <div class="col-sm-10">
-                                                <validation-provider
-                                                    name="news_group_name"
-                                                    rules="required|max:191"
-                                                    v-slot="{ errors }">
-                                                    <input
-                                                        v-model="groupData.newsgroupname"
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="News Group Name">
-                                                    <span class="text-red">{{ errors[0] }}</span>
-                                                </validation-provider>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Description</label>
-                                            <div class="col-sm-10">
-                                                <validation-provider
-                                                    name="news_group_description"
-                                                    rules="max:200"
-                                                    v-slot="{ errors }">
-                                                    <textarea
-                                                        v-model="groupData.description"
-                                                        class="form-control"
-                                                        placeholder="Description"></textarea>
-                                                    <span class="text-red">{{ errors[0] }}</span>
-                                                </validation-provider>
-                                            </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Description</label>
+                                        <div class="col-sm-10">
+                                            <validation-provider
+                                                name="news_group_description"
+                                                rules="max:200"
+                                                v-slot="{ errors }">
+                                                <textarea
+                                                    v-model="groupData.description"
+                                                    class="form-control"
+                                                    placeholder="Description"></textarea>
+                                                <span class="text-red">{{ errors[0] }}</span>
+                                            </validation-provider>
                                         </div>
                                     </div>
-                                </template>
-
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">{{$options.setting.fieldTxt.show_page}}</label>
+                                        <div class="col-sm-10">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="icheck-primary">
+                                                                <input type="checkbox" id="home_page" 
+                                                                    v-model="groupData.displays.home_page"> 
+                                                                <label for="home_page">Trang chủ</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="icheck-primary">
+                                                                <input type="checkbox" id="news_page" 
+                                                                    v-model="groupData.displays.news_page"> 
+                                                                <label for="news_page">Trang tin tức</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">{{$options.setting.fieldTxt.sort}}</label>
+                                        <div class="col-sm-10">
+                                            <input
+                                                    v-model="groupData.sort"
+                                                    type="number" min="0" step="1"
+                                                    class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -205,13 +198,21 @@
             }
         },
         setting: {
-            btnCancelTxt: 'Close',
+            btnCancelTxt: 'Thoát',
+            fieldTxt: {
+                newsgroupname: 'Tên',
+                name_placeholder: 'Tên nhóm tin',
+                description: 'Mô tả',
+                description_placeholder: 'Mô tả nhóm tin',
+                show_page: 'Trang Hiển Thị',
+                sort: 'Thứ tự',
+            },
             edit: {
                 actionName: 'edit',
                 isParentShow: false,
                 isAddFrom: false,
-                title: 'Edit News Group',
-                btnSubmitTxt: 'Update'
+                title: 'Sửa Nhóm Tin',
+                btnSubmitTxt: 'Cập nhật'
             }
         }
     };

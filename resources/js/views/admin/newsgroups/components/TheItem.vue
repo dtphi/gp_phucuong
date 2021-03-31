@@ -1,17 +1,19 @@
 <template>
-    <a class="treeview-animated-items-header"
-       v-on:mouseover.prevent="_showAction"
-       v-on:mouseleave.prevent="_hideAction">
-        <font-awesome-icon icon="folder" v-if="isItemRoot"/>
-        <font-awesome-icon icon="plus" size="xs" v-if="isFolder && !isItemRoot" />
-        <span>{{ group.newsgroupname }}</span>
-        <btn-group-action
-            :is-action-show="isItemRoot"
-            :current-group="group"
-            v-show="active"
-            class="float-sm-right center"
-            style="margin-top:0px"></btn-group-action>
-    </a>
+    <div>
+        <a class="treeview-animated-items-header"
+           v-on:mouseover.prevent="_showAction"
+           v-on:mouseleave.prevent="_hideAction">
+            <font-awesome-icon icon="folder" v-if="isItemRoot"/>
+            <font-awesome-icon icon="plus" size="xs" v-if="isFolder && !isItemRoot" />
+            <span>{{ group.newsgroupname }}</span>
+            <btn-group-action
+                :is-action-show="isItemRoot"
+                :current-group="group"
+                v-show="active"
+                class="float-sm-right center"
+                style="margin-top:0px"></btn-group-action>
+        </a>
+    </div>
 </template>
 
 <script>

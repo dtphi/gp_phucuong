@@ -1,6 +1,6 @@
 <template>
     <div class="modal-header">
-        <label class="col-sm-2">Parent name:</label>
+        <label class="col-sm-2">{{$options.setting.fieldTxt.parent_group_name}}</label>
 
         <div class="col-sm-10">
             <p>{{parentInfo.newsgroupname}}</p>
@@ -33,6 +33,11 @@
         },
         ...mapGetters(MODULE_NEWS_GROUP_MODAL, [
             'isOpen'
-        ])
+        ]),
+        setting: {
+            fieldTxt: {
+                parent_group_name: 'Tên nhóm cha'
+            }
+        }
     };
 </script>

@@ -82,6 +82,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
      */
     public function apiInsertOrUpdate(array $data = [])
     {
+        $data['displays'] = serialize($data['displays']);
         // TODO: Implement apiInsertOrUpdate() method.
         $this->model->fill($data);
 
