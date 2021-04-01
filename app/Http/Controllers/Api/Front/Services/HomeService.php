@@ -65,7 +65,7 @@ final class HomeService implements BaseModel, HomeModel
     public function apiGetNewsGroupTrees()
     {
         // TODO: Implement apiGetNewsGroupTrees() method.
-        $query = $this->modelNewGroup->select('id', 'father_id', 'newsgroupname', 'displays', 'sort')->orderByDescById();
+        $query = $this->modelNewGroup->select('id', 'father_id', 'newsgroupname', 'displays', 'sort')->orderBySortAsc();
 
         return [
             'total' => $query->count(),
