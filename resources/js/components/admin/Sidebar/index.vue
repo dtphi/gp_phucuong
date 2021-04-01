@@ -21,21 +21,21 @@
                         :active-item="activeItem"
                     />
                     <nav-link
-                        label="News Groups"
+                        label="Nhóm Tin"
                         link="/admin/news-groups"
                         index="news-groups"
                         iconName="folder"
                         :active-item="activeItem"
                     />
                     <nav-link
-                        label="News"
+                        label="Tin Tức"
                         link="/admin/news"
                         index="infomations"
                         iconName="info"
                         :active-item="activeItem"
                     />
                     <nav-link
-                        label="News Files"
+                        label="Hình Ảnh Tin Tức"
                         link="/admin/filemanagers"
                         index="filemanagers"
                         iconName="file"

@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <img v-if="logoUrl" :src="logoUrl" alt="Logo Phú Cường">
+    <img v-lazy="logoUrl" alt="Logo Phú Cường">
   </transition>
 </template>
 

@@ -31,7 +31,12 @@ const NEWS_GROUP = {
   id: null,
   father_id: -1,
   newsgroupname: '',
-  description: ''
+  description: '',
+  displays: {
+    home_page: false,
+    news_page: false
+  },
+  sort: 0
 }
 
 export default {

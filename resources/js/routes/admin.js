@@ -46,7 +46,7 @@ export default [{
             meta: {
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Dashboard'
+                    name: 'Quản lý'
                 }],
                 header: 'Dashboard',
                 layout: MainLayout,
@@ -93,13 +93,13 @@ export default [{
             meta: {
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Dashboard',
+                    name: 'Quản lý',
                     linkName: 'admin.dashboard',
                     linkPath: '/dashboard'
                 }, {
-                    name: 'News Groups'
+                    name: 'Nhóm Tin'
                 }],
-                header: 'News Groups List',
+                header: 'Danh sách nhóm tin',
                 layout: MainLayout,
                 role: 'admin',
                 title: 'News Groups | ' + config.site_name

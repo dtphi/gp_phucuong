@@ -4,7 +4,7 @@
           <div class="logo d-inline-block">
               <logo></logo>
           </div>
-          <div class="banner-image d-inline-block">
+          <div class="banner-image d-inline-block" v-if="bannerUrl">
               <img class="img" :src="bannerUrl" alt="Hình ảnh Phú Cường">
           </div>
       </div>

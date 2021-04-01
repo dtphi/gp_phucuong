@@ -1,6 +1,6 @@
 <template>
   <figure class="figure" @click="_redirectPage()">
-      <img :src="pageItem.img" class="rounded img" alt="Giáo Phận Phú Cường">
+      <img v-lazy="pageItem.img" class="rounded img" alt="Giáo Phận Phú Cường">
       <figcaption class="figure-caption" @click="_redirectPage()">{{pageItem.title}}</figcaption>
   </figure>
 </template>
@@ -32,11 +32,12 @@
         },
         methods: {
             _redirectPage() {
-                return fn_redirect_url();
+                return fn_redirect_url(this.pageItem.href);
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    
 </style>

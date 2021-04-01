@@ -45,41 +45,49 @@ class HomeController extends Controller
         return response()->json([
             'pageLists' => [
                 [
+                    'sort' => 0,
                     'img' => $bannerPath . '/news_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> XEM TIN TỨC'
                 ],
                 [
+                    'sort' => 1,
                     'img' => $bannerPath . '/loi_chua_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> LỜI CHÚA'
                 ],
                 [
+                    'sort' => 2,
                     'img' => $bannerPath . '/video_banner.jpg',
-                    'href' => '/',
+                    'href' => '/video',
                     'title' => '>>>> VIDEO'
                 ],
                 [
+                    'sort' => 3,
                     'img' => $bannerPath . '/audio_podcast_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> AUDIO/PODCAST'
                 ],
                 [
+                    'sort' => 4,
                     'img' => $bannerPath . '/linh_muc_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> DANH SÁCH LINH MỤC'
                 ],
                 [
+                    'sort' => 5,
                     'img' => $bannerPath . '/gx_chanh_toa_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> GIÁO XỨ TRONG GIÁO PHẬN'
                 ],
                 [
+                    'sort' => 6,
                     'img' => $bannerPath . '/thong_bao_banner.jpeg',
                     'href' => '/',
                     'title' => '>>>> THÔNG BÁO'
                 ],
                 [
+                    'sort' => 7,
                     'img' => $bannerPath . '/phung_vu_banner.jpg',
                     'href' => '/',
                     'title' => '>>>> PHỤNG VỤ'
@@ -92,15 +100,47 @@ class HomeController extends Controller
     {
         try {
             $newsGroups     = $this->homeSv->apiGetNewsGroupTrees();
-            $newsGroupTrees = $this->generateTree($newsGroups['data']);
+            $homeMenus = [];
+            foreach ($newsGroups['data'] as $key => $newsGroup) {
+                if (isset($newsGroup['displays']['home_page']) && $newsGroup['displays']['home_page']) {
+                    $homeMenus[] = $newsGroup;
+                }
+            }
+
+            //$newsGroupTrees = $this->generateTree($homeMenus);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
+        $appImgPath = '/upload/app';
+
         return response()->json([
             'logo' => '/front/img/logo.png',
             'banner' => '/images/banner_image.jpg',
-            'navMainLists' => $newsGroupTrees
+            'navMainLists' => $homeMenus,
+            'appLists' => [
+                [
+                    'sort' => 0,
+                    'title' => 'App website gppc',
+                    'img' => $appImgPath . '/app_website_gppc.png',
+                    'hrefAppStore' => '/',
+                    'hrefChPlay' => '/'
+                ],
+                [
+                    'sort' => 1,
+                    'title' => 'App sách nói công giáo',
+                    'img' => $appImgPath . '/app_sach_noi_cong_giao.jpg',
+                    'hrefAppStore' => '/',
+                    'hrefChPlay' => '/'
+                ],
+                [
+                    'sort' => 2,
+                    'title' => 'App tìm nhà thờ gần nhất',
+                    'img' => $appImgPath . '/app_tim_nha_tho.jpg',
+                    'hrefAppStore' => '/',
+                    'hrefChPlay' => '/'
+                ],
+            ]
         ]);
     }
 
@@ -117,9 +157,16 @@ class HomeController extends Controller
 
         for ($i = 0, $ni = count($data); $i < $ni; $i++) {
             if ($data[$i]['father_id'] == $parent) {
-                $newsGroupTree[$data[$i]['id']]['id']            = $data[$i]['id'];
-                $newsGroupTree[$data[$i]['id']]['fatherId']      = $data[$i]['father_id'];
-                $newsGroupTree[$data[$i]['id']]['newsgroupname'] = $data[$i]['newsgroupname'];
+                $newsGroupTree[$data[$i]['id']]['id']            = null;
+                $newsGroupTree[$data[$i]['id']]['fatherId']      = null;
+                $newsGroupTree[$data[$i]['id']]['newsgroupname'] = '';
+
+                if (isset($data[$i]['displays']['home_page']) && ($data[$i]['displays']['home_page'])) {
+                    $newsGroupTree[$data[$i]['id']]['id']            = $data[$i]['id'];
+                    $newsGroupTree[$data[$i]['id']]['fatherId']      = $data[$i]['father_id'];
+                    $newsGroupTree[$data[$i]['id']]['newsgroupname'] = $data[$i]['newsgroupname'];
+                }
+
                 $newsGroupTree[$data[$i]['id']]['children']      = $this->generateTree($data, $data[$i]['id'],
                     $depth + 1);
             }

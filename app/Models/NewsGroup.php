@@ -15,8 +15,18 @@ class NewsGroup extends BaseModel
         'father_id',
         'newsgroupname',
         'user_id',
-        'description'
+        'description',
+        'displays',
+        'sort'
     ];
+
+    public function getDisplaysAttribute($value)
+    {
+        if ($value) {
+            return unserialize($value);
+        }
+        return array('home_page' => false, 'news_page' => false);
+    }
 
     /**
      * [getNewsGroups description]
