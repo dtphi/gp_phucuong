@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper-container">
   	<Header />
-		<Home />
-	  <Footer />
+	<Video />
+	<Footer />
   </div>
 </template>
 
@@ -11,6 +11,7 @@
 	import Header from 'com@front/Header';
 	import Footer from 'com@front/Footer';
 	import Home from '../home/index';
+	import Video from '../video/index';
 
 	export default {
 		name: 'Layout',
@@ -18,6 +19,7 @@
 			Header,
 			Footer,
 			Home,
+			Video
 		}
 	};
 </script>
