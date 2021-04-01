@@ -1,13 +1,65 @@
 <template>
-    <main id="homepage" class="py-2">
+    <main id="video" class="py-2">
         <div class="container">
             <Navigation />
-            <div class="list-home mt-4 mb-3">
-                <figure class="figure" v-for="item in 8" :key="item">
-                    <img src="../assets/img/banner_image.jpg" class="rounded img" alt="Giáo Phận Phú Cường">
-                    <figcaption class="figure-caption">>>>> Xem tin tức</figcaption>
-                </figure>
-            </div>
+            <b-row class="mt-3">
+                <b-col cols="3">
+                    <aside class="aside">
+                        <ul class="menu">
+                            <li class="active"><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Tất cả</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Xem nhiều</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Đã xem</a></li>
+                            <hr class="border my-3">
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Thánh ca</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Lời chúa</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Kinh thánh</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Thời sự</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Tiếng việt</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Bé kể bé nghe</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Giáo lý</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Chuyên đề</a></li>
+                            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Karaoke</a></li>
+                        </ul>
+
+                        <hr class="border my-3">
+
+                        <div class="form">
+                            <p class="font-weight-bold txt">Đăng ký để nhận tin mỗi ngày</p>
+                            <div class="input">
+                                <input class="d-block mb-3" type="email" name="email" id="email" placeholder="Enter your e-mail address">
+                                <input class="btn" type="button" value="Subscribe">
+                            </div>
+                        </div>
+
+                        <hr class="border my-4">
+
+                        <div class="logo">
+                            <p class="mb-4"><img src="../../../views/front/assets/img/logo.png" alt="Logo Phú Cường"></p>
+                            <h4 class="title mb-3">Giáo Phận Phú Cường</h4>
+                            <p class="mb-0">Ban Truyền Thông Giáo Phận</p>
+                            <p>104 Lạc Long Quân, Phường Phú Cường, Tp. Thủ Dầu Một, Tỉnh Bình Dương</p>
+                            <p class="mb-0">+84 274 730 7788</p>
+                            <p class="mb-0">giaophanphucuong@gmail.com</p>
+                        </div>
+                    </aside>
+                </b-col>
+                <b-col cols="9">
+                    <div class="list-videos">
+                        <figure class="figure" v-for="item in 20" :key="item">
+                            <img src="../assets/img/banner_image.jpg" class="rounded img" alt="Giáo Phận Phú Cường">
+                            <figcaption class="figure-caption">
+                                <h4 class="title mt-2">
+                                    <img src="../../../views/front/assets/img/icon-book.png" alt="Icon">
+                                    Tình chúa thương con
+                                </h4>
+                                <span class="d-block mb-1">Bao la tình chúa thương con, mênh mông như biển thái bình</span>
+                                <span class="d-block mb-1">Trình bày: Phi Nguyễn</span>
+                                <span class="d-block">20N lượt xem | 3 tháng trước</span>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </b-col>
+            </b-row>
         </div>
     </main>
 </template>
@@ -16,7 +68,7 @@
     import Navigation from 'com@front/Navigation';
 
     export default {
-        name: 'Home',
+        name: 'Video',
         components: {
             Navigation,
         },
@@ -29,41 +81,95 @@
 </script>
 
 <style lang="scss" scoped>
-    #homepage {
-        background-color: #E6E6E6;
-        
-        .list-home {
-            .figure {
-                width: calc((100% - 60px)/4);
-                height: 160px;
-                margin-right: 20px;
-                margin-bottom: 20px;
-                position: relative;
-                cursor: pointer;
-                overflow: hidden;
+    #video {
+        .aside {
+            .menu {
+                list-style-type: none;
+                padding-left: 0;
 
-                &:hover {
+                li {
+                    margin-bottom: 8px;
+                    cursor: pointer;
+
+                    &:hover,
+                    &.active {
+                        background-color: #dee2e6;
+                    }
+
                     img {
-                        transform: scale(1.2);
-                        transition: all 1s;
+                        width: 8%;
+                        margin-right: 10px;
+                    }
+
+                    a {
+                        color: #000000;
+                        text-decoration: none;
+                        display: block;
+                        padding: 5px;
                     }
                 }
+            }
+
+            .form {
+                #email {
+                    background-color: #CCCCCC;
+                    padding: 8px;
+                    border-radius: 4px;
+                    width: 100%;
+                    outline: 0;
+                }
+
+                .btn {
+                    background-color: #ED1C24;
+                    color: #ffffff;
+                    padding: 7px 20px;
+                    font-weight: bold;
+                }
+
+                .txt {
+                    color: #CCCCCC;
+                }
+            }
+
+            .logo {
+                font-size: 13px;
+                text-align: center;
+
+                img {
+                    width: 30%;
+                }
+
+                .title {
+                    text-transform: uppercase;
+                    font-size: 15px;
+                }
+            }
+        }
+
+        .list-videos {
+            background-color: #dee2e6;
+            padding: 15px;
+
+            .figure {
+                width: calc((100% - 60px)/4);
+                margin-right: 20px;
+                margin-bottom: 20px;
+                cursor: pointer;
 
                 &:nth-child(4n) {
                     margin-right: 0;
                 }
+            }
 
-                .figure-caption {
-                    background: rgba(255, 255, 255, 0.7);
-                    color: #ED1C24;
+            .figure-caption {
+                color: #000000;
+
+                .title {
                     font-size: 14px;
-                    font-weight: bold;
-                    padding: 2px;
-                    text-transform: uppercase;
-                    text-align: center;
-                    width: 100%;
-                    position: absolute;
-                    bottom: 10px;
+
+                    img {
+                        width: 10%;
+                    }
                 }
             }
         }
