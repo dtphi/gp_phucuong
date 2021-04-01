@@ -20,7 +20,7 @@ Route::post('/test', function (Request $request) {
 Route::namespace('App\Http\Controllers\Api\Front')
     ->middleware('web')
     ->group(function () {
-        Route::post('/app/get-setting', 'HomeController@getSetting');
+        Route::post('/app/get-setting', 'Base\ApiController@getSetting');
         Route::apiResource('/homes/get-list', 'HomeController');
     });
 

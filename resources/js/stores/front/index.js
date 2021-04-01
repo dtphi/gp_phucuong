@@ -55,6 +55,9 @@ export default new Vuex.Store({
       }
     },
     mutations: {
+      initOptions(state, payload) {
+        state.options = payload;
+      },
       initSetting(state, payload) {
         state.cfApp.setting = payload;
       },
@@ -63,6 +66,9 @@ export default new Vuex.Store({
       }
      },
     actions: {
+      setParams({commit}, params) {
+        commit('initOptions', params);
+      },
       appSettings({
         commit
       }, options) {

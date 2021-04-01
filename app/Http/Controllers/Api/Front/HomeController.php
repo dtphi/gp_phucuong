@@ -31,19 +31,20 @@ class HomeController extends Controller
         parent::__construct($middleware);
     }
 
+    /**
+     * [getServiceContext description]
+     * @return [type] [description]
+     */
+    public function getServiceContext() {
+        return $this->homeSv;
+    }
+
     public function index()
     {
-        try {
-            ///$newsGroups     = $this->homeSv->apiGetNewsGroupTrees();
-            ///$newsGroupTrees = $this->generateTree($newsGroups['data']);
-        } catch (HandlerMsgCommon $e) {
-            throw $e->render();
-        }
-
         $bannerPath = '/upload/home_banners';
-
-        return response()->json([
-            'pageLists' => [
+        
+        try {
+            $pageLists = [
                 [
                     'sort' => 0,
                     'img' => $bannerPath . '/news_banner.jpeg',
@@ -92,86 +93,13 @@ class HomeController extends Controller
                     'href' => '/',
                     'title' => '>>>> PHỤNG VỤ'
                 ]      
-            ],
-        ]);
-    }
-
-    public function getSetting()
-    {
-        try {
-            $newsGroups     = $this->homeSv->apiGetNewsGroupTrees();
-            $homeMenus = [];
-            foreach ($newsGroups['data'] as $key => $newsGroup) {
-                if (isset($newsGroup['displays']['home_page']) && $newsGroup['displays']['home_page']) {
-                    $homeMenus[] = $newsGroup;
-                }
-            }
-
-            //$newsGroupTrees = $this->generateTree($homeMenus);
+            ];
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        $appImgPath = '/upload/app';
-
         return response()->json([
-            'logo' => '/front/img/logo.png',
-            'banner' => '/images/banner_image.jpg',
-            'navMainLists' => $homeMenus,
-            'appLists' => [
-                [
-                    'sort' => 0,
-                    'title' => 'App website gppc',
-                    'img' => $appImgPath . '/app_website_gppc.png',
-                    'hrefAppStore' => '/',
-                    'hrefChPlay' => '/'
-                ],
-                [
-                    'sort' => 1,
-                    'title' => 'App sách nói công giáo',
-                    'img' => $appImgPath . '/app_sach_noi_cong_giao.jpg',
-                    'hrefAppStore' => '/',
-                    'hrefChPlay' => '/'
-                ],
-                [
-                    'sort' => 2,
-                    'title' => 'App tìm nhà thờ gần nhất',
-                    'img' => $appImgPath . '/app_tim_nha_tho.jpg',
-                    'hrefAppStore' => '/',
-                    'hrefChPlay' => '/'
-                ],
-            ]
+            'pageLists' => $pageLists,
         ]);
-    }
-
-     /**
-     * @author : dtphi .
-     * @param $data
-     * @param int $parent
-     * @param int $depth
-     * @return array
-     */
-    public function generateTree($data, $parent = -1, $depth = 0)
-    {
-        $newsGroupTree = [];
-
-        for ($i = 0, $ni = count($data); $i < $ni; $i++) {
-            if ($data[$i]['father_id'] == $parent) {
-                $newsGroupTree[$data[$i]['id']]['id']            = null;
-                $newsGroupTree[$data[$i]['id']]['fatherId']      = null;
-                $newsGroupTree[$data[$i]['id']]['newsgroupname'] = '';
-
-                if (isset($data[$i]['displays']['home_page']) && ($data[$i]['displays']['home_page'])) {
-                    $newsGroupTree[$data[$i]['id']]['id']            = $data[$i]['id'];
-                    $newsGroupTree[$data[$i]['id']]['fatherId']      = $data[$i]['father_id'];
-                    $newsGroupTree[$data[$i]['id']]['newsgroupname'] = $data[$i]['newsgroupname'];
-                }
-
-                $newsGroupTree[$data[$i]['id']]['children']      = $this->generateTree($data, $data[$i]['id'],
-                    $depth + 1);
-            }
-        }
-
-        return $newsGroupTree;
     }
 }

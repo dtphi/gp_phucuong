@@ -33,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
 
         /*=====================Front end======================== .*/
         $this->app->bind(
+            \App\Http\Controllers\Api\Front\Services\Contracts\BaseModel::class,
+            \App\Http\Controllers\Api\Front\Services\Service::class
+        );
+        $this->app->bind(
             \App\Http\Controllers\Api\Front\Services\Contracts\HomeModel::class,
             \App\Http\Controllers\Api\Front\Services\HomeService::class
         );

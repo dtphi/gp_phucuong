@@ -1,7 +1,7 @@
 <template>
-    <main id="video" class="py-2">
+  <main id="video" class="py-2">
         <div class="container">
-            <Navigation />
+            <navigation-main :menu-items="navMainLists"></navigation-main>
             <b-row class="mt-3">
                 <b-col cols="3">
                     <aside class="aside">
@@ -61,120 +61,32 @@
                 </b-col>
             </b-row>
         </div>
-    </main>
+  </main>
 </template>
 
 <script>
-    import Navigation from 'com@front/Navigation';
+	import{
+      mapGetters,
+      mapActions
+  } from 'vuex';
+  import NavigationMain from 'com@front/Navigation/Main';
 
     export default {
-        name: 'Video',
+        name: 'VideoPage',
         components: {
-            Navigation,
+            NavigationMain,
         },
         data() {
             return {
 
             }
         },
-        mounted() {
-            console.log('video')
-        }
+        computed: {
+            ...mapGetters(['navMainLists'])
+        },
     }
 </script>
 
-<style lang="scss" scoped>
-    #video {
-        .aside {
-            .menu {
-                list-style-type: none;
-                padding-left: 0;
-
-                li {
-                    margin-bottom: 8px;
-                    cursor: pointer;
-
-                    &:hover,
-                    &.active {
-                        background-color: #dee2e6;
-                    }
-
-                    img {
-                        width: 8%;
-                        margin-right: 10px;
-                    }
-
-                    a {
-                        color: #000000;
-                        text-decoration: none;
-                        display: block;
-                        padding: 5px;
-                    }
-                }
-            }
-
-            .form {
-                #email {
-                    background-color: #CCCCCC;
-                    padding: 8px;
-                    border-radius: 4px;
-                    width: 100%;
-                    outline: 0;
-                }
-
-                .btn {
-                    background-color: #ED1C24;
-                    color: #ffffff;
-                    padding: 7px 20px;
-                    font-weight: bold;
-                }
-
-                .txt {
-                    color: #CCCCCC;
-                }
-            }
-
-            .logo {
-                font-size: 13px;
-                text-align: center;
-
-                img {
-                    width: 30%;
-                }
-
-                .title {
-                    text-transform: uppercase;
-                    font-size: 15px;
-                }
-            }
-        }
-
-        .list-videos {
-            background-color: #dee2e6;
-            padding: 15px;
-
-            .figure {
-                width: calc((100% - 60px)/4);
-                margin-right: 20px;
-                margin-bottom: 20px;
-                cursor: pointer;
-
-                &:nth-child(4n) {
-                    margin-right: 0;
-                }
-            }
-
-            .figure-caption {
-                color: #000000;
-
-                .title {
-                    font-size: 14px;
-
-                    img {
-                        width: 10%;
-                    }
-                }
-            }
-        }
-    }
+<style lang="scss">
+    @import './video-styles.scss'
 </style>
