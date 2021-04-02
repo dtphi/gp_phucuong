@@ -1,5 +1,5 @@
 <template>
-    <!-- <header id="header">
+    <header id="header">
         <div class="header-news">
             <div class="container">
                 <div class="breaking-news d-inline-block">
@@ -21,9 +21,9 @@
                 </div>
             </div>
             </div>
-    </header> -->
+    </header>
 
-    <header id="header" class="header-search">
+    <!-- <header id="header" class="header-search">
         <div class="header-image search">
             <div class="container">
                 <div class="logo d-inline-block">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-    </header>
+    </header> -->
 </template>
 
 <script>
@@ -141,6 +141,183 @@
                             border-radius: 4px;
                             width: 260px;
                             outline: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        #header {
+            .header-news {
+                .breaking-news {
+                    font-size: 12px;
+
+                    .title-breaking-news {
+                        font-size: 12px;
+                        margin: 0 40px 0 0;
+                    }
+                }
+
+                .subscribe {
+                    font-size: 12px;
+
+                    .btn {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .header-image {
+                padding: 10px 0;
+
+                .banner-image {
+                    height: 80px;
+                }
+            }
+
+            &.header-search {
+                .search {
+                    font-size: 12px;
+
+                    .banner-search {
+                        top: 18px;
+                        right: 80px;
+
+                        label {
+                            margin-right: 8px;
+                        }
+
+                        .icon-search {
+                            .search {
+                                left: 8px;
+                            }
+
+                            input {
+                                padding: 5px 5px 5px 22px;
+                                width: 240px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        #header {
+            .header-news {
+                .breaking-news {
+                    font-size: 12px;
+
+                    .title-breaking-news {
+                        font-size: 12px;
+                        margin: 0 40px 0 0;
+                    }
+                }
+
+                .subscribe {
+                    font-size: 12px;
+
+                    .btn {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .header-image {
+                padding: 10px 0;
+
+                .banner-image {
+                    height: 80px;
+                }
+            }
+
+            &.header-search {
+                .container {
+                    position: static;
+                }
+
+                .search {
+                    .banner-search {
+                        position: static;
+
+                        label {
+                            margin-right: 4px;
+                        }
+
+                        .icon-search {
+                            .search {
+                                left: 8px;
+                            }
+
+                            input {
+                                padding: 5px 5px 5px 22px;
+                                width: 240px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        #header {
+            .header-news {
+                .breaking-news {
+                    width: 100%;
+                    font-size: 12px;
+                    padding: 10px 0;
+
+                    .title-breaking-news {
+                        font-size: 12px;
+                        margin: 0 0 5px;
+                    }
+                }
+
+                .subscribe {
+                    width: 100%;
+                    font-size: 12px;
+                    margin-bottom: 10px;
+
+                    .btn {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .header-image {
+                .logo {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+
+                .banner-image {
+                    width: 100%;
+                }
+            }
+
+            &.header-search {
+                .search {
+                    .banner-search {
+                        width: 100%;
+
+                        label {
+                            margin-right: 0;
+                        }
+
+                        .icon-search {
+                            display: block;
+                            .search {
+                                left: 8px;
+                            }
+
+                            input {
+                                padding: 5px 5px 5px 22px;
+                                width: 100%;
+                            }
                         }
                     }
                 }

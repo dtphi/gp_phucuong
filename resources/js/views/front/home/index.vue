@@ -68,4 +68,27 @@
             }
         }
     }
+
+    @media screen and (max-width: 767px) {
+        #homepage {
+            .list-home {
+                .figure {
+                    width: calc((100% - 10px)/2);
+                    height: 120px;
+                    margin-right: 10px;
+                    margin-bottom: 5px;
+
+                    &:nth-child(2n),
+                    &:nth-child(4n) {
+                        margin-right: 0;
+                    }
+
+                    .figure-caption {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+    
 </style>
