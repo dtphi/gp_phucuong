@@ -77,6 +77,9 @@
 
             }
         },
+        mounted() {
+            console.log('video')
+        }
     }
 </script>
 

@@ -17,9 +17,18 @@ const router = new Router({
   ]
 });
 
-store.dispatch('appSettings', {
-    type: 'init'
-}).then(() => {
+const initParamsApp = {
+  type: 'init',
+  pathName: window.location.pathname
+}
+
+router.beforeEach(async (to, from, next) => {
+    document.title = to.meta.title;
+
+    next();
+});
+
+store.dispatch('appSettings', initParamsApp).then(() => {
     return new Vue({
         el: '#gp-phu-cuong',
         router,

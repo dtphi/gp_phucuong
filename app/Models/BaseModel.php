@@ -10,4 +10,9 @@ use App\Http\Controllers\Api\Admin\Services\ScopeService;
 abstract class BaseModel extends Model
 {
     use HasFactory, SoftDeletes, ScopeService;
+
+    public function scopeOrderBySortAsc($query, $value='')
+    {
+    	return $query->orderBy('sort', 'ASC');
+    }
 }
