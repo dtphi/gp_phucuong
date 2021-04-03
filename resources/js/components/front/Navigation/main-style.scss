@@ -1,6 +1,7 @@
 .fz-0 {
-    font-size: 0;
+  font-size: 0;
 }
+
 #nav {
     border: 1px solid #ED1C24;
     background-color: #ffffff;
@@ -71,6 +72,7 @@
         }
     }
 }
+
 .icon-nav {
     background-color: #ffffff;
     border: 1px solid #ED1C24;
@@ -91,6 +93,48 @@
         &:last-child {
             background-color: #ED1C24;
             color: #ffffff;
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #nav {
+        width: 75%;
+
+        .nav-menu {
+            li {
+                a {
+                    font-size: 10px;
+                    padding: 6px 6px;
+
+                    i {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .nav-menu > li {
+            ul {
+                box-shadow: 0px 2px 6px -2px;
+                li {
+                    a {
+                        font-size: 12px;
+                        padding: 8px;
+                    }
+                }
+            }
+        }
+    }
+    
+    .icon-nav {
+        width: 25%;
+        height: 38px;
+        p {
+            font-size: 14px;
+            width: 50%;
+            height: 38px;
+            padding-top: 6px;
         }
     }
 }
