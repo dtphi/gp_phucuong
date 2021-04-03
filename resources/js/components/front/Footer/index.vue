@@ -55,6 +55,7 @@
         color: #fff;
         .top-footer {
             background-color: #4D4D4D;
+            word-break: break-word;
             .row {
                 margin-right: 0;
                 margin-left: 0;
@@ -123,6 +124,78 @@
             p {
                 font-size: 13px;
                 margin-bottom: 0;
+            }
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        #footer {
+            .top-footer {
+                padding: 15px 0 !important;
+                font-size: 13px;
+
+                .row {
+                    .col-3,
+                    .col-4,
+                    .col-5 {
+                        max-width: 100%;
+                        flex: unset;
+                        display: block;
+                        padding:  0;
+                    }
+                    
+                    .col-info {
+                        margin-bottom: 20px;
+
+                        .title {
+                            font-size: 12px;
+                        }
+
+                        img {
+                            width: 25%;
+                        }
+                        
+                        p {
+                            font-size: 12px;
+                        }
+                    }
+
+                    .tit-ft {
+                        font-size: 12px;
+                        padding-bottom: 5px;
+                    }
+
+                    .col-img {
+                        height: 100%;
+                        padding-right: 0;
+                    }
+
+                    .col-detail {
+                        .tit-app-ft {
+                            font-size: 12px;
+                        }
+                    }
+
+                    .form {
+                        margin-top: 20px;
+
+                        #email {
+                            padding: 4px;
+                        }
+
+                        .btn {
+                            padding: 4px 12px;
+                            font-size: 13px;
+                        }
+                    }
+                }
+            }
+
+            .bottom-footer {
+                padding: 10px 0;
+                p {
+                    font-size: 12px;
+                }
             }
         }
     }

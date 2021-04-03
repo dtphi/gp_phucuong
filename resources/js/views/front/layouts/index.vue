@@ -44,6 +44,9 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
+
+		
+		word-break: break-word;
 	}
 
 	.img {
