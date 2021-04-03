@@ -15,7 +15,7 @@ const debug = process.env.NODE_ENV === 'debuger';
 
 let routeEnv = {};
 
-if (!debug) {
+if (debug) {
     routeEnv = {
         path: '',
         component: Home,

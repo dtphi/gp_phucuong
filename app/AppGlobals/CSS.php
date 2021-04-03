@@ -95,10 +95,16 @@ class CSS
         $cssStype    = $this->mapCss();
         $scripts     = '';
 
+        if (Request::is('admin/test')) {
+            $cssStype    = $this->mapCssTest();
+            $scripts     = $this->mapScriptTest();
+            $optionClass = '';
+        }
+
         if (Request::is('admin/dashboard')) {
-            $cssStype    = $this->mapCssUser();
-            $scripts     = $this->mapScriptUser();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
+            $cssStype    = $this->mapCssTest();
+            $scripts     = $this->mapScriptTest();
+            $optionClass = '';
         }
 
         if (Request::is('admin/user*')) {
@@ -121,10 +127,25 @@ class CSS
         }
 
         return [
-            $cssStype,
-            $scripts,
-            $optionClass
+            $this->mapCssTest(),
+            $this->mapScriptTest(),
+            ''
         ];
+    }
+
+    public function mapCssTest()
+    {
+        $output = '';
+       
+
+        return $output;
+    }
+
+    public function mapScriptTest()
+    {
+        $output = '';
+
+        return $output;
     }
 
     private function _initCss()

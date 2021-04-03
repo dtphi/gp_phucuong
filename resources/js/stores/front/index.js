@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import home from './homes';
+import video from './videos';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -86,6 +87,7 @@ export default new Vuex.Store({
     },
     modules: {
       home,
+      video,
     },
     strict: debug,
     plugins: debug ? [createLogger()] : []

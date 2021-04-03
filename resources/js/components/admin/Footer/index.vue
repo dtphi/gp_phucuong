@@ -1,17 +1,12 @@
 <template>
-    <footer class="main-footer">
-        <strong>Copyright &copy; 2021 <a href="#!">Diocese of Phu Cuong</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-            <b>Binh Pham</b>
-        </div>
+    <footer id="footer">Copyright © 2021 By Giáo Phận Phú Cường, All rights reserved. Powered by<a href="/"> Catholic.App.Team</a><br>Version 1.0.0.0
     </footer>
 </template>
 
 <script>
 
     export default {
-        name: 'Footer',
+        name: 'MainFooter',
         components: {}
     };
 </script>

@@ -22,7 +22,7 @@ export default {
   state: {
     authenticated: false,
     user: null,
-    redirectUrl: 'admin/users',
+    redirectUrl: 'admin/news-categories',
     redirectLogoutUrl: 'admin/login',
     errors: []
   },

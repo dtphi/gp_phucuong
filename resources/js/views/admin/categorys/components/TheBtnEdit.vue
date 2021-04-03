@@ -1,0 +1,46 @@
+<template>
+	<a 
+        href="javascript:void(0);" @click="_pushEditPage()" 
+        data-toggle="tooltip" title="" 
+        class="btn btn-primary" 
+        data-original-title="Edit">
+        <i class="fa fa-pencil"></i>
+    </a>
+</template>
+
+<script>
+    import {
+    	fn_get_base_url,
+        fn_redirect_url
+    } from '@app/api/utils/fn-helper';
+
+    export default {
+        name: 'TheButtonEdit',
+        props: {
+            isRedirect: {
+                type: Boolean,
+                default: true
+            },
+            categoryId: {
+                type: Number,
+                default: 0,
+                validator: function (value) {
+                    return (value && Number.isInteger(value))
+                }
+            }
+        },
+        methods: {
+            _pushEditPage() {
+                this.$router.push(`/admin/news-categories/edit/${this.categoryId}`)
+            },
+
+            _redirectUrl() {
+                return fn_redirect_url(`admin/news-categories/edit/${this.categoryId}`);
+            },
+
+            _getHref() {
+            	return fn_get_base_url() + `/admin/news-categories/edit/${this.categoryId}`;
+            }
+        }
+    };
+</script>

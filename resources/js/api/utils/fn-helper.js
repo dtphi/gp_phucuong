@@ -5,6 +5,10 @@ import {
 import NoImage from 'v@admin/assets/img/no-photo.jpg';
 import moment from 'moment';
 
+export function fn_get_base_url() {
+	return config.baseUrl;
+}
+
 export function fn_get_base_api_url(apiPath) {
 	return AppConfig.apiUrl + apiPath;
 }

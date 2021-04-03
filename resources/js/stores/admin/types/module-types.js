@@ -10,3 +10,6 @@ export const MODULE_INFO_MODAL = 'info/modal';
 export const MODULE_NEWS_GROUP = 'newsgroup';
 export const MODULE_NEWS_GROUP_MODAL = 'newsgroup/modal';
 export const MODULE_NEWS_GROUP_EDIT_MODAL = 'newsgroup/editModal';
+export const MODULE_NEWS_CATEGORY = 'news_category';
+export const MODULE_NEWS_CATEGORY_ADD = 'news_category/add';
+export const MODULE_NEWS_CATEGORY_EDIT = 'news_category/edit';

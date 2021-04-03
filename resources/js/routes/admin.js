@@ -8,6 +8,11 @@ import NewsAdd from 'v@admin/news/add';
 import NewsEdit from 'v@admin/news/edit';
 import FileManager from 'v@admin/filemanagers';
 
+import CategoryListPage from 'v@admin/categorys';
+import DefaultLayout from 'v@admin/layouts/default';
+import CategoryEditPage from 'v@admin/categorys/edit';
+import CategoryAddPage from 'v@admin/categorys/add';
+
 import {
     config
 } from '../common/config';
@@ -35,28 +40,65 @@ export default [{
             title: 'Login | ' + config.site_name
         }
     }, {
-        path: 'dashboard',
+        path: 'news-categories',
         component: {
             render: c => c('router-view')
         },
         children: [{
             path: '',
-            component: Users,
-            name: 'admin.dashboard',
+            component: CategoryListPage,
+            name: 'admin.category.list',
             meta: {
+                layout: DefaultLayout,
                 auth: true,
                 breadcrumbs: [{
                     name: 'Quản lý'
                 }],
-                header: 'Dashboard',
-                layout: MainLayout,
+                header: 'CategoryList',
                 role: 'admin',
                 title: 'Users | ' + config.site_name,
                 show: {
                     footer: true
                 }
             }
-        }]
+        },
+        {
+            path: 'add',
+            component: CategoryAddPage,
+            name: 'admin.category.add',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản lý'
+                }],
+                header: 'CategoryAdd',
+                role: 'admin',
+                title: 'Users | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        },
+        {
+            path: 'edit/:categoryId',
+            component: CategoryEditPage,
+            name: 'admin.category.edit',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản lý'
+                }],
+                header: 'CategoryEdit',
+                role: 'admin',
+                title: 'Users | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }
+        ]
     }, {
         path: 'users',
         component: {

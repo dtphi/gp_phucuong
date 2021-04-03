@@ -32,7 +32,7 @@ class HomeController extends Controller
     }
 
     /**
-     * [getServiceContext description]
+     * [getServiceContext:  ]
      * @return [type] [description]
      */
     public function getServiceContext() {

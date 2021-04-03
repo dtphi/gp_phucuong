@@ -1,5 +1,8 @@
 import Vue from 'vue';
 
+window.$ = window.jQuery = require('./assets/javascript/jquery/jquery-2.1.1.min');
+require('./assets/javascript/bootstrap/js/bootstrap.min');
+
 /*Add fontawesome free*/
 import {
   library

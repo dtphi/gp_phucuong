@@ -1,22 +1,12 @@
 <template>
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <ol class="breadcrumb float-sm-left">
-                        <li class="breadcrumb-item" v-for="(item,index) in breadcrumbs"
-                            :class="{'active': !!item.linkPath}"
-                            :key="index">
-                            <font-awesome-icon v-if="!index" icon="home" size="xs"/>
-                            <a href="javascript:void(0);" @click="_redirectTo(index)">{{item.name}}</a>
-                        </li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <ul class="breadcrumb">
+        <li v-for="(item,index) in breadcrumbs"
+            :class="{'active': !!item.linkPath}"
+            :key="index">
+            <font-awesome-icon v-if="!index" icon="home" size="xs"/>
+            <a href="javascript:void(0);" @click="_redirectTo(index)">{{item.name}}</a>
+        </li>
+    </ul>
 </template>
 
 <script>

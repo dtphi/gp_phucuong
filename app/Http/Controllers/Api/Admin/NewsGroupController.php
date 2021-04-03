@@ -42,7 +42,7 @@ class NewsGroupController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function _index(Request $request)
     {
         try {
             $newsGroups     = $this->newsGpSv->apiGetNewsGroupTrees();
@@ -53,6 +53,33 @@ class NewsGroupController extends ApiController
 
         return Helper::successResponse([
             'results' => $newsGroupTrees
+        ]);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
+    {
+        try {
+            $newsGroups     = $this->newsGpSv->apiGetNewsGroupTrees();
+            
+            $results = [];
+            foreach ($newsGroups as $key => $newsGroup) {
+                $results[] = [
+                    'category_name' => $newsGroup->category_name,
+                    'sort_order' => $newsGroup->sort_order,
+                    'category_id' => $newsGroup->category_id
+                ];
+            }
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+        }
+
+        return Helper::successResponse([
+            'results' => $results
         ]);
     }
 
