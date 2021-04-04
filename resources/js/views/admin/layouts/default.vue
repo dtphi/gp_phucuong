@@ -9,6 +9,7 @@
 			        
 		<main-footer></main-footer>
 
+		<v-dialog/>
   </div>
 </template>
 
@@ -25,6 +26,9 @@
       },
 
       mounted() {
+      	window.$ = window.jQuery = require('../assets/javascript/jquery/jquery-2.1.1.min');
+      	require('../assets/javascript/bootstrap/js/bootstrap.min');
+
       	function getURLVar(key) {
 					var value = [];
 

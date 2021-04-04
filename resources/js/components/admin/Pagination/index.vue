@@ -1,11 +1,11 @@
 <template>
     <div class="row">
-        <div class="col-sm-12 col-md-5">
+        <div class="col-sm-6 text-left">
             <div class="dataTables_info">
                 {{_getTextPagination()}}
             </div>
         </div>
-        <div class="col-sm-12 col-md-7">
+        <div class="col-sm-6 text-right">
             <div class="dataTables_paginate paging_simple_numbers">
                 <resource-pagination
                         :data="_resourceData"

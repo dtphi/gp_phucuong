@@ -1,16 +1,13 @@
 <template>
     <tr>
         <td>{{_getNo()}}</td>
-        <td>{{user.name}}</td>
-        <td>{{user.email}}</td>
-        <td>{{_formatDate(user.created_at)}}</td>
-        <td>
-            <div class="icheck-primary">
-                <input type="checkbox" :id="`user_id_${user.id}`" :value="user.id">
-                <label :for="`user_id_${user.id}`"></label>
-            </div>
+        <td class="text-center">                    
+            <input type="checkbox" name="selected[]" :id="`user_select_id_${user.id}`" :value="user.id">
         </td>
-        <td>
+        <td>{{user.name}}</td>
+        <td class="text-center">{{user.email}}</td>
+        <td class="text-right">{{_formatDate(user.created_at)}}</td>
+        <td class="text-right">
             <div>
                 <btn-edit :user-id="user.id"></btn-edit>
                 <btn-delete :user-id="user.id"></btn-delete>

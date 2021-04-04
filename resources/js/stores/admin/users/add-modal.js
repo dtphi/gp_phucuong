@@ -28,7 +28,7 @@ import {
 const INIT_STATE = {
   isOpen: false,
   action: null,
-  classShow: 'modal fade',
+  classShow: 'modal',
   styleCss: '',
   user: null,
   userId: 0,
@@ -70,15 +70,15 @@ export default {
   mutations: {
     [USERS_MODAL_SET_OPEN_MODAL](state, payload) {
       state.action = payload;
-      state.classShow = 'modal fade show';
-      state.styleCss = 'display:block';
+      state.classShow = 'modal in';
+      state.styleCss = 'display:block;';
       state.insertSuccess = false;
     },
 
     [USERS_MODAL_SET_CLOSE_MODAL](state) {
       state.action = 'closeModal';
-      state.classShow = 'modal fade';
-      state.styleCss = 'display:none';
+      state.classShow = 'modal';
+      state.styleCss = 'display:none;';
       state.userId = 0;
       state.user = null;
     },

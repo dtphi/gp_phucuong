@@ -1,14 +1,11 @@
 <template>
-    <li class="nav-item">
-        <a
-            @click="_logout()"
-            href="javascript:void(0)"
-            class="nav-link"
-            title="Logout Admin">
-            <font-awesome-icon icon="power-off" size="xs"/>
-            Thoát
-        </a>
-    </li>
+    <a
+        @click="_logout()"
+        href="javascript:void(0)"
+        class="nav-link"
+        title="Logout Admin"><span class="hidden-xs hidden-sm hidden-md">Thoát</span>
+        <font-awesome-icon icon="power-off" size="xs"/>
+    </a>
 </template>
 
 <script>

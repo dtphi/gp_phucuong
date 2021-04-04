@@ -63,8 +63,9 @@ class NewsGroupController extends ApiController
      */
     public function index(Request $request)
     {
+        $data = $request->all();
         try {
-            $newsGroups     = $this->newsGpSv->apiGetNewsGroupTrees();
+            $newsGroups     = $this->newsGpSv->apiGetResourceCollection($data);
             
             $results = [];
             foreach ($newsGroups as $key => $newsGroup) {

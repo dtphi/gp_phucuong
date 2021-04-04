@@ -49,7 +49,7 @@
             },
 
             _redirectUrl() {
-                return fn_redirect_url(`admin/news/edit/${this.infoId}`);
+                return fn_redirect_url(`admin/informations/edit/${this.infoId}`);
             }
         }
     };

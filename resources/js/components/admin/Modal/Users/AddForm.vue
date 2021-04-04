@@ -1,97 +1,99 @@
 <template>
-    <transition name="modal-user-add">
-        <div :class="classShow" :style="styleCss" data-keyboard="false">
+    <div id="user-add-modal" class="modal-open">
+        <div  :class="classShow" :style="styleCss">
             <div class="modal-dialog modal-lg">
-                <validation-observer ref="observerUser" @submit.prevent="_submitUser">
-                    <div class="modal-content">
-                        <loading-over-lay 
-                            :active.sync="loading" 
-                            :is-full-page="fullPage"></loading-over-lay>
-                        <div class="modal-header">
-                            <h4 class="modal-title">{{_getSetForm.title}}</h4>
-                            <button type="button" class="close" @click="_close">
-                                <span aria-hidden="true">
-                                  <font-awesome-icon icon="times"/>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- form start -->
-                            <div class="form-horizontal">
-                                <div class="card-body" v-if="_isShowBody">
-                                    <div class="form-group row">
-                                        <label for="user_name"
-                                               class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
-                                        <div class="col-sm-10">
-                                            <validation-provider
-                                                name="user_name"
-                                                rules="required|max:191"
-                                                v-slot="{ errors }">
-                                                <input
-                                                    v-model="userData.name"
-                                                    type="text"
-                                                    class="form-control"
-                                                    :placeholder="$options.setting.nameTxt">
-                                                <span class="text-red">{{ errors[0] }}</span>
-                                            </validation-provider>
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" @click="_close" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">Add User</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <validation-observer ref="observerUser" @submit.prevent="_submitUser">
+                            <template v-if="loading">
+                                <div style="height: 100px">
+                                    <loading-over-lay 
+                                    :active.sync="loading" 
+                                    :is-full-page="fullPage"></loading-over-lay>
+                                </div>
+                            </template>
+
+                            <template v-else>
+                                <div class="form-horizontal">
+                                    <div class="card-body" v-if="_isShowBody">
+                                        <div class="form-group row">
+                                            <label for="user_name"
+                                                   class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
+                                            <div class="col-sm-10">
+                                                <validation-provider
+                                                    name="user_name"
+                                                    rules="required|max:191"
+                                                    v-slot="{ errors }">
+                                                    <input
+                                                        v-model="userData.name"
+                                                        type="text"
+                                                        class="form-control"
+                                                        :placeholder="$options.setting.nameTxt">
+                                                    <span class="text-red">{{ errors[0] }}</span>
+                                                </validation-provider>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label
-                                            for="user_email"
-                                            class="col-sm-2 col-form-label">{{$options.setting.emailTxt}}</label>
-                                        <div class="col-sm-10">
-                                            <validation-provider
-                                                :immediate="false"
-                                                name="user_email"
-                                                rules="required|email|max:191"
-                                                v-slot="{ errors }">
-                                                <input
-                                                    v-model="userData.email"
-                                                    type="email"
-                                                    class="form-control"
-                                                    :placeholder="$options.setting.emailTxt">
-                                                <span class="text-red">{{ errors[0] }}</span>
-                                            </validation-provider>
+                                        <div class="form-group row">
+                                            <label
+                                                for="user_email"
+                                                class="col-sm-2 col-form-label">{{$options.setting.emailTxt}}</label>
+                                            <div class="col-sm-10">
+                                                <validation-provider
+                                                    :immediate="false"
+                                                    name="user_email"
+                                                    rules="required|email|max:191"
+                                                    v-slot="{ errors }">
+                                                    <input
+                                                        v-model="userData.email"
+                                                        type="email"
+                                                        class="form-control"
+                                                        :placeholder="$options.setting.emailTxt">
+                                                    <span class="text-red">{{ errors[0] }}</span>
+                                                </validation-provider>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label
-                                            for="user_password"
-                                            class="col-sm-2 col-form-label">{{$options.setting.passwordTxt}}</label>
-                                        <div class="col-sm-10">
-                                            <validation-provider
-                                                :immediate="false"
-                                                name="user_password"
-                                                rules="required|minLength:8|max:191"
-                                                v-slot="{ errors }">
-                                                <input
-                                                    v-model="userData.password"
-                                                    type="password"
-                                                    class="form-control"
-                                                    :placeholder="$options.setting.passwordTxt">
-                                                <span class="text-red">{{ errors[0] }}</span>
-                                            </validation-provider>
+                                        <div class="form-group row">
+                                            <label
+                                                for="user_password"
+                                                class="col-sm-2 col-form-label">{{$options.setting.passwordTxt}}</label>
+                                            <div class="col-sm-10">
+                                                <validation-provider
+                                                    :immediate="false"
+                                                    name="user_password"
+                                                    rules="required|minLength:8|max:191"
+                                                    v-slot="{ errors }">
+                                                    <input
+                                                        v-model="userData.password"
+                                                        type="password"
+                                                        class="form-control"
+                                                        :placeholder="$options.setting.passwordTxt">
+                                                    <span class="text-red">{{ errors[0] }}</span>
+                                                </validation-provider>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default"
-                                    @click="_close">{{$options.setting.btnCancelTxt}}
-                            </button>
-                            <button type="button" class="btn btn-success"
-                                    @click="_submitUser">{{_getSetForm.btnSubmitTxt}}
-                            </button>
-                        </div>
+                            </template>
+                        </validation-observer>
                     </div>
-                </validation-observer>
-                <!-- /.modal-content -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                @click="_close">{{$options.setting.btnCancelTxt}}
+                        </button>
+                        <button type="button" class="btn btn-success"
+                                @click="_submitUser">{{_getSetForm.btnSubmitTxt}}
+                        </button>
+                    </div>
+                </div>
             </div>
-            <!-- /.modal-dialog -->
         </div>
-    </transition>
+    </div>
 </template>
 
 <script>

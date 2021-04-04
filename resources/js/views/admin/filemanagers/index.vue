@@ -1,41 +1,29 @@
 <template>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <breadcrumb></breadcrumb>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">File List</h3>
-                                <div style="float:right">
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div id="elfinder"></div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
+    <div id="content">
+                <div class="page-header">
+                    <div class="container-fluid">
+                      <h1>Nhóm Tin</h1>
+                      <breadcrumb></breadcrumb>
                     </div>
-                    <!-- /.col -->
                 </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+                <div class="container-fluid">
+                    <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-pencil"></i>Hình ảnh tin tức</h3>
+                          </div>
+                    
+                        <div class="panel-body">
+                            <div id="elfinder"></div>
+                        </div>
+                    </div>            
+                </div>                   
+    </div>                        
 </template>
 
 <script>
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
+        fn_get_base_url,
         fn_get_news_file_connector_url,
         fn_get_news_file_sound_url
     } from '@app/api/utils/fn-helper';
@@ -51,7 +39,8 @@
         },
         data() {
             return {
-                fullPage: false
+                fullPage: false,
+                loading: true
             };
         },
         mounted () {

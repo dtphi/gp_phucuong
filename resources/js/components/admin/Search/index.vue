@@ -1,7 +1,7 @@
 <template>
-    <div id="example1_filter" class="dataTables_filter">
+    <div class="">
         <label>Search:
-            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label>
+            <input type="search" class=""></label>
     </div>
 </template>
 

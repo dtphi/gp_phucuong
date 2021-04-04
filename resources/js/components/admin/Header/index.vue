@@ -14,14 +14,16 @@
 		        <li class="dropdown-header">Help<i class="fa fa-life-ring"></i></li>
 		      </ul>
 		    </li>
-		    <li><a href="/"><span class="hidden-xs hidden-sm hidden-md">Thoát</span> <i class="fa fa-sign-out fa-lg"></i></a></li>
+		    <li><logout></logout></li>
 		  </ul>
 		</header>
 </template>
 <script>
+	import Logout from '../Sidebar/Logout';
 
 export default {
   name: 'MainHeader',
+  components: {Logout},
   props: {
     size: {type: Number, default: 21}
   },

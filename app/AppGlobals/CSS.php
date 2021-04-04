@@ -124,6 +124,12 @@ class CSS
             $cssStype    = $this->mapCss();
             $scripts     = $this->mapScriptFileManager();
             $optionClass = 'hold-transition sidebar-mini layout-fixed';
+
+            return [
+                $this->mapCss(),
+                $this->mapScriptFileManager(),
+                ''
+            ];
         }
 
         return [

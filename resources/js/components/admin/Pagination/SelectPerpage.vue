@@ -1,11 +1,11 @@
 <template>
-    <div class="dataTables_length">
+    <div>
         <label>Show
-            <select @change="_getResourceResults" class="custom-select custom-select-sm form-control form-control-sm">
+            <select @change="_getResourceResults" class="">
                 <option
                     v-for="(item, index) in $options.setting.perPageList" 
                     :value="item">{{item}}</option>
-            </select> entries</label>
+            </select></label>
     </div>
 </template>
 

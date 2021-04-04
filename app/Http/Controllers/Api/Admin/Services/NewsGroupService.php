@@ -44,7 +44,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     public function apiGetList(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetList() method.
-        $query = $this->model->orderByDescById();
+        $query = $this->apiGetNewsGroupTrees($options, $limit);
 
         return $query->paginate($limit);
     }
@@ -162,27 +162,13 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         return $this->model;
     }
 
-    /**
-     * @author : dtphi .
-     * @return array
-     */
-    public function _apiGetNewsGroupTrees()
-    {
-        // TODO: Implement apiGetNewsGroupTrees() method.
-        $query = $this->model->select('id', 'father_id', 'newsgroupname')->orderByDescById();
-
-        return [
-            'total' => $query->count(),
-            'data'  => $query->get()->toArray()
-        ];
-    }
-
     public function apiGetNewsGroupTrees($data = array()) {
-        $query = DB::table(DB_PREFIX . 'category_paths AS catep')->select('catep.category_id AS category_id', 'cate1.parent_id', 'cate1.sort_order', DB::raw("group_concat(cd1.`name` ORDER BY catep.level SEPARATOR ' ->> ') AS category_name"))->groupBy('catep.category_id')
-        ->leftJoin(DB_PREFIX . 'categorys AS cate1', 'catep.category_id', '=', 'cate1.category_id')
-        ->leftJoin(DB_PREFIX . 'categorys AS cate2', 'catep.path_id', '=', 'cate2.category_id')
-        ->leftJoin(DB_PREFIX . 'category_descriptions AS cd1', 'catep.path_id', '=', 'cd1.category_id')
-        ->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', 'catep.category_id', '=', 'cd2.category_id');
+
+        $query = $this->modelPath->select(DB_PREFIX.'category_paths.category_id AS category_id', 'cate1.parent_id', 'cate1.sort_order', DB::raw("group_concat(cd1.`name` ORDER BY pc_category_paths.level SEPARATOR ' ->> ') AS category_name"))->groupBy(DB_PREFIX.'category_paths.category_id')
+        ->leftJoin(DB_PREFIX . 'categorys AS cate1', DB_PREFIX.'category_paths.category_id', '=', 'cate1.category_id')
+        ->leftJoin(DB_PREFIX . 'categorys AS cate2', DB_PREFIX.'category_paths.path_id', '=', 'cate2.category_id')
+        ->leftJoin(DB_PREFIX . 'category_descriptions AS cd1', DB_PREFIX.'category_paths.path_id', '=', 'cd1.category_id')
+        ->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', DB_PREFIX.'category_paths.category_id', '=', 'cd2.category_id');
 
         /*if (!empty($data['filter_name'])) {
             $sql .= " AND cd2.name LIKE '" . $data['filter_name'] . "%'";
@@ -218,6 +204,6 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }*/
         //dd($query->toSql());
-        return  $query->get();
+        return  $query;
     }
 }

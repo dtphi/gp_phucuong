@@ -1,82 +1,52 @@
 <template>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <breadcrumb></breadcrumb>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Users List</h3>
-                                <div style="float:right">
-                                    <btn-add></btn-add>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6">
-                                            <perpage></perpage>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <list-search></list-search>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <table class="table table-bordered table-striped tbl-custom">
-                                                <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Created from</th>
-                                                    <th>Key</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <template v-if="loading">
-                                                    <loading-over-lay
-                                                        :active.sync="loading"
-                                                        :is-full-page="fullPage"></loading-over-lay>
-                                                </template>
-                                                <template v-if="_notEmpty">
-                                                    <item
-                                                        v-for="(item,index) in _userList"
-                                                        :no="index"
-                                                        :user="item"
-                                                        :key="item.id"></item>
-                                                </template>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <paginate></paginate>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!-- /.col -->
+    <div id="content">
+        <the-header-page></the-header-page>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                    <i class="fa fa-list"></i> Danh sách người dùng</h3>
                 </div>
-                <!-- /.row -->
+                <div class="panel-body">
+                    <div id="form-category">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr role="row">
+                                    <th style="width: 1px;" class="text-center">No</th>
+                                    <th style="width: 1px;" class="text-center">
+                                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                    </th>
+                                    <th>Name</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-right">Created from</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <template v-if="loading">
+                                    <loading-over-lay
+                                        :active.sync="loading"
+                                        :is-full-page="fullPage"></loading-over-lay>
+                                </template>
+                                <template v-if="_notEmpty">
+                                    <item
+                                        v-for="(item,index) in _userList"
+                                        :no="index"
+                                        :user="item"
+                                        :key="item.id"></item>
+                                </template>
+                                </tbody>
+                            </table>
+                        </div>
+                        <paginate></paginate>
+                    </div>
+                </div>
             </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-
+        </div>
         <user-add-form></user-add-form>
         <user-edit-form></user-edit-form>
-        <v-dialog></v-dialog>
     </div>
-    <!-- /.content-wrapper -->
 </template>
 
 <script>
@@ -85,14 +55,13 @@
         mapGetters,
         mapActions
     } from 'vuex';
+    import TheHeaderPage from './components/TheHeaderPage';
     import UserAddForm from 'com@admin/Modal/Users/AddForm';
     import UserEditForm from 'com@admin/Modal/Users/EditForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Item from './components/TheItem';
     import BtnAdd from './components/TheBtnAdd';
     import Paginate from 'com@admin/Pagination';
-    import Perpage from 'com@admin/Pagination/SelectPerpage';
-    import ListSearch from 'com@admin/Search';
     import {
         MODULE_USER,
         MODULE_USER_MODAL,
@@ -112,13 +81,12 @@
             this.$store.dispatch(MODULE_USER + '/' + ACTION_GET_USER_LIST);
         },
         components: {
+            TheHeaderPage,
             Breadcrumb,
             UserAddForm,
             UserEditForm,
             Item,
             BtnAdd,
-            Perpage,
-            ListSearch,
             Paginate
         },
         data() {

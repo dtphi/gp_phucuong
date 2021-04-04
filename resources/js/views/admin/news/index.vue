@@ -1,107 +1,66 @@
 <template>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <breadcrumb></breadcrumb>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">News List</h3>
-                                <div style="float:right">
-                                    <!-- test : <btn-add :is-redirect="!!(1 != 1)"></btn-add> -->
-                                    <btn-add></btn-add>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6">
-                                            <perpage></perpage>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <list-search></list-search>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <table
-                                                class="table table-bordered table-striped tbl-custom dataTable no-footer dtr-inline"
-                                                role="grid" aria-describedby="example1_info">
-                                                <thead>
-                                                <tr role="row">
-                                                    <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1"
-                                                        aria-sort="ascending"
-                                                        aria-label="No: activate to sort column descending">No
-                                                    </th>
-                                                    <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1"
-                                                        aria-sort="ascending"
-                                                        aria-label="Name: activate to sort column descending">Name
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Description: activate to sort column ascending">
-                                                        Description
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Created by: activate to sort column ascending">
-                                                        Created from
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Created by: activate to sort column ascending">
-                                                        Picture
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Key: activate to sort column ascending">Key
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Key: activate to sort column ascending">Action
-                                                    </th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <template v-if="loading">
-                                                    <loading-over-lay :active.sync="loading"
-                                                                      :is-full-page="fullPage"></loading-over-lay>
-                                                </template>
-                                                <template v-if="_notEmpty">
-                                                    <item v-for="(item,index) in _infoList"
-                                                          :info="item"
-                                                          :no="index"
-                                                          :key="item.id"></item>
-                                                </template>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <paginate></paginate>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!-- /.col -->
+    <div id="content">
+        <the-header-page></the-header-page>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                    <i class="fa fa-list"></i> Danh sách nhóm tin</h3>
                 </div>
-                <!-- /.row -->
+                <div class="panel-body">
+                    <div id="form-category">
+                        <div class="table-responsive">
+                            <template v-if="loading">
+                                <loading-over-lay :active.sync="loading"
+                                                  :is-full-page="fullPage"></loading-over-lay>
+                            </template>
+                            <template v-else>
+                                <div>
+                                    <table
+                                        class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr role="row">
+                                                <th style="width: 1px;" class="text-center">No
+                                                </th>
+                                                <th style="width: 1px;" class="text-center">
+                                                    <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                                </th>
+                                            
+                                                <th>Name
+                                                </th>
+                                                <th>
+                                                    Description
+                                                </th>
+                                                <th>
+                                                    Created from
+                                                </th>
+                                                <th>
+                                                    Picture
+                                                </th>
+                                                <th class="text-right">Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <item v-for="(item,index) in _infoList"
+                                                  :info="item"
+                                                  :no="index"
+                                                  :key="item.id"></item>
+                                        </tbody>
+                                    </table>
+                            
+                                </div>
+                            </template>
+                        </div>
+
+                        <paginate></paginate>
+                    </div>
+                </div>
             </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+        </div>
 
         <InfoAddForm/>
-
-        <v-dialog/>
-    </div>
-    <!-- /.content-wrapper -->
+    </div>        
 </template>
 
 <script>
@@ -112,12 +71,13 @@
     } from 'vuex';
     import Item from './components/TheItem';
 
+    import TheHeaderPage from './components/TheHeaderPage';
+
     import InfoAddForm from 'com@admin/Modal/Infos/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
-    import Perpage from 'com@admin/Pagination/SelectPerpage';
-    import ListSearch from 'com@admin/Search';
+    
     import Paginate from 'com@admin/Pagination';
-    import BtnAdd from './components/TheBtnAdd';
+    
     import {
         MODULE_INFO,
     } from 'store@admin/types/module-types';
@@ -129,9 +89,7 @@
         name: 'InformationList',
         components: {
             Breadcrumb,
-            BtnAdd,
-            Perpage,
-            ListSearch,
+            TheHeaderPage,
             InfoAddForm,
             Item,
             Paginate

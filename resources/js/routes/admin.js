@@ -118,7 +118,7 @@ export default [{
                     name: 'Users'
                 }],
                 header: 'Users List',
-                layout: MainLayout,
+                layout: DefaultLayout,
                 role: 'admin',
                 title: 'Users | ' + config.site_name
             }
@@ -148,7 +148,7 @@ export default [{
             }
         }]
     }, {
-        path: 'news',
+        path: 'informations',
         component: {
             render: c => c('router-view')
         },
@@ -166,14 +166,14 @@ export default [{
                     name: 'News'
                 }],
                 header: 'News List',
-                layout: MainLayout,
+                layout: DefaultLayout,
                 role: 'admin',
                 title: 'News | ' + config.site_name
             }
         }, {
             path: 'add',
             component: NewsAdd,
-            name: 'admin.news.add',
+            name: 'admin.informations.add',
             meta: {
                 auth: true,
                 breadcrumbs: [{
@@ -182,20 +182,20 @@ export default [{
                     linkPath: '/dashboard'
                 }, {
                     name: 'News',
-                    linkName: 'admin.news.list',
-                    linkPath: '/news'
+                    linkName: 'admin.informations.list',
+                    linkPath: '/informations'
                 }, {
                     name: 'News Add'
                 }],
                 header: 'News Add',
-                layout: MainLayout,
+                layout: DefaultLayout,
                 role: 'admin',
                 title: 'News Add | ' + config.site_name
             }
         }, {
             path: 'edit/:infoId',
             component: NewsEdit,
-            name: 'admin.news.edit',
+            name: 'admin.informations.edit',
             meta: {
                 auth: true,
                 breadcrumbs: [{
@@ -204,13 +204,13 @@ export default [{
                     linkPath: '/dashboard'
                 }, {
                     name: 'News',
-                    linkName: 'admin.news.list',
-                    linkPath: '/news'
+                    linkName: 'admin.informations.list',
+                    linkPath: '/informations'
                 }, {
                     name: 'News Edit'
                 }],
                 header: 'News Edit',
-                layout: MainLayout,
+                layout: DefaultLayout,
                 role: 'admin',
                 title: 'News Edit | ' + config.site_name
             }
@@ -234,7 +234,7 @@ export default [{
                     name: 'Filemanagers'
                 }],
                 header: 'Filemanagers List',
-                layout: MainLayout,
+                layout: DefaultLayout,
                 role: 'admin',
                 title: 'Filemanagers | ' + config.site_name
             }

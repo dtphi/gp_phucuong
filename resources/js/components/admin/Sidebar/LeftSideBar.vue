@@ -10,11 +10,11 @@
 			</div>
 			<ul id="menu">
 			  <li id="dashboard">
-			  	<a href="/"><i class="fa fa-dashboard fa-fw"></i> <span>Quản trị</span></a>
+			  	<a href="/admin/dashboards"><i class="fa fa-dashboard fa-fw"></i> <span>Quản trị</span></a>
 			  </li>
 
 			  <li id="user">
-			  	<a href="/"><i class="fa fa-user fa-fw"></i> <span>Users</span></a>
+			  	<a href="/admin/users"><i class="fa fa-user fa-fw"></i> <span>Users</span></a>
 			  </li>
 
 			  <li id="catalog" class="active open">
@@ -27,7 +27,7 @@
 			      	<a href="/admin/informations">Tin Tức</a>
 			      </li>
 			      <li>
-			      	<a href="/">Hình Ảnh Tin Tức</a>
+			      	<a href="/admin/filemanagers">Hình Ảnh Tin Tức</a>
 			      </li>
 			    </ul>
 			  </li>

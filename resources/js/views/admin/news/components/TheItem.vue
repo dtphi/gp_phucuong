@@ -1,6 +1,9 @@
 <template>
     <tr>
         <td>{{_getNo()}}</td>
+        <td class="text-center">                    
+            <input type="checkbox" name="selected[]" :id="`info_select_id_${info.id}`" :value="info.id">
+        </td>
         <td>{{info.newsname}}</td>
         <td>{{info.description}}</td>
         <td>{{_formatDate(info.created_at)}}</td>
@@ -11,13 +14,7 @@
                 </div>
             </div>
         </td>
-        <td>
-            <div class="icheck-primary">
-                <input type="checkbox" :id="`info_id_${info.id}`" :value="info.id">
-                <label :for="`info_id_${info.id}`"></label>
-            </div>
-        </td>
-        <td>
+        <td class="text-right">
             <btn-edit
                 :info-id="info.id"></btn-edit>
             <btn-delete
