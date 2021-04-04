@@ -17,10 +17,10 @@
                                     <th style="width: 1px;" class="text-center">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                     </th>
-                                    <th>Name</th>
+                                    <th>Họ Tên</th>
                                     <th class="text-center">Email</th>
-                                    <th class="text-right">Created from</th>
-                                    <th class="text-right">Action</th>
+                                    <th style="width: 100px" class="text-center">Ngày tạo</th>
+                                    <th style="width: 100px" class="text-right">Thực hiện</th>
                                 </tr>
                                 </thead>
                                 <tbody>

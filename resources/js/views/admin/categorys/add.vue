@@ -32,7 +32,7 @@
                             <li class="active">
                                 <a href="#tab-general" data-toggle="tab">Tổng quan</a>
                             </li>
-                            <li><a href="#tab-data" data-toggle="tab">Dữ liệu</a></li>
+                            <li><a href="#tab-data" data-toggle="tab">Mở rộng</a></li>
                             <li><a href="#tab-design" data-toggle="tab">Màn hình</a></li>
                           </ul>
                           <div class="tab-content">

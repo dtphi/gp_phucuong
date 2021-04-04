@@ -4,16 +4,16 @@
         <td class="text-center">                    
             <input type="checkbox" name="selected[]" :id="`info_select_id_${info.id}`" :value="info.id">
         </td>
-        <td>{{info.newsname}}</td>
-        <td>{{info.description}}</td>
-        <td>{{_formatDate(info.created_at)}}</td>
-        <td>
+        <td class="text-left">{{info.newsname}}</td>
+        <td class="text-right">
             <div class="file animated fadeIn">
                 <div class="file-preview">
                     <img :src="_getImgUrl()" class="thumb" />
                 </div>
             </div>
         </td>
+        <td class="text-left">{{info.description}}</td>
+        <td class="text-center">{{_formatDate(info.created_at)}}</td>
         <td class="text-right">
             <btn-edit
                 :info-id="info.id"></btn-edit>

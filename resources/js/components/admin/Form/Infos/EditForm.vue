@@ -1,71 +1,59 @@
 <template>
-    <transition name="modal-news-edit">
-        <validation-observer ref="observerInfo" @submit.prevent="_submitInfo">
-            <div class="modal-content"  role="tabpanel">
-                <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
-                <div class="modal-header">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#generalTab" aria-controls="generalTab" role="tab" data-toggle="tab">General</a>
-                            |
-                        </li>
-                        <li role="presentation" class="active">
-                            <a href="#newsGroupTab" aria-controls="newsGroupTab" role="tab"
-                               data-toggle="tab">News Group</a> |
-                        </li>
-                        <li role="presentation" class="active">
-                            <a href="#mediaManagerTab" aria-controls="mediaManagerTab" role="tab"
-                               data-toggle="tab">Image</a> |
-                        </li>
-                        <li role="presentation">
-                            <a href="#settingTab" aria-controls="settingTab" role="tab" data-toggle="tab">Setting</a>
-                        </li>
-                    </ul>
-                </div>
+    <div id="form-edit-user" class="modal-content"   role="tabpanel">
+        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+        <div class="modal-header">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#generalTab" aria-controls="generalTab" role="tab" data-toggle="tab">General</a>
+                    |
+                </li>
+                <li role="presentation" class="active">
+                    <a href="#newsGroupTab" aria-controls="newsGroupTab" role="tab"
+                       data-toggle="tab">News Group</a> |
+                </li>
+                <li role="presentation" class="active">
+                    <a href="#mediaManagerTab" aria-controls="mediaManagerTab" role="tab"
+                       data-toggle="tab">Image</a> |
+                </li>
+                <li role="presentation">
+                    <a href="#settingTab" aria-controls="settingTab" role="tab" data-toggle="tab">Setting</a>
+                </li>
+            </ul>
+        </div>
 
-                <div class="modal-body">
-                    <div>
-                        <!-- form start -->
-                        <div class="tab-content form-horizontal">
-                            <tab-general
-                                role="tabpanel"
-                                class="tab-pane active"
-                                id="generalTab"
-                                :general-data="info"></tab-general>
+        <div class="modal-body">
+            <div>
+                <!-- form start -->
+                <div class="tab-content form-horizontal">
+                    <tab-general
+                        role="tabpanel"
+                        class="tab-pane active"
+                        id="generalTab"
+                        :general-data="info"></tab-general>
 
-                            <tab-news-group
-                                role="tabpanel"
-                                class="tab-pane"
-                                :group-data="info"
-                                id="newsGroupTab"></tab-news-group>
+                    <tab-news-group
+                        role="tabpanel"
+                        class="tab-pane"
+                        :group-data="info"
+                        id="newsGroupTab"></tab-news-group>
 
-                            <tab-media-manager ref="mediaManagerTab"
-                                role="tabpanel"
-                                class="tab-pane"
-                                :group-data="info"
-                                :config-form="$options.setting"
-                                id="mediaManagerTab"></tab-media-manager>
+                    <tab-media-manager ref="mediaManagerTab"
+                        role="tabpanel"
+                        class="tab-pane"
+                        :group-data="info"
+                        :config-form="$options.setting"
+                        id="mediaManagerTab"></tab-media-manager>
 
-                            <tab-setting
-                                role="tabpanel"
-                                class="tab-pane"
-                                id="settingTab"
-                                :setting-data="info"></tab-setting>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" @click="_back">
-                        {{$options.setting.btnCancelTxt}}
-                    </button>
-                    <button type="button" class="btn btn-success" @click="_submitInfo">
-                        {{$options.setting.btnSubmitTxt}}
-                    </button>
+                    <tab-setting
+                        role="tabpanel"
+                        class="tab-pane"
+                        id="settingTab"
+                        :setting-data="info"></tab-setting>
                 </div>
             </div>
-        </validation-observer>
-    </transition>
+        </div>
+    </div>
 </template>
 
 <script>

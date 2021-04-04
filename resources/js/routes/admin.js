@@ -8,10 +8,12 @@ import NewsAdd from 'v@admin/news/add';
 import NewsEdit from 'v@admin/news/edit';
 import FileManager from 'v@admin/filemanagers';
 
-import CategoryListPage from 'v@admin/categorys';
+/*default layout*/
 import DefaultLayout from 'v@admin/layouts/default';
+import CategoryListPage from 'v@admin/categorys';
 import CategoryEditPage from 'v@admin/categorys/edit';
 import CategoryAddPage from 'v@admin/categorys/add';
+import DashboardPage from 'v@admin/dashboards';
 
 import {
     config
@@ -38,6 +40,18 @@ export default [{
                 footer: true
             },
             title: 'Login | ' + config.site_name
+        }
+    },{
+        path: 'dashboards',
+        component: DashboardPage,
+        name: 'admin.dashboards',
+        meta: {
+            layout: DefaultLayout,
+            role: 'admin',
+            show: {
+                footer: true
+            },
+            title: 'DashboardPage | ' + config.site_name
         }
     }, {
         path: 'news-categories',

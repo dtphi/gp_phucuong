@@ -1,36 +1,39 @@
 <template>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <breadcrumb></breadcrumb>
+    <div id="content">
+        <template v-if="loading">
+            <loading-over-lay :active.sync="loading"
+                              :is-full-page="fullPage"></loading-over-lay>
+        </template>
+        <template v-else>
+            <validation-observer ref="observerNewsGroup" @submit.prevent="_submitInfo">
+                <div class="page-header">
+                    <div class="container-fluid">
+                      <div class="pull-right">
+                        <button type="button" @click="_submitInfo"
+                            data-toggle="tooltip" 
+                            title="Lưu" 
+                            class="btn btn-primary"><i class="fa fa-save"></i></button>
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Add News</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <div class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                    <info-add-form></info-add-form>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
+                        <the-btn-back-list-page></the-btn-back-list-page>
+                      </div>
+                      <h1>Nhóm Tin</h1>
+                      <breadcrumb></breadcrumb>
                     </div>
-                    <!-- /.col -->
                 </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+                <div class="container-fluid">
+                    <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-pencil"></i>Thêm Tin</h3>
+                          </div>
+                    
+                        <div class="panel-body">
+                             <info-add-form ref="formAddUser"></info-add-form>
+                        </div>
+                    </div>
+                </div>
+            </validation-observer>
+        </template>
     </div>
-    <!-- /.content-wrapper -->
 </template>
 
 <script>
@@ -42,12 +45,25 @@
 
     import InfoAddForm from 'com@admin/Form/Infos/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
+    import TheBtnBackListPage from '../components/TheBtnBackListPage';
 
     export default {
         name: 'InformationAdd',
         components: {
             Breadcrumb,
-            InfoAddForm
+            InfoAddForm,
+            TheBtnBackListPage
+        },
+        data() {
+            return {
+                loading: false,
+                fullPage: true
+            }
+        },
+        methods: {
+            _submitInfo() {
+                this.$refs.formAddUser._submitInfo()
+            }
         }
     };
 </script>

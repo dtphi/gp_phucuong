@@ -24,10 +24,10 @@
                           <td class="text-left">                   
                             <a href="/" class="asc">Tên nhóm tin</a>
                           </td>
-                          <td class="text-right">                    
-                            <a href="/">Thứ tự</a>
+                          <td style="width: 1px" class="text-right">                    
+                            <a href="/">Sắp xếp</a>
                           </td>
-                          <td class="text-right">Thực hiện</td>
+                          <td style="width: 100px" class="text-right">Thực hiện</td>
                         </tr>
                       </thead>
                       <tbody>

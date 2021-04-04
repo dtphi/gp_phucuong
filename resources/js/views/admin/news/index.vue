@@ -26,18 +26,18 @@
                                                     <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                                 </th>
                                             
-                                                <th>Name
+                                                <th style="width: 200px" class="text-left">Tên
                                                 </th>
-                                                <th>
-                                                    Description
+                                                <th style="width: 5px" class="text-right">
+                                                    Hình ảnh
                                                 </th>
-                                                <th>
-                                                    Created from
+                                                <th class="text-left">
+                                                    Mô tả
                                                 </th>
-                                                <th>
-                                                    Picture
+                                                <th style="width: 100px" class="text-center">
+                                                    Ngày tạo
                                                 </th>
-                                                <th class="text-right">Action
+                                                <th style="width: 100px" class="text-right">Action
                                                 </th>
                                             </tr>
                                         </thead>

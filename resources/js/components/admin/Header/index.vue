@@ -2,10 +2,15 @@
   <header id="header" class="navbar navbar-static-top">
 		  <div class="navbar-header">
 		  	<a type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></a>
+		  	<a href="/" class="navbar-brand"><logo></logo></a>
 		  </div>
 
 		  <ul class="nav pull-right">
-		    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">1</span> <i class="fa fa-bell fa-lg"></i></a>
+		    <li class="dropdown">
+		    	<a class="dropdown-toggle" data-toggle="dropdown">
+		    		<span class="label label-danger pull-left">1</span> 
+		    		<i class="fa fa-bell fa-lg"></i>
+		    	</a>
 		    </li>
 		    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-life-ring fa-lg"></i></a>
 		      <ul class="dropdown-menu dropdown-menu-right">
@@ -20,12 +25,20 @@
 </template>
 <script>
 	import Logout from '../Sidebar/Logout';
+	import Logo from '../Logo';
 
 export default {
   name: 'MainHeader',
-  components: {Logout},
+  components: {Logout, Logo},
   props: {
     size: {type: Number, default: 21}
   },
 }
 </script>
+
+<style type="text/css" scoped="">
+	.navbar-brand > img {
+		width: 18px;
+		height: 24px;
+	}
+</style>
