@@ -17,7 +17,7 @@
 <script>
 	import MainHeader from 'com@admin/Header';
 	import MainFooter from 'com@admin/Footer';
-	import LeftSideBar from 'com@admin/SideBar/LeftSideBar';
+	import LeftSideBar from 'com@admin/Sidebar/LeftSideBar';
   export default {
       name: 'DefaultLayout',
       components: {
