@@ -1,7 +1,10 @@
 <template>
-    <a href="javascript:void(0);">
-        <font-awesome-layers size="xs" @click="_showModal()" style="background:honeydew">
-            <font-awesome-icon icon="edit"/>
+    <a href="javascript:void(0);" data-toggle="tooltip" 
+        @click="_showModal()"
+        class="btn btn-default cms-btn" 
+        data-original-title="Sửa User">
+        <font-awesome-layers style="background:honeydew">
+            <font-awesome-icon size="1x" icon="edit"/>
         </font-awesome-layers>
     </a>
 </template>

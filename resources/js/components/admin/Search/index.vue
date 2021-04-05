@@ -1,8 +1,6 @@
 <template>
-    <div class="">
-        <label>Search:
-            <input type="search" class=""></label>
-    </div>
+      <input type="search" class="form-control" placeholder="Tìm kiếm">
+    
 </template>
 
 <script>

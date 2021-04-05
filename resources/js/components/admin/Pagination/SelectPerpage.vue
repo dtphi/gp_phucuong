@@ -1,11 +1,9 @@
 <template>
-    <div>
-        <label>Show
-            <select @change="_getResourceResults" class="">
-                <option
-                    v-for="(item, index) in $options.setting.perPageList" 
-                    :value="item">{{item}}</option>
-            </select></label>
+        <select @change="_getResourceResults" class="form-control">
+            <option
+                v-for="(item, index) in $options.setting.perPageList" 
+                :value="item">{{item}}</option>
+        </select>
     </div>
 </template>
 

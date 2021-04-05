@@ -1,6 +1,9 @@
 <template>
-    <a href="javascript:void(0);">
-        <font-awesome-layers size="xs" @click="_showModal()" style="background:honeydew">
+    <a href="javascript:void(0);" data-toggle="tooltip" 
+        @click="_showModal()"
+        class="btn btn-default cms-btn" 
+        data-original-title="Sửa Tin">
+        <font-awesome-layers size="1x" style="background:honeydew">
             <font-awesome-icon icon="edit"/>
         </font-awesome-layers>
     </a>

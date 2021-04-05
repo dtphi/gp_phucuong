@@ -630,3 +630,25 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     visibility: unset;
 }
 /* Menu Fix For System -> Layout -> Banner */
+
+.cms-btn {
+	padding: 6px 10px;
+	font-size: 12px;
+}
+.cms-breadcrumb {
+		display: inline-block;
+    background: none;
+    margin: 0;
+    padding: 0 10px;
+    list-style: none;
+}
+.cms-breadcrumb > li {
+    display: inline-block;
+}
+.cms-breadcrumb > li input, .cms-breadcrumb > li select{
+	padding: 3px 6px;
+	font-size: 12px;
+}
+.cms-text-red {
+	color: red
+}

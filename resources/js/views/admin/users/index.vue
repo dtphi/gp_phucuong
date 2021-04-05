@@ -58,7 +58,6 @@
     import TheHeaderPage from './components/TheHeaderPage';
     import UserAddForm from 'com@admin/Modal/Users/AddForm';
     import UserEditForm from 'com@admin/Modal/Users/EditForm';
-    import Breadcrumb from 'com@admin/Breadcrumb';
     import Item from './components/TheItem';
     import BtnAdd from './components/TheBtnAdd';
     import Paginate from 'com@admin/Pagination';
@@ -82,7 +81,6 @@
         },
         components: {
             TheHeaderPage,
-            Breadcrumb,
             UserAddForm,
             UserEditForm,
             Item,

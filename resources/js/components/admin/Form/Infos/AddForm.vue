@@ -1,57 +1,37 @@
 <template>
-    <div id="form-add-user" class="modal-content" role="tabpanel">
-        <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
-        <div class="modal-header">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#generalTab" aria-controls="generalTab" role="tab" data-toggle="tab">General</a>
-                    |
-                </li>
-                <li role="presentation" class="active">
-                    <a href="#newsGroupTab" aria-controls="newsGroupTab" role="tab"
-                       data-toggle="tab">News Group</a> |
-                </li>
-                <li role="presentation" class="active">
-                    <a href="#mediaManagerTab" aria-controls="mediaManagerTab" role="tab"
-                       data-toggle="tab">Image</a> |
-                </li>
-                <li role="presentation">
-                    <a href="#settingTab" aria-controls="settingTab" role="tab" data-toggle="tab">Setting</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="modal-body">
-            <!-- form start -->
-            <div class="tab-content form-horizontal">
-                <tab-general
+    <form class="form-horizontal">
+      <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+      <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#tab-general" data-toggle="tab">Tổng quan</a>
+        </li>
+        <li><a href="#tab-advance" data-toggle="tab">Mở rộng</a></li>
+        <li><a href="#tab-media-manager" data-toggle="tab">Hình ảnh</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-general">
+            <tab-general
                     role="tabpanel"
                     class="tab-pane active"
-                    id="generalTab"
                     :general-data="info"></tab-general>
-
-                <tab-news-group
-                    role="tabpanel"
-                    class="tab-pane"
-                    :group-data="info"
-                    id="newsGroupTab"></tab-news-group>
-
-                <tab-media-manager ref="mediaManagerTab"
-                    role="tabpanel"
-                    class="tab-pane"
-                    :group-data="info"
-                    :config-form="$options.setting"
-                    id="mediaManagerTab"></tab-media-manager>
-
-                <tab-setting
-                    role="tabpanel"
-                    class="tab-pane"
-                    id="settingTab"
-                    :setting-data="info"></tab-setting>
-            </div>
         </div>
-    </div>
+
+        <div class="tab-pane" id="tab-advance">
+            <tab-news-group
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"></tab-news-group>
+        </div>
+
+        <div class="tab-pane" id="tab-media-manager">
+            <tab-media-manager ref="mediaManagerTab"
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"
+                    :config-form="$options.setting"></tab-media-manager>
+        </div>
+      </div>
+    </form>
 </template>
 
 <script>

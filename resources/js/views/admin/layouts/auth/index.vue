@@ -8,10 +8,11 @@
 			      <div class="col-sm-offset-4 col-sm-4">
 			        <div class="panel panel-default">
 			          <div class="panel-heading">
-			            <h1 class="panel-title"><i class="fa fa-lock"></i> Please enter your login details.</h1>
+			            <h1 class="panel-title text-center">
+			            	<i class="fa fa-lock"></i>{{$options.setting.frm_auth_title}}</h1><br>
 			            <logo class="main-logo"></logo>
 			          </div>
-			          	<div class="panel-body">
+			          <div class="panel-body">
 			              <slot></slot>
 			          </div>
 			        </div>
@@ -30,7 +31,13 @@
 
     export default {
         name: 'AuthLayout',
-        components: {Logo, MainFooter}
+        components: {
+        	Logo, 
+        	MainFooter
+        },
+        setting: {
+        	frm_auth_title: 'Login Dashboard', 
+        }
     };
 </script>
 

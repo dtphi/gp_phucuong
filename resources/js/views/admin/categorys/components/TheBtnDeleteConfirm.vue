@@ -1,10 +1,13 @@
 <template>
 	<button type="button" 
         data-toggle="tooltip" title="" 
-        class="btn btn-danger" 
+        class="btn btn-default cms-btn" 
         @click="_showConfirm()" 
         data-original-title="Delete">
-        <i class="fa fa-trash-o"></i>
+        <font-awesome-layers size="1x" style="background:MistyRose">
+            <font-awesome-icon icon="circle" style="color:Tomato"/>
+            <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
+        </font-awesome-layers>
     </button>
 </template>
 

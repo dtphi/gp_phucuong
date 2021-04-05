@@ -3,24 +3,32 @@
     <form id="login-form" @submit.prevent="_login">
         <p v-if="isError" class="mb-1 text-center text-red">{{errors[0].msgCommon}}</p>
         <div class="form-group">
-            <label for="input-username">Username</label>
+            <label for="input-username">{{$options.setting.username_txt}}</label>
             <div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <input type="text" ref="email" name="username" value="" placeholder="Username" id="input-username" class="form-control">
+              <input type="text" 
+                ref="email" name="username" 
+                value="" :placeholder="$options.setting.username_txt" 
+                id="input-username" 
+                class="form-control">
             </div>
           </div>
           <div class="form-group">
-            <label for="input-password">Password</label>
-            <div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span>
-              <input type="password" ref="password" name="password" placeholder="Password" id="input-password" class="form-control">
+            <label for="input-password">{{$options.setting.password_txt}}</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+              <input type="password" 
+                ref="password" name="password" 
+                :placeholder="$options.setting.password_txt" 
+                id="input-password" 
+                class="form-control">
             </div>
             </div>
           <div class="text-right">
-
             <div class="col-4">
-                <a v-if="isSubmit" class="btn btn-success btn-block">Login
+                <a v-if="isSubmit" class="btn btn-success btn-block">{{$options.setting.btn_submit_txt}}
                     <font-awesome-icon icon="spinner" pulse/>
                 </a>
-                <button v-else type="submit" class="btn btn-success btn-block"><i class="fa fa-key"></i>Login</button>
+                <button v-else type="submit" class="btn btn-success btn-block"><i class="fa fa-key"></i>{{$options.setting.btn_submit_txt}}</button>
             </div>
           </div>
     </form>
@@ -75,6 +83,11 @@
                     this._submit();
                 }
             }
+        },
+        setting: {
+            username_txt: 'Username',
+            password_txt: 'Password',
+            btn_submit_txt: 'Login'
         }
     };
 </script>

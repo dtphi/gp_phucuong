@@ -1,8 +1,10 @@
 <template>
-    <a href="javascript:void(0);">
-        <font-awesome-layers size="xs" @click="_showModal()" style="background:honeydew">
-            <font-awesome-icon icon="plus" size="xs"/>
-        </font-awesome-layers>
+    <a href="javascript:void(0);" 
+        data-toggle="tooltip" 
+        @click="_showModal()"
+        class="btn btn-primary" 
+        data-original-title="Thêm User">
+        <font-awesome-icon icon="plus" size="1x"/>
     </a>
 </template>
 

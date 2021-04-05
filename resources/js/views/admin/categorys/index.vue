@@ -5,7 +5,7 @@
         				    <div class="panel panel-default">
         				      <div class="panel-heading">
         				        <h3 class="panel-title">
-                                    <i class="fa fa-list"></i> Danh sách nhóm tin</h3>
+                                    <i class="fa fa-list"></i>{{$options.setting.list_title}}</h3>
         				      </div>
         	<div class="panel-body">
            <div id="form-category">
@@ -117,7 +117,7 @@
             }
         },
         setting: {
-            title: 'News Groups List'
+            list_title: 'Danh sách danh mục tin'
         }
     };
 </script>

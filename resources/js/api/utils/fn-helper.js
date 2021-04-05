@@ -9,6 +9,10 @@ export function fn_get_base_url() {
 	return config.baseUrl;
 }
 
+export function fn_get_admin_base_url() {
+	return config.baseUrl + '/admin';
+}
+
 export function fn_get_base_api_url(apiPath) {
 	return AppConfig.apiUrl + apiPath;
 }

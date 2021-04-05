@@ -2,9 +2,11 @@
 	<a 
         href="javascript:void(0);" @click="_pushEditPage()" 
         data-toggle="tooltip" title="" 
-        class="btn btn-primary" 
+        class="btn btn-default cms-btn" 
         data-original-title="Edit">
-        <i class="fa fa-pencil"></i>
+        <font-awesome-layers style="background:honeydew">
+            <font-awesome-icon size="1x" icon="edit"/>
+        </font-awesome-layers>
     </a>
 </template>
 

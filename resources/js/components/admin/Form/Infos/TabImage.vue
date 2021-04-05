@@ -1,26 +1,24 @@
 <template>
-    <transition name="modal-tab-image">
-        <div class="card-body">
-            <div class="form-group row">
-            		<div class="col-sm-12">
-            			<div id="media-info-manager"></div>
-            		</div>
-            		<div class="col-sm-12">
-            			<input type="text" id="file-input" disabled>
-            		</div>
-            </div>
-            <div class="form-group row" v-if="_isShowImgThumb">
-                    <div class="col-sm-3">Picture :</div>
-                    <div class="col-sm-9">
-                        <div class="file animated fadeIn">
-                            <div class="file-preview">
-                                <img :src="_getImgUrl()" class="thumb" />
-                            </div>
+    <div class="tab-content">
+        <div class="form-group row">
+        		<div class="col-sm-12">
+        			<div id="media-info-manager"></div>
+        		</div>
+        		<div class="col-sm-12">
+        			<input type="text" id="file-input" disabled>
+        		</div>
+        </div>
+        <div class="form-group row" v-if="_isShowImgThumb">
+                <div class="col-sm-3">Picture :</div>
+                <div class="col-sm-9">
+                    <div class="file animated fadeIn">
+                        <div class="file-preview">
+                            <img :src="_getImgUrl()" class="thumb" />
                         </div>
                     </div>
-            </div>
+                </div>
         </div>
-    </transition>
+    </div>
 </template>
 
 <script>

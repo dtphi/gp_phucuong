@@ -16,7 +16,7 @@
 
                         <the-btn-back-list-page></the-btn-back-list-page>
                       </div>
-                      <h1>Nhóm Tin</h1>
+                      <h1>Tin tức</h1>
                       <breadcrumb></breadcrumb>
                     </div>
                 </div>

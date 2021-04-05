@@ -1,34 +1,33 @@
 <template>
-    <transition name="modal-tab-general">
-        <div class="card-body">
-            <div class="form-group row">
-                <label for="news_name" class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
+    <div class="tab-content">
+            <div class="form-group required">
+                <label for="input-info-name" class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
                 <div class="col-sm-10">
                     <validation-provider name="news_name" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="generalData.newsname" type="text" class="form-control"
+                        <input v-model="generalData.newsname" type="text" name="input-info-name" class="form-control"
                                :placeholder="$options.setting.nameTxt">
-                        <span class="text-red">{{ errors[0] }}</span>
+                        <span class="cms-text-red">{{ errors[0] }}</span>
                     </validation-provider>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group required">
                 <label for="news_description"
                        class="col-sm-2 col-form-label">{{$options.setting.descriptionTxt}}</label>
                 <div class="col-sm-10">
                     <validation-provider name="news_description" rules="required|max:191" v-slot="{ errors }">
                         <input v-model="generalData.description" class="form-control"
                                :placeholder="$options.setting.descriptionTxt">
-                        <span class="text-red">{{ errors[0] }}</span>
+                        <span class="cms-text-red">{{ errors[0] }}</span>
                     </validation-provider>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group required">
                 <label for="news_newslink" class="col-sm-2 col-form-label">{{$options.setting.newsLinkTxt}}</label>
                 <div class="col-sm-10">
                     <validation-provider name="news_newslink" rules="required|max:191" v-slot="{ errors }">
                         <input v-model="generalData.newslink" class="form-control"
                                :placeholder="$options.setting.newsLinkTxt">
-                        <span class="text-red">{{ errors[0] }}</span>
+                        <span class="cms-text-red">{{ errors[0] }}</span>
                     </validation-provider>
                 </div>
             </div>
@@ -41,8 +40,7 @@
                         v-model="generalData.context"></tinymce>
                 </div>
             </div>
-        </div>
-    </transition>
+    </div>
 </template>
 
 <script>

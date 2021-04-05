@@ -51,7 +51,11 @@ Vue.mixin(utilMixin);
 /*Add vue js modal and dialog*/
 import VModal from 'vue-js-modal';
 Vue.use(VModal, {
-  dialog: true
+  dialog: true,
+  dynamic: true, 
+  dynamicDefaults: { 
+    clickToClose: true 
+  }
 });
 
 /*Add vue notification*/

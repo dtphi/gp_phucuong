@@ -51,7 +51,7 @@ export default [{
             show: {
                 footer: true
             },
-            title: 'DashboardPage | ' + config.site_name
+            title: 'Quản trị | ' + config.site_name
         }
     }, {
         path: 'news-categories',
@@ -66,11 +66,15 @@ export default [{
                 layout: DefaultLayout,
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Quản lý'
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Danh mục tin'
                 }],
-                header: 'CategoryList',
+                header: 'Danh sách danh mục tin',
                 role: 'admin',
-                title: 'Users | ' + config.site_name,
+                title: 'Danh mục tin | ' + config.site_name,
                 show: {
                     footer: true
                 }
@@ -84,11 +88,19 @@ export default [{
                 layout: DefaultLayout,
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Quản lý'
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Danh mục tin',
+                    linkName: 'admin.category.list',
+                    linkPath: '/news-categories'
+                }, {
+                    name: 'Thêm danh mục'
                 }],
-                header: 'CategoryAdd',
+                header: 'Thêm danh mục tin tức',
                 role: 'admin',
-                title: 'Users | ' + config.site_name,
+                title: 'Thêm danh mục | ' + config.site_name,
                 show: {
                     footer: true
                 }
@@ -102,7 +114,15 @@ export default [{
                 layout: DefaultLayout,
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Quản lý'
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards.list',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Danh mục tin',
+                    linkName: 'admin.category',
+                    linkPath: '/news-categories'
+                }, {
+                    name: 'Cập nhật danh mục'
                 }],
                 header: 'CategoryEdit',
                 role: 'admin',
@@ -125,13 +145,13 @@ export default [{
             meta: {
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Dashboard',
-                    linkName: 'admin.dashboard',
-                    linkPath: '/dashboard'
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
                 }, {
-                    name: 'Users'
+                    name: 'Người dùng'
                 }],
-                header: 'Users List',
+                header: 'Danh sách người dùng',
                 layout: DefaultLayout,
                 role: 'admin',
                 title: 'Users | ' + config.site_name
@@ -173,16 +193,16 @@ export default [{
             meta: {
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Dashboard',
-                    linkName: 'admin.dashboard',
-                    linkPath: '/dashboard'
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
                 }, {
-                    name: 'News'
+                    name: 'Tin Tức'
                 }],
-                header: 'News List',
+                header: 'Danh sách tin tức',
                 layout: DefaultLayout,
                 role: 'admin',
-                title: 'News | ' + config.site_name
+                title: 'Tin tức | ' + config.site_name
             }
         }, {
             path: 'add',
@@ -191,20 +211,20 @@ export default [{
             meta: {
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Dashboard',
-                    linkName: 'admin.dashboard',
-                    linkPath: '/dashboard'
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
                 }, {
-                    name: 'News',
+                    name: 'Tin Tức',
                     linkName: 'admin.informations.list',
                     linkPath: '/informations'
                 }, {
-                    name: 'News Add'
+                    name: 'Thêm tin tức'
                 }],
-                header: 'News Add',
+                header: 'Thêm tin tức',
                 layout: DefaultLayout,
                 role: 'admin',
-                title: 'News Add | ' + config.site_name
+                title: 'Thêm tin tức | ' + config.site_name
             }
         }, {
             path: 'edit/:infoId',
@@ -213,20 +233,20 @@ export default [{
             meta: {
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Dashboard',
-                    linkName: 'admin.dashboard',
-                    linkPath: '/dashboard'
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
                 }, {
-                    name: 'News',
+                    name: 'Tin Tức',
                     linkName: 'admin.informations.list',
                     linkPath: '/informations'
                 }, {
-                    name: 'News Edit'
+                    name: 'Cập nhật tin tức'
                 }],
-                header: 'News Edit',
+                header: 'Cập nhật tin tức',
                 layout: DefaultLayout,
                 role: 'admin',
-                title: 'News Edit | ' + config.site_name
+                title: 'Cập nhật tin tức | ' + config.site_name
             }
         }]
     }, {
@@ -241,16 +261,16 @@ export default [{
             meta: {
                 auth: true,
                 breadcrumbs: [{
-                    name: 'Dashboard',
-                    linkName: 'admin.dashboard',
-                    linkPath: '/dashboard'
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
                 }, {
-                    name: 'Filemanagers'
+                    name: 'Hình ảnh tin tức'
                 }],
-                header: 'Filemanagers List',
+                header: 'Danh sách hình ảnh',
                 layout: DefaultLayout,
                 role: 'admin',
-                title: 'Filemanagers | ' + config.site_name
+                title: 'Danh sách hình ảnh | ' + config.site_name
             }
         }]
     }]

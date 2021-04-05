@@ -5,7 +5,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                    <i class="fa fa-list"></i> Danh sách nhóm tin</h3>
+                    <i class="fa fa-list"></i> {{$options.setting.list_title}}</h3>
                 </div>
                 <div class="panel-body">
                     <div id="form-category">
@@ -58,8 +58,6 @@
                 </div>
             </div>
         </div>
-
-        <InfoAddForm/>
     </div>        
 </template>
 
@@ -73,7 +71,6 @@
 
     import TheHeaderPage from './components/TheHeaderPage';
 
-    import InfoAddForm from 'com@admin/Modal/Infos/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     
     import Paginate from 'com@admin/Pagination';
@@ -90,7 +87,6 @@
         components: {
             Breadcrumb,
             TheHeaderPage,
-            InfoAddForm,
             Item,
             Paginate
         },
@@ -119,6 +115,9 @@
             _notEmpty() {
                 return this.isNotEmptyList;
             }
+        },
+        setting: {
+            list_title: 'Danh sách tin tức'
         }
     };
 </script>

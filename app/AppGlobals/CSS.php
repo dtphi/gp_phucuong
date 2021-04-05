@@ -91,7 +91,7 @@ class CSS
 
     public function init()
     {
-        $optionClass = 'hold-transition login-page';
+        /*$optionClass = 'hold-transition login-page';
         $cssStype    = $this->mapCss();
         $scripts     = '';
 
@@ -130,6 +130,17 @@ class CSS
                 $this->mapScriptFileManager(),
                 ''
             ];
+        }*/
+
+        if (Request::is('admin/filemanagers*')) {
+            $cssStype    = $this->mapCss();
+            $scripts     = $this->mapScriptFileManager();
+
+            return [
+                '',
+                $this->mapScriptFileManager(),
+                ''
+            ];
         }
 
         return [
@@ -150,6 +161,10 @@ class CSS
     public function mapScriptTest()
     {
         $output = '';
+        /*<!-- jQuery -->*/
+        $output .= "<script src='/administrator/javascript/jquery/jquery-2.1.1.min.js'></script>\n";
+        $output .= "<script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
+        $output .= "<script src='/administrator/javascript/bootstrap/js/bootstrap.min.js'></script>\n";
 
         return $output;
     }

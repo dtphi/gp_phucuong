@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
 
     if (store.state.auth.authenticated) {
         if (to.name === "admin.auth.login") {
-            window.location = window.origin + '/admin/users';
+            window.location = window.origin + '/' + store.state.auth.redirectUrl;
             return;
         } else {
             next();
@@ -39,7 +39,7 @@ router.beforeEach(async (to, from, next) => {
             next();
             return;
         } else {
-            window.location = window.origin + '/admin/login';
+            window.location = window.origin + '/' + store.state.auth.redirectLogoutUrl;
             return;
         }
     }
