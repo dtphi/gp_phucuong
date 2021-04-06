@@ -7,31 +7,6 @@ import {
 } from 'store@admin/types/api-paths';
 
 /**
- * Mocking client-server processing
- */
-const _users = [{
-  id: 1,
-  name: 'Phi',
-  email: 'phi@mail.com',
-  createdAt: '24/12/2020'
-}, {
-  id: 2,
-  name: 'Fei',
-  email: 'fei@mail.com',
-  createdAt: '24/12/2020'
-}, {
-  id: 3,
-  name: 'Admin',
-  email: 'admin@mail.com',
-  createdAt: '24/12/2020'
-}, {
-  id: 4,
-  name: 'Admin',
-  email: 'admin@mail.com',
-  createdAt: '24/12/2020'
-}]
-
-/**
  * [description]
  * @param  {[type]} userId    [description]
  * @param  {[type]} resolve   [description]
@@ -53,7 +28,13 @@ export const apiGetUserById = (userId, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => {
+      errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+      }])
+    })
 }
 
 /**
@@ -64,7 +45,7 @@ export const apiGetUserById = (userId, resolve, errResole) => {
  * @return {[type]}           [description]
  */
 export const apiGetUsers = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(API_USERS_RESOURCE),{
+  return axios.get(fn_get_base_api_url(API_USERS_RESOURCE), {
       params: params
     })
     .then((response) => {
@@ -78,7 +59,13 @@ export const apiGetUsers = (resolve, errResole, params) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => {
+      errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+      }])
+    })
 }
 
 /**
@@ -104,7 +91,13 @@ export const apiUpdateUser = (user, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => {
+      errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+      }])
+    })
 }
 
 /**
@@ -130,7 +123,13 @@ export const apiInsertUser = (user, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch((errors) => {
+      errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+      }])
+    })
 }
 
 /**
@@ -156,7 +155,11 @@ export const apiDeleteUser = (userId, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => errResole([{
+      status: errors.response.status,
+      messageCommon: errors.response.data.message,
+      messages: errors.response.data.errors
+    }]))
 }
 
 /**
@@ -168,9 +171,11 @@ export const apiDeleteUser = (userId, resolve, errResole) => {
  */
 export const apiSearchAll = (query, resolve, errResole) => {
   let params = {
-          query
-      };
-  return axios.get(fn_get_base_api_url(`/api/search-user`),{params})
+    query
+  };
+  return axios.get(fn_get_base_api_url(`/api/search-user`), {
+      params
+    })
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -182,5 +187,9 @@ export const apiSearchAll = (query, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => errResole([{
+      status: errors.response.status,
+      messageCommon: errors.response.data.message,
+      messages: errors.response.data.errors
+    }]))
 }

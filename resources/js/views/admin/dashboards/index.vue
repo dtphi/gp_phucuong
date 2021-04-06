@@ -32,6 +32,34 @@
 						</div>
 						</div>
 			    </div>
+
+			    <div class="row">
+			    	<div class="col-lg-12 col-md-12 col-sm-12 col-sx-12"> <div class="panel panel-default">
+						  <div class="panel-heading">
+						    <h3 class="panel-title"><i class="fa fa-info"></i>Tin tức mới nhất</h3>
+						  </div>
+						  <div class="table-responsive">
+						    <table class="table">
+						      <thead>
+						        <tr>
+						          <td class="text-right">No</td>
+						          <td>Tên</td>
+						          <td>Hình ảnh</td>
+						          <td>Mô tả</td>
+						          <td class="text-right">Ngày tạo</td>
+						          <td class="text-right">Trạng thái</td>
+						        </tr>
+						      </thead>
+						      <tbody>
+						                <tr>
+						          <td class="text-center" colspan="6">No results!</td>
+						        </tr>
+						              </tbody>
+						    </table>
+						  </div>
+						</div>
+						 </div>
+			    </div>
 			</div>
   </div>
 </template>

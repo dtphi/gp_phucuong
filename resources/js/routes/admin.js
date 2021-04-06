@@ -2,10 +2,6 @@ import AuthLayout from 'v@admin/layouts/auth';
 import MainLayout from 'v@admin/layouts/Main';
 import Login from 'v@admin/auth/Login';
 import Users from 'v@admin/users';
-import NewsGroups from 'v@admin/newsgroups';
-import News from 'v@admin/news';
-import NewsAdd from 'v@admin/news/add';
-import NewsEdit from 'v@admin/news/edit';
 import FileManager from 'v@admin/filemanagers';
 
 /*default layout*/
@@ -13,6 +9,9 @@ import DefaultLayout from 'v@admin/layouts/default';
 import CategoryListPage from 'v@admin/categorys';
 import CategoryEditPage from 'v@admin/categorys/edit';
 import CategoryAddPage from 'v@admin/categorys/add';
+import InformationListPage from 'v@admin/informations';
+import InformationAddPage from 'v@admin/informations/add';
+import InformationEditPage from 'v@admin/informations/edit';
 import DashboardPage from 'v@admin/dashboards';
 
 import {
@@ -41,7 +40,7 @@ export default [{
             },
             title: 'Login | ' + config.site_name
         }
-    },{
+    }, {
         path: 'dashboards',
         component: DashboardPage,
         name: 'admin.dashboards',
@@ -79,8 +78,7 @@ export default [{
                     footer: true
                 }
             }
-        },
-        {
+        }, {
             path: 'add',
             component: CategoryAddPage,
             name: 'admin.category.add',
@@ -105,8 +103,7 @@ export default [{
                     footer: true
                 }
             }
-        },
-        {
+        }, {
             path: 'edit/:categoryId',
             component: CategoryEditPage,
             name: 'admin.category.edit',
@@ -131,8 +128,7 @@ export default [{
                     footer: true
                 }
             }
-        }
-        ]
+        }]
     }, {
         path: 'users',
         component: {
@@ -158,38 +154,14 @@ export default [{
             }
         }]
     }, {
-        path: 'news-groups',
-        component: {
-            render: c => c('router-view')
-        },
-        children: [{
-            path: '',
-            component: NewsGroups,
-            name: 'admin.newsgroups.list',
-            meta: {
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản lý',
-                    linkName: 'admin.dashboard',
-                    linkPath: '/dashboard'
-                }, {
-                    name: 'Nhóm Tin'
-                }],
-                header: 'Danh sách nhóm tin',
-                layout: MainLayout,
-                role: 'admin',
-                title: 'News Groups | ' + config.site_name
-            }
-        }]
-    }, {
         path: 'informations',
         component: {
             render: c => c('router-view')
         },
         children: [{
             path: '',
-            component: News,
-            name: 'admin.news.list',
+            component: InformationListPage,
+            name: 'admin.informations.list',
             meta: {
                 auth: true,
                 breadcrumbs: [{
@@ -206,7 +178,7 @@ export default [{
             }
         }, {
             path: 'add',
-            component: NewsAdd,
+            component: InformationAddPage,
             name: 'admin.informations.add',
             meta: {
                 auth: true,
@@ -228,7 +200,7 @@ export default [{
             }
         }, {
             path: 'edit/:infoId',
-            component: NewsEdit,
+            component: InformationEditPage,
             name: 'admin.informations.edit',
             meta: {
                 auth: true,

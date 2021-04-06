@@ -14,7 +14,7 @@
                     <loading-over-lay :active.sync="loading"
                                       :is-full-page="fullPage"></loading-over-lay>
                 </template>
-                <template v-else>
+                <template v-if="_lists">
                     <table class="table table-bordered table-hover">
                       <thead>
                         <tr>
@@ -22,10 +22,10 @@
                             <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                           </td>
                           <td class="text-left">                   
-                            <a href="/" class="asc">Tên nhóm tin</a>
+                            <a href="javascript:void(0);" class="asc">Tên nhóm tin</a>
                           </td>
-                          <td style="width: 1px" class="text-right">                    
-                            <a href="/">Sắp xếp</a>
+                          <td style="width: 100px" class="text-center">                    
+                            <a href="javascript:void(0);" class="asc">Sắp xếp</a>
                           </td>
                           <td style="width: 100px" class="text-right">Thực hiện</td>
                         </tr>

@@ -1,31 +1,30 @@
 <template>
-	<button type="button" 
-        data-toggle="tooltip" title="" 
+    <a href="javascript:void(0);" data-toggle="tooltip" 
+        @click="_showDiaglogConfirm()"
         class="btn btn-default cms-btn" 
-        @click="_showConfirm()" 
-        data-original-title="Delete">
-        <font-awesome-layers size="1x" style="background:MistyRose">
+        data-original-title="Xóa">
+        <font-awesome-layers size="xs" style="background:MistyRose">
             <font-awesome-icon icon="circle" style="color:Tomato"/>
             <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
         </font-awesome-layers>
-    </button>
+    </a>
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
     import {
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_NEWS_CATEGORY
+        MODULE_INFO,
+        MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
     import {
-        ACTION_DELETE_NEWS_GROUP_BY_ID,
+        ACTION_SET_INFO_DELETE_BY_ID,
+        ACTION_DELETE_INFO_BY_ID
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'TheBtnDeleteConfirm',
+        name: 'TheButtonDelete',
         props: {
-            categoryId: {
+            infoId: {
                 type: Number,
                 default: 0,
                 validator: function (value) {
@@ -33,20 +32,20 @@
                 }
             }
         },
+        data() {
+            return {};
+        },
         methods: {
-            ...mapActions(MODULE_NEWS_CATEGORY, [
-                ACTION_DELETE_NEWS_GROUP_BY_ID
+            ...mapActions(MODULE_INFO, [
+                ACTION_SET_INFO_DELETE_BY_ID,
+                ACTION_DELETE_INFO_BY_ID
             ]),
 
-            _delete() {
-                this.[ACTION_DELETE_NEWS_GROUP_BY_ID](this.categoryId); 
-            },
-
-            _showConfirm() {
-                const _self = this;
+            _showDiaglogConfirm() {
+                this.[ACTION_SET_INFO_DELETE_BY_ID](this.infoId);
                 this.$modal.show('dialog', {
-                    title: 'Xóa Danh Mục Tin Tức',
-                    text: 'Bạn muốn xóa danh mục tin tức ?',
+                    title: 'Xóa Tin Tức',
+                    text: 'Bạn muốn xóa tin tức ?',
                     buttons: [
                         {
                             title: 'Hủy',
@@ -57,7 +56,7 @@
                         {
                             title: 'Xóa',
                             handler: () => {
-                                this._delete();
+                                this.[ACTION_DELETE_INFO_BY_ID]();
                                 this.$modal.hide('dialog')
                             }
                         }

@@ -1,5 +1,6 @@
 <template>
   <div id="container">
+    <notifications group="common-update"></notifications>
   	
   	<main-header></main-header>
 

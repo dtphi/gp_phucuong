@@ -2,10 +2,7 @@
 	  <div class="page-header">
 	    <div class="container-fluid">
 	      <div class="pull-right">
-	      	<button @click="_pushAddPage()" 
-	      		data-toggle="tooltip" title="" 
-	      		class="btn btn-primary" 
-	      		data-original-title="Thêm Nhóm Tin"><i class="fa fa-plus"></i></button> 
+	      	<btn-add></btn-add>
 
 	      		<button 
                     @click="_refreshList()"
@@ -26,37 +23,39 @@
 </template>
 
 <script>
-     import {
+    import {
         mapActions
       } from 'vuex';
+	import BtnAdd from './TheBtnAdd';
 	import Perpage from 'com@admin/Pagination/SelectPerpage';
 	import ListSearch from 'com@admin/Search';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
-        MODULE_NEWS_CATEGORY
+        MODULE_INFO
     } from 'store@admin/types/module-types';
     import {
-        ACTION_GET_NEWS_GROUP_LIST
+        ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'CategoryHeaderPage',
+        name: 'InformationHeaderPage',
         components: {
-        	Perpage,
-        	ListSearch,
+            BtnAdd, 
+            Perpage, 
+            ListSearch,
             Breadcrumb
         },
         methods: {
-            ...mapActions(MODULE_NEWS_CATEGORY, [ACTION_GET_NEWS_GROUP_LIST]),
+            ...mapActions(MODULE_INFO, [ACTION_GET_INFO_LIST]),
         	_pushAddPage() {
-        		this.$router.push(`/admin/news-categories/add`);
+        		this.$router.push(`/admin/informations/add`);
         	},
             _refreshList() {
-            this.[ACTION_GET_NEWS_GROUP_LIST]();
-          }
+                this.[ACTION_GET_INFO_LIST]();
+              }
         },
         setting: {
-            title: 'Danh Mục Tin',
+            title: 'Tin Tức',
             refresh_txt: 'Tải lại danh sách'
         }
     };

@@ -84,6 +84,7 @@ export default {
       state.styleCss = 'display:none';
       state.userId = 0;
       state.user = null;
+      state.errors = [];
     },
 
     [USERS_MODAL_SET_IS_OPEN_MODAL](state, payload) {
@@ -145,7 +146,7 @@ export default {
           dispatch(ACTION_IS_OPEN_MODAL, true);
         },
         (errors) => {
-          commit(USERS_MODAL_SET_USER_ID_FAILED, Object.values(errors))
+          commit(USERS_MODAL_SET_USER_ID_FAILED, errors)
 
           dispatch(ACTION_SET_LOADING, false);
         }
@@ -177,6 +178,7 @@ export default {
       dispatch,
       commit
     }, user) {
+      dispatch(ACTION_SET_LOADING, true);
       apiUpdateUser(
         user,
         (result) => {
@@ -190,8 +192,8 @@ export default {
         },
         (errors) => {
           commit(USERS_MODAL_UPDATE_USER_FAILED, AppConfig.comUpdateNoFail)
-
           dispatch(ACTION_SET_LOADING, false);
+          commit(USERS_MODAL_SET_ERROR, errors);
         }
       )
     },

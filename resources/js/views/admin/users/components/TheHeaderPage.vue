@@ -3,10 +3,11 @@
 	    <div class="container-fluid">
 	      <div class="pull-right">
 	      	<btn-add></btn-add>
-      		<a href="/" 
-      			data-toggle="tooltip" title="" 
+      		<button 
+            @click="_refreshList()"
+      			data-toggle="tooltip" :title="$options.setting.refresh_txt" 
       			class="btn btn-default" 
-      			data-original-title="Rebuild"><i class="fa fa-refresh"></i></a>
+      			:data-original-title="$options.setting.refresh_txt"><i class="fa fa-refresh"></i></button>
 
        		 <button type="button" data-toggle="tooltip" title="" class="btn btn-danger" onclick="confirm('Are you sure?') ? $('#form-category').submit() : false;" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>
 	      </div>
@@ -21,10 +22,19 @@
 </template>
 
 <script>
+  import {
+    mapActions
+  } from 'vuex';
 	import BtnAdd from './TheBtnAdd';
 	import Perpage from 'com@admin/Pagination/SelectPerpage';
 	import ListSearch from 'com@admin/Search';
   import Breadcrumb from 'com@admin/Breadcrumb';
+  import {
+        MODULE_USER
+    } from 'store@admin/types/module-types';
+    import {
+        ACTION_GET_USER_LIST
+    } from 'store@admin/types/action-types';
 
     export default {
         name: 'UserHeaderPage',
@@ -35,12 +45,17 @@
           Breadcrumb
         },
         methods: {
+          ...mapActions(MODULE_USER, [ACTION_GET_USER_LIST]),
         	_pushAddPage() {
         		this.$router.push(`/admin/users/add`);
-        	}
+        	},
+          _refreshList() {
+            this.[ACTION_GET_USER_LIST]();
+          }
         },
         setting: {
-            title: 'Người Dùng'
+            title: 'Người Dùng',
+            refresh_txt: 'Tải lại danh sách'
         }
     };
 </script>

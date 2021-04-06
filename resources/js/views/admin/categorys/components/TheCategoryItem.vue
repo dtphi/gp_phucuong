@@ -4,7 +4,7 @@
   		<input type="checkbox" name="selected[]" :id="`cate_select_id_${categoryItem.category_id}`" :value="categoryItem.category_id">
     </td>
   	<td class="text-left">{{categoryItem.category_name}}</td>
-  	<td class="text-right">{{categoryItem.sort_order}}</td>
+  	<td class="text-center">{{categoryItem.sort_order}}</td>
   	<td class="text-right">
   		<the-btn-edit
           :category-id="categoryItem.category_id"></the-btn-edit>

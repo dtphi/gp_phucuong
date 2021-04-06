@@ -45,17 +45,17 @@
                 console.log(this);
                 this.[ACTION_SET_USER_DELETE_BY_ID](this.userId);
                 this.$modal.show('dialog', {
-                    title: 'Delete Confirm',
-                    text: 'Are you sure delete user?',
+                    title: 'Xóa Người Dùng',
+                    text: 'Bạn muốn xóa người dùng ?',
                     buttons: [
                         {
-                            title: 'Cancel',
+                            title: 'Hủy',
                             handler: () => {
                                 this.$modal.hide('dialog')
                             }
                         },
                         {
-                            title: 'Delete',
+                            title: 'Xóa',
                             handler: () => {
                                 this.[ACTION_DELETE_USER_BY_ID]();
                                 this.$modal.hide('dialog')

@@ -25,15 +25,21 @@ import {
   ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
 
+const USER_MODEL = {
+  name:'',
+  email: '',
+  password: ''
+}
+
 const INIT_STATE = {
   isOpen: false,
   action: null,
   classShow: 'modal',
   styleCss: '',
-  user: null,
+  user: {...USER_MODEL},
   userId: 0,
   loading: false,
-  insertSuccess: false,
+  insertSuccess: '',
   errors: []
 }
 
@@ -72,7 +78,7 @@ export default {
       state.action = payload;
       state.classShow = 'modal in';
       state.styleCss = 'display:block;';
-      state.insertSuccess = false;
+      state.insertSuccess = '';
     },
 
     [USERS_MODAL_SET_CLOSE_MODAL](state) {
@@ -80,7 +86,8 @@ export default {
       state.classShow = 'modal';
       state.styleCss = 'display:none;';
       state.userId = 0;
-      state.user = null;
+      state.errors = [];
+      state.user = {...USER_MODEL};
     },
 
     [USERS_MODAL_SET_IS_OPEN_MODAL](state, payload) {
@@ -143,6 +150,7 @@ export default {
       dispatch,
       commit
     }, user) {
+      dispatch(ACTION_SET_LOADING, true);
       apiInsertUser(
         user,
         (result) => {
@@ -156,8 +164,9 @@ export default {
         },
         (errors) => {
           commit(USERS_MODAL_INSERT_USER_FAILED, AppConfig.comInsertNoFail);
-
+          
           dispatch(ACTION_SET_LOADING, false);
+          commit(USERS_MODAL_SET_ERROR, errors);
         }
       )
     },
