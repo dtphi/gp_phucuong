@@ -30,7 +30,11 @@ export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+    }]))
 }
 
 /**
@@ -60,7 +64,11 @@ export const apiGetNewsGroups = (resolve, errResole, params) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+    }]))
 }
 
 /**
@@ -86,7 +94,11 @@ export const apiUpdateNewsGroup = (newsGroup, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+    }]))
 }
 
 /**
@@ -112,7 +124,11 @@ export const apiInsertNewsGroup = (newsGroup, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+    }]))
 }
 
 /**
@@ -138,7 +154,11 @@ export const apiDeleteNewsGroup = (newsGroupId, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+    }]))
 }
 
 /**
@@ -164,5 +184,9 @@ export const apiSearchAll = (query, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => errResole([{
+        status: errors.response.status,
+        messageCommon: errors.response.data.message,
+        messages: errors.response.data.errors
+    }]))
 }

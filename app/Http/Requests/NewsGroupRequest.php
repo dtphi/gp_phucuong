@@ -23,8 +23,9 @@ class NewsGroupRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+         return [
+            'name' => 'required|min:3|max:255',
+            'meta_title' => 'required|min:3'
         ];
     }
 }

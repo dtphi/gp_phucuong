@@ -26,7 +26,7 @@
                             </template>
 
                             <template v-if="user">
-                                <form class="form-horizontal">
+                                <div class="form-horizontal">
                                     <div class="form-group required">
                                         <label
                                                class="col-sm-2 control-label" 
@@ -36,7 +36,7 @@
                                                 name="user_name"
                                                 rules="required|max:191"
                                                 v-slot="{ errors }">
-                                                <input
+                                                <input autocomplete="off"
                                                     id="input-user-name"
                                                     v-model="user.name"
                                                     type="text"
@@ -77,8 +77,7 @@
                                                 name="user_password"
                                                 rules="required|minLength:8|max:191"
                                                 v-slot="{ errors }">
-                                                <input
-                                                    autocomplete="off"
+                                                <input autocomplete="new-password"
                                                     id="input-user-password"
                                                     v-model="user.password"
                                                     type="password"
@@ -89,7 +88,7 @@
                                             </validation-provider>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </template>
                         </div>
 
@@ -170,8 +169,12 @@
 
             _errorToArrs() {
                 let errs = [];
-                if (this.errors.length) {
+                if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
                     errs = Object.values(this.errors[0].messages);
+                }
+
+                if (Object.entries(errs).length === 0 && this.errors.length) {
+                    errs.push(this.$options.setting.error_msg_system);
                 }
 
                 return errs;
@@ -195,7 +198,8 @@
             actionName: 'add',
             isAddFrom: true,
             modal_title: 'Thêm người dùng',
-            btnSubmitTxt: 'Lưu'
+            btnSubmitTxt: 'Lưu',
+            error_msg_system: 'Lỗi hệ thống !'
         }
     };
 </script>

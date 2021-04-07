@@ -22,12 +22,12 @@
 			  		<span>{{$options.setting.users_title}}</span></a>
 			  </li>
 
-			  <li id="catalog" class="active open">
+			  <li id="catalog" class="">
 			  	<a class="parent">
 			  		<i class="fa fa-tags fa-fw"></i> 
 			  		<span>{{$options.setting.category_root_title}}</span></a>
-			    <ul class="collapse in">
-			      <li class="active open">
+			    <ul class="collapse">
+			      <li>
 			      	<a :href="_getHref('news-categories')">{{$options.setting.category_sub_cate_info_title}}</a>
 			      </li>
 			      <li>

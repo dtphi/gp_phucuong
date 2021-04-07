@@ -23,9 +23,11 @@ import {
   ACTION_SHOW_MODAL,
   ACTION_CLOSE_MODAL,
   ACTION_IS_OPEN_MODAL,
-  ACTION_INSERT_NEWS_GROUP,  
+  ACTION_INSERT_NEWS_GROUP,
   ACTION_RELOAD_GET_NEWS_GROUP_LIST,
-  ACTION_RESET_NOTIFICATION_INFO
+  ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_SELECT_DROPDOWN_PARENT_CATEGORY,
+  ACTION_INSERT_NEWS_GROUP_BACK
 } from '../types/action-types';
 const NEWS_GROUP = {
   category_id: null,
@@ -36,24 +38,39 @@ const NEWS_GROUP = {
   sort_order: 0,
   status: 1,
   layout_id: null,
-  path: null
+  path: null,
+  nameQuery: '',
+}
+
+const defaultState = () => {
+    return {
+       isOpen: false,
+      action: null,
+      classShow: 'modal fade',
+      styleCss: '',
+      newsGroupAdd: {
+        category_id: null,
+        name: '',
+        parent_id: 0,
+        description: '',
+        meta_title: '',
+        sort_order: 0,
+        status: 1,
+        layout_id: null,
+        path: null,
+        nameQuery: '',
+      },
+      newsGroupId: 0,
+      itemRoot: 0,
+      loading: false,
+      insertSuccess: false,
+      errors: []
+    }
 }
 
 export default {
   namespaced: true,
-  state: {
-    isOpen: false,
-    action: null,
-    classShow: 'modal fade',
-    styleCss: '',
-    parentInfo: NEWS_GROUP,
-    newsGroupAdd: NEWS_GROUP,
-    newsGroupId: 0,
-    itemRoot: 0,
-    loading: false,
-    insertSuccess: false,
-    errors: []
-  },
+  state: defaultState,
   getters: {
     newsGroupAdd(state) {
       return state.newsGroupAdd
@@ -70,8 +87,8 @@ export default {
     styleCss(state) {
       return state.styleCss
     },
-    parentInfo(state) {
-      return state.parentInfo
+    nameQuery(state) {
+      return state.newsGroupAdd.nameQuery
     },
     loading(state) {
       return state.loading
@@ -93,16 +110,14 @@ export default {
       state.classShow = 'modal fade show';
       state.styleCss = 'display:block';
       state.insertSuccess = false;
-      state.parentInfo = NEWS_GROUP;
       state.newsGroupId = 0;
     },
 
     [NEWSGROUPS_MODAL_SET_CLOSE_MODAL](state) {
-      state.action = 'closeModal';
-      state.classShow = 'modal fade';
-      state.styleCss = 'display:none';
-      state.parentInfo = NEWS_GROUP;
-      state.newsGroupId = 0;
+      const initState = defaultState();
+
+      Object.assign(state.newsGroupAdd, initState.newsGroupAdd);
+      state.errors = [];
     },
 
     [NEWSGROUPS_MODAL_SET_IS_OPEN_MODAL](state, payload) {
@@ -119,10 +134,6 @@ export default {
 
     [NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS](state, payload) {
 
-    },
-
-    [NEWSGROUPS_MODAL_SET_NEWS_GROUP](state, payload) {
-      state.parentInfo = payload
     },
 
     [NEWSGROUPS_MODAL_SET_LOADING](state, payload) {
@@ -206,19 +217,43 @@ export default {
       dispatch,
       commit
     }, newsGroup) {
+      dispatch(ACTION_SET_LOADING, true);
+      apiInsertNewsGroup(
+        newsGroup,
+        (result) => {
+          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, AppConfig.comInsertNoSuccess);
+          
+          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_CLOSE_MODAL);
+        },
+        (errors) => {
+          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED, AppConfig.comInsertNoFail);
+          commit(NEWSGROUPS_MODAL_SET_ERROR, errors);
+
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
+
+    [ACTION_INSERT_NEWS_GROUP_BACK]({
+      dispatch,
+      commit
+    }, newsGroup) {
+      dispatch(ACTION_SET_LOADING, true);
       apiInsertNewsGroup(
         newsGroup,
         (result) => {
           commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, AppConfig.comInsertNoSuccess);
 
+          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_CLOSE_MODAL);
           dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
             root: true
           });
-          dispatch(ACTION_SET_LOADING, false);
-          dispatch(ACTION_CLOSE_MODAL);
         },
         (errors) => {
-          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED, AppConfig.comInsertNoFail)
+          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED, AppConfig.comInsertNoFail);
+          commit(NEWSGROUPS_MODAL_SET_ERROR, errors);
 
           dispatch(ACTION_SET_LOADING, false);
         }
@@ -229,6 +264,13 @@ export default {
       commit
     }, values) {
       commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, values)
+    },
+
+    [ACTION_SELECT_DROPDOWN_PARENT_CATEGORY]({
+      state
+    }, category) {
+      state.newsGroupAdd.nameQuery = category.category_name;
+      state.newsGroupAdd.parent_id = category.category_id;
     }
   }
 }

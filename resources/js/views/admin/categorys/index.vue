@@ -86,9 +86,6 @@
                 'newsGroups',
                 'loading'
             ]),
-            ...mapState(MODULE_NEWS_CATEGORY_ADD, [
-                'insertSuccess'
-            ]),
             ...mapState(MODULE_NEWS_CATEGORY_EDIT, [
                 'updateSuccess'
             ]),
@@ -98,23 +95,7 @@
                 return rootTree;
             }
         },
-        watch: {
-            'insertSuccess'(newValue, oldValue) {
-                if (newValue) {
-                    this._notificationUpdate(newValue);
-                }
-            },
-            'updateSuccess'( newValue, oldValue ) {
-                if (newValue) {
-                    this._notificationUpdate(newValue);
-                }
-            }
-        },
         methods: {
-            _notificationUpdate(notification) {
-                this.$notify(notification);
-                this.$store.dispatch(MODULE_NEWS_CATEGORY_ADD + '/' + ACTION_RESET_NOTIFICATION_INFO, '');
-            }
         },
         setting: {
             list_title: 'Danh sách danh mục tin'

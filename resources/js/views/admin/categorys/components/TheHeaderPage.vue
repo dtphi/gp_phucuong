@@ -5,7 +5,7 @@
 	      	<button @click="_pushAddPage()" 
 	      		data-toggle="tooltip" title="" 
 	      		class="btn btn-primary" 
-	      		data-original-title="Thêm Nhóm Tin"><i class="fa fa-plus"></i></button> 
+	      		data-original-title="Thêm Nhóm Tin"><i class="fa fa-plus"></i></button>
 
 	      		<button 
                     @click="_refreshList()"
