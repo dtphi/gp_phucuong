@@ -106,12 +106,16 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         return new NewsGroupResource($this->apiGetDetail($id));
     }
 
+    public function apiInsertOrUpdate(array $data = []) {
+
+    }
+
     /**
      * @author : dtphi .
      * @param array $data
      * @return Admin|bool|null
      */
-    public function apiInsertOrUpdate(array $data = [])
+    public function apiInsert(array $data = [])
     {
         // TODO: Implement apiInsertOrUpdate() method.
         $this->model->fill($data);
@@ -143,6 +147,113 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
                 if (isset($data['layout_id'])) {
                     DB::insert('insert into ' . DB_PREFIX . 'category_to_layouts (category_id, layout_id) values (?, ?)', [$data['category_id'], $data['layout_id']]);
+                }
+
+            } else {
+                DB::rollBack();
+
+                return false;
+            }
+
+        } catch(\Exceptions $e) {
+            DB::rollBack();
+
+            return false;
+        }
+
+        DB::commit();
+
+        return $this->model;
+    }
+
+
+    public function getCateogryById($categoryId = null)
+    {
+        if ($categoryId) return $this->model->findOrFail($categoryId);
+    }
+
+    public function getCategoryDesById($categoryId = null)
+    {
+        if ($categoryId) return $this->modelDes->findOrFail($categoryId);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param array $data
+     * @return Admin|bool|null
+     */
+    public function apiUpdate($model, array $data = [])
+    {
+        // TODO: Implement apiInsertOrUpdate() method.
+        $model->fill($data);
+
+        /**
+         * Save user with transaction to make sure all data stored correctly
+         */
+        DB::beginTransaction();
+
+        try{
+            if($model->save()) {
+                $categoryId = $model->category_id;
+
+                $modelDes = $this->getCategoryDesById((int)$categoryId);
+                $modelDes->fill($data);
+                
+                $modelDes->save();
+
+                /*MySQL Hierarchical Data Closure Table Pattern*/
+                $resultPaths = $this->modelPath->where('path_id', (int)$categoryId )
+                ->orderBy('level', 'ASC')->get();
+
+                if ($resultPaths->count()) {
+                    foreach ($resultPaths as $key => $resultPath) {
+                        DB::delete("delete from `" . DB_PREFIX . "category_paths` where category_id = '" . (int)$resultPath['category_id'] . "' AND level < '" . (int)$resultPath['level'] . "'");
+                        $path = [];
+
+                        $resultPathCurParents = $this->modelPath->where('category_id', (int)$data['parent_id'] )
+                    ->orderBy('level', 'ASC')->get();
+
+                        foreach ($resultPathCurParents as $resultPathCurParent) {
+                            $path[] = $resultPathCurParent['path_id'];
+                        }
+
+                        $resultPathLefts = $this->modelPath->where('category_id', (int)$resultPath['category_id'] )
+                    ->orderBy('level', 'ASC')->get();
+
+                        foreach ($resultPathLefts as $resultPathLeft) {
+                            $path[] = $resultPathLeft['path_id'];
+                        }
+
+                        // Combine the paths with a new level
+                        $level = 0;
+                        foreach ($path as $path_id) {
+                            DB::statement("REPLACE INTO `" . DB_PREFIX . "category_paths` SET category_id = '" . (int)$resultPath['category_id'] . "', `path_id` = '" . (int)$path_id . "', level = '" . (int)$level . "'");
+
+                            $level++;
+                        }
+                    }
+                } else {
+                    // Delete the path below the current one
+                    DB::delete("delete from `" . DB_PREFIX . "category_paths` where category_id = '" . (int)$categoryId . "'");
+
+                    // Fix for records with no paths
+                    $level = 0;
+
+                    $resultPathParents = $this->modelPath->where('category_id', (int)$data['parent_id'] )->orderBy('level', 'ASC')->get();
+
+                    foreach ($resultPathParents as $resultPathParent) {
+                        DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)', [$categoryId, $resultPathParent['path_id'], (int)$level]);
+
+                        $level++;
+                    }
+
+                    DB::statement("REPLACE INTO `" . DB_PREFIX . "category_paths` SET category_id = '" . (int)$categoryId . "', `path_id` = '" . (int)$categoryId . "', level = '" . (int)$level . "'");
+                }
+                
+                DB::delete("delete from " . DB_PREFIX . "category_to_layouts WHERE category_id = '" . (int)$categoryId . "'");
+
+                if (isset($data['layout_id'])) {
+                    DB::insert('insert into ' . DB_PREFIX . 'category_to_layouts (category_id, layout_id) values (?, ?)', [$categoryId, $data['layout_id']]);
                 }
 
             } else {

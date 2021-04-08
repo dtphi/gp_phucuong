@@ -6,7 +6,7 @@ class Category extends BaseModel
 {
     protected $table = DB_PREFIX  . 'categorys';
 
-     protected $primaryKey = 'category_id';
+    protected $primaryKey = 'category_id';
 
     /**
      * The attributes that are mass assignable.

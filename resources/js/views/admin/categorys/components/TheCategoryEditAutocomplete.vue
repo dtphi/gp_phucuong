@@ -4,13 +4,13 @@
         <div class="col-sm-10">
     	   <input autocomplete="off"
             v-on:focus="_focusParentCategory"
-    		v-on:keyup.enter="_searchProducts()" 
-    		v-model="newsGroupAdd.nameQuery" type="text" 
-    		name="category" 
-    		:placeholder="$options.setting.paren_category_txt" 
-    		id="input-parent-category-name" 
-    		class="form-control" />
-            <ul class="dropdown-menu cms-dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
+		    		v-on:keyup.enter="_searchProducts()" 
+		    		v-model="getNameQuery" type="text" 
+		    		name="category" 
+		    		:placeholder="$options.setting.paren_category_txt" 
+		    		id="input-parent-category-name" 
+		    		class="form-control" />
+            <ul class="dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
                 <li>
                     <span class="btn btn-default cms-btn-dropdown" @click="_closeDropdown">
                         <font-awesome-layers size="2x" style="background:MistyRose">
@@ -34,10 +34,10 @@
         mapGetters,
         mapActions
     } from 'vuex';
-    import TheDropdownCategory from './TheDropdownCategory';
+    import TheDropdownCategory from './TheDropdownCategoryEdit';
     import {
         MODULE_NEWS_CATEGORY,
-        MODULE_NEWS_CATEGORY_ADD
+        MODULE_NEWS_CATEGORY_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_NEWS_GROUP_LIST
@@ -45,7 +45,7 @@
     import lodash from 'lodash';
 
     export default {
-        name: 'CategoryAutocomplete',
+        name: 'CategoryEditAutocomplete',
         components: {TheDropdownCategory},
         props: {
             categoryId: {
@@ -66,8 +66,9 @@
             ...mapGetters(MODULE_NEWS_CATEGORY, [
                 'newsGroups'
             ]),
-            ...mapGetters(MODULE_NEWS_CATEGORY_ADD, [
-                'newsGroupAdd'
+            ...mapGetters(MODULE_NEWS_CATEGORY_EDIT, [
+                'newsGroup',
+                'getNameQuery'
             ]),
             _lists() {
                 let rootTree = {...this.newsGroups.children};
@@ -76,27 +77,29 @@
             }
         },
         watch: {
-            'newsGroupAdd.nameQuery': {
+            'getNameQuery': {
                 handler: _.debounce(function () {
                     this._searchProducts()
                 }, 100)
             }
         },
         methods: {
-        	...mapActions(MODULE_NEWS_CATEGORY, [ACTION_GET_NEWS_GROUP_LIST]),
+        	...mapActions(MODULE_NEWS_CATEGORY, [
+        		ACTION_GET_NEWS_GROUP_LIST
+        	]),
             _searchProducts() {
-                const query = this.newsGroupAdd.nameQuery;
-                if (query && query.length) {
-                	this.[ACTION_GET_NEWS_GROUP_LIST](query);
-                }
-            },
-            _focusParentCategory() {
-                this.[ACTION_GET_NEWS_GROUP_LIST]();
-                this.$data.dropdownStyle = 'display:block';
-            },
-            _closeDropdown() {
-                this.$data.dropdownStyle = 'display:none';
-            }
+              const query = this.getNameQuery;
+              if (query && query.length) {
+              	this.[ACTION_GET_NEWS_GROUP_LIST](query);
+              }
+          },
+          _focusParentCategory() {
+              this.[ACTION_GET_NEWS_GROUP_LIST]();
+              this.$data.dropdownStyle = 'display:block';
+          },
+          _closeDropdown() {
+              this.$data.dropdownStyle = 'display:none';
+          }
         },
         setting: {
             paren_category_txt: 'Danh mục tin tức cha'
@@ -109,13 +112,13 @@
         top: 35px; 
         left: 15px;
     }
+    .cms-ul-cate-dropdown > li > a:hover, .cms-dropdown-menu > li > a:focus {
+        background-color: green !important
+    }
     .cms-btn-dropdown {
         position: absolute;
         right: 0px;
         top: 0px;
         font-size: 0.5em;
-    }
-    .cms-dropdown-menu > li > a:hover, .cms-dropdown-menu > li > a:focus {
-        background-color: green !important
     }
 </style>

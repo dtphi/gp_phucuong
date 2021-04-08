@@ -29,18 +29,6 @@ import {
   ACTION_SELECT_DROPDOWN_PARENT_CATEGORY,
   ACTION_INSERT_NEWS_GROUP_BACK
 } from '../types/action-types';
-const NEWS_GROUP = {
-  category_id: null,
-  name: '',
-  parent_id: 0,
-  description: '',
-  meta_title: '',
-  sort_order: 0,
-  status: 1,
-  layout_id: null,
-  path: null,
-  nameQuery: '',
-}
 
 const defaultState = () => {
     return {

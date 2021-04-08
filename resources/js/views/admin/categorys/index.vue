@@ -86,9 +86,6 @@
                 'newsGroups',
                 'loading'
             ]),
-            ...mapState(MODULE_NEWS_CATEGORY_EDIT, [
-                'updateSuccess'
-            ]),
             _lists() {
                 let rootTree = {...this.newsGroups.children};
 

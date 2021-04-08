@@ -6,6 +6,8 @@ class CategoryDescription extends BaseModel
 {
     protected $table = DB_PREFIX  . 'category_descriptions';
 
+    protected $primaryKey = 'category_id';
+
     /**
      * The attributes that are mass assignable.
      *

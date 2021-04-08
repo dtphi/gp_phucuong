@@ -13,6 +13,14 @@ class NewsGroupRequest extends FormRequest
      */
     public function authorize()
     {
+        $data = $this->all();
+
+        if ($this->isMethod('put')) {
+            $mergeData = [
+                'name' => isset($data['category_name'])?$data['category_name']:''
+            ];
+            $this->merge($mergeData);
+        }
         return true;
     }
 
@@ -22,10 +30,18 @@ class NewsGroupRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {   
+
+        if ($this->isMethod('put')) {
+            return [
+                'name' => 'required|min:3|max:255',
+                'meta_title' => 'required|min:3|max:255'
+            ];
+        }
+
          return [
             'name' => 'required|min:3|max:255',
-            'meta_title' => 'required|min:3'
+            'meta_title' => 'required|min:3|max:255'
         ];
     }
 }

@@ -236,7 +236,7 @@
                     }
                 });
             },
-            _notificationUpdate(notification) {console.log(notification)
+            _notificationUpdate(notification) {
                 this.$notify(notification);
                 this.[ACTION_RESET_NOTIFICATION_INFO]('');
             }

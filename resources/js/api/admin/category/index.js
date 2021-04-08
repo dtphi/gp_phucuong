@@ -79,7 +79,7 @@ export const apiGetNewsGroups = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiUpdateNewsGroup = (newsGroup, resolve, errResole) => {
-  return axios.put(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, newsGroup.id), newsGroup)
+  return axios.put(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, newsGroup.category_id), newsGroup)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {

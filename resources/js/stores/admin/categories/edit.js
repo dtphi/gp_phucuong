@@ -18,7 +18,8 @@ import {
   NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED,
   NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED,
   NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS,
-  NEWSGROUPS_MODAL_SET_ERROR
+  NEWSGROUPS_MODAL_SET_ERROR,
+  SELECT_DROPDOWN_PARENT_CATEGORY
 } from '../types/mutation-types';
 import {
   ACTION_GET_NEWS_GROUP_BY_ID,
@@ -30,35 +31,40 @@ import {
   ACTION_INSERT_NEWS_GROUP,
   ACTION_UPDATE_NEWS_GROUP,
   ACTION_RELOAD_GET_NEWS_GROUP_LIST,
-  ACTION_RESET_NOTIFICATION_INFO
+  ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_SELECT_DROPDOWN_PARENT_CATEGORY
 } from '../types/action-types';
-const NEWS_GROUP = {
-  category_id: null,
-  name: '',
-  parent_id: 0,
-  description: '',
-  meta_title: '',
-  sort_order: 0,
-  status: 1,
-  layout_id: null,
-  path: null
+
+const defaultState = () => {
+    return {
+       isOpen: false,
+      action: null,
+      classShow: 'modal fade',
+      styleCss: '',
+      newsGroup: {
+        category_id: null,
+        category_name: '',
+        name: '',
+        parent_id: 0,
+        description: '',
+        meta_title: '',
+        sort_order: 0,
+        status: 1,
+        layout_id: null,
+        path: null
+      },
+      nameQuery: '',
+      newsGroupId: 0,
+      itemRoot: 0,
+      loading: false,
+      updateSuccess: false,
+      errors: []
+    }
 }
 
 export default {
   namespaced: true,
-  state: {
-    isOpen: false,
-    action: null,
-    classShow: 'modal fade',
-    styleCss: '',
-    newsGroup: NEWS_GROUP,
-    newsGroupAdd: NEWS_GROUP,
-    newsGroupId: 0,
-    itemRoot: 0,
-    loading: false,
-    updateSuccess: false,
-    errors: []
-  },
+  state: defaultState,
   getters: {
     newsGroupAdd(state) {
       return state.newsGroupAdd
@@ -77,6 +83,9 @@ export default {
     },
     newsGroup(state) {
       return state.newsGroup
+    },
+    getNameQuery(state) {
+      return state.nameQuery
     },
     loading(state) {
       return state.loading
@@ -98,16 +107,13 @@ export default {
       state.classShow = 'modal fade show';
       state.styleCss = 'display:block';
       state.updateSuccess = false;
-      state.newsGroup = NEWS_GROUP;
-      state.newsGroupId = 0;
     },
 
     [NEWSGROUPS_MODAL_SET_CLOSE_MODAL](state) {
       state.action = 'closeModal';
       state.classShow = 'modal fade';
       state.styleCss = 'display:none';
-      state.newsGroupId = 0;
-      state.newsGroup = NEWS_GROUP;
+      state.errors = [];
     },
 
     [NEWSGROUPS_MODAL_SET_IS_OPEN_MODAL](state, payload) {
@@ -127,7 +133,7 @@ export default {
     },
 
     [NEWSGROUPS_MODAL_SET_NEWS_GROUP](state, payload) {
-        state.newsGroup = payload
+        state.newsGroup = payload;
     },
 
     [NEWSGROUPS_MODAL_SET_LOADING](state, payload) {
@@ -152,6 +158,10 @@ export default {
 
     [NEWSGROUPS_MODAL_SET_ERROR](state, payload) {
       state.errors = payload
+    },
+    [SELECT_DROPDOWN_PARENT_CATEGORY](state, payload) {
+        state.nameQuery = payload.category_name;
+      state.newsGroup.parent_id = payload.category_id;
     }
   },
 
@@ -189,6 +199,10 @@ export default {
           (result) => {
             commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS, true)
             commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP, result.data);
+            commit(SELECT_DROPDOWN_PARENT_CATEGORY, {
+              category_name: result.data.path,
+              category_id: result.data.parent_id
+            });
 
             dispatch(ACTION_SET_LOADING, false);
             dispatch(ACTION_IS_OPEN_MODAL, true);
@@ -225,45 +239,24 @@ export default {
       commit(NEWSGROUPS_MODAL_SET_LOADING, isLoading);
     },
 
-    [ACTION_INSERT_NEWS_GROUP]({
-      dispatch,
-      commit
-    }, newsGroup) {
-      apiInsertNewsGroup(
-        newsGroup,
-        (result) => {
-          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, AppConfig.comInsertNoSuccess);
-
-          dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
-            root: true
-          });
-          dispatch(ACTION_SET_LOADING, false);
-          dispatch(ACTION_CLOSE_MODAL);
-        },
-        (errors) => {
-          commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED, AppConfig.comInsertNoFail)
-
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      )
-    },
-
     [ACTION_UPDATE_NEWS_GROUP]({
       dispatch,
       commit
     }, newsGroup) {
+      dispatch(ACTION_SET_LOADING, true);
       apiUpdateNewsGroup(newsGroup,
         (result) => {
           commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS, AppConfig.comUpdateNoSuccess);
 
-          dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
+         /* dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
             root: true
-          });
+          });*/
           dispatch(ACTION_SET_LOADING, false);
           dispatch(ACTION_CLOSE_MODAL);
         },
         (errors) => {
-          commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED, AppConfig.comUpdateNoFail)
+          commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED, AppConfig.comUpdateNoFail);
+          commit(NEWSGROUPS_MODAL_SET_ERROR, errors);
 
           dispatch(ACTION_SET_LOADING, false);
         }
@@ -274,6 +267,12 @@ export default {
       commit
     }, values) {
       commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS, values)
+    },
+
+    [ACTION_SELECT_DROPDOWN_PARENT_CATEGORY]({
+      commit
+    }, category) {
+      commit(SELECT_DROPDOWN_PARENT_CATEGORY, category);
     }
   }
 }

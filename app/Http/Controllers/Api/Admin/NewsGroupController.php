@@ -151,7 +151,7 @@ class NewsGroupController extends ApiController
     public function update(NewsGroupRequest $request, $id = null)
     {
         try {
-            $this->newsGpSv->apiGetDetail($id);
+            $model = $this->newsGpSv->getCateogryById($id);
 
         } catch (HandlerMsgCommon $e) {
             Log::debug('User not found, Request ID = ' . $id);
@@ -159,7 +159,7 @@ class NewsGroupController extends ApiController
             throw $e->render();
         }
 
-        return $this->__handleStore($request);
+        return $this->__handleStoreUpdate($model, $request);
     }
 
     /**
@@ -170,7 +170,7 @@ class NewsGroupController extends ApiController
     public function destroy($id = null)
     {
         try {
-            $newsGroup = $this->newsGpSv->apiGetDetail($id);
+            $newsGroup = $this->newsGpSv->getCateogryById($id);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -189,7 +189,23 @@ class NewsGroupController extends ApiController
     {
         $requestParams = $request->all();
 
-        if ($result = $this->newsGpSv->apiInsertOrUpdate($requestParams)) {
+        if ($result = $this->newsGpSv->apiInsert($requestParams)) {
+            return $this->respondUpdated($result);
+        }
+
+        return $this->respondBadRequest();
+    }
+
+    /**
+     * @author : dtphi .
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function __handleStoreUpdate(&$model, &$request)
+    {
+        $requestParams = $request->all();
+
+        if ($result = $this->newsGpSv->apiUpdate($model, $requestParams)) {
             return $this->respondUpdated($result);
         }
 

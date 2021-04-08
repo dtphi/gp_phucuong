@@ -1,10 +1,17 @@
 <template>
 	<div id="content">
+    <template v-if="_errors">
+      <div class="alert alert-danger">
+          <i class="fa fa-exclamation-circle"></i>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p v-for="err in _errorToArrs()">{{err}}</p>
+      </div>
+    </template>
         <template v-if="loading">
             <loading-over-lay :active.sync="loading"
                               :is-full-page="fullPage"></loading-over-lay>
         </template>
-        <template v-else>
+        <template v-if="newsGroup">
             <validation-observer ref="observerNewsGroup" @submit.prevent="_submitInfo">
                 <div class="page-header">
                 <div class="container-fluid">
@@ -37,6 +44,7 @@
                     <li><a href="#tab-design" data-toggle="tab">Màn hình</a></li>
                   </ul>
                   <div class="tab-content">
+
                     <div class="tab-pane active" id="tab-general">
                       <div class="tab-content">
                           <div class="form-group required">
@@ -62,13 +70,9 @@
                           </div>
                       </div>
                     </div>
+
                     <div class="tab-pane" id="tab-data">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-parent">Nhóm tin cha</label>
-                        <div class="col-sm-10">
-                          <input type="text" v-model="newsGroup.parent_id" placeholder="Nhóm tin cha" id="input-parent" class="form-control" />
-                        </div>
-                      </div>
+                      <category-autocomplete :category-id="newsGroup.parent_id"></category-autocomplete>
 
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-sort-order">Thứ tự</label>
@@ -86,6 +90,7 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="tab-pane" id="tab-design">
                       <div class="table-responsive">
                         <table class="table table-bordered table-hover">
@@ -108,6 +113,7 @@
                         </table>
                       </div>
                     </div>
+
                   </div>
                 </form>
               </div>
@@ -123,6 +129,7 @@
 <script>
     import {mapState, mapGetters, mapActions} from 'vuex';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
+    import CategoryAutocomplete from './components/TheCategoryEditAutocomplete';
     import tinymce from 'vue-tinymce-editor';
     import {
         fn_get_tinymce_langs_url
@@ -134,7 +141,8 @@
     import {
         ACTION_SET_LOADING,
         ACTION_UPDATE_NEWS_GROUP,
-        ACTION_GET_NEWS_GROUP_BY_ID 
+        ACTION_GET_NEWS_GROUP_BY_ID,
+        ACTION_RESET_NOTIFICATION_INFO 
     } from 'store@admin/types/action-types';
 
     export default {
@@ -148,6 +156,7 @@
         components: {
             TheBtnBackListPage,
             Breadcrumb,
+            CategoryAutocomplete,
             tinymce
         },
         data() {
@@ -158,30 +167,60 @@
                 }
             };
         },
+        watch: {
+            'updateSuccess'(newValue, oldValue) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            }
+        },
         computed: {
             ...mapState(MODULE_NEWS_CATEGORY_EDIT, {
-                loading: state => state.loading
+                loading: state => state.loading,
+                errors: state => state.errors,
             }),
             ...mapGetters(MODULE_NEWS_CATEGORY_EDIT, [
-                'newsGroup'
+                'newsGroup',
+                'updateSuccess'
             ]),
+            _errors() {
+                return this.errors.length;
+            }
         },
         methods: {
-            ...mapActions(MODULE_NEWS_CATEGORY_EDIT, [ACTION_GET_NEWS_GROUP_BY_ID]),
+            ...mapActions(MODULE_NEWS_CATEGORY_EDIT, [
+              ACTION_GET_NEWS_GROUP_BY_ID,
+              ACTION_RESET_NOTIFICATION_INFO,
+              ACTION_UPDATE_NEWS_GROUP
+            ]),
+            _errorToArrs() {
+                let errs = [];
+                if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
+                    errs = Object.values(this.errors[0].messages);
+                }
+
+                if (Object.entries(errs).length === 0 && this.errors.length) {
+                    errs.push(this.$options.setting.error_msg_system);
+                }
+
+                return errs;
+            },
             async _submitInfo() {
                 const _self = this;
-                _self.[ACTION_SET_LOADING](true);
                 await _self.$refs.observerNewsGroup.validate().then((isValid) => {
                     if (isValid) {
                       _self.[ACTION_UPDATE_NEWS_GROUP](_self.newsGroup);
-                    } else {
-                        _self.[ACTION_SET_LOADING](false);
                     }
                 });
+            },
+            _notificationUpdate(notification) {
+                this.$notify(notification);
+                this.[ACTION_RESET_NOTIFICATION_INFO]('');
             }
         },
         setting: {
-            title: 'Cập nhật nhóm tin'
+            title: 'Cập nhật nhóm tin',
+            error_msg_system: 'Lỗi hệ thống !'
         }
     };
 </script>
