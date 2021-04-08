@@ -89,6 +89,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     ) AS path"))
         ->distinct()
     ->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', 'c.category_id', '=', 'cd2.category_id')
+    ->leftJoin(DB_PREFIX . 'category_to_layouts AS ctl', 'c.category_id', '=', 'ctl.category_id')
     ->where('c.category_id', $id);
 
         return $query->first();
@@ -106,9 +107,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         return new NewsGroupResource($this->apiGetDetail($id));
     }
 
-    public function apiInsertOrUpdate(array $data = []) {
-
-    }
+    public function apiInsertOrUpdate(array $data = []) {}
 
     /**
      * @author : dtphi .
@@ -316,5 +315,42 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         }*/
         //dd($query->toSql());
         return  $query;
+    }
+
+
+    private function _deleteById($cateId) {
+        if ($cateId) {
+            DB::delete("delete from `" . DB_PREFIX . "category_paths` where category_id = '" . (int)$cateId . "'");
+
+            $resultPaths = $this->modelPath->where('path_id', '=', (int)$cateId)->get();
+            foreach ($resultPaths as $resultPath) {
+                $this->_deleteById($resultPath->category_id);
+            }
+
+            DB::delete("delete from `" . DB_PREFIX . "categorys` where category_id = '" . (int)$cateId . "'");
+            DB::delete("delete from `" . DB_PREFIX . "category_descriptions` where category_id = '" . (int)$cateId . "'");
+            DB::delete("delete from `" . DB_PREFIX . "category_to_layouts` where category_id = '" . (int)$cateId . "'");
+            DB::delete("delete from `" . DB_PREFIX . "infomation_to_categorys` where category_id = '" . (int)$cateId . "'");
+        }
+    }
+
+    public function deleteCategory($model) {
+        /**
+         * Save user with transaction to make sure all data stored correctly
+         */
+        DB::beginTransaction();
+
+        try{
+            $cateId = $model->category_id;
+
+            $this->_deleteById($cateId);
+
+        } catch(\Exceptions $e) {
+            DB::rollBack();
+
+            return false;
+        }
+
+        DB::commit();
     }
 }

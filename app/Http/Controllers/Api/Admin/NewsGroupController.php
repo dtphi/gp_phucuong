@@ -170,12 +170,12 @@ class NewsGroupController extends ApiController
     public function destroy($id = null)
     {
         try {
-            $newsGroup = $this->newsGpSv->getCateogryById($id);
+            $model = $this->newsGpSv->getCateogryById($id);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        $newsGroup->destroy($id);
+        $this->newsGpSv->deleteCategory($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }

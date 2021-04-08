@@ -29,6 +29,7 @@ class NewsGroupResource extends JsonResource
             'category_name' => $this->resource->name,
             'description' => $this->resource->description,
             'meta_title' => $this->resource->meta_title,
+            'layout_id' => $this->resource->layout_id,
             'path' => $this->resource->path
         );
     }
