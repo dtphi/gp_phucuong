@@ -29,16 +29,20 @@ import {
   ACTION_SEARCH_ALL
 } from '../types/action-types';
 
-export default {
-  namespaced: true,
-  state: {
+const defaultState = () => {
+  return {
     users: [],
     userDelete: null,
     isDelete: false,
     isList: false,
     loading: false,
     errors: []
-  },
+  }
+}
+
+export default {
+  namespaced: true,
+  state: defaultState(),
   getters: {
     users(state) {
       return state.users

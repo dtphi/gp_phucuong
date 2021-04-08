@@ -28,21 +28,24 @@ import {
   ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
 
-const INIT_STATE = {
-  isOpen: false,
-  action: null,
-  classShow: 'modal',
-  styleCss: '',
-  user: null,
-  userId: 0,
-  loading: false,
-  updateSuccess: false,
-  errors: []
+
+const defaultState = () => {
+  return {
+    isOpen: false,
+    action: 'closeModal',
+    classShow: 'modal',
+    styleCss: 'display:none',
+    user: null,
+    userId: 0,
+    loading: false,
+    updateSuccess: false,
+    errors: []
+  }
 }
 
 export default {
   namespaced: true,
-  state: Object.assign({}, INIT_STATE),
+  state: defaultState(),
   getters: {
     isOpen(state) {
       return state.isOpen

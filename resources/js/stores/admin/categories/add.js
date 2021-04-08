@@ -31,34 +31,34 @@ import {
 } from '../types/action-types';
 
 const defaultState = () => {
-    return {
-       isOpen: false,
-      action: null,
-      classShow: 'modal fade',
-      styleCss: '',
-      newsGroupAdd: {
-        category_id: null,
-        name: '',
-        parent_id: 0,
-        description: '',
-        meta_title: '',
-        sort_order: 0,
-        status: 1,
-        layout_id: null,
-        path: null,
-        nameQuery: '',
-      },
-      newsGroupId: 0,
-      itemRoot: 0,
-      loading: false,
-      insertSuccess: false,
-      errors: []
-    }
+  return {
+    isOpen: false,
+    action: null,
+    classShow: 'modal fade',
+    styleCss: '',
+    newsGroupAdd: {
+      category_id: null,
+      name: '',
+      parent_id: 0,
+      description: '',
+      meta_title: '',
+      sort_order: 0,
+      status: 1,
+      layout_id: null,
+      path: null,
+      nameQuery: '',
+    },
+    newsGroupId: 0,
+    itemRoot: 0,
+    loading: false,
+    insertSuccess: false,
+    errors: []
+  }
 }
 
 export default {
   namespaced: true,
-  state: defaultState,
+  state: defaultState(),
   getters: {
     newsGroupAdd(state) {
       return state.newsGroupAdd
@@ -210,7 +210,7 @@ export default {
         newsGroup,
         (result) => {
           commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, AppConfig.comInsertNoSuccess);
-          
+
           dispatch(ACTION_SET_LOADING, false);
           dispatch(ACTION_CLOSE_MODAL);
         },

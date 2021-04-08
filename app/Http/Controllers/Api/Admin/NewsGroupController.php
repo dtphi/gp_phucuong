@@ -42,25 +42,6 @@ class NewsGroupController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function _index(Request $request)
-    {
-        try {
-            $newsGroups     = $this->newsGpSv->apiGetNewsGroupTrees();
-            $newsGroupTrees = $this->generateTree($newsGroups['data']);
-        } catch (HandlerMsgCommon $e) {
-            throw $e->render();
-        }
-
-        return Helper::successResponse([
-            'results' => $newsGroupTrees
-        ]);
-    }
-
-    /**
-     * @author : dtphi .
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function index(Request $request)
     {
         $data = $request->all();

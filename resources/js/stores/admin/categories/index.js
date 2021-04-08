@@ -29,16 +29,20 @@ import {
   fn_redirect_url
 } from '@app/api/utils/fn-helper';
 
-export default {
-  namespaced: true,
-  state: {
+const defaultState = () => {
+  return {
     newsGroups: [],
     newsGroupDelete: null,
     isDelete: false,
     isList: false,
     loading: false,
     errors: []
-  },
+  }
+}
+
+export default {
+  namespaced: true,
+  state: defaultState(),
   getters: {
     newsGroups(state) {
       return state.newsGroups
@@ -118,7 +122,7 @@ export default {
           }
         });
       }
-      
+
       await apiDeleteNewsGroup(
         state.newsGroupDelete.newsgroup.category_id,
         (newsGroups) => {
@@ -154,7 +158,7 @@ export default {
       root: true,
       handler(namespacedContext, payload) {
         return fn_redirect_url('admin/news-categories');
-        
+
       }
     },
 

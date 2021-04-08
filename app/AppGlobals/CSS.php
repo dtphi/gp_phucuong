@@ -23,13 +23,6 @@ class CSS
         $this->cssSetting['mapCss']    = $css;
         $this->cssSetting['mapScript'] = $script;
         $this->cssSetting['bodyClass'] = $bodyClass;
-
-        /*Test information*/
-        $testInfos      = [
-            'cssSetting' => $this->cssSetting,
-            'pathInfo'   => $this->pathInfo
-        ];
-        $this->testInfo = json_encode($testInfos);
     }
 
     public function getDistJsScript($src)

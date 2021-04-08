@@ -36,35 +36,35 @@ import {
 } from '../types/action-types';
 
 const defaultState = () => {
-    return {
-       isOpen: false,
-      action: null,
-      classShow: 'modal fade',
-      styleCss: '',
-      newsGroup: {
-        category_id: null,
-        category_name: '',
-        name: '',
-        parent_id: 0,
-        description: '',
-        meta_title: '',
-        sort_order: 0,
-        status: 1,
-        layout_id: null,
-        path: null
-      },
-      nameQuery: '',
-      newsGroupId: 0,
-      itemRoot: 0,
-      loading: false,
-      updateSuccess: false,
-      errors: []
-    }
+  return {
+    isOpen: false,
+    action: null,
+    classShow: 'modal fade',
+    styleCss: '',
+    newsGroup: {
+      category_id: null,
+      category_name: '',
+      name: '',
+      parent_id: 0,
+      description: '',
+      meta_title: '',
+      sort_order: 0,
+      status: 1,
+      layout_id: null,
+      path: null
+    },
+    nameQuery: '',
+    newsGroupId: 0,
+    itemRoot: 0,
+    loading: false,
+    updateSuccess: false,
+    errors: []
+  }
 }
 
 export default {
   namespaced: true,
-  state: defaultState,
+  state: defaultState(),
   getters: {
     newsGroupAdd(state) {
       return state.newsGroupAdd
@@ -133,7 +133,7 @@ export default {
     },
 
     [NEWSGROUPS_MODAL_SET_NEWS_GROUP](state, payload) {
-        state.newsGroup = payload;
+      state.newsGroup = payload;
     },
 
     [NEWSGROUPS_MODAL_SET_LOADING](state, payload) {
@@ -160,8 +160,10 @@ export default {
       state.errors = payload
     },
     [SELECT_DROPDOWN_PARENT_CATEGORY](state, payload) {
+      if (parseInt(payload.category_id) !== parseInt(state.newsGroupId)) {
         state.nameQuery = payload.category_name;
-      state.newsGroup.parent_id = payload.category_id;
+        state.newsGroup.parent_id = payload.category_id;
+      }
     }
   },
 
@@ -194,6 +196,7 @@ export default {
     }, newsGroupId) {
       dispatch(ACTION_SET_LOADING, true);
       if (newsGroupId) {
+        commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_ID, newsGroupId);
         apiGetNewsGroupById(
           newsGroupId,
           (result) => {
@@ -248,9 +251,9 @@ export default {
         (result) => {
           commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS, AppConfig.comUpdateNoSuccess);
 
-         /* dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
-            root: true
-          });*/
+          /* dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
+             root: true
+           });*/
           dispatch(ACTION_SET_LOADING, false);
           dispatch(ACTION_CLOSE_MODAL);
         },

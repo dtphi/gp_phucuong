@@ -52,9 +52,9 @@ Vue.mixin(utilMixin);
 import VModal from 'vue-js-modal';
 Vue.use(VModal, {
   dialog: true,
-  dynamic: true, 
-  dynamicDefaults: { 
-    clickToClose: true 
+  dynamic: true,
+  dynamicDefaults: {
+    clickToClose: true
   }
 });
 

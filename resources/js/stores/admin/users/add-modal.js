@@ -25,27 +25,27 @@ import {
   ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
 
-const USER_MODEL = {
-  name:'',
-  email: '',
-  password: ''
-}
-
-const INIT_STATE = {
-  isOpen: false,
-  action: null,
-  classShow: 'modal',
-  styleCss: '',
-  user: {...USER_MODEL},
-  userId: 0,
-  loading: false,
-  insertSuccess: '',
-  errors: []
+const defaultState = () => {
+  return {
+    isOpen: false,
+    action: null,
+    classShow: 'modal',
+    styleCss: '',
+    user: {
+      name: '',
+      email: '',
+      password: ''
+    },
+    userId: 0,
+    loading: false,
+    insertSuccess: '',
+    errors: []
+  }
 }
 
 export default {
   namespaced: true,
-  state: Object.assign({}, INIT_STATE),
+  state: defaultState(),
   getters: {
     isOpen(state) {
       return state.isOpen
@@ -87,7 +87,9 @@ export default {
       state.styleCss = 'display:none;';
       state.userId = 0;
       state.errors = [];
-      state.user = {...USER_MODEL};
+
+      const initState = defaultState();
+      Object.assign(state.user, initState.user);
     },
 
     [USERS_MODAL_SET_IS_OPEN_MODAL](state, payload) {
@@ -164,7 +166,7 @@ export default {
         },
         (errors) => {
           commit(USERS_MODAL_INSERT_USER_FAILED, AppConfig.comInsertNoFail);
-          
+
           dispatch(ACTION_SET_LOADING, false);
           commit(USERS_MODAL_SET_ERROR, errors);
         }
