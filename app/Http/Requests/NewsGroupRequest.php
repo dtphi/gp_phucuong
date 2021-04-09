@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class NewsGroupRequest extends FormRequest
 {
     /**
+     * @author : dtphi .
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -17,30 +18,32 @@ class NewsGroupRequest extends FormRequest
 
         if ($this->isMethod('put')) {
             $mergeData = [
-                'name' => isset($data['category_name'])?$data['category_name']:''
+                'name' => isset($data['category_name']) ? $data['category_name'] : ''
             ];
             $this->merge($mergeData);
         }
+
         return true;
     }
 
     /**
+     * @author : dtphi .
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
     public function rules()
-    {   
+    {
 
         if ($this->isMethod('put')) {
             return [
-                'name' => 'required|min:3|max:255',
+                'name'       => 'required|min:3|max:255',
                 'meta_title' => 'required|min:3|max:255'
             ];
         }
 
-         return [
-            'name' => 'required|min:3|max:255',
+        return [
+            'name'       => 'required|min:3|max:255',
             'meta_title' => 'required|min:3|max:255'
         ];
     }

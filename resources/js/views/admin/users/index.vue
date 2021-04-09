@@ -5,7 +5,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                    <i class="fa fa-list"></i> Danh sách người dùng</h3>
+                        <i class="fa fa-list"></i>{{$options.setting.panel_title}}</h3>
                 </div>
                 <div class="panel-body">
                     <div id="form-category">
@@ -13,14 +13,16 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr role="row">
-                                    <th style="width: 1px;" class="text-center">No</th>
+                                    <th style="width: 1px;" class="text-center">{{$options.setting.no_txt}}</th>
                                     <th style="width: 1px;" class="text-center">
-                                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                        <input type="checkbox"
+                                               onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                     </th>
-                                    <th>Họ Tên</th>
-                                    <th class="text-center">Email</th>
-                                    <th style="width: 100px" class="text-center">Ngày tạo</th>
-                                    <th style="width: 100px" class="text-right">Thực hiện</th>
+                                    <th>{{$options.setting.user_name_txt}}</th>
+                                    <th class="text-center">{{$options.setting.email_txt}}</th>
+                                    <th style="width: 100px" class="text-center">{{$options.setting.created_at_txt}}
+                                    </th>
+                                    <th style="width: 100px" class="text-right">{{$options.setting.action_txt}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -53,6 +55,7 @@
     import {
         mapState,
         mapGetters,
+        mapMutations,
         mapActions
     } from 'vuex';
     import TheHeaderPage from './components/TheHeaderPage';
@@ -76,9 +79,6 @@
 
     export default {
         name: 'UserList',
-        beforeCreate() {
-            this.$store.dispatch(MODULE_USER + '/' + ACTION_GET_USER_LIST);
-        },
         components: {
             TheHeaderPage,
             UserAddForm,
@@ -93,7 +93,9 @@
             };
         },
         computed: {
-            ...mapGetters(['isNotEmptyList']),
+            ...mapGetters([
+                'isNotEmptyList'
+            ]),
 
             ...mapState(MODULE_USER, [
                 'users',
@@ -106,6 +108,10 @@
 
             ...mapState(MODULE_USER_EDIT_MODAL, [
                 'updateSuccess'
+            ]),
+
+            ...mapMutations(MODULE_USER, [
+                USERS_SET_USER_LIST
             ]),
 
             _userList() {
@@ -129,17 +135,32 @@
             }
         },
         mounted() {
+            this.[ACTION_GET_USER_LIST]();
             window.Echo.channel('search-user')
             .listen('.searchAllResults', (e) => {
-                this.$store.commit(MODULE_USER + '/' + USERS_SET_USER_LIST, e.users.results)
-            })
+                this.$store.commit(USERS_SET_USER_LIST, e.users.results)
+            });
         },
         methods: {
+            ...mapActions(MODULE_USER, [
+                ACTION_GET_USER_LIST
+            ]),
+            ...mapActions(MODULE_USER_MODAL, [
+                ACTION_RESET_NOTIFICATION_INFO
+            ]),
             ...mapActions(['getNo']),
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.$store.dispatch(MODULE_USER_MODAL + '/' + ACTION_RESET_NOTIFICATION_INFO, '');
+                this.[ACTION_RESET_NOTIFICATION_INFO]('');
             }
+        },
+        setting: {
+            panel_title: 'Danh sách người dùng',
+            no_txt: 'No',
+            user_name_txt: 'Họ Tên',
+            email_txt: 'Email',
+            created_at_txt: 'Ngày Tạo',
+            action_txt: 'Thực Hiện'
         }
     };
 </script>

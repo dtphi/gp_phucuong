@@ -1,55 +1,64 @@
 <template>
-	<div id="content">
+    <div id="content">
         <the-header-page></the-header-page>
-            <div class="container-fluid">
-        				    <div class="panel panel-default">
-        				      <div class="panel-heading">
-        				        <h3 class="panel-title">
-                                    <i class="fa fa-list"></i>{{$options.setting.list_title}}</h3>
-        				      </div>
-        	<div class="panel-body">
-           <div id="form-category">
-              <div class="table-responsive">
-                <template v-if="loading">
-                    <loading-over-lay :active.sync="loading"
-                                      :is-full-page="fullPage"></loading-over-lay>
-                </template>
-                <template v-if="_lists">
-                    <table class="table table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <td style="width: 1px;" class="text-center">
-                            <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
-                          </td>
-                          <td class="text-left">                   
-                            <a href="javascript:void(0);" class="asc">Tên nhóm tin</a>
-                          </td>
-                          <td style="width: 100px" class="text-center">                    
-                            <a href="javascript:void(0);" class="asc">Sắp xếp</a>
-                          </td>
-                          <td style="width: 100px" class="text-right">Thực hiện</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <the-category-item 
-                            v-for="(item, idx) in _lists" 
-                            :category-item="item" 
-                            :key="idx"></the-category-item>
-                        </tbody>
-                    </table>
-                </template>
-              </div>
-            </div>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i>{{$options.setting.list_title}}
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div id="form-category">
+                        <div class="table-responsive">
+                            <template v-if="loading">
+                                <loading-over-lay
+                                    :active.sync="loading"
+                                    :is-full-page="fullPage"></loading-over-lay>
+                            </template>
+                            <template v-if="_lists">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td style="width: 1px;" class="text-center">
+                                            <input type="checkbox"
+                                                   onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                        </td>
+                                        <td class="text-left">
+                                            <a href="javascript:void(0);"
+                                               class="asc">{{$options.setting.category_name_txt}}</a>
+                                        </td>
+                                        <td style="width: 100px" class="text-center">
+                                            <a href="javascript:void(0);" class="asc">{{$options.setting.sort_order_txt}}</a>
+                                        </td>
+                                        <td style="width: 100px" class="text-right">{{$options.setting.action_txt}}</td>
+                                    </tr>
+                                    </thead>
 
-            <paginate></paginate>
-				    </div>
-				  </div>
-			</div>
+                                    <tbody>
+                                    <the-category-item
+                                        v-for="(item, idx) in _lists"
+                                        :category-item="item"
+                                        :key="idx"></the-category-item>
+                                    </tbody>
+                                </table>
+                            </template>
+                        </div>
+                    </div>
+
+                    <paginate></paginate>
+                </div>
+            </div>
         </div>
+    </div>
 </template>
 
 <script>
-    import {mapState, mapGetters, mapActions} from 'vuex';
+    import {
+        mapState,
+        mapGetters,
+        mapActions
+    } from 'vuex';
     import TheCategoryItem from './components/TheCategoryItem';
     import TheHeaderPage from './components/TheHeaderPage';
     import Breadcrumb from 'com@admin/Breadcrumb';
@@ -67,13 +76,10 @@
     export default {
         name: 'CategoryListPage',
         components: {
-        	TheCategoryItem,
+            TheCategoryItem,
             TheHeaderPage,
             Breadcrumb,
             Paginate
-        },
-        beforeCreate() {
-            this.$store.dispatch(MODULE_NEWS_CATEGORY + '/' + ACTION_GET_NEWS_GROUP_LIST);
         },
         data() {
             return {
@@ -81,8 +87,7 @@
             };
         },
         computed: {
-            ...mapState(MODULE_NEWS_CATEGORY,
-            [
+            ...mapState(MODULE_NEWS_CATEGORY, [
                 'newsGroups',
                 'loading'
             ]),
@@ -92,10 +97,19 @@
                 return rootTree;
             }
         },
+        mounted() {
+            this.[ACTION_GET_NEWS_GROUP_LIST]();
+        },
         methods: {
+            ...mapActions(MODULE_NEWS_CATEGORY, [
+                ACTION_GET_NEWS_GROUP_LIST
+            ])
         },
         setting: {
-            list_title: 'Danh sách danh mục tin'
+            list_title: 'Danh sách danh mục tin',
+            category_name_txt: 'Tên danh mục tin',
+            sort_order_txt: 'Sắp xếp',
+            action_txt: 'Thực hiện'
         }
     };
 </script>

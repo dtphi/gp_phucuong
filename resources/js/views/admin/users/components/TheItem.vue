@@ -1,8 +1,11 @@
 <template>
     <tr>
         <td>{{_getNo()}}</td>
-        <td class="text-center">                    
-            <input type="checkbox" name="selected[]" :id="`user_select_id_${user.id}`" :value="user.id">
+        <td class="text-center">
+            <input type="checkbox"
+                   name="selected[]"
+                   :id="`user_select_id_${user.id}`"
+                   :value="user.id">
         </td>
         <td>{{user.name}}</td>
         <td class="text-center">{{user.email}}</td>
@@ -44,7 +47,7 @@
                     return (id && name);
                 }
             },
-            no : {
+            no: {
                 default: 1
             }
         },
@@ -52,9 +55,6 @@
             ...mapState({
                 meta: state => state.cfApp.meta
             })
-        },
-        data() {
-            return {};
         },
         methods: {
             _getNo() {

@@ -1,5 +1,4 @@
 import AuthLayout from 'v@admin/layouts/auth';
-import MainLayout from 'v@admin/layouts/Main';
 import Login from 'v@admin/auth/Login';
 import Users from 'v@admin/users';
 import FileManager from 'v@admin/filemanagers';

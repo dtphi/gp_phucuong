@@ -1,15 +1,18 @@
 <template>
-    <a href="javascript:void(0);" 
-        data-toggle="tooltip" 
+    <a
+        href="javascript:void(0);"
+        data-toggle="tooltip"
         @click="_showModal()"
-        class="btn btn-primary" 
+        class="btn btn-primary"
         data-original-title="Thêm User">
         <font-awesome-icon icon="plus" size="1x"/>
     </a>
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {
+        mapActions
+    } from 'vuex';
     import {
         MODULE_USER_MODAL
     } from 'store@admin/types/module-types';
@@ -19,15 +22,17 @@
 
     export default {
         name: 'TheButtonAdd',
-        data() {
-            return {};
-        },
         methods: {
-            ...mapActions(MODULE_USER_MODAL, [ACTION_SHOW_MODAL]),
+            ...mapActions(MODULE_USER_MODAL, [
+                ACTION_SHOW_MODAL
+            ]),
 
             _showModal() {
                 this.[ACTION_SHOW_MODAL]({action: 'add'});
             }
+        },
+        setting: {
+            btn_add_txt: 'Thêm người dùng',
         }
     };
 </script>

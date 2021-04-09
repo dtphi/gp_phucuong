@@ -6,11 +6,10 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel;
 use App\Http\Resources\NewsGroups\NewsGroupCollection;
 use App\Http\Resources\NewsGroups\NewsGroupResource;
-use App\Models\NewsGroup;
 use App\Models\Category;
 use App\Models\CategoryDescription;
 use App\Models\CategoryPath;
-
+use App\Models\NewsGroup;
 use DB;
 
 final class NewsGroupService implements BaseModel, NewsGroupModel
@@ -20,8 +19,14 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
      */
     private $model = null;
 
+    /**
+     * @var CategoryDescription|null
+     */
     private $modelDes = null;
 
+    /**
+     * @var CategoryPath|null
+     */
     private $modelPath = null;
 
     /**
@@ -30,8 +35,8 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
      */
     public function __construct()
     {
-        $this->model = new Category();
-        $this->modelDes = new CategoryDescription();
+        $this->model     = new Category();
+        $this->modelDes  = new CategoryDescription();
         $this->modelPath = new CategoryPath();
     }
 
@@ -87,10 +92,10 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         GROUP BY
             cp.category_id
     ) AS path"))
-        ->distinct()
-    ->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', 'c.category_id', '=', 'cd2.category_id')
-    ->leftJoin(DB_PREFIX . 'category_to_layouts AS ctl', 'c.category_id', '=', 'ctl.category_id')
-    ->where('c.category_id', $id);
+            ->distinct()
+            ->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', 'c.category_id', '=', 'cd2.category_id')
+            ->leftJoin(DB_PREFIX . 'category_to_layouts AS ctl', 'c.category_id', '=', 'ctl.category_id')
+            ->where('c.category_id', $id);
 
         return $query->first();
     }
@@ -103,11 +108,17 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     public function apiGetResourceDetail($id = null)
     {
         // TODO: Implement apiGetResourceDetail() method.
-    
+
         return new NewsGroupResource($this->apiGetDetail($id));
     }
 
-    public function apiInsertOrUpdate(array $data = []) {}
+    /**
+     * @author : dtphi .
+     * @param array $data
+     */
+    public function apiInsertOrUpdate(array $data = [])
+    {
+    }
 
     /**
      * @author : dtphi .
@@ -124,28 +135,31 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
          */
         DB::beginTransaction();
 
-        try{
-            if($this->model->save()) {
+        try {
+            if ($this->model->save()) {
                 $data['category_id'] = $this->model->category_id;
                 $this->modelDes->fill($data);
-                
+
                 $this->modelDes->save();
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
-                $level = 0;
-                $resultPaths = $this->modelPath->where('category_id', $data['parent_id'] )
-                ->orderBy('level', 'ASC')->get();
+                $level       = 0;
+                $resultPaths = $this->modelPath->where('category_id', $data['parent_id'])
+                    ->orderBy('level', 'ASC')->get();
 
                 foreach ($resultPaths as $key => $resultPath) {
-                    DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)', [$data['category_id'], $resultPath['path_id'], $level]);
+                    DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)',
+                        [$data['category_id'], $resultPath['path_id'], $level]);
 
                     $level++;
                 }
 
-                DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)', [$data['category_id'], $data['category_id'], $level]);
+                DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)',
+                    [$data['category_id'], $data['category_id'], $level]);
 
                 if (isset($data['layout_id'])) {
-                    DB::insert('insert into ' . DB_PREFIX . 'category_to_layouts (category_id, layout_id) values (?, ?)', [$data['category_id'], $data['layout_id']]);
+                    DB::insert('insert into ' . DB_PREFIX . 'category_to_layouts (category_id, layout_id) values (?, ?)',
+                        [$data['category_id'], $data['layout_id']]);
                 }
 
             } else {
@@ -154,7 +168,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                 return false;
             }
 
-        } catch(\Exceptions $e) {
+        } catch (\Exceptions $e) {
             DB::rollBack();
 
             return false;
@@ -165,15 +179,28 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         return $this->model;
     }
 
-
+    /**
+     * @author : dtphi .
+     * @param null $categoryId
+     * @return mixed
+     */
     public function getCateogryById($categoryId = null)
     {
-        if ($categoryId) return $this->model->findOrFail($categoryId);
+        if ($categoryId) {
+            return $this->model->findOrFail($categoryId);
+        }
     }
 
+    /**
+     * @author : dtphi .
+     * @param null $categoryId
+     * @return mixed
+     */
     public function getCategoryDesById($categoryId = null)
     {
-        if ($categoryId) return $this->modelDes->findOrFail($categoryId);
+        if ($categoryId) {
+            return $this->modelDes->findOrFail($categoryId);
+        }
     }
 
     /**
@@ -191,33 +218,33 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
          */
         DB::beginTransaction();
 
-        try{
-            if($model->save()) {
+        try {
+            if ($model->save()) {
                 $categoryId = $model->category_id;
 
                 $modelDes = $this->getCategoryDesById((int)$categoryId);
                 $modelDes->fill($data);
-                
+
                 $modelDes->save();
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
-                $resultPaths = $this->modelPath->where('path_id', (int)$categoryId )
-                ->orderBy('level', 'ASC')->get();
+                $resultPaths = $this->modelPath->where('path_id', (int)$categoryId)
+                    ->orderBy('level', 'ASC')->get();
 
                 if ($resultPaths->count()) {
                     foreach ($resultPaths as $key => $resultPath) {
                         DB::delete("delete from `" . DB_PREFIX . "category_paths` where category_id = '" . (int)$resultPath['category_id'] . "' AND level < '" . (int)$resultPath['level'] . "'");
                         $path = [];
 
-                        $resultPathCurParents = $this->modelPath->where('category_id', (int)$data['parent_id'] )
-                    ->orderBy('level', 'ASC')->get();
+                        $resultPathCurParents = $this->modelPath->where('category_id', (int)$data['parent_id'])
+                            ->orderBy('level', 'ASC')->get();
 
                         foreach ($resultPathCurParents as $resultPathCurParent) {
                             $path[] = $resultPathCurParent['path_id'];
                         }
 
-                        $resultPathLefts = $this->modelPath->where('category_id', (int)$resultPath['category_id'] )
-                    ->orderBy('level', 'ASC')->get();
+                        $resultPathLefts = $this->modelPath->where('category_id', (int)$resultPath['category_id'])
+                            ->orderBy('level', 'ASC')->get();
 
                         foreach ($resultPathLefts as $resultPathLeft) {
                             $path[] = $resultPathLeft['path_id'];
@@ -238,7 +265,8 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                     // Fix for records with no paths
                     $level = 0;
 
-                    $resultPathParents = $this->modelPath->where('category_id', (int)$data['parent_id'] )->orderBy('level', 'ASC')->get();
+                    $resultPathParents = $this->modelPath->where('category_id',
+                        (int)$data['parent_id'])->orderBy('level', 'ASC')->get();
 
                     foreach ($resultPathParents as $resultPathParent) {
                         DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)', [$categoryId, $resultPathParent['path_id'], (int)$level]);
@@ -248,11 +276,12 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
                     DB::statement("REPLACE INTO `" . DB_PREFIX . "category_paths` SET category_id = '" . (int)$categoryId . "', `path_id` = '" . (int)$categoryId . "', level = '" . (int)$level . "'");
                 }
-                
+
                 DB::delete("delete from " . DB_PREFIX . "category_to_layouts WHERE category_id = '" . (int)$categoryId . "'");
 
                 if (isset($data['layout_id'])) {
-                    DB::insert('insert into ' . DB_PREFIX . 'category_to_layouts (category_id, layout_id) values (?, ?)', [$categoryId, $data['layout_id']]);
+                    DB::insert('insert into ' . DB_PREFIX . 'category_to_layouts (category_id, layout_id) values (?, ?)',
+                        [$categoryId, $data['layout_id']]);
                 }
 
             } else {
@@ -261,7 +290,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                 return false;
             }
 
-        } catch(\Exceptions $e) {
+        } catch (\Exceptions $e) {
             DB::rollBack();
 
             return false;
@@ -272,13 +301,24 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         return $this->model;
     }
 
-    public function apiGetNewsGroupTrees($data = array()) {
+    /**
+     * @author : dtphi .
+     * @param array $data
+     * @return mixed
+     */
+    public function apiGetNewsGroupTrees($data = array())
+    {
 
-        $query = $this->modelPath->select(DB_PREFIX.'category_paths.category_id AS category_id', 'cate1.parent_id', 'cate1.sort_order', DB::raw("group_concat(cd1.`name` ORDER BY pc_category_paths.level SEPARATOR ' ->> ') AS category_name"))->groupBy(DB_PREFIX.'category_paths.category_id')
-        ->leftJoin(DB_PREFIX . 'categorys AS cate1', DB_PREFIX.'category_paths.category_id', '=', 'cate1.category_id')
-        ->leftJoin(DB_PREFIX . 'categorys AS cate2', DB_PREFIX.'category_paths.path_id', '=', 'cate2.category_id')
-        ->leftJoin(DB_PREFIX . 'category_descriptions AS cd1', DB_PREFIX.'category_paths.path_id', '=', 'cd1.category_id')
-        ->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', DB_PREFIX.'category_paths.category_id', '=', 'cd2.category_id');
+        $query = $this->modelPath->select(DB_PREFIX . 'category_paths.category_id AS category_id', 'cate1.parent_id',
+            'cate1.sort_order',
+            DB::raw("group_concat(cd1.`name` ORDER BY pc_category_paths.level SEPARATOR ' ->> ') AS category_name"))->groupBy(DB_PREFIX . 'category_paths.category_id')
+            ->leftJoin(DB_PREFIX . 'categorys AS cate1', DB_PREFIX . 'category_paths.category_id', '=',
+                'cate1.category_id')
+            ->leftJoin(DB_PREFIX . 'categorys AS cate2', DB_PREFIX . 'category_paths.path_id', '=', 'cate2.category_id')
+            ->leftJoin(DB_PREFIX . 'category_descriptions AS cd1', DB_PREFIX . 'category_paths.path_id', '=',
+                'cd1.category_id')
+            ->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', DB_PREFIX . 'category_paths.category_id', '=',
+                'cd2.category_id');
 
         /*if (!empty($data['filter_name'])) {
             $sql .= " AND cd2.name LIKE '" . $data['filter_name'] . "%'";
@@ -299,7 +339,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         if (isset($data['order']) && ($data['order'] == 'DESC')) {
             $query->orderBy($sqlSort, 'DESC');
         } else {
-            $query->orderBy($sqlSort,'ASC');
+            $query->orderBy($sqlSort, 'ASC');
         }
 
         /*if (isset($data['start']) || isset($data['limit'])) {
@@ -313,12 +353,17 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }*/
+
         //dd($query->toSql());
-        return  $query;
+        return $query;
     }
 
-
-    private function _deleteById($cateId) {
+    /**
+     * @author : dtphi.
+     * @param $cateId
+     */
+    private function _deleteById($cateId)
+    {
         if ($cateId) {
             DB::delete("delete from `" . DB_PREFIX . "category_paths` where category_id = '" . (int)$cateId . "'");
 
@@ -334,18 +379,24 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         }
     }
 
-    public function deleteCategory($model) {
+    /**
+     * @author : dtphi.
+     * @param $model
+     * @return bool
+     */
+    public function deleteCategory($model)
+    {
         /**
          * Save user with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
 
-        try{
+        try {
             $cateId = $model->category_id;
 
             $this->_deleteById($cateId);
 
-        } catch(\Exceptions $e) {
+        } catch (\Exceptions $e) {
             DB::rollBack();
 
             return false;

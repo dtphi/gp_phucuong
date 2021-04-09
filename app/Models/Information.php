@@ -2,18 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 class Information extends BaseModel
 {
-    protected $table = 'news';
+    /**
+     * @var string
+     */
+    protected $table = DB_PREFIX . 'informations';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'information_id';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function group()
+    public function category()
     {
-        return $this->belongsTo('App\Models\NewsGroup', 'newsgroup_id');
+        return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
     /**
@@ -22,13 +28,11 @@ class Information extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'newsgroup_id',
-        'newsname',
-        'user_id',
-        'description',
-        'newslink',
-        'picture',
-        'context'
+        'image',
+        'date_available',
+        'sort_order',
+        'status',
+        'viewed'
     ];
 
     /**
@@ -39,7 +43,7 @@ class Information extends BaseModel
      */
     public function getGroupNameAttribute($value)
     {
-        if (is_null($this->group)) return ucfirst($value); 
+        if (is_null($this->group)) return ucfirst($value);
 
         return ucfirst($this->group->newsgroupname);
     }

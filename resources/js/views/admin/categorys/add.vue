@@ -1,145 +1,163 @@
 <template>
-	<div id="content">
-    <template v-if="_errors">
-      <div class="alert alert-danger">
-          <i class="fa fa-exclamation-circle"></i>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <p v-for="err in _errorToArrs()">{{err}}</p>
-      </div>
-    </template>
+    <div id="content">
+        <template v-if="_errors">
+            <div class="alert alert-danger">
+                <i class="fa fa-exclamation-circle"></i>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p v-for="err in _errorToArrs()">{{err}}</p>
+            </div>
+        </template>
         <template v-if="loading">
-            <loading-over-lay :active.sync="loading"
-                              :is-full-page="fullPage"></loading-over-lay>
+            <loading-over-lay
+                :active.sync="loading"
+                :is-full-page="fullPage"></loading-over-lay>
         </template>
         <template v-if="newsGroupAdd">
-            <validation-observer ref="observerNewsGroup" @submit.prevent="_submitInfo">
+            <validation-observer
+                ref="observerNewsGroup"
+                @submit.prevent="_submitInfo">
                 <div class="page-header">
                     <div class="container-fluid">
-                      <div class="pull-right">
-                        <button type="button" @click="_submitInfo"
-                            data-toggle="tooltip" 
-                            title="Lưu" 
-                            class="btn btn-primary"><i class="fa fa-save"></i></button>
+                        <div class="pull-right">
+                            <button type="button" @click="_submitInfo"
+                                    data-toggle="tooltip"
+                                    title="Lưu"
+                                    class="btn btn-primary"><i class="fa fa-save"></i></button>
 
-                        <button type="button" @click="_submitInfoBack"
-                            data-toggle="tooltip" 
-                            title="Lưu" 
-                            class="btn btn-primary">Lưu trở về danh sách</button>
+                            <button type="button" @click="_submitInfoBack"
+                                    data-toggle="tooltip"
+                                    title="Lưu"
+                                    class="btn btn-primary">Lưu trở về danh sách
+                            </button>
 
-                        <the-btn-back-list-page></the-btn-back-list-page>
-                      </div>
-                      <h1>{{$options.setting.panel_title}}</h1>
-                      <breadcrumb></breadcrumb>
+                            <the-btn-back-list-page></the-btn-back-list-page>
+                        </div>
+                        <h1>{{$options.setting.panel_title}}</h1>
+                        <breadcrumb></breadcrumb>
                     </div>
                 </div>
                 <div class="container-fluid">
                     <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
-                      </div>
-                    
-                    <div class="panel-body">
-                        <form class="form-horizontal">
-                          <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#tab-general" data-toggle="tab">{{$options.setting.tab_general_title}}</a>
-                            </li>
-                            <li><a href="#tab-data" data-toggle="tab">{{$options.setting.tab_data_title}}</a></li>
-                            <li><a href="#tab-design" data-toggle="tab">{{$options.setting.tab_design_title}}</a></li>
-                          </ul>
-                          <div class="tab-content">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
+                        </div>
 
-                            <div class="tab-pane active" id="tab-general">
-                              <div class="tab-content">
-                                  <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-category-name">Tên Nhóm Tin</label>
-                                    <div class="col-sm-10">
-                                      <validation-provider
-                                                name="category_name"
-                                                rules="required|max:191"
-                                                v-slot="{ errors }">
-                                        <input type="text" v-model="newsGroupAdd.name" placeholder="Tên nhóm tin" id="input-category-name" class="form-control">
+                        <div class="panel-body">
+                            <form class="form-horizontal">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#tab-general"
+                                           data-toggle="tab">{{$options.setting.tab_general_title}}</a>
+                                    </li>
+                                    <li><a href="#tab-data" data-toggle="tab">{{$options.setting.tab_data_title}}</a>
+                                    </li>
+                                    <li><a href="#tab-design"
+                                           data-toggle="tab">{{$options.setting.tab_design_title}}</a></li>
+                                </ul>
+                                <div class="tab-content">
 
-                                        <span class="cms-text-red">{{ errors[0] }}</span>
-                                      </validation-provider>
+                                    <div class="tab-pane active" id="tab-general">
+                                        <div class="tab-content">
+                                            <div class="form-group required">
+                                                <label class="col-sm-2 control-label" for="input-category-name">Tên Nhóm Tin</label>
+                                                <div class="col-sm-10">
+                                                    <validation-provider
+                                                        name="category_name"
+                                                        rules="required|max:191"
+                                                        v-slot="{ errors }">
+                                                        <input type="text" v-model="newsGroupAdd.name"
+                                                               placeholder="Tên nhóm tin" id="input-category-name"
+                                                               class="form-control">
+
+                                                        <span class="cms-text-red">{{ errors[0] }}</span>
+                                                    </validation-provider>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="input-category-description">Mô tả</label>
+                                                <div class="col-sm-10">
+                                                    <tinymce
+                                                        id="input-category-description"
+                                                        :other_options="options"
+                                                        v-model="newsGroupAdd.description"></tinymce>
+                                                </div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label class="col-sm-2 control-label"
+                                                       for="input-meta-title">Meta title</label>
+                                                <div class="col-sm-10">
+                                                    <validation-provider
+                                                        name="user_name"
+                                                        rules="required|max:191"
+                                                        v-slot="{ errors }">
+                                                        <input type="text" v-model="newsGroupAdd.meta_title"
+                                                               placeholder="Meta title" id="input-meta-title"
+                                                               class="form-control">
+
+                                                        <span class="cms-text-red">{{ errors[0] }}</span>
+                                                    </validation-provider>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-category-description">Mô tả</label>
-                                    <div class="col-sm-10">
-                                      <tinymce 
-                                            id="input-category-description" 
-                                            :other_options="options"
-                                            v-model="newsGroupAdd.description"></tinymce>
+
+                                    <div class="tab-pane" id="tab-data">
+                                        <category-autocomplete
+                                            :category-id="newsGroupAdd.parent_id"></category-autocomplete>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label"
+                                                   for="input-category-sort-order">Thứ tự</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" v-model="newsGroupAdd.sort_order" name="sort_order"
+                                                       placeholder="Thứ tự hiển thị" id="input-category-sort-order"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label"
+                                                   for="input-category-status">Trạng thái</label>
+                                            <div class="col-sm-10">
+                                                <select v-model="newsGroupAdd.status" id="input-category-status"
+                                                        class="form-control">
+                                                    <option value="1" selected="selected">Xảy ra</option>
+                                                    <option value="0">Ẩn</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-meta-title">Meta title</label>
-                                    <div class="col-sm-10">
-                                      <validation-provider
-                                                name="user_name"
-                                                rules="required|max:191"
-                                                v-slot="{ errors }">
-                                        <input type="text" v-model="newsGroupAdd.meta_title" placeholder="Meta title" id="input-meta-title" class="form-control">
 
-                                        <span class="cms-text-red">{{ errors[0] }}</span>
-                                      </validation-provider>
+                                    <div class="tab-pane" id="tab-design">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <td class="text-left">Màn hình hiển thị</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="text-left">
+                                                        <select v-model="newsGroupAdd.layout_id" class="form-control">
+                                                            <option value="1">Trang chủ</option>
+                                                            <option value="2">Trang Tin tức</option>
+                                                            <option value="3">Trang Video</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                  </div>
-                              </div>
-                            </div>
 
-                            <div class="tab-pane" id="tab-data">
-                              <category-autocomplete :category-id="newsGroupAdd.parent_id"></category-autocomplete>
-
-                              <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-category-sort-order">Thứ tự</label>
-                                <div class="col-sm-10">
-                                  <input type="text" v-model="newsGroupAdd.sort_order" name="sort_order" placeholder="Thứ tự hiển thị" id="input-category-sort-order" class="form-control" />
                                 </div>
-                              </div>
-                              <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-category-status">Trạng thái</label>
-                                <div class="col-sm-10">
-                                  <select v-model="newsGroupAdd.status" id="input-category-status" class="form-control">
-                                    <option value="1" selected="selected">Xảy ra</option>
-                                    <option value="0">Ẩn</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="tab-pane" id="tab-design">
-                              <div class="table-responsive">
-                                <table class="table table-bordered table-hover">
-                                  <thead>
-                                    <tr>
-                                      <td class="text-left">Màn hình hiển thị</td>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td class="text-left">
-                                        <select v-model="newsGroupAdd.layout_id" class="form-control">
-                                          <option value="1">Trang chủ</option>
-                                          <option value="2">Trang Tin tức</option>
-                                          <option value="3">Trang Video</option>
-                                        </select>
-                                        </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-
-                          </div>
-                        </form>
-                      </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </validation-observer>
         </template>
-	</div>
+    </div>
 </template>
 
 <script>
@@ -219,7 +237,7 @@
             },
             async _submitInfo() {
                 const _self = this;
-            
+
                 await _self.$refs.observerNewsGroup.validate().then((isValid) => {
                     if (isValid) {
                         _self.[ACTION_INSERT_NEWS_GROUP](_self.newsGroupAdd);
@@ -229,7 +247,7 @@
 
             async _submitInfoBack() {
                 const _self = this;
-            
+
                 await _self.$refs.observerNewsGroup.validate().then((isValid) => {
                     if (isValid) {
                         _self.[ACTION_INSERT_NEWS_GROUP_BACK](_self.newsGroupAdd);

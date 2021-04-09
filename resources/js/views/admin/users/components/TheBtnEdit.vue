@@ -1,7 +1,9 @@
 <template>
-    <a href="javascript:void(0);" data-toggle="tooltip" 
+    <a
+        href="javascript:void(0);"
+        data-toggle="tooltip"
         @click="_showModal()"
-        class="btn btn-default cms-btn" 
+        class="btn btn-default cms-btn"
         data-original-title="Sửa User">
         <font-awesome-layers style="background:honeydew">
             <font-awesome-icon size="1x" icon="edit"/>
@@ -10,7 +12,9 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {
+        mapActions
+    } from 'vuex';
     import {
         MODULE_USER_EDIT_MODAL
     } from 'store@admin/types/module-types';

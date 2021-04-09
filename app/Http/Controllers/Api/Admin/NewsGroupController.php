@@ -46,14 +46,14 @@ class NewsGroupController extends ApiController
     {
         $data = $request->all();
         try {
-            $newsGroups     = $this->newsGpSv->apiGetResourceCollection($data);
-            
+            $newsGroups = $this->newsGpSv->apiGetResourceCollection($data);
+
             $results = [];
             foreach ($newsGroups as $key => $newsGroup) {
                 $results[] = [
                     'category_name' => $newsGroup->category_name,
-                    'sort_order' => $newsGroup->sort_order,
-                    'category_id' => $newsGroup->category_id
+                    'sort_order'    => $newsGroup->sort_order,
+                    'category_id'   => $newsGroup->category_id
                 ];
             }
         } catch (HandlerMsgCommon $e) {

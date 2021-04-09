@@ -1,8 +1,10 @@
 <template>
-    <a href="javascript:void(0);" data-toggle="tooltip" 
+    <a
+        href="javascript:void(0);"
+        data-toggle="tooltip"
         @click="_showConfirm()"
-        class="btn btn-default cms-btn" 
-        data-original-title="Xóa User">
+        class="btn btn-default cms-btn"
+        :data-original-title="$options.setting.btn_delete_txt">
         <font-awesome-layers size="1x" style="background:MistyRose">
             <font-awesome-icon icon="circle" style="color:Tomato"/>
             <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
@@ -32,9 +34,6 @@
                 }
             }
         },
-        data() {
-            return {};
-        },
         methods: {
             ...mapActions(MODULE_USER, [
                 ACTION_SET_USER_DELETE_BY_ID,
@@ -42,20 +41,19 @@
             ]),
 
             _showConfirm() {
-                console.log(this);
                 this.[ACTION_SET_USER_DELETE_BY_ID](this.userId);
                 this.$modal.show('dialog', {
-                    title: 'Xóa Người Dùng',
-                    text: 'Bạn muốn xóa người dùng ?',
+                    title: this.$options.setting.modal_title_txt,
+                    text: this.$options.setting.content_txt,
                     buttons: [
                         {
-                            title: 'Hủy',
+                            title: this.$options.setting.btn_delete_cancel_txt,
                             handler: () => {
                                 this.$modal.hide('dialog')
                             }
                         },
                         {
-                            title: 'Xóa',
+                            title: this.$options.setting.btn_delete_submit_txt,
                             handler: () => {
                                 this.[ACTION_DELETE_USER_BY_ID]();
                                 this.$modal.hide('dialog')
@@ -64,6 +62,13 @@
                     ]
                 })
             }
+        },
+        setting: {
+            btn_delete_txt: 'Xóa người dùng',
+            btn_delete_submit_txt: 'Xóa',
+            btn_delete_cancel_txt: 'Hủy',
+            modal_title_txt: 'Xóa Người Dùng',
+            content_txt: 'Bạn muốn xóa người dùng này ?',
         }
     };
 </script>

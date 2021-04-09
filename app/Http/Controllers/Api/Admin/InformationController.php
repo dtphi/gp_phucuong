@@ -92,7 +92,7 @@ class InformationController extends ApiController
     public function update(InformationRequest $request, $id = null)
     {
         try {
-            $this->infoSv->apiGetDetail($id);
+            $model = $this->infoSv->apiGetDetail($id);
 
         } catch (HandlerMsgCommon $e) {
             Log::debug('User not found, Request ID = ' . $id);
@@ -100,7 +100,7 @@ class InformationController extends ApiController
             throw $e->render();
         }
 
-        return $this->__handleStore($request);
+        return $this->__handleStoreUpdate($model, $request);
     }
 
     /**
@@ -130,7 +130,24 @@ class InformationController extends ApiController
     {
         $requestParams = $request->all();
 
-        if ($result = $this->infoSv->apiInsertOrUpdate($requestParams)) {
+        if ($result = $this->infoSv->apiInsert($requestParams)) {
+            return $this->respondUpdated($result);
+        }
+
+        return $this->respondBadRequest();
+    }
+
+    /**
+     * @author : dtphi .
+     * @param $model
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function __handleStoreUpdate(&$model,&$request)
+    {
+        $requestParams = $request->all();
+
+        if ($result = $this->infoSv->apiUpdate($model,$requestParams)) {
             return $this->respondUpdated($result);
         }
 
