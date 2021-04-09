@@ -1,45 +1,76 @@
 <template>
     <div class="tab-content">
+
             <div class="form-group required">
-                <label for="input-info-name" class="col-sm-2 col-form-label">{{$options.setting.nameTxt}}</label>
+                <label 
+                    for="input-info-name" 
+                    class="col-sm-2 control-label">{{$options.setting.name_txt}}</label>
                 <div class="col-sm-10">
-                    <validation-provider name="news_name" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="generalData.newsname" type="text" name="input-info-name" class="form-control"
-                               :placeholder="$options.setting.nameTxt">
+                    <validation-provider 
+                        name="news_name" 
+                        rules="required|max:191" 
+                        v-slot="{ errors }">
+                        <input 
+                            v-model="generalData.newsname"
+                            type="text" 
+                            name="input-info-name" 
+                            class="form-control"
+                            :placeholder="$options.setting.name_txt">
+
                         <span class="cms-text-red">{{ errors[0] }}</span>
                     </validation-provider>
                 </div>
             </div>
-            <div class="form-group required">
-                <label for="news_description"
-                       class="col-sm-2 col-form-label">{{$options.setting.descriptionTxt}}</label>
-                <div class="col-sm-10">
-                    <validation-provider name="news_description" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="generalData.description" class="form-control"
-                               :placeholder="$options.setting.descriptionTxt">
-                        <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
-            </div>
-            <div class="form-group required">
-                <label for="news_newslink" class="col-sm-2 col-form-label">{{$options.setting.newsLinkTxt}}</label>
-                <div class="col-sm-10">
-                    <validation-provider name="news_newslink" rules="required|max:191" v-slot="{ errors }">
-                        <input v-model="generalData.newslink" class="form-control"
-                               :placeholder="$options.setting.newsLinkTxt">
-                        <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="news-context" class="col-sm-2 col-form-label">{{$options.setting.newsContextTxt}}</label>
+
+            <div class="form-group">
+                <label 
+                    for="input-info-description" 
+                    class="col-sm-2 control-label">{{$options.setting.info_description_txt}}</label>
                 <div class="col-sm-10">
                     <tinymce 
-                        id="news-context" 
+                        id="input-info-description" 
                         :other_options="options"
-                        v-model="generalData.context"></tinymce>
+                        v-model="generalData.description"></tinymce>
                 </div>
             </div>
+
+            <div class="form-group required">
+                <label 
+                    for="input-info-meta-title"
+                    class="col-sm-2 control-label">{{$options.setting.info_meta_title_txt}}</label>
+                <div class="col-sm-10">
+                    <validation-provider 
+                        name="info_meta_title" 
+                        rules="required|max:191" v-slot="{ errors }">
+                        <input 
+                            v-model="generalData.meta_title" 
+                            class="form-control"
+                            :placeholder="$options.setting.info_meta_title_txt">
+
+                        <span class="cms-text-red">{{ errors[0] }}</span>
+                    </validation-provider>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label 
+                    for="input-info-key-word" 
+                    class="col-sm-2 control-label">{{$options.setting.info_key_word_txt}}</label>
+                <div class="col-sm-10">
+                    <validation-provider 
+                        name="info_key_word" 
+                        rules="required|max:191" 
+                        v-slot="{ errors }">
+                        <input 
+                            v-model="generalData.key_word" 
+                            class="form-control"
+                            :placeholder="$options.setting.info_key_word_txt">
+
+                        <span class="cms-text-red">{{ errors[0] }}</span>
+                    </validation-provider>
+                </div>
+            </div>
+
     </div>
 </template>
 
@@ -80,7 +111,7 @@
         },
 
         watch: {
-            generalData: {
+            'generalData': {
                 immediate: true,
                 deep: true,
                 handler(newValue, oldValue) {
@@ -100,29 +131,10 @@
             ]),
         },
         setting: {
-            btnCancelTxt: 'Close',
-            nameTxt: 'Name',
-            descriptionTxt: 'Description',
-            newsLinkTxt: 'News Link',
-            newsContextTxt: 'Content',
-            add: {
-                actionName: 'add',
-                isAddFrom: true,
-                title: 'Add News',
-                btnSubmitTxt: 'Save'
-            },
-            edit: {
-                actionName: 'edit',
-                isAddFrom: false,
-                title: 'Edit News',
-                btnSubmitTxt: 'Update'
-            },
-            closeModal: {
-                actionName: 'closeModal',
-                isAddFrom: false,
-                title: '',
-                btnSubmitTxt: ''
-            }
+            name_txt: 'Tên',
+            info_description_txt: 'Mô tả',
+            info_key_word_txt: 'Từ khóa',
+            info_meta_title_txt: 'Meta title',
         }
     };
 </script>

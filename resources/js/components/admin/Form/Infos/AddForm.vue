@@ -1,14 +1,21 @@
 <template>
     <form class="form-horizontal">
-      <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+      <loading-over-lay 
+        :active.sync="loading" 
+        :is-full-page="fullPage"></loading-over-lay>
       <ul class="nav nav-tabs">
         <li class="active">
             <a href="#tab-general" data-toggle="tab">Tổng quan</a>
         </li>
-        <li><a href="#tab-advance" data-toggle="tab">Mở rộng</a></li>
-        <li><a href="#tab-media-manager" data-toggle="tab">Hình ảnh</a></li>
+        <li>
+            <a href="#tab-advance" data-toggle="tab">Mở rộng</a>
+        </li>
+        <li>
+            <a href="#tab-media-manager" data-toggle="tab">Hình ảnh</a>
+        </li>
       </ul>
       <div class="tab-content">
+
         <div class="tab-pane active" id="tab-general">
             <tab-general
                     role="tabpanel"
@@ -17,10 +24,10 @@
         </div>
 
         <div class="tab-pane" id="tab-advance">
-            <tab-news-group
+            <tab-advance
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-news-group>
+                    :group-data="info"></tab-advance>
         </div>
 
         <div class="tab-pane" id="tab-media-manager">
@@ -50,7 +57,7 @@
     } from 'store@admin/types/action-types';
     import TabGeneral from './TabGeneral';
     import TabSetting from './TabSetting';
-    import TabNewsGroup from './TabNewsGroup';
+    import TabAdvance from './TabAdvance';
     import TabMediaManager from './TabImage';
     import {
         fn_redirect_url
@@ -60,7 +67,7 @@
         name: 'ModalAddForm',
         components: {
             TabGeneral,
-            TabNewsGroup,
+            TabAdvance,
             TabMediaManager,
             TabSetting
         },
