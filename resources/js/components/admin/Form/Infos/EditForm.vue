@@ -50,7 +50,6 @@
     } from 'store@admin/types/action-types';
     import TabGeneral from './TabGeneral';
     import TabSetting from './TabSetting';
-    import TabNewsGroup from './TabNewsGroup';
     import TabMediaManager from './TabImage';
     import {
         fn_redirect_url
@@ -60,7 +59,6 @@
         name: 'NewsEditForm',
         components: {
             TabGeneral,
-            TabNewsGroup,
             TabMediaManager,
             TabSetting
         },

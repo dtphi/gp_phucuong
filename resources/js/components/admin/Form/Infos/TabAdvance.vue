@@ -3,6 +3,8 @@
 
         <info-to-category-autocomplete></info-to-category-autocomplete>
 
+        <info-to-related-autocomplete></info-to-related-autocomplete>
+
     </div>
 </template>
 
@@ -20,11 +22,13 @@
         ACTION_GET_NEWS_GROUP_LIST,
     } from 'store@admin/types/action-types';
      import InfoToCategoryAutocomplete from './Category/InfoToCategoryAutocomplete';
+     import InfoToRelatedAutocomplete from './Related/InfoRelatedAutocomplete';
 
     export default {
         name: 'TabNewsGroupForm',
         components: {
-            InfoToCategoryAutocomplete
+            InfoToCategoryAutocomplete,
+            InfoToRelatedAutocomplete
         },
         beforeCreate() {
             this.$store.dispatch(MODULE_NEWS_CATEGORY + '/' + ACTION_GET_NEWS_GROUP_LIST);

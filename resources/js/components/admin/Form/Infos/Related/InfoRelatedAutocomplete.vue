@@ -25,25 +25,25 @@
                         </font-awesome-layers>
                     </span>
                 </li>
-                <the-dropdown-category  :key="-1"
-                    :category="itemNone"></the-dropdown-category>
+                <the-dropdown-related  :key="-1"
+                    :category="itemNone"></the-dropdown-related>
               
-                <the-dropdown-category v-for="(item,idx) in _lists" :key="idx" 
-                    :category="item"></the-dropdown-category>            
+                <the-dropdown-related v-for="(item,idx) in _lists" :key="idx" 
+                    :category="item"></the-dropdown-related>            
             </ul>
 
-            <div id="info-category" class="well well-sm" style="height: 150px; overflow: auto;"> </div>
+            <div id="info-related" class="well well-sm" style="height: 150px; overflow: auto;"> </div>
 
         </div>
     </div>
 </template>
-
+e
 <script>
     import {
         mapGetters,
         mapActions
     } from 'vuex';
-    import TheDropdownCategory from './DropdownInfoToCategoryAutocomplete';
+    import TheDropdownRelated from './DropdownToInfoRelatedAutocomplete';
     import {
         MODULE_NEWS_CATEGORY,
         MODULE_NEWS_CATEGORY_EDIT
@@ -54,8 +54,8 @@
     import lodash from 'lodash';
 
     export default {
-        name: 'CategoryEditAutocomplete',
-        components: {TheDropdownCategory},
+        name: 'InfoRelatedAutocomplete',
+        components: {TheDropdownRelated},
         props: {
             categoryId: {
                 default: 0
@@ -111,7 +111,7 @@
           }
         },
         setting: {
-            paren_category_txt: 'Danh mục tin tức cha'
+            paren_category_txt: 'Tin tức liên hệ'
         }
     };
 </script>
