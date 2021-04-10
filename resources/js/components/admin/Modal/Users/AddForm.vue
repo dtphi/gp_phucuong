@@ -14,7 +14,7 @@
                                 <div class="alert alert-danger">
                                     <i class="fa fa-exclamation-circle"></i>
                                   <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                  <p v-for="err in _errorToArrs()">{{err}}</p>
+                                  <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{err}}</p>
                                 </div>
                             </template>
                             <template v-if="loading">
@@ -115,7 +115,6 @@
     } from 'vuex';
     import {email} from 'vee-validate/dist/rules';
     import {
-        MODULE_USER,
         MODULE_USER_MODAL
     } from 'store@admin/types/module-types';
     import {

@@ -1,14 +1,21 @@
 <template>
     <form class="form-horizontal">
-      <loading-over-lay :active.sync="loading" :is-full-page="fullPage"></loading-over-lay>
+        <loading-over-lay 
+            :active.sync="loading" 
+            :is-full-page="fullPage"></loading-over-lay>
       <ul class="nav nav-tabs">
         <li class="active">
-            <a href="#tab-general" data-toggle="tab">Tổng quan</a>
+            <a href="#tab-general" data-toggle="tab">{{$options.setting.tab_general_title}}</a>
         </li>
-        <li><a href="#tab-advance" data-toggle="tab">Mở rộng</a></li>
-        <li><a href="#tab-media-manager" data-toggle="tab">Hình ảnh</a></li>
+        <li>
+            <a href="#tab-advance" data-toggle="tab">{{$options.setting.tab_advance_title}}</a>
+        </li>
+        <li>
+            <a href="#tab-media-manager" data-toggle="tab">{{$options.setting.tab_image_title}}</a>
+        </li>
       </ul>
       <div class="tab-content">
+        
         <div class="tab-pane active" id="tab-general">
             <tab-general
                     role="tabpanel"
@@ -17,10 +24,10 @@
         </div>
 
         <div class="tab-pane" id="tab-advance">
-            <tab-news-group
+            <tab-advance
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-news-group>
+                    :group-data="info"></tab-advance>
         </div>
 
         <div class="tab-pane" id="tab-media-manager">
@@ -49,7 +56,7 @@
         ACTION_UPDATE_INFO
     } from 'store@admin/types/action-types';
     import TabGeneral from './TabGeneral';
-    import TabSetting from './TabSetting';
+    import TabAdvance from './TabAdvance';
     import TabMediaManager from './TabImage';
     import {
         fn_redirect_url
@@ -60,7 +67,7 @@
         components: {
             TabGeneral,
             TabMediaManager,
-            TabSetting
+            TabAdvance
         },
         data() {
             return {
@@ -106,12 +113,9 @@
 
             async _submitInfo() {
                 const _self = this;
-                _self.[ACTION_SET_LOADING](true);
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
                         _self.[ACTION_UPDATE_INFO](_self.info)
-                    } else {
-                        _self.[ACTION_SET_LOADING](false)
                     }
                 });
             },
@@ -128,7 +132,12 @@
             actionName: 'edit',
             isAddFrom: false,
             title: 'Edit News',
-            btnSubmitTxt: 'Update'
+            btnSubmitTxt: 'Update',
+            tab_general_title: 'Tổng quan',
+            tab_advance_title: 'Mở rộng',
+            tab_image_title: 'Hình ảnh',
+            tab_design_title: 'Màn hình',
+            error_msg_system: 'Lỗi hệ thống !'
         }
     };
 </script>

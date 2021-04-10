@@ -4,7 +4,7 @@
             <div class="alert alert-danger">
                 <i class="fa fa-exclamation-circle"></i>
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p v-for="err in _errorToArrs()">{{err}}</p>
+                <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{err}}</p>
             </div>
         </template>
         <template v-if="loading">
@@ -21,13 +21,13 @@
                         <div class="pull-right">
                             <button type="button" @click="_submitInfo"
                                     data-toggle="tooltip"
-                                    title="Lưu"
+                                    :title="$options.setting.btn_save_txt"
                                     class="btn btn-primary"><i class="fa fa-save"></i></button>
 
                             <button type="button" @click="_submitInfoBack"
                                     data-toggle="tooltip"
-                                    title="Lưu"
-                                    class="btn btn-primary">Lưu trở về danh sách
+                                    :title="$options.setting.btn_save_back_txt"
+                                    class="btn btn-primary">{{$options.setting.btn_save_back_txt}}
                             </button>
 
                             <the-btn-back-list-page></the-btn-back-list-page>
@@ -262,6 +262,8 @@
         setting: {
             panel_title: 'Danh Mục Tin',
             frm_title: 'Thêm danh mục tin',
+            btn_save_txt: 'Lưu',
+            btn_save_back_txt: 'Lưu trở về danh sách',
             tab_general_title: 'Tổng quan',
             tab_data_title: 'Mở rộng',
             tab_design_title: 'Màn hình',

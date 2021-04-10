@@ -4,7 +4,7 @@
             <div class="alert alert-danger">
                 <i class="fa fa-exclamation-circle"></i>
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p v-for="err in _errorToArrs()">{{err}}</p>
+                <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{err}}</p>
             </div>
         </template>
         <template v-if="loading">

@@ -4,7 +4,7 @@
             <div class="alert alert-danger">
                 <i class="fa fa-exclamation-circle"></i>
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p v-for="err in _errorToArrs()">{{err}}</p>
+                <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{err}}</p>
             </div>
         </template>
         <template v-if="loading">
@@ -24,6 +24,13 @@
                         data-toggle="tooltip" 
                         :title="$options.setting.btn_save_txt" 
                         class="btn btn-primary"><i class="fa fa-save"></i>
+                    </button>
+
+                    <button type="button" 
+                        @click="_submitInfoBack"
+                        data-toggle="tooltip"
+                        title="Lưu"
+                        class="btn btn-primary">{{$options.setting.btn_save_back_txt}}
                     </button>
 
                     <the-btn-back-list-page></the-btn-back-list-page>
@@ -113,6 +120,15 @@
             _submitInfo() {
                 this.$refs.formAddUser._submitInfo()
             },
+            _submitInfoBack() {
+                const _self = this;
+
+                await _self.$refs.observerNewsGroup.validate().then((isValid) => {
+                    if (isValid) {
+                        _self.[ACTION_INSERT_NEWS_GROUP_BACK](_self.newsGroupAdd);
+                    }
+                });
+            },
             _notificationUpdate(notification) {
                 this.$notify(notification);
                 this.[ACTION_RESET_NOTIFICATION_INFO]('');
@@ -121,7 +137,8 @@
         setting: {
             panel_title: 'Tin Tức',
             frm_title: 'Thêm tin',
-            btn_save_txt: 'Lưu'
+            btn_save_txt: 'Lưu',
+            btn_save_back_txt: 'Lưu trở về danh sách'
         }
     };
 </script>

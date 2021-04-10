@@ -1,25 +1,33 @@
 <template>
-	  <div class="page-header">
+	<div class="page-header">
 	    <div class="container-fluid">
-	      <div class="pull-right">
-	      	<btn-add></btn-add>
+            <div class="pull-right">
+                <btn-add></btn-add>
 
-	      		<button 
+                <button 
                     @click="_refreshList()"
                     data-toggle="tooltip" :title="$options.setting.refresh_txt" 
                     class="btn btn-default" 
-                    :data-original-title="$options.setting.refresh_txt"><i class="fa fa-refresh"></i></button>
+                    :data-original-title="$options.setting.refresh_txt">
+                    <i class="fa fa-refresh"></i>
+                </button>
 
-	       		 <button type="button" data-toggle="tooltip" title="" class="btn btn-danger" onclick="confirm('Are you sure?') ? $('#form-category').submit() : false;" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>
-	      </div>
-	      <h1>{{$options.setting.title}}</h1>
-	      <breadcrumb></breadcrumb>
-        <ul class="cms-breadcrumb">
-        	<li><perpage></perpage></li>
-        	<li><list-search></list-search></li>
-        </ul>
+                <button type="button" 
+                    data-toggle="tooltip" title="" 
+                    class="btn btn-danger" 
+                    onclick="confirm('Are you sure?') ? $('#form-category').submit() : false;" 
+                    data-original-title="Delete">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </div>
+	        <h1>{{$options.setting.title}}</h1>
+	        <breadcrumb></breadcrumb>
+            <ul class="cms-breadcrumb">
+                <li><perpage></perpage></li>
+                <li><list-search></list-search></li>
+            </ul>
 	    </div>
-		</div>
+	</div>
 </template>
 
 <script>
