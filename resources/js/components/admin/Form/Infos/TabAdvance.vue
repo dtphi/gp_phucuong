@@ -57,13 +57,13 @@
 
         computed: {
             ...mapState(MODULE_NEWS_CATEGORY,
-                [
-                    'newsGroups'
-                ]),
+            [
+                'newsGroups'
+            ]),
             ...mapGetters(MODULE_NEWS_CATEGORY, ['loading']),
             ...mapGetters(MODULE_NEWS_CATEGORY_ADD, ['isOpen']),
             _lists() {
-                let rootTree = {...this.newsGroups.children};
+                let rootTree = {...this.newsGroups};
 
                 return rootTree;
             },

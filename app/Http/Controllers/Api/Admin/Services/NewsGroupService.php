@@ -29,6 +29,8 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
      */
     private $modelPath = null;
 
+    private $separate = ' >> ';
+
     /**
      * @author : dtphi .
      * AdminService constructor.
@@ -63,7 +65,10 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     public function apiGetResourceCollection(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetResourceCollection() method.
-        return new NewsGroupCollection($this->apiGetList($options, $limit));
+        $paginations = $this->apiGetList($options, $limit);
+        //dd($paginations->getCollection());
+          //  dd(get_class_methods($paginations));
+        return new NewsGroupCollection($paginations->getCollection());
     }
 
     /**
@@ -79,7 +84,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             GROUP_CONCAT(
                 cd1.`name`
                 ORDER BY
-                    `level` SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;'
+                    `level` SEPARATOR '" . $this->separate . "'
             )
         FROM
             pc_category_paths cp
@@ -138,9 +143,9 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         try {
             if ($this->model->save()) {
                 $data['category_id'] = $this->model->category_id;
-                $this->modelDes->fill($data);
 
-                $this->modelDes->save();
+                DB::insert('insert into ' . DB_PREFIX . 'category_descriptions (category_id, name, description, meta_title) values (?, ?, ?, ?)',
+                        [$data['category_id'], $data['name'], $data['description'], $data['meta_title']]);
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
                 $level       = 0;
@@ -222,9 +227,14 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             if ($model->save()) {
                 $categoryId = $model->category_id;
 
-                $modelDes = $this->getCategoryDesById((int)$categoryId);
-                $modelDes->fill($data);
-
+                $modelDes = $model->description;
+                $dataDes = [
+                    'name' => $data['name'],
+                    'description' => $data['description'],
+                    'meta_title' => $data['meta_title']
+                ];
+                
+                $modelDes->fill($dataDes);
                 $modelDes->save();
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
@@ -311,7 +321,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
         $query = $this->modelPath->select(DB_PREFIX . 'category_paths.category_id AS category_id', 'cate1.parent_id',
             'cate1.sort_order',
-            DB::raw("group_concat(cd1.`name` ORDER BY pc_category_paths.level SEPARATOR ' ->> ') AS category_name"))->groupBy(DB_PREFIX . 'category_paths.category_id')
+            DB::raw("group_concat(cd1.`name` ORDER BY pc_category_paths.level SEPARATOR '" . $this->separate . "') AS category_name"))->groupBy(DB_PREFIX . 'category_paths.category_id')
             ->leftJoin(DB_PREFIX . 'categorys AS cate1', DB_PREFIX . 'category_paths.category_id', '=',
                 'cate1.category_id')
             ->leftJoin(DB_PREFIX . 'categorys AS cate2', DB_PREFIX . 'category_paths.path_id', '=', 'cate2.category_id')

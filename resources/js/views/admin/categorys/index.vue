@@ -46,7 +46,7 @@
                         </div>
                     </div>
 
-                    <paginate></paginate>
+                    <paginate :is-resource="isResource"></paginate>
                 </div>
             </div>
         </div>
@@ -83,7 +83,8 @@
         },
         data() {
             return {
-                fullPage: false
+                fullPage: false,
+                isResource: false
             };
         },
         computed: {
@@ -92,13 +93,13 @@
                 'loading'
             ]),
             _lists() {
-                let rootTree = {...this.newsGroups.children};
+                let rootTree = {...this.newsGroups};
 
                 return rootTree;
             }
         },
         mounted() {
-            this.[ACTION_GET_NEWS_GROUP_LIST]();
+            this.[ACTION_GET_NEWS_GROUP_LIST]({page: 1, perPage: 5});
         },
         methods: {
             ...mapActions(MODULE_NEWS_CATEGORY, [

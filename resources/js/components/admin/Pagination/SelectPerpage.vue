@@ -1,10 +1,9 @@
 <template>
-        <select @change="_getResourceResults" class="form-control">
-            <option
-                v-for="(item, index) in $options.setting.perPageList" 
-                :value="item">{{item}}</option>
-        </select>
-    </div>
+    <select @change="_getResourceResults" class="form-control">
+        <option
+            v-for="(item, index) in $options.setting.perPageList" 
+            :value="item">{{item}}</option>
+    </select>
 </template>
 
 <script>
@@ -15,7 +14,6 @@
 
     export default {
         name: 'SelectPerpage',
-        components: {},
         computed: {
             ...mapGetters(['moduleNameActive', 'moduleActionListActive']),
         },
@@ -26,7 +24,9 @@
                 var perPage = event.target.value; 
                 
                 const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
-                _self.$store.dispatch(actionName, {perPage: parseInt(perPage)});
+                _self.$store.dispatch(actionName, {
+                    perPage: parseInt(perPage)
+                });
             }
         },
         setting: {

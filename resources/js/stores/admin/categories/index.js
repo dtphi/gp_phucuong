@@ -8,6 +8,9 @@ import {
   apiSearchAll
 } from 'api@admin/category';
 import {
+  MODULE_NEWS_CATEGORY
+} from '../types/module-types';
+import {
   NEWSGROUPS_SET_LOADING,
   NEWSGROUPS_GET_NEWS_GROUP_LIST_SUCCESS,
   NEWSGROUPS_GET_NEWS_GROUP_LIST_FAILED,
@@ -32,6 +35,7 @@ import {
 const defaultState = () => {
   return {
     newsGroups: [],
+    total: 0,
     newsGroupDelete: null,
     isDelete: false,
     isList: false,
@@ -93,21 +97,44 @@ export default {
   },
 
   actions: {
-    async [ACTION_GET_NEWS_GROUP_LIST]({
+    [ACTION_GET_NEWS_GROUP_LIST]({
       dispatch,
       commit
-    }) {
+    }, params) {
       dispatch(ACTION_SET_LOADING, true);
-      await apiGetNewsGroups(
+
+      apiGetNewsGroups(
         (newsGroups) => {
-          commit(NEWSGROUPS_SET_NEWS_GROUP_LIST, newsGroups)
-          commit(NEWSGROUPS_GET_NEWS_GROUP_LIST_SUCCESS, true)
+          commit(NEWSGROUPS_SET_NEWS_GROUP_LIST, newsGroups.data.results);
+          commit(NEWSGROUPS_GET_NEWS_GROUP_LIST_SUCCESS, true);
+          var pagination = {
+            current_page: 1,
+            total: 0
+          };
+          if (newsGroups.data.hasOwnProperty('pagination')) {
+            pagination = newsGroups.data.pagination;
+          }
+          var configs = {
+             moduleActive: {
+              name: MODULE_NEWS_CATEGORY,
+              actionList: ACTION_GET_NEWS_GROUP_LIST
+            },
+            collectionData: pagination
+          };
+
+          dispatch('setConfigApp', configs, {
+            root: true
+          });
+
+          dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
-          commit(NEWSGROUPS_GET_NEWS_GROUP_LIST_FAILED, false)
-        }
+          commit(NEWSGROUPS_GET_NEWS_GROUP_LIST_FAILED, false);
+
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        params
       );
-      dispatch(ACTION_SET_LOADING, false);
     },
 
     async [ACTION_DELETE_NEWS_GROUP_BY_ID]({

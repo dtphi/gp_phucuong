@@ -85,7 +85,12 @@ export default {
       return state.newsGroup
     },
     getNameQuery(state) {
-      return state.nameQuery
+      var str = state.nameQuery;
+
+      if (typeof str === 'undefined' || str === null) {
+        return '';
+      }
+      return str;
     },
     loading(state) {
       return state.loading
@@ -243,11 +248,12 @@ export default {
     },
 
     [ACTION_UPDATE_NEWS_GROUP]({
+      state,
       dispatch,
       commit
     }, newsGroup) {
       dispatch(ACTION_SET_LOADING, true);
-      apiUpdateNewsGroup(newsGroup,
+      apiUpdateNewsGroup(state.newsGroupId, newsGroup,
         (result) => {
           commit(NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS, AppConfig.comUpdateNoSuccess);
 

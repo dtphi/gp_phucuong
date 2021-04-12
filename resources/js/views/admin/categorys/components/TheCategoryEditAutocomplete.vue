@@ -22,7 +22,7 @@
                 <the-dropdown-category  :key="-1"
                     :category="itemNone"></the-dropdown-category>
               
-                <the-dropdown-category v-for="(item,idx) in _lists" :key="idx" 
+                <the-dropdown-category v-for="(item,idx) in newsGroups" :key="idx" 
                     :category="item"></the-dropdown-category>            
             </ul>
         </div>
@@ -69,12 +69,7 @@
             ...mapGetters(MODULE_NEWS_CATEGORY_EDIT, [
                 'newsGroup',
                 'getNameQuery'
-            ]),
-            _lists() {
-                let rootTree = {...this.newsGroups.children};
-
-                return rootTree;
-            }
+            ])
         },
         watch: {
             'getNameQuery': {

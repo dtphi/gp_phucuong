@@ -20,7 +20,6 @@ class InformationImage extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'infomation_image_id',
         'infomation_id',
         'image',
         'sort_order'

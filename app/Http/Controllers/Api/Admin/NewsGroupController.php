@@ -10,6 +10,7 @@ use App\Http\Requests\NewsGroupRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Log;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class NewsGroupController
@@ -45,8 +46,15 @@ class NewsGroupController extends ApiController
     public function index(Request $request)
     {
         $data = $request->all();
+        $pagination = [];
+        $page = 1;
+        if ($request->query('page')) {
+            $page = $request->query('page');
+        }
         try {
-            $newsGroups = $this->newsGpSv->apiGetResourceCollection($data);
+            $limit       = $this->_getPerPage();
+            $newsGroups = $this->newsGpSv->apiGetList($data, $limit);
+            $pagination = $this->_getTextPagination($newsGroups);
 
             $results = [];
             foreach ($newsGroups as $key => $newsGroup) {
@@ -61,8 +69,28 @@ class NewsGroupController extends ApiController
         }
 
         return Helper::successResponse([
-            'results' => $results
+            'results' => $results,
+            'pagination' => $pagination,
+            'page' => $page
         ]);
+    }
+
+    /**
+     * [_getTextPagination description]
+     * @param  LengthAwarePaginator $paginator [description]
+     * @return [type]                          [description]
+     */
+    protected function _getTextPagination(LengthAwarePaginator $paginator)
+    {
+        $data = [];
+
+        if ($paginator instanceof LengthAwarePaginator && $paginator->count()) {
+            $data = $paginator->toArray();
+
+            unset($data['data']);
+        }
+
+        return $data;
     }
 
     /**

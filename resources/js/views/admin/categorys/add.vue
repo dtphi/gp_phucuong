@@ -109,9 +109,16 @@
                                             <label class="col-sm-2 control-label"
                                                    for="input-category-sort-order">Thứ tự</label>
                                             <div class="col-sm-10">
-                                                <input type="text" v-model="newsGroupAdd.sort_order" name="sort_order"
-                                                       placeholder="Thứ tự hiển thị" id="input-category-sort-order"
-                                                       class="form-control"/>
+                                                <validation-provider
+                                                        name="sort_order"
+                                                        rules="numeric|max:191"
+                                                        v-slot="{ errors }">
+                                                    <input type="text" v-model="newsGroupAdd.sort_order" name="sort_order"
+                                                           placeholder="Thứ tự hiển thị" id="input-category-sort-order"
+                                                           class="form-control"/>
+
+                                                    <span class="cms-text-red">{{ errors[0] }}</span>
+                                                </validation-provider>
                                             </div>
                                         </div>
                                         <div class="form-group">

@@ -123,7 +123,7 @@
             _submitInfoBack() {
                 const _self = this;
 
-                await _self.$refs.observerNewsGroup.validate().then((isValid) => {
+                _self.$refs.observerNewsGroup.validate().then((isValid) => {
                     if (isValid) {
                         _self.[ACTION_INSERT_NEWS_GROUP_BACK](_self.newsGroupAdd);
                     }

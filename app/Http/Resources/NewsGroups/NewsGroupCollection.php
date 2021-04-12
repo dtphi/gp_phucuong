@@ -14,7 +14,7 @@ class NewsGroupCollection extends ResourceCollection
      * @return array
      */
     public function toArray($request)
-    {
+    {dd($this->collection->toArray());
         return [
             'results' => $this->collection,
             'errors'  => [],

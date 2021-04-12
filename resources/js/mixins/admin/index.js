@@ -5,7 +5,8 @@ import {
   required,
   max,
   min,
-  email
+  email,
+  numeric
 } from 'vee-validate/dist/rules';
 
 extend('url', {
@@ -34,6 +35,10 @@ extend('email', {
   ...email,
   message: 'This field must be a valid email'
 });
+extend('numeric', {
+  ...numeric,
+  message: 'This field must be a number'
+})
 extend('required', {
   ...required,
   message: 'This {_field_} is required'

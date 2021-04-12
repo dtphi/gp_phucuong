@@ -1,6 +1,8 @@
 <template>
     <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-parent-category-name">{{$options.setting.paren_category_txt}}</label>
+        <label class="col-sm-2 control-label" for="input-parent-category-name">
+            <span data-toggle="tooltip" data-original-title="(Tự động hoàn toàn)">{{$options.setting.paren_category_txt}}</span>
+        </label>
         <div class="col-sm-10">
     	   <input autocomplete="off"
             v-on:focus="_focusParentCategory"
@@ -22,7 +24,7 @@
                 <the-dropdown-category  :key="-1"
                     :category="itemNone"></the-dropdown-category>
               
-                <the-dropdown-category v-for="(item,idx) in _lists" :key="idx" 
+                <the-dropdown-category v-for="(item,idx) in newsGroups" :key="idx" 
                     :category="item"></the-dropdown-category>            
             </ul>
         </div>
@@ -68,12 +70,7 @@
             ]),
             ...mapGetters(MODULE_NEWS_CATEGORY_ADD, [
                 'newsGroupAdd'
-            ]),
-            _lists() {
-                let rootTree = {...this.newsGroups.children};
-
-                return rootTree;
-            }
+            ])
         },
         watch: {
             'newsGroupAdd.nameQuery': {

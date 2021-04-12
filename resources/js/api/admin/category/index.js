@@ -30,11 +30,9 @@ export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole([{
-        status: errors.response.status,
-        messageCommon: errors.response.data.message,
-        messages: errors.response.data.errors
-    }]))
+    .catch(errors => {
+     console.log(errors)
+    })
 }
 
 /**
@@ -51,12 +49,13 @@ export const apiGetNewsGroups = (resolve, errResole, params) => {
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
-        const data = {
+        
+        resolve({
           newsgroupname: "Danh Mục :",
           id: 0,
-          children: response.data.data.results
-        };
-        resolve(data);
+          children: [],
+          data: response.data.data
+        });
       } else {
         errResole([{
           status: response.status,
@@ -64,11 +63,15 @@ export const apiGetNewsGroups = (resolve, errResole, params) => {
         }]);
       }
     })
-    .catch(errors => errResole([{
-        status: errors.response.status,
-        messageCommon: errors.response.data.message,
-        messages: errors.response.data.errors
-    }]))
+    .catch(errors => {
+      if(errors.response) {
+        errResole([{
+            status: errors.response.status,
+            messageCommon: errors.response.data.message,
+            messages: errors.response.data.errors
+        }])
+      }
+    })
 }
 
 /**
@@ -78,8 +81,8 @@ export const apiGetNewsGroups = (resolve, errResole, params) => {
  * @param  {[type]} errResole [description]
  * @return {[type]}           [description]
  */
-export const apiUpdateNewsGroup = (newsGroup, resolve, errResole) => {
-  return axios.put(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, newsGroup.category_id), newsGroup)
+export const apiUpdateNewsGroup = (categoryId, newsGroup, resolve, errResole) => {
+  return axios.put(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, categoryId), newsGroup)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {

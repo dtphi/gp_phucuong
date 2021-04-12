@@ -12,18 +12,29 @@ Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV === 'debuger';
 
+const defaultState = () => {
+  return {
+    errors: [],
+    links: {},
+    meta: {},
+    perPage: 5,
+    moduleActive: {
+      name: '',
+      actionList: ''
+    },
+    logo: '/front/img/logo.png',
+    collectionData: {
+      current_page: 1,
+      from: 0,
+      to:0,
+      total: 0
+    }
+  }
+}
+
 export default new Vuex.Store({
   state: {
-    cfApp: {
-      errors: [],
-      links: {},
-      meta: {},
-      moduleActive: {
-        name: '',
-        actionList: ''
-      },
-      logo: '/front/img/logo.png',
-    }
+    cfApp: defaultState()
   },
   getters: {
     cfApp(state) {
@@ -35,8 +46,15 @@ export default new Vuex.Store({
         meta: state.cfApp.meta
       }
     },
+    collectionPaginationData(state) {
+      return state.cfApp.collectionData;
+    },
     isNotEmptyList(state) {
-      return (state.cfApp.meta.total > 0);
+      if (typeof state.cfApp.meta !== "undefined") {
+        return (state.cfApp.meta.total > 0);
+      }
+
+      return false;
     },
     moduleNameActive(state) {
       return state.cfApp.moduleActive.name;
@@ -47,30 +65,42 @@ export default new Vuex.Store({
   },
   mutations: {
     configApp(state, configs) {
-      state.cfApp.links = configs.links;
-      state.cfApp.meta = configs.meta;
-      state.cfApp.moduleActive = configs.moduleActive;
+      if (configs.links != undefined) {
+        state.cfApp.links = configs.links;
+      }
+      if (configs.meta != undefined) {
+        state.cfApp.meta = configs.meta;
+      }
+      if (configs.moduleActive)
+      {
+        state.cfApp.moduleActive = configs.moduleActive;
+      }
+      if (configs.collectionData != undefined)
+      {
+        state.cfApp.collectionData = configs.collectionData;
+      }
     }
   },
   actions: {
     setConfigApp({
       commit
     }, configs) {
-      commit('configApp', {
+      const links = (configs.hasOwnProperty('links')) ? configs.links: undefined;
+      const meta = (configs.hasOwnProperty('meta')) ? configs.meta: undefined;
+      const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive: '';
+      const collectionData = (configs.hasOwnProperty('collectionData')) ? configs.collectionData: undefined;
+
+      var _configs = {
+        ...defaultState(),
         ...{
-          links: {},
-          meta: {},
-          moduleActive: {
-            name: '',
-            actionList: ''
-          }
-        },
-        ...{
-          links: configs.links,
-          meta: configs.meta,
-          moduleActive: configs.moduleActive
+          links: links,
+          meta: meta,
+          moduleActive: moduleActive,
+          collectionData: collectionData
         }
-      });
+      };
+
+      commit('configApp', _configs);
     }
   },
   modules: {

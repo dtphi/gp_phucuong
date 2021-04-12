@@ -28,7 +28,7 @@
                 <the-dropdown-category  :key="-1"
                     :category="itemNone"></the-dropdown-category>
               
-                <the-dropdown-category v-for="(item,idx) in _lists" :key="idx" 
+                <the-dropdown-category v-for="(item,idx) in newsGroups" :key="idx" 
                     :category="item"></the-dropdown-category>            
             </ul>
 
@@ -80,7 +80,7 @@
                 'getNameQuery'
             ]),
             _lists() {
-                let rootTree = {...this.newsGroups.children};
+                let rootTree = {...this.newsGroups};
 
                 return rootTree;
             }

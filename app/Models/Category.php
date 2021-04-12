@@ -9,6 +9,14 @@ class Category extends BaseModel
     protected $primaryKey = 'category_id';
 
     /**
+     * Get the description associated with the category.
+     */
+    public function description()
+    {
+        return $this->hasOne(CategoryDescription::class, $this->primaryKey);
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

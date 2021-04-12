@@ -14,7 +14,6 @@ class CategoryDescription extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'category_id',
         'name',
         'description',
         'meta_title',

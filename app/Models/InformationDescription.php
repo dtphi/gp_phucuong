@@ -20,7 +20,6 @@ class InformationDescription extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'infomation_id',
         'name',
         'description',
         'meta_title',

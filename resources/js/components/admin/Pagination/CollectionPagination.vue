@@ -49,9 +49,10 @@
 
 <script>
 import RenderPagination from './RenderPagination.vue';
+
 export default {
-    name: 'ResourcePagination',
-	components: {
+	name: 'CollectionPagination',
+		components: {
         RenderPagination
     },
     props: {
@@ -82,10 +83,11 @@ export default {
             }
         }
     },
+
     methods: {
         onPaginationChangePage (page) {
             this.$emit('pagination-change-page', page);
         }
-    }
+    },
 }
 </script>
