@@ -33,7 +33,10 @@
 
             <template v-if="categorys.length">
                 <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    <category-item v-for="(item,idx) in categorys" :key="idx" :info-to-category="item"></category-item>
+                    <category-item 
+                        v-for="(item,idx) in categorys" 
+                        :key="idx" 
+                        :info-to-category="item"></category-item>
                 </div>
             </template>
             <template v-else>

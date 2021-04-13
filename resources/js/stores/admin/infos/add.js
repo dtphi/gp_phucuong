@@ -53,6 +53,7 @@ const defaultState = () => {
       downloads: []
     },
     listCategorysDisplay: [],
+    listRelatedsDisplay: [],
     infoId: 0,
     loading: false,
     insertSuccess: false,
@@ -174,6 +175,14 @@ export default {
 
     [ACTION_SET_IMAGE]({commit}, imgFile) {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    },
+
+    [ACTION_ADD_INFO_TO_RELATED_LIST]() {
+
+    },
+
+    [ACTION_REMOVE_INFO_TO_RELATED_LIST]() {
+
     },
   }
 }

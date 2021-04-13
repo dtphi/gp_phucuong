@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i class="fa fa-minus-circle cms-text-red" @click="_deleteCategory"></i>{{infoToCategory.category_name}}
+        <i class="fa fa-minus-circle cms-text-red" @click="_deleteRelated"></i>{{infoToRelated.name}}
     </div>
 </template>
 
@@ -14,22 +14,22 @@
         MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
     import {
-        ACTION_REMOVE_INFO_TO_CATEGORY_LIST
+        ACTION_REMOVE_INFO_TO_RELATED_LIST
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'CategoryItem',
+        name: 'RelatedItem',
         props: {
-            infoToCategory: {
+            infoToRelated: {
                 default: null
             }
         },
         methods: {
         	...mapActions(MODULE_INFO_ADD, [
-        		ACTION_REMOVE_INFO_TO_CATEGORY_LIST
+        		ACTION_REMOVE_INFO_TO_RELATED_LIST
         	]),
-          _deleteCategory() {
-              this.[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
+          _deleteRelated() {
+              this.[ACTION_REMOVE_INFO_TO_RELATED_LIST](this.infoToRelated)
           },
         },
         setting: {

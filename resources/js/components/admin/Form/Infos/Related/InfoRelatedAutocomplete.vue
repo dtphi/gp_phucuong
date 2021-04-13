@@ -2,20 +2,20 @@
     <div class="form-group">
         <label 
         	class="col-sm-2 control-label" 
-        	for="input-parent-category-name">
+        	for="input-info-related">
         		<span data-toggle="tooltip" 
         			title="" 
         			data-original-title="(Tự động hoàn toàn)">{{$options.setting.paren_category_txt}}</span>
         	</label>
         <div class="col-sm-10">
     	   <input autocomplete="off"
-            v-on:focus="_focusParentCategory"
-		    		v-on:keyup.enter="_searchProducts()" 
-		    		v-model="query" type="text" 
-		    		name="informations" 
-		    		:placeholder="$options.setting.paren_category_txt" 
-		    		id="input-parent-category-name" 
-		    		class="form-control" />
+                v-on:focus="_focusParentCategory"
+	    		v-on:keyup.enter="_searchProducts()" 
+	    		v-model="query" type="text" 
+	    		name="informations" 
+	    		:placeholder="$options.setting.paren_category_txt" 
+	    		id="input-info-related" 
+	    		class="form-control" />
             <ul class="dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
                 <li>
                     <span class="btn btn-default cms-btn-dropdown" @click="_closeDropdown">
@@ -32,30 +32,44 @@
                     :category="item"></the-dropdown-related>            
             </ul>
 
-            <div id="info-related" class="well well-sm" style="height: 150px; overflow: auto;"> </div>
-
+            <template v-if="relateds.length">
+                <div class="well well-sm" style="height: 150px; overflow: auto;">
+                    <related-item 
+                        v-for="(item,idx) in relateds" 
+                        :key="idx" 
+                        :info-to-related="item"></related-item>
+                </div>
+            </template>
+            <template v-else>
+                <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
+            </template>
         </div>
     </div>
 </template>
 e
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
     import TheDropdownRelated from './DropdownToInfoRelatedAutocomplete';
     import {
         MODULE_NEWS_CATEGORY,
-        MODULE_NEWS_CATEGORY_EDIT
+        MODULE_NEWS_CATEGORY_EDIT,
+        MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_NEWS_GROUP_LIST
     } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
+    import RelatedItem from './RelatedItem';
 
     export default {
         name: 'InfoRelatedAutocomplete',
-        components: {TheDropdownRelated},
+        components: {
+            TheDropdownRelated,
+            RelatedItem
+        },
         props: {
             categoryId: {
                 default: 0
@@ -81,11 +95,9 @@ e
                 'newsGroup',
                 'getNameQuery'
             ]),
-            _lists() {
-                let rootTree = {...this.newsGroups};
-
-                return rootTree;
-            }
+            ...mapState(MODULE_INFO_ADD, {
+                relateds: state => state.listRelatedsDisplay
+            }),
         },
         watch: {
             'getNameQuery': {

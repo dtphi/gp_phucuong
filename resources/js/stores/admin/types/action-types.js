@@ -27,6 +27,8 @@ export const ACTION_SELECT_DROPDOWN_PARENT_CATEGORY = 'selectParentDropdownCateg
 export const ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY = 'selectInfoToParentDropdownCategory';
 export const ACTION_ADD_INFO_TO_CATEGORY_LIST = 'addInfoToCategoryList';
 export const ACTION_REMOVE_INFO_TO_CATEGORY_LIST = 'removeInfoToCategoryList';
+export const ACTION_ADD_INFO_TO_RELATED_LIST = 'addInfoToRelatedList';
+export const ACTION_REMOVE_INFO_TO_RELATED_LIST = 'removeInfoToRelatedList';
 
 export const ACTION_SET_LOADING = 'setLoading';
 export const ACTION_SHOW_MODAL = 'showModal';
