@@ -1,9 +1,37 @@
 <template>
     <div class="tab-content">
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                   for="input-info-date-available">Ngày hoạt động</label>
+            <info-date-available class="col-sm-10" :group-data="groupData"></info-date-available>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                   for="input-info-sort-order">Thứ tự</label>
+            <div class="col-sm-10">
+                <validation-provider
+                        name="sort_order"
+                        rules="numeric|max:191"
+                        v-slot="{ errors }">
+                    <input type="text" v-model="groupData.sort_order" name="sort_order"
+                           placeholder="Thứ tự hiển thị" id="input-info-sort-order"
+                           class="form-control"/>
 
-        <info-to-category-autocomplete></info-to-category-autocomplete>
-
-        <info-to-related-autocomplete></info-to-related-autocomplete>
+                    <span class="cms-text-red">{{ errors[0] }}</span>
+                </validation-provider>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                   for="input-info-status">Trạng thái</label>
+            <div class="col-sm-10">
+                <select v-model="groupData.status" id="input-info-status"
+                        class="form-control">
+                    <option value="1" selected="selected">Xảy ra</option>
+                    <option value="0">Ẩn</option>
+                </select>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -21,38 +49,18 @@
     import {
         ACTION_GET_NEWS_GROUP_LIST,
     } from 'store@admin/types/action-types';
-     import InfoToCategoryAutocomplete from './Category/InfoToCategoryAutocomplete';
-     import InfoToRelatedAutocomplete from './Related/InfoRelatedAutocomplete';
+    import InfoDateAvailable from './Datapicker/InfoDateAvailable';
 
     export default {
-        name: 'TabNewsGroupForm',
+        name: 'TabAdvanceForm',
         components: {
-            InfoToCategoryAutocomplete,
-            InfoToRelatedAutocomplete
-        },
-        beforeCreate() {
-            this.$store.dispatch(MODULE_NEWS_CATEGORY + '/' + ACTION_GET_NEWS_GROUP_LIST);
+            InfoDateAvailable
         },
 
         props: {
             groupData: {
                 type: Object
             }
-        },
-
-        data() {
-            return {
-                rootKey: 1
-            };
-        },
-
-        mounted() {
-            console.log('mounted tab')
-
-            window.Echo.channel('search-user')
-            .listen('.searchAllResults', (e) => {
-                console.log(e);
-            })
         },
 
         computed: {
@@ -62,14 +70,6 @@
             ]),
             ...mapGetters(MODULE_NEWS_CATEGORY, ['loading']),
             ...mapGetters(MODULE_NEWS_CATEGORY_ADD, ['isOpen']),
-            _lists() {
-                let rootTree = {...this.newsGroups};
-
-                return rootTree;
-            },
-            _selectedGroup() {
-                return this.groupData.newsgroup_id ? this.groupData.newsgroupname : 'Not select'
-            }
         },
 
         methods: {},

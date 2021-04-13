@@ -11,8 +11,8 @@
     	   <input autocomplete="off"
             v-on:focus="_focusParentCategory"
 		    		v-on:keyup.enter="_searchProducts()" 
-		    		v-model="getNameQuery" type="text" 
-		    		name="category" 
+		    		v-model="query" type="text" 
+		    		name="informations" 
 		    		:placeholder="$options.setting.paren_category_txt" 
 		    		id="input-parent-category-name" 
 		    		class="form-control" />
@@ -28,7 +28,7 @@
                 <the-dropdown-related  :key="-1"
                     :category="itemNone"></the-dropdown-related>
               
-                <the-dropdown-related v-for="(item,idx) in newsGroups" :key="idx" 
+                <the-dropdown-related v-for="(item,idx) in informations" :key="idx" 
                     :category="item"></the-dropdown-related>            
             </ul>
 
@@ -68,7 +68,9 @@ e
                     category_id: 0,
                     category_name: ' --- Chọn --- ',
                     sort_order: 0
-                }            
+                },
+                informations: [],
+                query: ''
             }
         },
         computed: {
@@ -97,10 +99,11 @@ e
         		ACTION_GET_NEWS_GROUP_LIST
         	]),
             _searchProducts() {
-              const query = this.getNameQuery;
-              if (query && query.length) {
-              	this.[ACTION_GET_NEWS_GROUP_LIST](query);
-              }
+                /*this.$data.query = this.getNameQuery;
+                  const query = this.getNameQuery;
+                  if (query && query.length) {
+                  	this.[ACTION_GET_NEWS_GROUP_LIST](query);
+                  }*/
           },
           _focusParentCategory() {
               this.[ACTION_GET_NEWS_GROUP_LIST]();

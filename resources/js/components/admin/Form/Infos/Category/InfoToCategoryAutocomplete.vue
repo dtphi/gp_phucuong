@@ -32,14 +32,12 @@
             </ul>
 
             <template v-if="categorys.length">
-                <div id="info-category" class="well well-sm" style="height: 150px; overflow: auto;">
-                    <div v-for="(item,idx) in categorys" id="news-category1">
-                        <i class="fa fa-minus-circle cms-text-red"></i>{{item.category_name}}
-                    </div>
+                <div class="well well-sm" style="height: 150px; overflow: auto;">
+                    <category-item v-for="(item,idx) in categorys" :key="idx" :info-to-category="item"></category-item>
                 </div>
             </template>
             <template v-else>
-                <div id="info-category" class="well well-sm" style="height: 150px; overflow: auto;"></div>
+                <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
             </template>
 
         </div>
@@ -53,6 +51,7 @@
         mapActions
     } from 'vuex';
     import TheDropdownCategory from './DropdownInfoToCategoryAutocomplete';
+    import CategoryItem from './CategoryItem';
     import {
         MODULE_NEWS_CATEGORY,
         MODULE_NEWS_CATEGORY_EDIT,
@@ -66,7 +65,10 @@
 
     export default {
         name: 'CategoryEditAutocomplete',
-        components: {TheDropdownCategory},
+        components: {
+            TheDropdownCategory,
+            CategoryItem
+        },
         props: {
             categoryId: {
                 default: null

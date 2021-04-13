@@ -11,6 +11,9 @@
             <a href="#tab-advance" data-toggle="tab">{{$options.setting.tab_advance_title}}</a>
         </li>
         <li>
+            <a href="#tab-link" data-toggle="tab">{{$options.setting.tab_link_title}}</a>
+        </li>
+        <li>
             <a href="#tab-media-manager" data-toggle="tab">{{$options.setting.tab_image_title}}</a>
         </li>
       </ul>
@@ -30,12 +33,18 @@
                     :group-data="info"></tab-advance>
         </div>
 
+        <div class="tab-pane" id="tab-link">
+            <tab-link
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"></tab-link>
+        </div>
+
         <div class="tab-pane" id="tab-media-manager">
             <tab-media-manager ref="mediaManagerTab"
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"
-                    :config-form="$options.setting"></tab-media-manager>
+                    :group-data="info"></tab-media-manager>
         </div>
       </div>
     </form>
@@ -53,10 +62,12 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_LOADING,
-        ACTION_INSERT_INFO
+        ACTION_INSERT_INFO,
+        ACTION_SET_IMAGE
     } from 'store@admin/types/action-types';
     import TabGeneral from './TabGeneral';
     import TabAdvance from './TabAdvance';
+    import TabLink from './TabLink';
     import TabMediaManager from './TabImage';
     import {
         fn_redirect_url
@@ -67,6 +78,7 @@
         components: {
             TabGeneral,
             TabAdvance,
+            TabLink,
             TabMediaManager
         },
         data() {
@@ -87,29 +99,16 @@
 
         mounted() {
             const _self = this;
-
-            EventBus.$on('item-selected-group', (groupItem) => {
-                if ((typeof groupItem === 'object') && groupItem.hasOwnProperty('id')) {
-                    _self.info.newsgroup_id = groupItem.id;
-                    _self.info.newsgroupname = groupItem.newsgroupname;
-                }
-                console.log(`Oh, that's nice. It's gotten ${groupItem.id} clicks! :)`)
-            });
-
             EventBus.$on('on-selected-image', (imgItem) => {
-                if (imgItem.selected) {
-                    _self.info.picture = imgItem.selected.path;
-                    _self.file = imgItem;
-                } else {
-                    _self.info.picture = null;
-                }
+                _self._selectMainImg(imgItem)
             });
         },
 
         methods: {
             ...mapActions(MODULE_INFO_ADD, [
                 ACTION_SET_LOADING,
-                ACTION_INSERT_INFO
+                ACTION_INSERT_INFO,
+                ACTION_SET_IMAGE
             ]),
 
             async _submitInfo() {
@@ -123,6 +122,15 @@
 
             _back() {
                 return fn_redirect_url('admin/news');
+            },
+
+            _selectMainImg(file) {
+                if (typeof file === "object") {
+                    if (file.hasOwnProperty('selected')) {
+                        this.[ACTION_SET_IMAGE](file.selected);
+                    }
+                }
+                //console.log(file, '->type:', typeof file, '=> has', file.hasOwnProperty('selected'))
             }
         },
         setting: {
@@ -136,6 +144,7 @@
             btnSubmitTxt: 'Save',
             tab_general_title: 'Tổng quan',
             tab_advance_title: 'Mở rộng',
+            tab_link_title: 'Liên kết',
             tab_image_title: 'Hình ảnh',
             tab_design_title: 'Màn hình',
             error_msg_system: 'Lỗi hệ thống !'

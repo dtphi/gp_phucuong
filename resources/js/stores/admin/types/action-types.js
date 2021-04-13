@@ -26,6 +26,7 @@ export const ACTION_UPDATE_NEWS_GROUP = 'updateNewsGroup';
 export const ACTION_SELECT_DROPDOWN_PARENT_CATEGORY = 'selectParentDropdownCategory';
 export const ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY = 'selectInfoToParentDropdownCategory';
 export const ACTION_ADD_INFO_TO_CATEGORY_LIST = 'addInfoToCategoryList';
+export const ACTION_REMOVE_INFO_TO_CATEGORY_LIST = 'removeInfoToCategoryList';
 
 export const ACTION_SET_LOADING = 'setLoading';
 export const ACTION_SHOW_MODAL = 'showModal';
@@ -34,3 +35,4 @@ export const ACTION_CLOSE_MODAL = 'closeModal';
 export const ACTION_IS_OPEN_MODAL = 'isOpenModal';
 export const ACTION_RESET_NOTIFICATION_INFO = 'resetNotificationInfo';
 export const ACTION_SEARCH_ALL = 'searchAll';
+export const ACTION_SET_IMAGE = 'setImage';
