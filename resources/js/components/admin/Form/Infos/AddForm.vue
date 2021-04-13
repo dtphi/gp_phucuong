@@ -63,7 +63,7 @@
     } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'ModalAddForm',
+        name: 'FormAdd',
         components: {
             TabGeneral,
             TabAdvance,

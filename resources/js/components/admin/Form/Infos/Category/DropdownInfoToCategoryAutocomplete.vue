@@ -12,7 +12,7 @@
         MODULE_NEWS_CATEGORY_EDIT
     } from 'store@admin/types/module-types';
     import {
-        ACTION_SELECT_DROPDOWN_PARENT_CATEGORY
+        ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
     } from 'store@admin/types/action-types';
 
     export default {
@@ -27,10 +27,10 @@
         },
         methods: {
         	...mapActions(MODULE_NEWS_CATEGORY_EDIT, [
-        			ACTION_SELECT_DROPDOWN_PARENT_CATEGORY
+        			ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
         	]),
             _selectParentCategory() {
-                this.[ACTION_SELECT_DROPDOWN_PARENT_CATEGORY](this.category);
+                this.[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](this.category);
             }
         },
         setting: {

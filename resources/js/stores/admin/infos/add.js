@@ -6,35 +6,50 @@ import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
   INFOS_MODAL_INSERT_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR
+  INFOS_MODAL_SET_ERROR,
+  INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
+  INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST
 } from '../types/mutation-types';
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
-  ACTION_RELOAD_GET_INFO_LIST
+  ACTION_RELOAD_GET_INFO_LIST,
+  ACTION_ADD_INFO_TO_CATEGORY_LIST
 } from '../types/action-types';
-const NEWS = {
-  id: 0,
-  newsname: '',
-  description: '',
-  newslink: '',
-  newsgroup_id: 0,
-  newsgroupname: '',
-  picture: '',
-  context: ''
+
+const defaultState = () => {
+  return {
+    isOpen: false,
+    action: null,
+    classShow: 'modal fade',
+    styleCss: '',
+    info: {
+      image: null,
+      date_available: null,
+      sort_order: 0,
+      status: 1,
+      name: '',
+      meta_title: '',
+      description: '',
+      tag: '',
+      meta_description: '',
+      meta_keyword: '',
+      multi_images: [],
+      relateds: [],
+      categorys: [],
+      downloads: []
+    },
+    listCategorysDisplay: [],
+    infoId: 0,
+    loading: false,
+    insertSuccess: false,
+    errors: []
+  }
 }
 
 export default {
   namespaced: true,
-  state: {
-    isOpen: false,
-    action: 'add',
-    info: Object.assign({}, NEWS),
-    infoId: 0,
-    loading: false,
-    updateSuccess: false,
-    errors: []
-  },
+  state: defaultState(),
   getters: {
     isOpen(state) {
       return state.isOpen
@@ -72,6 +87,14 @@ export default {
 
     [INFOS_MODAL_SET_ERROR](state, payload) {
       state.errors = payload
+    },
+
+    [INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST](state, payload) {
+      state.info.categorys = payload
+    },
+
+    [INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST](state, payload) {
+      state.listCategorysDisplay = payload
     }
   },
 
@@ -103,6 +126,17 @@ export default {
           dispatch(ACTION_SET_LOADING, false);
         }
       )
-    }
+    },
+
+    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({commit, state}, category) {
+      const categorys = state.info.categorys;
+      const listCateShow = state.listCategorysDisplay;
+
+      categorys.push(category.category_id);
+      listCateShow.push(category);
+
+      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, categorys);
+      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow);
+    },
   }
 }

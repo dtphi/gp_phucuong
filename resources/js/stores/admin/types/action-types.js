@@ -24,6 +24,8 @@ export const ACTION_INSERT_NEWS_GROUP = 'insertNewsGroup';
 export const ACTION_INSERT_NEWS_GROUP_BACK = 'insertNewsGroupBack';
 export const ACTION_UPDATE_NEWS_GROUP = 'updateNewsGroup';
 export const ACTION_SELECT_DROPDOWN_PARENT_CATEGORY = 'selectParentDropdownCategory';
+export const ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY = 'selectInfoToParentDropdownCategory';
+export const ACTION_ADD_INFO_TO_CATEGORY_LIST = 'addInfoToCategoryList';
 
 export const ACTION_SET_LOADING = 'setLoading';
 export const ACTION_SHOW_MODAL = 'showModal';

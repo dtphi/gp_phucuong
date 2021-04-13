@@ -19,7 +19,8 @@ import {
   NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED,
   NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS,
   NEWSGROUPS_MODAL_SET_ERROR,
-  SELECT_DROPDOWN_PARENT_CATEGORY
+  SELECT_DROPDOWN_PARENT_CATEGORY,
+  SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
 } from '../types/mutation-types';
 import {
   ACTION_GET_NEWS_GROUP_BY_ID,
@@ -32,7 +33,8 @@ import {
   ACTION_UPDATE_NEWS_GROUP,
   ACTION_RELOAD_GET_NEWS_GROUP_LIST,
   ACTION_RESET_NOTIFICATION_INFO,
-  ACTION_SELECT_DROPDOWN_PARENT_CATEGORY
+  ACTION_SELECT_DROPDOWN_PARENT_CATEGORY,
+  ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
 } from '../types/action-types';
 
 const defaultState = () => {
@@ -52,6 +54,10 @@ const defaultState = () => {
       status: 1,
       layout_id: null,
       path: null
+    },
+    infoCategory: {
+      category_name: '',
+      category_id: null
     },
     nameQuery: '',
     newsGroupId: 0,
@@ -83,6 +89,9 @@ export default {
     },
     newsGroup(state) {
       return state.newsGroup
+    },
+    infoCategory(state) {
+      return state.infoCategory
     },
     getNameQuery(state) {
       var str = state.nameQuery;
@@ -169,6 +178,10 @@ export default {
         state.nameQuery = payload.category_name;
         state.newsGroup.parent_id = payload.category_id;
       }
+    },
+    [SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](state, payload) {
+      state.nameQuery = payload.category_name;
+      state.infoCategory = payload;
     }
   },
 
@@ -282,6 +295,12 @@ export default {
       commit
     }, category) {
       commit(SELECT_DROPDOWN_PARENT_CATEGORY, category);
+    },
+
+    [ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY]({
+      commit
+    }, category) {
+      commit(SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY, category);
     }
   }
 }

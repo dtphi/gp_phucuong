@@ -4,18 +4,17 @@
         	class="col-sm-2 control-label" 
         	for="input-parent-category-name">
         		<span data-toggle="tooltip" 
-        			title="" 
         			data-original-title="(Tự động hoàn toàn)">{{$options.setting.paren_category_txt}}</span>
         	</label>
         <div class="col-sm-10">
     	   <input autocomplete="off"
-            v-on:focus="_focusParentCategory"
-		    		v-on:keyup.enter="_searchProducts()" 
-		    		v-model="getNameQuery" type="text" 
-		    		name="category" 
-		    		:placeholder="$options.setting.paren_category_txt" 
-		    		id="input-parent-category-name" 
-		    		class="form-control" />
+                v-on:focus="_focusParentCategory"
+	    		v-on:keyup.enter="_searchProducts()" 
+	    		v-model="query" type="text" 
+	    		name="category" 
+	    		:placeholder="$options.setting.paren_category_txt" 
+	    		id="input-parent-category-name" 
+	    		class="form-control" />
             <ul class="dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
                 <li>
                     <span class="btn btn-default cms-btn-dropdown" @click="_closeDropdown">
@@ -32,7 +31,16 @@
                     :category="item"></the-dropdown-category>            
             </ul>
 
-            <div id="info-category" class="well well-sm" style="height: 150px; overflow: auto;"> </div>
+            <template v-if="categorys.length">
+                <div id="info-category" class="well well-sm" style="height: 150px; overflow: auto;">
+                    <div v-for="(item,idx) in categorys" id="news-category1">
+                        <i class="fa fa-minus-circle cms-text-red"></i>{{item.category_name}}
+                    </div>
+                </div>
+            </template>
+            <template v-else>
+                <div id="info-category" class="well well-sm" style="height: 150px; overflow: auto;"></div>
+            </template>
 
         </div>
     </div>
@@ -40,16 +48,19 @@
 
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
     import TheDropdownCategory from './DropdownInfoToCategoryAutocomplete';
     import {
         MODULE_NEWS_CATEGORY,
-        MODULE_NEWS_CATEGORY_EDIT
+        MODULE_NEWS_CATEGORY_EDIT,
+        MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
     import {
-        ACTION_GET_NEWS_GROUP_LIST
+        ACTION_GET_NEWS_GROUP_LIST,
+        ACTION_ADD_INFO_TO_CATEGORY_LIST
     } from 'store@admin/types/action-types';
     import lodash from 'lodash';
 
@@ -58,17 +69,18 @@
         components: {TheDropdownCategory},
         props: {
             categoryId: {
-                default: 0
+                default: null
             }
         },
         data() {
             return {
                 dropdownStyle: 'display: none;',
                 itemNone: {
-                    category_id: 0,
+                    category_id: -1,
                     category_name: ' --- Chọn --- ',
                     sort_order: 0
-                }            
+                },
+                query: '',            
             }
         },
         computed: {
@@ -76,27 +88,35 @@
                 'newsGroups'
             ]),
             ...mapGetters(MODULE_NEWS_CATEGORY_EDIT, [
-                'newsGroup',
+                'infoCategory',
                 'getNameQuery'
             ]),
-            _lists() {
-                let rootTree = {...this.newsGroups};
-
-                return rootTree;
-            }
+            ...mapState(MODULE_INFO_ADD, {
+                categorys: state => state.listCategorysDisplay
+            }),
         },
         watch: {
             'getNameQuery': {
                 handler: _.debounce(function () {
                     this._searchProducts()
                 }, 100)
+            },
+            'infoCategory': {
+                handler: function() {
+                    this._addInfoToCategory(this.infoCategory);
+                }
             }
         },
         methods: {
         	...mapActions(MODULE_NEWS_CATEGORY, [
         		ACTION_GET_NEWS_GROUP_LIST
         	]),
+            ...mapActions(MODULE_INFO_ADD, [
+                ACTION_ADD_INFO_TO_CATEGORY_LIST
+            ]),
             _searchProducts() {
+                this.$data.query = this.getNameQuery;
+
               const query = this.getNameQuery;
               if (query && query.length) {
               	this.[ACTION_GET_NEWS_GROUP_LIST](query);
@@ -108,6 +128,9 @@
           },
           _closeDropdown() {
               this.$data.dropdownStyle = 'display:none';
+          },
+          _addInfoToCategory(infoCategory) {
+            this.[ACTION_ADD_INFO_TO_CATEGORY_LIST](infoCategory);
           }
         },
         setting: {

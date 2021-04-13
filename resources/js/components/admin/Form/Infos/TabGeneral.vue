@@ -7,13 +7,13 @@
                     class="col-sm-2 control-label">{{$options.setting.name_txt}}</label>
                 <div class="col-sm-10">
                     <validation-provider 
-                        name="news_name" 
+                        name="info_name" 
                         rules="required|max:191" 
                         v-slot="{ errors }">
                         <input 
-                            v-model="generalData.newsname"
+                            v-model="generalData.name"
                             type="text" 
-                            name="input-info-name" 
+                            id="input-info-name" 
                             class="form-control"
                             :placeholder="$options.setting.name_txt">
 
@@ -43,6 +43,7 @@
                         name="info_meta_title" 
                         rules="required|max:191" v-slot="{ errors }">
                         <input 
+                            id="input-info-meta-title"
                             v-model="generalData.meta_title" 
                             class="form-control"
                             :placeholder="$options.setting.info_meta_title_txt">
@@ -54,17 +55,60 @@
 
             <div class="form-group">
                 <label 
-                    for="input-info-key-word" 
+                    for="input-info-meta-description" 
+                    class="col-sm-2 control-label">{{$options.setting.info_meta_description_txt}}</label>
+                <div class="col-sm-10">
+                    <validation-provider 
+                        name="info_meta_description" 
+                        rules="max:191" 
+                        v-slot="{ errors }">
+                        <textarea 
+                            id="input-info-meta-description"
+                            v-model="generalData.meta_description" 
+                            class="form-control"
+                            :placeholder="$options.setting.info_meta_description_txt"></textarea>
+
+                        <span class="cms-text-red">{{ errors[0] }}</span>
+                    </validation-provider>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label 
+                    for="input-info-meta-keyword" 
                     class="col-sm-2 control-label">{{$options.setting.info_key_word_txt}}</label>
                 <div class="col-sm-10">
                     <validation-provider 
-                        name="info_key_word" 
-                        rules="required|max:191" 
+                        name="info_meta_keyword" 
+                        rules="max:191" 
                         v-slot="{ errors }">
-                        <input 
-                            v-model="generalData.key_word" 
+                        <textarea
+                            id="input-info-meta-keyword"
+                            v-model="generalData.meta_keyword" 
                             class="form-control"
-                            :placeholder="$options.setting.info_key_word_txt">
+                            :placeholder="$options.setting.info_key_word_txt"></textarea>
+
+                        <span class="cms-text-red">{{ errors[0] }}</span>
+                    </validation-provider>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label 
+                    for="input-info-tag" 
+                    class="col-sm-2 control-label">
+                    <span data-toggle="tooltip" :data-original-title="$options.setting.info_tag_tooltip_txt">{{$options.setting.info_tag_txt}}</span>
+                </label>
+                <div class="col-sm-10">
+                    <validation-provider 
+                        name="info_tag" 
+                        rules="max:191" 
+                        v-slot="{ errors }">
+                        <input
+                            id="input-info-tag"
+                            v-model="generalData.tag" 
+                            class="form-control"
+                            :placeholder="$options.setting.info_tag_txt"></textarea>
 
                         <span class="cms-text-red">{{ errors[0] }}</span>
                     </validation-provider>
@@ -133,8 +177,11 @@
         setting: {
             name_txt: 'Tên',
             info_description_txt: 'Mô tả',
-            info_key_word_txt: 'Từ khóa',
-            info_meta_title_txt: 'Meta title',
+            info_key_word_txt: 'Từ khóa mô tả',
+            info_meta_title_txt: 'Thẻ meta tiêu đề',
+            info_meta_description_txt: 'Thẻ meta mô tả',
+            info_tag_txt: 'Tags',
+            info_tag_tooltip_txt: 'Ngăn cách bởi dấu phẩy'
         }
     };
 </script>

@@ -15,11 +15,11 @@ class Information extends BaseModel
     protected $primaryKey = 'information_id';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the description associated with the category.
      */
-    public function category()
+    public function description()
     {
-        return $this->belongsTo('App\Models\Category', 'category_id');
+        return $this->hasOne(InformationDescription::class, $this->primaryKey);
     }
 
     /**

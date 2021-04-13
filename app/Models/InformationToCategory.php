@@ -14,6 +14,14 @@ class InformationToCategory extends BaseModel
      */
     protected $primaryKey = ['infomation_id', 'category_id'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category', 'category_id');
+    }
+
     //public $incrementing = false;
 
     /**
