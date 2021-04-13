@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   apiInsertInfo
 } from 'api@admin/information';
@@ -9,6 +8,8 @@ import {
   INFOS_MODAL_SET_ERROR,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST,
+  INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
+  INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
   INFOS_FORM_SET_MAIN_IMAGE,
 } from '../types/mutation-types';
 import {
@@ -17,6 +18,7 @@ import {
   ACTION_RELOAD_GET_INFO_LIST,
   ACTION_ADD_INFO_TO_CATEGORY_LIST,
   ACTION_REMOVE_INFO_TO_CATEGORY_LIST,
+  ACTION_INSERT_INFO_BACK,
   ACTION_SET_IMAGE,
 } from '../types/action-types';
 
@@ -111,6 +113,14 @@ export default {
       state.listCategorysDisplay = payload
     },
 
+    [INFOS_FORM_ADD_INFO_TO_RELATED_LIST](state, payload) {
+      state.info.relateds = payload
+    },
+
+    [INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST](state, payload) {
+      state.listRelatedsDisplay = payload
+    },
+
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload;
     }
@@ -131,15 +141,36 @@ export default {
       apiInsertInfo(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, true);
+          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          commit(NEWSGROUPS_MODAL_SET_ERROR, []);
+
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+          commit(NEWSGROUPS_MODAL_SET_ERROR, errors);
+
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
+
+    [ACTION_INSERT_INFO_BACK]({
+      dispatch,
+      commit
+    }, info) {
+      apiInsertInfo(
+        info,
+        (result) => {
+          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
 
           dispatch(ACTION_RELOAD_GET_INFO_LIST, 'page', {
             root: true
           });
-          dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, false)
+          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+          commit(NEWSGROUPS_MODAL_SET_ERROR, errors);
 
           dispatch(ACTION_SET_LOADING, false);
         }
@@ -177,12 +208,31 @@ export default {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
     },
 
-    [ACTION_ADD_INFO_TO_RELATED_LIST]() {
+    [ACTION_ADD_INFO_TO_RELATED_LIST]({state, commit}, related) {
+      const relateds = state.info.relateds;
+      const listRelatedShow = state.listRelatedsDisplay;
 
+      if (typeof related === "object" && Object.keys(related).length) {
+        if ((relateds.indexOf(related.information_id) === -1) && (parseInt(related.information_id) > 0)) {
+          relateds.push(related.information_id);
+          listRelatedShow.push(related);
+        }
+      }
+
+      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, relateds);
+      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, listRelatedShow);
     },
 
-    [ACTION_REMOVE_INFO_TO_RELATED_LIST]() {
+    [ACTION_REMOVE_INFO_TO_RELATED_LIST]({state, commit}, related) {
+      const relateds = state.info.relateds;
+      const listRelatedShow = state.listRelatedsDisplay;
 
+      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, _.remove(relateds, function(infoId) {
+        return (infoId - related.information_id !== 0);
+      }));
+      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, _.remove(listRelatedShow, function(item) {
+        return (item.information_id - related.information_id !== 0);
+      }));
     },
   }
 }

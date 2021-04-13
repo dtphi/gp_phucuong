@@ -12,6 +12,7 @@ export const ACTION_DELETE_INFO_BY_ID = 'deleteInfoById';
 export const ACTION_SET_INFO_DELETE_BY_ID = 'setInfoDeleteById';
 export const ACTION_RELOAD_GET_INFO_LIST = 'reloadGetInfoList';
 export const ACTION_INSERT_INFO = 'insertInfo';
+export const ACTION_INSERT_INFO_BACK = 'insertInfoBack';
 export const ACTION_UPDATE_INFO = 'updateInfo';
 export const ACTION_RESET_UPDATE_INFO = 'resetUpdateInfo';
 

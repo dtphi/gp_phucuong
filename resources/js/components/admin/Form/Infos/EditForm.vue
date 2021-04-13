@@ -11,6 +11,9 @@
             <a href="#tab-advance" data-toggle="tab">{{$options.setting.tab_advance_title}}</a>
         </li>
         <li>
+            <a href="#tab-link" data-toggle="tab">{{$options.setting.tab_link_title}}</a>
+        </li>
+        <li>
             <a href="#tab-media-manager" data-toggle="tab">{{$options.setting.tab_image_title}}</a>
         </li>
       </ul>
@@ -28,6 +31,13 @@
                     role="tabpanel"
                     class="tab-pane"
                     :group-data="info"></tab-advance>
+        </div>
+
+        <div class="tab-pane" id="tab-link">
+            <tab-link
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"></tab-link>
         </div>
 
         <div class="tab-pane" id="tab-media-manager">
@@ -52,11 +62,13 @@
         MODULE_INFO_EDIT
     } from 'store@admin/types/module-types';
     import {
-        ACTION_SET_LOADING,
-        ACTION_UPDATE_INFO
+        ACTION_GET_INFO_BY_ID,
+        ACTION_UPDATE_INFO,
+        ACTION_SET_IMAGE
     } from 'store@admin/types/action-types';
     import TabGeneral from './TabGeneral';
     import TabAdvance from './TabAdvance';
+    import TabLink from './TabLink';
     import TabMediaManager from './TabImage';
     import {
         fn_redirect_url
@@ -64,10 +76,19 @@
 
     export default {
         name: 'NewsEditForm',
+        beforeCreate() {
+            const infoId = this.$route.params.infoId;
+            if (infoId) {
+                this.$store.dispatch(MODULE_INFO_EDIT + '/' + ACTION_GET_INFO_BY_ID, infoId);
+            } else {
+                return fn_redirect_url('admin/informations');
+            }
+        },
         components: {
             TabGeneral,
             TabMediaManager,
-            TabAdvance
+            TabAdvance,
+            TabLink
         },
         data() {
             return {
@@ -87,28 +108,16 @@
 
         mounted() {
             const _self = this;
-            EventBus.$on('item-selected-group', (groupItem) => {
-                if ((typeof groupItem === 'object') && groupItem.hasOwnProperty('id')) {
-                    _self.info.newsgroup_id = groupItem.id;
-                    _self.info.newsgroupname = groupItem.newsgroupname;
-                }
-                console.log(`Oh, that's nice. It's gotten ${groupItem.id} clicks! :)`)
-            });
-
             EventBus.$on('on-selected-image', (imgItem) => {
-                if (imgItem.selected) {
-                    _self.info.picture = imgItem.selected.path;
-                    _self.file = imgItem;
-                } else {
-                    _self.info.picture = null;
-                }
+                _self.$data.file = imgItem;
+                _self._selectMainImg(imgItem);
             });
         },
 
         methods: {
             ...mapActions(MODULE_INFO_EDIT, [
-                ACTION_SET_LOADING,
-                ACTION_UPDATE_INFO
+                ACTION_UPDATE_INFO,
+                ACTION_SET_IMAGE
             ]),
 
             async _submitInfo() {
@@ -121,7 +130,16 @@
             },
 
             _back() {
-                return fn_redirect_url('admin/news');
+                return fn_redirect_url('admin/informations');
+            },
+
+            _selectMainImg(file) {
+                if (typeof file === "object") {
+                    if (file.hasOwnProperty('selected')) {
+                        this.[ACTION_SET_IMAGE](file.selected);
+                    }
+                }
+                //console.log(file, '->type:', typeof file, '=> has', file.hasOwnProperty('selected'))
             }
         },
         setting: {

@@ -210,6 +210,7 @@ export default {
         newsGroup,
         (result) => {
           commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, AppConfig.comInsertNoSuccess);
+          commit(NEWSGROUPS_MODAL_SET_ERROR, []);
 
           dispatch(ACTION_SET_LOADING, false);
           dispatch(ACTION_CLOSE_MODAL);
@@ -233,8 +234,6 @@ export default {
         (result) => {
           commit(NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS, AppConfig.comInsertNoSuccess);
 
-          //dispatch(ACTION_SET_LOADING, false);
-          //dispatch(ACTION_CLOSE_MODAL);
           dispatch(ACTION_RELOAD_GET_NEWS_GROUP_LIST, null, {
             root: true
           });

@@ -46,7 +46,8 @@
                       </div>
                 
                     <div class="panel-body">
-                         <info-add-form ref="formAddUser"></info-add-form>
+                         <info-add-form 
+                            ref="formAddUser"></info-add-form>
                     </div>
                 </div>
             </div>

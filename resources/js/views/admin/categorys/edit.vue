@@ -163,7 +163,6 @@
         MODULE_NEWS_CATEGORY_EDIT
     } from 'store@admin/types/module-types';
     import {
-        ACTION_SET_LOADING,
         ACTION_UPDATE_NEWS_GROUP,
         ACTION_GET_NEWS_GROUP_BY_ID,
         ACTION_RESET_NOTIFICATION_INFO

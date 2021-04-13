@@ -100,7 +100,8 @@
         mounted() {
             const _self = this;
             EventBus.$on('on-selected-image', (imgItem) => {
-                _self._selectMainImg(imgItem)
+                _self.$data.file = imgItem;
+                _self._selectMainImg(imgItem);
             });
         },
 
@@ -118,10 +119,6 @@
                         _self.[ACTION_INSERT_INFO](_self.info)
                     }
                 });
-            },
-
-            _back() {
-                return fn_redirect_url('admin/news');
             },
 
             _selectMainImg(file) {
