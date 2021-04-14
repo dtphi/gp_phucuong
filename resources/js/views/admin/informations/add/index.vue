@@ -13,7 +13,7 @@
                 :is-full-page="fullPage"></loading-over-lay>
         </template>
         <validation-observer 
-            ref="observerNewsGroup" 
+            ref="observerInfo" 
             @submit.prevent="_submitInfo">
             <div class="page-header">
                 <div class="container-fluid">
@@ -119,14 +119,19 @@
                 return errs;
             },
             _submitInfo() {
-                this.$refs.formAddUser._submitInfo()
+                const _self = this;
+                _self.$refs.observerInfo.validate().then((isValid) => {
+                    if (isValid) {
+                        _self.$refs.formAddUser._submitInfo();
+                    }
+                });
             },
             _submitInfoBack() {
                 const _self = this;
 
-                _self.$refs.observerNewsGroup.validate().then((isValid) => {
+                _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
-                        _self.[ACTION_INSERT_NEWS_GROUP_BACK](_self.newsGroupAdd);
+                        _self.$refs.formAddUser._submitInfoBack();
                     }
                 });
             },

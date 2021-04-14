@@ -14,6 +14,8 @@ class InformationImage extends BaseModel
      */
     protected $primaryKey = 'infomation_image_id';
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -27,7 +27,7 @@
                 <the-dropdown-category  :key="-1"
                     :category="itemNone"></the-dropdown-category>
               
-                <the-dropdown-category v-for="(item,idx) in newsGroups" :key="idx" 
+                <the-dropdown-category v-for="(item,idx) in dropdowns" :key="idx" 
                     :category="item"></the-dropdown-category>            
             </ul>
 
@@ -61,7 +61,7 @@
         MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
     import {
-        ACTION_GET_NEWS_GROUP_LIST,
+        ACTION_GET_DROPDOWN_CATEGORY_LIST,
         ACTION_ADD_INFO_TO_CATEGORY_LIST
     } from 'store@admin/types/action-types';
     import lodash from 'lodash';
@@ -82,16 +82,13 @@
                 dropdownStyle: 'display: none;',
                 itemNone: {
                     category_id: -1,
-                    category_name: ' --- Chọn --- ',
+                    name: ' --- Chọn --- ',
                     sort_order: 0
                 },
                 query: '',            
             }
         },
         computed: {
-            ...mapGetters(MODULE_NEWS_CATEGORY, [
-                'newsGroups'
-            ]),
             ...mapGetters(MODULE_NEWS_CATEGORY_EDIT, [
                 'infoCategory',
                 'getNameQuery'
@@ -99,11 +96,14 @@
             ...mapState(MODULE_INFO_ADD, {
                 categorys: state => state.listCategorysDisplay
             }),
+            ...mapState(MODULE_NEWS_CATEGORY, {
+                dropdowns: state => state.dropdownCategories
+            }),
         },
         watch: {
-            'getNameQuery': {
+            'query': {
                 handler: _.debounce(function () {
-                    this._searchProducts()
+                    this._searchCategories()
                 }, 100)
             },
             'infoCategory': {
@@ -114,21 +114,20 @@
         },
         methods: {
         	...mapActions(MODULE_NEWS_CATEGORY, [
-        		ACTION_GET_NEWS_GROUP_LIST
+        		ACTION_GET_DROPDOWN_CATEGORY_LIST
         	]),
             ...mapActions(MODULE_INFO_ADD, [
                 ACTION_ADD_INFO_TO_CATEGORY_LIST
             ]),
-            _searchProducts() {
-                this.$data.query = this.getNameQuery;
-
-              const query = this.getNameQuery;
+            _searchCategories() {
+              const query = this.query;
               if (query && query.length) {
-              	this.[ACTION_GET_NEWS_GROUP_LIST](query);
+              	this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
               }
           },
           _focusParentCategory() {
-              this.[ACTION_GET_NEWS_GROUP_LIST]();
+            const query = this.query;
+              this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
               this.$data.dropdownStyle = 'display:block';
           },
           _closeDropdown() {

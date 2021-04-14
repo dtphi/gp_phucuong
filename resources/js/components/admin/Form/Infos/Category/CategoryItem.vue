@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i class="fa fa-minus-circle cms-text-red" @click="_deleteCategory"></i>{{infoToCategory.category_name}}
+        <i class="fa fa-minus-circle cms-text-red" @click="_deleteCategory"></i>{{infoToCategory.name}}
     </div>
 </template>
 

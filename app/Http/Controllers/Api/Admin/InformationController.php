@@ -167,4 +167,21 @@ class InformationController extends ApiController
 
         return $this->respondBadRequest();
     }
+
+    public function dropdown(Request $request)
+    {
+        $data = $request->all();
+
+        $results = $this->infoSv->apiGetInformations($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'information_id' => $value->information_id,
+                'name' => strip_tags(html_entity_decode($value->name, ENT_QUOTES, 'UTF-8')),
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
 }

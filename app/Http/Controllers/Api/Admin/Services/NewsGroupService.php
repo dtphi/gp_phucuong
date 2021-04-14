@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\CategoryDescription;
 use App\Models\CategoryPath;
 use App\Models\NewsGroup;
+use App\Http\Common\Tables;
 use DB;
 
 final class NewsGroupService implements BaseModel, NewsGroupModel
@@ -414,4 +415,25 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
         DB::commit();
     }
+
+    public function apiGetCategories($data = array(), $limit = 5) {
+
+        $query = $this->modelPath->select(Tables::$category_paths . '.category_id AS category_id', 'cate1.parent_id',
+            'cate1.sort_order',
+            DB::raw("group_concat(cd1.`name` ORDER BY pc_category_paths.level SEPARATOR '" . $this->separate . "') AS name"))->groupBy(Tables::$category_paths . '.category_id')
+            ->leftJoin(Tables::$categorys . ' AS cate1', Tables::$category_paths . '.category_id', '=',
+                'cate1.category_id')
+            ->leftJoin(Tables::$categorys . ' AS cate2', Tables::$category_paths . '.path_id', '=', 'cate2.category_id')
+            ->leftJoin(Tables::$category_descriptions . ' AS cd1', Tables::$category_paths . '.path_id', '=',
+                'cd1.category_id')
+            ->leftJoin(Tables::$category_descriptions . ' AS cd2', Tables::$category_paths . '.category_id', '=',
+                'cd2.category_id');
+
+            if (!empty($data['filter_name'])) {
+                $query->where('cd2.name', 'LIKE', "%{$data['filter_name']}%");
+            }
+
+        return $query->limit($limit)->get();
+    }
+
 }

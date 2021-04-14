@@ -14,6 +14,8 @@ class InformationToDownload extends BaseModel
      */
     protected $primaryKey = ['infomation_id', 'download_id'];
 
+    public $timestamps = false;
+
     //public $incrementing = false;
 
     /**

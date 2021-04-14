@@ -31,7 +31,7 @@ export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
       }
     })
     .catch(errors => {
-     console.log(errors)
+      console.log(errors)
     })
 }
 
@@ -49,7 +49,7 @@ export const apiGetNewsGroups = (resolve, errResole, params) => {
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
-        
+
         resolve({
           newsgroupname: "Danh Mục :",
           id: 0,
@@ -64,11 +64,11 @@ export const apiGetNewsGroups = (resolve, errResole, params) => {
       }
     })
     .catch(errors => {
-      if(errors.response) {
+      if (errors.response) {
         errResole([{
-            status: errors.response.status,
-            messageCommon: errors.response.data.message,
-            messages: errors.response.data.errors
+          status: errors.response.status,
+          messageCommon: errors.response.data.message,
+          messages: errors.response.data.errors
         }])
       }
     })
@@ -98,9 +98,9 @@ export const apiUpdateNewsGroup = (categoryId, newsGroup, resolve, errResole) =>
       }
     })
     .catch(errors => errResole([{
-        status: errors.response.status,
-        messageCommon: errors.response.data.message,
-        messages: errors.response.data.errors
+      status: errors.response.status,
+      messageCommon: errors.response.data.message,
+      messages: errors.response.data.errors
     }]))
 }
 
@@ -128,9 +128,9 @@ export const apiInsertNewsGroup = (newsGroup, resolve, errResole) => {
       }
     })
     .catch(errors => errResole([{
-        status: errors.response.status,
-        messageCommon: errors.response.data.message,
-        messages: errors.response.data.errors
+      status: errors.response.status,
+      messageCommon: errors.response.data.message,
+      messages: errors.response.data.errors
     }]))
 }
 
@@ -158,9 +158,9 @@ export const apiDeleteNewsGroup = (newsGroupId, resolve, errResole) => {
       }
     })
     .catch(errors => errResole([{
-        status: errors.response.status,
-        messageCommon: errors.response.data.message,
-        messages: errors.response.data.errors
+      status: errors.response.status,
+      messageCommon: errors.response.data.message,
+      messages: errors.response.data.errors
     }]))
 }
 
@@ -173,9 +173,11 @@ export const apiDeleteNewsGroup = (newsGroupId, resolve, errResole) => {
  */
 export const apiSearchAll = (query, resolve, errResole) => {
   let params = {
-          query
-      };
-  return axios.get(fn_get_base_api_url(`/api/search-news-group`),{params})
+    query
+  };
+  return axios.get(fn_get_base_api_url(`/api/search-news-group`), {
+      params
+    })
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -188,8 +190,26 @@ export const apiSearchAll = (query, resolve, errResole) => {
       }
     })
     .catch(errors => errResole([{
-        status: errors.response.status,
-        messageCommon: errors.response.data.message,
-        messages: errors.response.data.errors
+      status: errors.response.status,
+      messageCommon: errors.response.data.message,
+      messages: errors.response.data.errors
     }]))
+}
+
+export const apiGetDropdownCategories = (resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_url(`/api/news-categories/dropdowns`), {
+      params: params
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        resolve(response.data);
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test'
+        }]);
+      }
+    })
+    .catch(errors => errResole(errors))
 }

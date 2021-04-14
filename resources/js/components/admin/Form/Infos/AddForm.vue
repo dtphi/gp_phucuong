@@ -63,7 +63,8 @@
     import {
         ACTION_SET_LOADING,
         ACTION_INSERT_INFO,
-        ACTION_SET_IMAGE
+        ACTION_SET_IMAGE,
+        ACTION_INSERT_INFO_BACK
     } from 'store@admin/types/action-types';
     import TabGeneral from './TabGeneral';
     import TabAdvance from './TabAdvance';
@@ -109,16 +110,16 @@
             ...mapActions(MODULE_INFO_ADD, [
                 ACTION_SET_LOADING,
                 ACTION_INSERT_INFO,
+                ACTION_INSERT_INFO_BACK,
                 ACTION_SET_IMAGE
             ]),
 
-            async _submitInfo() {
-                const _self = this;
-                _self.$refs.observerInfo.validate().then((isValid) => {
-                    if (isValid) {
-                        _self.[ACTION_INSERT_INFO](_self.info)
-                    }
-                });
+            _submitInfo() {
+                this.[ACTION_INSERT_INFO](this.info);
+            },
+
+            _submitInfoBack() {
+                this.[ACTION_INSERT_INFO_BACK](this.info);
             },
 
             _selectMainImg(file) {

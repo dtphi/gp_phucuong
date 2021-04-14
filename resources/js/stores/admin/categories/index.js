@@ -1,11 +1,11 @@
-import axios from 'axios';
 import add from './add';
 import edit from './edit';
 import {
   apiGetNewsGroupById,
   apiGetNewsGroups,
   apiDeleteNewsGroup,
-  apiSearchAll
+  apiSearchAll,
+  apiGetDropdownCategories
 } from 'api@admin/category';
 import {
   MODULE_NEWS_CATEGORY
@@ -18,7 +18,10 @@ import {
   NEWSGROUPS_DELETE_GROUP_BY_ID_FAILED,
   NEWSGROUPS_SET_NEWS_GROUP_LIST,
   NEWSGROUPS_GROUP_DELETE_BY_ID,
-  NEWSGROUPS_SET_ERROR
+  NEWSGROUPS_SET_ERROR,
+  NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST,
+  NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_SUCCESS,
+  NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_FAILED,
 } from '../types/mutation-types';
 import {
   ACTION_GET_NEWS_GROUP_LIST,
@@ -26,7 +29,8 @@ import {
   ACTION_SET_NEWS_GROUP_DELETE_BY_ID,
   ACTION_RELOAD_GET_NEWS_GROUP_LIST,
   ACTION_SET_LOADING,
-  ACTION_SEARCH_ALL
+  ACTION_SEARCH_ALL,
+  ACTION_GET_DROPDOWN_CATEGORY_LIST
 } from '../types/action-types';
 import {
   fn_redirect_url
@@ -35,6 +39,7 @@ import {
 const defaultState = () => {
   return {
     newsGroups: [],
+    dropdownCategories: [],
     total: 0,
     newsGroupDelete: null,
     isDelete: false,
@@ -63,6 +68,18 @@ export default {
   },
 
   mutations: {
+    [NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST](state, payload) {
+      state.dropdownCategories = payload;
+    },
+
+    [NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_SUCCESS](state, payload) {
+
+    },
+
+    [NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_FAILED](state, payload) {
+
+    },
+
     [NEWSGROUPS_SET_NEWS_GROUP_LIST](state, payload) {
       state.newsGroups = payload
     },
@@ -97,6 +114,25 @@ export default {
   },
 
   actions: {
+    [ACTION_GET_DROPDOWN_CATEGORY_LIST]({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit(NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_SUCCESS, 'Success');
+
+          commit(NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST, result);
+        },
+        (errors) => {
+          commit(NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_FAILED, 'Failed');
+        },
+        params
+      );
+    },
+
     [ACTION_GET_NEWS_GROUP_LIST]({
       dispatch,
       commit
@@ -115,7 +151,7 @@ export default {
             pagination = newsGroups.data.pagination;
           }
           var configs = {
-             moduleActive: {
+            moduleActive: {
               name: MODULE_NEWS_CATEGORY,
               actionList: ACTION_GET_NEWS_GROUP_LIST
             },

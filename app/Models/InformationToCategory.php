@@ -14,6 +14,8 @@ class InformationToCategory extends BaseModel
      */
     protected $primaryKey = ['infomation_id', 'category_id'];
 
+    public $timestamps = false;
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

@@ -15,6 +15,8 @@ export const ACTION_INSERT_INFO = 'insertInfo';
 export const ACTION_INSERT_INFO_BACK = 'insertInfoBack';
 export const ACTION_UPDATE_INFO = 'updateInfo';
 export const ACTION_RESET_UPDATE_INFO = 'resetUpdateInfo';
+export const ACTION_GET_DROPDOWN_RELATED_LIST = 'getDropdownRelatedList';
+export const ACTION_SELECT_DROPDOWN_RELATED_INFO = 'selectDropdownRelatedInfo';
 
 export const ACTION_GET_NEWS_GROUP_LIST = 'getNewsGroupList';
 export const ACTION_GET_NEWS_GROUP_BY_ID = 'getNewsGroupById';
@@ -30,6 +32,7 @@ export const ACTION_ADD_INFO_TO_CATEGORY_LIST = 'addInfoToCategoryList';
 export const ACTION_REMOVE_INFO_TO_CATEGORY_LIST = 'removeInfoToCategoryList';
 export const ACTION_ADD_INFO_TO_RELATED_LIST = 'addInfoToRelatedList';
 export const ACTION_REMOVE_INFO_TO_RELATED_LIST = 'removeInfoToRelatedList';
+export const ACTION_GET_DROPDOWN_CATEGORY_LIST = 'getDropdownCategoryList';
 
 export const ACTION_SET_LOADING = 'setLoading';
 export const ACTION_SHOW_MODAL = 'showModal';
@@ -39,3 +42,4 @@ export const ACTION_IS_OPEN_MODAL = 'isOpenModal';
 export const ACTION_RESET_NOTIFICATION_INFO = 'resetNotificationInfo';
 export const ACTION_SEARCH_ALL = 'searchAll';
 export const ACTION_SET_IMAGE = 'setImage';
+export const ACTION_GET_DROPDOWN_LIST = 'getDropdownList';

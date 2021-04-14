@@ -220,4 +220,21 @@ class NewsGroupController extends ApiController
 
         return $this->respondBadRequest();
     }
+
+    public function dropdown(Request $request)
+    {
+        $data = $request->all();
+
+        $results = $this->newsGpSv->apiGetCategories($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'category_id' => $value->category_id,
+                'name' => strip_tags(html_entity_decode($value->name, ENT_QUOTES, 'UTF-8')),
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
 }

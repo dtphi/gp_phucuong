@@ -1,6 +1,6 @@
 <template>
-    <li @click="_selectParentCategory()">
-        <a href="javascript:void(0);">{{category.category_name}}</a>
+    <li @click="_selectRelatedInfo()">
+        <a href="javascript:void(0);">{{information.name}}</a>
     </li>
 </template>
 
@@ -9,32 +9,28 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_NEWS_CATEGORY_EDIT
+        MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
     import {
-        ACTION_SELECT_DROPDOWN_PARENT_CATEGORY
+        ACTION_SELECT_DROPDOWN_RELATED_INFO
     } from 'store@admin/types/action-types';
 
     export default {
         name: 'DropdownToInfoRelatedAutocomplete',
         props: {
-            category: {
+            information: {
                 default: {}
-            },
-            selectCategoryName: {
-            	default: Function
             }
         },
         methods: {
-        	...mapActions(MODULE_NEWS_CATEGORY_EDIT, [
-        			ACTION_SELECT_DROPDOWN_PARENT_CATEGORY
+        	...mapActions(MODULE_INFO_ADD, [
+        			ACTION_SELECT_DROPDOWN_RELATED_INFO
         	]),
-            _selectParentCategory() {
-                this.[ACTION_SELECT_DROPDOWN_PARENT_CATEGORY](this.category);
+            _selectRelatedInfo() {
+                this.[ACTION_SELECT_DROPDOWN_RELATED_INFO](this.information);
             }
         },
         setting: {
-            paren_category_txt: 'Danh mục tin tức cha'
         }
     };
 </script>

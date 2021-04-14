@@ -14,6 +14,8 @@ class InformationRelated extends BaseModel
      */
     protected $primaryKey = ['infomation_id', 'related_id'];
 
+    public $timestamps = false;
+
     /**
      * @author : dtphi .
      * The attributes that are mass assignable.

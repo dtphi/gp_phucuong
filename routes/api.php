@@ -41,7 +41,9 @@ Route::namespace('App\Http\Controllers\Api\Admin')
         Route::apiResource('users', 'AdminController');
         Route::get('/search-user','AdminController@search');
         Route::apiResource('news-groups', 'NewsGroupController');
+        Route::get('/news-categories/dropdowns','NewsGroupController@dropdown');
         Route::apiResource('news', 'InformationController');
+        Route::get('/informations/dropdowns','InformationController@dropdown');
 
         Route::any('/mmedia/{any}', function () {});
     });

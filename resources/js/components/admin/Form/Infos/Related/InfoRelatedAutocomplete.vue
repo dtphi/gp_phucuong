@@ -9,7 +9,7 @@
         	</label>
         <div class="col-sm-10">
     	   <input autocomplete="off"
-                v-on:focus="_focusParentCategory"
+                v-on:focus="_focusRelatedInfo"
 	    		v-on:keyup.enter="_searchProducts()" 
 	    		v-model="query" type="text" 
 	    		name="informations" 
@@ -26,10 +26,10 @@
                     </span>
                 </li>
                 <the-dropdown-related  :key="-1"
-                    :category="itemNone"></the-dropdown-related>
+                    :information="itemNone"></the-dropdown-related>
               
-                <the-dropdown-related v-for="(item,idx) in informations" :key="idx" 
-                    :category="item"></the-dropdown-related>            
+                <the-dropdown-related v-for="(item,idx) in dropdowns" :key="idx" 
+                    :information="item"></the-dropdown-related>            
             </ul>
 
             <template v-if="relateds.length">
@@ -55,12 +55,11 @@ e
     } from 'vuex';
     import TheDropdownRelated from './DropdownToInfoRelatedAutocomplete';
     import {
-        MODULE_NEWS_CATEGORY,
-        MODULE_NEWS_CATEGORY_EDIT,
         MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
     import {
-        ACTION_GET_NEWS_GROUP_LIST
+        ACTION_GET_DROPDOWN_RELATED_LIST,
+        ACTION_ADD_INFO_TO_RELATED_LIST
     } from 'store@admin/types/action-types';
     import RelatedItem from './RelatedItem';
 
@@ -79,50 +78,52 @@ e
             return {
                 dropdownStyle: 'display: none;',
                 itemNone: {
-                    category_id: 0,
-                    category_name: ' --- Chọn --- ',
-                    sort_order: 0
+                    information_id: 0,
+                    name: ' --- Chọn --- '
                 },
-                informations: [],
                 query: ''
             }
         },
         computed: {
-            ...mapGetters(MODULE_NEWS_CATEGORY, [
-                'newsGroups'
-            ]),
-            ...mapGetters(MODULE_NEWS_CATEGORY_EDIT, [
-                'newsGroup',
-                'getNameQuery'
-            ]),
             ...mapState(MODULE_INFO_ADD, {
-                relateds: state => state.listRelatedsDisplay
+                relateds: state => state.listRelatedsDisplay,
+                dropdowns: state => state.dropdownsRelateds,
+                infoRelated: state => state.infoRelated,
             }),
         },
         watch: {
-            'getNameQuery': {
+            'query': {
                 handler: _.debounce(function () {
-                    this._searchProducts()
+                    this._searchRelateds()
                 }, 100)
+            },
+            'infoRelated': {
+                handler: function() {
+                    this._addInfoToRelated(this.infoRelated);
+                }
             }
         },
         methods: {
-        	...mapActions(MODULE_NEWS_CATEGORY, [
-        		ACTION_GET_NEWS_GROUP_LIST
+        	...mapActions(MODULE_INFO_ADD, [
+        		ACTION_GET_DROPDOWN_RELATED_LIST,
+                ACTION_ADD_INFO_TO_RELATED_LIST,
         	]),
-            _searchProducts() {
-                /*this.$data.query = this.getNameQuery;
-                  const query = this.getNameQuery;
+            _searchRelateds() {
+                  const query = this.query;
                   if (query && query.length) {
-                  	this.[ACTION_GET_NEWS_GROUP_LIST](query);
-                  }*/
+                  	this.[ACTION_GET_DROPDOWN_RELATED_LIST](query);
+                  }
           },
-          _focusParentCategory() {
-              this.[ACTION_GET_NEWS_GROUP_LIST]();
+          _focusRelatedInfo() {
+            const query = this.query;
+              this.[ACTION_GET_DROPDOWN_RELATED_LIST](query);
               this.$data.dropdownStyle = 'display:block';
           },
           _closeDropdown() {
               this.$data.dropdownStyle = 'display:none';
+          },
+          _addInfoToRelated(info) {
+            this.[ACTION_ADD_INFO_TO_RELATED_LIST](info);
           }
         },
         setting: {

@@ -14,6 +14,8 @@ class InformationDescription extends BaseModel
      */
     protected $primaryKey = 'infomation_id';
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,6 +24,7 @@ class InformationDescription extends BaseModel
     protected $fillable = [
         'name',
         'description',
+        'tag',
         'meta_title',
         'meta_description',
         'meta_keyword'

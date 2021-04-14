@@ -25,9 +25,20 @@ class InformationRequest extends FormRequest
     public function validationData()
     {
         $formData = $this->all();
-
         /*informations*/
         $formData['image']  = isset($formData['image']) ? $formData['image'] : '';
+        
+        if (!empty($formData['image']) && is_array($formData['image'])) {
+            
+            $formData['image_type'] = $formData['image']['type'];
+            $formData['image_path'] = $formData['image']['path'];
+            $formData['image_timestamp'] = $formData['image']['timestamp'];
+            $formData['image_extension'] = $formData['image']['extension'];
+            $formData['image_filename'] = $formData['image']['filename'];
+            $formData['image_thumb'] = $formData['image']['thumb'];
+            $formData['image'] = null;
+        }
+
         $formData['date_available']  = isset($formData['date_available']) ? $formData['date_available'] : now();
         $formData['sort_order']  = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
         $formData['status']  = isset($formData['status']) ? $formData['status'] : 0;
@@ -50,6 +61,8 @@ class InformationRequest extends FormRequest
                     'sort_order' => $image['sort_order']
                 ];
             }
+
+            $formData['multi_images'] = null;
         }
 
         /*information relateds*/
