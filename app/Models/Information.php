@@ -22,6 +22,31 @@ class Information extends BaseModel
         return $this->hasOne(InformationDescription::class, $this->primaryKey);
     }
 
+    public function relateds()
+    {
+        return $this->hasMany(InformationRelated::class, 'information_id');
+    }
+
+    public function getNameAttribute() 
+    {
+        return $this->description->name;
+    }
+
+    public function getMetaTitleAttribute() 
+    {
+        return $this->description->meta_title;
+    }
+
+    public function getRelatedListAttribute($value)
+    {
+        $relateds = [];
+        foreach ($this->relateds as $related) {
+           $relateds[] = $related->related_id;
+        }
+
+        return $relateds;
+    }
+
     /**
      * The attributes that are mass assignable.
      *

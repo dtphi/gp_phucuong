@@ -47,6 +47,7 @@ class NewsGroupController extends ApiController
     {
         $data = $request->all();
         $pagination = [];
+        $results = [];
         $page = 1;
         if ($request->query('page')) {
             $page = $request->query('page');

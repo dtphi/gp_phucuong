@@ -12,7 +12,7 @@ class InformationRelated extends BaseModel
     /**
      * @var string
      */
-    protected $primaryKey = ['infomation_id', 'related_id'];
+    protected $primaryKey = ['information_id', 'related_id'];
 
     public $timestamps = false;
 
@@ -23,7 +23,11 @@ class InformationRelated extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'infomation_id',
+        'information_id',
         'related_id'
     ];
+
+    public function getRelatedIdAttribute($value) {
+        return (int)$value;
+    }
 }

@@ -2,23 +2,23 @@
     <tr>
         <td>{{_getNo()}}</td>
         <td class="text-center">                    
-            <input type="checkbox" name="selected[]" :id="`info_select_id_${info.id}`" :value="info.id">
+            <input type="checkbox" name="selected[]" :id="`info_select_id_${info.information_id}`" :value="info.information_id">
         </td>
-        <td class="text-left">{{info.newsname}}</td>
-        <td class="text-right">
+        <td class="text-left">{{info.name}}</td>
+        <td class="text-center">
             <div class="file animated fadeIn">
                 <div class="file-preview">
                     <img :src="_getImgUrl()" class="thumb" />
                 </div>
             </div>
         </td>
-        <td class="text-left">{{info.description}}</td>
+        <td class="text-center">{{_formatDate(info.date_available)}}</td>
         <td class="text-center">{{_formatDate(info.created_at)}}</td>
         <td class="text-right">
             <btn-edit
-                :info-id="info.id"></btn-edit>
+                :info-id="info.information_id"></btn-edit>
             <btn-delete
-                :info-id="info.id"></btn-delete>
+                :info-id="info.information_id"></btn-delete>
         </td>
     </tr>
 </template>
@@ -45,8 +45,8 @@
             info: {
                 type: Object,
                 validator: function (value) {
-                    var id = (value.id && Number.isInteger(value.id));
-                    var name = (value.newsname && value.newsname.length);
+                    var id = (value.information_id && Number.isInteger(value.information_id));
+                    var name = (value.name && value.name.length);
 
                     return (id && name)
                 }
@@ -57,7 +57,7 @@
         },
         computed: {
             ...mapState({
-                meta: state => state.cfApp.meta
+                meta: state => state.cfApp.collectionData
             })
         },
         data() {
@@ -65,11 +65,11 @@
         },
         methods: {
             _getImgUrl() {
-                return fn_get_base_url_image(this.info.picture);
+                return fn_get_base_url_image(this.info.image);
             },
 
             _getNo() {
-                return (this.no + this.meta.from);
+                return (parseInt(this.no) + parseInt(this.meta.from));
             },
 
             _formatDate(date) {

@@ -48,7 +48,7 @@ final class InformationService implements BaseModel, InformationModel
     public function apiGetList(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetList() method.
-        $query = $this->model->orderByDescById();
+        $query = $this->apiGetInformations($options, $limit);
 
         return $query->paginate($limit);
     }
@@ -137,7 +137,7 @@ final class InformationService implements BaseModel, InformationModel
                 $this->model->save();
             }
 
-            DB::insert('insert into ' . DB_PREFIX . 'information_descriptions (information_id, name, description, tag, meta_title, meta_description, meta_keyword) values (?, ?, ?, ?, ?, ?, ?)', [
+            DB::insert('insert into ' . Tables::$information_descriptions . ' (information_id, name, description, tag, meta_title, meta_description, meta_keyword) values (?, ?, ?, ?, ?, ?, ?)', [
                 (int)$infoId, 
                 $data['name'], 
                 $data['description'],
@@ -149,7 +149,7 @@ final class InformationService implements BaseModel, InformationModel
 
             if (isset($data['info_images']) && !empty($data['info_images'])) {
                 foreach ($data['info_images'] as $information_image) {
-                    DB::insert('insert into ' . DB_PREFIX . 'information_images (information_id, image, sort_order) values (?, ?, ?)', [
+                    DB::insert('insert into ' . Tables::$information_images . ' (information_id, image, sort_order) values (?, ?, ?)', [
                         (int)$infoId,
                         $information_image['image'],
                         (int)$information_image['sort_order']
@@ -159,7 +159,7 @@ final class InformationService implements BaseModel, InformationModel
 
             if (isset($data['downloads']) && !empty($data['downloads'])) {
                 foreach ($data['downloads'] as $downloadId) {
-                    DB::insert('insert into ' . DB_PREFIX . 'information_to_downloads (information_id, download_id) values (?, ?)', [
+                    DB::insert('insert into ' . Tables::$information_to_downloads . ' (information_id, download_id) values (?, ?)', [
                         (int)$infoId,
                         (int)$downloadId
                     ]);
@@ -168,7 +168,7 @@ final class InformationService implements BaseModel, InformationModel
 
             if (isset($data['categorys']) && !empty($data['categorys'])) {
                 foreach ($data['categorys'] as $categoryId) {
-                    DB::insert('insert into ' . DB_PREFIX . 'information_to_categorys (information_id, category_id) values (?, ?)', [
+                    DB::insert('insert into ' . Tables::$information_to_categorys . ' (information_id, category_id) values (?, ?)', [
                         (int)$infoId,
                         (int)$categoryId
                     ]);
@@ -177,11 +177,11 @@ final class InformationService implements BaseModel, InformationModel
 
             if (isset($data['relateds']) && !empty($data['relateds'])) {
                 foreach ($data['relateds'] as $relatedId) {
-                    DB::delete("delete from " . DB_PREFIX . "information_relateds where information_id = '" . (int)$infoId . "' and related_id = '" . (int)$relatedId . "'");
-                    DB::insert("insert into " . DB_PREFIX . "information_relateds set information_id = '" . (int)$infoId . "', related_id = '" . (int)$relatedId . "'");
-                    DB::delete("delete from " . DB_PREFIX . "information_relateds where news_id = '" . (int)$relatedId . "' and related_id = '" . (int)$infoId . "'");
+                    DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$infoId . "' and related_id = '" . (int)$relatedId . "'");
+                    DB::insert("insert into " . Tables::$information_relateds . " set information_id = '" . (int)$infoId . "', related_id = '" . (int)$relatedId . "'");
+                    DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$relatedId . "' and related_id = '" . (int)$infoId . "'");
 
-                    DB::insert("insert into " . DB_PREFIX . "information_relateds set information_id = '" . (int)$relatedId . "', related_id = '" . (int)$infoId . "'");
+                    DB::insert("insert into " . Tables::$information_relateds . " set information_id = '" . (int)$relatedId . "', related_id = '" . (int)$infoId . "'");
                 }
             }
         } else {
@@ -234,55 +234,46 @@ final class InformationService implements BaseModel, InformationModel
             $modelDes->fill($data);
             $modelDes->save();
 
-            DB::delete("delete from " . DB_PREFIX . "information_images where information_id = '" . (int)$infoId . "'");
-            if (isset($data['information_images'])) {
-                foreach ($data['information_images'] as $information_image) {
-                    $dataImage = [
-                        'information_id' => (int)$infoId,
-                        'image'          => (int)$information_image['image'],
-                        'sort_order'     => (int)$information_image['sort_order']
-                    ];
-                    $modelImg  = new InformationImage();
-                    $modelImg->fill($dataImage);
-                    $modelImg->save();
+            DB::delete("delete from " . Tables::$information_images . " where information_id = '" . (int)$infoId . "'");
+            if (isset($data['info_images']) && !empty($data['info_images'])) {
+                foreach ($data['info_images'] as $information_image) {
+                    DB::insert('insert into ' . Tables::$information_images . ' (information_id, image, sort_order) values (?, ?, ?)', [
+                        (int)$infoId,
+                        $information_image['image'],
+                        (int)$information_image['sort_order']
+                    ]);
                 }
             }
 
-            DB::delete("delete from " . DB_PREFIX . "information_to_downloads where information_id = '" . (int)$infoId . "'");
-            if (isset($data['information_downloads'])) {
-                foreach ($data['information_downloads'] as $downloadId) {
-                    $dataDownload  = [
-                        'information_id' => (int)$infoId,
-                        'download_id'    => (int)$downloadId
-                    ];
-                    $modelDownload = new InformationToDownload();
-                    $modelDownload->fill($dataDownload);
-                    $modelDownload->save();
+            DB::delete("delete from " . Tables::$information_to_downloads . " where information_id = '" . (int)$infoId . "'");
+            if (isset($data['downloads']) && !empty($data['downloads'])) {
+                foreach ($data['downloads'] as $downloadId) {
+                    DB::insert('insert into ' . Tables::$information_to_downloads . ' (information_id, download_id) values (?, ?)', [
+                        (int)$infoId,
+                        (int)$downloadId
+                    ]);
                 }
             }
 
-            DB::delete("delete from " . DB_PREFIX . "information_to_categorys where information_id = '" . (int)$infoId . "'");
-            if (isset($data['information_categorys'])) {
-                foreach ($data['information_categorys'] as $categoryId) {
-                    $dataCategory = [
-                        'information_id' => (int)$infoId,
-                        'category_id'    => (int)$categoryId
-                    ];
-                    $modelCate    = new InformationToCategory();
-                    $modelCate->fill($dataCategory);
-                    $modelCate->save();
+            DB::delete("delete from " . Tables::$information_to_categorys . " where information_id = '" . (int)$infoId . "'");
+            if (isset($data['categorys']) && !empty($data['categorys'])) {
+                foreach ($data['categorys'] as $categoryId) {
+                    DB::insert('insert into ' . Tables::$information_to_categorys . ' (information_id, category_id) values (?, ?)', [
+                        (int)$infoId,
+                        (int)$categoryId
+                    ]);
                 }
             }
 
-            DB::delete("delete from " . DB_PREFIX . "information_relateds where information_id = '" . (int)$infoId . "'");
-            DB::delete("delete from " . DB_PREFIX . "information_relateds WHERE related_id = '" . (int)$infoId . "'");
-            if (isset($data['information_relateds'])) {
-                foreach ($data['information_relateds'] as $relatedId) {
-                    DB::delete("delete from " . DB_PREFIX . "information_relateds where information_id = '" . (int)$infoId . "' and related_id = '" . (int)$relatedId . "'");
-                    DB::insert("insert into " . DB_PREFIX . "information_relateds set information_id = '" . (int)$infoId . "', related_id = '" . (int)$relatedId . "'");
-                    DB::delete("delete from " . DB_PREFIX . "information_relateds where news_id = '" . (int)$relatedId . "' and related_id = '" . (int)$infoId . "'");
+            DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$infoId . "'");
+            DB::delete("delete from " . Tables::$information_relateds . " WHERE related_id = '" . (int)$infoId . "'");
+            if (isset($data['relateds']) && !empty($data['relateds'])) {
+                foreach ($data['relateds'] as $relatedId) {
+                    DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$infoId . "' and related_id = '" . (int)$relatedId . "'");
+                    DB::insert("insert into " . Tables::$information_relateds . " set information_id = '" . (int)$infoId . "', related_id = '" . (int)$relatedId . "'");
+                    DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$relatedId . "' and related_id = '" . (int)$infoId . "'");
 
-                    DB::insert("insert into " . DB_PREFIX . "information_relateds set information_id = '" . (int)$relatedId . "', related_id = '" . (int)$infoId . "'");
+                    DB::insert("insert into " . Tables::$information_relateds . " set information_id = '" . (int)$relatedId . "', related_id = '" . (int)$infoId . "'");
                 }
             }
         } else {
@@ -299,7 +290,7 @@ final class InformationService implements BaseModel, InformationModel
     public function apiGetInformations($data = array(), $limit = 5) {
         $query = $this->model->select()
         ->leftJoin(Tables::$information_descriptions, Tables::$informations . '.information_id', '=', Tables::$information_descriptions . '.information_id')->limit($limit);
-        return $query->get();
+        return $query;
         /*$sql = "SELECT * FROM " . DB_PREFIX . "news n LEFT JOIN " . DB_PREFIX . "news_description nd ON (n.news_id = nd.news_id) WHERE nd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
         if (!empty($data['filter_name'])) {

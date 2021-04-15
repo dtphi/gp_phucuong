@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\CheckApp;
 use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ApiController extends Controller
 {
@@ -256,5 +257,23 @@ class ApiController extends Controller
     protected function _getPerPage()
     {
         return (int)request()->query(self::$perPageText, $this->limit);
+    }
+
+    /**
+     * [_getTextPagination description]
+     * @param  LengthAwarePaginator $paginator [description]
+     * @return [type]                          [description]
+     */
+    protected function _getTextPagination(LengthAwarePaginator $paginator)
+    {
+        $data = [];
+
+        if ($paginator instanceof LengthAwarePaginator && $paginator->count()) {
+            $data = $paginator->toArray();
+
+            unset($data['data']);
+        }
+
+        return $data;
     }
 }

@@ -15,11 +15,21 @@ class InformationResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {   $groupMerge = [
-            'newsgroupname' => $this->resource->group_name
-        ];
-        $this->with = $groupMerge;
+    {   
+        $json = [];
 
-        return array_merge(parent::toArray($request), $groupMerge);
+        $this->with = [
+            'fields' => 'ok',
+        ];;
+
+        $json = parent::toArray($request);
+        $json = array_merge($json, [
+            'name' => $this->resource->name,
+            'meta_title' => $this->resource->meta_title,
+            'relateds' => $this->resource->related_list
+        ]);
+        
+
+        return $json;
     }
 }

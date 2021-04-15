@@ -39,14 +39,43 @@ class InformationController extends ApiController
      */
     public function index(Request $request)
     {
+        $data = $request->all();
+        $pagination = [];
+        $results = [];
+        $page = 1;
+        if ($request->query('page')) {
+            $page = $request->query('page');
+        }
         try {
             $limit       = $this->_getPerPage();
-            $collections = $this->infoSv->apiGetResourceCollection([], $limit);
+            $collections = $this->infoSv->apiGetList([], $limit);
+            $pagination = $this->_getTextPagination($collections);
+
+            $results = [];
+            foreach ($collections as $key => $info) {
+                $results[] = [
+                    'information_id' => $info->information_id,
+                    'image' => $info->image,
+                    'name' => strip_tags(html_entity_decode($info->name,ENT_QUOTES, 'UTF-8')),
+                    'sort_order'    => $info->sort_order,
+                    'date_available' => $info->date_available,
+                    'created_at' => $info->created_at
+                ];
+            }
+
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        return $this->respondWithCollectionPagination($collections);
+        $json = [
+            'data' => [
+                'results' => $results,
+                'pagination' => $pagination,
+                'page' => $page
+            ]
+        ];
+
+        return $this->respondWithCollectionPagination($json);
     }
 
     /**
@@ -172,7 +201,7 @@ class InformationController extends ApiController
     {
         $data = $request->all();
 
-        $results = $this->infoSv->apiGetInformations($data);
+        $results = $this->infoSv->apiGetList($data);
         $collections = [];
 
         foreach ($results as $key => $value) {

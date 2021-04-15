@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\Admin\Services\ScopeService;
 
 abstract class BaseModel extends Model
 {
-    use HasFactory, SoftDeletes, ScopeService;
+    use HasFactory, ScopeService;
 
     public function scopeOrderBySortAsc($query, $value='')
     {

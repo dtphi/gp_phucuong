@@ -45,16 +45,13 @@
                 <tr>
                     <td colspan="2"></td>
                     <td class="text-right">
-                        <button type="button" data-toggle="tooltip"
-                                :title="$options.setting.btn_image_sub_add_txt" class="btn btn-default cms-btn">
-                                <font-awesome-layers style="background:honeydew">
-                                    <font-awesome-icon size="1x" icon="plus"/>
-                                </font-awesome-layers>
-                        </button>
+                        <btn-add-image></btn-add-image>
                     </td>
                 </tr>
             </tfoot>
         </table>
+
+        <modal-form-add-image></modal-form-add-image>
     </div>    
 </template>
 
@@ -62,9 +59,15 @@
     import {
         fn_get_base_url_image
     } from '@app/api/utils/fn-helper';
+    import ModalFormAddImage from 'com@admin/Modal/Infos/FormAddImage';
+    import BtnAddImage from '../Btn/BtnAddImage';
 
     export default {
         name: 'InfoImageForm',
+        components: {
+            ModalFormAddImage,
+            BtnAddImage,
+        },
 
         props: {
             infoImages: {

@@ -1,3 +1,4 @@
+import AppConfig from 'api@admin/constants/app-config';
 import {
   apiInsertInfo,
   apiGetDropdownInfos
@@ -170,13 +171,13 @@ export default {
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          commit(NEWSGROUPS_MODAL_SET_ERROR, []);
+          commit(INFOS_MODAL_SET_ERROR, []);
 
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(NEWSGROUPS_MODAL_SET_ERROR, errors);
+          commit(INFOS_MODAL_SET_ERROR, errors);
 
           dispatch(ACTION_SET_LOADING, false);
         }
@@ -198,7 +199,7 @@ export default {
         },
         (errors) => {
           commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(NEWSGROUPS_MODAL_SET_ERROR, errors);
+          commit(INFOS_MODAL_SET_ERROR, errors);
 
           dispatch(ACTION_SET_LOADING, false);
         }

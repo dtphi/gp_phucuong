@@ -1,4 +1,3 @@
-import axios from 'axios';
 import modals from './modal';
 import adds from './add';
 import edits from './edit';
@@ -35,16 +34,21 @@ import {
   fn_redirect_url
 } from '@app/api/utils/fn-helper';
 
-export default {
-  namespaced: true,
-  state: {
+const defaultState = () => {
+  return {
     infos: [],
+    total: 0,
     infoDelete: null,
     isDelete: false,
     isList: false,
     loading: false,
     errors: []
-  },
+  }
+}
+
+export default {
+  namespaced: true,
+  state: defaultState(),
   getters: {
     infos(state) {
       return state.infos
@@ -113,23 +117,31 @@ export default {
       dispatch(ACTION_SET_LOADING, true);
       await apiGetInfos(
         (infos) => {
-          commit(INFOS_SET_INFO_LIST, infos.data.results)
-          dispatch('setConfigApp', {
-            links: { ...infos.links
-            },
-            meta: { ...infos.meta
-            },
+          console.log(infos)
+          commit(INFOS_SET_INFO_LIST, infos.data.results);
+          commit(INFOS_GET_INFO_LIST_SUCCESS, true)
+
+          var pagination = {
+            current_page: 1,
+            total: 0
+          };
+          if (infos.data.hasOwnProperty('pagination')) {
+            pagination = infos.data.pagination;
+          }
+          var configs = {
             moduleActive: {
               name: MODULE_INFO,
               actionList: ACTION_GET_INFO_LIST
-            }
-          }, {
+            },
+            collectionData: pagination
+          };
+
+          dispatch('setConfigApp', configs, {
             root: true
-          })
-          commit(INFOS_GET_INFO_LIST_SUCCESS, true)
+          });
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, false)
+          commit(INFOS_GET_INFO_LIST_FAILED, errors)
         },
         params
       );
@@ -175,7 +187,7 @@ export default {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/news');
+          return fn_redirect_url('admin/informations');
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

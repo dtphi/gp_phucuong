@@ -20,18 +20,18 @@
                                         class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row">
-                                                <th style="width: 1px;" class="text-center">No
+                                                <th style="width: 1px;" class="text-left">No
                                                 </th>
                                                 <th style="width: 1px;" class="text-center">
                                                     <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                                 </th>
                                                 <th style="width: 200px" class="text-left">Tên
                                                 </th>
-                                                <th style="width: 5px" class="text-center">
+                                                <th style="width: 100px" class="text-left">
                                                     Hình ảnh
                                                 </th>
-                                                <th class="text-left">
-                                                    Mô tả
+                                                <th style="width: 100px" class="text-center">
+                                                    Ngày hoạt động
                                                 </th>
                                                 <th style="width: 100px" class="text-center">
                                                     Ngày tạo
@@ -51,7 +51,7 @@
                             </template>
                         </div>
 
-                        <paginate></paginate>
+                        <paginate :is-resource="isResource"></paginate>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,8 @@
 
         data() {
             return {
-                fullPage: false
+                fullPage: false,
+                isResource: false,
             }
         },
 

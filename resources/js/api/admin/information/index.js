@@ -47,7 +47,9 @@ export const apiGetInfos = (resolve, errResole, params) => {
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
-        resolve(response.data);
+        resolve({
+          data: response.data.data
+        });
       } else {
         errResole([{
           status: response.status,
@@ -55,7 +57,17 @@ export const apiGetInfos = (resolve, errResole, params) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => {
+      console.log(errors);
+      if (errors.response) {
+        errResole([{
+          status: errors.response.status,
+          messageCommon: errors.response.data.message,
+          messages: errors.response.data.errors
+        }])
+      }
+      
+    })
 }
 
 /**
