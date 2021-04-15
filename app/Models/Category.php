@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use DB;
+
 class Category extends BaseModel
 {
     protected $table = DB_PREFIX  . 'categorys';
@@ -49,5 +51,10 @@ class Category extends BaseModel
             'total' => $query->count(),
             'data'  => $query->get()->toArray()
         ];
+    }
+
+    public static function fcDeleteByCateId($cateId)
+    {
+        DB::delete("delete from `" . Tables::$categorys . "` where category_id = '" . (int)$cateId . "'");
     }
 }

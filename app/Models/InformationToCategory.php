@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use DB;
+
 class InformationToCategory extends BaseModel
 {
     /**
@@ -36,4 +38,9 @@ class InformationToCategory extends BaseModel
         'infomation_id',
         'category_id'
     ];
+
+    public static function fcDeleteByCateId($cateId)
+    {
+        DB::delete("delete from `" . Tables::$information_to_categorys . "` where category_id = '" . (int)$cateId . "'");
+    }
 }

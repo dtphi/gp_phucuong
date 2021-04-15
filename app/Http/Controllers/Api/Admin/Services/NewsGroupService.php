@@ -9,6 +9,7 @@ use App\Http\Resources\NewsGroups\NewsGroupResource;
 use App\Models\Category;
 use App\Models\CategoryDescription;
 use App\Models\CategoryPath;
+use App\Models\InformationToCategory;
 use App\Models\NewsGroup;
 use App\Http\Common\Tables;
 use DB;
@@ -145,7 +146,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             if ($this->model->save()) {
                 $data['category_id'] = $this->model->category_id;
 
-                DB::insert('insert into ' . DB_PREFIX . 'category_descriptions (category_id, name, description, meta_title) values (?, ?, ?, ?)',
+                DB::insert('insert into ' . Tables::$category_descriptions . ' (category_id, name, description, meta_title) values (?, ?, ?, ?)',
                         [$data['category_id'], $data['name'], $data['description'], $data['meta_title']]);
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
@@ -154,17 +155,17 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                     ->orderBy('level', 'ASC')->get();
 
                 foreach ($resultPaths as $key => $resultPath) {
-                    DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)',
+                    DB::insert('insert into ' . Tables::$category_paths . ' (category_id, path_id, level) values (?, ?, ?)',
                         [$data['category_id'], $resultPath['path_id'], $level]);
 
                     $level++;
                 }
 
-                DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)',
+                DB::insert('insert into ' . Tables::$category_paths . ' (category_id, path_id, level) values (?, ?, ?)',
                     [$data['category_id'], $data['category_id'], $level]);
 
                 if (isset($data['layout_id'])) {
-                    DB::insert('insert into ' . DB_PREFIX . 'category_to_layouts (category_id, layout_id) values (?, ?)',
+                    DB::insert('insert into ' . Tables::$category_to_layouts . ' (category_id, layout_id) values (?, ?)',
                         [$data['category_id'], $data['layout_id']]);
                 }
 
@@ -244,7 +245,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
                 if ($resultPaths->count()) {
                     foreach ($resultPaths as $key => $resultPath) {
-                        DB::delete("delete from `" . DB_PREFIX . "category_paths` where category_id = '" . (int)$resultPath['category_id'] . "' AND level < '" . (int)$resultPath['level'] . "'");
+                        DB::delete("delete from `" . Tables::$category_paths . "` where category_id = '" . (int)$resultPath['category_id'] . "' AND level < '" . (int)$resultPath['level'] . "'");
                         $path = [];
 
                         $resultPathCurParents = $this->modelPath->where('category_id', (int)$data['parent_id'])
@@ -264,14 +265,14 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                         // Combine the paths with a new level
                         $level = 0;
                         foreach ($path as $path_id) {
-                            DB::statement("REPLACE INTO `" . DB_PREFIX . "category_paths` SET category_id = '" . (int)$resultPath['category_id'] . "', `path_id` = '" . (int)$path_id . "', level = '" . (int)$level . "'");
+                            DB::statement("REPLACE INTO `" . Tables::$category_paths . "` SET category_id = '" . (int)$resultPath['category_id'] . "', `path_id` = '" . (int)$path_id . "', level = '" . (int)$level . "'");
 
                             $level++;
                         }
                     }
                 } else {
                     // Delete the path below the current one
-                    DB::delete("delete from `" . DB_PREFIX . "category_paths` where category_id = '" . (int)$categoryId . "'");
+                    DB::delete("delete from `" . Tables::$category_paths . "` where category_id = '" . (int)$categoryId . "'");
 
                     // Fix for records with no paths
                     $level = 0;
@@ -280,18 +281,18 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                         (int)$data['parent_id'])->orderBy('level', 'ASC')->get();
 
                     foreach ($resultPathParents as $resultPathParent) {
-                        DB::insert('insert into ' . DB_PREFIX . 'category_paths (category_id, path_id, level) values (?, ?, ?)', [$categoryId, $resultPathParent['path_id'], (int)$level]);
+                        DB::insert('insert into ' . Tables::$category_paths . ' (category_id, path_id, level) values (?, ?, ?)', [$categoryId, $resultPathParent['path_id'], (int)$level]);
 
                         $level++;
                     }
 
-                    DB::statement("REPLACE INTO `" . DB_PREFIX . "category_paths` SET category_id = '" . (int)$categoryId . "', `path_id` = '" . (int)$categoryId . "', level = '" . (int)$level . "'");
+                    DB::statement("REPLACE INTO `" . Tables::$category_paths . "` SET category_id = '" . (int)$categoryId . "', `path_id` = '" . (int)$categoryId . "', level = '" . (int)$level . "'");
                 }
 
-                DB::delete("delete from " . DB_PREFIX . "category_to_layouts WHERE category_id = '" . (int)$categoryId . "'");
+                DB::delete("delete from " . Tables::$category_to_layouts . " WHERE category_id = '" . (int)$categoryId . "'");
 
                 if (isset($data['layout_id'])) {
-                    DB::insert('insert into ' . DB_PREFIX . 'category_to_layouts (category_id, layout_id) values (?, ?)',
+                    DB::insert('insert into ' . Tables::$category_to_layouts . ' (category_id, layout_id) values (?, ?)',
                         [$categoryId, $data['layout_id']]);
                 }
 
@@ -319,17 +320,23 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
      */
     public function apiGetNewsGroupTrees($data = array())
     {
+        $cate1 = 'cate1';
+        $cate2 = 'cate2';
+        $cateDes1 = 'cd1';
+        $cateDes2 = 'cd2';
 
-        $query = $this->modelPath->select(DB_PREFIX . 'category_paths.category_id AS category_id', 'cate1.parent_id',
-            'cate1.sort_order',
-            DB::raw("group_concat(cd1.`name` ORDER BY pc_category_paths.level SEPARATOR '" . $this->separate . "') AS category_name"))->groupBy(DB_PREFIX . 'category_paths.category_id')
-            ->leftJoin(DB_PREFIX . 'categorys AS cate1', DB_PREFIX . 'category_paths.category_id', '=',
-                'cate1.category_id')
-            ->leftJoin(DB_PREFIX . 'categorys AS cate2', DB_PREFIX . 'category_paths.path_id', '=', 'cate2.category_id')
-            ->leftJoin(DB_PREFIX . 'category_descriptions AS cd1', DB_PREFIX . 'category_paths.path_id', '=',
-                'cd1.category_id')
-            ->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', DB_PREFIX . 'category_paths.category_id', '=',
-                'cd2.category_id');
+        $query = $this->modelPath->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id', $cate1 . '.sort_order', DB::raw("group_concat(" . $cateDes1 . ".`name` ORDER BY " . Tables::$category_paths . ".level SEPARATOR '" . $this->separate . "') AS category_name"))->gbByCategoryId()
+            ->ljoinCategory($cate1)
+            /*->leftJoin(DB_PREFIX . 'categorys AS cate1', DB_PREFIX . 'category_paths.category_id', '=',
+                'cate1.category_id')*/
+            ->ljoinCategory($cate2)
+            /*->leftJoin(DB_PREFIX . 'categorys AS cate2', DB_PREFIX . 'category_paths.path_id', '=', 'cate2.category_id')*/
+            ->ljoinCateDescription($cateDes1)
+            /*->leftJoin(DB_PREFIX . 'category_descriptions AS cd1', DB_PREFIX . 'category_paths.path_id', '=',
+                'cd1.category_id')*/
+            ->ljoinCateDescription($cateDes2)
+            /*->leftJoin(DB_PREFIX . 'category_descriptions AS cd2', DB_PREFIX . 'category_paths.category_id', '=',
+                'cd2.category_id')*/;
 
         /*if (!empty($data['filter_name'])) {
             $sql .= " AND cd2.name LIKE '" . $data['filter_name'] . "%'";
@@ -376,17 +383,17 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     private function _deleteById($cateId)
     {
         if ($cateId) {
-            DB::delete("delete from `" . DB_PREFIX . "category_paths` where category_id = '" . (int)$cateId . "'");
+            CategoryPath::fcDeleteByCateId($cateId);
 
             $resultPaths = $this->modelPath->where('path_id', '=', (int)$cateId)->get();
             foreach ($resultPaths as $resultPath) {
                 $this->_deleteById($resultPath->category_id);
             }
 
-            DB::delete("delete from `" . DB_PREFIX . "categorys` where category_id = '" . (int)$cateId . "'");
-            DB::delete("delete from `" . DB_PREFIX . "category_descriptions` where category_id = '" . (int)$cateId . "'");
+            Category::fcDeleteByCateId($cateId);
+            CategoryDescription::fcDeleteByCateId($cateId);
             DB::delete("delete from `" . DB_PREFIX . "category_to_layouts` where category_id = '" . (int)$cateId . "'");
-            DB::delete("delete from `" . DB_PREFIX . "infomation_to_categorys` where category_id = '" . (int)$cateId . "'");
+            InformationToCategory::fcDeleteByCateId($cateId);
         }
     }
 
@@ -416,21 +423,30 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         DB::commit();
     }
 
-    public function apiGetCategories($data = array(), $limit = 5) {
+    public function apiGetCategories($data = array(), $limit = 5) 
+    {
+        $cate1 = 'cate1';
+        $cate2 = 'cate2';
+        $cd1 = 'cd1';
+        $cd2 = 'cd2';
 
-        $query = $this->modelPath->select(Tables::$category_paths . '.category_id AS category_id', 'cate1.parent_id',
-            'cate1.sort_order',
-            DB::raw("group_concat(cd1.`name` ORDER BY pc_category_paths.level SEPARATOR '" . $this->separate . "') AS name"))->groupBy(Tables::$category_paths . '.category_id')
-            ->leftJoin(Tables::$categorys . ' AS cate1', Tables::$category_paths . '.category_id', '=',
-                'cate1.category_id')
-            ->leftJoin(Tables::$categorys . ' AS cate2', Tables::$category_paths . '.path_id', '=', 'cate2.category_id')
-            ->leftJoin(Tables::$category_descriptions . ' AS cd1', Tables::$category_paths . '.path_id', '=',
-                'cd1.category_id')
-            ->leftJoin(Tables::$category_descriptions . ' AS cd2', Tables::$category_paths . '.category_id', '=',
-                'cd2.category_id');
+        $query = $this->modelPath->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id',
+            $cate1 . '.sort_order',
+            DB::raw("group_concat(" . $cd1 . ".`name` ORDER BY " . Tables::$category_paths . ".level SEPARATOR '" . $this->separate . "') AS name"))->groupBy(Tables::$category_paths . '.category_id')
+            ->ljoinCategory($cate1)
+            /*->leftJoin(Tables::$categorys . ' AS cate1', Tables::$category_paths . '.category_id', '=',
+                'cate1.category_id')*/
+            ->ljoinCategory($cate2)
+            /*->leftJoin(Tables::$categorys . ' AS cate2', Tables::$category_paths . '.path_id', '=', 'cate2.category_id')*/
+            ->ljoinCateDescription($cd1)
+            /*->leftJoin(Tables::$category_descriptions . ' AS cd1', Tables::$category_paths . '.path_id', '=',
+                'cd1.category_id')*/
+            ->ljoinCateDescription($cd2)
+            /*->leftJoin(Tables::$category_descriptions . ' AS cd2', Tables::$category_paths . '.category_id', '=',
+                'cd2.category_id')*/;
 
             if (!empty($data['filter_name'])) {
-                $query->where('cd2.name', 'LIKE', "%{$data['filter_name']}%");
+                $query->filterLikeName($cd2, $data['filter_name']);
             }
 
         return $query->limit($limit)->get();

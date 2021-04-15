@@ -54,9 +54,9 @@ class InformationController extends ApiController
             $results = [];
             foreach ($collections as $key => $info) {
                 $results[] = [
-                    'information_id' => $info->information_id,
+                    'information_id' => (int)$info->information_id,
                     'image' => $info->image,
-                    'name' => strip_tags(html_entity_decode($info->name,ENT_QUOTES, 'UTF-8')),
+                    'name' => $info->name,
                     'sort_order'    => $info->sort_order,
                     'date_available' => $info->date_available,
                     'created_at' => $info->created_at
