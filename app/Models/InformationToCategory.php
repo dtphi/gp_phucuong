@@ -10,7 +10,7 @@ class InformationToCategory extends BaseModel
     /**
      * @var string
      */
-    protected $table = DB_PREFIX  . 'information_to_categorys';
+    protected $table = DB_PREFIX . 'information_to_categorys';
 
     /**
      * @var string
@@ -40,10 +40,15 @@ class InformationToCategory extends BaseModel
         'category_id'
     ];
 
+    public function getCategoryIdAttribute($value)
+    {
+        return $value;
+    }
+
     public static function fcDeleteByCateId($cateId = null)
     {
         $cateId = (int)$cateId;
-        
+
         if ($cateId) {
             return DB::delete("delete from `" . Tables::$information_to_categorys . "` where category_id = '" . $cateId . "'");
         }
@@ -55,9 +60,20 @@ class InformationToCategory extends BaseModel
         $cateId = (int)$cateId;
 
         if ($infoId && $cateId) {
-            DB::insert('insert into ' . Tables::$information_to_categorys . ' (information_id, category_id) values (?, ?)', [
-                $infoId, $cateId
-            ]);
+            DB::insert('insert into ' . Tables::$information_to_categorys . ' (information_id, category_id) values (?, ?)',
+                [
+                    $infoId,
+                    $cateId
+                ]);
+        }
+    }
+
+    public static function fcDeleteByInfoId($infoId = null)
+    {
+        $infoId = (int)$infoId;
+
+        if ($infoId) {
+            return DB::delete("delete from " . Tables::$information_to_categorys . " where information_id = '" . $infoId . "'");
         }
     }
 }

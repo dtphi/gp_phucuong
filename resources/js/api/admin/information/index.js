@@ -30,7 +30,12 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
         }]);
       }
     })
-    .catch(errors => errResole(errors))
+    .catch(errors => {
+      console.log(errors)
+      if (errors.response) {
+        errResole(errors);
+      }
+    })
 }
 
 /**

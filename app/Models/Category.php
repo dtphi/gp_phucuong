@@ -2,17 +2,24 @@
 
 namespace App\Models;
 
-use DB;
 use App\Http\Common\Tables;
+use DB;
 
 class Category extends BaseModel
 {
-    protected $table = DB_PREFIX  . 'categorys';
+    /**
+     * @var string
+     */
+    protected $table = DB_PREFIX . 'categorys';
 
+    /**
+     * @var string
+     */
     protected $primaryKey = 'category_id';
 
     /**
-     * Get the description associated with the category.
+     * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function description()
     {
@@ -31,18 +38,24 @@ class Category extends BaseModel
         'status'
     ];
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return array|mixed
+     */
     public function getDisplaysAttribute($value)
     {
         if ($value) {
             return unserialize($value);
         }
+
         return array('home_page' => false, 'news_page' => false);
     }
 
     /**
-     * [getNewsGroups description]
-     * @param  array $data [description]
-     * @return [type]       [description]
+     * @author : dtphi .
+     * @param array $data
+     * @return array
      */
     public static function getNewsGroups(array $data)
     {
@@ -54,6 +67,9 @@ class Category extends BaseModel
         ];
     }
 
+    /**@author : dtphi .
+     * @param $cateId
+     */
     public static function fcDeleteByCateId($cateId)
     {
         DB::delete("delete from `" . Tables::$categorys . "` where category_id = '" . (int)$cateId . "'");

@@ -26,38 +26,38 @@ class InformationRequest extends FormRequest
     {
         $formData = $this->all();
         /*informations*/
-        $formData['image']  = isset($formData['image']) ? $formData['image'] : '';
-        
+        $formData['image'] = isset($formData['image']) ? $formData['image'] : '';
+
         if (!empty($formData['image']) && is_array($formData['image'])) {
-            
-            $formData['image_type'] = $formData['image']['type'];
-            $formData['image_path'] = $formData['image']['path'];
+
+            $formData['image_type']      = $formData['image']['type'];
+            $formData['image_path']      = $formData['image']['path'];
             $formData['image_timestamp'] = $formData['image']['timestamp'];
             $formData['image_extension'] = $formData['image']['extension'];
-            $formData['image_filename'] = $formData['image']['filename'];
-            $formData['image_thumb'] = $formData['image']['thumb'];
-            $formData['image'] = null;
+            $formData['image_filename']  = $formData['image']['filename'];
+            $formData['image_thumb']     = $formData['image']['thumb'];
+            $formData['image']           = null;
         }
 
-        $formData['date_available']  = isset($formData['date_available']) ? $formData['date_available'] : now();
-        $formData['sort_order']  = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
-        $formData['status']  = isset($formData['status']) ? $formData['status'] : 0;
+        $formData['date_available'] = isset($formData['date_available']) ? $formData['date_available'] : now();
+        $formData['sort_order']     = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
+        $formData['status']         = isset($formData['status']) ? $formData['status'] : 0;
 
         /*information descriptions*/
-        $formData['name']        = isset($formData['name']) ? $formData['name'] : '';
-        $formData['meta_title']  = isset($formData['meta_title']) ? $formData['meta_title'] : '';
-        $formData['description'] = isset($formData['description']) ? $formData['description'] : '';
-        $formData['tag']        = isset($formData['tag']) ? $formData['tag'] : '';
-        $formData['meta_description']        = isset($formData['meta_description']) ? $formData['meta_description'] : '';
-        $formData['meta_keyword']        = isset($formData['meta_keyword']) ? $formData['meta_keyword'] : '';
+        $formData['name']             = isset($formData['name']) ? $formData['name'] : '';
+        $formData['meta_title']       = isset($formData['meta_title']) ? $formData['meta_title'] : '';
+        $formData['description']      = isset($formData['description']) ? $formData['description'] : '';
+        $formData['tag']              = isset($formData['tag']) ? $formData['tag'] : '';
+        $formData['meta_description'] = isset($formData['meta_description']) ? $formData['meta_description'] : '';
+        $formData['meta_keyword']     = isset($formData['meta_keyword']) ? $formData['meta_keyword'] : '';
 
         /*information images*/
-        $formData['info_images'] = [];
-        $formData['multi_images']        = isset($formData['multi_images']) ? $formData['multi_images'] : '';
+        $formData['info_images']  = [];
+        $formData['multi_images'] = isset($formData['multi_images']) ? $formData['multi_images'] : '';
         if (!empty($formData['multi_images'])) {
             foreach ($formData['multi_images'] as $key => $image) {
                 $formData['info_images'][] = [
-                    'image' => $image['image'],
+                    'image'      => $image['image'],
                     'sort_order' => $image['sort_order']
                 ];
             }
@@ -66,13 +66,13 @@ class InformationRequest extends FormRequest
         }
 
         /*information relateds*/
-        $formData['relateds']        = isset($formData['relateds']) ? $formData['relateds'] : '';
-        
+        $formData['relateds'] = isset($formData['relateds']) ? $formData['relateds'] : '';
+
         /*information categorys*/
-        $formData['categorys']        = isset($formData['categorys']) ? $formData['categorys'] : '';
-        
+        $formData['categorys'] = isset($formData['categorys']) ? $formData['categorys'] : '';
+
         /*information downloads*/
-        $formData['downloads']        = isset($formData['downloads']) ? $formData['downloads'] : '';
+        $formData['downloads'] = isset($formData['downloads']) ? $formData['downloads'] : '';
 
         $this->merge($formData);
 

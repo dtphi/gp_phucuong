@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin\Services;
 
+use App\Http\Common\Tables;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel;
 use App\Http\Resources\NewsGroups\NewsGroupCollection;
@@ -9,10 +10,9 @@ use App\Http\Resources\NewsGroups\NewsGroupResource;
 use App\Models\Category;
 use App\Models\CategoryDescription;
 use App\Models\CategoryPath;
-use App\Models\InformationToCategory;
 use App\Models\CategoryToLayout;
+use App\Models\InformationToCategory;
 use App\Models\NewsGroup;
-use App\Http\Common\Tables;
 use DB;
 
 final class NewsGroupService implements BaseModel, NewsGroupModel
@@ -69,7 +69,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     {
         // TODO: Implement apiGetResourceCollection() method.
         $paginations = $this->apiGetList($options, $limit);
-        
+
         return new NewsGroupCollection($paginations->getCollection());
     }
 
@@ -146,7 +146,8 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             if ($this->model->save()) {
                 $data['category_id'] = $this->model->category_id;
 
-                CategoryDescription::insertByCateId($data['category_id'],$data['name'], $data['description'], $data['meta_title'], $data['meta_description'], $data['meta_keyword'] );
+                CategoryDescription::insertByCateId($data['category_id'], $data['name'], $data['description'],
+                    $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
                 $level       = 0;
@@ -225,12 +226,12 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                 $categoryId = $model->category_id;
 
                 $modelDes = $model->description;
-                $dataDes = [
-                    'name' => $data['name'],
-                    'description' => $data['description'],
-                    'meta_title' => $data['meta_title'],
+                $dataDes  = [
+                    'name'             => $data['name'],
+                    'description'      => $data['description'],
+                    'meta_title'       => $data['meta_title'],
                     'meta_description' => $data['meta_description'],
-                    'meta_keyword' => $data['meta_keyword']
+                    'meta_keyword'     => $data['meta_keyword']
                 ];
 
                 $modelDes->fill($dataDes);
@@ -316,13 +317,14 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
      */
     public function apiGetNewsGroupTrees($data = array())
     {
-        $cate1 = 'cate1';
-        $cate2 = 'cate2';
+        $cate1    = 'cate1';
+        $cate2    = 'cate2';
         $cateDes1 = 'cd1';
         $cateDes2 = 'cd2';
 
         $query = $this->modelPath
-            ->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id', $cate1 . '.sort_order', CategoryPath::getRawCategoryName($cateDes1, 'category_name'))
+            ->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id',
+                $cate1 . '.sort_order', CategoryPath::getRawCategoryName($cateDes1, 'category_name'))
             ->gbByCategoryId()
             ->ljoinCategory($cate1)
             ->ljoinCategory($cate2)
@@ -414,24 +416,25 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         DB::commit();
     }
 
-    public function apiGetCategories($data = array(), $limit = 5) 
+    public function apiGetCategories($data = array(), $limit = 5)
     {
         $cate1 = 'cate1';
         $cate2 = 'cate2';
-        $cd1 = 'cd1';
-        $cd2 = 'cd2';
+        $cd1   = 'cd1';
+        $cd2   = 'cd2';
 
         $query = $this->modelPath
-            ->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id', $cate1 . '.sort_order', CategoryPath::getRawCategoryName($cd1))
+            ->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id',
+                $cate1 . '.sort_order', CategoryPath::getRawCategoryName($cd1))
             ->gbByCategoryId()
             ->ljoinCategory($cate1)
             ->ljoinCategory($cate2)
             ->ljoinCateDescription($cd1)
             ->ljoinCateDescription($cd2);
 
-            if (!empty($data['filter_name'])) {
-                $query->filterLikeName($cd2, $data['filter_name']);
-            }
+        if (!empty($data['filter_name'])) {
+            $query->filterLikeName($cd2, $data['filter_name']);
+        }
 
         return $query->limit($limit)->get();
     }

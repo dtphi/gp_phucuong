@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Api\Admin\Base;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\CheckApp;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -95,7 +94,8 @@ class ApiController extends Controller
      * @author : dtphi .
      * @return null
      */
-    public function getResource() {
+    public function getResource()
+    {
         return $this->resource;
     }
 
@@ -260,9 +260,9 @@ class ApiController extends Controller
     }
 
     /**
-     * [_getTextPagination description]
-     * @param  LengthAwarePaginator $paginator [description]
-     * @return [type]                          [description]
+     * @author : dtphi .
+     * @param LengthAwarePaginator $paginator
+     * @return array
      */
     protected function _getTextPagination(LengthAwarePaginator $paginator)
     {

@@ -74,13 +74,11 @@ export default {
     },
 
     [INFOS_SET_INFO_DELETE_BY_ID_FAILED](state, payload) {
-      state.isDelete = false;
-      state.errors = payload;
+      state.isDelete = payload;
     },
 
     [INFOS_SET_INFO_DELETE_BY_ID_SUCCESS](state, payload) {
-      state.isDelete = true;
-      state.errors = payload;
+      state.isDelete = payload;
     },
 
     [INFOS_GET_INFO_LIST_SUCCESS](state, payload) {
@@ -152,17 +150,28 @@ export default {
       state,
       dispatch,
       commit
-    }) {
-      if (state.infoDelete) {
+    }, infoId) {
+      let getId = null;
+      if (typeof state.infoDelete === "object") {
+        if (state.infoDelete.hasOwnProperty('information_id')) {
+          getId = parseInt(state.infoDelete.information_id);
+        }
+      }
+      const deleteId = parseInt(infoId);
+
+      if (getId === deleteId) {
         await apiDeleteInfo(
-          state.infoDelete.id,
+          deleteId,
           (infos) => {
-            commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
-            dispatch(ACTION_GET_INFO_LIST)
-            commit(INFOS_INFO_DELETE_BY_ID, null)
+            commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true);
+            dispatch(ACTION_GET_INFO_LIST);
+            commit(INFOS_INFO_DELETE_BY_ID, null);
           },
           (errors) => {
-            commit(INFOS_DELETE_INFO_BY_ID_FAILED, Object.values(errors));
+            commit(INFOS_DELETE_INFO_BY_ID_FAILED, false);
+            if (errors) {
+              commit(INFOS_SET_ERROR, errors);
+            }
           }
         );
       }
@@ -175,10 +184,13 @@ export default {
         infoId,
         (result) => {
           commit(INFOS_INFO_DELETE_BY_ID, result.data);
-          commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, false);
+          commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, true);
         },
         (errors) => {
-          commit(INFOS_SET_INFO_DELETE_BY_ID_FAILED, Object.values(errors));
+          commit(INFOS_SET_INFO_DELETE_BY_ID_FAILED, false);
+          if (errors) {
+            commit(INFOS_SET_ERROR, errors);
+          }
         }
       );
     },

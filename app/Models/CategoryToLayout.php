@@ -10,7 +10,7 @@ class CategoryToLayout extends BaseModel
     /**
      * @var string
      */
-    protected $table = DB_PREFIX  . 'category_to_layouts';
+    protected $table = DB_PREFIX . 'category_to_layouts';
 
     /**
      * @var string
@@ -27,8 +27,6 @@ class CategoryToLayout extends BaseModel
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
-    //public $incrementing = false;
-
     /**
      * @author : dtphi .
      * The attributes that are mass assignable.
@@ -40,6 +38,11 @@ class CategoryToLayout extends BaseModel
         'layout_id'
     ];
 
+    /**
+     * @author : dtphi .
+     * @param null $cateId
+     * @return mixed
+     */
     public static function fcDeleteByCateId($cateId = null)
     {
         $cateId = (int)$cateId;
@@ -49,14 +52,21 @@ class CategoryToLayout extends BaseModel
         }
     }
 
-        public static function insertByCateId($cateId = null, $layoutId = null)
-        {
-            $cateId = (int)$cateId;
-            $layoutId = (int)$layoutId;
+    /**
+     * @author : dtphi .
+     * @param null $cateId
+     * @param null $layoutId
+     * @return mixed
+     */
+    public static function insertByCateId($cateId = null, $layoutId = null)
+    {
+        $cateId   = (int)$cateId;
+        $layoutId = (int)$layoutId;
 
-            if ($cateId && $layoutId) {
-                return DB::insert('insert into ' . Tables::$category_to_layouts . ' (category_id, layout_id) values (?, ?)', [$cateId, $layoutId]);
-            }
-
+        if ($cateId && $layoutId) {
+            return DB::insert('insert into ' . Tables::$category_to_layouts . ' (category_id, layout_id) values (?, ?)',
+                [$cateId, $layoutId]);
         }
+
+    }
 }

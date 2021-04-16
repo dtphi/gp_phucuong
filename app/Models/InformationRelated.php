@@ -10,7 +10,7 @@ class InformationRelated extends BaseModel
     /**
      * @var string
      */
-    protected $table = DB_PREFIX  . 'information_relateds';
+    protected $table = DB_PREFIX . 'information_relateds';
 
     /**
      * @var string
@@ -30,29 +30,49 @@ class InformationRelated extends BaseModel
         'related_id'
     ];
 
-    public function getRelatedIdAttribute($value) {
+    public function getRelatedIdAttribute($value)
+    {
         return (int)$value;
     }
 
     public static function fcDeleteByInfoAndRelatedId($infoId = null, $relatedId = null)
     {
-        $infoId = (int)$infoId;
+        $infoId    = (int)$infoId;
         $relatedId = (int)$relatedId;
-        
+
         if ($infoId && $relatedId) {
-            return DB::delete("delete from `" . Tables::$information_relateds . "` where " . Tables::$information_relateds . ".information_id = '" . $infoId .  "' and " . Tables::$information_relateds . ".related_id = '" . $relatedId . "'");
+            return DB::delete("delete from `" . Tables::$information_relateds . "` where " . Tables::$information_relateds . ".information_id = '" . $infoId . "' and " . Tables::$information_relateds . ".related_id = '" . $relatedId . "'");
         }
     }
 
     public static function insertByInfoId($infoId = null, $relatedId = null)
     {
-        $infoId = (int)$infoId;
+        $infoId    = (int)$infoId;
         $relatedId = (int)$relatedId;
 
         if ($infoId && !empty($relatedId)) {
             DB::insert('insert into ' . Tables::$information_relateds . ' (information_id, related_id) values (?, ?)', [
-                $infoId, $relatedId
+                $infoId,
+                $relatedId
             ]);
+        }
+    }
+
+    public static function fcDeleteByInfoId($infoId = null)
+    {
+        $infoId = (int)$infoId;
+
+        if ($infoId) {
+            return DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . $infoId . "'");
+        }
+    }
+
+    public static function fcDeleteByRelatedId($relatedId = null)
+    {
+        $relatedId = (int)$relatedId;
+
+        if ($relatedId) {
+            return DB::delete("delete from " . Tables::$information_relateds . " where related_id = '" . $relatedId . "'");
         }
     }
 }

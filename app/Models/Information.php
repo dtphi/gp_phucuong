@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Http\Common\Tables;
 use DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Information extends BaseModel
 {
+    use SoftDeletes;
+
     /**
      * @var string
      */
@@ -18,90 +21,177 @@ class Information extends BaseModel
     protected $primaryKey = 'information_id';
 
     /**
-     * Get the infoDes associated with the category.
+     * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function infoDes()
     {
         return $this->hasOne(InformationDescription::class, $this->primaryKey);
     }
 
+    /**
+     * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function relateds()
     {
         return $this->hasMany(InformationRelated::class, $this->primaryKey);
     }
 
+    /**
+     * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function categories()
     {
         return $this->hasMany(InformationToCategory::class, $this->primaryKey);
     }
 
+    /**
+     * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function images()
     {
         return $this->hasMany(InformationImage::class, $this->primaryKey);
     }
 
+    /**
+     * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function downloads()
     {
         return $this->hasMany(InformationToDownload::class, $this->primaryKey);
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return mixed
+     */
+    public function getImageAttribute($value)
+    {
+        return $value;
+    }
+
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return mixed
+     */
+    public function getDateAvailableAttribute($value)
+    {
+        return $value;
+    }
+
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return int
+     */
     public function getSortOrderAttribute($value)
     {
         return (int)$value;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return int
+     */
     public function getViewedAttribute($value)
     {
         return (int)$value;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return int
+     */
     public function getStatusAttribute($value)
     {
         return (int)$value;
     }
 
-    public function getNameAttribute($value) 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return string
+     */
+    public function getNameAttribute($value)
     {
-        $value = $value ?? (($this->infoDes)?$this->infoDes->name:'');
+        $value = ($this->infoDes) ? $this->infoDes->name : '';
 
-        return strip_tags(html_entity_decode($value,ENT_QUOTES, 'UTF-8'));
+        return $value;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return string
+     */
     public function getDescriptionAttribute($value)
     {
-        $value = $value ?? (($this->infoDes)?$this->infoDes->description:'');
+        $value = ($this->infoDes) ? $this->infoDes->description : '';
 
         return $value;
     }
 
-    public function getMetaTitleAttribute($value) 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return string
+     */
+    public function getMetaTitleAttribute($value)
     {
-        $value = $value ?? (($this->infoDes)?$this->infoDes->meta_title:'');
+        $value = ($this->infoDes) ? $this->infoDes->meta_title : '';
 
         return $value;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return string
+     */
     public function getMetaDescriptionAttribute($value)
     {
-        $value = $value ?? (($this->infoDes)?$this->infoDes->meta_description:'');
+        $value = ($this->infoDes) ? $this->infoDes->meta_description : '';
 
         return $value;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return string
+     */
     public function getTagAttribute($value)
     {
-        $value = $value ?? (($this->infoDes)?$this->infoDes->tag:'');
+        $value = ($this->infoDes) ? $this->infoDes->tag : '';
 
         return $value;
     }
 
-    public function getMetaKeywordAttribute($value) 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return string
+     */
+    public function getMetaKeywordAttribute($value)
     {
-        $value = $value ?? (($this->infoDes)?$this->infoDes->meta_keyword:'');
+        $value = ($this->infoDes) ? $this->infoDes->meta_keyword : '';
 
         return $value;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return array
+     */
     public function getArrRelatedListAttribute($value)
     {
         $relateds = [];
@@ -114,13 +204,18 @@ class Information extends BaseModel
         return $relateds;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return array
+     */
     public function getArrImageListAttribute($value)
     {
         $value = [];
         if ($this->images) {
-            foreach( $this->images as $image) {
+            foreach ($this->images as $image) {
                 $value[] = [
-                    'image' => $image->image,
+                    'image'      => $image->image,
                     'sort_order' => (int)$image->sort_order
                 ];
             }
@@ -129,11 +224,16 @@ class Information extends BaseModel
         return $value;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return array
+     */
     public function getArrDownloadListAttribute($value)
     {
         $value = [];
         if ($this->downloads) {
-            foreach($this->downloads as $download) {
+            foreach ($this->downloads as $download) {
                 $value[] = (int)$download->download_id;
             }
         }
@@ -141,11 +241,16 @@ class Information extends BaseModel
         return $value;
     }
 
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return array
+     */
     public function getArrCategoryListAttribute($value)
     {
         $value = [];
         if ($this->categories) {
-            foreach($this->categories as $category) {
+            foreach ($this->categories as $category) {
                 $value[] = (int)$category->category_id;
             }
         }
@@ -154,6 +259,7 @@ class Information extends BaseModel
     }
 
     /**
+     * @author : dtphi .
      * The attributes that are mass assignable.
      *
      * @var array
@@ -167,24 +273,33 @@ class Information extends BaseModel
     ];
 
     /**
-     * Get the group's name.
-     *
-     * @param  string  $value
+     * @author : dtphi .
+     * @param $value
      * @return string
      */
     public function getGroupNameAttribute($value)
     {
-        if (is_null($this->group)) return ucfirst($value);
+        if (is_null($this->group)) {
+            return ucfirst($value);
+        }
 
         return ucfirst($this->group->newsgroupname);
     }
 
+    /**
+     * @author : dtphi .
+     * @param $query
+     * @param string $alias
+     * @return mixed
+     */
     public function scopeLjoinDescription($query, $alias = '')
     {
         if (empty($alias)) {
             $alias = Tables::$information_descriptions;
         }
-        return $query->leftJoin(Tables::$information_descriptions . ' AS ' . $alias, $this->table . '.information_id', '=',
-        $alias . '.information_id');
+
+        return $query->leftJoin(Tables::$information_descriptions . ' AS ' . $alias, $this->table . '.information_id',
+            '=',
+            $alias . '.information_id');
     }
 }

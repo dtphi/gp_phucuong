@@ -9,8 +9,8 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel as newsGpSv
 use App\Http\Requests\NewsGroupRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
-use Log;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Log;
 
 /**
  * Class NewsGroupController
@@ -19,6 +19,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class NewsGroupController extends ApiController
 {
+    /**
+     * @var string
+     */
     protected $resourceName = 'newsgroup';
 
     /**
@@ -46,14 +49,14 @@ class NewsGroupController extends ApiController
     public function index(Request $request)
     {
         $data = $request->all();
-        $pagination = [];
-        $results = [];
         $page = 1;
         if ($request->query('page')) {
             $page = $request->query('page');
         }
+        $data['page'] = $page;
+
         try {
-            $limit       = $this->_getPerPage();
+            $limit      = $this->_getPerPage();
             $newsGroups = $this->newsGpSv->apiGetList($data, $limit);
             $pagination = $this->_getTextPagination($newsGroups);
 
@@ -70,16 +73,16 @@ class NewsGroupController extends ApiController
         }
 
         return Helper::successResponse([
-            'results' => $results,
+            'results'    => $results,
             'pagination' => $pagination,
-            'page' => $page
+            'page'       => $page
         ]);
     }
 
     /**
-     * [_getTextPagination description]
-     * @param  LengthAwarePaginator $paginator [description]
-     * @return [type]                          [description]
+     * @author : dtphi .
+     * @param LengthAwarePaginator $paginator
+     * @return array
      */
     protected function _getTextPagination(LengthAwarePaginator $paginator)
     {
@@ -125,8 +128,12 @@ class NewsGroupController extends ApiController
      */
     public function show($id = null)
     {
+        $json = [];
+
         try {
-            $json = $this->newsGpSv->apiGetResourceDetail($id);
+            if ($id) {
+                $json = $this->newsGpSv->apiGetResourceDetail($id);
+            }
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -147,7 +154,7 @@ class NewsGroupController extends ApiController
             return $storeResponse;
         }
 
-        $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
+        $resourceId = ($this->getResource()) ? $this->getResource()->category_id : null;
 
         return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
     }
@@ -160,9 +167,12 @@ class NewsGroupController extends ApiController
      */
     public function update(NewsGroupRequest $request, $id = null)
     {
-        try {
-            $model = $this->newsGpSv->getCateogryById($id);
+        $model = null;
 
+        try {
+            if ($id) {
+                $model = $this->newsGpSv->getCateogryById($id);
+            }
         } catch (HandlerMsgCommon $e) {
             Log::debug('User not found, Request ID = ' . $id);
 
@@ -213,26 +223,33 @@ class NewsGroupController extends ApiController
      */
     private function __handleStoreUpdate(&$model, &$request)
     {
-        $requestParams = $request->all();
+        $formData = $request->all();
 
-        if ($result = $this->newsGpSv->apiUpdate($model, $requestParams)) {
-            return $this->respondUpdated($result);
+        if (!is_null($model)) {
+            if ($result = $this->newsGpSv->apiUpdate($model, $formData)) {
+                return $this->respondUpdated($result);
+            }
         }
 
         return $this->respondBadRequest();
     }
 
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
     public function dropdown(Request $request)
     {
         $data = $request->all();
 
-        $results = $this->newsGpSv->apiGetCategories($data);
+        $results     = $this->newsGpSv->apiGetCategories($data);
         $collections = [];
 
         foreach ($results as $key => $value) {
             $collections[] = [
                 'category_id' => $value->category_id,
-                'name' => strip_tags(html_entity_decode($value->name, ENT_QUOTES, 'UTF-8')),
+                'name'        => strip_tags(html_entity_decode($value->name, ENT_QUOTES, 'UTF-8')),
             ];
         }
 

@@ -17,7 +17,7 @@ class NewsGroupRequest extends FormRequest
         return true;
     }
 
-     /**
+    /**
      * @author : dtphi .
      * Get data to be validated from the request.
      *
@@ -27,19 +27,19 @@ class NewsGroupRequest extends FormRequest
     {
         $formData = $this->all();
 
-        $formData['name']        = isset($formData['name']) ? $formData['name'] : '';
+        $formData['name'] = isset($formData['name']) ? $formData['name'] : '';
         if (empty($formData['name'])) {
-            $formData['name'] = isset($formData['category_name']) ? $formData['category_name']: '';
+            $formData['name'] = isset($formData['category_name']) ? $formData['category_name'] : '';
         }
-        $formData['parent_id'] = isset($formData['parent_id']) ? $formData['parent_id']: null;
-        $formData['description'] = isset($formData['description']) ? $formData['description'] : '';
-        $formData['meta_title']  = isset($formData['meta_title']) ? $formData['meta_title'] : '';
-        $formData['meta_description']  = isset($formData['meta_description']) ? $formData['meta_description'] : '';
-        $formData['meta_keyword']  = isset($formData['meta_keyword']) ? $formData['meta_keyword'] : '';
-        $formData['sort_order'] = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
-        $formData['status'] = isset($formData['status']) ? $formData['status'] : 0;
-        $formData['layout_id'] = isset($formData['layout_id']) ? $formData['layout_id'] : null;
-        $formData['path'] = isset($formData['path']) ? $formData['path'] : null;
+        $formData['parent_id']        = isset($formData['parent_id']) ? $formData['parent_id'] : null;
+        $formData['description']      = isset($formData['description']) ? $formData['description'] : '';
+        $formData['meta_title']       = isset($formData['meta_title']) ? $formData['meta_title'] : '';
+        $formData['meta_description'] = isset($formData['meta_description']) ? $formData['meta_description'] : '';
+        $formData['meta_keyword']     = isset($formData['meta_keyword']) ? $formData['meta_keyword'] : '';
+        $formData['sort_order']       = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
+        $formData['status']           = isset($formData['status']) ? $formData['status'] : 0;
+        $formData['layout_id']        = isset($formData['layout_id']) ? $formData['layout_id'] : null;
+        $formData['path']             = isset($formData['path']) ? $formData['path'] : null;
 
         $this->merge($formData);
 

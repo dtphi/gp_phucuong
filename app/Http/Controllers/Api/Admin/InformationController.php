@@ -13,6 +13,9 @@ use Log;
 
 class InformationController extends ApiController
 {
+    /**
+     * @var string
+     */
     protected $resourceName = 'information';
 
     /**
@@ -40,26 +43,24 @@ class InformationController extends ApiController
     public function index(Request $request)
     {
         $data = $request->all();
-        $pagination = [];
-        $results = [];
         $page = 1;
         if ($request->query('page')) {
             $page = $request->query('page');
         }
         try {
             $limit       = $this->_getPerPage();
-            $collections = $this->infoSv->apiGetList([], $limit);
-            $pagination = $this->_getTextPagination($collections);
+            $collections = $this->infoSv->apiGetList($data, $limit);
+            $pagination  = $this->_getTextPagination($collections);
 
             $results = [];
             foreach ($collections as $key => $info) {
                 $results[] = [
                     'information_id' => (int)$info->information_id,
-                    'image' => $info->image,
-                    'name' => $info->name,
-                    'sort_order'    => $info->sort_order,
+                    'image'          => $info->image,
+                    'name'           => $info->name,
+                    'sort_order'     => $info->sort_order,
                     'date_available' => $info->date_available,
-                    'created_at' => $info->created_at
+                    'created_at'     => $info->created_at
                 ];
             }
 
@@ -69,9 +70,9 @@ class InformationController extends ApiController
 
         $json = [
             'data' => [
-                'results' => $results,
+                'results'    => $results,
                 'pagination' => $pagination,
-                'page' => $page
+                'page'       => $page
             ]
         ];
 
@@ -107,7 +108,7 @@ class InformationController extends ApiController
             return $storeResponse;
         }
 
-        $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
+        $resourceId = ($this->getResource()) ? $this->getResource()->information_id : null;
 
         return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
     }
@@ -140,12 +141,12 @@ class InformationController extends ApiController
     public function destroy($id = null)
     {
         try {
-            $info = $this->infoSv->apiGetDetail($id);
+            $model = $this->infoSv->apiGetDetail($id);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        $info->destroy($id);
+        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -157,9 +158,9 @@ class InformationController extends ApiController
      */
     private function __handleStore(&$request)
     {
-        $requestParams = $request->all();
+        $formData = $request->all();
 
-        if ($result = $this->infoSv->apiInsert($requestParams)) {
+        if ($result = $this->infoSv->apiInsert($formData)) {
             return $this->respondUpdated($result);
         }
 
@@ -172,11 +173,11 @@ class InformationController extends ApiController
      * @param $request
      * @return \Illuminate\Http\JsonResponse
      */
-    private function __handleStoreUpdate(&$model,&$request)
+    private function __handleStoreUpdate(&$model, &$request)
     {
-        $requestParams = $request->all();
+        $formData = $request->all();
 
-        if ($result = $this->infoSv->apiUpdate($model,$requestParams)) {
+        if ($result = $this->infoSv->apiUpdate($model, $formData)) {
             return $this->respondUpdated($result);
         }
 
@@ -197,17 +198,22 @@ class InformationController extends ApiController
         return $this->respondBadRequest();
     }
 
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
     public function dropdown(Request $request)
     {
         $data = $request->all();
 
-        $results = $this->infoSv->apiGetList($data);
+        $results     = $this->infoSv->apiGetList($data);
         $collections = [];
 
         foreach ($results as $key => $value) {
             $collections[] = [
                 'information_id' => $value->information_id,
-                'name' => strip_tags(html_entity_decode($value->name, ENT_QUOTES, 'UTF-8')),
+                'name'           => $value->name,
             ];
         }
 

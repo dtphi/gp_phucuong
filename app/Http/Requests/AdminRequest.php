@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\ExistUserMail;
+use Illuminate\Foundation\Http\FormRequest;
 
 class AdminRequest extends FormRequest
 {
@@ -26,16 +26,16 @@ class AdminRequest extends FormRequest
     {
         if ($this->isMethod('post')) {
             return [
-                'name' => 'required|max:255',
-                'email' => 'required|unique:admins,email|email:rfc,dns|max:255',
+                'name'     => 'required|max:255',
+                'email'    => 'required|unique:admins,email|email:rfc,dns|max:255',
                 'password' => 'required|min:8'
             ];
         }
 
         if ($this->isMethod('put')) {
             return [
-                'name' => 'required|max:255',
-                'email' => ['required', 'max:255', new ExistUserMail($this->get('id'))],
+                'name'     => 'required|max:255',
+                'email'    => ['required', 'max:255', new ExistUserMail($this->get('id'))],
                 'password' => 'required|min:8'
             ];
         }

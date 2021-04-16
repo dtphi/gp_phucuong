@@ -4,19 +4,25 @@ namespace App\Models;
 
 use App\Http\Common\Tables;
 use DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InformationDescription extends BaseModel
 {
-    /**
-     * @var string
-     */
-    protected $table = DB_PREFIX  . 'information_descriptions';
+    use SoftDeletes;
 
     /**
      * @var string
      */
-    protected $primaryKey = 'infomation_id';
+    protected $table = DB_PREFIX . 'information_descriptions';
 
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'information_id';
+
+    /**
+     * @var bool
+     */
     public $timestamps = false;
 
     /**
@@ -33,14 +39,69 @@ class InformationDescription extends BaseModel
         'meta_keyword'
     ];
 
-    public static function insertByInfoId($infoId = null, $name = '', $description = '', $tag = '', $metaTitle = '', $metaDescription = '', $metaKeyword = '')
+    public function getNameAttribute($value)
     {
+        return strip_tags(html_entity_decode($value, ENT_QUOTES, 'UTF-8'));
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        return $value;
+    }
+
+    public function getMetaTitleAttribute($value)
+    {
+
+        return $value;
+    }
+
+    public function getMetaDescriptionAttribute($value)
+    {
+        return $value;
+    }
+
+    public function getTagAttribute($value)
+    {
+        return $value;
+    }
+
+    public function getMetaKeywordAttribute($value)
+    {
+
+        return $value;
+    }
+
+    public static function insertByInfoId(
+        $infoId = null,
+        $name = '',
+        $description = '',
+        $tag = '',
+        $metaTitle = '',
+        $metaDescription = '',
+        $metaKeyword = ''
+    ) {
         $infoId = (int)$infoId;
 
         if ($infoId && !empty($name) && !empty($metaTitle)) {
-            DB::insert('insert into ' . Tables::$information_descriptions . ' (information_id, name, description, tag, meta_title, meta_description, meta_keyword) values (?, ?, ?, ?, ?, ?, ?)', [
-                $infoId, $name, $description, $tag, $metaTitle, $metaDescription, $metaKeyword
-            ]);
+            DB::insert('insert into ' . Tables::$information_descriptions . ' (information_id, name, description, tag, meta_title, meta_description, meta_keyword) values (?, ?, ?, ?, ?, ?, ?)',
+                [
+                    $infoId,
+                    $name,
+                    $description,
+                    $tag,
+                    $metaTitle,
+                    $metaDescription,
+                    $metaKeyword
+                ]);
+        }
+    }
+
+    public static function fcDeleteByInfoId($infoId = null)
+    {
+        $infoId = (int)$infoId;
+
+        if ($infoId) {
+            return DB::delete("delete from " . Tables::$information_descriptions . " where information_id = '" . $infoId . "'");
         }
     }
 }

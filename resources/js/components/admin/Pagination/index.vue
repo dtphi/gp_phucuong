@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-sm-6 text-right">
-                <div class="dataTables_paginate paging_simple_numbers">
+                <div class="dataTables_paginate paging_simple_numbers" v-if="_collectionData.length">
 
                     <collection-pagination
                         class="mb-0"

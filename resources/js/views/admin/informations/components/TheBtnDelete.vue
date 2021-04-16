@@ -56,7 +56,7 @@
                         {
                             title: 'Xóa',
                             handler: () => {
-                                this.[ACTION_DELETE_INFO_BY_ID]();
+                                this.[ACTION_DELETE_INFO_BY_ID](this.infoId);
                                 this.$modal.hide('dialog')
                             }
                         }

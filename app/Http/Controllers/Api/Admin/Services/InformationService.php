@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin\Services;
 
+use App\Http\Common\Tables;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\InformationModel;
 use App\Http\Resources\Informations\InformationCollection;
@@ -9,23 +10,22 @@ use App\Http\Resources\Informations\InformationResource;
 use App\Models\Information;
 use App\Models\InformationDescription;
 use App\Models\InformationImage;
+use App\Models\InformationRelated;
 use App\Models\InformationToCategory;
 use App\Models\InformationToDownload;
-use App\Http\Common\Tables;
 use DB;
 
 final class InformationService implements BaseModel, InformationModel
 {
     /**
-     * @var Admin|null
+     * @var Information|null
      */
     private $model = null;
 
+    /**
+     * @var InformationDescription|null
+     */
     private $modelDes = null;
-
-    private $modelImg = null;
-
-    private $modelCate = null;
 
     /**
      * @author : dtphi .
@@ -33,10 +33,8 @@ final class InformationService implements BaseModel, InformationModel
      */
     public function __construct()
     {
-        $this->model = new Information();
+        $this->model    = new Information();
         $this->modelDes = new InformationDescription();
-        $this->modelCate = new InformationToCategory();
-        $this->modelImg = new InformationImage();
     }
 
     /**
@@ -45,7 +43,7 @@ final class InformationService implements BaseModel, InformationModel
      * @param int $limit
      * @return AdminCollection
      */
-    public function apiGetList(array $options = [], $limit = 15)
+    public function apiGetList(array $options = [], $limit = 5)
     {
         // TODO: Implement apiGetList() method.
         $query = $this->apiGetInformations($options, $limit);
@@ -59,7 +57,7 @@ final class InformationService implements BaseModel, InformationModel
      * @param int $limit
      * @return InformationCollection
      */
-    public function apiGetResourceCollection(array $options = [], $limit = 15)
+    public function apiGetResourceCollection(array $options = [], $limit = 5)
     {
         // TODO: Implement apiGetResourceCollection() method.
         return new InformationCollection($this->apiGetList($options, $limit));
@@ -137,11 +135,13 @@ final class InformationService implements BaseModel, InformationModel
                 $this->model->save();
             }
 
-            InformationDescription::insertByInfoId($infoId, $data['name'], $data['description'], $data['tag'], $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
+            InformationDescription::insertByInfoId($infoId, $data['name'], $data['description'], $data['tag'],
+                $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
 
             if (isset($data['info_images']) && !empty($data['info_images'])) {
                 foreach ($data['info_images'] as $information_image) {
-                    InformationImage::insertByInfoId($infoId, $information_image['image'], $information_image['sort_order']);
+                    InformationImage::insertByInfoId($infoId, $information_image['image'],
+                        $information_image['sort_order']);
                 }
             }
 
@@ -211,50 +211,51 @@ final class InformationService implements BaseModel, InformationModel
                 $model->save();
             }
 
-            $modelDes = $this->getInfoDesById((int)$infoId);
-            $modelDes->fill($data);
-            $modelDes->save();
+            $modelDes = $model->infoDes;
+            if ($modelDes) {
+                $dataDes = [
+                    'name'             => $data['name'],
+                    'tag'              => $data['tag'],
+                    'description'      => $data['description'],
+                    'meta_title'       => $data['meta_title'],
+                    'meta_description' => $data['meta_description'],
+                    'meta_keyword'     => $data['meta_keyword']
+                ];
 
-            DB::delete("delete from " . Tables::$information_images . " where information_id = '" . (int)$infoId . "'");
+                $modelDes->fill($dataDes);
+                $modelDes->save();
+            }
+
+            InformationImage::fcDeleteByInfoId($infoId);
             if (isset($data['info_images']) && !empty($data['info_images'])) {
                 foreach ($data['info_images'] as $information_image) {
-                    DB::insert('insert into ' . Tables::$information_images . ' (information_id, image, sort_order) values (?, ?, ?)', [
-                        (int)$infoId,
-                        $information_image['image'],
-                        (int)$information_image['sort_order']
-                    ]);
+                    InformationImage::insertByInfoId($infoId, $information_image['image'],
+                        $information_image['sort_order']);
                 }
             }
 
-            DB::delete("delete from " . Tables::$information_to_downloads . " where information_id = '" . (int)$infoId . "'");
+            InformationToDownload::fcDeleteByInfoId($infoId);
             if (isset($data['downloads']) && !empty($data['downloads'])) {
                 foreach ($data['downloads'] as $downloadId) {
-                    DB::insert('insert into ' . Tables::$information_to_downloads . ' (information_id, download_id) values (?, ?)', [
-                        (int)$infoId,
-                        (int)$downloadId
-                    ]);
+                    InformationToDownload::insertByInfoId($infoId, $downloadId);
                 }
             }
 
-            DB::delete("delete from " . Tables::$information_to_categorys . " where information_id = '" . (int)$infoId . "'");
+            InformationToCategory::fcDeleteByInfoId($infoId);
             if (isset($data['categorys']) && !empty($data['categorys'])) {
                 foreach ($data['categorys'] as $categoryId) {
-                    DB::insert('insert into ' . Tables::$information_to_categorys . ' (information_id, category_id) values (?, ?)', [
-                        (int)$infoId,
-                        (int)$categoryId
-                    ]);
+                    InformationToCategory::insertByInfoId($infoId, $categoryId);
                 }
             }
 
-            DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$infoId . "'");
-            DB::delete("delete from " . Tables::$information_relateds . " WHERE related_id = '" . (int)$infoId . "'");
+            InformationRelated::fcDeleteByInfoId($infoId);
+            InformationRelated::fcDeleteByRelatedId($infoId);
             if (isset($data['relateds']) && !empty($data['relateds'])) {
                 foreach ($data['relateds'] as $relatedId) {
-                    DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$infoId . "' and related_id = '" . (int)$relatedId . "'");
-                    DB::insert("insert into " . Tables::$information_relateds . " set information_id = '" . (int)$infoId . "', related_id = '" . (int)$relatedId . "'");
-                    DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$relatedId . "' and related_id = '" . (int)$infoId . "'");
-
-                    DB::insert("insert into " . Tables::$information_relateds . " set information_id = '" . (int)$relatedId . "', related_id = '" . (int)$infoId . "'");
+                    InformationRelated::fcDeleteByInfoAndRelatedId($infoId, $relatedId);
+                    InformationRelated::insertByInfoId($infoId, $relatedId);
+                    InformationRelated::fcDeleteByInfoAndRelatedId($relatedId, $infoId);
+                    InformationRelated::insertByInfoId($relatedId, $infoId);
                 }
             }
         } else {
@@ -268,55 +269,54 @@ final class InformationService implements BaseModel, InformationModel
         return $this->model;
     }
 
-    public function apiGetInformations($data = array(), $limit = 5) {
-        $query = $this->model->select()
-        ->ljoinDescription()->limit($limit);
+    /**
+     * @author : dtphi .
+     * @param array $data
+     * @param int $limit
+     * @return mixed
+     */
+    public function apiGetBuilderInformations($data = [], $limit = 5)
+    {
+        $alias = 'infoDes';
+
+        $query = DB::table(Tables::$informations)->leftJoin(Tables::$information_descriptions . ' AS ' . $alias,
+            Tables::$informations . '.information_id', '=', $alias . '.information_id')->limit($limit);
 
         return $query;
-        /*$sql = "SELECT * FROM " . DB_PREFIX . "news n LEFT JOIN " . DB_PREFIX . "news_description nd ON (n.news_id = nd.news_id) WHERE nd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+    }
 
-        if (!empty($data['filter_name'])) {
-            $sql .= " AND nd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+    /**
+     * @author : dtphi .
+     * @param array $data
+     * @param int $limit
+     * @return mixed
+     */
+    public function apiGetInformations($data = array(), $limit = 5)
+    {
+        $query = $this->model->select()->limit($limit);
+
+        return $query;
+    }
+
+    /**
+     * @author : dtphi .
+     * @param null $model
+     */
+    public function deleteInformation($model = null)
+    {
+        if ($model) {
+            $infoId = $model->information_id;
+
+            $model->delete();
+            $modelDes = $this->modelDes->where('information_id', $infoId)->first();
+            $modelDes->delete();
+
+            InformationImage::fcDeleteByInfoId($infoId);
+            InformationToCategory::fcDeleteByInfoId($infoId);
+            InformationToDownload::fcDeleteByInfoId($infoId);
+            InformationRelated::fcDeleteByInfoId($infoId);
+            InformationRelated::fcDeleteByRelatedId($infoId);
+
         }
-
-        if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-            $sql .= " AND n.status = '" . (int)$data['filter_status'] . "'";
-        }
-
-        $sql .= " GROUP BY n.news_id";
-
-        $sort_data = array(
-            'nd.name',
-            'n.status',
-            'n.sort_order'
-        );
-
-        if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-            $sql .= " ORDER BY " . $data['sort'];
-        } else {
-            $sql .= " ORDER BY nd.name";
-        }
-
-        if (isset($data['order']) && ($data['order'] == 'DESC')) {
-            $sql .= " DESC";
-        } else {
-            $sql .= " ASC";
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-
-            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-        }
-
-        $query = $this->db->query($sql);
-
-        return $query->rows;*/
     }
 }
