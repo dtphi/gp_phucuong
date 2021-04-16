@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Common\Tables;
+use DB;
+
 class InformationToDownload extends BaseModel
 {
     /**
@@ -28,4 +31,16 @@ class InformationToDownload extends BaseModel
         'infomation_id',
         'download_id'
     ];
+
+    public static function insertByInfoId($infoId = null, $downloadId = null)
+    {
+        $infoId = (int)$infoId;
+        $downloadId = (int)$downloadId;
+
+        if ($infoId && $downloadId) {
+            DB::insert('insert into ' . Tables::$information_to_downloads . ' (information_id, download_id) values (?, ?)', [
+                $infoId, $downloadId
+            ]);
+        }
+    }
 }

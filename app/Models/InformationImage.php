@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Common\Tables;
+use DB;
+
 class InformationImage extends BaseModel
 {
     /**
@@ -26,4 +29,15 @@ class InformationImage extends BaseModel
         'image',
         'sort_order'
     ];
+
+    public static function insertByInfoId($infoId = null, $image = '', $sortOrder = 0)
+    {
+        $infoId = (int)$infoId;
+
+        if ($infoId && !empty($image)) {
+            DB::insert('insert into ' . Tables::$information_images . ' (information_id, image, sort_order) values (?, ?, ?)', [
+                $infoId, $image, $sortOrder
+            ]);
+        }
+    }
 }

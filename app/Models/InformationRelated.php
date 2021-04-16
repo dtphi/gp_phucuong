@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Common\Tables;
+use DB;
+
 class InformationRelated extends BaseModel
 {
     /**
@@ -29,5 +32,27 @@ class InformationRelated extends BaseModel
 
     public function getRelatedIdAttribute($value) {
         return (int)$value;
+    }
+
+    public static function fcDeleteByInfoAndRelatedId($infoId = null, $relatedId = null)
+    {
+        $infoId = (int)$infoId;
+        $relatedId = (int)$relatedId;
+        
+        if ($infoId && $relatedId) {
+            return DB::delete("delete from `" . Tables::$information_relateds . "` where " . Tables::$information_relateds . ".information_id = '" . $infoId .  "' and " . Tables::$information_relateds . ".related_id = '" . $relatedId . "'");
+        }
+    }
+
+    public static function insertByInfoId($infoId = null, $relatedId = null)
+    {
+        $infoId = (int)$infoId;
+        $relatedId = (int)$relatedId;
+
+        if ($infoId && !empty($relatedId)) {
+            DB::insert('insert into ' . Tables::$information_relateds . ' (information_id, related_id) values (?, ?)', [
+                $infoId, $relatedId
+            ]);
+        }
     }
 }

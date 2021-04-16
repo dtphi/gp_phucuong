@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Common\Tables;
+use DB;
+
 class Information extends BaseModel
 {
     /**
@@ -15,9 +18,9 @@ class Information extends BaseModel
     protected $primaryKey = 'information_id';
 
     /**
-     * Get the description associated with the category.
+     * Get the infoDes associated with the category.
      */
-    public function description()
+    public function infoDes()
     {
         return $this->hasOne(InformationDescription::class, $this->primaryKey);
     }
@@ -59,32 +62,44 @@ class Information extends BaseModel
 
     public function getNameAttribute($value) 
     {
-        return strip_tags(html_entity_decode($this->description->name,ENT_QUOTES, 'UTF-8'));
+        $value = $value ?? (($this->infoDes)?$this->infoDes->name:'');
+
+        return strip_tags(html_entity_decode($value,ENT_QUOTES, 'UTF-8'));
     }
 
     public function getDescriptionAttribute($value)
     {
-        return $this->description->description;
+        $value = $value ?? (($this->infoDes)?$this->infoDes->description:'');
+
+        return $value;
     }
 
     public function getMetaTitleAttribute($value) 
     {
-        return $this->description->meta_title;
+        $value = $value ?? (($this->infoDes)?$this->infoDes->meta_title:'');
+
+        return $value;
     }
 
     public function getMetaDescriptionAttribute($value)
     {
-        return $this->description->meta_description;
+        $value = $value ?? (($this->infoDes)?$this->infoDes->meta_description:'');
+
+        return $value;
     }
 
     public function getTagAttribute($value)
     {
-        return $this->description->tag;
+        $value = $value ?? (($this->infoDes)?$this->infoDes->tag:'');
+
+        return $value;
     }
 
     public function getMetaKeywordAttribute($value) 
     {
-        return $this->description->meta_keyword;
+        $value = $value ?? (($this->infoDes)?$this->infoDes->meta_keyword:'');
+
+        return $value;
     }
 
     public function getArrRelatedListAttribute($value)
@@ -162,5 +177,14 @@ class Information extends BaseModel
         if (is_null($this->group)) return ucfirst($value);
 
         return ucfirst($this->group->newsgroupname);
+    }
+
+    public function scopeLjoinDescription($query, $alias = '')
+    {
+        if (empty($alias)) {
+            $alias = Tables::$information_descriptions;
+        }
+        return $query->leftJoin(Tables::$information_descriptions . ' AS ' . $alias, $this->table . '.information_id', '=',
+        $alias . '.information_id');
     }
 }

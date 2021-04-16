@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use App\Http\Common\Tables;
 
 class Category extends BaseModel
 {

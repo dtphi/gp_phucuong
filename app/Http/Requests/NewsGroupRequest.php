@@ -34,6 +34,8 @@ class NewsGroupRequest extends FormRequest
         $formData['parent_id'] = isset($formData['parent_id']) ? $formData['parent_id']: null;
         $formData['description'] = isset($formData['description']) ? $formData['description'] : '';
         $formData['meta_title']  = isset($formData['meta_title']) ? $formData['meta_title'] : '';
+        $formData['meta_description']  = isset($formData['meta_description']) ? $formData['meta_description'] : '';
+        $formData['meta_keyword']  = isset($formData['meta_keyword']) ? $formData['meta_keyword'] : '';
         $formData['sort_order'] = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
         $formData['status'] = isset($formData['status']) ? $formData['status'] : 0;
         $formData['layout_id'] = isset($formData['layout_id']) ? $formData['layout_id'] : null;

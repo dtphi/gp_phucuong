@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Common\Tables;
 use DB;
 
 class InformationToCategory extends BaseModel
@@ -39,8 +40,24 @@ class InformationToCategory extends BaseModel
         'category_id'
     ];
 
-    public static function fcDeleteByCateId($cateId)
+    public static function fcDeleteByCateId($cateId = null)
     {
-        DB::delete("delete from `" . Tables::$information_to_categorys . "` where category_id = '" . (int)$cateId . "'");
+        $cateId = (int)$cateId;
+        
+        if ($cateId) {
+            return DB::delete("delete from `" . Tables::$information_to_categorys . "` where category_id = '" . $cateId . "'");
+        }
+    }
+
+    public static function insertByInfoId($infoId = null, $cateId = null)
+    {
+        $infoId = (int)$infoId;
+        $cateId = (int)$cateId;
+
+        if ($infoId && $cateId) {
+            DB::insert('insert into ' . Tables::$information_to_categorys . ' (information_id, category_id) values (?, ?)', [
+                $infoId, $cateId
+            ]);
+        }
     }
 }

@@ -12,6 +12,8 @@ class CategoryPath extends BaseModel
      */
     protected $table = DB_PREFIX . 'category_paths';
 
+    public static $separate = ' >> ';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,8 +53,42 @@ class CategoryPath extends BaseModel
         return $query->where($alias . '.name', 'LIKE', "%{$name}%");
     }
 
-    public static function fcDeleteByCateId($cateId)
+    public static function fcDeleteByCateId($cateId = null)
     {
-        DB::delete("delete from `" . Tables::$category_paths . "` where category_id = '" . (int)$cateId . "'");
+        if ($cateId) {
+            return DB::delete("delete from `" . Tables::$category_paths . "` where " . Tables::$category_paths . ".category_id = '" . (int)$cateId . "'");
+        }
+    }
+
+    public static function fcDeleteByCateIdAndLevelDown($cateId = null, $level = 0) 
+    {
+        if ($cateId) {
+            return DB::delete("delete from `" . Tables::$category_paths . "` where " . Tables::$category_paths . ".category_id = '" . (int)$cateId . "' AND " . Tables::$category_paths . ".level < '" . (int)$level . "'");
+        }
+    } 
+
+    public static function replaceByCateidAndPathAndLevel($cateId = null, $pathId = null, $level = 0)
+    {
+        if ($cateId && $pathId) {
+           return DB::statement("REPLACE INTO `" . Tables::$category_paths . "` SET " . Tables::$category_paths . ".category_id = '" . (int)$cateId . "', " . Tables::$category_paths . ".path_id = '" . (int)$pathId . "', " . Tables::$category_paths . ".level = '" . (int)$level . "'");
+        }
+    }
+
+    public static function getRawCategoryName($tbContainNameAlias = '', $rawAlias = 'name') {
+        if (empty($tbContainNameAlias)) {
+            $tbContainNameAlias = Tables::$category_descriptions;
+        }
+        return DB::raw("group_concat(" . $tbContainNameAlias . ".`name` ORDER BY " . Tables::$category_paths . ".level SEPARATOR '" . self::$separate . "') AS " . $rawAlias);
+    }
+
+    public static function insertByCateId($cateId = null, $pathId = null, $level = 0)
+    {
+        $cateId = (int)$cateId;
+        $pathId = (int)$pathId;
+        $level = (int)$level;
+
+        if ($cateId && $pathId) {
+            return DB::insert('insert into ' . Tables::$category_paths . ' (category_id, path_id, level) values (?, ?, ?)', [$cateId, $pathId, $level]);
+        }
     }
 }

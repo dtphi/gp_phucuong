@@ -137,51 +137,32 @@ final class InformationService implements BaseModel, InformationModel
                 $this->model->save();
             }
 
-            DB::insert('insert into ' . Tables::$information_descriptions . ' (information_id, name, description, tag, meta_title, meta_description, meta_keyword) values (?, ?, ?, ?, ?, ?, ?)', [
-                (int)$infoId, 
-                $data['name'], 
-                $data['description'],
-                $data['tag'], 
-                $data['meta_title'], 
-                $data['meta_description'], 
-                $data['meta_keyword']
-            ]);
+            InformationDescription::insertByInfoId($infoId, $data['name'], $data['description'], $data['tag'], $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
 
             if (isset($data['info_images']) && !empty($data['info_images'])) {
                 foreach ($data['info_images'] as $information_image) {
-                    DB::insert('insert into ' . Tables::$information_images . ' (information_id, image, sort_order) values (?, ?, ?)', [
-                        (int)$infoId,
-                        $information_image['image'],
-                        (int)$information_image['sort_order']
-                    ]);
+                    InformationImage::insertByInfoId($infoId, $information_image['image'], $information_image['sort_order']);
                 }
             }
 
             if (isset($data['downloads']) && !empty($data['downloads'])) {
                 foreach ($data['downloads'] as $downloadId) {
-                    DB::insert('insert into ' . Tables::$information_to_downloads . ' (information_id, download_id) values (?, ?)', [
-                        (int)$infoId,
-                        (int)$downloadId
-                    ]);
+                    InformationToDownload::insertByInfoId($infoId, $downloadId);
                 }
             }
 
             if (isset($data['categorys']) && !empty($data['categorys'])) {
                 foreach ($data['categorys'] as $categoryId) {
-                    DB::insert('insert into ' . Tables::$information_to_categorys . ' (information_id, category_id) values (?, ?)', [
-                        (int)$infoId,
-                        (int)$categoryId
-                    ]);
+                    InformationToCategory::insertByInfoId($infoId, $categoryId);
                 }
             }
 
             if (isset($data['relateds']) && !empty($data['relateds'])) {
                 foreach ($data['relateds'] as $relatedId) {
-                    DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$infoId . "' and related_id = '" . (int)$relatedId . "'");
-                    DB::insert("insert into " . Tables::$information_relateds . " set information_id = '" . (int)$infoId . "', related_id = '" . (int)$relatedId . "'");
-                    DB::delete("delete from " . Tables::$information_relateds . " where information_id = '" . (int)$relatedId . "' and related_id = '" . (int)$infoId . "'");
-
-                    DB::insert("insert into " . Tables::$information_relateds . " set information_id = '" . (int)$relatedId . "', related_id = '" . (int)$infoId . "'");
+                    InformationRelated::fcDeleteByInfoAndRelatedId($infoId, $relatedId);
+                    InformationRelated::insertByInfoId($infoId, $relatedId);
+                    InformationRelated::fcDeleteByInfoAndRelatedId($relatedId, $infoId);
+                    InformationRelated::insertByInfoId($relatedId, $infoId);
                 }
             }
         } else {
@@ -289,7 +270,8 @@ final class InformationService implements BaseModel, InformationModel
 
     public function apiGetInformations($data = array(), $limit = 5) {
         $query = $this->model->select()
-        ->leftJoin(Tables::$information_descriptions, Tables::$informations . '.information_id', '=', Tables::$information_descriptions . '.information_id')->limit($limit);
+        ->ljoinDescription()->limit($limit);
+
         return $query;
         /*$sql = "SELECT * FROM " . DB_PREFIX . "news n LEFT JOIN " . DB_PREFIX . "news_description nd ON (n.news_id = nd.news_id) WHERE nd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
