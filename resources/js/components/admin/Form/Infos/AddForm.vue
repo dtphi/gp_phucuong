@@ -132,14 +132,6 @@
             }
         },
         setting: {
-            btnCancelTxt: 'Back',
-            nameTxt: 'Name',
-            descriptionTxt: 'Description',
-            newslinkTxt: 'News Link',
-            actionName: 'add',
-            isAddFrom: true,
-            title: 'Add News',
-            btnSubmitTxt: 'Save',
             tab_general_title: 'Tổng quan',
             tab_advance_title: 'Mở rộng',
             tab_link_title: 'Liên kết',

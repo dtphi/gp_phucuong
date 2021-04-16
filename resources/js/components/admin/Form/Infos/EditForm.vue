@@ -44,8 +44,7 @@
             <tab-media-manager ref="mediaManagerTab"
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"
-                    :config-form="$options.setting"></tab-media-manager>
+                    :group-data="info"></tab-media-manager>
         </div>
       </div>
     </form>
@@ -75,21 +74,15 @@
     } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'NewsEditForm',
-        beforeCreate() {
-            const infoId = this.$route.params.infoId;
-            if (infoId) {
-                this.$store.dispatch(MODULE_INFO_EDIT + '/' + ACTION_GET_INFO_BY_ID, infoId);
-            } else {
-                return fn_redirect_url('admin/informations');
-            }
-        },
+        name: 'InformationEditForm',
+        
         components: {
             TabGeneral,
             TabMediaManager,
             TabAdvance,
             TabLink
         },
+
         data() {
             return {
                 fullPage: false,
@@ -102,7 +95,7 @@
             }),
 
             ...mapGetters(MODULE_INFO_EDIT, [
-                'info',
+                'info'
             ])
         },
 
@@ -129,10 +122,6 @@
                 });
             },
 
-            _back() {
-                return fn_redirect_url('admin/informations');
-            },
-
             _selectMainImg(file) {
                 if (typeof file === "object") {
                     if (file.hasOwnProperty('selected')) {
@@ -143,17 +132,11 @@
             }
         },
         setting: {
-            btnCancelTxt: 'Back',
-            nameTxt: 'Name',
-            descriptionTxt: 'Description',
-            newslinkTxt: 'News Link',
-            actionName: 'edit',
-            isAddFrom: false,
-            title: 'Edit News',
             btnSubmitTxt: 'Update',
             tab_general_title: 'Tổng quan',
             tab_advance_title: 'Mở rộng',
             tab_image_title: 'Hình ảnh',
+            tab_link_title: 'Liên kết',
             tab_design_title: 'Màn hình',
             error_msg_system: 'Lỗi hệ thống !'
         }

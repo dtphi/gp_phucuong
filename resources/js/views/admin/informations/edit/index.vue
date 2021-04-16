@@ -63,6 +63,9 @@
         ACTION_SHOW_MODAL_EDIT,
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
+    import {
+        fn_redirect_url
+    } from '@app/api/utils/fn-helper';
 
     export default {
         name: 'InformationEdit',
@@ -75,7 +78,7 @@
         beforeCreate() {
             const infoId = parseInt(this.$route.params.infoId);
             if (!infoId) {
-                window.location = '/admin';
+                return fn_redirect_url('admin/informations');
             }
         },
 
@@ -131,7 +134,12 @@
                 this.[ACTION_RESET_NOTIFICATION_INFO]();
             },
             _submitInfo() {
-                this.$ref.formEditUser._submitInfo();
+                const _self = this;
+                _self.$refs.observerInfo.validate().then((isValid) => {
+                    if (isValid) {
+                        _self.$ref.formEditUser._submitInfo();
+                    }
+                });
             }
         },
         setting: {
