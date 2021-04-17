@@ -38,7 +38,8 @@ class InformationResource extends JsonResource
             'relateds'         => $res->arr_related_list,
             'multi_images'     => $res->arr_image_list,
             'categorys'        => $res->arr_category_list,
-            'downloads'        => $res->arr_download_list
+            'downloads'        => $res->arr_download_list,
+            'category_display_list' => $res->category_display_list
         ]);
 
         return $json;

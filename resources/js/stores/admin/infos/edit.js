@@ -30,13 +30,14 @@ import {
   ACTION_ADD_INFO_TO_RELATED_LIST,
   ACTION_REMOVE_INFO_TO_RELATED_LIST,
 } from '../types/action-types';
+import {
+  config
+} from '@app/api/admin/config';
 
 const defaultState = () => {
   return {
-    isOpen: false,
-    action: 'edit',
-    classShow: 'modal fade',
     styleCss: '',
+    isExistInfo: config.existStatus.checking,
     info: {
       image: {
         basename: "",
@@ -90,13 +91,24 @@ export default {
     },
     isError(state) {
       return state.errors.length
+    },
+    isNotExistValidate(state) {
+      if (state.isExistInfo !== config.existStatus.checking || 
+        state.isExistInfo !== config.existStatus.exist ) {
+        return false;
+      }
+
+      return true;
     }
   },
 
   mutations: {
 
     [INFOS_MODAL_SET_INFO_ID](state, payload) {
-      state.infoId = payload
+      if (payload) {
+        state.infoId = payload;
+        state.isExistInfo = config.existStatus.exist;
+      }
     },
 
     [INFOS_MODAL_SET_INFO_ID_FAILED](state, payload) {
@@ -148,10 +160,7 @@ export default {
 
     [ACTION_SHOW_MODAL_EDIT]({
       dispatch,
-      commit
     }, infoId) {
-      commit(INFOS_MODAL_SET_INFO_ID, infoId);
-
       dispatch(ACTION_GET_INFO_BY_ID, infoId);
     },
 
@@ -163,7 +172,9 @@ export default {
       apiGetInfoById(
         infoId,
         (result) => {
+          commit(INFOS_MODAL_SET_INFO_ID, infoId);
           commit(INFOS_MODAL_SET_INFO, result.data);
+          commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, result.data.category_display_list);
 
           dispatch(ACTION_SET_LOADING, false);
         },

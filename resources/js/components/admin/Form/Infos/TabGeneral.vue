@@ -150,6 +150,7 @@
             return {
                 options: {
                     language_url: fn_get_tinymce_langs_url('vi_VN'),
+                    height : "500"
                 }
             };
         },

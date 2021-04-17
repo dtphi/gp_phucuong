@@ -37,6 +37,7 @@
             <tab-link
                     role="tabpanel"
                     class="tab-pane"
+                    :is-form="$options.setting.isForm"
                     :group-data="info"></tab-link>
         </div>
 
@@ -113,13 +114,9 @@
                 ACTION_SET_IMAGE
             ]),
 
-            async _submitInfo() {
+            _submitInfo() {
                 const _self = this;
-                _self.$refs.observerInfo.validate().then((isValid) => {
-                    if (isValid) {
-                        _self.[ACTION_UPDATE_INFO](_self.info)
-                    }
-                });
+                _self.[ACTION_UPDATE_INFO](_self.info);
             },
 
             _selectMainImg(file) {
@@ -138,7 +135,8 @@
             tab_image_title: 'Hình ảnh',
             tab_link_title: 'Liên kết',
             tab_design_title: 'Màn hình',
-            error_msg_system: 'Lỗi hệ thống !'
+            error_msg_system: 'Lỗi hệ thống !',
+            isForm: 'edit'
         }
     };
 </script>

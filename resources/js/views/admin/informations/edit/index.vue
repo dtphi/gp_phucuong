@@ -13,7 +13,7 @@
                 :is-full-page="fullPage"></loading-over-lay>
         </template>
         <validation-observer 
-            ref="observerNewsGroup" 
+            ref="observerInfo" 
             @submit.prevent="_submitInfo">
             <div class="page-header">
                 <div class="container-fluid">
@@ -84,7 +84,8 @@
 
         data() {
             return {
-                fullPage: false
+                fullPage: false,
+                updateLog: 0
             }
         },
 
@@ -95,11 +96,22 @@
             }
         },
 
+        updated() {
+            this.updateLog ++;
+            if (this.isNotExistValidate) {
+                fn_redirect_url('admin/informations');
+            }
+        },
+
         computed: {
             ...mapState(MODULE_INFO_EDIT, [
                 'loading',
                 'updateSuccess',
                 'errors',
+                'infoId'
+            ]),
+            ...mapGetters(MODULE_INFO_EDIT, [
+                'isNotExistValidate'
             ]),
             _errors() {
                 return this.errors.length;
@@ -137,7 +149,7 @@
                 const _self = this;
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
-                        _self.$ref.formEditUser._submitInfo();
+                        _self.$refs.formEditUser._submitInfo();
                     }
                 });
             }

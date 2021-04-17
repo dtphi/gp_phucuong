@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Common\Tables;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\CategoryPath;
 
 class Information extends BaseModel
 {
@@ -19,6 +20,11 @@ class Information extends BaseModel
      * @var string
      */
     protected $primaryKey = 'information_id';
+
+    /**
+     * @var array
+     */
+    protected $categoryDisplayList = [];
 
     /**
      * @author : dtphi .
@@ -72,7 +78,17 @@ class Information extends BaseModel
      */
     public function getImageAttribute($value)
     {
-        return $value;
+        return [
+            'basename' => "",
+            'dirname' => "",
+            'extension'=> "",
+            'filename'=> "",
+            'path'=> $value,
+            'size'=> 0,
+            'timestamp'=> null,
+            'type'=> null,
+            'thumb' => $value
+        ];
     }
 
     /**
@@ -255,7 +271,29 @@ class Information extends BaseModel
             }
         }
 
+        $this->setArrCategoryDisplayList($value);
+
         return $value;
+    }
+
+    public function setArrCategoryDisplayList($value = [])
+    {
+        if (!empty($value)) {
+            $modelPath = new CategoryPath();
+            $models = $modelPath->getQueryCategories()->whereIn('cate1.category_id', $value)->get();
+
+            foreach($models as $model) {
+                $this->categoryDisplayList[] = [
+                    'category_id' => $model->category_id,
+                    'name' => $model->name
+                ];
+            }
+        }
+    }
+
+    public function getcategoryDisplayListAttribute($value)
+    {
+        return $this->categoryDisplayList;
     }
 
     /**

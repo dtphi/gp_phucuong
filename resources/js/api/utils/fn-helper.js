@@ -25,9 +25,9 @@ export function fn_get_base_url_thumb(thumbPath) {
 	return config.baseUrl + '/thumbs/' + thumbPath;
 }
 
-export function fn_get_base_url_image(path) {
-	if (path) {
-		return config.baseUrl + AppConfig.newsUploadDir + '/' + path.replace(/^\//, "");
+export function fn_get_base_url_image(path) {console.log('path', path)
+	if (typeof path !== "undefined" && path.thumb) {
+		return config.baseUrl + AppConfig.newsUploadDir + '/' + path.thumb.replace(/^\//, "");
 	}
 	return NoImage;
 }

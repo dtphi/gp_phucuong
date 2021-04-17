@@ -155,4 +155,22 @@ class CategoryPath extends BaseModel
                 [$cateId, $pathId, $level]);
         }
     }
+
+    public function getQueryCategories($data = array())
+    {
+        $cate1 = 'cate1';
+        $cate2 = 'cate2';
+        $cd1   = 'cd1';
+        $cd2   = 'cd2';
+
+        $query = $this->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id',
+                $cate1 . '.sort_order', self::getRawCategoryName($cd1))
+            ->gbByCategoryId()
+            ->ljoinCategory($cate1)
+            ->ljoinCategory($cate2)
+            ->ljoinCateDescription($cd1)
+            ->ljoinCateDescription($cd2);
+
+        return $query;
+    }
 }

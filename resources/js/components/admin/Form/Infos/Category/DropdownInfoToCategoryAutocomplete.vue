@@ -24,7 +24,7 @@
         },
         methods: {
         	...mapActions(MODULE_NEWS_CATEGORY_EDIT, [
-        			ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
+        		ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
         	]),
             _selectParentCategory() {
                 this.[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](this.category);

@@ -97,10 +97,14 @@
 
         methods: {
             _changeImage(fi) {
-                EventBus.$emit('on-selected-image', fi)
+                if (typeof fi === "object") {
+                    if (fi.hasOwnProperty('selected') && fi.selected) {
+                        EventBus.$emit('on-selected-image', fi);
+                    }
+                }
             },
             _getImgUrl() {
-                if (this.groupData.image.thumb.length) {
+                if (this.groupData.image.thumb && this.groupData.image.thumb.length) {
                     return this.groupData.image.thumb;
                 } else {
                     return fn_get_base_url_image();

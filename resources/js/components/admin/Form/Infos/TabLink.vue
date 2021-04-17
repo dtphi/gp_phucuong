@@ -1,52 +1,55 @@
 <template>
     <div class="tab-content">
+        <template v-if="_isAdd">
+            <info-to-category-autocomplete></info-to-category-autocomplete>
 
-        <info-to-category-autocomplete></info-to-category-autocomplete>
+            <info-to-related-autocomplete></info-to-related-autocomplete>
+        </template>
 
-        <info-to-related-autocomplete></info-to-related-autocomplete>
-
+        <template v-if="_isEdit">
+            <info-to-category-autocomplete-edit></info-to-category-autocomplete-edit>
+        </template>
     </div>
 </template>
 
 <script>
-    import {
-        mapState, 
-        mapGetters, 
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_NEWS_CATEGORY,
-        MODULE_NEWS_CATEGORY_ADD
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_NEWS_GROUP_LIST,
-    } from 'store@admin/types/action-types';
      import InfoToCategoryAutocomplete from './Category/InfoToCategoryAutocomplete';
      import InfoToRelatedAutocomplete from './Related/InfoRelatedAutocomplete';
+
+     import InfoToCategoryAutocompleteEdit from './Category/InfoToCategoryAutocompleteEdit';
 
     export default {
         name: 'TabLinkForm',
         components: {
             InfoToCategoryAutocomplete,
-            InfoToRelatedAutocomplete
+            InfoToRelatedAutocomplete,
+            InfoToCategoryAutocompleteEdit
         },
         props: {
+            isForm: {
+                type: String,
+                default: ''
+            },
             groupData: {
                 type: Object
             }
         },
-
         computed: {
-            ...mapState(MODULE_NEWS_CATEGORY,
-            [
-                'newsGroups'
-            ]),
-            ...mapGetters(MODULE_NEWS_CATEGORY, ['loading']),
-            ...mapGetters(MODULE_NEWS_CATEGORY_ADD, ['isOpen']),
+            _isAdd() {
+                if (this.isForm == 'add') {
+                    return true;
+                }
+
+                return false;
+            },
+
+            _isEdit() {
+                if (this.isForm == 'edit') {
+                    return true;
+                }
+
+                return false;
+            }
         },
-
-        methods: {},
-
-        setting: {}
     };
 </script>

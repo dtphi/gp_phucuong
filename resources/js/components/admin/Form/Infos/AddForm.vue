@@ -37,6 +37,7 @@
             <tab-link
                     role="tabpanel"
                     class="tab-pane"
+                    :is-form="$options.setting.isForm"
                     :group-data="info"></tab-link>
         </div>
 
@@ -137,7 +138,8 @@
             tab_link_title: 'Liên kết',
             tab_image_title: 'Hình ảnh',
             tab_design_title: 'Màn hình',
-            error_msg_system: 'Lỗi hệ thống !'
+            error_msg_system: 'Lỗi hệ thống !',
+            isForm: 'add'
         }
     };
 </script>

@@ -135,7 +135,7 @@ final class InformationService implements BaseModel, InformationModel
                 $this->model->save();
             }
 
-            InformationDescription::insertByInfoId($infoId, $data['name'], $data['description'], $data['tag'],
+            InformationDescription::insertByInfoId($infoId, fn_mysql_escape($data['name']), fn_mysql_escape($data['description']), $data['tag'],
                 $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
 
             if (isset($data['info_images']) && !empty($data['info_images'])) {
@@ -206,17 +206,17 @@ final class InformationService implements BaseModel, InformationModel
         if ($model->save()) {
             $infoId = $model->information_id;
 
-            if (isset($data['image'])) {
-                $model->image = $data['image'];
+            if (isset($data['image_path'])) {
+                $model->image = $data['image_path'];
                 $model->save();
             }
 
             $modelDes = $model->infoDes;
             if ($modelDes) {
                 $dataDes = [
-                    'name'             => $data['name'],
+                    'name'             => fn_mysql_escape($data['name']),
                     'tag'              => $data['tag'],
-                    'description'      => $data['description'],
+                    'description'      => fn_mysql_escape($data['description']),
                     'meta_title'       => $data['meta_title'],
                     'meta_description' => $data['meta_description'],
                     'meta_keyword'     => $data['meta_keyword']
@@ -304,12 +304,14 @@ final class InformationService implements BaseModel, InformationModel
      */
     public function deleteInformation($model = null)
     {
-        if ($model) {
+        if ($model instanceof Information) {
             $infoId = $model->information_id;
 
             $model->delete();
             $modelDes = $this->modelDes->where('information_id', $infoId)->first();
-            $modelDes->delete();
+            if ($modelDes instanceof InformationDescription) {
+                $modelDes->delete();
+            }
 
             InformationImage::fcDeleteByInfoId($infoId);
             InformationToCategory::fcDeleteByInfoId($infoId);
