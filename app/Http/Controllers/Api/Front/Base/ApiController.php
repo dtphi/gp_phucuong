@@ -41,6 +41,35 @@ class ApiController extends Controller
         $pathName = trim($pathName,'/');
        
         try {
+            $menus = [];
+            $categories =  $this->sv->getMenuCategories(0);
+    
+            foreach ($categories as $cate) {
+                    // Level 2
+                    $children_data = array();
+    
+                    $children = $this->sv->getMenuCategories($cate->category_id);
+    
+                    foreach ($children as $child) {
+                        $filter_data = array(
+                            'filter_category_id'  => $child->category_id,
+                            'filter_sub_category' => true
+                        );
+    
+                        $children_data[] = array(
+                            'name'  => $child->name,
+                            'href'  => 'path=' . $cate->category_id . '_' . $child->category_id
+                        );
+                    }
+    
+                    // Level 1
+                    $menus[] = array(
+                        'name'     => $cate->name,
+                        'children' => $children_data,
+                        'href'     => 'path=' . $cate->category_id
+                    );
+            }
+
             $newsGroups     = $this->sv->apiGetNewsGroupTrees();
             $mainMenus = [];
             if ($pathName === 'home' || empty($pathName)) {
@@ -62,6 +91,7 @@ class ApiController extends Controller
             'logo' => '/front/img/logo.png',
             'banner' => '/images/banner_image.jpg',
             'navMainLists' => $mainMenus,
+            'menus' => $menus,
             'appLists' => [
                 [
                     'sort' => 0,

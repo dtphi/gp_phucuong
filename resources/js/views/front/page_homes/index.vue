@@ -1,7 +1,8 @@
 <template>
     <main id="homepage" class="py-2">
         <div class="container">
-            <navigation-main :menu-items="navMainLists"></navigation-main>
+            <!-- <navigation-main :menu-items="navMainLists"></navigation-main> -->
+            <main-menu></main-menu>
             <div class="list-home mt-4 mb-3">
                 <figure-item-page v-for="(item, idx) in pageLists" :key="idx" :page-item="item"></figure-item-page>
             </div>
@@ -12,22 +13,23 @@
 <script>
     import{
         mapGetters,
-        mapActions
     } from 'vuex';
     import NavigationMain from 'com@front/Navigation/Main';
+    import MainMenu from 'com@front/Common/MainMenu';
     import FigureItemPage from './components/TheItemPage';
     import {
         MODULE_HOME
     } from '@app/stores/front/types/module-types';
     import {
         GET_LISTS
-    } from '@app/stores/front/types/action-types'
+    } from '@app/stores/front/types/action-types';
 
     export default {
         name: 'HomePage',
         components: {
             NavigationMain,
             FigureItemPage,
+            MainMenu,
         },
         data() {
             return {

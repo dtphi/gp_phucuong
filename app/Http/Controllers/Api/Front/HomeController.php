@@ -45,7 +45,6 @@ class HomeController extends Controller
         $categories =  $this->homeSv->getMenuCategories(0);
 
         foreach ($categories as $cate) {
-			if ($cate['top']) {
 				// Level 2
 				$children_data = array();
 
@@ -64,12 +63,11 @@ class HomeController extends Controller
 				}
 
 				// Level 1
-				$data['categories'][] = array(
+				$menus[] = array(
 					'name'     => $cate->name,
 					'children' => $children_data,
 					'href'     => 'path=' . $cate->category_id
 				);
-			}
 		}
 
         $bannerPath = '/upload/home_banners';
