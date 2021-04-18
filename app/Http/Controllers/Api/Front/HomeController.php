@@ -41,6 +41,37 @@ class HomeController extends Controller
 
     public function index()
     {
+        $menus = [];
+        $categories =  $this->homeSv->getMenuCategories(0);
+
+        foreach ($categories as $cate) {
+			if ($cate['top']) {
+				// Level 2
+				$children_data = array();
+
+				$children = $this->homeSv->getMenuCategories($cate->category_id);
+
+				foreach ($children as $child) {
+					$filter_data = array(
+						'filter_category_id'  => $child->category_id,
+						'filter_sub_category' => true
+					);
+
+					$children_data[] = array(
+						'name'  => $child->name,
+						'href'  => 'path=' . $cate->category_id . '_' . $child->category_id
+					);
+				}
+
+				// Level 1
+				$data['categories'][] = array(
+					'name'     => $cate->name,
+					'children' => $children_data,
+					'href'     => 'path=' . $cate->category_id
+				);
+			}
+		}
+
         $bannerPath = '/upload/home_banners';
         
         try {
@@ -100,6 +131,7 @@ class HomeController extends Controller
 
         return response()->json([
             'pageLists' => $pageLists,
+            'menus' => $menus
         ]);
     }
 }
