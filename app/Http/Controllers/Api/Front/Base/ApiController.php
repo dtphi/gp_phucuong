@@ -46,26 +46,87 @@ class ApiController extends Controller
     
             foreach ($categories as $cate) {
                     // Level 2
-                    $children_data = array();
+                    $children_data_2 = array();
     
-                    $children = $this->sv->getMenuCategories($cate->category_id);
+                    $children_2 = $this->sv->getMenuCategories($cate->category_id);
     
-                    foreach ($children as $child) {
+                    foreach ($children_2 as $child_2) {
+                        $path_2 = 'path=' . $cate->category_id . '_' . $child_2->category_id;
+                        // Level 3
+                        $children_data_3 = array();
+    
+                        $children_3 = $this->sv->getMenuCategories($child_2->category_id);
+        
+                        foreach ($children_3 as $child_3) {
+                            $path_3 = $path_2 . '_' . $child_3->category_id;
+                            // Level 4
+                            $children_data_4 = array();
+        
+                            $children_4 = $this->sv->getMenuCategories($child_3->category_id);
+            
+                            foreach ($children_4 as $child_4) {
+                                $path_4 = $path_3 . '_' . $child_4->category_id;
+                                // Level 5
+                                $children_data_5 = array();
+            
+                                $children_5 = $this->sv->getMenuCategories($child_4->category_id);
+                
+                                foreach ($children_5 as $child_5) {
+                                    $path_5 = $path_4 . '_' . $child_5->category_id;
+                                    $filter_data = array(
+                                        'filter_category_id'  => $child_5->category_id,
+                                        'filter_sub_category' => true
+                                    );
+                
+                                    $children_data_5[] = array(
+                                        'name'  => $child_5->name,
+                                        'href'  => $path_5
+                                    );
+                                }
+
+                                // Level 4 - 1
+                                $filter_data = array(
+                                    'filter_category_id'  => $child_4->category_id,
+                                    'filter_sub_category' => true
+                                );
+            
+                                $children_data_4[] = array(
+                                    'name'  => $child_4->name,
+                                    'children' => $children_data_5,
+                                    'href'  => $path_4
+                                );
+                            }
+
+                            // Level 3 -1
+                            $filter_data = array(
+                                'filter_category_id'  => $child_3->category_id,
+                                'filter_sub_category' => true
+                            );
+        
+                            $children_data_3[] = array(
+                                'name'  => $child_3->name,
+                                'children' => $children_data_4,
+                                'href'  => $path_3
+                            );
+                        }
+                        
+                        // Level 2 - 1
                         $filter_data = array(
-                            'filter_category_id'  => $child->category_id,
+                            'filter_category_id'  => $child_2->category_id,
                             'filter_sub_category' => true
                         );
     
-                        $children_data[] = array(
-                            'name'  => $child->name,
-                            'href'  => 'path=' . $cate->category_id . '_' . $child->category_id
+                        $children_data_2[] = array(
+                            'name'  => $child_2->name,
+                            'children' => $children_data_3,
+                            'href'  => $path_2
                         );
                     }
     
                     // Level 1
                     $menus[] = array(
                         'name'     => $cate->name,
-                        'children' => $children_data,
+                        'children' => $children_data_2,
                         'href'     => 'path=' . $cate->category_id
                     );
             }
