@@ -1,6 +1,6 @@
 <template>
 	<a 
-        href="javascript:void(0);" @click="_pushEditPage()" 
+        href="javascript:void(0);" @click="_redirectUrl()" 
         data-toggle="tooltip" title="" 
         class="btn btn-default cms-btn" 
         data-original-title="Edit">

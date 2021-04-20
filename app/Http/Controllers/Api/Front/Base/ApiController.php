@@ -130,53 +130,40 @@ class ApiController extends Controller
                         'href'     => 'path=' . $cate->category_id
                     );
             }
-
-            $newsGroups     = $this->sv->apiGetNewsGroupTrees();
-            $mainMenus = [];
-            if ($pathName === 'home' || empty($pathName)) {
-                foreach ($newsGroups['data'] as $key => $newsGroup) {
-                    if (isset($newsGroup['displays']['home_page']) && $newsGroup['displays']['home_page']) {
-                        $mainMenus[] = $newsGroup;
-                    }
-                }
-            } else {
-                $mainMenus = $this->generateTree($newsGroups['data']);
-            }
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
         $appImgPath = '/upload/app';
+        $data['appList']  = [
+            [
+                'sort' => 0,
+                'title' => 'App website gppc',
+                'img' => $appImgPath . '/app_website_gppc.png',
+                'hrefAppStore' => '/',
+                'hrefChPlay' => '/'
+            ],
+            [
+                'sort' => 1,
+                'title' => 'App sách nói công giáo',
+                'img' => $appImgPath . '/app_sach_noi_cong_giao.jpg',
+                'hrefAppStore' => '/',
+                'hrefChPlay' => '/'
+            ],
+            [
+                'sort' => 2,
+                'title' => 'App tìm nhà thờ gần nhất',
+                'img' => $appImgPath . '/app_tim_nha_tho.jpg',
+                'hrefAppStore' => '/',
+                'hrefChPlay' => '/'
+            ],
+        ];
 
-        return response()->json([
-            'logo' => '/front/img/logo.png',
-            'banner' => '/images/banner_image.jpg',
-            'navMainLists' => $mainMenus,
-            'menus' => $menus,
-            'appLists' => [
-                [
-                    'sort' => 0,
-                    'title' => 'App website gppc',
-                    'img' => $appImgPath . '/app_website_gppc.png',
-                    'hrefAppStore' => '/',
-                    'hrefChPlay' => '/'
-                ],
-                [
-                    'sort' => 1,
-                    'title' => 'App sách nói công giáo',
-                    'img' => $appImgPath . '/app_sach_noi_cong_giao.jpg',
-                    'hrefAppStore' => '/',
-                    'hrefChPlay' => '/'
-                ],
-                [
-                    'sort' => 2,
-                    'title' => 'App tìm nhà thờ gần nhất',
-                    'img' => $appImgPath . '/app_tim_nha_tho.jpg',
-                    'hrefAppStore' => '/',
-                    'hrefChPlay' => '/'
-                ],
-            ]
-        ]);
+        $data['logo'] = '/front/img/logo.png';
+        $data['banner'] = '/images/banner_image.jpg';
+        $data['menus'] = $menus;
+
+        return response()->json($data);
     }
 
 

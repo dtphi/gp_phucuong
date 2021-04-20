@@ -234,8 +234,13 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                     'meta_keyword'     => $data['meta_keyword']
                 ];
 
-                $modelDes->fill($dataDes);
-                $modelDes->save();
+                if ($dataDes) {
+                    $modelDes->fill($dataDes);
+                    $modelDes->save();
+                } else {
+                    CategoryDescription::insertByCateId($categoryId, $data['name'], $data['description'],
+                    $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
+                }
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
                 $resultPaths = $this->modelPath->where('path_id', (int)$categoryId)
@@ -437,6 +442,71 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         }
 
         return $query->limit($limit)->get();
+    }
+
+    public function importCategory() {
+        $data = [];
+        $results = DB::table('news_groups')->get();
+
+        /**
+         * Save user with transaction to make sure all data stored correctly
+         */
+        DB::beginTransaction();
+
+        try {
+            foreach($results as $group) {
+                Category::insertForce($group->id, $group->father_id);
+                $categoryId = $group->id;
+
+                CategoryDescription::insertByCateId($group->id, $group->newsgroupname, '',
+                    $group->newsgroupnamenomark, '', '');
+
+                /*MySQL Hierarchical Data Closure Table Pattern*/
+                $level       = 0;
+                $resultPaths = $this->modelPath->where('category_id', $group->father_id)
+                    ->orderBy('level', 'ASC')->get();
+
+                foreach ($resultPaths as $key => $resultPath) {
+                    CategoryPath::insertByCateId($group->id, $resultPath['path_id'], $level);
+
+                    $level++;
+                }
+                CategoryPath::insertByCateId($group->id, $group->id, $level);
+            }
+        } catch (\Exceptions $e) {
+            DB::rollBack();
+
+            return false;
+        }
+
+        DB::commit();
+    
+    }
+
+    public function connectSqlServer() {
+        $servername = "103.139.202.9";
+        $username = "giaophanphucuong_db";
+        $password = "xY8uKdxKazxBguiV82gQ";
+        $database = "giaophanphucuong_db";
+        $port = "1433";
+        try {
+            $conn = new \PDO("sqlsrv:server=103.139.202.9:1433;Database=giaophanphucuong_db;ConnectionPooling=0", "giaophanphucuong_db", "xY8uKdxKazxBguiV82gQ",
+                array(
+                    \PDO::ATTR_PERSISTENT => true,
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+                )
+            );
+        } catch (\PDOException $e) {
+            echo ("Error connecting to SQL Server: " . $e->getMessage());
+        }
+
+        if (isset($conn)) {
+            $sql = "SELECT * FROM NewsGroup";
+
+            foreach ($conn->query($sql) as $row) {
+                dd($row);
+            }
+        }
     }
 
 }

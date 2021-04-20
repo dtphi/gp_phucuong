@@ -135,7 +135,7 @@ final class InformationService implements BaseModel, InformationModel
                 $this->model->save();
             }
 
-            InformationDescription::insertByInfoId($infoId, fn_mysql_escape($data['name']), fn_mysql_escape($data['description']), $data['tag'],
+            InformationDescription::insertByInfoId($infoId, $data['name'], htmlentities($data['description']), $data['tag'],
                 $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
 
             if (isset($data['info_images']) && !empty($data['info_images'])) {
@@ -214,9 +214,9 @@ final class InformationService implements BaseModel, InformationModel
             $modelDes = $model->infoDes;
             if ($modelDes) {
                 $dataDes = [
-                    'name'             => fn_mysql_escape($data['name']),
+                    'name'             => $data['name'],
                     'tag'              => $data['tag'],
-                    'description'      => fn_mysql_escape($data['description']),
+                    'description'      => htmlentities($data['description']),
                     'meta_title'       => $data['meta_title'],
                     'meta_description' => $data['meta_description'],
                     'meta_keyword'     => $data['meta_keyword']
@@ -320,5 +320,27 @@ final class InformationService implements BaseModel, InformationModel
             InformationRelated::fcDeleteByRelatedId($infoId);
 
         }
+    }
+
+    public function importInformation()
+    {
+        $data = [];
+        $results = DB::table('newss_groups')->get();
+
+        DB::beginTransaction();
+
+        foreach ($results as $info) {
+            Information::insertForce($info->id, $info->picture, 0, 1, $info->sort, $info->context1, $info->description);
+            
+            $infoId = $info->id;
+            $des = htmlentities($info->context);
+
+            InformationDescription::insertByInfoId($infoId, $info->newsgroupname, $des, $info->tag,
+                $info->metatitle, $info->metadescription, $info->metakeyword);
+
+            InformationToCategory::insertByInfoId($infoId, $info->father_id);
+        }
+
+        DB::commit();
     }
 }

@@ -74,4 +74,21 @@ class Category extends BaseModel
     {
         DB::delete("delete from `" . Tables::$categorys . "` where category_id = '" . (int)$cateId . "'");
     }
+
+    public static function insertForce(
+        $cateId = null,
+        $parentId = null,
+        $status = 1
+    ) {
+        $cateId = (int)$cateId;
+        $parentId = (int)$parentId;
+        if ($parentId == -1) {
+            $parentId = 0;
+        }
+
+        if ($cateId) {
+            DB::insert('insert into ' . Tables::$categorys . ' (category_id, parent_id, status) values (?, ?, ?)',
+                [$cateId, $parentId, $status]);
+        }
+    }
 }

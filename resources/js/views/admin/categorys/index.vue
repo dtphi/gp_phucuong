@@ -16,7 +16,7 @@
                                     :active.sync="loading"
                                     :is-full-page="fullPage"></loading-over-lay>
                             </template>
-                            <template v-if="_lists">
+                            <template v-if="newsGroups">
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
@@ -37,7 +37,7 @@
 
                                     <tbody>
                                     <the-category-item
-                                        v-for="(item, idx) in _lists"
+                                        v-for="(item, idx) in newsGroups"
                                         :category-item="item"
                                         :key="idx"></the-category-item>
                                     </tbody>
@@ -88,18 +88,20 @@
             };
         },
         computed: {
+            ...mapState({
+                perPage: state => state.cfApp.perPage
+            }),
             ...mapState(MODULE_NEWS_CATEGORY, [
                 'newsGroups',
                 'loading'
             ]),
-            _lists() {
-                let rootTree = {...this.newsGroups};
-
-                return rootTree;
-            }
         },
         mounted() {
-            this.[ACTION_GET_NEWS_GROUP_LIST]({page: 1, perPage: 5});
+            const params = {
+                perPage: this.perPage
+            }
+
+            this.[ACTION_GET_NEWS_GROUP_LIST](params);
         },
         methods: {
             ...mapActions(MODULE_NEWS_CATEGORY, [

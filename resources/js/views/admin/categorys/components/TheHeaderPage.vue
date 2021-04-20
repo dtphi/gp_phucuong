@@ -2,7 +2,7 @@
 	  <div class="page-header">
 	    <div class="container-fluid">
 	      <div class="pull-right">
-	      	<button @click="_pushAddPage()" 
+	      	<button @click="_redirectUrl()" 
 	      		data-toggle="tooltip" title="" 
 	      		class="btn btn-primary" 
 	      		data-original-title="Thêm Nhóm Tin"><i class="fa fa-plus"></i></button>
@@ -38,6 +38,9 @@
     import {
         ACTION_GET_NEWS_GROUP_LIST
     } from 'store@admin/types/action-types';
+    import {
+        fn_redirect_url
+    } from '@app/api/utils/fn-helper';
 
     export default {
         name: 'CategoryHeaderPage',
@@ -52,8 +55,11 @@
         		this.$router.push(`/admin/news-categories/add`);
         	},
             _refreshList() {
-            this.[ACTION_GET_NEWS_GROUP_LIST]();
-          }
+                this.[ACTION_GET_NEWS_GROUP_LIST]();
+            },
+            _redirectUrl() {
+                return fn_redirect_url(`admin/news-categories/add`);
+            },
         },
         setting: {
             title: 'Danh Mục Tin',

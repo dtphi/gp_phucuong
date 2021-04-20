@@ -32,14 +32,14 @@
             ...mapActions(MODULE_INFO_MODAL, [ACTION_SHOW_MODAL]),
             _showModal() {
                 if (this.isRedirect) {
-                    return this._pushAddPage();
+                    return this._redirectUrl();
                 } else {
                     this.[ACTION_SHOW_MODAL]('add');
                 }
             },
 
             _redirectUrl() {
-                return fn_redirect_url('admin/news/add');
+                return fn_redirect_url('admin/informations/add');
             },
             
             _pushAddPage() {

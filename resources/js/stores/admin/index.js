@@ -12,12 +12,22 @@ Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV === 'debuger';
 
+const fnIsObject = (obj) => {
+  if (typeof obj !== "undefined" 
+    && typeof obj === "object" 
+    && Object.keys(obj).length) {
+    return true;
+  }
+
+  return false;
+}
+
 const defaultState = () => {
   return {
     errors: [],
     links: {},
     meta: {},
-    perPage: 5,
+    perPage: 15,
     moduleActive: {
       name: '',
       actionList: ''
@@ -37,9 +47,6 @@ export default new Vuex.Store({
     cfApp: defaultState()
   },
   getters: {
-    cfApp(state) {
-      return state.cfApp;
-    },
     resourcePaginationData(state) {
       return {
         links: state.cfApp.links,
@@ -47,35 +54,58 @@ export default new Vuex.Store({
       }
     },
     collectionPaginationData(state) {
-      return state.cfApp.collectionData;
+      const colData = {
+        current_page: 1,
+        from: 0,
+        to:0,
+        total: 0
+      };
+      if (fnIsObject(state.cfApp.collectionData)) {
+        return state.cfApp.collectionData;
+      }
+
+      return colData;
     },
     isNotEmptyList(state) {
-      if (typeof state.cfApp.meta !== "undefined") {
-        return (state.cfApp.meta.total > 0);
+      if (fnIsObject(state.cfApp.meta) 
+        && state.cfApp.meta.hasOwnProperty('total')) {
+        return (parseInt(state.cfApp.meta.total) > 0);
       }
 
       return false;
     },
     moduleNameActive(state) {
-      return state.cfApp.moduleActive.name;
+      let mName = '';
+      if (fnIsObject(state.cfApp.moduleActive) 
+        && state.cfApp.moduleActive.hasOwnProperty('name')) {
+          mName = state.cfApp.moduleActive.name;
+      }
+
+      return mName;
     },
     moduleActionListActive(state) {
-      return state.cfApp.moduleActive.actionList;
+      let mAction = '';
+      if (fnIsObject(state.cfApp.moduleActive)
+        && state.cfApp.moduleActive.hasOwnProperty('actionList')) {
+          mAction = state.cfApp.moduleActive.actionList;
+      }
+
+      return mAction;
     }
   },
   mutations: {
     configApp(state, configs) {
-      if (configs.links != undefined) {
+      if (fnIsObject(configs.links)) {
         state.cfApp.links = configs.links;
       }
-      if (configs.meta != undefined) {
+      if (fnIsObject(configs.meta)) {
         state.cfApp.meta = configs.meta;
       }
-      if (configs.moduleActive)
+      if (fnIsObject(configs.moduleActive))
       {
         state.cfApp.moduleActive = configs.moduleActive;
       }
-      if (configs.collectionData != undefined)
+      if (fnIsObject(configs.collectionData))
       {
         state.cfApp.collectionData = configs.collectionData;
       }
@@ -87,7 +117,7 @@ export default new Vuex.Store({
     }, configs) {
       const links = (configs.hasOwnProperty('links')) ? configs.links: undefined;
       const meta = (configs.hasOwnProperty('meta')) ? configs.meta: undefined;
-      const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive: '';
+      const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive: undefined;
       const collectionData = (configs.hasOwnProperty('collectionData')) ? configs.collectionData: undefined;
 
       var _configs = {

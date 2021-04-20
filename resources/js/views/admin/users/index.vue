@@ -93,6 +93,9 @@
             };
         },
         computed: {
+            ...mapState({
+                perPage: state => state.cfApp.perPage
+            }),
             ...mapGetters([
                 'isNotEmptyList'
             ]),
@@ -108,10 +111,6 @@
 
             ...mapState(MODULE_USER_EDIT_MODAL, [
                 'updateSuccess'
-            ]),
-
-            ...mapMutations(MODULE_USER, [
-                USERS_SET_USER_LIST
             ]),
 
             _userList() {
@@ -135,11 +134,14 @@
             }
         },
         mounted() {
-            this.[ACTION_GET_USER_LIST]();
-            window.Echo.channel('search-user')
+            const params = {
+                perPage: this.perPage
+            }
+            this.[ACTION_GET_USER_LIST](params);
+            /*window.Echo.channel('search-user')
             .listen('.searchAllResults', (e) => {
                 this.$store.commit(USERS_SET_USER_LIST, e.users.results)
-            });
+            });*/
         },
         methods: {
             ...mapActions(MODULE_USER, [

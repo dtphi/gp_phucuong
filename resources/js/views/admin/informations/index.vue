@@ -89,10 +89,6 @@
             Paginate
         },
 
-        beforeCreate() {
-            this.$store.dispatch(MODULE_INFO + '/' + ACTION_GET_INFO_LIST);
-        },
-
         data() {
             return {
                 fullPage: false,
@@ -101,6 +97,9 @@
         },
 
         computed: {
+            ...mapState({
+                perPage: state => state.cfApp.perPage
+            }),
             ...mapGetters(['isNotEmptyList']),
             ...mapState(MODULE_INFO, [
                 'infos',
@@ -114,6 +113,18 @@
             _notEmpty() {
                 return this.isNotEmptyList;
             }
+        },
+        methods: {
+            ...mapActions(MODULE_INFO, [
+                ACTION_GET_INFO_LIST
+            ]),
+        },
+        mounted() {
+            const params = {
+                perPage: this.perPage
+            }
+
+            this.[ACTION_GET_INFO_LIST](params);
         },
         setting: {
             list_title: 'Danh sách tin tức'

@@ -340,4 +340,23 @@ class Information extends BaseModel
             '=',
             $alias . '.information_id');
     }
+
+    public static function insertForce(
+        $infoId = null,
+        $image = null,
+        $sortOrder = 0,
+        $status = 1,
+        $viewed = 0,
+        $vote = 0,
+        $sortDes = ''
+    ) {
+        $infoId = (int)$infoId;
+        $viewed = (int)$viewed;
+        $vote = (int)$vote;
+
+        if ($infoId) {
+            DB::insert('insert into ' . Tables::$informations . ' (information_id, image, sort_order, status, viewed, vote, sort_description) values (?, ?, ?, ?, ?, ?, ?)',
+                [$infoId, $image, $sortOrder, $status, $viewed, $vote, $sortDes]);
+        }
+    }
 }

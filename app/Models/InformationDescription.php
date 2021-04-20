@@ -41,12 +41,12 @@ class InformationDescription extends BaseModel
 
     public function getNameAttribute($value)
     {
-        return strip_tags(html_entity_decode($value, ENT_QUOTES, 'UTF-8'));
+        return htmlspecialchars_decode($value);
     }
 
     public function getDescriptionAttribute($value)
     {
-        return $value;
+        return htmlspecialchars_decode($value);
     }
 
     public function getMetaTitleAttribute($value)

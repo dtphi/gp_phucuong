@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <template v-if="isResource">
+        <template v-if="_isResource">
             <div class="col-sm-6 text-left">
                 <div class="dataTables_info">
                     {{_getTextPagination()}}
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-sm-6 text-right">
-                <div class="dataTables_paginate paging_simple_numbers" v-if="_collectionData.length">
+                <div class="dataTables_paginate paging_simple_numbers" v-if="Object.keys(_collectionData).length">
 
                     <collection-pagination
                         class="mb-0"
@@ -78,6 +78,9 @@
         },
 
         computed: {
+            _isResource() {
+                return this.isResource;
+            },
             ...mapGetters([
                 'collectionPaginationData',
                 'resourcePaginationData', 
