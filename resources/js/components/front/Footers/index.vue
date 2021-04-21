@@ -22,7 +22,7 @@
 
 <script>
     import {
-        mapGetters
+        mapState
     } from 'vuex';
     import CopyRight from '../CopyRight';
     import BlockApp from './BlockApp';
@@ -38,7 +38,9 @@
             CopyRight
         },
         computed: {
-            ...mapGetters(['appLists']),
+            ...mapState({
+                appLists : state => state.cfApp.setting.appList
+            }),
         }
     };
 </script>
