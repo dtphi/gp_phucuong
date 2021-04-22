@@ -3,7 +3,7 @@
         <nav id="nav">
             <ul class="nav-menu">
               <nav-main-item :title="$options.setting.menuHome.name" activeClass="active"></nav-main-item>
-              <nav-tree v-for="(itemMenu,idx) in menus" :item="itemMenu" :key="idx"></nav-tree>
+              <nav-tree v-for="(itemMenu,idx) in _menuLists" :item="itemMenu" :key="idx"></nav-tree>
             </ul>
         </nav>
         <div class="icon-nav">
@@ -28,14 +28,33 @@ import {
         NavMainItem
       },
       props: {
-        menuItems: null
+        menuItems: null,
+        layoutId : 0
       },
       computed: {
           ...mapState({
-              menus: state => state.cfApp.setting.menus
+              menus: state => state.cfApp.setting.menus,
+              menus_1: state => state.cfApp.setting.menus_1
           }),
         _menuLists() {
-          return this.menus
+          const layoutId = parseInt(this.layoutId);
+
+          switch(layoutId) {
+            case 0: {
+              return this.menus;
+
+              break;
+            }
+            case 1: {
+              return this.menus_1;
+
+              break;
+            }
+            default: {
+              return this.menus;
+              break;
+            }
+          }
         }
       },
       setting: {

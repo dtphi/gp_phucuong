@@ -130,6 +130,60 @@ class ApiController extends Controller
                         'href'     => 'path=' . $cate->category_id
                     );
             }
+
+            $menuLayout_1 = [];
+            $categories_1 = $this->sv->getMenuCategoriesToLayout(1);
+
+            foreach($categories_1 as $cate_1) {
+                 // Level 2
+                 $children_data_2 = array();
+    
+                 $children_2 = $this->sv->getMenuCategories($cate_1->category_id);
+
+                 foreach ($children_2 as $child_2) {
+                    $path_2 = 'path=' . $cate_1->category_id . '_' . $child_2->category_id;
+
+                    // Level 3
+                    $children_data_3 = array();
+    
+                    $children_3 = $this->sv->getMenuCategories($child_2->category_id);
+    
+                    foreach ($children_3 as $child_3) {
+                        $path_3 = $path_2 . '_' . $child_3->category_id;
+
+                        // Level 3 -1
+                        $filter_data = array(
+                            'filter_category_id'  => $child_3->category_id,
+                            'filter_sub_category' => true
+                        );
+    
+                        $children_data_3[] = array(
+                            'name'  => $child_3->name,
+                            'children' => [],
+                            'href'  => $path_3
+                        );
+                    }
+
+                    // Level 2 - 1
+                    $filter_data = array(
+                        'filter_category_id'  => $child_2->category_id,
+                        'filter_sub_category' => true
+                    );
+
+                    $children_data_2[] = array(
+                        'name'  => $child_2->name,
+                        'children' => $children_data_3,
+                        'href'  => $path_2
+                    );
+                 }
+
+                // Level 1
+                $menuLayout_1[] = array(
+                    'name'     => $cate_1->name,
+                    'children' => $children_data_2,
+                    'href'     => 'path=' . $cate_1->category_id
+                );
+            }
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -162,6 +216,21 @@ class ApiController extends Controller
         $data['logo'] = '/front/img/logo.png';
         $data['banner'] = '/images/banner_image.jpg';
         $data['menus'] = $menus;
+        $data['menus_1'] = $menuLayout_1;
+        $data['pages'] = [
+            'home' => [
+                'title' => 'Trang chủ',
+                'id' => 1
+            ],
+            'video' => [
+                'title' => 'Trang video',
+                'id' => 2
+            ],
+            'news' => [
+                'title' => 'Trang tin tức',
+                'id' => 3
+            ]  
+        ];
 
         return response()->json($data);
     }

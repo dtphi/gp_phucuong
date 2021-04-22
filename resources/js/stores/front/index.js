@@ -32,6 +32,7 @@ const defaultState = () => {
     navMainLists: [],
     pageLists: [],
     appLists: [],
+    pages: {}
   }
 }
 
