@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import auth from './auth';
 import layout from './layout';
+import dashboard from './dashboad';
 import user from './users';
 import info from './infos';
 import news_category from './categories';
@@ -136,6 +137,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     layout,
+    dashboard,
     user,
     info,
     news_category

@@ -5,29 +5,29 @@ namespace App\Http\Controllers\Api\Front;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\Front\Services\Contracts\HomeModel as HomeSv;
+use App\Http\Controllers\Api\Front\Services\Contracts\NewsModel as NewsSv;
 
-class HomeController extends Controller
+class NewsController extends Controller
 {
     /**
      * @var string
      */
-    protected $resourceName = 'home';
+    protected $resourceName = 'news';
 
     /**
-     * @var HomeSv|null
+     * @var NewsSv|null
      */
-    private $homeSv = null;
+    private $newsSv = null;
 
     /**
      * @author : dtphi .
-     * HomeController constructor.
-     * @param HomeSv $homeSv
+     * NewsController constructor.
+     * @param NewsSv $newsSv
      * @param array $middleware
      */
-    public function __construct(HomeSv $homeSv, array $middleware = [])
+    public function __construct(NewsSv $newsSv, array $middleware = [])
     {
-        $this->homeSv = $homeSv;
+        $this->newsSv = $newsSv;
         parent::__construct($middleware);
     }
 
@@ -36,7 +36,7 @@ class HomeController extends Controller
      * @return [type] [description]
      */
     public function getServiceContext() {
-        return $this->homeSv;
+        return $this->newsSv;
     }
 
     public function index()

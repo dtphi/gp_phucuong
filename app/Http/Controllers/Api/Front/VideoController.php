@@ -5,29 +5,29 @@ namespace App\Http\Controllers\Api\Front;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\Front\Services\Contracts\HomeModel as HomeSv;
+use App\Http\Controllers\Api\Front\Services\Contracts\VideoModel as VideoSv;
 
-class HomeController extends Controller
+class VideoController extends Controller
 {
     /**
      * @var string
      */
-    protected $resourceName = 'home';
+    protected $resourceName = 'video';
 
     /**
-     * @var HomeSv|null
+     * @var VideoSv|null
      */
-    private $homeSv = null;
+    private $videoSv = null;
 
     /**
      * @author : dtphi .
-     * HomeController constructor.
-     * @param HomeSv $homeSv
+     * VideoController constructor.
+     * @param VideoSv $videoSv
      * @param array $middleware
      */
-    public function __construct(HomeSv $homeSv, array $middleware = [])
+    public function __construct(VideoSv $videoSv, array $middleware = [])
     {
-        $this->homeSv = $homeSv;
+        $this->videoSv = $videoSv;
         parent::__construct($middleware);
     }
 
@@ -36,7 +36,7 @@ class HomeController extends Controller
      * @return [type] [description]
      */
     public function getServiceContext() {
-        return $this->homeSv;
+        return $this->videoSv;
     }
 
     public function index()

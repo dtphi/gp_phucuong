@@ -40,6 +40,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Front\Services\Contracts\HomeModel::class,
             \App\Http\Controllers\Api\Front\Services\HomeService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Front\Services\Contracts\NewsModel::class,
+            \App\Http\Controllers\Api\Front\Services\NewsService::class
+        );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Front\Services\Contracts\VideoModel::class,
+            \App\Http\Controllers\Api\Front\Services\VideoService::class
+        );
     }
 
     /**

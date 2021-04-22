@@ -1,6 +1,7 @@
 import MainLayout from 'v@front/layouts/main';
 import HomePage from 'v@front/page_homes';
 import VideoPage from 'v@front/page_videos';
+import NewsPage from 'v@front/page_news';
 
 //static html layout
 import Home from 'v@front/home';
@@ -73,6 +74,23 @@ if (debug) {
                 },
                 title: 'Trang chủ | ' + config.site_name
             }
+        }, {
+            path: 'tin-tuc',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: NewsPage,
+                name: 'news-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
         }, {
             path: 'video',
             component: {
