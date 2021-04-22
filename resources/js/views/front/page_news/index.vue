@@ -27,6 +27,14 @@
   import SideBar from 'com@front/SideBar';
   import TheVideoItem from './components/TheVideoItem';
 
+  import {
+        MODULE_INFO
+    } from '@app/stores/front/types/module-types';
+    import {
+        GET_DETAIL
+    } from '@app/stores/front/types/action-types';
+
+
     export default {
         name: 'VideoPage',
         components: {
@@ -43,6 +51,14 @@
         computed: {
             ...mapGetters(['navMainLists'])
         },
+        mounted() {
+            this.[GET_DETAIL](22);
+        },
+        methods: {
+            ...mapActions(MODULE_INFO, [
+                GET_DETAIL,
+            ]),
+        }
     }
 </script>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Front;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use Illuminate\Http\Request;
+use App\Helpers\Helper;
 use App\Http\Controllers\Api\Front\Services\Contracts\NewsModel as NewsSv;
 
 class NewsController extends Controller
@@ -101,5 +102,63 @@ class NewsController extends Controller
         return response()->json([
             'pageLists' => $pageLists
         ]);
+    }
+
+    public function detail($informationId = null, Request $request) 
+    {
+        $json = [];
+        $this->newsSv->apiUpdateViewed($informationId);
+
+        if ($informationId) {
+            $json = $this->newsSv->apiGetInfo($informationId);
+        }
+
+        return Helper::successResponse([
+            'results'    => $json
+        ]);
+    }
+
+    public function showLastedList() 
+    {
+        $json = [];
+
+        $list = $this->newsSv->apiGetLatestInfos(5);
+        if ($list) {
+            foreach ($list as $info) {
+				$json[$info->information_id] = $this->newsSv->apiGetInfo($info->information_id);
+			}
+        }
+
+        return $json;
+    }
+
+    public function showPopularList()
+    {
+        $json = [];
+
+        $list = $this->newsSv->apiGetPopularInfos(5);
+
+        if($list) {
+            foreach ($list as $info) {
+                $json[$info->information_id] = $this->newsSv->apiGetInfo($info->information_id);
+            }
+        }
+
+        return $json;
+    }
+
+    public function showRelatedList($informationId = null)
+    {
+        $json = [];
+
+        $list = $this->newsSv->apiGetInfoRelated($informationId);
+
+        if ($list) {
+            foreach ($list as $info) {
+                $json[$info->related_id] = $this->newsSv->apiGetInfo($info->related_id);
+            }
+        }
+
+        return $json;
     }
 }

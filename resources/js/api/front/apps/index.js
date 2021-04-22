@@ -6,16 +6,6 @@ import {
   API_APP_SETTING
 } from 'store@front/types/api-paths';
 
-/**
- * Mocking client-server processing
- */
-const _users = [{
-  id: 1,
-  name: 'Phi',
-  email: 'phi@mail.com',
-  createdAt: '24/12/2020'
-}]
-
 
 export const apiGetSettings = (resolve, errResole, params) => {
   return axios.post(fn_get_base_api_url(API_APP_SETTING),{

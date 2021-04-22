@@ -57,10 +57,10 @@
         setting: {
         	dashboards_title: 'Quản trị',
         	users_title: 'Người dùng',
-        	category_root_title: 'Danh mục thông tin',
-        	category_sub_cate_info_title: 'Danh mục tin tức',
+        	category_root_title: 'Tin Tức',
+        	category_sub_cate_info_title: 'Danh mục',
         	category_sub_info_title: 'Tin tức',
-        	category_sub_image_title: 'Hình ảnh tin tức',
+        	category_sub_image_title: 'Hình ảnh',
         }
     };
 </script>
