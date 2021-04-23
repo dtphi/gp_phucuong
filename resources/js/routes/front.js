@@ -75,6 +75,74 @@ if (debug) {
                 title: 'Trang chủ | ' + config.site_name
             }
         }, {
+            path: 'danh-muc-tin/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: NewsPage,
+                name: 'news-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
+            path: 'danh-muc-tin/:slug/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: NewsPage,
+                name: 'news-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
+            path: 'danh-muc-tin/:slug/:slug/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: NewsPage,
+                name: 'news-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
+            path: 'danh-muc-tin/:slug/:slug/:slug/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: NewsPage,
+                name: 'news-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
             path: 'tin-tuc',
             component: {
                 render: c => c('router-view')

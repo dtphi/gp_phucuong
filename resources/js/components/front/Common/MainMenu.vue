@@ -2,7 +2,7 @@
     <div class="fz-0">
         <nav id="nav">
             <ul class="nav-menu">
-              <nav-main-item :title="$options.setting.menuHome.name" activeClass="active"></nav-main-item>
+              <nav-main-item :group="$options.setting.menuHome" activeClass="active"></nav-main-item>
               <nav-tree v-for="(itemMenu,idx) in _menuLists" :item="itemMenu" :key="idx"></nav-tree>
             </ul>
         </nav>
@@ -60,7 +60,8 @@ import {
       setting: {
           menuHome: {
               children: [],
-              name: 'Home'
+              name: 'Home',
+              link: 'home'
           }
       }
   }

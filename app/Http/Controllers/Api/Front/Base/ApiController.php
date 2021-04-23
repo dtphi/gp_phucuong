@@ -52,6 +52,7 @@ class ApiController extends Controller
     
                     foreach ($children_2 as $child_2) {
                         $path_2 = 'path=' . $cate->category_id . '_' . $child_2->category_id;
+                        $link_2 = $cate->name_slug . '/' . $child_2->name_slug;
                         // Level 3
                         $children_data_3 = array();
     
@@ -59,6 +60,7 @@ class ApiController extends Controller
         
                         foreach ($children_3 as $child_3) {
                             $path_3 = $path_2 . '_' . $child_3->category_id;
+                            $link_3 = $link_2 . '/' . $child_3->name_slug;
                             // Level 4
                             $children_data_4 = array();
         
@@ -66,6 +68,7 @@ class ApiController extends Controller
             
                             foreach ($children_4 as $child_4) {
                                 $path_4 = $path_3 . '_' . $child_4->category_id;
+                                $link_4 = $link_3 . '/' . $child_4->name_slug;
                                 // Level 5
                                 $children_data_5 = array();
             
@@ -73,6 +76,9 @@ class ApiController extends Controller
                 
                                 foreach ($children_5 as $child_5) {
                                     $path_5 = $path_4 . '_' . $child_5->category_id;
+                                    $link_5 = $link_4 . '/' . $child_5->name_slug;
+
+                                    // Level 5-1
                                     $filter_data = array(
                                         'filter_category_id'  => $child_5->category_id,
                                         'filter_sub_category' => true
@@ -80,7 +86,8 @@ class ApiController extends Controller
                 
                                     $children_data_5[] = array(
                                         'name'  => $child_5->name,
-                                        'href'  => $path_5
+                                        'href'  => $path_5,
+                                        'link' => $link_5
                                     );
                                 }
 
@@ -93,7 +100,8 @@ class ApiController extends Controller
                                 $children_data_4[] = array(
                                     'name'  => $child_4->name,
                                     'children' => $children_data_5,
-                                    'href'  => $path_4
+                                    'href'  => $path_4,
+                                    'link' => $link_4
                                 );
                             }
 
@@ -106,7 +114,8 @@ class ApiController extends Controller
                             $children_data_3[] = array(
                                 'name'  => $child_3->name,
                                 'children' => $children_data_4,
-                                'href'  => $path_3
+                                'href'  => $path_3,
+                                'link' => $link_3
                             );
                         }
                         
@@ -119,7 +128,8 @@ class ApiController extends Controller
                         $children_data_2[] = array(
                             'name'  => $child_2->name,
                             'children' => $children_data_3,
-                            'href'  => $path_2
+                            'href'  => $path_2,
+                            'link' => $link_2
                         );
                     }
     
@@ -127,7 +137,8 @@ class ApiController extends Controller
                     $menus[] = array(
                         'name'     => $cate->name,
                         'children' => $children_data_2,
-                        'href'     => 'path=' . $cate->category_id
+                        'href'     => 'path=' . $cate->category_id,
+                        'link' => $cate->name_slug
                     );
             }
 
@@ -142,14 +153,15 @@ class ApiController extends Controller
 
                  foreach ($children_2 as $child_2) {
                     $path_2 = 'path=' . $cate_1->category_id . '_' . $child_2->category_id;
+                    $link_2 = $cate_1->name_slug . '/' . $child_2->name_slug;
 
                     // Level 3
                     $children_data_3 = array();
-    
                     $children_3 = $this->sv->getMenuCategories($child_2->category_id);
     
                     foreach ($children_3 as $child_3) {
                         $path_3 = $path_2 . '_' . $child_3->category_id;
+                        $link_3 = $link_2 . '/' . $child_3->name_slug;
 
                         // Level 3 -1
                         $filter_data = array(
@@ -160,7 +172,8 @@ class ApiController extends Controller
                         $children_data_3[] = array(
                             'name'  => $child_3->name,
                             'children' => [],
-                            'href'  => $path_3
+                            'href'  => $path_3,
+                            'link' => $link_3
                         );
                     }
 
@@ -173,7 +186,8 @@ class ApiController extends Controller
                     $children_data_2[] = array(
                         'name'  => $child_2->name,
                         'children' => $children_data_3,
-                        'href'  => $path_2
+                        'href'  => $path_2,
+                        'link' => $link_2
                     );
                  }
 
@@ -181,7 +195,8 @@ class ApiController extends Controller
                 $menuLayout_1[] = array(
                     'name'     => $cate_1->name,
                     'children' => $children_data_2,
-                    'href'     => 'path=' . $cate_1->category_id
+                    'href'     => 'path=' . $cate_1->category_id,
+                    'link' => $cate_1->name_slug
                 );
             }
         } catch (HandlerMsgCommon $e) {

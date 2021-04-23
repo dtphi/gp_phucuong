@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Models\Category;
 use App\Models\CategoryDescription;
 use App\Models\CategoryPath;
+use Illuminate\Support\Str;
 use DB;
 
 class ImportCategoryCsv extends Command
@@ -95,9 +96,10 @@ class ImportCategoryCsv extends Command
                 }
                 $name = $group['C'];
                 $metaTitle = $group['D'];
+                $nameSlug = Str::slug($name . ' ' . $categoryId);
 
                 if ($categoryId) {
-                    Category::insertForce($categoryId, $parentId);
+                    Category::insertForce($categoryId, $nameSlug, $parentId);
                     CategoryDescription::insertByCateId($categoryId, $name, '', $metaTitle, '', '');
 
                     /*MySQL Hierarchical Data Closure Table Pattern*/
