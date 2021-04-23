@@ -5,29 +5,30 @@ namespace App\Http\Controllers\Api\Front;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\Front\Services\Contracts\HomeModel as HomeSv;
+use App\Helpers\Helper;
+use App\Http\Controllers\Api\Front\Services\Contracts\NewsModel as NewsSv;
 
-class HomeController extends Controller
+class NewsController extends Controller
 {
     /**
      * @var string
      */
-    protected $resourceName = 'home';
+    protected $resourceName = 'news';
 
     /**
-     * @var HomeSv|null
+     * @var NewsSv|null
      */
-    private $homeSv = null;
+    private $newsSv = null;
 
     /**
      * @author : dtphi .
-     * HomeController constructor.
-     * @param HomeSv $homeSv
+     * NewsController constructor.
+     * @param NewsSv $newsSv
      * @param array $middleware
      */
-    public function __construct(HomeSv $homeSv, array $middleware = [])
+    public function __construct(NewsSv $newsSv, array $middleware = [])
     {
-        $this->homeSv = $homeSv;
+        $this->newsSv = $newsSv;
         parent::__construct($middleware);
     }
 
@@ -36,7 +37,7 @@ class HomeController extends Controller
      * @return [type] [description]
      */
     public function getServiceContext() {
-        return $this->homeSv;
+        return $this->newsSv;
     }
 
     public function index()
@@ -101,5 +102,84 @@ class HomeController extends Controller
         return response()->json([
             'pageLists' => $pageLists
         ]);
+    }
+
+    public function list(Request $request) 
+    {
+        $params = $request->all();
+        $params['slug'] = isset($params['slug'])? $params['slug']: '';
+        if (!empty($params['slug'])) {
+            $slugs = explode('-', $params['slug']);
+            $params['category_id'] = end($slugs);
+        }
+
+        $results = $this->newsSv->apiGetInfoList($params);
+
+        $infos = [];
+        foreach($results as $info) {
+            $infos[] = $info;
+        }
+
+        return Helper::successResponse([
+            'results'    => $infos
+        ]);
+    }
+
+    public function detail($informationId = null, Request $request) 
+    {
+        $json = [];
+        $this->newsSv->apiUpdateViewed($informationId);
+
+        if ($informationId) {
+            $json = $this->newsSv->apiGetInfo($informationId);
+        }
+
+        return Helper::successResponse([
+            'results'    => $json
+        ]);
+    }
+
+    public function showLastedList() 
+    {
+        $json = [];
+
+        $list = $this->newsSv->apiGetLatestInfos(5);
+        if ($list) {
+            foreach ($list as $info) {
+				$json[$info->information_id] = $this->newsSv->apiGetInfo($info->information_id);
+			}
+        }
+
+        return $json;
+    }
+
+    public function showPopularList()
+    {
+        $json = [];
+
+        $list = $this->newsSv->apiGetPopularInfos(5);
+
+        if($list) {
+            foreach ($list as $info) {
+                $json[$info->information_id] = $this->newsSv->apiGetInfo($info->information_id);
+            }
+        }
+
+        return $json;
+    }
+
+    public function showRelatedList($informationId = null)
+    {
+        $json = [];
+
+        $list = $this->newsSv->apiGetInfoRelated($informationId);
+
+        if ($list) {
+            foreach ($list as $info) {
+                $json[$info->related_id] = $this->newsSv->apiGetInfo($info->related_id);
+            }
+        }
+
+        return $json;
     }
 }

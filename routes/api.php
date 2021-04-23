@@ -22,6 +22,11 @@ Route::namespace('App\Http\Controllers\Api\Front')
     ->group(function () {
         Route::post('/app/get-setting', 'Base\ApiController@getSetting');
         Route::apiResource('/homes/get-list', 'HomeController');
+        Route::get('/app/info/get-information-list','NewsController@list');
+        Route::get('/app/info/get-information/{informationId}','NewsController@detail');
+        Route::get('/app/info/get-latest-information', 'NewsController@showLastedList');
+        Route::get('/app/info/get-popular-information', 'NewsController@showPopularList');
+        Route::get('/app/info/get-related-information/{informationId}', 'NewsController@showRelatedList');
     });
 
 Route::namespace('App\Http\Controllers\Api\Admin')

@@ -5,10 +5,29 @@ import {
 import NoImage from 'v@admin/assets/img/no-photo.jpg';
 import moment from 'moment';
 
+export function fn_is_object(obj) {
+	if (typeof obj !== "undefined" 
+	  && typeof obj === "object" 
+	  && Object.keys(obj).length) {
+	  return true;
+	}
+  
+	return false;
+}
+
+export function fn_is_string(value) {
+	return typeof value === 'string' || value instanceof String;
+}
+
 export function fn_get_base_url() {
 	return config.baseUrl;
 }
-
+export function fn_get_href_base_url(path) {
+	if (fn_is_string(path)) {
+		return config.baseUrl + '/' + path.replace(/^\//, "");
+	}
+	return config.baseUrl + '/';
+}
 export function fn_get_admin_base_url() {
 	return config.baseUrl + '/admin';
 }

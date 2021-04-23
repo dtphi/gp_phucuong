@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import home from './homes';
 import video from './videos';
+import info from './infos';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -13,19 +14,33 @@ import {
   apiGetSettings
 } from '@app/api/front/apps';
 
-const settings = {
-  logo: '/front/img/logo.png',
-  banner: '/images/banner_image.jpg',
-  navMainLists: [],
-  pageLists: [],
-  appLists: [],
+const fnIsObject = (obj) => {
+  if (typeof obj !== "undefined" 
+    && typeof obj === "object" 
+    && Object.keys(obj).length) {
+    return true;
+  }
+
+  return false;
+}
+
+
+const defaultState = () => {
+  return {
+    logo: '/front/img/logo.png',
+    banner: '/images/banner_image.jpg',
+    navMainLists: [],
+    pageLists: [],
+    appLists: [],
+    pages: {}
+  }
 }
 
 
 export default new Vuex.Store({
     state: {
       cfApp: {
-        setting: {}
+        setting: defaultState()
       },
       errors: []
     },
@@ -43,16 +58,19 @@ export default new Vuex.Store({
         let menus = {
           id: 0,
           newsgroupname: 'Home',
-          children: {...state.cfApp.setting.navMainLists}
+          children: []
         };
+
+        if (fnIsObject(state.cfApp.setting) 
+          && state.cfApp.setting.hasOwnProperty('navMainLists') 
+          && Array.isArray(state.cfApp.setting.navMainLists)) {
+            menus.children = {...state.cfApp.setting.navMainLists};
+        }
         
         return menus;
       },
       pageLists(state) {
         return state.cfApp.setting.pageLists;
-      },
-      appLists(state) {
-        return state.cfApp.setting.appLists;
       }
     },
     mutations: {
@@ -88,6 +106,7 @@ export default new Vuex.Store({
     modules: {
       home,
       video,
+      info
     },
     strict: debug,
     plugins: debug ? [createLogger()] : []

@@ -1,6 +1,8 @@
 import MainLayout from 'v@front/layouts/main';
 import HomePage from 'v@front/page_homes';
 import VideoPage from 'v@front/page_videos';
+import NewsPage from 'v@front/page_news';
+import CategoryNewsPage from 'v@front/page_category_news';
 
 //static html layout
 import Home from 'v@front/home';
@@ -64,7 +66,7 @@ if (!debug) {
         }, {
             path: 'home',
             component: HomePage,
-            name: 'home',
+            name: 'home_1',
             meta: {
                 layout: MainLayout,
                 role: 'public',
@@ -73,6 +75,91 @@ if (!debug) {
                 },
                 title: 'Trang chủ | ' + config.site_name
             }
+        }, {
+            path: 'danh-muc-tin/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: CategoryNewsPage,
+                name: 'news-category-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Danh Mục Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
+            path: 'danh-muc-tin/:slug_1/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: CategoryNewsPage,
+                name: 'news-category_1-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
+            path: 'danh-muc-tin/:slug_2/:slug_1/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: CategoryNewsPage,
+                name: 'news-category_2-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
+            path: 'danh-muc-tin/:slug_3/:slug_2/:slug_1/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: CategoryNewsPage,
+                name: 'news-category_3-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
+            path: 'tin-tuc',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: NewsPage,
+                name: 'news-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
         }, {
             path: 'video',
             component: {

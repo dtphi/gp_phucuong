@@ -77,6 +77,7 @@ class Category extends BaseModel
 
     public static function insertForce(
         $cateId = null,
+        $nameSlug = '',
         $parentId = null,
         $status = 1
     ) {
@@ -87,8 +88,8 @@ class Category extends BaseModel
         }
 
         if ($cateId) {
-            DB::insert('insert into ' . Tables::$categorys . ' (category_id, parent_id, status) values (?, ?, ?)',
-                [$cateId, $parentId, $status]);
+            DB::insert('insert into ' . Tables::$categorys . ' (category_id, parent_id, status, name_slug) values (?, ?, ?, ?)',
+                [$cateId, $parentId, $status, $nameSlug]);
         }
     }
 }
