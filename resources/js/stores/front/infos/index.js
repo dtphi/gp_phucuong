@@ -3,7 +3,8 @@ import {
   apiGetLists
 } from '@app/api/front/homes';
 import {
-    apiGetDetail
+    apiGetDetail,
+    apiGetListsToCategory
   } from '@app/api/front/infos';
 import {
   INIT_LIST,
@@ -11,7 +12,8 @@ import {
 } from '@app/stores/front/types/mutation-types';
 import {
   GET_LISTS,
-  GET_DETAIL
+  GET_DETAIL,
+  GET_INFORMATION_LIST_TO_CATEGORY
 } from '@app/stores/front/types/action-types';
 
 export default {
@@ -43,16 +45,31 @@ export default {
     },
 
     actions: {
-        [GET_DETAIL]({commit}, params) {
+        [GET_DETAIL]({ commit }, routeParams) {
+          if (routeParams.hasOwnProperty('slug')) {
             apiGetDetail(
-                22, 
-                (result) => {
-                    console.log(result)
-                },
-                (errors)=> {
-                    console.log(errors)
-                },
-                params)
+              routeParams.slug, 
+              (result) => {
+                  console.log(result)
+              },
+              (errors)=> {
+                  console.log(errors)
+              })
+          }
+        },
+        [GET_INFORMATION_LIST_TO_CATEGORY]({ commit }, routeParams) {
+          if (routeParams.hasOwnProperty('slug')) {
+            apiGetListsToCategory(
+              (result) => {
+                commit(INIT_LIST, result.data.results);
+                commit(SET_ERROR, []);
+              },
+              (errors)=> {
+                  console.log(errors)
+              },
+              routeParams.slug
+            )
+          }
         },
       [GET_LISTS]({
         commit

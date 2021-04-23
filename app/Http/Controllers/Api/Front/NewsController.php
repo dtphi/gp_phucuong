@@ -104,6 +104,27 @@ class NewsController extends Controller
         ]);
     }
 
+    public function list(Request $request) 
+    {
+        $params = $request->all();
+        $params['slug'] = isset($params['slug'])? $params['slug']: '';
+        if (!empty($params['slug'])) {
+            $slugs = explode('-', $params['slug']);
+            $params['category_id'] = end($slugs);
+        }
+
+        $results = $this->newsSv->apiGetInfoList($params);
+
+        $infos = [];
+        foreach($results as $info) {
+            $infos[] = $info;
+        }
+
+        return Helper::successResponse([
+            'results'    => $infos
+        ]);
+    }
+
     public function detail($informationId = null, Request $request) 
     {
         $json = [];

@@ -23,7 +23,7 @@ import {
         		return this.group.name;
         	},
             _getHref() {
-                if (this.link) return this.link;
+                if (this.link) return fn_get_href_base_url(this.link);
 
                 return fn_get_href_base_url('danh-muc-tin/'+this.group.link);
             }
