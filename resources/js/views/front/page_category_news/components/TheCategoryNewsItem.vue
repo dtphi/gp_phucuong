@@ -1,15 +1,15 @@
 <template>
     <figure>
         <a :href="_getHref()">
-            <img :src="info.image" class="rounded img" alt="Giáo Phận Phú Cường">
+            <img :src="info.image" class="rounded img" :alt="_getHref()">
         </a>
         <figcaption class="figure-caption">
             <h4 class="title mt-2">
-                <img src="../../../../views/front/assets/img/icon-book.png" alt="Icon">
-                {{info.name}}
+                <img :src="iconBook" alt="Icon">
+                {{info.sort_name}}...
             </h4>
             <span class="d-block mb-1">{{info.sort_description.substring( 0, 100 )}}
-                <a :href="_getHref()">...</a></span>
+                <a :href="_getHref()" >...</a></span>
             <span class="d-block mb-1"></span>
             <span class="d-block">{{info.viewed}} lượt xem | 3 tháng trước</span>
         </figcaption>
@@ -25,6 +25,7 @@
     fn_get_href_base_url,
     fn_change_to_slug
 } from '@app/api/utils/fn-helper';
+import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
         name: 'TheCategoryNewsItem',
@@ -35,8 +36,11 @@
         },
         data() {
             return {
-
+                iconBook: IconBook
             }
+        },
+        computed: {
+        	...mapGetters(['iconBookUrl'])
         },
         methods: {
             _getHref() {

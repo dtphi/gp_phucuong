@@ -29,6 +29,7 @@ const defaultState = () => {
   return {
     logo: '/front/img/logo.png',
     banner: '/images/banner_image.jpg',
+    iconBookUrl: '/',
     navMainLists: [],
     pageLists: [],
     appLists: [],

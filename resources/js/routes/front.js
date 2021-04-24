@@ -77,6 +77,23 @@ if (debug) {
                 title: 'Trang chủ | ' + config.site_name
             }
         }, {
+            path: 'danh-muc-tin',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: CategoryNewsPage,
+                name: 'news-category-all-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Danh Mục Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
             path: 'danh-muc-tin/:slug',
             component: {
                 render: c => c('router-view')
