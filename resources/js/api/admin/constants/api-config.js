@@ -1,5 +1,10 @@
+let baseUrl = window.origin;
+if (process.env.NODE_ENV == "server") {
+    baseUrl = 'http://haydesachnoipodcast.com';
+}
+
 const ApiConfig = {
-    baseURL: window.origin,
+    baseURL: baseUrl,
     basePORT: 8000
 };
 

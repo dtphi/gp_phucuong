@@ -41,7 +41,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $bannerPath = '/upload/home_banners';
+        $bannerPath = config('app.asset_url') . '/upload/home_banners';
         
         try {
             $pageLists = [

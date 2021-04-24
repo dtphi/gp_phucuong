@@ -1,6 +1,6 @@
 <template>
   <figure class="figure" @click="_redirectPage()">
-      <img v-lazy="pageItem.img" class="rounded img" alt="Giáo Phận Phú Cường">
+      <img v-lazy="_getImgUrl()" class="rounded img" alt="Giáo Phận Phú Cường">
       <figcaption class="figure-caption" @click="_redirectPage()">{{pageItem.title}}</figcaption>
   </figure>
 </template>
@@ -10,7 +10,8 @@
         mapGetters
     } from 'vuex';
     import {
-        fn_redirect_url
+        fn_redirect_url,
+        fn_get_base_url
     } from '@app/api/utils/fn-helper'
 
     export default {
@@ -33,6 +34,9 @@
         methods: {
             _redirectPage() {
                 return fn_redirect_url(this.pageItem.href);
+            },
+            _getImgUrl() {
+                return fn_get_base_url() + this.pageItem.img;
             }
         }
     }

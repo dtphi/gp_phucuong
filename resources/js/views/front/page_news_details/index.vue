@@ -9,7 +9,7 @@
                 </b-col>
                 <b-col cols="9">
                     <div class="list-videos">
-                        <the-video-item class="figure" v-for="item in 20" :key="item"></the-video-item>
+                        <!-- <the-video-item class="figure" v-for="item in 20" :key="item"></the-video-item>-->
                     </div>
                 </b-col>
             </b-row>

@@ -1,4 +1,8 @@
 const envBuild = process.env.NODE_ENV;
+let baseUrl = window.origin;
+if (envBuild == "server") {
+    //baseUrl = 'http://haydesachnoipodcast.com';
+}
 
 const existStatus = {
 	checking: 'checking',
@@ -8,6 +12,6 @@ const existStatus = {
 
 export const config = {
 	site_name: 'GP-PhuCuong',
-	baseUrl: window.origin,
+	baseUrl: baseUrl,
 	existStatus: existStatus
 };

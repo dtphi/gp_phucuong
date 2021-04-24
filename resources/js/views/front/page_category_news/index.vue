@@ -9,7 +9,7 @@
                 </b-col>
                 <b-col cols="9">
                     <div class="list-videos">
-                        <the-video-item class="figure" v-for="(item,idx) in infoList" :info="item" :key="idx"></the-video-item>
+                        <the-category-news-item class="figure" v-for="(item,idx) in infoList" :info="item" :key="idx"></the-category-news-item>
                     </div>
                 </b-col>
             </b-row>
@@ -26,7 +26,7 @@
   import NavigationMain from 'com@front/Navigation/Main';
   import MainMenu from 'com@front/Common/MainMenu';
   import SideBar from 'com@front/SideBar';
-  import TheVideoItem from './components/TheVideoItem';
+  import TheCategoryNewsItem from './components/TheCategoryNewsItem';
 
   import {
         MODULE_INFO
@@ -42,7 +42,7 @@
             NavigationMain,
             MainMenu,
             SideBar,
-            TheVideoItem
+            TheCategoryNewsItem
         },
         beforeCreate() {
             console.log(this.$route.params.slug)
@@ -70,5 +70,5 @@
 </script>
 
 <style lang="scss">
-    @import './video-styles.scss'
+    @import './category-news-styles.scss'
 </style>
