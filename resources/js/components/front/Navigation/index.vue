@@ -1,7 +1,7 @@
 <template>
     <div class="fz-0">
         <nav id="nav">
-            <ul class="nav-menu">
+            <ul class="menu-pc nav-menu">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a href="#">Tin Giáo Phận</a></li>
                 <li><a href="#">Tin Giáo Hội Hoàn Vũ</a></li>
@@ -11,6 +11,26 @@
                 <li><a href="#">Hôn Nhân - Gia Đình</a></li>
                 <li><a href="#">Tiếng Việt Online</a></li>
                 <li><a href="#">Văn Kiện</a></li>
+            </ul>
+            <ul class="menu-sp nav-menu">
+                <li class="active">
+                    <a href="#">Home</a>
+                    <div class="hambuger" @click="isHiddenMenu = !isHiddenMenu">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
+                </li>
+                <div v-show="isHiddenMenu" class="dropdown">
+                    <li><a href="#">Tin Giáo Phận</a></li>
+                    <li><a href="#">Tin Giáo Hội Hoàn Vũ</a></li>
+                    <li><a href="#">Tin Giáo Hội Việt Nam</a></li>
+                    <li><a href="#">Lời Chúa</a></li>
+                    <li><a href="#">Tài Liệu</a></li>
+                    <li><a href="#">Hôn Nhân - Gia Đình</a></li>
+                    <li><a href="#">Tiếng Việt Online</a></li>
+                    <li><a href="#">Văn Kiện</a></li>
+                </div>
             </ul>
         </nav>
         <div class="icon-nav">
@@ -22,7 +42,12 @@
 
 <script>
     export default {
-        name: 'Navigation'
+        name: 'Navigation',
+        data () {
+            return {
+                isHiddenMenu: false
+            }
+        }
     }
 </script>
 
@@ -36,17 +61,29 @@
         background-color: #ffffff;
         width: 93%;
         display: inline-block;
+
         .nav-menu {
             margin-bottom: 0;
             padding-left: 0;
             list-style-type: none;
             font-size: 0;
+
+            &.menu-sp {
+                display: none;
+            }
+
+            &.menu-pc {
+                display: block;
+            }
+
             li {
                 display: inline-block;
+
                 &.active > a {
                     background-color: #ED1C24;
                     color: #ffffff;
                 }
+
                 a {
                     color: #000;
                     display: block;
@@ -55,12 +92,14 @@
                     padding: 10px 8px;
                     text-transform: uppercase;
                     text-decoration: none;
+
                     i {
                         font-size: 14px;
                     }
                 }
             }
         }
+
         .nav-menu > li {
             ul {
                 background-color: #fff;
@@ -108,7 +147,6 @@
         width: 7%;
         display: inline-block;
         height: 38px;
-        border-left: 0;
         vertical-align: top;
         p {
             font-size: 16px;
@@ -128,10 +166,25 @@
 
     @media screen and (max-width: 767px) {
         #nav {
-            width: 75%;
+            width: 100%;
+            margin-bottom: 10px;
 
             .nav-menu {
+                &.menu-sp {
+                    display: block;
+                }
+
+                &.menu-pc {
+                    display: none;
+                }
+
                 li {
+                    display: block;
+
+                    &:first-child {
+                        position: relative;
+                    }
+
                     a {
                         font-size: 10px;
                         padding: 6px 6px;
@@ -141,11 +194,28 @@
                         }
                     }
                 }
+
+                .hambuger {
+                    display: inline-block;
+                    position: absolute;
+                    top: 4px;
+                    right: 10px;
+                    cursor: pointer;
+
+                    .bar1, .bar2, .bar3 {
+                        width: 25px;
+                        height: 2px;
+                        background-color: #fff;
+                        margin: 3px 0;
+                        transition: 0.4s;
+                    }
+                }
             }
 
             .nav-menu > li {
                 ul {
                     box-shadow: 0px 2px 6px -2px;
+
                     li {
                         a {
                             font-size: 12px;
@@ -157,13 +227,14 @@
         }
         
         .icon-nav {
-            width: 25%;
-            height: 38px;
+            width: 100%;
+            height: 34px;
+
             p {
                 font-size: 14px;
                 width: 50%;
-                height: 38px;
-                padding-top: 6px;
+                height: 32px;
+                padding-top: 4px;
             }
         }
     }
