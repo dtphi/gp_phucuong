@@ -58,18 +58,20 @@ export default {
           }
         },
         [GET_INFORMATION_LIST_TO_CATEGORY]({ commit }, routeParams) {
+          let slug = '';
           if (routeParams.hasOwnProperty('slug')) {
-            apiGetListsToCategory(
-              (result) => {
-                commit(INIT_LIST, result.data.results);
-                commit(SET_ERROR, []);
-              },
-              (errors)=> {
-                  console.log(errors)
-              },
-              routeParams.slug
-            )
+            slug = routeParams.slug;
           }
+          apiGetListsToCategory(
+            (result) => {
+              commit(INIT_LIST, result.data.results);
+              commit(SET_ERROR, []);
+            },
+            (errors)=> {
+                console.log(errors)
+            },
+            slug
+          )
         },
       [GET_LISTS]({
         commit

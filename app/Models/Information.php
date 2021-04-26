@@ -348,15 +348,16 @@ class Information extends BaseModel
         $status = 1,
         $viewed = 0,
         $vote = 0,
-        $sortDes = ''
+        $sortDes = '',
+        $nameSlug = ''
     ) {
         $infoId = (int)$infoId;
         $viewed = (int)$viewed;
         $vote = (int)$vote;
 
         if ($infoId) {
-            DB::insert('insert into ' . Tables::$informations . ' (information_id, image, sort_order, status, viewed, vote, sort_description) values (?, ?, ?, ?, ?, ?, ?)',
-                [$infoId, $image, $sortOrder, $status, $viewed, $vote, $sortDes]);
+            DB::insert('insert into ' . Tables::$informations . ' (information_id, image, sort_order, status, viewed, vote, sort_description, name_slug) values (?, ?, ?, ?, ?, ?, ?, ?)',
+                [$infoId, $image, $sortOrder, $status, $viewed, $vote, $sortDes, $nameSlug]);
         }
     }
 }

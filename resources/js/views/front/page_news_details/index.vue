@@ -9,7 +9,7 @@
                 </b-col>
                 <b-col cols="9">
                     <div class="list-videos">
-                        <the-category-news-item class="figure" v-for="(item,idx) in infoList" :info="item" :key="idx"></the-category-news-item>
+                        <!-- <the-video-item class="figure" v-for="item in 20" :key="item"></the-video-item>-->
                     </div>
                 </b-col>
             </b-row>
@@ -20,32 +20,28 @@
 <script>
 	import{
       mapGetters,
-      mapActions,
-      mapState
+      mapActions
   } from 'vuex';
   import NavigationMain from 'com@front/Navigation/Main';
   import MainMenu from 'com@front/Common/MainMenu';
   import SideBar from 'com@front/SideBar';
-  import TheCategoryNewsItem from './components/TheCategoryNewsItem';
+  import TheVideoItem from './components/TheVideoItem';
 
   import {
         MODULE_INFO
     } from '@app/stores/front/types/module-types';
     import {
-        GET_INFORMATION_LIST_TO_CATEGORY
+        GET_DETAIL
     } from '@app/stores/front/types/action-types';
 
 
     export default {
-        name: 'InfoListtoCategory',
+        name: 'VideoPage',
         components: {
             NavigationMain,
             MainMenu,
             SideBar,
-            TheCategoryNewsItem
-        },
-        beforeCreate() {
-            console.log(this.$route.params.slug)
+            TheVideoItem
         },
         data() {
             return {
@@ -53,22 +49,19 @@
             }
         },
         computed: {
-            ...mapGetters(['navMainLists']),
-            ...mapState(MODULE_INFO,{
-                infoList: state => state.pageLists
-            }),
+            ...mapGetters(['navMainLists'])
         },
         mounted() {
-            this.[GET_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
+            this.[GET_DETAIL](22);
         },
         methods: {
             ...mapActions(MODULE_INFO, [
-                GET_INFORMATION_LIST_TO_CATEGORY,
+                GET_DETAIL,
             ]),
         }
     }
 </script>
 
 <style lang="scss">
-    @import './category-news-styles.scss'
+    @import './video-styles.scss'
 </style>

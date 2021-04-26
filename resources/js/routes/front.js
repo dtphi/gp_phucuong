@@ -2,6 +2,7 @@ import MainLayout from 'v@front/layouts/main';
 import HomePage from 'v@front/page_homes';
 import VideoPage from 'v@front/page_videos';
 import NewsPage from 'v@front/page_news';
+import NewsDetailPage from 'v@front/page_news_details';
 import CategoryNewsPage from 'v@front/page_category_news';
 
 //static html layout
@@ -17,7 +18,7 @@ const debug = process.env.NODE_ENV === 'debuger';
 
 let routeEnv = {};
 
-if (!debug) {
+if (debug) {
     routeEnv = {
         path: '',
         component: Home,
@@ -75,6 +76,23 @@ if (!debug) {
                 },
                 title: 'Trang chủ | ' + config.site_name
             }
+        }, {
+            path: 'danh-muc-tin',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: CategoryNewsPage,
+                name: 'news-category-all-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Danh Mục Tin Tức | ' + config.site_name
+                }
+            }]
         }, {
             path: 'danh-muc-tin/:slug',
             component: {
@@ -158,6 +176,23 @@ if (!debug) {
                     layout: MainLayout,
                     role: 'guest',
                     title: 'Trang Tin Tức | ' + config.site_name
+                }
+            }]
+        }, {
+            path: 'tin-tuc-detail/:slug',
+            component: {
+                render: c => c('router-view')
+            },
+            children: [{
+                path: '',
+                component: NewsDetailPage,
+                name: 'news-detail-page',
+                meta: {
+                    auth: false,
+                    header: 'News Detail Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức Chi Tiet | ' + config.site_name
                 }
             }]
         }, {

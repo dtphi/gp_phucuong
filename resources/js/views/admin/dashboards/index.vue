@@ -42,7 +42,7 @@
 						    <table class="table">
 								<thead>
 									<tr>
-										<td class="text-right">No</td>
+										<td class="text-left">No</td>
 										<td>Tên</td>
 										<td>Hình ảnh</td>
 										<td class="text-right">Ngày tạo</td>

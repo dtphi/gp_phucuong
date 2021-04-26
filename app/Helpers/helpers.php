@@ -1,4 +1,6 @@
 <?php
+define('DB_PREFIX', 'pc_');
+
 if ( !function_exists('fn_mysql_escape'))
 {
     function fn_mysql_escape($inp)

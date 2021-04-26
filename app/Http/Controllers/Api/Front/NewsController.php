@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Helper;
 use App\Http\Controllers\Api\Front\Services\Contracts\NewsModel as NewsSv;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -117,7 +118,18 @@ class NewsController extends Controller
 
         $infos = [];
         foreach($results as $info) {
-            $infos[] = $info;
+            $infos[] = [
+                'category_id'=> $info->category_id,
+                'created_at'=> $info->created_at,
+                'description' => htmlspecialchars_decode($info->sort_description),
+                'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
+                'image'=> $info->image,
+                'information_id' => $info->information_id,
+                'name'=> $info->name,
+                'sort_name' =>  Str::substr($info->name, 0, 50),
+                'viewed'=> $info->viewed,
+                'vote'=> $info->vote
+            ];
         }
 
         return Helper::successResponse([

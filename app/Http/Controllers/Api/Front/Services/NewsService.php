@@ -87,9 +87,11 @@ final class NewsService implements NewsModel
 		$query = DB::table(Tables::$information_to_categorys)->select()
         ->leftJoin(Tables::$informations, Tables::$information_to_categorys.'.information_id', '=', Tables::$informations.'.information_id')
         ->leftJoin(Tables::$information_descriptions, Tables::$informations.'.information_id', '=', Tables::$information_descriptions.'.information_id')
-        ->where('category_id' , '=', $data['category_id'])
-        ->limit(20);
+        ->where('status', '=', '1');   
+        if (isset($data['category_id'])) {
+          $query->where('category_id' , '=', $data['category_id']);
+        }
 
-        return $query->get();
+        return $query->limit(20)->get();
 	}
 }

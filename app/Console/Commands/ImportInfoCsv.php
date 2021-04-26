@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Information;
 use App\Models\InformationDescription;
 use App\Models\InformationToCategory;
+use Illuminate\Support\Str;
 
 class ImportInfoCsv extends Command
 {
@@ -92,9 +93,10 @@ class ImportInfoCsv extends Command
                 $image = $info['G'];
                 $viewed = (int)$info['N'];
                 $vote = (int)$info['M'];
-                $sortDes = $info['J'];
+                $sortDes = htmlentities($info['J']);
 
                 $name = $info['C'];
+                $nameSlug = Str::slug($name . ' ' . $infoId);
                 $des = htmlentities($info['E']);
                 $tag = $info['O'];
                 $metaTitle = $info['P'];
@@ -103,7 +105,7 @@ class ImportInfoCsv extends Command
 
                 $cateId = (int)$info['D'];
 
-                Information::insertForce($infoId, $image, 0, 1, $viewed, $vote, $sortDes);
+                Information::insertForce($infoId, $image, 0, 1, $viewed, $vote, $sortDes, $nameSlug);
                 InformationDescription::insertByInfoId($infoId, $name, $des, $tag, $metaTitle, $metaDes, $metaKey);
                 InformationToCategory::insertByInfoId($infoId, $cateId);
             }
