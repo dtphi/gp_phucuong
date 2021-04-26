@@ -90,10 +90,11 @@ class ImportInfoCsv extends Command
 
             foreach ($sheetData as $info) {
                 $infoId = (int)$info['A'];
+                $createUser = (int)$info['B'];
                 $image = $info['G'];
                 $viewed = (int)$info['N'];
                 $vote = (int)$info['M'];
-                $sortDes = htmlentities($info['J']);
+                $sortDes = $info['J'];
 
                 $name = $info['C'];
                 $nameSlug = Str::slug($name . ' ' . $infoId);
@@ -104,10 +105,15 @@ class ImportInfoCsv extends Command
                 $metaKey = $info['R'];
 
                 $cateId = (int)$info['D'];
+                $infoType = 1;
+                if ($info['V'] == 'Video') {
+                    $infoType = 2;
+                }
+                $dateAvailable = $info['T'];
 
-                Information::insertForce($infoId, $image, 0, 1, $viewed, $vote, $sortDes, $nameSlug);
-                InformationDescription::insertByInfoId($infoId, $name, $des, $tag, $metaTitle, $metaDes, $metaKey);
-                InformationToCategory::insertByInfoId($infoId, $cateId);
+                Information::insertForce($infoId, $image, $dateAvailable, 0, 1, $viewed, $vote, $sortDes, $nameSlug, $createUser, $infoType);
+                //InformationDescription::insertByInfoId($infoId, $name, $des, $tag, $metaTitle, $metaDes, $metaKey);
+                //InformationToCategory::insertByInfoId($infoId, $cateId);
             }
         }
     }

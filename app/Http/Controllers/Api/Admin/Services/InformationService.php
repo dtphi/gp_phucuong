@@ -13,6 +13,7 @@ use App\Models\InformationImage;
 use App\Models\InformationRelated;
 use App\Models\InformationToCategory;
 use App\Models\InformationToDownload;
+use Illuminate\Support\Str;
 use DB;
 
 final class InformationService implements BaseModel, InformationModel
@@ -330,9 +331,11 @@ final class InformationService implements BaseModel, InformationModel
         DB::beginTransaction();
 
         foreach ($results as $info) {
-            Information::insertForce($info->id, $info->picture, 0, 1, $info->sort, $info->context1, $info->description);
-            
             $infoId = $info->id;
+            $sortDes = $info->description;
+            $nameSlug = Str::slug($name . ' ' . $infoId);
+            Information::insertForce($info->id, $info->picture, 0, 1, $info->sort, $info->context1, $info->description, $nameSlug);
+            
             $des = htmlentities($info->context);
 
             InformationDescription::insertByInfoId($infoId, $info->newsgroupname, $des, $info->tag,

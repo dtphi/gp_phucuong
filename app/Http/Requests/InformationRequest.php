@@ -42,6 +42,9 @@ class InformationRequest extends FormRequest
         $formData['date_available'] = isset($formData['date_available']) ? $formData['date_available'] : now();
         $formData['sort_order']     = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
         $formData['status']         = isset($formData['status']) ? $formData['status'] : 0;
+        $formData['create_user']    = isset($formData['create_user']) ? $formData['create_user']: 0;
+        $formData['sort_description'] = isset($formData['sort_description']) ? $formData['sort_description']: '';
+        $formData['info_type'] = isset($formData['info_type']) ? $formData['info_type']: 1;
 
         /*information descriptions*/
         $formData['name']             = isset($formData['name']) ? $formData['name'] : '';

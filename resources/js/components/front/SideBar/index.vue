@@ -1,10 +1,7 @@
 <template>
     <aside>
-        <ul class="menu">
-            <li class="active"><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Tất cả</a></li>
-            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Xem nhiều</a></li>
-            <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Đã xem</a></li>
-            <hr class="border my-3">
+        <info-left-side-bar></info-left-side-bar>
+        <ul class="menu">   
             <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Thánh ca</a></li>
             <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Lời chúa</a></li>
             <li><a href="#"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Kinh thánh</a></li>
@@ -44,10 +41,12 @@
       mapGetters,
       mapActions
   } from 'vuex';
+  import InfoLeftSideBar from './SideBarInfoLeft';
 
     export default {
         name: 'SideBar',
         components: {
+            InfoLeftSideBar
         },
         data() {
             return {

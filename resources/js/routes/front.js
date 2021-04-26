@@ -2,6 +2,7 @@ import MainLayout from 'v@front/layouts/main';
 import HomePage from 'v@front/page_homes';
 import VideoPage from 'v@front/page_videos';
 import NewsPage from 'v@front/page_news';
+import NewsPopularPage from 'v@front/page_news_populars';
 import NewsDetailPage from 'v@front/page_news_details';
 import CategoryNewsPage from 'v@front/page_category_news';
 
@@ -177,16 +178,23 @@ if (debug) {
                     role: 'guest',
                     title: 'Trang Tin Tức | ' + config.site_name
                 }
-            }]
-        }, {
-            path: 'tin-tuc-detail/:slug',
-            component: {
-                render: c => c('router-view')
             },
-            children: [{
-                path: '',
+            {
+                path: 'xem-nhieu',
+                component: NewsPopularPage,
+                name: 'news-popular-page',
+                meta: {
+                    auth: false,
+                    header: 'News Page',
+                    layout: MainLayout,
+                    role: 'guest',
+                    title: 'Trang Tin Tức | ' + config.site_name
+                }
+            },
+            {
+                path: 'chi-tiet/:slug',
                 component: NewsDetailPage,
-                name: 'news-detail-page',
+                name: 'news-slug-detail-page',
                 meta: {
                     auth: false,
                     header: 'News Detail Page',
@@ -194,7 +202,8 @@ if (debug) {
                     role: 'guest',
                     title: 'Trang Tin Tức Chi Tiet | ' + config.site_name
                 }
-            }]
+            }
+        ]
         }, {
             path: 'video',
             component: {

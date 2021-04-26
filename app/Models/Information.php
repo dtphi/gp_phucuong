@@ -344,20 +344,23 @@ class Information extends BaseModel
     public static function insertForce(
         $infoId = null,
         $image = null,
+        $dateAvailable = null,
         $sortOrder = 0,
         $status = 1,
         $viewed = 0,
         $vote = 0,
         $sortDes = '',
-        $nameSlug = ''
+        $nameSlug = '',
+        $createUser = 0,
+        $infoType = 1
     ) {
         $infoId = (int)$infoId;
         $viewed = (int)$viewed;
         $vote = (int)$vote;
 
         if ($infoId) {
-            DB::insert('insert into ' . Tables::$informations . ' (information_id, image, sort_order, status, viewed, vote, sort_description, name_slug) values (?, ?, ?, ?, ?, ?, ?, ?)',
-                [$infoId, $image, $sortOrder, $status, $viewed, $vote, $sortDes, $nameSlug]);
+            DB::insert('insert into ' . Tables::$informations . ' (information_id, user_create, name_slug, image, date_available, sort_order, information_type, status, viewed, vote, sort_description) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [$infoId, $createUser, $nameSlug, $image, $dateAvailable, $sortOrder, $infoType, $status, $viewed, $vote, $sortDes]);
         }
     }
 }
