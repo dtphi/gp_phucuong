@@ -97,9 +97,10 @@ class ImportCategoryCsv extends Command
                 $name = $group['C'];
                 $metaTitle = $group['D'];
                 $nameSlug = Str::slug($name . ' ' . $categoryId);
+                $createUser = (int)$group['Q'];
 
                 if ($categoryId) {
-                    Category::insertForce($categoryId, $nameSlug, $parentId);
+                    Category::insertForce($categoryId, $nameSlug, $parentId, $createUser);
                     CategoryDescription::insertByCateId($categoryId, $name, '', $metaTitle, '', '');
 
                     /*MySQL Hierarchical Data Closure Table Pattern*/

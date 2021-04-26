@@ -79,6 +79,7 @@ class Category extends BaseModel
         $cateId = null,
         $nameSlug = '',
         $parentId = null,
+        $createUser = 0,
         $status = 1
     ) {
         $cateId = (int)$cateId;
@@ -88,8 +89,8 @@ class Category extends BaseModel
         }
 
         if ($cateId) {
-            DB::insert('insert into ' . Tables::$categorys . ' (category_id, parent_id, status, name_slug) values (?, ?, ?, ?)',
-                [$cateId, $parentId, $status, $nameSlug]);
+            DB::insert('insert into ' . Tables::$categorys . ' (category_id, parent_id, status, name_slug, user_create) values (?, ?, ?, ?, ?)',
+                [$cateId, $parentId, $status, $nameSlug, $createUser]);
         }
     }
 }
