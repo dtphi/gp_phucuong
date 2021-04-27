@@ -4,7 +4,8 @@ import {
 } from '@app/api/front/homes';
 import {
     apiGetDetail,
-    apiGetListsToCategory
+    apiGetListsToCategory,
+    apiGetVideoListsToCategory
   } from '@app/api/front/infos';
 import {
   INIT_LIST,
@@ -62,16 +63,29 @@ export default {
           if (routeParams.hasOwnProperty('slug')) {
             slug = routeParams.slug;
           }
-          apiGetListsToCategory(
-            (result) => {
-              commit(INIT_LIST, result.data.results);
-              commit(SET_ERROR, []);
-            },
-            (errors)=> {
-                console.log(errors)
-            },
-            slug
-          )
+          if (routeParams.hasOwnProperty('infoType')) {
+            apiGetVideoListsToCategory(
+              (result) => {
+                commit(INIT_LIST, result.data.results);
+                commit(SET_ERROR, []);
+              },
+              (errors)=> {
+                  console.log(errors)
+              },
+              routeParams
+            )
+          } else {
+            apiGetListsToCategory(
+              (result) => {
+                commit(INIT_LIST, result.data.results);
+                commit(SET_ERROR, []);
+              },
+              (errors)=> {
+                  console.log(errors)
+              },
+              slug
+            )
+          }
         },
       [GET_LISTS]({
         commit

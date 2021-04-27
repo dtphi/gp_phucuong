@@ -8,6 +8,23 @@ import {
     API_INFO_LIST
   } from 'store@front/types/api-paths';
   
+  export const apiGetVideoListsToCategory = (resolve, errResole, params) => {
+    return axios.get(fn_get_base_api_url(API_INFO_LIST),{
+        params: params
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          resolve(response.data);
+        } else {
+          errResole([{
+            status: response.status,
+            msg: 'error test'
+          }]);
+        }
+      })
+      .catch(errors => errResole(errors))
+  }
+
   export const apiGetListsToCategory = (resolve, errResole, slug) => {
     const params = {
       slug: slug
