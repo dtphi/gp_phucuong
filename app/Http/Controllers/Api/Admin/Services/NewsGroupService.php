@@ -13,6 +13,7 @@ use App\Models\CategoryPath;
 use App\Models\CategoryToLayout;
 use App\Models\InformationToCategory;
 use App\Models\NewsGroup;
+use Illuminate\Support\Str;
 use DB;
 
 final class NewsGroupService implements BaseModel, NewsGroupModel
@@ -146,6 +147,10 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             if ($this->model->save()) {
                 $data['category_id'] = $this->model->category_id;
 
+                $this->model->name_slug =  Str::slug($data['name'] . ' ' . $data['category_id']);
+                $this->model->save();
+
+
                 CategoryDescription::insertByCateId($data['category_id'], $data['name'], $data['description'],
                     $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
 
@@ -214,6 +219,8 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     public function apiUpdate($model, array $data = [])
     {
         // TODO: Implement apiInsertOrUpdate() method.
+        $data['name_slug'] =  Str::slug($data['name'] . ' ' . $model->category_id);
+
         $model->fill($data);
 
         /**
@@ -441,7 +448,11 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             $query->filterLikeName($cd2, $data['filter_name']);
         }
 
-        return $query->limit($limit)->get();
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 
     public function importCategory() {

@@ -87,12 +87,72 @@
                                                        for="input-meta-title">Meta title</label>
                                                 <div class="col-sm-10">
                                                     <validation-provider
-                                                        name="user_name"
+                                                        name="meta_title"
                                                         rules="required|max:191"
                                                         v-slot="{ errors }">
                                                         <input type="text" v-model="newsGroupAdd.meta_title"
                                                                placeholder="Meta title" id="input-meta-title"
                                                                class="form-control">
+
+                                                        <span class="cms-text-red">{{ errors[0] }}</span>
+                                                    </validation-provider>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label 
+                                                    for="input-meta-description" 
+                                                    class="col-sm-2 control-label">{{$options.setting.tab_general_meta_description_txt}}</label>
+                                                <div class="col-sm-10">
+                                                    <validation-provider 
+                                                        name="meta_description" 
+                                                        rules="max:191" 
+                                                        v-slot="{ errors }">
+                                                        <textarea 
+                                                            id="input-meta-description"
+                                                            v-model="newsGroupAdd.meta_description" 
+                                                            class="form-control"
+                                                            :placeholder="$options.setting.tab_general_meta_description_txt"></textarea>
+
+                                                        <span class="cms-text-red">{{ errors[0] }}</span>
+                                                    </validation-provider>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label 
+                                                    for="input-meta-keyword" 
+                                                    class="col-sm-2 control-label">{{$options.setting.tab_general_key_word_txt}}</label>
+                                                <div class="col-sm-10">
+                                                    <validation-provider 
+                                                        name="meta_keyword" 
+                                                        rules="max:191" 
+                                                        v-slot="{ errors }">
+                                                        <textarea
+                                                            id="input-meta-keyword"
+                                                            v-model="newsGroupAdd.meta_keyword" 
+                                                            class="form-control"
+                                                            :placeholder="$options.setting.tab_general_key_word_txt"></textarea>
+
+                                                        <span class="cms-text-red">{{ errors[0] }}</span>
+                                                    </validation-provider>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label 
+                                                    for="input-tag" 
+                                                    class="col-sm-2 control-label">
+                                                    <span data-toggle="tooltip" :data-original-title="$options.setting.tab_general_tag_tooltip_txt">{{$options.setting.tab_general_tag_txt}}</span>
+                                                </label>
+                                                <div class="col-sm-10">
+                                                    <validation-provider 
+                                                        name="tag" 
+                                                        rules="max:191" 
+                                                        v-slot="{ errors }">
+                                                        <input
+                                                            id="input-tag"
+                                                            v-model="newsGroupAdd.tag" 
+                                                            class="form-control"
+                                                            :placeholder="$options.setting.tab_general_tag_txt">
 
                                                         <span class="cms-text-red">{{ errors[0] }}</span>
                                                     </validation-provider>
@@ -274,7 +334,12 @@
             tab_general_title: 'Tổng quan',
             tab_data_title: 'Mở rộng',
             tab_design_title: 'Màn hình',
-            error_msg_system: 'Lỗi hệ thống !'
+            error_msg_system: 'Lỗi hệ thống !',
+            tab_general_key_word_txt: 'Từ khóa mô tả',
+            tab_general_meta_title_txt: 'Thẻ meta tiêu đề',
+            tab_general_meta_description_txt: 'Thẻ meta mô tả',
+            tab_general_tag_txt: 'Tags',
+            tab_general_tag_tooltip_txt: 'Ngăn cách bởi dấu phẩy'
         }
     };
 </script>

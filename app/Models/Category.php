@@ -34,8 +34,13 @@ class Category extends BaseModel
     protected $fillable = [
         'image',
         'parent_id',
+        'top',
+        'name_slug',
+        'tag',
+        'column',
         'sort_order',
-        'status'
+        'status',
+        'user_create'
     ];
 
     /**

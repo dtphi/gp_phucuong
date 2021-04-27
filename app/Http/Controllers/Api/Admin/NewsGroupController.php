@@ -243,7 +243,7 @@ class NewsGroupController extends ApiController
     {
         $data = $request->all();
 
-        $results     = $this->newsGpSv->apiGetCategories($data);
+        $results     = $this->newsGpSv->apiGetCategories($data, 0);
         $collections = [];
 
         foreach ($results as $key => $value) {

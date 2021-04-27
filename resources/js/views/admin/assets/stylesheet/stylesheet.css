@@ -652,3 +652,17 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .cms-text-red {
 	color: red
 }
+#cms-scroll-dropdown ul{
+	height: 200px;
+    width: 95%;
+    display: block;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.cms-btn-input-right {
+    position: absolute;
+    right: 15px;
+    top: 0px;
+    height: 34px;
+    font-size: 1.5em;
+}

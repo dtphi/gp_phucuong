@@ -6,7 +6,7 @@
         		<span data-toggle="tooltip" 
         			data-original-title="(Tự động hoàn toàn)">{{$options.setting.paren_category_txt}}</span>
         	</label>
-        <div class="col-sm-10">
+        <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		v-on:keyup.enter="_searchProducts()" 

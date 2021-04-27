@@ -112,8 +112,8 @@ class ImportInfoCsv extends Command
                 $dateAvailable = $info['T'];
 
                 Information::insertForce($infoId, $image, $dateAvailable, 0, 1, $viewed, $vote, $sortDes, $nameSlug, $createUser, $infoType);
-                //InformationDescription::insertByInfoId($infoId, $name, $des, $tag, $metaTitle, $metaDes, $metaKey);
-                //InformationToCategory::insertByInfoId($infoId, $cateId);
+                InformationDescription::insertByInfoId($infoId, $name, $des, $tag, $metaTitle, $metaDes, $metaKey);
+                InformationToCategory::insertByInfoId($infoId, $cateId);
             }
         }
     }

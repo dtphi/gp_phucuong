@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Auth;
+use Illuminate\Support\Str;
 
 class NewsGroupRequest extends FormRequest
 {
@@ -31,8 +33,11 @@ class NewsGroupRequest extends FormRequest
         if (empty($formData['name'])) {
             $formData['name'] = isset($formData['category_name']) ? $formData['category_name'] : '';
         }
+        $formData['name_slug'] =  Str::slug($formData['name']);
+        $formData['user_create'] = isset(Auth::user()->id) ? Auth::user()->id: 0;
+        $formData['tag'] = isset($formData['tag']) ? $formData['tag'] : '';
         $formData['parent_id']        = isset($formData['parent_id']) ? $formData['parent_id'] : null;
-        $formData['description']      = isset($formData['description']) ? $formData['description'] : '';
+        $formData['description']      = isset($formData['description']) ? htmlentities($formData['description']) : '';
         $formData['meta_title']       = isset($formData['meta_title']) ? $formData['meta_title'] : '';
         $formData['meta_description'] = isset($formData['meta_description']) ? $formData['meta_description'] : '';
         $formData['meta_keyword']     = isset($formData['meta_keyword']) ? $formData['meta_keyword'] : '';

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import AppConfig from 'api@admin/constants/app-config';
 import {
   apiGetNewsGroupById,
@@ -47,9 +46,12 @@ const defaultState = () => {
       category_id: null,
       category_name: '',
       name: '',
+      tag: '',
       parent_id: 0,
       description: '',
       meta_title: '',
+      meta_description: '',
+      meta_keyword: '',
       sort_order: 0,
       status: 1,
       layout_id: null,
@@ -175,12 +177,12 @@ export default {
     },
     [SELECT_DROPDOWN_PARENT_CATEGORY](state, payload) {
       if (parseInt(payload.category_id) !== parseInt(state.newsGroupId)) {
-        state.nameQuery = payload.category_name;
+        state.nameQuery = payload.name;
         state.newsGroup.parent_id = payload.category_id;
       }
     },
     [SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](state, payload) {
-      state.nameQuery = payload.category_name;
+      state.nameQuery = payload.name;
       state.infoCategory = payload;
     }
   },
@@ -221,7 +223,7 @@ export default {
             commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS, true)
             commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP, result.data);
             commit(SELECT_DROPDOWN_PARENT_CATEGORY, {
-              category_name: result.data.path,
+              name: result.data.path,
               category_id: result.data.parent_id
             });
 
