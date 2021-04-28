@@ -1,6 +1,6 @@
 <template>
     <figure>
-        <a :href="_getHref()">
+        <a class="img-video" :href="_getHref()">
             <img :src="info.image" class="rounded img" :alt="_getHref()">
         </a>
         <figcaption class="figure-caption">
