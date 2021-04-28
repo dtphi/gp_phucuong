@@ -1,5 +1,6 @@
 <template>
     <li @click="_selectParentCategory()">
+        <i v-if="isSelected" class="fa fa-plus-circle"></i>
         <a href="javascript:void(0);">{{category.name}}</a>
     </li>
 </template>
@@ -22,11 +23,17 @@
                 default: {}
             }
         },
+        data() {
+            return {
+                isSelected: false
+            }
+        },
         methods: {
         	...mapActions(MODULE_NEWS_CATEGORY_EDIT, [
         		ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
         	]),
             _selectParentCategory() {
+                this.isSelected = true;
                 this.[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](this.category);
             }
         },

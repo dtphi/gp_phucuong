@@ -22,15 +22,42 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group required">
+                <label 
+                    for="input-info-sort-description" 
+                    class="col-sm-2 control-label">{{$options.setting.info_sort_description_txt}}</label>
+                <div class="col-sm-10">
+                    <validation-provider 
+                        name="info_sort_description" 
+                        rules="required|max:500" 
+                        v-slot="{ errors }">
+                        <textarea 
+                            id="input-info-sort-description"
+                            v-model="generalData.sort_description" 
+                            class="form-control"
+                            :placeholder="$options.setting.info_sort_description_txt"></textarea>
+
+                        <span class="cms-text-red">{{ errors[0] }}</span>
+                    </validation-provider>
+                </div>
+            </div>
+
+            <div class="form-group required">
                 <label 
                     for="input-info-description" 
                     class="col-sm-2 control-label">{{$options.setting.info_description_txt}}</label>
                 <div class="col-sm-10">
-                    <tinymce 
-                        id="input-info-description" 
-                        :other_options="options"
-                        v-model="generalData.description"></tinymce>
+                    <validation-provider 
+                        name="info_sort_description" 
+                        rules="required" 
+                        v-slot="{ errors }">
+                        <tinymce 
+                            id="input-info-description" 
+                            :other_options="options"
+                            v-model="generalData.description"></tinymce>
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                    </validation-provider>
                 </div>
             </div>
 
@@ -177,7 +204,8 @@
         },
         setting: {
             name_txt: 'Tên',
-            info_description_txt: 'Mô tả',
+            info_sort_description_txt: 'Mô tả',
+            info_description_txt: 'Nội dung',
             info_key_word_txt: 'Từ khóa mô tả',
             info_meta_title_txt: 'Thẻ meta tiêu đề',
             info_meta_description_txt: 'Thẻ meta mô tả',

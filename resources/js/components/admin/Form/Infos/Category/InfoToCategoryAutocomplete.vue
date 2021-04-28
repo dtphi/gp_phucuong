@@ -15,15 +15,21 @@
 	    		:placeholder="$options.setting.paren_category_txt" 
 	    		id="input-parent-category-name" 
 	    		class="form-control" />
+            <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
+                <font-awesome-layers size="2x" style="background:MistyRose">
+                    <font-awesome-icon icon="circle" style="color:Tomato"/>
+                    <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
+                </font-awesome-layers>
+            </span>
             <ul class="dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
-                <li>
+                <!--<li>
                     <span class="btn btn-default cms-btn-dropdown" @click="_closeDropdown">
                         <font-awesome-layers size="2x" style="background:MistyRose">
                             <font-awesome-icon icon="circle" style="color:Tomato"/>
                             <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
                         </font-awesome-layers>
                     </span>
-                </li>
+                </li>-->
                 <the-dropdown-category  :key="-1"
                     :category="itemNone"></the-dropdown-category>
               

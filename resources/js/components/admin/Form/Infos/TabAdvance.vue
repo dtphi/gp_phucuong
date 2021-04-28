@@ -21,6 +21,19 @@
                 </validation-provider>
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                   for="input-info-type">Loại Tin</label>
+            <div class="col-sm-10">
+                <select v-model="groupData.information_type" id="input-info-type"
+                        class="form-control">
+                    <option value="1" selected="selected">Tin tức</option>
+                    <option value="2">Video</option>
+                </select>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-sm-2 control-label"
                    for="input-info-status">Trạng thái</label>

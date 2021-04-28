@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Auth;
+use Illuminate\Support\Str;
 
 class InformationRequest extends FormRequest
 {
@@ -48,6 +50,8 @@ class InformationRequest extends FormRequest
 
         /*information descriptions*/
         $formData['name']             = isset($formData['name']) ? $formData['name'] : '';
+        $formData['name_slug'] =  Str::slug($formData['name']);
+        $formData['user_create'] = isset(Auth::user()->id) ? Auth::user()->id: 0;
         $formData['meta_title']       = isset($formData['meta_title']) ? $formData['meta_title'] : '';
         $formData['description']      = isset($formData['description']) ? $formData['description'] : '';
         $formData['tag']              = isset($formData['tag']) ? $formData['tag'] : '';

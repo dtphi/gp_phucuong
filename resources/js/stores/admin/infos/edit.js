@@ -55,6 +55,8 @@ const defaultState = () => {
       status: 1,
       name: '',
       meta_title: '',
+      sort_description: '',
+      information_type: 1,
       description: '',
       tag: '',
       meta_description: '',
