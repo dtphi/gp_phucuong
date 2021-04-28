@@ -3,7 +3,7 @@
         <label class="col-sm-2 control-label" for="input-parent-category-name">
             <span data-toggle="tooltip" data-original-title="(Tự động hoàn toàn)">{{$options.setting.paren_category_txt}}</span>
         </label>
-        <div class="col-sm-10">
+        <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
             v-on:focus="_focusParentCategory"
     		v-on:keyup.enter="_searchProducts()" 
@@ -12,19 +12,25 @@
     		:placeholder="$options.setting.paren_category_txt" 
     		id="input-parent-category-name" 
     		class="form-control" />
+            <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
+                <font-awesome-layers size="2x" style="background:MistyRose">
+                    <font-awesome-icon icon="circle" style="color:Tomato"/>
+                    <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
+                </font-awesome-layers>
+            </span>
             <ul class="dropdown-menu cms-dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
-                <li>
+                <!-- <li>
                     <span class="btn btn-default cms-btn-dropdown" @click="_closeDropdown">
                         <font-awesome-layers size="2x" style="background:MistyRose">
                             <font-awesome-icon icon="circle" style="color:Tomato"/>
                             <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
                         </font-awesome-layers>
                     </span>
-                </li>
+                </li> -->
                 <the-dropdown-category  :key="-1"
                     :category="itemNone"></the-dropdown-category>
               
-                <the-dropdown-category v-for="(item,idx) in newsGroups" :key="idx" 
+                <the-dropdown-category v-for="(item,idx) in dropdownCategories" :key="idx" 
                     :category="item"></the-dropdown-category>            
             </ul>
         </div>
@@ -34,7 +40,8 @@
 <script>
     import {
         mapGetters,
-        mapActions
+        mapActions,
+        mapState
     } from 'vuex';
     import TheDropdownCategory from './TheDropdownCategory';
     import {
@@ -42,7 +49,7 @@
         MODULE_NEWS_CATEGORY_ADD
     } from 'store@admin/types/module-types';
     import {
-        ACTION_GET_NEWS_GROUP_LIST
+        ACTION_GET_DROPDOWN_CATEGORY_LIST
     } from 'store@admin/types/action-types';
     import lodash from 'lodash';
 
@@ -65,8 +72,8 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_NEWS_CATEGORY, [
-                'newsGroups'
+            ...mapState(MODULE_NEWS_CATEGORY, [
+                'dropdownCategories'
             ]),
             ...mapGetters(MODULE_NEWS_CATEGORY_ADD, [
                 'newsGroupAdd'
@@ -80,15 +87,15 @@
             }
         },
         methods: {
-        	...mapActions(MODULE_NEWS_CATEGORY, [ACTION_GET_NEWS_GROUP_LIST]),
+        	...mapActions(MODULE_NEWS_CATEGORY, [ACTION_GET_DROPDOWN_CATEGORY_LIST]),
             _searchProducts() {
                 const query = this.newsGroupAdd.nameQuery;
                 if (query && query.length) {
-                	this.[ACTION_GET_NEWS_GROUP_LIST](query);
+                	this.[ACTION_GET_DROPDOWN_CATEGORY_LIST]('');
                 }
             },
             _focusParentCategory() {
-                this.[ACTION_GET_NEWS_GROUP_LIST]();
+                this.[ACTION_GET_DROPDOWN_CATEGORY_LIST]('');
                 this.$data.dropdownStyle = 'display:block';
             },
             _closeDropdown() {

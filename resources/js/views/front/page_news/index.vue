@@ -3,7 +3,7 @@
         <div class="container">
             <main-menu></main-menu>
             <b-row class="mt-3 notication">
-                <b-col cols="8">
+                <b-col cols="8" class="col-mobile">
                     <b-carousel
                         id="carousel-1"
                         :interval="4000"
@@ -22,7 +22,7 @@
                         </b-carousel-slide>
                     </b-carousel>
                 </b-col>
-                <b-col cols="4">
+                <b-col cols="4" class="col-mobile">
                     <div class="box-social">
                         <h4 class="tit-common clr-blue">Mạng xã hội</h4>
                         <div class="list-icon">
@@ -35,7 +35,7 @@
 
                         <b-card no-body class="mt-3">
                             <b-tabs card>
-                                <b-tab title="Bài mới" active>
+                                <b-tab class="tab-bar" title="Bài mới" active>
                                     <b-card-text>
                                         <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 5" :key="index">
                                             <span>
@@ -102,7 +102,7 @@
                 <h4 class="tit-highlights"><span>Nổi bật</span></h4>
 
                 <b-row>
-                    <b-col cols="4">
+                    <b-col cols="4" class="mb-3 col-mobile">
                         <h4 class="tit-common">Sách nói</h4>
                         <a href="#" class="row-item-2" v-for="(item, index) in 4" :key="index">
                             <span>Chí khí - đường hi vọng</span>
@@ -112,7 +112,7 @@
                             </span>
                         </a>
                     </b-col>
-                    <b-col cols="4">
+                    <b-col cols="4" class="mb-3 col-mobile">
                         <h4 class="tit-common">Youtube</h4>
                         <a href="#" class="row-item-2" v-for="(item, index) in 4" :key="index">
                             <span>Chí khí - đường hi vọng</span>
@@ -122,7 +122,7 @@
                             </span>
                         </a>
                     </b-col>
-                    <b-col cols="4">
+                    <b-col cols="4" class="mb-3 col-mobile">
                         <h4 class="tit-common">Hát thanh vịnh</h4>
                         <a href="#" class="row-item-2" v-for="(item, index) in 4" :key="index">
                             <span>Chí khí - đường hi vọng</span>
@@ -134,12 +134,12 @@
                     </b-col>
                 </b-row>
 
-                <b-row class="mt-4">
-                    <b-col cols="8">
+                <b-row class="mt-2">
+                    <b-col cols="8" class="col-mobile">
                         <div class="say-gods">
                             <h4 class="tit-common mb-3"><img src="../assets/img/icon-book.png" alt=""> Lời chúa</h4>
                             <b-row>
-                                <b-col cols="5" class="col-5">
+                                <b-col cols="5" class="col-mobile">
                                     <a class="d-block" href="#"><img class="img" src="../assets/img/image_footer.jpg" alt=""></a>
                                     <h4 class="tit-bg-common mt-2">
                                         <span><i class="bg-red">Nổi bật</i></span>
@@ -153,7 +153,7 @@
                                         <span>12/03/2021</span>
                                     </p>
                                 </b-col>
-                                <b-col cols="7">
+                                <b-col cols="7" class="col-mobile">
                                     <p class="info-post">
                                         <span>13/2/2019</span>
                                         <span class="name font-weight-bold ml-1">Giuse Quỳnh</span>
@@ -182,7 +182,7 @@
                         </div>
 
                         <b-row class="mt-4">
-                            <b-col cols="6">
+                            <b-col cols="6" class="col-mobile">
                                 <div class="new mt-3">
                                     <h4 class="tit-common mb-3"><img src="../assets/img/icon-book.png" alt=""> Tin giáo hội</h4>
                                     <p class="info-post mb-2">
@@ -221,7 +221,7 @@
                                 </div>
                             </b-col>
 
-                            <b-col cols="6">
+                            <b-col cols="6" class="col-mobile">
                                 <div class="new mt-3">
                                     <h4 class="tit-common mb-3"><img src="../assets/img/icon-book.png" alt=""> Tin giáo hội việt nam</h4>
                                     <p class="info-post mb-2">
@@ -267,7 +267,7 @@
                                 <a href="#" class="view-all">View all</a>
                             </h4>
                             <b-row>
-                                <b-col cols="7">
+                                <b-col cols="7" class="col-mobile">
                                     <a class="d-block" href="#"><img class="img" src="../assets/img/image_footer.jpg" alt=""></a>
                                     <h4 class="tit-bg-common mt-2">
                                         <a href="#">Thông báo: Bế mạc năm thánh mừng kính các thánh tử đạo Việt Nam</a>
@@ -279,7 +279,7 @@
                                         <span>12/03/2021</span>
                                     </p>
                                 </b-col>
-                                <b-col cols="5" class="col-r">
+                                <b-col cols="5" class="col-r col-mobile">
                                     <a class="d-block" href="#"><img class="img" src="../assets/img/image_footer.jpg" alt=""></a>
                                     <h4 class="tit-bg-common mt-2">
                                         <a href="#">Thông báo: Bế mạc năm thánh mừng kính các thánh tử đạo Việt Nam</a>
@@ -324,7 +324,7 @@
                                 <a href="#" class="view-all">View all</a>
                             </h4>
                             <b-row>
-                                <b-col cols="4" v-for="(item, index) in 3" :key="index">
+                                <b-col cols="4" class="col-mobile" v-for="(item, index) in 3" :key="index">
                                     <a class="d-block" href="#"><img class="img" src="../assets/img/image_footer.jpg" alt=""></a>
                                     <h4 class="tit-bg-common mt-2">
                                         <a href="#">Thông báo: Bế mạc năm thánh mừng kính các thánh tử đạo Việt Nam</a>
@@ -338,7 +338,7 @@
                         </div>
                     </b-col>
 
-                    <b-col cols="4">
+                    <b-col cols="4" class="col-mobile">
                         <div class="category">
                             <h4 class="tit-common clr-blue">Danh mục</h4>
                             <b-row>
@@ -351,7 +351,7 @@
                             </b-row>
                         </div>
 
-                        <div class="info mt-3">
+                        <div class="info">
                             <h4 class="tit-common clr-orange"><img src="../assets/img/icon-book.png" alt=""> Thông báo</h4>
                             <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 3" :key="index">
                                 <span>
@@ -369,8 +369,8 @@
 
                         <div class="fanpage mt-4">
                             <h4 class="tit-common clr-orange">fanpage</h4>
-                            <div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/truyenthongphucuong/" data-tabs="timeline, messages" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=210446675691863&amp;container_width=350&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Ftruyenthongphucuong%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=true&amp;tabs=timeline%2C%20messages&amp;width="><span style="vertical-align: bottom; width: 350px; height: 500px;">
-                                <iframe name="f34b797b58338a" width="1000px" height="1000px" data-testid="fb:page Facebook Social Plugin" title="fb:page Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v5.0/plugins/page.php?adapt_container_width=true&amp;app_id=210446675691863&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df2eb147e0af6c64%26domain%3Dgiaophanphucuong.org%26origin%3Dhttps%253A%252F%252Fgiaophanphucuong.org%252Ff46cb85af4ed18%26relation%3Dparent.parent&amp;container_width=350&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Ftruyenthongphucuong%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=true&amp;tabs=timeline%2C%20messages&amp;width=350" style="border: none; visibility: visible; width: 350px; height: 500px;"></iframe></span>
+                            <div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/truyenthongphucuong/" data-tabs="timeline, messages" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" fb-xfbml-state="rendered">
+                                <iframe width="350px" height="500px" data-testid="fb:page Facebook Social Plugin" title="fb:page Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v5.0/plugins/page.php?adapt_container_width=true&amp;app_id=210446675691863&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df2eb147e0af6c64%26domain%3Dgiaophanphucuong.org%26origin%3Dhttps%253A%252F%252Fgiaophanphucuong.org%252Ff46cb85af4ed18%26relation%3Dparent.parent&amp;container_width=330&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Ftruyenthongphucuong%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=true&amp;tabs=timeline%2C%20messages&amp;width=330"></iframe>
                             </div>
                         </div>
 

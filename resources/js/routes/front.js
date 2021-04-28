@@ -4,6 +4,7 @@ import VideoPage from 'v@front/page_videos';
 import NewsPage from 'v@front/page_news';
 import NewsPopularPage from 'v@front/page_news_populars';
 import NewsDetailPage from 'v@front/page_news_details';
+import VideoDetailPage from 'v@front/page_video_details';
 import CategoryNewsPage from 'v@front/page_category_news';
 
 //static html layout
@@ -210,17 +211,30 @@ if (debug) {
                 render: c => c('router-view')
             },
             children: [{
-                path: '',
-                component: VideoPage,
-                name: 'video-page',
-                meta: {
-                    auth: false,
-                    header: 'Video Page',
-                    layout: MainLayout,
-                    role: 'guest',
-                    title: 'Trang Video | ' + config.site_name
+                    path: '',
+                    component: VideoPage,
+                    name: 'video-page',
+                    meta: {
+                        auth: false,
+                        header: 'Video Page',
+                        layout: MainLayout,
+                        role: 'guest',
+                        title: 'Trang Video | ' + config.site_name
+                    }
+                },
+                {
+                    path: 'chi-tiet/:slug',
+                    component: VideoDetailPage,
+                    name: 'video-detail-page',
+                    meta: {
+                        auth: false,
+                        header: 'Video Detail Page',
+                        layout: MainLayout,
+                        role: 'guest',
+                        title: 'Trang Chie Tiet Video | ' + config.site_name
+                    }
                 }
-            }]
+            ]
         }]
     }
 }

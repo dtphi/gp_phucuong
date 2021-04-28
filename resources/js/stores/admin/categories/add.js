@@ -1,4 +1,3 @@
-import axios from 'axios';
 import AppConfig from 'api@admin/constants/app-config';
 import {
   apiGetNewsGroupById,
@@ -39,9 +38,12 @@ const defaultState = () => {
     newsGroupAdd: {
       category_id: null,
       name: '',
+      tag: '',
       parent_id: 0,
       description: '',
       meta_title: '',
+      meta_description: '',
+      meta_keyword: '',
       sort_order: 0,
       status: 1,
       layout_id: null,
@@ -256,7 +258,7 @@ export default {
     [ACTION_SELECT_DROPDOWN_PARENT_CATEGORY]({
       state
     }, category) {
-      state.newsGroupAdd.nameQuery = category.category_name;
+      state.newsGroupAdd.nameQuery = category.name;
       state.newsGroupAdd.parent_id = category.category_id;
     }
   }

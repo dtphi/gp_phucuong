@@ -1,6 +1,6 @@
 <template>
     <li @click="_selectParentCategory()">
-        <a href="javascript:void(0);">{{category.category_name}}</a>
+        <a href="javascript:void(0);">{{category.name}}</a>
     </li>
 </template>
 

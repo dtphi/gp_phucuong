@@ -108,7 +108,7 @@
                             id="input-info-tag"
                             v-model="generalData.tag" 
                             class="form-control"
-                            :placeholder="$options.setting.info_tag_txt"></textarea>
+                            :placeholder="$options.setting.info_tag_txt">
 
                         <span class="cms-text-red">{{ errors[0] }}</span>
                     </validation-provider>

@@ -1,11 +1,25 @@
 <template>
     <div class="fz-0">
         <nav id="nav">
-            <ul class="nav-menu">
+            <ul class="menu-pc nav-menu">
               <nav-main-item :group="$options.setting.menuHome" :link="$options.setting.menuHome.link" activeClass="active"></nav-main-item>
               <nav-tree v-for="(itemMenu,idx) in _menuLists" :item="itemMenu" :key="idx"></nav-tree>
             </ul>
-        </nav>
+
+            <ul class="menu-sp nav-menu">
+              <nav-main-mobile-item :group="$options.setting.menuHome" :link="$options.setting.menuHome.link" activeClass="active">
+                <div class="hambuger" @click="isHiddenMenu = !isHiddenMenu">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+              </nav-main-mobile-item>
+        
+              <div v-show="isHiddenMenu" class="dropdown">
+                <nav-tree v-for="(itemMenu,idx) in _menuLists" :item="itemMenu" :key="idx"></nav-tree>
+              </div>
+            </ul>
+        </nav>  
         <div class="icon-nav">
             <p><b-icon class="person" icon="person-fill"></b-icon></p>
             <p><b-icon class="search" icon="search"></b-icon></p>
@@ -19,17 +33,24 @@ import {
 }  from 'vuex';
 
 	import NavMainItem from './MainMenus/Item';
+  import NavMainMobileItem from './MainMenus/MobileItem';
   import NavTree from './MainMenus/TreeItem';
 
   export default {
       name: 'MainMenu',
       components: {
         NavTree,
-        NavMainItem
+        NavMainItem,
+        NavMainMobileItem
       },
       props: {
         menuItems: null,
         layoutId : 0
+      },
+      data () {
+          return {
+              isHiddenMenu: false
+          }
       },
       computed: {
           ...mapState({

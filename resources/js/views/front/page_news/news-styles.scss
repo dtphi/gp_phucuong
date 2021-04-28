@@ -179,6 +179,12 @@
                 display: inline-block;
                 width: calc(100% / 5);
             }
+
+            .nav-tabs {
+                 .nav-link {
+                    color: #000;
+                }
+            }
         }
     }
 
@@ -226,14 +232,14 @@
             .col-7 {
                 .tit-bg-common {
                     span {
-                        width: 12%;
+                        width: 14%;
                         i {
                             padding: 2px 12px;
                         }
                     }
 
                     a {
-                        width: 88%;
+                        width: 86%;
                     }
                 }
 
@@ -311,7 +317,7 @@
                 height: 80px;
                 font-weight: 600;
                 text-transform: uppercase;
-                padding: 23px;
+                padding: 20px;
                 text-align: center;
 
                 &:hover {
@@ -356,10 +362,21 @@
 @media screen and (max-width: 767px) {
     #news {
         .row {
-            .col-3,
-            .col-9 {
+            .col-mobile {
                 max-width: 100%;
                 flex: unset;
+            }
+        }
+
+        .notication {
+            .description {
+                h4 {
+                    font-size: 18px;
+                }
+            }
+
+            .box-social {
+                margin-top: 14px;
             }
         }
     }
