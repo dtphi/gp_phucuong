@@ -1,7 +1,7 @@
 <template>
     <figure>
         <a :href="_getHref()">
-            <img :src="info.image" class="rounded img" :alt="_getHref()">
+            <img :src="info.imgUrl" class="rounded img" :alt="_getHref()">
         </a>
         <figcaption class="figure-caption">
             <h4 class="title mt-2">

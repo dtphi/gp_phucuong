@@ -66,6 +66,7 @@ const defaultState = () => {
       categorys: [],
       downloads: []
     },
+    isImgChange: true,
     listCategorysDisplay: [],
     listRelatedsDisplay: [],
     dropdownsRelateds: [],
@@ -154,6 +155,7 @@ export default {
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload;
+      state.isImgChange = true;
     }
   },
 

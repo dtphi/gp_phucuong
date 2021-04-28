@@ -98,7 +98,7 @@
         methods: {
             _changeImage(fi) {
                 if (typeof fi === "object") {
-                    if (fi.hasOwnProperty('selected') && fi.selected) {
+                    if (fi.hasOwnProperty('selected') && fi.selected) {console.log(fi.selected)
                         EventBus.$emit('on-selected-image', fi);
                     }
                 }

@@ -118,12 +118,17 @@ class NewsController extends Controller
 
         $infos = [];
         foreach($results as $info) {
+            $staticImg = '\.tmp\cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
+            if (file_exists(public_path('upload/news' . $info->image))) {
+                $staticImg = $info->image;
+            }
             $infos[] = [
                 'category_id'=> $info->category_id,
                 'created_at'=> $info->created_at,
                 'description' => htmlspecialchars_decode($info->sort_description),
                 'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
-                'image'=> $info->image,
+                'image'=> $staticImg,
+                'imgUrl' => url("/upload/news{$staticImg}"),
                 'information_id' => $info->information_id,
                 'name'=> $info->name,
                 'sort_name' =>  Str::substr($info->name, 0, 50),
