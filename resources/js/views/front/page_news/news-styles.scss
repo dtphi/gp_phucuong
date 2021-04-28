@@ -171,15 +171,13 @@
         color: #cdcdcd;
     }
 
-    .notication {
-        .box-social {
-            .list-icon {
-                font-size: 0;
+    .box-social {
+        .list-icon {
+            font-size: 0;
 
-                a {
-                    display: inline-block;
-                    width: calc(100% / 5);
-                }
+            a {
+                display: inline-block;
+                width: calc(100% / 5);
             }
 
             .nav-tabs {
@@ -188,30 +186,30 @@
                 }
             }
         }
+    }
 
-        .box-care {
-            #email {
-                background-color: #CCCCCC;
-                padding: 6px;
-                border-radius: 4px;
-                width: 100%;
-                outline: 0;
-            }
+    .box-care {
+        #email {
+            background-color: #CCCCCC;
+            padding: 6px;
+            border-radius: 4px;
+            width: 100%;
+            outline: 0;
+        }
 
-            .btn {
-                background-color: #ED1C24;
-                color: #ffffff;
-                padding: 4px 14px;
-                font-weight: bold;
-            }
+        .btn {
+            background-color: #ED1C24;
+            color: #ffffff;
+            padding: 4px 14px;
+            font-weight: bold;
+        }
 
-            .text-download {
-                color: #ff0000;
-                font-weight: 700;
-                text-transform: uppercase;
-                text-align: center;
-                vertical-align: middle;
-            }
+        .text-download {
+            color: #ff0000;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            vertical-align: middle;
         }
     }
 
