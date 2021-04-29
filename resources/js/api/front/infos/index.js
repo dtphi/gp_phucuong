@@ -47,7 +47,9 @@ import {
 
   export const apiGetDetail = (infoId, resolve, errResole, params) => {
       console.log(infoId)
-    return axios.get(API_INFO_DETAIL + '/' + infoId).then((response) => {
+    return axios.get(API_INFO_DETAIL, {
+      params: params
+    }).then((response) => {
         if (response.status === 200) {
           resolve(response.data);
         } else {

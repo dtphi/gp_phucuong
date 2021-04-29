@@ -1,6 +1,7 @@
 <template>
     <li>
         <mobile-collape-item 
+            @onTogleSubMenu="_togleSubMenu"
             v-if="level === 0"
             :is-folder="isFolder"
             :group="item"></mobile-collape-item>
@@ -9,7 +10,7 @@
             v-else
             :group="item"></mobile-nav-item>
 
-        <ul class="sub-menu pl-3" v-if="isFolder">
+        <ul class="sub-menu pl-3" :class="togleClass" v-if="isFolder">
             <mobile-nav-tree
                 v-for="(child, index) in item.children"
                 :level="_getLevel()"
@@ -38,7 +39,9 @@
             item: [Object, Array]
         },
         data: function () {
-            return {};
+            return {
+                togleClass: ''
+            };
         },
         computed: {
             isFolder() {
@@ -48,7 +51,17 @@
         methods: {
             _getLevel() {
                 return this.level + 1;
+            },
+            _togleSubMenu(togle) {
+                if (togle === true) {
+                    this.togleClass = this.$options.setting.togleClass;
+                } else {
+                    this.togleClass = '';
+                }
             }
+        },
+        setting: {
+            togleClass: 'cms-togle'
         }
     };
 </script>

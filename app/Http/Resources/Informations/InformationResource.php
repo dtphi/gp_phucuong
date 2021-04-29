@@ -31,6 +31,7 @@ class InformationResource extends JsonResource
         $json = array_merge($json, [
             'name'             => $res->name,
             'description'      => $res->description,
+            'date_available'   => $res->date_available,
             'tag'              => $res->tag,
             'meta_title'       => $res->meta_title,
             'meta_description' => $res->meta_description,

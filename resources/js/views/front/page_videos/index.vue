@@ -1,7 +1,6 @@
 <template>
   <main id="video" class="py-2">
         <div class="container">
-            <!-- <navigation-main :menu-items="navMainLists"></navigation-main> -->
             <main-menu></main-menu>
             <b-row class="mt-3">
                 <b-col cols="3">
@@ -9,7 +8,10 @@
                 </b-col>
                 <b-col cols="9">
                     <div class="list-videos">
-                        <the-video-item class="figure" v-for="(item,idx) in infoList" :info="item" :key="idx"></the-video-item>
+                        <the-video-item class="figure" 
+                            v-for="(item,idx) in infoList" 
+                            :info="item" 
+                            :key="idx"></the-video-item>
                     </div>
                 </b-col>
             </b-row>

@@ -1,4 +1,3 @@
-import detail from './detail';
 import {
   apiGetLists
 } from '@app/api/front/homes';
@@ -21,7 +20,10 @@ export default {
     namespaced: true,
     state: {
       mainMenus: [],
-      pageLists: [],
+      pageLists: {
+          name: '',
+          description: ''
+    },
       errors: []
     },
     getters: {
@@ -52,10 +54,13 @@ export default {
               routeParams.slug, 
               (result) => {
                   console.log(result)
+                  commit(INIT_LIST, result.data.results);
               },
               (errors)=> {
                   console.log(errors)
-              })
+              },
+                routeParams
+              )
           }
         },
         [GET_INFORMATION_LIST_TO_CATEGORY]({ commit }, routeParams) {
@@ -101,9 +106,6 @@ export default {
           options
         );
       }
-    },
-    modules: {
-      detail: detail
     }
 }
  

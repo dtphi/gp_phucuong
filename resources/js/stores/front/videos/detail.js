@@ -1,20 +1,20 @@
-import detail from "./detail";
 import {
-  apiGetLists
-} from '@app/api/front/homes';
+  apiGetDetail,
+} from '@app/api/front/videos';
 import {
   INIT_LIST,
   SET_ERROR,
 } from '@app/stores/front/types/mutation-types';
 import {
-  GET_LISTS
+  GET_LISTS,
+  GET_DETAIL
 } from '@app/stores/front/types/action-types';
 
 export default {
     namespaced: true,
     state: {
       mainMenus: [],
-      pageLists: [],
+      pageLists: {},
       errors: []
     },
     getters: {
@@ -39,24 +39,21 @@ export default {
     },
 
     actions: {
-      [GET_LISTS]({
-        commit
-      }, options) {
-        apiGetLists(
-        (responses) => {
-            commit(INIT_LIST, responses.pageLists);
-            commit(SET_ERROR, []);
-          },
-          (errors) => {
-            commit(SET_ERROR, error);
-          },
-          options
-        );
-      }
-    },
-
-    modules: {
-      detail: detail
+      [GET_DETAIL]({ commit }, routeParams) {
+        if (routeParams.hasOwnProperty('slug')) {
+          apiGetDetail(
+            routeParams.slug, 
+            (result) => {
+                console.log(result)
+                commit(INIT_LIST, result.data.results);
+            },
+            (errors)=> {
+                console.log(errors)
+            },
+              routeParams
+            )
+        }
+      },
     }
 }
  

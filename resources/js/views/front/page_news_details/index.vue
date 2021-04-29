@@ -1,26 +1,21 @@
 <template>
   <main id="news" class="py-2">
         <div class="container">
-            <!-- <navigation-main :menu-items="navMainLists"></navigation-main> -->
             <main-menu></main-menu>
             <b-row class="my-3">
                 <b-col cols="8" class="col-mobile">
                     <div class="new-detail">
-                        <h4 class="tit-detail">Thánh Lễ Chúa Chiên Lành Tại Giáo Xứ Búng</h4>
+                        <h4 class="tit-detail">{{pageLists.name}}</h4>
                         <p>
                             <b-icon class="alarm" icon="alarm"></b-icon>
-                            <span>12/03/2021</span>
+                            <span>{{pageLists.date_available}}</span>
                         </p>
 
-                        <p>Thánh lễ dành cho các em thiếu nhi lúc 7g30 ngày 25-4-2021 được cử hành long trọng do cha 
-                            sở Simon Nguyễn Văn Thu chủ tế. Với sự tham dự của các phụ huynh, và con em thiếu nhi giáo xứ 
-                            Búng trong bầu khí sốt mến...</p>
+                        <p>{{pageLists.sort_description}}</p>
 
                         <hr>
 
-                        <div class="text-detail">
-                            <p>Chèn nội dung tại đây</p>
-                        </div>
+                        <div class="text-detail" v-html="pageLists.description"></div>
 
                         <hr>
                     </div>
@@ -152,7 +147,7 @@
 
                     <div class="calendar mt-4">
                         <h4 class="title"><span>Lịch</span></h4>
-                        <b-calendar class="w-100" v-model="value" @context="onContext" locale="en-US"></b-calendar>
+                        <b-calendar class="w-100" locale="en-US"></b-calendar>
                     </div>
 
                     <div class="fanpage mt-4">
@@ -179,13 +174,10 @@
       mapGetters,
       mapActions
   } from 'vuex';
-  import NavigationMain from 'com@front/Navigation/Main';
   import MainMenu from 'com@front/Common/MainMenu';
-  import SideBar from 'com@front/SideBar';
-  import TheVideoItem from './components/TheVideoItem';
 
   import {
-        MODULE_INFO
+        MODULE_INFO_DETAIL
     } from '@app/stores/front/types/module-types';
     import {
         GET_DETAIL
@@ -193,12 +185,9 @@
 
 
     export default {
-        name: 'VideoPage',
+        name: 'NewsDetailPage',
         components: {
-            NavigationMain,
             MainMenu,
-            SideBar,
-            TheVideoItem
         },
         data() {
             return {
@@ -206,13 +195,17 @@
             }
         },
         computed: {
-            ...mapGetters(['navMainLists'])
+            ...mapGetters(MODULE_INFO_DETAIL, [
+                'pageLists'
+            ]),
         },
         mounted() {
-            this.[GET_DETAIL](22);
+            this.[GET_DETAIL]({
+                slug: this.$route.params.slug
+            });
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
+            ...mapActions(MODULE_INFO_DETAIL, [
                 GET_DETAIL,
             ]),
         }

@@ -131,6 +131,7 @@ class NewsController extends Controller
                 'imgUrl' => url("/upload/news{$staticImg}"),
                 'information_id' => $info->information_id,
                 'name'=> $info->name,
+                'name_slug' => $info->name_slug,
                 'sort_name' =>  Str::substr($info->name, 0, 50),
                 'viewed'=> $info->viewed,
                 'vote'=> $info->vote
@@ -142,13 +143,20 @@ class NewsController extends Controller
         ]);
     }
 
-    public function detail($informationId = null, Request $request) 
+    public function detail(Request $request) 
     {
-        $json = [];
-        $this->newsSv->apiUpdateViewed($informationId);
+        $params = $request->all();
+        $params['slug'] = isset($params['slug'])? $params['slug']: '';
+        if (!empty($params['slug'])) {
+            $slugs = explode('-', $params['slug']);
+            $params['information_id'] = end($slugs);
+        }
 
-        if ($informationId) {
-            $json = $this->newsSv->apiGetInfo($informationId);
+        $json = [];
+        if (isset($params['information_id'])) {
+            $this->newsSv->apiUpdateViewed($params['information_id']);
+
+            $json = $this->newsSv->apiGetInfo($params['information_id']);
         }
 
         return Helper::successResponse([

@@ -6,20 +6,17 @@
             <b-row class="my-3">
                 <b-col cols="8" class="col-mobile">
                     <div class="new-detail">
-                        <h4 class="tit-detail">Câu Chuyện Giáng Sinh - Phim hoạt hình công giáo</h4>
+                        <h4 class="tit-detail">{{pageLists.name}}</h4>
                         <p>
                             <b-icon class="alarm" icon="alarm"></b-icon>
-                            <span>12/03/2021</span>
+                            <span>{{pageLists.date_available}}</span>
                         </p>
 
-                        <p>Câu Chuyện Giáng Sinh - Phim hoạt hình công giáo: Phim hoạt hình công giáo được việt hóa bởi Ban 
-                            truyền thông Giáo phận Phú Cường...</p>
+                        <p>{{pageLists.sort_description}}</p>
 
                         <hr>
 
-                        <div class="text-detail">
-                            <p>Chèn nội dung tại đây</p>
-                        </div>
+                        <div class="text-detail" v-html="pageLists.description"></div>
 
                         <hr>
                     </div>
@@ -151,7 +148,7 @@
 
                     <div class="calendar mt-4">
                         <h4 class="title"><span>Lịch</span></h4>
-                        <b-calendar class="w-100" v-model="value" @context="onContext" locale="en-US"></b-calendar>
+                        <b-calendar class="w-100"  locale="en-US"></b-calendar>
                     </div>
 
                     <div class="fanpage mt-4">
@@ -178,13 +175,10 @@
       mapGetters,
       mapActions
   } from 'vuex';
-  import NavigationMain from 'com@front/Navigation/Main';
   import MainMenu from 'com@front/Common/MainMenu';
-  import SideBar from 'com@front/SideBar';
-  import TheVideoItem from './components/TheVideoItem';
 
   import {
-        MODULE_INFO
+        MODULE_VIDEO_DETAIL
     } from '@app/stores/front/types/module-types';
     import {
         GET_DETAIL
@@ -192,12 +186,9 @@
 
 
     export default {
-        name: 'VideoPage',
+        name: 'VideoDetailPage',
         components: {
-            NavigationMain,
             MainMenu,
-            SideBar,
-            TheVideoItem
         },
         data() {
             return {
@@ -205,13 +196,17 @@
             }
         },
         computed: {
-            ...mapGetters(['navMainLists'])
+            ...mapGetters(MODULE_VIDEO_DETAIL, [
+                'pageLists'
+            ]),
         },
         mounted() {
-            this.[GET_DETAIL](22);
+            this.[GET_DETAIL]({
+                slug: this.$route.params.slug
+            });
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
+            ...mapActions(MODULE_VIDEO_DETAIL, [
                 GET_DETAIL,
             ]),
         }

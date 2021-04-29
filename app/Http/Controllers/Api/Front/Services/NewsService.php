@@ -31,6 +31,7 @@ final class NewsService implements NewsModel
                 'information_id' => $result->information_id,
                 'name' => $result->name,
                 'sort_description' => $result->sort_description,
+                'description' => $result->description,
                 'image' => $result->image,
                 'viewed' => $result->viewed,
                 'vote' => $result->vote
