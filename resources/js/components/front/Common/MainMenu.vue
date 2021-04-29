@@ -16,7 +16,7 @@
               </nav-main-mobile-item>
         
               <div v-show="isHiddenMenu" class="dropdown">
-                <nav-tree v-for="(itemMenu,idx) in _menuLists" :item="itemMenu" :key="idx"></nav-tree>
+                <mobile-nav-tree  v-for="(itemMenu,idx) in _menuLists" :item="itemMenu" :key="idx"></mobile-nav-tree>
               </div>
             </ul>
         </nav>  
@@ -35,11 +35,13 @@ import {
 	import NavMainItem from './MainMenus/Item';
   import NavMainMobileItem from './MainMenus/MobileItem';
   import NavTree from './MainMenus/TreeItem';
+  import MobileNavTree from './MainMenus/MobileTreeItem';
 
   export default {
       name: 'MainMenu',
       components: {
         NavTree,
+        MobileNavTree,
         NavMainItem,
         NavMainMobileItem
       },
