@@ -304,6 +304,10 @@ class Information extends BaseModel
      */
     protected $fillable = [
         'image',
+        'information_type',
+        'user_create',
+        'name_slug',
+        'sort_description',
         'date_available',
         'sort_order',
         'status',

@@ -51,7 +51,7 @@ const defaultState = () => {
         type: null
       },
       date_available: null,
-      sort_order: 0,
+      sort_order: 1,
       status: 1,
       name: '',
       meta_title: '',

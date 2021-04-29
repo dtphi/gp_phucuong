@@ -133,8 +133,9 @@ final class InformationService implements BaseModel, InformationModel
 
             if (isset($data['image_path'])) {
                 $this->model->image = $data['image_path'];
-                $this->model->save();
             }
+            $this->model->name_slug =  Str::slug($data['name'] . ' ' . $infoId);
+            $this->model->save();
 
             InformationDescription::insertByInfoId($infoId, $data['name'], htmlentities($data['description']), $data['tag'],
                 $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
@@ -211,6 +212,8 @@ final class InformationService implements BaseModel, InformationModel
                 $model->image = $data['image_path'];
                 $model->save();
             }
+            $model->name_slug =  Str::slug($model->name . ' ' . $infoId);
+            $model->save();
 
             $modelDes = $model->infoDes;
             if ($modelDes) {
@@ -294,7 +297,9 @@ final class InformationService implements BaseModel, InformationModel
      */
     public function apiGetInformations($data = array(), $limit = 5)
     {
-        $query = $this->model->select()->limit($limit);
+        $query = $this->model->select()
+        ->orderBy('sort_order', 'DESC')
+        ->orderBy('date_available', 'DESC')->limit($limit);
 
         return $query;
     }
