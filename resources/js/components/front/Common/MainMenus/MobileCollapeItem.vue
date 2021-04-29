@@ -1,7 +1,8 @@
 <template>
     <li :class="activeClass">
-    	<a v-if="isFolder" :href="_getHref()">{{_getTitle()}}<label>+</label></a>
+    	<a v-if="isFolder" :href="_getHref()">{{_getTitle()}}</a>
         <a v-else :href="_getHref()">{{_getTitle()}}<label> > </label></a>
+        <b-icon class="icon-plus" icon="plus"></b-icon>
         <slot></slot>
     </li>
 </template>

@@ -9,7 +9,7 @@
             v-else
             :group="item"></mobile-nav-item>
 
-        <ul v-if="isFolder">
+        <ul class="sub-menu pl-3" v-if="isFolder">
             <mobile-nav-tree
                 v-for="(child, index) in item.children"
                 :level="_getLevel()"

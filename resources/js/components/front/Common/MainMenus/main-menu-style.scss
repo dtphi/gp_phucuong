@@ -7,6 +7,7 @@
       background-color: #ffffff;
       width: 93%;
       display: inline-block;
+
       .nav-menu {
           margin-bottom: 0;
           padding-left: 0;
@@ -40,6 +41,7 @@
               }
           }
       }
+
       .nav-menu > li {
           ul {
               background-color: #fff;
@@ -79,6 +81,29 @@
               transition: none;
           }
       }
+
+      .menu-sp {
+        li {
+          &:first {
+            border-bottom: 1px solid #ED1C24;
+          }
+          
+
+          .icon-plus {
+            text-align: center;
+            font-size: 20px;
+            width: 30px;
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+          }
+        }
+
+        .sub-menu {
+          display: none;
+        }
+      }
   }
   
   .icon-nav {
@@ -88,6 +113,7 @@
       display: inline-block;
       height: 38px;
       vertical-align: top;
+
       p {
           font-size: 16px;
           width: 50%;
@@ -108,57 +134,71 @@
       #nav {
         width: 100%;
         margin-bottom: 10px;
+        border: none;
   
-          .nav-menu {
-            &.menu-sp {
-                display: block;
-            }
-            &.menu-pc {
-                display: none;
-            }
-              li {
-                display: block;
-                &:first-child {
-                    position: relative;
-                }
+        .nav-menu {
+          &.menu-sp {
+              display: block;
+          }
+          &.menu-pc {
+              display: none;
+          }
+            li {
+              display: block;
 
-                  a {
-                      font-size: 10px;
-                      padding: 6px 6px;
-  
-                      i {
-                          font-size: 14px;
-                      }
-                  }
+              &:first-child {
+                  position: relative;
               }
 
-              .hambuger {
-                display: inline-block;
-                position: absolute;
-                top: 4px;
-                right: 10px;
-                cursor: pointer;
-                .bar1, .bar2, .bar3 {
-                    width: 25px;
-                    height: 2px;
-                    background-color: #fff;
-                    margin: 3px 0;
-                    transition: 0.4s;
+                a {
+                    font-size: 10px;
+                    padding: 6px 6px;
+
+                    i {
+                        font-size: 14px;
+                    }
                 }
             }
-          }
-  
-          .nav-menu > li {
-              ul {
-                  box-shadow: 0px 2px 6px -2px;
-                  li {
-                      a {
-                          font-size: 12px;
-                          padding: 8px;
-                      }
-                  }
+
+            .hambuger {
+              display: inline-block;
+              position: absolute;
+              top: 4px;
+              right: 10px;
+              cursor: pointer;
+              .bar1, .bar2, .bar3 {
+                  width: 25px;
+                  height: 2px;
+                  background-color: #fff;
+                  margin: 3px 0;
+                  transition: 0.4s;
               }
           }
+        }
+
+        .nav-menu > li {
+            ul {
+                box-shadow: 0px 2px 6px -2px;
+                li {
+                    a {
+                        font-size: 12px;
+                        padding: 8px;
+                    }
+                }
+            }
+        }
+
+        .menu-sp {
+          .dropdown > li {
+            border-bottom: 1px solid #ED1C24;
+          }
+
+          .dropdown {
+            ul {
+              background-color: #ffe6e6;
+            }
+          }
+        }
       }
       
       .icon-nav {
