@@ -63,7 +63,7 @@ export default {
       dispatch
     }, credentials) {
       await axios.get(fn_get_base_api_url(API_AUTH_SANCTUM_CSRF_COOKIE));
-      await axios.post(fn_get_base_api_url(API_AUTH_LOGIN, credentials));
+      await axios.post(fn_get_base_api_url(API_AUTH_LOGIN), credentials);
 
       return dispatch('admin', {
         type: options.login
