@@ -33,42 +33,7 @@
                             <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
                         </div>
 
-                        <b-card no-body class="mt-3">
-                            <b-tabs card>
-                                <b-tab class="tab-bar" title="Bài mới" active>
-                                    <b-card-text>
-                                        <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 5" :key="index">
-                                            <span>
-                                                <i class="status bg-blue">Live</i>
-                                            </span>
-                                            <span>
-                                                <img src="../assets/img/icon-book.png" alt="">
-                                                <i>Điểm tin giáo hội</i>
-                                            </span>
-                                            <span>
-                                                <img src="../assets/img/icon-book.png" alt="">
-                                                <i>Thanh Thúy</i>
-                                            </span>
-                                        </a>
-                                    </b-card-text>
-                                </b-tab>
-                                <b-tab title="Xem nhiều">
-                                    <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 5" :key="index">
-                                        <span>
-                                            <i class="status bg-orange">Hot</i>
-                                        </span>
-                                        <span>
-                                            <img src="../assets/img/icon-book.png" alt="">
-                                            <i>Điểm tin giáo hội</i>
-                                        </span>
-                                        <span>
-                                            <img src="../assets/img/icon-book.png" alt="">
-                                            <i>Thanh Thúy</i>
-                                        </span>
-                                    </a>
-                                </b-tab>
-                            </b-tabs>
-                        </b-card>
+                        <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
                     </div>
                     
                     <div class="box-care mt-3">
@@ -364,7 +329,7 @@
 
                         <div class="calendar mt-4">
                             <h4 class="title"><span>Lịch</span></h4>
-                            <b-calendar class="w-100" v-model="value" @context="onContext" locale="en-US"></b-calendar>
+                            <b-calendar class="w-100"  locale="en-US"></b-calendar>
                         </div>
 
                         <div class="fanpage mt-4">
@@ -389,29 +354,28 @@
 
 <script>
 	import{
-      mapGetters,
+      mapState,
       mapActions
   } from 'vuex';
-  import NavigationMain from 'com@front/Navigation/Main';
   import MainMenu from 'com@front/Common/MainMenu';
   import SideBar from 'com@front/SideBar';
-  import TheVideoItem from './components/TheVideoItem';
+  import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
 
   import {
         MODULE_INFO
     } from '@app/stores/front/types/module-types';
     import {
-        GET_DETAIL
+        GET_DETAIL,
+        GET_INFORMATION_LIST_TO_CATEGORY
     } from '@app/stores/front/types/action-types';
 
 
     export default {
         name: 'VideoPage',
         components: {
-            NavigationMain,
             MainMenu,
             SideBar,
-            TheVideoItem
+            TabInfoViewedAndPopular
         },
         data() {
             return {
@@ -419,14 +383,16 @@
             }
         },
         computed: {
-            ...mapGetters(['navMainLists'])
+            ...mapState(MODULE_INFO,{
+                infoList: state => state.pageLists
+            }),
         },
         mounted() {
-            this.[GET_DETAIL](22);
+            this.[GET_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
         },
         methods: {
             ...mapActions(MODULE_INFO, [
-                GET_DETAIL,
+                GET_DETAIL,GET_INFORMATION_LIST_TO_CATEGORY
             ]),
         }
     }

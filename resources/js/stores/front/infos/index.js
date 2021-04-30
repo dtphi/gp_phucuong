@@ -1,9 +1,5 @@
 import detail from './detail';
 import {
-  apiGetLists
-} from '@app/api/front/homes';
-import {
-    apiGetDetail,
     apiGetListsToCategory,
     apiGetVideoListsToCategory
   } from '@app/api/front/infos';
@@ -12,8 +8,6 @@ import {
   SET_ERROR,
 } from '@app/stores/front/types/mutation-types';
 import {
-  GET_LISTS,
-  GET_DETAIL,
   GET_INFORMATION_LIST_TO_CATEGORY
 } from '@app/stores/front/types/action-types';
 
@@ -34,9 +28,6 @@ export default {
     },
 
     mutations: {
-        MAIN_MENU(state, value) {
-            state.mainMenus = value
-        },
         INIT_LIST(state, payload) {
           state.pageLists = payload;
         },
@@ -46,18 +37,6 @@ export default {
     },
 
     actions: {
-        [GET_DETAIL]({ commit }, routeParams) {
-          if (routeParams.hasOwnProperty('slug')) {
-            apiGetDetail(
-              routeParams.slug, 
-              (result) => {
-                  console.log(result)
-              },
-              (errors)=> {
-                  console.log(errors)
-              })
-          }
-        },
         [GET_INFORMATION_LIST_TO_CATEGORY]({ commit }, routeParams) {
           let slug = '';
           if (routeParams.hasOwnProperty('slug')) {
@@ -87,20 +66,6 @@ export default {
             )
           }
         },
-      [GET_LISTS]({
-        commit
-      }, options) {
-        apiGetLists(
-        (responses) => {
-            commit(INIT_LIST, responses.pageLists);
-            commit(SET_ERROR, []);
-          },
-          (errors) => {
-            commit(SET_ERROR, error);
-          },
-          options
-        );
-      }
     },
     modules: {
       detail: detail
