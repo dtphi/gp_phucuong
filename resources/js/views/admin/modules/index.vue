@@ -12,10 +12,25 @@
     export default {
         name: 'ExtensionModuler',
         components: {
-            'module-home-banners': () => import('./home_banners'),
-			'module-category-left-side-bars': () => import('./category_left_side_bars'),
+			
 			'module-category-icon-side-bars': () => import('./category_icon_side_bars'),
+            
+			'module-category-left-side-bars': () => import('./category_left_side_bars'),
+
+			'module-home-banners': () => import('./home_banners'),
+
+			'module-loi-chuas': () => import('./loi_chuas'),
+			
 			'module-thong-baos': () => import('./thong_baos'),
+
+			'module-tin-giao-hoi-viet-names': () => import('./tin_giao_hoi_viet_nams'),
+
+			'module-tin-giao-hois': () => import('./tin_giao_hois'),
+
+			'module-tin-giao-phans': () => import('./tin_giao_phans'),
+
+			'module-van-kiens': () => import('./van_kiens'),
+
         },
 		computed: {
           currentModule: function() {

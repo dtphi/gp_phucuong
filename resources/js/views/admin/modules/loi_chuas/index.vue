@@ -132,8 +132,8 @@
             }
         },
         setting: {
-            panel_title: 'Module Danh Mục Icon',
-            frm_title: 'Thêm danh mục Icon',
+            panel_title: 'Module Lời Chúa',
+            frm_title: 'Thêm danh mục',
             btn_save_txt: 'Lưu',
         }
     };
