@@ -38,6 +38,27 @@
 			      </li>
 			    </ul>
 			  </li>
+
+			  <li id="module">
+			  	<a class="parent">
+			  		<i class="fa fa-tags fa-fw"></i> 
+			  		<span>{{$options.setting.module_title}}</span></a>
+			    <ul class="collapse">
+			      <li>
+			      	<a :href="_getHref('module-category-left-side-bars')">{{$options.setting.module_category_left_side_bar}}</a>
+			      </li>
+				  <li>
+			      	<a :href="_getHref('module-home-banners')">{{$options.setting.module_home_banner}}</a>
+			      </li>
+				  <li>
+					  <a :href="_getHref('module-category-icon-side-bars')">{{$options.setting.module_category_icon_side_bar}}</a>
+				  </li>
+				  <li>
+					  <a :href="_getHref('module-thong-baos')">{{$options.setting.module_thong_bao}}</a>
+				  </li>
+			    </ul>
+			  </li>
+
 			</ul>
 		</nav>
 </template>
@@ -61,6 +82,11 @@
         	category_sub_cate_info_title: 'Danh mục',
         	category_sub_info_title: 'Tin tức',
         	category_sub_image_title: 'Hình ảnh',
+			module_title: 'Mở rộng',
+			module_category_left_side_bar: 'Danh mục trái',
+			module_category_icon_side_bar: 'Danh mục Icon',
+			module_home_banner: 'Banner trang chủ',
+			module_thong_bao: 'Danh mục thông báo',
         }
     };
 </script>

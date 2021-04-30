@@ -358,7 +358,6 @@
       mapActions
   } from 'vuex';
   import MainMenu from 'com@front/Common/MainMenu';
-  import SideBar from 'com@front/SideBar';
   import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
 
   import {
@@ -374,7 +373,6 @@
         name: 'VideoPage',
         components: {
             MainMenu,
-            SideBar,
             TabInfoViewedAndPopular
         },
         data() {

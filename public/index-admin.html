@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Laravel</title>
+    </head>
+    <body class="antialiased">
+        <div id="gp-phu-cuong" class="relative items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+            <component :is="this.$route.meta.layout || 'div'">
+              <router-view></router-view>
+            </component>
+        </div>
+        <!-- Scripts -->
+        <script src="/administrator/javascript/jquery/jquery-2.1.1.min.js"></script>
+        <script src="/administrator/plugins/jquery-ui/jquery-ui.min.js"></script>
+        <script src="/administrator/javascript/bootstrap/js/bootstrap.min.js"></script>
+
+        <script src="/js/app-admin.js" defer></script>
+    </body>
+</html>

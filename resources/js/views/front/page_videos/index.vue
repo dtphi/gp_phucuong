@@ -25,7 +25,6 @@
       mapActions,
       mapState
   } from 'vuex';
-  import NavigationMain from 'com@front/Navigation/Main';
   import MainMenu from 'com@front/Common/MainMenu';
   import SideBar from 'com@front/SideBar';
   import TheVideoItem from './components/TheVideoItem';
@@ -41,7 +40,6 @@
     export default {
         name: 'InfoListtoCategory',
         components: {
-            NavigationMain,
             MainMenu,
             SideBar,
             TheVideoItem

@@ -1,7 +1,6 @@
 <template>
   <main id="video" class="py-2">
         <div class="container">
-            <!-- <navigation-main :menu-items="navMainLists"></navigation-main> -->
             <main-menu></main-menu>
             <b-row class="mt-3">
                 <b-col cols="3">
@@ -23,7 +22,6 @@
       mapActions,
       mapState
   } from 'vuex';
-  import NavigationMain from 'com@front/Navigation/Main';
   import MainMenu from 'com@front/Common/MainMenu';
   import SideBar from 'com@front/SideBar';
   import TheCategoryNewsItem from './components/TheCategoryNewsItem';
@@ -39,7 +37,6 @@
     export default {
         name: 'InfoListtoCategory',
         components: {
-            NavigationMain,
             MainMenu,
             SideBar,
             TheCategoryNewsItem

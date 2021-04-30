@@ -12,6 +12,7 @@ import InformationListPage from 'v@admin/informations';
 import InformationAddPage from 'v@admin/informations/add';
 import InformationEditPage from 'v@admin/informations/edit';
 import DashboardPage from 'v@admin/dashboards';
+import Module from 'v@admin/modules';
 
 import {
     config
@@ -50,6 +51,27 @@ export default [{
                 footer: true
             },
             title: 'Quản trị | ' + config.site_name
+        }
+    }, {
+        path: 'module-*',
+        component: Module,
+        name: 'admin.module.list',
+        meta: {
+            layout: DefaultLayout,
+            auth: true,
+            breadcrumbs: [{
+                name: 'Quản trị',
+                linkName: 'admin.dashboards',
+                linkPath: '/dashboards'
+            }, {
+                name: 'Phần mở rộng'
+            }],
+            header: 'Phần mở rộng',
+            role: 'admin',
+            title: 'Danh mục tin | ' + config.site_name,
+            show: {
+                footer: true
+            }
         }
     }, {
         path: 'news-categories',
