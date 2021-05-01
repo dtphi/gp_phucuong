@@ -2,7 +2,7 @@
 	<div id="content">
       	<div class="container-fluid">
 			  	<keep-alive>
-					<component v-bind:is="currentModule" class="tab"></component>
+					<component v-bind:is="currentModule"></component>
 				</keep-alive>
       	</div>
   	</div>
@@ -12,7 +12,7 @@
     export default {
         name: 'ExtensionModuler',
         components: {
-			
+
 			'module-category-icon-side-bars': () => import('./category_icon_side_bars'),
             
 			'module-category-left-side-bars': () => import('./category_left_side_bars'),
