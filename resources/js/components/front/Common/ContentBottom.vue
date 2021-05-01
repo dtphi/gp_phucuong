@@ -1,39 +1,9 @@
 <template>
     <div class="highlights mt-3">
-        <h4 class="tit-highlights"><span>Nổi bật</span></h4>
-
-        <b-row>
-            <b-col cols="4" class="mb-3 col-mobile">
-                <h4 class="tit-common">Sách nói</h4>
-                <a href="#" class="row-item-2" v-for="(item, index) in 4" :key="index">
-                    <span>Chí khí - đường hi vọng</span>
-                    <span>
-                        <img :src="iconBook" alt="">
-                        <i>Thanh Thúy</i>
-                    </span>
-                </a>
-            </b-col>
-            <b-col cols="4" class="mb-3 col-mobile">
-                <h4 class="tit-common">Youtube</h4>
-                <a href="#" class="row-item-2" v-for="(item, index) in 4" :key="index">
-                    <span>Chí khí - đường hi vọng</span>
-                    <span>
-                        <img :src="iconBook" alt="">
-                        <i>Thanh Thúy</i>
-                    </span>
-                </a>
-            </b-col>
-            <b-col cols="4" class="mb-3 col-mobile">
-                <h4 class="tit-common">Hát thanh vịnh</h4>
-                <a href="#" class="row-item-2" v-for="(item, index) in 4" :key="index">
-                    <span>Chí khí - đường hi vọng</span>
-                    <span>
-                        <img :src="iconBook" alt="">
-                        <i>Thanh Thúy</i>
-                    </span>
-                </a>
-            </b-col>
-        </b-row>
+        
+        <keep-alive>
+            <component v-bind:is="currentContentBoth"></component>
+        </keep-alive>
         <b-row class="mt-2">
             <keep-alive>
                 <component v-bind:is="currentContentLeft"></component>
@@ -66,6 +36,7 @@
         components: {
             'content-bottom-left': () => import('./ContentBottomLeft'),
             'content-bottom-right': () => import('./ContentBottomRight'),
+            'content-bottom-both': () => import('./ContentBottomBoth'),
         },
         data() {
             return {
@@ -83,6 +54,10 @@
             },
             currentContentRight: function() {
 			  	let moduleName = 'bottom-right';
+            	return "content-" + moduleName.toLowerCase();
+            },
+            currentContentBoth: function() {
+			  	let moduleName = 'bottom-both';
             	return "content-" + moduleName.toLowerCase();
             },
         },

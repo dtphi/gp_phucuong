@@ -178,7 +178,7 @@
     import ModuleLoiChua from 'v@front/modules/loi_chuas';
 
     export default {
-        name: 'ContentBottomRight',
+        name: 'ContentBottomLeft',
         components: {
             ModuleLoiChua,
         },

@@ -1,18 +1,8 @@
 import AuthLayout from 'v@admin/layouts/auth';
 import Login from 'v@admin/auth/Login';
-import Users from 'v@admin/users';
-import FileManager from 'v@admin/filemanagers';
 
 /*default layout*/
 import DefaultLayout from 'v@admin/layouts/default';
-import CategoryListPage from 'v@admin/categorys';
-import CategoryEditPage from 'v@admin/categorys/edit';
-import CategoryAddPage from 'v@admin/categorys/add';
-import InformationListPage from 'v@admin/informations';
-import InformationAddPage from 'v@admin/informations/add';
-import InformationEditPage from 'v@admin/informations/edit';
-import DashboardPage from 'v@admin/dashboards';
-import Module from 'v@admin/modules';
 
 import {
     config
@@ -42,7 +32,7 @@ export default [{
         }
     }, {
         path: 'dashboards',
-        component: DashboardPage,
+        component: () => import('v@admin/dashboards'),
         name: 'admin.dashboards',
         meta: {
             layout: DefaultLayout,
@@ -54,7 +44,7 @@ export default [{
         }
     }, {
         path: 'module-*',
-        component: Module,
+        component: () => import('v@admin/modules'),
         name: 'admin.module.list',
         meta: {
             layout: DefaultLayout,
@@ -80,7 +70,7 @@ export default [{
         },
         children: [{
             path: '',
-            component: CategoryListPage,
+            component: () => import('v@admin/categorys'),
             name: 'admin.category.list',
             meta: {
                 layout: DefaultLayout,
@@ -101,7 +91,7 @@ export default [{
             }
         }, {
             path: 'add',
-            component: CategoryAddPage,
+            component: () => import('v@admin/categorys/add'),
             name: 'admin.category.add',
             meta: {
                 layout: DefaultLayout,
@@ -126,7 +116,7 @@ export default [{
             }
         }, {
             path: 'edit/:categoryId',
-            component: CategoryEditPage,
+            component: () => import('v@admin/categorys/edit'),
             name: 'admin.category.edit',
             meta: {
                 layout: DefaultLayout,
@@ -144,7 +134,7 @@ export default [{
                 }],
                 header: 'CategoryEdit',
                 role: 'admin',
-                title: 'Users | ' + config.site_name,
+                title: 'Edit category | ' + config.site_name,
                 show: {
                     footer: true
                 }
@@ -157,7 +147,7 @@ export default [{
         },
         children: [{
             path: '',
-            component: Users,
+            component: () => import('v@admin/users'),
             name: 'admin.users.list',
             meta: {
                 auth: true,
@@ -181,7 +171,7 @@ export default [{
         },
         children: [{
             path: '',
-            component: InformationListPage,
+            component: () => import('v@admin/informations'),
             name: 'admin.informations.list',
             meta: {
                 auth: true,
@@ -199,7 +189,7 @@ export default [{
             }
         }, {
             path: 'add',
-            component: InformationAddPage,
+            component: () => import('v@admin/informations/add'),
             name: 'admin.informations.add',
             meta: {
                 auth: true,
@@ -221,7 +211,7 @@ export default [{
             }
         }, {
             path: 'edit/:infoId',
-            component: InformationEditPage,
+            component: () => import('v@admin/informations/edit'),
             name: 'admin.informations.edit',
             meta: {
                 auth: true,
@@ -249,7 +239,7 @@ export default [{
         },
         children: [{
             path: '',
-            component: FileManager,
+            component: () => import('v@admin/filemanagers'),
             name: 'admin.filemanagers.list',
             meta: {
                 auth: true,
