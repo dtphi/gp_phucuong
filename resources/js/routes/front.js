@@ -168,7 +168,19 @@ routeEnv = {
                 header: 'News Detail Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức Chi Tiet | ' + config.site_name
+                title: 'Trang Tin Tức Chi Tiet | ' + config.site_name,
+                layout_content: {
+                    content_bottom: false,
+                    content_main: true,
+                    right_collumn:true,
+                    left_collumn: true,
+                }
+            },
+            layout_content: {
+                content_bottom: false,
+                content_main: true,
+                right_collumn:false,
+                left_collumn: true,
             }
         }
     ]
