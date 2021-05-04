@@ -2,12 +2,8 @@
     <tr>
         <td>{{_getNo()}}</td>
         <td class="text-left"><a :href="_getHref()">{{info.name}}</a></td>
-        <td class="text-center">
-            <div class="file animated fadeIn">
-                <div class="file-preview">
-                    <img :src="_getImgUrl()" class="thumb" />
-                </div>
-            </div>
+        <td class="text-center" style="width:7%">
+            <img :src="_getImgUrl()" class="img-thumbnail" />
         </td>
         <td class="text-center">{{_formatDate(info.created_at)}}</td>
     </tr>

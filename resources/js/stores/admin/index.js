@@ -7,6 +7,7 @@ import dashboard from './dashboad';
 import user from './users';
 import info from './infos';
 import news_category from './categories';
+import app_module from './modules';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -140,7 +141,8 @@ export default new Vuex.Store({
     dashboard,
     user,
     info,
-    news_category
+    news_category,
+    app_module,
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

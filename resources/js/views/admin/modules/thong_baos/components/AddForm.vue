@@ -5,7 +5,7 @@
         :is-full-page="fullPage"></loading-over-lay>
         <ul class="nav nav-tabs">
             
-            <li>
+            <li class="active">
                 <a href="#tab-link" data-toggle="tab">{{$options.setting.tab_link_title}}</a>
             </li>
             
@@ -72,7 +72,7 @@
         setting: {
             tab_general_title: 'Tổng quan',
             tab_advance_title: 'Mở rộng',
-            tab_link_title: 'Danh sách',
+            tab_link_title: 'Dữ liệu',
             tab_design_title: 'Màn hình',
             error_msg_system: 'Lỗi hệ thống !',
         }

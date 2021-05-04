@@ -128,10 +128,12 @@ class CSS
         if (Request::is('admin/filemanagers*')) {
             $cssStype    = $this->mapCss();
             $scripts     = $this->mapScriptFileManager();
+            $scripts     .= "<script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
+            $scripts     .= "<script src='/administrator/javascript/bootstrap/js/bootstrap.min.js'></script>\n";
 
             return [
                 '',
-                $this->mapScriptFileManager(),
+                $scripts,
                 ''
             ];
         }

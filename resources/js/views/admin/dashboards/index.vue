@@ -38,29 +38,31 @@
 						  <div class="panel-heading">
 						    <h3 class="panel-title"><i class="fa fa-info"></i>Tin tức mới nhất</h3>
 						  </div>
-						  <div class="table-responsive">
-						    <table class="table">
-								<thead>
-									<tr>
-										<td class="text-left">No</td>
-										<td>Tên</td>
-										<td>Hình ảnh</td>
-										<td class="text-right">Ngày tạo</td>
-									</tr>
-								</thead>
-						      	<tbody v-if="_isNotEmptyList">
-									<tr>
-										<td class="text-center" colspan="6">No results!</td>
-									</tr>
-						    	</tbody>
-								<tbody v-else>
-									<info-item 
-										v-for="(item, idx) in infos"
-										:info="item"
-										:no="idx"
-										:key="idx"></info-item>
-								</tbody>
-						    </table>
+						  <div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<td class="text-left">No</td>
+											<td>Tên</td>
+											<td>Hình ảnh</td>
+											<td class="text-right">Ngày tạo</td>
+										</tr>
+									</thead>
+									<tbody v-if="_isNotEmptyList">
+										<tr>
+											<td class="text-center" colspan="6">No results!</td>
+										</tr>
+									</tbody>
+									<tbody v-else>
+										<info-item 
+											v-for="(item, idx) in infos"
+											:info="item"
+											:no="idx"
+											:key="idx"></info-item>
+									</tbody>
+								</table>
+							</div>
 						  </div>
 						</div>
 						 </div>

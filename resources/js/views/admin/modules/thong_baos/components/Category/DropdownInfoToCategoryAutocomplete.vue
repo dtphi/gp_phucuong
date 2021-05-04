@@ -10,7 +10,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_NEWS_CATEGORY_EDIT
+        MODULE_MODULE_THONG_BAO
     } from 'store@admin/types/module-types';
     import {
         ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
@@ -29,7 +29,7 @@
             }
         },
         methods: {
-        	...mapActions(MODULE_NEWS_CATEGORY_EDIT, [
+        	...mapActions(MODULE_MODULE_THONG_BAO, [
         		ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
         	]),
             _selectParentCategory() {

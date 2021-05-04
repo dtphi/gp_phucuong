@@ -1,12 +1,24 @@
 <template>
     <div class="form-group">
         <label 
-        	class="col-sm-2 control-label" 
+        	class="col-sm-1 control-label" 
         	for="input-parent-category-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">{{$options.setting.paren_category_txt}}</span>
-        	</label>
-        <div class="col-sm-10" id="cms-scroll-dropdown">
+        			data-original-title="(Tự động hoàn toàn)">Key</span>
+        </label>
+        
+        <div class="col-sm-3">
+            <input class="form-control" />
+        </div>
+        
+        <label 
+        	class="col-sm-1 control-label" 
+        	for="input-parent-category-name">
+        		<span data-toggle="tooltip" 
+        			data-original-title="(Tự động hoàn toàn)">Value</span>
+        </label>
+
+        <div class="col-sm-7" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		v-on:keyup.enter="_searchProducts()" 
@@ -55,7 +67,7 @@
     import CategoryItem from './CategoryItemEdit';
     import {
         MODULE_NEWS_CATEGORY,
-        MODULE_NEWS_CATEGORY_EDIT,
+        MODULE_MODULE_THONG_BAO,
         MODULE_INFO_EDIT
     } from 'store@admin/types/module-types';
     import {
@@ -87,7 +99,7 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_NEWS_CATEGORY_EDIT, [
+            ...mapGetters(MODULE_MODULE_THONG_BAO, [
                 'infoCategory',
                 'getNameQuery'
             ]),
