@@ -97,7 +97,8 @@
     #video {
         .row {
             .col-3,
-            .col-9 {
+            .col-9,
+            .col-mobile {
                 max-width: 100%;
                 flex: unset;
             }

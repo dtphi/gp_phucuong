@@ -100,14 +100,6 @@
 
 @media screen and (max-width: 767px) {
     #video {
-        .row {
-            .col-3,
-            .col-9 {
-                max-width: 100%;
-                flex: unset;
-            }
-        }
-
         .border {
             margin: 10px 0 !important;
         }

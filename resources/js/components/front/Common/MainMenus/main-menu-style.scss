@@ -88,15 +88,21 @@
             border-bottom: 1px solid #ED1C24;
           }
           
-
-          .icon-plus {
+          .icon-menu {
             text-align: center;
-            font-size: 20px;
-            width: 30px;
             position: absolute;
+            width: 30px;
             top: 50%;
             right: 0px;
             transform: translateY(-50%);
+
+            &.icon-plus {
+              font-size: 20px;
+            }
+  
+            &.icon-caret {
+              font-size: 10px;
+            }
           }
         }
 

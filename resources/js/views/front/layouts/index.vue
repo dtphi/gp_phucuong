@@ -47,6 +47,59 @@
 
 		
 		word-break: break-word;
+
+		.bg-blue { background-color: #00d9ff; }
+		.bg-sliver { background-color: #cdcdcd; }
+		.bg-red { background-color: #ed1c24; }
+		.bg-green { background-color: #1ced38; }
+		.bg-orange { background-color: #ff9900; }
+		.bg-pink { background-color: #ed1c96; }
+		.bg-grow { background-color: #57070793; }
+
+		.clr-blue { color: #00d9ff; }
+		.clr-orange { color: #ff9900; }
+
+		.box-social {
+			.list-icon {
+				font-size: 0;
+
+				a {
+					display: inline-block;
+					width: calc(100% / 5);
+				}
+
+				.nav-tabs {
+					.nav-link {
+						color: #000;
+					}
+				}
+			}
+		}
+
+		.box-care {
+			#email {
+				background-color: #CCCCCC;
+				padding: 6px;
+				border-radius: 4px;
+				width: 100%;
+				outline: 0;
+			}
+
+			.btn {
+				background-color: #ED1C24;
+				color: #ffffff;
+				padding: 4px 14px;
+				font-weight: bold;
+			}
+
+			.text-download {
+				color: #ff0000;
+				font-weight: 700;
+				text-transform: uppercase;
+				text-align: center;
+				vertical-align: middle;
+			}
+		}
 	}
 
 	.img {

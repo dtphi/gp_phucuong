@@ -1,10 +1,10 @@
 <template>
     <li :class="activeClass">
     	<div v-if="isFolder"><a  :href="_getHref()">{{_getTitle()}}</a>
-            <b-icon class="icon-plus" icon="plus" @click="_togleMenu"></b-icon></div>
+            <b-icon class="icon-menu icon-plus" icon="plus" @click="_togleMenu"></b-icon></div>
         <div v-else>
         <a  :href="_getHref()">{{_getTitle()}}</a>
-        <b-icon class="icon-plus" icon="arrow-right-short"></b-icon>
+        <b-icon class="icon-menu icon-caret" icon="caret-right-fill"></b-icon>
         </div>
         
         <slot></slot>
