@@ -30,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel::class,
             \App\Http\Controllers\Api\Admin\Services\NewsGroupService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\SettingModel::class,
+            \App\Http\Controllers\Api\Admin\Services\SettingService::class
+        );
 
         /*=====================Front end======================== .*/
         $this->app->bind(

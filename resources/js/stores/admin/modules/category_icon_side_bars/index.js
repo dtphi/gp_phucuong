@@ -39,9 +39,16 @@ import {
 const defaultState = () => {
   return {
     isOpen: false,
-    action: null,
-    classShow: 'modal fade',
-    styleCss: '',
+    moduleData: {
+      code: 'module_category_icon_side_bar',
+      keys: [
+        {
+          key: 'module_category_icon_side_bar_categories', 
+          value: [],
+          serialize: true
+        }
+      ]
+    },
     newsGroup: {
       category_id: null,
       category_name: '',
@@ -74,9 +81,6 @@ export default {
   namespaced: true,
   state: defaultState(),
   getters: {
-    newsGroupAdd(state) {
-      return state.newsGroupAdd
-    },
     isOpen(state) {
       return state.isOpen
     },
@@ -119,16 +123,10 @@ export default {
 
   mutations: {
     [NEWSGROUPS_MODAL_SET_OPEN_MODAL](state, payload) {
-      state.action = payload;
-      state.classShow = 'modal fade show';
-      state.styleCss = 'display:block';
       state.updateSuccess = false;
     },
 
     [NEWSGROUPS_MODAL_SET_CLOSE_MODAL](state) {
-      state.action = 'closeModal';
-      state.classShow = 'modal fade';
-      state.styleCss = 'display:none';
       state.errors = [];
     },
 

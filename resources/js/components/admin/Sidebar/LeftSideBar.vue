@@ -41,7 +41,7 @@
 
 			  <li id="module">
 			  	<a class="parent">
-			  		<i class="fa fa-tags fa-fw"></i> 
+			  		<i class="fa fa-puzzle-piece fw"></i> 
 			  		<span>{{$options.setting.module_title}}</span></a>
 			    <ul class="collapse">
 			      <li>

@@ -49,6 +49,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
         Route::get('/news-categories/dropdowns','NewsGroupController@dropdown');
         Route::apiResource('news', 'InformationController');
         Route::get('/informations/dropdowns','InformationController@dropdown');
+        Route::apiResource('settings', 'SettingController');
 
         Route::any('/mmedia/{any}', function () {});
     });
