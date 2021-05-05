@@ -15,4 +15,6 @@ final class Tables
     public static $information_relateds = DB_PREFIX . 'information_relateds';
     public static $information_images = DB_PREFIX . 'information_images';
     public static $information_descriptions = DB_PREFIX . 'information_descriptions';
+
+    public static $settings = DB_PREFIX . 'settings';
 }

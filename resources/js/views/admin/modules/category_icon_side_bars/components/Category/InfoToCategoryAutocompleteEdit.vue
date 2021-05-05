@@ -8,7 +8,7 @@
         </label>
         
         <div class="col-sm-3">
-            <input class="form-control" />
+            <input class="form-control" v-model="settingCategory.key" type="text" disabled/>
         </div>
         
         <label 
@@ -77,15 +77,10 @@
     import lodash from 'lodash';
 
     export default {
-        name: 'CategoryEditAutocompleteEdit',
+        name: 'TheCategoryAutocompleteList',
         components: {
             TheDropdownCategory,
             CategoryItem
-        },
-        props: {
-            categoryId: {
-                default: null
-            }
         },
         data() {
             return {
@@ -101,10 +96,12 @@
         computed: {
             ...mapGetters(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
                 'infoCategory',
-                'getNameQuery'
+                'getNameQuery',
+                'settingCategory'
             ]),
             ...mapState(MODULE_INFO_EDIT, {
-                categorys: state => state.listCategorysDisplay
+                categorys: state => state.listCategorysDisplay,
+                categoryIds: state => state.info.categorys
             }),
             ...mapState(MODULE_NEWS_CATEGORY, {
                 dropdowns: state => state.dropdownCategories
@@ -120,9 +117,13 @@
                 handler: function() {
                     this._addInfoToCategory(this.infoCategory);
                 }
+            },
+            'categoryIds'(newValue) {
+                this.actionResetSettingData(newValue);
             }
         },
         methods: {
+            ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, ['actionResetSettingData']),
         	...mapActions(MODULE_NEWS_CATEGORY, [
         		ACTION_GET_DROPDOWN_CATEGORY_LIST
         	]),

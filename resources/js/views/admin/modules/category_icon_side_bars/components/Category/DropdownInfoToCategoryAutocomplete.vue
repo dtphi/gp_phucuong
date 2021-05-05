@@ -17,7 +17,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'TheDropdownCategoryEdit',
+        name: 'TheDropdownCategory',
         props: {
             category: {
                 default: {}

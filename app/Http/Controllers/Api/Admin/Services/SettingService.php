@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\SettingModel;
 use App\Http\Resources\Settings\SettingCollection;
 use App\Http\Resources\Settings\SettingResource;
 use App\Models\Setting;
+use DB;
 
 final class SettingService implements BaseModel, SettingModel 
 {
@@ -26,20 +27,28 @@ final class SettingService implements BaseModel, SettingModel
          * Save setting with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
-
         try {
-            Setting::forceDeleteByCode($data['code']);
+            //Setting::forceDeleteByCode($data['code']);
+            $model = new Setting();
+            $model->code = $data['code']; 
+            
             foreach($data['settings'] as $setting) {
-                Setting::forceInsert($data['code'], $setting['key'], $setting['value'], $setting['serialized']);
+                $model->key_data = $setting['key'];
+                $model->value = $setting['value'];
+                $model->serialized = $setting['serialized'];
+
+                $model->save();
+                //Setting::forceInsert($data['code'], $setting['key'], $setting['value'], $setting['serialized']);
             }
         } catch (\Exception $e) {
-            DB::rollBack();
+
+            //DB::rollBack();
 
             return false;
         }
 
         DB::commit();
 
-        return $this->model;
+        return true;
     }
 }

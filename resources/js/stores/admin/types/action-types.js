@@ -43,3 +43,4 @@ export const ACTION_RESET_NOTIFICATION_INFO = 'resetNotificationInfo';
 export const ACTION_SEARCH_ALL = 'searchAll';
 export const ACTION_SET_IMAGE = 'setImage';
 export const ACTION_GET_DROPDOWN_LIST = 'getDropdownList';
+export const ACTION_INSERT_SETTING = 'insertSetting';

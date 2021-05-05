@@ -71,26 +71,6 @@ class SettingController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param SettingRequest $request
-     * @param null $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(SettingRequest $request, $id = null)
-    {
-        try {
-            $this->settingSv->apiGetDetail($id);
-
-        } catch (HandlerMsgCommon $e) {
-            Log::debug('User not found, Request ID = ' . $id);
-
-            throw $e->render();
-        }
-
-        return $this->__handleStore($request);
-    }
-
-    /**
-     * @author : dtphi .
      * @param Setting $setting
      * @param $request
      * @return \Illuminate\Http\JsonResponse
@@ -98,7 +78,6 @@ class SettingController extends ApiController
     private function __handleStore(&$request)
     {
         $requestParams = $request->all();
-
         if ($result = $this->settingSv->apiInsertOrUpdate($requestParams)) {
             return $this->respondUpdated($result);
         }

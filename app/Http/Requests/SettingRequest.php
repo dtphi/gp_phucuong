@@ -56,7 +56,7 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'code'       => 'required|min:5|max:255',
+            'code'       => 'required|min:5|max:128',
             'settings' => 'required'
         ];
     }
