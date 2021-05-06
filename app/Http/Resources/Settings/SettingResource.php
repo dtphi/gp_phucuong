@@ -7,6 +7,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class SettingResource extends JsonResource
 {
     /**
+     * @var string
+     */
+    public static $wrap = 'setting';
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request

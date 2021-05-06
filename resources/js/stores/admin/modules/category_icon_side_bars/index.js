@@ -1,5 +1,6 @@
 import AppConfig from 'api@admin/constants/app-config';
 import {
+  apiGetSettingByCode,
   apiInsertSetting
 } from 'api@admin/setting';
 import {
@@ -11,7 +12,8 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_SELECT_DROPDOWN_PARENT_CATEGORY,
   ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY,
-  ACTION_INSERT_SETTING
+  ACTION_INSERT_SETTING,
+  ACTION_GET_SETTING
 } from '../../types/action-types';
 const settingCategory = {
   key: 'module_category_icon_side_bar_categories', 
@@ -111,6 +113,26 @@ export default {
   },
 
   actions: {
+    [ACTION_GET_SETTING]({
+      dispatch,
+      state,
+      commit
+    }, params) {
+      dispatch(ACTION_SET_LOADING, true);
+      apiGetSettingByCode(
+        state.moduleData.code,
+        (result) => { console.log(result);
+          //commit(INFOS_MODAL_SET_INFO, result.data);
+          //commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, result.data.category_display_list);
+
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      );
+    },
+
     [ACTION_INSERT_SETTING]({commit, dispatch}, settingData) {
       dispatch(ACTION_SET_LOADING, true);
       apiInsertSetting(

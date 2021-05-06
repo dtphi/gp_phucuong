@@ -12,13 +12,43 @@ use DB;
 
 final class SettingService implements BaseModel, SettingModel 
 {
-    public function apiGetList(array $options = [], $limit = 15) {}
+    /**
+     * @var Setting|null
+     */
+    private $model = null;
 
-    public function apiGetResourceCollection(array $options = [], $limit = 15){}
+    /**
+     * @author : dtphi .
+     * SettingService constructor.
+     */
+    public function __construct()
+    {
+        $this->model = new Setting();
+    }
 
-    public function apiGetDetail($id = null){}
+    public function apiGetList(array $options = [], $limit = 15) {
+        $query = $this->model->where('code', $options['code']);
 
-    public function apiGetResourceDetail($id = null){}
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
+
+    public function apiGetResourceCollection(array $options = [], $limit = 15){
+        return new SettingCollection($this->apiGetList($options, $limit));
+    }
+
+    public function apiGetDetail($id = null){
+        $this->model = $this->model->where('key', $id)->get();
+
+        return $this->model;
+    }
+
+    public function apiGetResourceDetail($id = null){
+        return new AdminResource($this->apiGetDetail($id));
+    }
 
     public function apiInsertOrUpdate(array $data = []){
         // TODO: Implement apiInsertOrUpdate() method.
@@ -28,27 +58,20 @@ final class SettingService implements BaseModel, SettingModel
          */
         DB::beginTransaction();
         try {
-            //Setting::forceDeleteByCode($data['code']);
-            $model = new Setting();
-            $model->code = $data['code']; 
+            Setting::forceDeleteByCode($data['code']);
             
             foreach($data['settings'] as $setting) {
-                $model->key_data = $setting['key'];
-                $model->value = $setting['value'];
-                $model->serialized = $setting['serialized'];
-
-                $model->save();
-                //Setting::forceInsert($data['code'], $setting['key'], $setting['value'], $setting['serialized']);
+                Setting::forceInsert($data['code'], $setting['key'], $setting['value'], $setting['serialized']);
             }
-        } catch (\Exception $e) {
+        } catch (\Exceptions $e) {
 
-            //DB::rollBack();
+            DB::rollBack();
 
             return false;
         }
 
         DB::commit();
 
-        return true;
+        return $data['code'];
     }
 }

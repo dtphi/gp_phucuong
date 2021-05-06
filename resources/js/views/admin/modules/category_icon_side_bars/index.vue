@@ -7,11 +7,7 @@
                 <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{err}}</p>
             </div>
         </template>
-        <template v-if="loading">
-            <loading-over-lay 
-                :active.sync="loading"
-                :is-full-page="fullPage"></loading-over-lay>
-        </template>
+        
         <validation-observer 
             ref="observerInfo" 
             @submit.prevent="_submitInfo">

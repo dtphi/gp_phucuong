@@ -3,7 +3,6 @@ import {
   fn_get_base_api_detail_url
 } from '@app/api/utils/fn-helper';
 import {
-  API_NEWS_GROUPS_RESOURCE,
   API_SETTING_RESOURCE
 } from 'store@admin/types/api-paths';
 
@@ -15,13 +14,13 @@ import {
  * @param  {[type]} errResole   [description]
  * @return {[type]}             [description]
  */
-export const apiGetNewsGroupById = (newsGroupId, resolve, errResole) => {
-  axios.get(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, newsGroupId))
+export const apiGetSettingByCode = (code, resolve, errResole) => {
+  axios.get(fn_get_base_api_detail_url(API_SETTING_RESOURCE, code))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = response.data.newsgroup;
+        json['data'] = response.data.setting;
         json['status'] = 1000;
         resolve(json);
       } else {

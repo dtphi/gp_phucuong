@@ -31,6 +31,7 @@
     } from 'store@admin/types/module-types';
 
     import {
+        ACTION_GET_SETTING,
         ACTION_INSERT_SETTING
     } from 'store@admin/types/action-types';
    
@@ -38,6 +39,12 @@
 
     export default {
         name: 'TheModuleForm',
+        beforeCreate() {
+            const codeSetting = this.$store.app_module;console.log(codeSetting)
+            if (codeSetting) {
+                this.$store.dispatch(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR + '/' + ACTION_GET_SETTING, codeSetting);
+            }
+        },
         components: {
             TabData,
         },
@@ -55,8 +62,12 @@
                 'moduleData',
             ])
         },
+        mounted() {
+            this.[ACTION_GET_SETTING]();
+        },
         methods: {
             ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
+                ACTION_GET_SETTING,
                 ACTION_INSERT_SETTING
             ]),
             _submitInfo() {

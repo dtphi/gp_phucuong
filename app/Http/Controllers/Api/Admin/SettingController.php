@@ -39,10 +39,10 @@ class SettingController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null)
+    public function show($code = null)
     {
         try {
-            $json = $this->settingSv->apiGetResourceDetail($id);
+            $json = $this->settingSv->apiGetResourceCollection(['code' => $code]);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -64,7 +64,7 @@ class SettingController extends ApiController
             return $storeResponse;
         }
 
-        $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
+        $resourceId = ($this->getResource()) ? $this->getResource() : null;
 
         return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
     }

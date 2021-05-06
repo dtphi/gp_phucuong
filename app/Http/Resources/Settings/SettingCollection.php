@@ -14,6 +14,12 @@ class SettingCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $results = [];
+        
+        return [
+            'results' => $this->collection,
+            'errors'  => [],
+            'status'  => 1000
+        ];
     }
 }

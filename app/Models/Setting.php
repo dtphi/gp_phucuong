@@ -14,6 +14,11 @@ class Setting extends BaseModel
      */
     protected $primaryKey = 'setting_id';
 
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+
         /**
      * @author : dtphi .
      * The attributes that are mass assignable.
@@ -36,14 +41,9 @@ class Setting extends BaseModel
         $serialized = (int)$serialized;
 
         if (!empty($code) && !empty($key)) {
-            return $this->fill([
-                'code' => $code, 
-                'key' => $key, 
-                'value' => $value, 
-                'serialized' => $serialized
-            ])->save();
-           // $insertQuery = 'insert into ' . Tables::$settings . ' (setting_id, code, key, value, serialized) values (?, ?, ?, ?, ?)';
-            //return dd(DB::insert(0, $insertQuery, [$code, $key, $value, $serialized]));
+
+            $insertQuery = 'insert into ' . Tables::$settings . ' (code, key_data, value, serialized) values (?, ?, ?, ?)';
+            return DB::insert($insertQuery, [$code, $key, $value, $serialized]);
         }
     }
 
