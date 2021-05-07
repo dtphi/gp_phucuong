@@ -20,7 +20,7 @@ export const apiGetSettingByCode = (code, resolve, errResole) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = response.data.setting;
+        json['data'] = response.data.data;
         json['status'] = 1000;
         resolve(json);
       } else {

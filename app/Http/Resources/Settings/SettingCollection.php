@@ -15,9 +15,21 @@ class SettingCollection extends ResourceCollection
     public function toArray($request)
     {
         $results = [];
-        
+        foreach($this->collection as $setting) {
+            $value = ($setting->serialized) ? unserialize($setting->value): $setting->value;
+
+            $results[$setting->key_data] = [
+                'key' => $setting->key_data,
+                'serialize' => $setting->serialized,
+                'value' => $value
+            ];
+        }
+
+        $code = 'module_category_icon_side_bar';
+
         return [
-            'results' => $this->collection,
+            'code' => $code,
+            'results' => $results,
             'errors'  => [],
             'status'  => 1000
         ];

@@ -4,6 +4,9 @@ import {
   apiInsertSetting
 } from 'api@admin/setting';
 import {
+  apiGetCategoryByIds
+} from 'api@admin/category';
+import {
   SELECT_DROPDOWN_PARENT_CATEGORY,
   SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
 } from '../../types/mutation-types';
@@ -23,7 +26,7 @@ const settingCategory = {
 
 const defaultState = () => {
   return {
-    settingCategory: settingCategory,
+    module_category_icon_side_bar_categories: settingCategory,
     moduleData: {
       code: 'module_category_icon_side_bar',
       keys: [
@@ -34,6 +37,7 @@ const defaultState = () => {
       category_name: '',
       category_id: null
     },
+    dropdownCategory: [],
     nameQuery: '',
     newsGroupId: 0,
     loading: false,
@@ -46,8 +50,11 @@ export default {
   namespaced: true,
   state: defaultState(),
   getters: {
+    dropdownCategory(state) {
+      return state.dropdownCategory;
+    },
     settingCategory(state) {
-      return state.settingCategory
+      return state.module_category_icon_side_bar_categories;
     },
     moduleData(state) {
       return state.moduleData
@@ -108,7 +115,17 @@ export default {
     },
 
     resetSettingData(state, payload) {
-      state.settingCategory.value = payload;
+      state.module_category_icon_side_bar_categories.value = payload;
+    },
+
+    setKeys(state, payload) {
+      state.module_category_icon_side_bar_categories = payload.module_category_icon_side_bar_categories;
+      state.moduleData.keys = [];
+      state.moduleData.keys.push(payload.module_category_icon_side_bar_categories);
+    },
+
+    setDropdownCategory(state, payload) {
+      state.dropdownCategory = payload;
     }
   },
 
@@ -121,15 +138,31 @@ export default {
       dispatch(ACTION_SET_LOADING, true);
       apiGetSettingByCode(
         state.moduleData.code,
-        (result) => { console.log(result);
-          //commit(INFOS_MODAL_SET_INFO, result.data);
-          //commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, result.data.category_display_list);
+        (res) => {
+          commit('setKeys', res.data.results);
+
+          dispatch('get_category_byIds', res.data.results.module_category_icon_side_bar_categories.value);
+        },
+        (errors) => {
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      );
+    },
+
+    get_category_byIds({commit, dispatch}, cateIds) {
+      const params = {
+        cateIds: cateIds
+      }
+      apiGetCategoryByIds(
+        (res) => {
+          commit('setDropdownCategory', res);
 
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           dispatch(ACTION_SET_LOADING, false);
-        }
+        },
+        params
       );
     },
 

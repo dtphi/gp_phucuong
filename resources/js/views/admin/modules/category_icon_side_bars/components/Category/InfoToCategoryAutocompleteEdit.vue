@@ -97,7 +97,8 @@
             ...mapGetters(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
                 'infoCategory',
                 'getNameQuery',
-                'settingCategory'
+                'settingCategory',
+                'dropdownCategory'
             ]),
             ...mapState(MODULE_INFO_EDIT, {
                 categorys: state => state.listCategorysDisplay,
@@ -120,7 +121,19 @@
             },
             'categoryIds'(newValue) {
                 this.actionResetSettingData(newValue);
+            },
+            'dropdownCategory'(newValue) {
+                console.log(newValue)
             }
+        },
+        updated() {
+            /*const _self = this;console.log(this.dropdownCategory)
+            _.forEach(this.settingCategory.value, function(category) {
+                _self._addInfoToCategory({
+                    category_id: category,
+                    name: 'test'
+                })
+            })*/
         },
         methods: {
             ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, ['actionResetSettingData']),
@@ -137,7 +150,7 @@
               }
           },
           _focusParentCategory() {
-            const query = this.query;
+                const query = this.query;
               this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
               this.$data.dropdownStyle = 'display:block';
           },

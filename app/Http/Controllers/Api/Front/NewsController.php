@@ -119,7 +119,7 @@ class NewsController extends Controller
         $infos = [];
         foreach($results as $info) {
             $staticImg = '\.tmp\cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
-            if (file_exists(public_path('upload/news' . $info->image))) {
+            if (file_exists(public_path('upload/news' . rawurldecode($info->image)))) {
                 $staticImg = $info->image;
             }
             $infos[] = [

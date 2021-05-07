@@ -39,12 +39,6 @@
 
     export default {
         name: 'TheModuleForm',
-        beforeCreate() {
-            const codeSetting = this.$store.app_module;console.log(codeSetting)
-            if (codeSetting) {
-                this.$store.dispatch(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR + '/' + ACTION_GET_SETTING, codeSetting);
-            }
-        },
         components: {
             TabData,
         },
@@ -62,7 +56,7 @@
                 'moduleData',
             ])
         },
-        mounted() {
+        created() {
             this.[ACTION_GET_SETTING]();
         },
         methods: {
