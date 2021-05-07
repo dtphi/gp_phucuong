@@ -8,7 +8,14 @@ import {
 } from 'api@admin/category';
 import {
   SELECT_DROPDOWN_PARENT_CATEGORY,
-  SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
+  SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY,
+  MODULE_UPDATE_SET_LOADING,
+  MODULE_UPDATE_SETTING_SUCCESS,
+  MODULE_UPDATE_SETTING_FAILED,
+  MODULE_UPDATE_SET_ERROR,
+  MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA,
+  MODULE_UPDATE_SET_KEYS_DATA,
+  MODULE_UPDATE_SET_INIT_DROP_DOWN_CATEGORY_LIST,
 } from '../../types/mutation-types';
 import {
   ACTION_SET_LOADING,
@@ -16,7 +23,9 @@ import {
   ACTION_SELECT_DROPDOWN_PARENT_CATEGORY,
   ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY,
   ACTION_INSERT_SETTING,
-  ACTION_GET_SETTING
+  ACTION_GET_SETTING,
+  ACTION_GET_CATEGORY_LIST_BY_IDS,
+  ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA,
 } from '../../types/action-types';
 const settingCategory = {
   key: 'module_category_icon_side_bar_categories', 
@@ -86,19 +95,19 @@ export default {
 
   mutations: {
 
-    MODULE_UPDATE_SET_LOADING(state, payload) {
+    [MODULE_UPDATE_SET_LOADING](state, payload) {
       state.loading = payload
     },
 
-    MODULE_UPDATE_SETTING_SUCCESS(state, payload) {
+    [MODULE_UPDATE_SETTING_SUCCESS](state, payload) {
       state.updateSuccess = payload
     },
 
-    MODULE_UPDATE_SETTING_FAILED(state, payload) {
+    [MODULE_UPDATE_SETTING_FAILED](state, payload) {
       state.updateSuccess = payload
     },
 
-    MODULE_UPDATE_SET_ERROR(state, payload) {
+    [MODULE_UPDATE_SET_ERROR](state, payload) {
       state.errors = payload
     },
 
@@ -114,17 +123,17 @@ export default {
       state.infoCategory = payload;
     },
 
-    resetSettingData(state, payload) {
+    [MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA](state, payload) {
       state.module_category_icon_side_bar_categories.value = payload;
     },
 
-    setKeys(state, payload) {
+    [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
       state.module_category_icon_side_bar_categories = payload.module_category_icon_side_bar_categories;
       state.moduleData.keys = [];
       state.moduleData.keys.push(payload.module_category_icon_side_bar_categories);
     },
 
-    setDropdownCategory(state, payload) {
+    [MODULE_UPDATE_SET_INIT_DROP_DOWN_CATEGORY_LIST](state, payload) {
       state.dropdownCategory = payload;
     }
   },
@@ -140,9 +149,9 @@ export default {
         state.moduleData.code,
         (res) => {
           if (Object.keys(res.data.results).length) {
-            commit('setKeys', res.data.results);
+            commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.results);
 
-            dispatch('get_category_byIds', res.data.results.module_category_icon_side_bar_categories.value);
+            dispatch(ACTION_GET_CATEGORY_LIST_BY_IDS, res.data.results.module_category_icon_side_bar_categories.value);
           } else {
             dispatch(ACTION_SET_LOADING, false);
           }
@@ -153,13 +162,13 @@ export default {
       );
     },
 
-    get_category_byIds({commit, dispatch}, cateIds) {
+    [ACTION_GET_CATEGORY_LIST_BY_IDS]({commit, dispatch}, cateIds) {
       const params = {
         cateIds: cateIds
       }
       apiGetCategoryByIds(
         (res) => {
-          commit('setDropdownCategory', res);
+          commit(MODULE_UPDATE_SET_INIT_DROP_DOWN_CATEGORY_LIST, res);
 
           dispatch(ACTION_SET_LOADING, false);
         },
@@ -175,34 +184,34 @@ export default {
       apiInsertSetting(
         settingData,
         (result) => {
-          commit('MODULE_UPDATE_SETTING_SUCCESS', AppConfig.comInsertNoSuccess);
-          commit('MODULE_UPDATE_SET_ERROR', []);
+          commit(MODULE_UPDATE_SETTING_SUCCESS, AppConfig.comInsertNoSuccess);
+          commit(MODULE_UPDATE_SET_ERROR, []);
 
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
-          commit('MODULE_UPDATE_SETTING_FAILED', AppConfig.comInsertNoFail);
-          commit('MODULE_UPDATE_SET_ERROR', errors);
+          commit(MODULE_UPDATE_SETTING_FAILED, AppConfig.comInsertNoFail);
+          commit(MODULE_UPDATE_SET_ERROR, errors);
 
           dispatch(ACTION_SET_LOADING, false);
         }
       )
     },
 
-    actionResetSettingData({commit}, payload) {
-      commit('resetSettingData', payload)
+    [ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA]({commit}, payload) {
+      commit(MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA, payload)
     },
 
     [ACTION_SET_LOADING]({
       commit
     }, isLoading) {
-      commit('MODULE_UPDATE_SET_LOADING', isLoading);
+      commit(MODULE_UPDATE_SET_LOADING, isLoading);
     },
 
     [ACTION_RESET_NOTIFICATION_INFO]({
       commit
     }, values) {
-      commit('MODULE_UPDATE_SETTING_SUCCESS', values)
+      commit(MODULE_UPDATE_SETTING_SUCCESS, values)
     },
 
     [ACTION_SELECT_DROPDOWN_PARENT_CATEGORY]({

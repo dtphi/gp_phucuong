@@ -72,7 +72,8 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
-        ACTION_ADD_INFO_TO_CATEGORY_LIST
+        ACTION_ADD_INFO_TO_CATEGORY_LIST,
+        ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
     } from 'store@admin/types/action-types';
     import lodash from 'lodash';
 
@@ -120,14 +121,16 @@
                 }
             },
             'categoryIds'(newValue) {
-                this.actionResetSettingData(newValue);
+                this.[ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA](newValue);
             },
             'dropdownCategory'(newValue) {
                 this._initAddCategoryModule(newValue);
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, ['actionResetSettingData']),
+            ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
+                ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
+            ]),
         	...mapActions(MODULE_NEWS_CATEGORY, [
         		ACTION_GET_DROPDOWN_CATEGORY_LIST
         	]),
