@@ -123,17 +123,8 @@
                 this.actionResetSettingData(newValue);
             },
             'dropdownCategory'(newValue) {
-                console.log(newValue)
+                this._initAddCategoryModule(newValue);
             }
-        },
-        updated() {
-            /*const _self = this;console.log(this.dropdownCategory)
-            _.forEach(this.settingCategory.value, function(category) {
-                _self._addInfoToCategory({
-                    category_id: category,
-                    name: 'test'
-                })
-            })*/
         },
         methods: {
             ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, ['actionResetSettingData']),
@@ -159,7 +150,16 @@
           },
           _addInfoToCategory(infoCategory) {
             this.[ACTION_ADD_INFO_TO_CATEGORY_LIST](infoCategory);
-          }
+          },
+          _initAddCategoryModule(cateList) {
+              const _self = this;
+                _.forEach(this.settingCategory.value, function(categoryId) {
+                    const isCategory = _.find(cateList, {category_id: categoryId})
+                    if(isCategory) {
+                        _self._addInfoToCategory(isCategory)
+                    }
+                })
+          },
         },
         setting: {
             paren_category_txt: 'Danh mục hiển thị Icon'

@@ -1,0 +1,132 @@
+CREATE TABLE `pc_categorys` (
+  `tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` int NOT NULL AUTO_INCREMENT,
+  `image` varchar(255) DEFAULT NULL,
+  `parent_id` int DEFAULT '0',
+  `top` tinyint(1) DEFAULT NULL,
+  `name_slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `column` int DEFAULT NULL,
+  `sort_order` int DEFAULT '0',
+  `status` tinyint(1) DEFAULT NULL,
+  `user_create` int DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`category_id`),
+  KEY `parent_id` (`parent_id`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `pc_category_descriptions` (
+  `category_description_id` int NOT NULL AUTO_INCREMENT,
+  `category_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keyword` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`category_description_id`,`category_id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+// 4 * 255 = 1020 bytes .
+// error : Specified key was too long; max key length is 1000 bytes
+// đổi lại ENGINE = InnoDb
+// run this query before creating or altering table.
+// SET @@global.innodb_large_prefix = 1;
+// this will set max key length to 3072 bytes
+
+CREATE TABLE `pc_category_paths` (
+  `category_id` int NOT NULL,
+  `path_id` int NOT NULL,
+  `level` int NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`category_id`,`path_id`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `pc_category_to_layouts` (
+  `category_id` int NOT NULL,
+  `layout_id` int DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+// Information .
+
+DROP TABLE IF EXISTS `pc_informations`;
+CREATE TABLE `pc_informations` (
+  `information_id` int NOT NULL AUTO_INCREMENT,
+  `user_create` int DEFAULT NULL,
+  `name_slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `date_available` datetime DEFAULT NULL,
+  `sort_order` int NOT NULL DEFAULT '0',
+  `information_type` smallint DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `viewed` int NOT NULL DEFAULT '0',
+  `vote` int DEFAULT NULL,
+  `sort_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`information_id`),
+  KEY `name_slug` (`name_slug`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP TABLE IF EXISTS `pc_information_descriptions`;
+CREATE TABLE `pc_information_descriptions` (
+  `information_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tag` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keyword` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`information_id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `pc_information_to_categorys`;
+CREATE TABLE `pc_information_to_categorys` (
+  `information_id` int NOT NULL,
+  `category_id` int NOT NULL,
+  PRIMARY KEY (`information_id`,`category_id`),
+  KEY `category_id` (`category_id`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `pc_information_images`;
+CREATE TABLE `pc_information_images` (
+  `information_image_id` int NOT NULL AUTO_INCREMENT,
+  `information_id` int NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `sort_order` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`information_image_id`),
+  KEY `infomation_id` (`information_id`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `pc_information_relateds`;
+CREATE TABLE `pc_information_relateds` (
+  `information_id` int NOT NULL,
+  `related_id` int NOT NULL,
+  PRIMARY KEY (`information_id`,`related_id`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `pc_information_to_downloads`;
+CREATE TABLE `pc_information_to_downloads` (
+  `information_id` int NOT NULL,
+  `download_id` int NOT NULL,
+  PRIMARY KEY (`information_id`,`download_id`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `pc_settings` (
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(128) NOT NULL,
+  `key_data` varchar(128) NOT NULL,
+  `value` text NOT NULL,
+  `serialized` tinyint(1) NOT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

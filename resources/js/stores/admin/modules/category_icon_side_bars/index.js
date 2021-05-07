@@ -139,9 +139,13 @@ export default {
       apiGetSettingByCode(
         state.moduleData.code,
         (res) => {
-          commit('setKeys', res.data.results);
+          if (Object.keys(res.data.results).length) {
+            commit('setKeys', res.data.results);
 
-          dispatch('get_category_byIds', res.data.results.module_category_icon_side_bar_categories.value);
+            dispatch('get_category_byIds', res.data.results.module_category_icon_side_bar_categories.value);
+          } else {
+            dispatch(ACTION_SET_LOADING, false);
+          }
         },
         (errors) => {
           dispatch(ACTION_SET_LOADING, false);
