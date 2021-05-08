@@ -58,7 +58,16 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Danh Mục Tin Tức | ' + config.site_name
+                title: 'Trang Danh Mục Tin Tức | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_bottom: false,
+                    content_main: false,
+                    right_collumn:false,
+                    middle_column: true,
+                    left_collumn: true,
+                    column_number: 2,
+                }
             }
         }]
     }, {
@@ -75,7 +84,16 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Danh Mục Tin Tức | ' + config.site_name
+                title: 'Trang Danh Mục Tin Tức | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_bottom: false,
+                    content_main: false,
+                    right_collumn:false,
+                    middle_column: true,
+                    left_collumn: true,
+                    column_number: 2,
+                }
             }
         }]
     }, {
@@ -92,7 +110,16 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name
+                title: 'Trang Tin Tức | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_bottom: false,
+                    content_main: false,
+                    right_collumn:false,
+                    middle_column: true,
+                    left_collumn: true,
+                    column_number: 2,
+                }
             }
         }]
     }, {
@@ -109,7 +136,16 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name
+                title: 'Trang Tin Tức | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_bottom: false,
+                    content_main: false,
+                    right_collumn:false,
+                    middle_column: true,
+                    left_collumn: true,
+                    column_number: 2,
+                }
             }
         }]
     }, {
@@ -126,7 +162,16 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name
+                title: 'Trang Tin Tức | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_bottom: false,
+                    content_main: false,
+                    right_collumn:false,
+                    middle_column: true,
+                    left_collumn: true,
+                    column_number: 2,
+                }
             }
         }]
     }, {
@@ -174,12 +219,6 @@ routeEnv = {
                     right_collumn:true,
                     left_collumn: true,
                 }
-            },
-            layout_content: {
-                content_bottom: false,
-                content_main: true,
-                right_collumn:false,
-                left_collumn: true,
             }
         }
     ]
