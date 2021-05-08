@@ -23,7 +23,7 @@
 			
 			'module-thong-baos': () => import('./thong_baos'),
 
-			'module-tin-giao-hoi-viet-names': () => import('./tin_giao_hoi_viet_nams'),
+			'module-tin-giao-hoi-viet-nams': () => import('./tin_giao_hoi_viet_nams'),
 
 			'module-tin-giao-hois': () => import('./tin_giao_hois'),
 
@@ -34,7 +34,7 @@
         },
 		computed: {
           currentModule: function() {
-			  	let moduleName = this.$route.params.pathMatch;
+			  	let moduleName = this.$route.params.pathMatch;console.log("module-" + moduleName.toLowerCase());
             	return "module-" + moduleName.toLowerCase();
           }
         }

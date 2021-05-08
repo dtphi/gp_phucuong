@@ -27,9 +27,9 @@
         	...mapActions(MODULE_INFO_EDIT, [
         		ACTION_REMOVE_INFO_TO_CATEGORY_LIST
         	]),
-          _deleteCategory() {
-              this.[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
-          },
+            _deleteCategory() {
+                this.[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
+            },
         },
     };
 </script>

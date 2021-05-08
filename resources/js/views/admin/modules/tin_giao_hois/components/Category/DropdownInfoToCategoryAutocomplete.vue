@@ -10,14 +10,14 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_NEWS_CATEGORY_EDIT
+        MODULE_MODULE_TIN_GIAO_HOI
     } from 'store@admin/types/module-types';
     import {
         ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'TheDropdownCategoryEdit',
+        name: 'TheDropdownCategory',
         props: {
             category: {
                 default: {}
@@ -29,7 +29,7 @@
             }
         },
         methods: {
-        	...mapActions(MODULE_NEWS_CATEGORY_EDIT, [
+        	...mapActions(MODULE_MODULE_TIN_GIAO_HOI, [
         		ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
         	]),
             _selectParentCategory() {
@@ -38,7 +38,7 @@
             }
         },
         setting: {
-            paren_category_txt: 'Danh mục thông báo'
+            paren_category_txt: 'Danh mục hiển thị tin giáo hội'
         }
     };
 </script>

@@ -8,7 +8,7 @@
         </label>
         
         <div class="col-sm-3">
-            <input class="form-control" />
+            <input class="form-control" v-model="settingCategory.key" type="text" disabled/>
         </div>
         
         <label 
@@ -16,7 +16,7 @@
         	for="input-parent-category-name">
         		<span data-toggle="tooltip" 
         			data-original-title="(Tự động hoàn toàn)">Value</span>
-        </label>
+        	</label>
 
         <div class="col-sm-7" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
@@ -72,20 +72,16 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
-        ACTION_ADD_INFO_TO_CATEGORY_LIST
+        ACTION_ADD_INFO_TO_CATEGORY_LIST,
+        ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
     } from 'store@admin/types/action-types';
     import lodash from 'lodash';
 
     export default {
-        name: 'CategoryEditAutocompleteEdit',
+        name: 'TheCategoryAutocompleteList',
         components: {
             TheDropdownCategory,
             CategoryItem
-        },
-        props: {
-            categoryId: {
-                default: null
-            }
         },
         data() {
             return {
@@ -101,10 +97,13 @@
         computed: {
             ...mapGetters(MODULE_MODULE_THONG_BAO, [
                 'infoCategory',
-                'getNameQuery'
+                'getNameQuery',
+                'settingCategory',
+                'dropdownCategory'
             ]),
             ...mapState(MODULE_INFO_EDIT, {
-                categorys: state => state.listCategorysDisplay
+                categorys: state => state.listCategorysDisplay,
+                categoryIds: state => state.info.categorys
             }),
             ...mapState(MODULE_NEWS_CATEGORY, {
                 dropdowns: state => state.dropdownCategories
@@ -120,9 +119,18 @@
                 handler: function() {
                     this._addInfoToCategory(this.infoCategory);
                 }
+            },
+            'categoryIds'(newValue) {
+                this.[ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA](newValue);
+            },
+            'dropdownCategory'(newValue) {
+                this._initAddCategoryModule(newValue);
             }
         },
         methods: {
+            ...mapActions(MODULE_MODULE_THONG_BAO, [
+                ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
+            ]),
         	...mapActions(MODULE_NEWS_CATEGORY, [
         		ACTION_GET_DROPDOWN_CATEGORY_LIST
         	]),
@@ -136,7 +144,7 @@
               }
           },
           _focusParentCategory() {
-            const query = this.query;
+                const query = this.query;
               this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
               this.$data.dropdownStyle = 'display:block';
           },
@@ -145,10 +153,19 @@
           },
           _addInfoToCategory(infoCategory) {
             this.[ACTION_ADD_INFO_TO_CATEGORY_LIST](infoCategory);
-          }
+          },
+          _initAddCategoryModule(cateList) {
+              const _self = this;
+                _.forEach(this.settingCategory.value, function(categoryId) {
+                    const isCategory = _.find(cateList, {category_id: categoryId})
+                    if(isCategory) {
+                        _self._addInfoToCategory(isCategory)
+                    }
+                })
+          },
         },
         setting: {
-            paren_category_txt: 'Danh mục thông báo'
+            paren_category_txt: 'Danh mục hiển thị thông báo'
         }
     };
 </script>

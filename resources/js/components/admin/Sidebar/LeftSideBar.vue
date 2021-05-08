@@ -56,6 +56,15 @@
 				  <li>
 					  <a :href="_getHref('module-thong-baos')">{{$options.setting.module_thong_bao}}</a>
 				  </li>
+				  <li>
+					  <a :href="_getHref('module-tin-giao-hoi-viet-nams')">{{$options.setting.module_tin_giao_hoi_viet_nam}}</a>
+				  </li>
+				  <li>
+					  <a :href="_getHref('module-tin-giao-hois')">{{$options.setting.module_tin_giao_hoi}}</a>
+				  </li>
+				  <li>
+					  <a :href="_getHref('module-tin-giao-phans')">{{$options.setting.module_tin_giao_phan}}</a>
+				  </li>
 			    </ul>
 			  </li>
 
@@ -87,6 +96,9 @@
 			module_category_icon_side_bar: 'Danh mục Icon',
 			module_home_banner: 'Banner trang chủ',
 			module_thong_bao: 'Danh mục thông báo',
+			module_tin_giao_hoi_viet_nam: 'Tin giáo hội việt nam',
+			module_tin_giao_hoi: 'Tin giáo hội',
+			module_tin_giao_phan: 'Tin giáo phận',
         }
     };
 </script>

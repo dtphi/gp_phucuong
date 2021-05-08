@@ -7,11 +7,7 @@
                 <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{err}}</p>
             </div>
         </template>
-        <template v-if="loading">
-            <loading-over-lay 
-                :active.sync="loading"
-                :is-full-page="fullPage"></loading-over-lay>
-        </template>
+        
         <validation-observer 
             ref="observerInfo" 
             @submit.prevent="_submitInfo">
@@ -40,7 +36,7 @@
                 
                     <div class="panel-body">
                          <info-add-form 
-                            ref="formAddUser"></info-add-form>
+                            ref="formAddSetting"></info-add-form>
                     </div>
                 </div>
             </div>
@@ -51,7 +47,6 @@
 <script>
     import {
         mapState,
-        mapGetters,
         mapActions
     } from 'vuex';
 
@@ -59,14 +54,14 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
 
     import {
-        MODULE_INFO_ADD
+        MODULE_MODULE_TIN_GIAO_PHAN
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'InformationAdd',
+        name: 'ModuleTinGiaoPhan',
         components: {
             Breadcrumb,
             InfoAddForm,
@@ -77,24 +72,24 @@
             }
         },
         computed: {
-            ...mapState(MODULE_INFO_ADD, {
+            ...mapState(MODULE_MODULE_TIN_GIAO_PHAN, {
                 loading: state => state.loading,
                 errors: state => state.errors,
-                insertSuccess: state => state.insertSuccess
+                updateSuccess: state => state.updateSuccess
             }),
             _errors() {
                 return this.errors.length;
             }
         },
         watch: {
-            'insertSuccess'(newValue, oldValue) {
+            'updateSuccess'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }
             }
         },
         methods: {
-             ...mapActions(MODULE_INFO_ADD, [
+             ...mapActions(MODULE_MODULE_TIN_GIAO_PHAN, [
                 ACTION_RESET_NOTIFICATION_INFO
             ]),
             _errorToArrs() {
@@ -113,16 +108,7 @@
                 const _self = this;
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
-                        //_self.$refs.formAddUser._submitInfo();
-                    }
-                });
-            },
-            _submitInfoBack() {
-                const _self = this;
-
-                _self.$refs.observerInfo.validate().then((isValid) => {
-                    if (isValid) {
-                        //_self.$refs.formAddUser._submitInfoBack();
+                        _self.$refs.formAddSetting._submitInfo();
                     }
                 });
             },
@@ -132,8 +118,8 @@
             }
         },
         setting: {
-            panel_title: 'Module Thông Báo',
-            frm_title: 'Thêm danh mục thông báo',
+            panel_title: 'Module Tin Giáo Phận',
+            frm_title: 'Thêm danh mục',
             btn_save_txt: 'Lưu',
         }
     };

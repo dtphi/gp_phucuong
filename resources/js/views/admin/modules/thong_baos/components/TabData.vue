@@ -4,9 +4,11 @@
             <label class="col-sm-2 control-label"
                     for="input-code-name">Mã Module Code</label>
             <div class="col-sm-10">
-                <input type="text"
-                        placeholder="Mã Module Code" id="input-code-name"
-                        class="form-control">
+                <input disabled
+                    v-model="moduleData.code" 
+                    type="text"
+                    placeholder="Mã Module Code" id="input-code-name"
+                    class="form-control">
             </div>
         </div>
         
@@ -18,20 +20,14 @@
      import InfoToCategoryAutocompleteEdit from './Category/InfoToCategoryAutocompleteEdit';
 
     export default {
-        name: 'TabLinkForm',
+        name: 'TheTabData',
         components: {
             InfoToCategoryAutocompleteEdit
         },
         props: {
-            isForm: {
-                type: String,
-                default: ''
-            },
-            groupData: {
+            moduleData: {
                 type: Object
             }
-        },
-        computed: {
         },
     };
 </script>

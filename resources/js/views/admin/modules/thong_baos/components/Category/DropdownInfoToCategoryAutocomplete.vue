@@ -17,7 +17,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'TheDropdownCategoryEdit',
+        name: 'TheDropdownCategory',
         props: {
             category: {
                 default: {}
@@ -38,7 +38,7 @@
             }
         },
         setting: {
-            paren_category_txt: 'Danh mục thông báo'
+            paren_category_txt: 'Danh mục hiển thị thông báo'
         }
     };
 </script>

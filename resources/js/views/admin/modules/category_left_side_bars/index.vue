@@ -61,7 +61,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'ModuleCategoryIconSideBar',
+        name: 'ModuleCategoryLeftSideBar',
         components: {
             Breadcrumb,
             InfoAddForm,
