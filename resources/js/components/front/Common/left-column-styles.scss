@@ -1,0 +1,63 @@
+aside {
+    .menu {
+        list-style-type: none;
+        padding-left: 0;
+
+        li {
+            margin-bottom: 8px;
+            cursor: pointer;
+
+            &:hover,
+            &.active {
+                background-color: #dee2e6;
+            }
+
+            img {
+                width: 8%;
+                margin-right: 10px;
+            }
+
+            a {
+                color: #000000;
+                text-decoration: none;
+                display: block;
+                padding: 5px;
+            }
+        }
+    }
+
+    .form {
+        #email {
+            background-color: #CCCCCC;
+            padding: 8px;
+            border-radius: 4px;
+            width: 100%;
+            outline: 0;
+        }
+
+        .btn {
+            background-color: #ED1C24;
+            color: #ffffff;
+            padding: 7px 20px;
+            font-weight: bold;
+        }
+
+        .txt {
+            color: #CCCCCC;
+        }
+    }
+
+    .logo {
+        font-size: 13px;
+        text-align: center;
+
+        img {
+            width: 30%;
+        }
+
+        .title {
+            text-transform: uppercase;
+            font-size: 15px;
+        }
+    }
+}

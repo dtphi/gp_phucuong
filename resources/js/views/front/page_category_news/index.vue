@@ -4,7 +4,10 @@
             <main-menu></main-menu>
 
             <content-top v-if="_isContentTop">
-                <the-category-news-item class="figure" v-for="(item,idx) in infoList" :info="item" :key="idx"></the-category-news-item>
+                <the-category-news-item class="figure" 
+                    v-for="(item,idx) in infoList" 
+                    :info="item" 
+                    :key="idx"></the-category-news-item>
             </content-top>
 
             <main-content v-if="_isContentMain"></main-content>
