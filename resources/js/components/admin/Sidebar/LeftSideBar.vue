@@ -65,6 +65,9 @@
 				  <li>
 					  <a :href="_getHref('module-tin-giao-phans')">{{$options.setting.module_tin_giao_phan}}</a>
 				  </li>
+				  <li>
+					  <a :href="_getHref('module-van-kiens')">{{$options.setting.module_van_kien}}</a>
+				  </li>
 			    </ul>
 			  </li>
 
@@ -99,6 +102,7 @@
 			module_tin_giao_hoi_viet_nam: 'Tin giáo hội việt nam',
 			module_tin_giao_hoi: 'Tin giáo hội',
 			module_tin_giao_phan: 'Tin giáo phận',
+			module_van_kien: 'Văn kiện',
         }
     };
 </script>

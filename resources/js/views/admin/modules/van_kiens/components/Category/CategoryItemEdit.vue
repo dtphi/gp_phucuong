@@ -17,7 +17,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'CategoryItemEdit',
+        name: 'TheCategoryItem',
         props: {
             infoToCategory: {
                 default: null

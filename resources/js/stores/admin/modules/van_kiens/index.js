@@ -28,16 +28,16 @@ import {
   ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA,
 } from '../../types/action-types';
 const settingCategory = {
-  key: 'module_thong_bao_categories', 
+  key: 'module_van_kien_categories', 
   value: [],
   serialize: true
 }
 
 const defaultState = () => {
   return {
-    module_thong_bao_categories: settingCategory,
+    module_van_kien_categories: settingCategory,
     moduleData: {
-      code: 'module_thong_bao',
+      code: 'module_van_kien',
       keys: [
         settingCategory
       ]
@@ -63,7 +63,7 @@ export default {
       return state.dropdownCategory;
     },
     settingCategory(state) {
-      return state.module_thong_bao_categories;
+      return state.module_van_kien_categories;
     },
     moduleData(state) {
       return state.moduleData
@@ -124,13 +124,13 @@ export default {
     },
 
     [MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA](state, payload) {
-      state.module_thong_bao_categories.value = payload;
+      state.module_van_kien_categories.value = payload;
     },
 
     [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
-      state.module_thong_bao_categories = payload.module_thong_bao_categories;
+      state.module_van_kien_categories = payload.module_van_kien_categories;
       state.moduleData.keys = [];
-      state.moduleData.keys.push(payload.module_thong_bao_categories);
+      state.moduleData.keys.push(payload.module_van_kien_categories);
     },
 
     [MODULE_UPDATE_SET_INIT_DROP_DOWN_CATEGORY_LIST](state, payload) {
@@ -151,7 +151,7 @@ export default {
           if (Object.keys(res.data.results).length) {
             commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.results);
 
-            dispatch(ACTION_GET_CATEGORY_LIST_BY_IDS, res.data.results.module_thong_bao_categories.value);
+            dispatch(ACTION_GET_CATEGORY_LIST_BY_IDS, res.data.results.module_van_kien_categories.value);
           } else {
             dispatch(ACTION_SET_LOADING, false);
           }
