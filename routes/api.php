@@ -27,7 +27,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
         Route::get('/app/info/get-latest-information', 'NewsController@showLastedList');
         Route::get('/app/info/get-popular-information', 'NewsController@showPopularList');
         Route::get('/app/info/get-related-information', 'NewsController@showRelatedList');
-        Route::apiResource('settings', 'SettingController');
+        Route::get('/app/get-data-module', 'ModuleController@showDataList');
     });
 
 Route::namespace('App\Http\Controllers\Api\Admin')

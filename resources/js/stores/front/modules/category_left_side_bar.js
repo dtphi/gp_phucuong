@@ -1,24 +1,14 @@
 import {
   apiGetSettingByCode,
-} from 'api@admin/setting';
+} from '@app/api/front/setting';
 import {
-  apiGetCategoryByIds
-} from 'api@admin/category';
-import {
-  SELECT_DROPDOWN_PARENT_CATEGORY,
-  SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY,
   MODULE_UPDATE_SET_LOADING,
-  MODULE_UPDATE_SETTING_SUCCESS,
-  MODULE_UPDATE_SETTING_FAILED,
   MODULE_UPDATE_SET_ERROR,
-  MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA,
   MODULE_UPDATE_SET_KEYS_DATA,
-  MODULE_UPDATE_SET_INIT_DROP_DOWN_CATEGORY_LIST,
 } from '../../admin/types/mutation-types';
 import {
   ACTION_SET_LOADING,
   ACTION_GET_SETTING,
-  ACTION_GET_CATEGORY_LIST_BY_IDS,
 } from '../../admin/types/action-types';
 const settingCategory = {
   key: 'module_category_left_side_bar_categories', 
@@ -35,9 +25,7 @@ const defaultState = () => {
         settingCategory
       ]
     },
-    dropdownCategory: [],
     loading: false,
-    updateSuccess: false,
     errors: []
   }
 }
@@ -46,31 +34,15 @@ export default {
   namespaced: true,
   state: defaultState(),
   getters: {
-    dropdownCategory(state) {
-      return state.dropdownCategory;
-    },
     settingCategory(state) {
       return state.module_category_left_side_bar_categories;
     },
     moduleData(state) {
       return state.moduleData
     },
-    infoCategory(state) {
-      return state.infoCategory
-    },
-    getNameQuery(state) {
-      var str = state.nameQuery;
-
-      if (typeof str === 'undefined' || str === null) {
-        return '';
-      }
-      return str;
-    },
+    
     loading(state) {
       return state.loading
-    },
-    updateSuccess(state) {
-      return state.updateSuccess
     },
     errors(state) {
       return state.errors
@@ -86,43 +58,16 @@ export default {
       state.loading = payload
     },
 
-    [MODULE_UPDATE_SETTING_SUCCESS](state, payload) {
-      state.updateSuccess = payload
-    },
-
-    [MODULE_UPDATE_SETTING_FAILED](state, payload) {
-      state.updateSuccess = payload
-    },
-
     [MODULE_UPDATE_SET_ERROR](state, payload) {
       state.errors = payload
     },
 
-    [SELECT_DROPDOWN_PARENT_CATEGORY](state, payload) {
-      if (parseInt(payload.category_id) !== parseInt(state.newsGroupId)) {
-        state.nameQuery = payload.name;
-        state.newsGroup.parent_id = payload.category_id;
-      }
-    },
-
-    [SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](state, payload) {
-      state.nameQuery = payload.name;
-      state.infoCategory = payload;
-    },
-
-    [MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA](state, payload) {
-      state.module_category_left_side_bar_categories.value = payload;
-    },
 
     [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
       state.module_category_left_side_bar_categories = payload.module_category_left_side_bar_categories;
       state.moduleData.keys = [];
       state.moduleData.keys.push(payload.module_category_left_side_bar_categories);
     },
-
-    [MODULE_UPDATE_SET_INIT_DROP_DOWN_CATEGORY_LIST](state, payload) {
-      state.dropdownCategory = payload;
-    }
   },
 
   actions: {
@@ -130,34 +75,18 @@ export default {
       dispatch,
       state,
       commit
-    }, params) {
+    }, options) {
       dispatch(ACTION_SET_LOADING, true);
+      const params = {
+          code: state.moduleData.code
+      }
       apiGetSettingByCode(
-        state.moduleData.code,
         (res) => {
-          if (Object.keys(res.data.results).length) {
-            commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.results);
-
-            dispatch(ACTION_GET_CATEGORY_LIST_BY_IDS, res.data.results.module_category_left_side_bar_categories.value);
+          if (Object.keys(res.data.moduleData).length) {
+            commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.moduleData);
           } else {
             dispatch(ACTION_SET_LOADING, false);
           }
-        },
-        (errors) => {
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      );
-    },
-
-    [ACTION_GET_CATEGORY_LIST_BY_IDS]({commit, dispatch}, cateIds) {
-      const params = {
-        cateIds: cateIds
-      }
-      apiGetCategoryByIds(
-        (res) => {
-          commit(MODULE_UPDATE_SET_INIT_DROP_DOWN_CATEGORY_LIST, res);
-
-          dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           dispatch(ACTION_SET_LOADING, false);

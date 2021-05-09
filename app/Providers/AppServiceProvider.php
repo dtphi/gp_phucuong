@@ -52,6 +52,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Front\Services\Contracts\VideoModel::class,
             \App\Http\Controllers\Api\Front\Services\VideoService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Front\Services\Contracts\SettingModel::class,
+            \App\Http\Controllers\Api\Front\Services\SettingService::class
+        );
     }
 
     /**
