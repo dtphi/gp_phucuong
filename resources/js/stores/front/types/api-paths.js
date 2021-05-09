@@ -13,8 +13,8 @@ export const API_INFO_DETAIL = '/api/app/info/get-information';
 
 export const API_INFO_LIST =    '/api/app/info/get-information-list';
 
-export const API_INFO_GET_POPULAR_LIST = '/app/info/get-popular-information';
+export const API_INFO_GET_POPULAR_LIST = '/api/app/info/get-popular-information';
 
-export const API_INFO_GET_RELATED_LIST = '/app/info/get-related-information';
+export const API_INFO_GET_RELATED_LIST = '/api/app/info/get-related-information';
 
-export const API_INFO_GET_LASTED_LIST = '/app/info/get-latest-information';
+export const API_INFO_GET_LASTED_LIST = '/api/app/info/get-latest-information';

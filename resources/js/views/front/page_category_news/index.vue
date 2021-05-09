@@ -57,7 +57,6 @@
             }
         },
         computed: {
-            ...mapGetters(['navMainLists']),
             ...mapState(MODULE_INFO,{
                 infoList: state => state.pageLists
             }),

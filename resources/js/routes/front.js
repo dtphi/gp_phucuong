@@ -200,7 +200,16 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name
+                title: 'Trang Tin Tức | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_bottom: false,
+                    content_main: false,
+                    right_collumn:false,
+                    middle_column: true,
+                    left_collumn: true,
+                    column_number: 2,
+                }
             }
         },
         {

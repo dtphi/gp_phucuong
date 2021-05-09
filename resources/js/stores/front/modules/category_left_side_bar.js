@@ -10,11 +10,7 @@ import {
   ACTION_SET_LOADING,
   ACTION_GET_SETTING,
 } from '../../admin/types/action-types';
-const settingCategory = {
-  key: 'module_category_left_side_bar_categories', 
-  value: [],
-  serialize: true
-}
+const settingCategory = [];
 
 const defaultState = () => {
   return {

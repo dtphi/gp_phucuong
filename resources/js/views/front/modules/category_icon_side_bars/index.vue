@@ -1,5 +1,5 @@
 <template>
-    <div id="category-icon-side-bar-module" class="category">
+    <div v-if="_isExist" id="category-icon-side-bar-module" class="category">
         <h4 class="tit-common clr-blue">Danh mục</h4>
         <b-row>
             <category-item 
@@ -7,12 +7,6 @@
                 :key="idx"
                 :idx="idx"
                 :group="item"></category-item>
-            <!--<b-col cols="4"><a class="d-block mb-4 bg-blue" href="#">Phụng vụ</a></b-col>
-            <b-col cols="4"><a class="d-block mb-4 bg-red" href="#">Giáo luật</a></b-col>
-            <b-col cols="4"><a class="d-block mb-4 bg-orange" href="#">Kinh thánh</a></b-col>
-            <b-col cols="4"><a class="d-block mb-4 bg-green" href="#">Tài liệu</a></b-col>
-            <b-col cols="4"><a class="d-block mb-4 bg-pink" href="#">Dòng tu</a></b-col>
-            <b-col cols="4"><a class="d-block mb-4 bg-grow" href="#">Giáo lý</a></b-col>-->
         </b-row>
     </div>
 </template>
@@ -47,7 +41,10 @@
         computed: {
             ...mapGetters(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
                 'settingCategory',
-            ])
+            ]),
+            _isExist() {
+                return this.settingCategory.length;
+            }
         },
 
         created() {

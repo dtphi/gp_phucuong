@@ -102,4 +102,22 @@ final class NewsService implements NewsModel
         
         return $query->limit(20)->get();
 	}
+
+    public function apiGetInfoListByIds($data = array()) {
+        $infoType = 1;
+        if (isset($data['infoType'])) {
+            $infoType = (int)$data['infoType'];
+        }
+
+		$query = DB::table(Tables::$informations)->select()
+        ->leftJoin(Tables::$information_descriptions, Tables::$informations.'.information_id', '=', Tables::$information_descriptions.'.information_id')
+        ->where('status', '=', '1')
+        ->where('information_type', '=', $infoType);
+           
+        if(isset($data['information_ids'])) {
+            $query->whereIn(Tables::$informations . '.information_id', $data['information_ids']);
+        }
+        
+        return $query->get();
+	}
 }

@@ -2,19 +2,16 @@
   <main id="video" class="py-2">
         <div class="container">
             <main-menu></main-menu>
-            <b-row class="mt-3">
-                <b-col class="col-mobile" cols="3">
-                    <side-bar class="aside"></side-bar>
-                </b-col>
-                <b-col class="col-mobile" cols="9">
-                    <div class="list-videos">
-                        <the-category-news-item class="figure" 
-                            v-for="(item,idx) in infoList" 
-                            :info="item" 
-                            :key="idx"></the-category-news-item>
-                    </div>
-                </b-col>
-            </b-row>
+            <content-top v-if="_isContentTop">
+                <the-category-news-item class="figure" 
+                    v-for="(item,idx) in infoList" 
+                    :info="item" 
+                    :key="idx"></the-category-news-item>
+            </content-top>
+
+            <main-content v-if="_isContentMain"></main-content>
+
+            <content-bottom v-if="_isContentBottom"></content-bottom>
         </div>
   </main>
 </template>
@@ -26,22 +23,26 @@
       mapState
   } from 'vuex';
   import MainMenu from 'com@front/Common/MainMenu';
-  import SideBar from 'com@front/SideBar';
   import TheCategoryNewsItem from './components/TheCategoryNewsItem';
 
   import {
         MODULE_INFO
     } from '@app/stores/front/types/module-types';
     import {
-        GET_INFORMATION_LIST_TO_CATEGORY
+        GET_POPULAR_INFORMATION_LIST_TO_CATEGORY
     } from '@app/stores/front/types/action-types';
+    import MainContent from 'com@front/Common/MainContent';
+    import ContentBottom from 'com@front/Common/ContentBottom';
+    import ContentTop from 'com@front/Common/ContentTop';
 
 
     export default {
         name: 'InfoListtoCategory',
         components: {
             MainMenu,
-            SideBar,
+            ContentTop,
+            MainContent,
+            ContentBottom,
             TheCategoryNewsItem
         },
         beforeCreate() {
@@ -56,13 +57,23 @@
             ...mapState(MODULE_INFO,{
                 infoList: state => state.pageLists
             }),
+            _isContentTop() {
+                return this.$route.meta.layout_content.content_top;
+            },
+
+            _isContentBottom() {
+                return this.$route.meta.layout_content.content_bottom;
+            },
+            _isContentMain() {
+                return this.$route.meta.layout_content.content_main;
+            },
         },
         mounted() {
-            this.[GET_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
+            this.[GET_POPULAR_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
         },
         methods: {
             ...mapActions(MODULE_INFO, [
-                GET_INFORMATION_LIST_TO_CATEGORY,
+                GET_POPULAR_INFORMATION_LIST_TO_CATEGORY,
             ]),
         }
     }
