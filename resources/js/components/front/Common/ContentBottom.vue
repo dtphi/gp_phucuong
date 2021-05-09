@@ -9,7 +9,7 @@
                 <component v-bind:is="currentContentLeft"></component>
             </keep-alive>
             <keep-alive>
-				<component v-bind:is="currentContentRight"></component>
+				<component v-bind:is="currentColumnRight"></component>
 			</keep-alive>
         </b-row>
     </div>
@@ -37,6 +37,7 @@
             'content-bottom-left': () => import('./ContentBottomLeft'),
             'content-bottom-right': () => import('./ContentBottomRight'),
             'content-bottom-both': () => import('./ContentBottomBoth'),
+            'column-right': () => import('./ColumnRight'),
         },
         data() {
             return {
@@ -59,6 +60,10 @@
             currentContentBoth: function() {
 			  	let moduleName = 'bottom-both';
             	return "content-" + moduleName.toLowerCase();
+            },
+            currentColumnRight: function() {
+			  	let moduleName = 'right';
+            	return "column-" + moduleName.toLowerCase();
             },
         },
         mounted() {
