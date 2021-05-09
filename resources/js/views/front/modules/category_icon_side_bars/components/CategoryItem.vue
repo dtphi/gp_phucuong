@@ -19,7 +19,7 @@ import {
         },
         data() {
             return {
-                iconItemColor: ['blue', 'red']
+                iconItemColor: ['blue', 'red', 'orange', 'green', 'pink', 'grow', 'blue', 'red', 'orange', 'green', 'pink', 'grow']
             }
         },
         methods: {
