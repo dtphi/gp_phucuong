@@ -70,9 +70,9 @@
 
         data () {
             return {
-                limit: 5,
+                limit: 3,
                 showDisabled: false,
-                size: 'default',
+                size: 'small',
                 align: 'right'
             }
         },
