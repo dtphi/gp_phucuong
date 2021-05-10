@@ -8,6 +8,8 @@
                     v-for="(item,idx) in infoList" 
                     :info="item" 
                     :key="idx"></the-category-news-item>
+
+                <paginate :is-resource="isResource"></paginate>
             </content-top>
 
             <main-content v-if="_isContentMain"></main-content>
@@ -26,6 +28,7 @@
   } from 'vuex';
   import MainMenu from 'com@front/Common/MainMenu';
   import TheCategoryNewsItem from './components/TheCategoryNewsItem';
+  import Paginate from 'com@front/Pagination';
 
   import {
         MODULE_INFO
@@ -46,14 +49,15 @@
             ContentTop,
             MainContent,
             ContentBottom,
-            TheCategoryNewsItem
+            TheCategoryNewsItem,
+            Paginate
         },
         beforeCreate() {
             console.log(this.$route.params.slug)
         },
         data() {
             return {
-
+                isResource: false
             }
         },
         computed: {

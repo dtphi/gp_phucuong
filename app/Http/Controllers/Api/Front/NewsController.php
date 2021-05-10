@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\Helper;
 use App\Http\Controllers\Api\Front\Services\Contracts\NewsModel as NewsSv;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class NewsController extends Controller
 {
@@ -108,6 +109,14 @@ class NewsController extends Controller
     public function list(Request $request) 
     {
         $params = $request->all();
+        $page = 1;
+        if ($request->query('page')) {
+            $page = $request->query('page');
+        }
+        $params['page'] = $page;
+
+        $params['limit'] = 20;
+
         $params['slug'] = isset($params['slug'])? $params['slug']: '';
         if (!empty($params['slug'])) {
             $slugs = explode('-', $params['slug']);
@@ -115,6 +124,7 @@ class NewsController extends Controller
         }
 
         $results = $this->newsSv->apiGetInfoList($params);
+        $pagination = $this->_getTextPagination($results);
 
         $infos = [];
         foreach($results as $info) {
@@ -139,8 +149,28 @@ class NewsController extends Controller
         }
 
         return Helper::successResponse([
-            'results'    => $infos
+            'results'    => $infos,
+            'pagination' => $pagination,
+            'page'       => $page
         ]);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param LengthAwarePaginator $paginator
+     * @return array
+     */
+    protected function _getTextPagination(LengthAwarePaginator $paginator)
+    {
+        $data = [];
+
+        if ($paginator instanceof LengthAwarePaginator && $paginator->count()) {
+            $data = $paginator->toArray();
+
+            unset($data['data']);
+        }
+
+        return $data;
     }
 
     public function detail(Request $request) 

@@ -16,6 +16,7 @@ import {
   GET_POPULAR_INFORMATION_LIST_TO_CATEGORY,
   GET_LASTED_INFORMATION_LIST_TO_CATEGORY
 } from '@app/stores/front/types/action-types';
+import { MODULE_INFO } from '../../admin/types/module-types';
 
 export default {
     namespaced: true,
@@ -101,7 +102,7 @@ export default {
             )
           }
         },
-        [GET_INFORMATION_LIST_TO_CATEGORY]({ commit }, routeParams) {
+        [GET_INFORMATION_LIST_TO_CATEGORY]({ commit, dispatch }, routeParams) {
           let slug = '';
           if (routeParams.hasOwnProperty('slug')) {
             slug = routeParams.slug;
@@ -110,6 +111,25 @@ export default {
             apiGetVideoListsToCategory(
               (result) => {
                 commit(INIT_LIST, result.data.results);
+                var pagination = {
+                  current_page: 1,
+                  total: 0
+                };
+                if (result.data.hasOwnProperty('pagination')) {
+                  pagination = result.data.pagination;
+                }
+                var configs = {
+                  moduleActive: {
+                    name: MODULE_INFO,
+                    actionList: GET_INFORMATION_LIST_TO_CATEGORY
+                  },
+                  collectionData: pagination
+                };
+      
+                dispatch('setConfigApp', configs, {
+                  root: true
+                });
+
                 commit(SET_ERROR, []);
               },
               (errors)=> {
@@ -121,6 +141,25 @@ export default {
             apiGetListsToCategory(
               (result) => {
                 commit(INIT_LIST, result.data.results);
+                var pagination = {
+                  current_page: 1,
+                  total: 0
+                };
+                if (result.data.hasOwnProperty('pagination')) {
+                  pagination = result.data.pagination;
+                }
+                var configs = {
+                  moduleActive: {
+                    name: MODULE_INFO,
+                    actionList: GET_INFORMATION_LIST_TO_CATEGORY
+                  },
+                  collectionData: pagination
+                };
+      
+                dispatch('setConfigApp', configs, {
+                  root: true
+                });
+
                 commit(SET_ERROR, []);
               },
               (errors)=> {

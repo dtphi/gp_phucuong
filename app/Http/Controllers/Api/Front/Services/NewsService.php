@@ -99,8 +99,12 @@ final class NewsService implements NewsModel
         if (isset($data['category_id'])) {
           $query->where('category_id' , '=', $data['category_id']);
         }
-        
-        return $query->limit(20)->get();
+        $limit = 20;
+        if (isset($data['limit'])) {
+            $limit = (int)$data['limit'];
+        }
+
+        return $query->paginate($limit);
 	}
 
     public function apiGetInfoListByIds($data = array()) {

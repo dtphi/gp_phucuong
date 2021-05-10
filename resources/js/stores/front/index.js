@@ -34,16 +34,34 @@ const defaultState = () => {
     navMainLists: [],
     pageLists: [],
     appLists: [],
-    pages: {}
+    pages: {},
   }
 }
 
+const initPaginationState = () => {
+  return {
+    links: {},
+    meta: {},
+    perPage: 20,
+    moduleActive: {
+      name: '',
+      actionList: ''
+    },
+    collectionData: {
+      current_page: 1,
+      from: 0,
+      to:0,
+      total: 0
+    }
+  }
+}
 
 export default new Vuex.Store({
     state: {
       cfApp: {
         setting: defaultState()
       },
+      paginationRoot: initPaginationState(),
       errors: []
     },
     getters: {
@@ -73,6 +91,52 @@ export default new Vuex.Store({
       },
       pageLists(state) {
         return state.cfApp.setting.pageLists;
+      },
+
+      resourcePaginationData(state) {
+        return {
+          links: state.paginationRoot.links,
+          meta: state.paginationRoot.meta
+        }
+      },
+      collectionPaginationData(state) {
+        const colData = {
+          current_page: 1,
+          from: 0,
+          to:0,
+          total: 0
+        };
+        if (fnIsObject(state.paginationRoot.collectionData)) {
+          return state.paginationRoot.collectionData;
+        }
+  
+        return colData;
+      },
+      isNotEmptyList(state) {
+        if (fnIsObject(state.paginationRoot.meta) 
+          && state.paginationRoot.meta.hasOwnProperty('total')) {
+          return (parseInt(state.paginationRoot.meta.total) > 0);
+        }
+  
+        return false;
+      },
+      moduleNameActive(state) {
+        let mName = '';
+        if (fnIsObject(state.paginationRoot.moduleActive) 
+          && state.paginationRoot.moduleActive.hasOwnProperty('name')) {
+            mName = state.paginationRoot.moduleActive.name;
+        }
+  
+        return mName;
+      },
+      moduleActionListActive(state) {
+        let mAction = '';
+        if (fnIsObject(state.paginationRoot.moduleActive)
+          && state.paginationRoot.moduleActive.hasOwnProperty('actionList')) {
+            mAction = state.paginationRoot.moduleActive.actionList;
+        }
+  
+        return mAction;
       }
     },
     mutations: {
@@ -84,6 +148,23 @@ export default new Vuex.Store({
       },
       appSetError(state, payload) {
         state.errors = payload;
+      },
+
+      configApp(state, configs) {
+        if (fnIsObject(configs.links)) {
+          state.paginationRoot.links = configs.links;
+        }
+        if (fnIsObject(configs.meta)) {
+          state.paginationRoot.meta = configs.meta;
+        }
+        if (fnIsObject(configs.moduleActive))
+        {
+          state.paginationRoot.moduleActive = configs.moduleActive;
+        }
+        if (fnIsObject(configs.collectionData))
+        {
+          state.paginationRoot.collectionData = configs.collectionData;
+        }
       }
      },
     actions: {
@@ -103,6 +184,27 @@ export default new Vuex.Store({
           },
           options
         );
+      },
+
+      setConfigApp({
+        commit
+      }, configs) {
+        const links = (configs.hasOwnProperty('links')) ? configs.links: undefined;
+        const meta = (configs.hasOwnProperty('meta')) ? configs.meta: undefined;
+        const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive: undefined;
+        const collectionData = (configs.hasOwnProperty('collectionData')) ? configs.collectionData: undefined;
+  
+        var _configs = {
+          ...initPaginationState(),
+          ...{
+            links: links,
+            meta: meta,
+            moduleActive: moduleActive,
+            collectionData: collectionData
+          }
+        };
+  
+        commit('configApp', _configs);
       }
     },
     modules: {
