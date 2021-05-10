@@ -107,6 +107,14 @@ export default {
           if (routeParams.hasOwnProperty('slug')) {
             slug = routeParams.slug;
           }
+          let page = 1;
+          if (routeParams.hasOwnProperty('page')) {
+            page = routeParams.page;
+          }
+          let params = {
+            page: page,
+            slug: slug
+          };
           if (routeParams.hasOwnProperty('infoType')) {
             apiGetVideoListsToCategory(
               (result) => {
@@ -165,7 +173,7 @@ export default {
               (errors)=> {
                   console.log(errors)
               },
-              slug
+              params
             )
           }
         },

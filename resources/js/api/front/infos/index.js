@@ -77,10 +77,8 @@ import {
       .catch(errors => errResole(errors))
   }
 
-  export const apiGetListsToCategory = (resolve, errResole, slug) => {
-    const params = {
-      slug: slug
-    };
+  export const apiGetListsToCategory = (resolve, errResole, params) => {
+    
     return axios.get(fn_get_base_api_url(API_INFO_LIST),{
         params: params
       })

@@ -123,8 +123,9 @@
 
                 const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
                 _self.$store.dispatch(actionName, {
-                    perPage: _self.collectionPaginationData.per_page,
-                    page: page
+                    perPage: parseInt(_self.collectionPaginationData.per_page),
+                    page: parseInt(page),
+                    ...this.$route.params
                 });
             },
 
@@ -144,7 +145,8 @@
                 const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
                 _self.$store.dispatch(actionName, {
                     perPage: _self.resourcePaginationData.meta.per_page,
-                    page: page
+                    page: page,
+                    ...this.$route.params
                 });
             }
         },
