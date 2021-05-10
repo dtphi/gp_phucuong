@@ -164,18 +164,51 @@ class NewsController extends Controller
         ]);
     }
 
-    public function showLastedList() 
+    public function showLastedList(Request $request) 
     {
         $json = [];
 
-        $list = $this->newsSv->apiGetLatestInfos(5);
-        if ($list) {
-            foreach ($list as $info) {
-				$json[$info->information_id] = $this->newsSv->apiGetInfo($info->information_id);
+        $list = $this->newsSv->apiGetLatestInfos(20)->toArray();
+
+        if (!empty($list)) {
+            $infoIds = array_reduce($list, function($carry, $item) {
+                $carry[] = $item['information_id'];
+
+                return $carry;
+            });
+
+            if (!empty($infoIds)) {
+				$params = $request->all();
+                $params['information_ids'] = $infoIds;
+
+                $results = $this->newsSv->apiGetInfoListByIds($params);
+
+                $json = [];
+                foreach($results as $info) {
+                    $staticImg = '\.tmp\cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
+                    if (file_exists(public_path('upload/news' . rawurldecode($info->image)))) {
+                        $staticImg = $info->image;
+                    }
+                    $json[] = [
+                        'created_at'=> $info->created_at,
+                        'description' => htmlspecialchars_decode($info->sort_description),
+                        'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
+                        'image'=> $staticImg,
+                        'imgUrl' => url("/upload/news{$staticImg}"),
+                        'information_id' => $info->information_id,
+                        'name'=> $info->name,
+                        'name_slug' => $info->name_slug,
+                        'sort_name' =>  Str::substr($info->name, 0, 50),
+                        'viewed'=> $info->viewed,
+                        'vote'=> $info->vote
+                    ];
+                }
 			}
         }
 
-        return $json;
+        return Helper::successResponse([
+            'results'    => $json
+        ]);
     }
 
     function sum($carry, $item)
@@ -198,7 +231,7 @@ class NewsController extends Controller
                 return $carry;
             });
             
-            if ($infoIds) {
+            if (!empty($infoIds)) {
                 $params = $request->all();
                 $params['information_ids'] = $infoIds;
 

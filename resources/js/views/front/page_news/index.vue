@@ -69,20 +69,9 @@
 </template>
 
 <script>
-	import{
-      mapState,
-      mapActions
-  } from 'vuex';
   import MainMenu from 'com@front/Common/MainMenu';
   import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
 
-  import {
-        MODULE_INFO
-    } from '@app/stores/front/types/module-types';
-    import {
-        GET_DETAIL,
-        GET_INFORMATION_LIST_TO_CATEGORY
-    } from '@app/stores/front/types/action-types';
     import ContentBottom from 'com@front/Common/ContentBottom';
 
 
@@ -99,18 +88,7 @@
             }
         },
         computed: {
-            ...mapState(MODULE_INFO,{
-                infoList: state => state.pageLists
-            }),
         },
-        mounted() {
-            this.[GET_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
-        },
-        methods: {
-            ...mapActions(MODULE_INFO, [
-                GET_DETAIL,GET_INFORMATION_LIST_TO_CATEGORY
-            ]),
-        }
     }
 </script>
 

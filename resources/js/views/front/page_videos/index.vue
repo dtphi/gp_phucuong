@@ -63,7 +63,7 @@
                 infoType: 2,
                 ...this.$route.params
             };
-            console.log('params',params)
+            
             this.[GET_INFORMATION_LIST_TO_CATEGORY](params);
         },
         methods: {

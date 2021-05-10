@@ -55,7 +55,7 @@
         },
         computed: {
             ...mapState(MODULE_INFO,{
-                infoList: state => state.pageLists
+                infoList: state => state.infoPopularList
             }),
             _isContentTop() {
                 return this.$route.meta.layout_content.content_top;
