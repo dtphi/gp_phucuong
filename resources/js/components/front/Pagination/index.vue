@@ -70,8 +70,8 @@
 
         data () {
             return {
-                limit: 20,
-                showDisabled: true,
+                limit: 5,
+                showDisabled: false,
                 size: 'default',
                 align: 'right'
             }
