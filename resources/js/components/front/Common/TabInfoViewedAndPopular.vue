@@ -23,4 +23,14 @@
 </script>
 
 <style lang="scss">
+    .tab-bar {
+        .row-item-3 {
+            span {
+                &:nth-child(2n) {
+                    width: 85%;
+                    text-align: left;
+                }
+            }
+        }
+    }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <b-tab title="Xem nhiều">
+    <b-tab class="tab-bar" title="Xem nhiều">
         <a :href="_getHref(item)" class="row-item-3 d-block mb-2 pb-2" v-for="(item, idx) in infoList" :key="idx">
             <span>
                 <i class="status bg-orange">Hot</i>
