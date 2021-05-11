@@ -87,7 +87,7 @@
                 <div class="col-sm-10">
                     <validation-provider 
                         name="info_meta_description" 
-                        rules="max:191" 
+                        rules="max:255" 
                         v-slot="{ errors }">
                         <textarea 
                             id="input-info-meta-description"
@@ -147,8 +147,6 @@
 
 <script>
     import {
-        mapState,
-        mapGetters,
         mapActions
     } from 'vuex';
     import {

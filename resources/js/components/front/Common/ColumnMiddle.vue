@@ -1,8 +1,6 @@
 <template>
         <b-col :cols="colMiddleClass" class="col-mobile">
-            <div class="list-videos">
-               <slot></slot>
-            </div>
+            <slot></slot>
         </b-col>
 </template>
 

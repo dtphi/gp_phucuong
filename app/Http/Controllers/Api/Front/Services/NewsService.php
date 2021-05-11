@@ -104,6 +104,9 @@ final class NewsService implements NewsModel
             $limit = (int)$data['limit'];
         }
 
+        $query->orderBy('sort_order', 'DESC');
+        $query->orderBy('date_available', 'DESC');
+
         return $query->paginate($limit);
 	}
 

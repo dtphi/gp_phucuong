@@ -30,7 +30,7 @@ $config = [
         ],
         'fs' => [
             'class' => 'App\Helpers\UploadLocalFilesystem',
-            'path' => '@webroot/upload/news/NewImage',
+            'path' => '@webroot/Image/NewPicture',
         ],
     ],
     'modules' => [
@@ -47,8 +47,8 @@ $config = [
                            'Access-Control-Expose-Headers' => [],
                        ],
                    ],
-           'thumbsPath' => '@webroot/upload/news/.tmp',
-           'thumbsUrl' => '@web/upload/news/.tmp',
+           'thumbsPath' => '@webroot/.tmb',
+           'thumbsUrl' => '@web/.tmb',
            'thumbsSize' => 'thumb',
         ],
     ],

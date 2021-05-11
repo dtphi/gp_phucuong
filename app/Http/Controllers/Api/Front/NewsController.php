@@ -17,6 +17,8 @@ class NewsController extends Controller
      */
     protected $resourceName = 'news';
 
+    public static $thumImgNo = '/images/cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
+
     /**
      * @var NewsSv|null
      */
@@ -128,9 +130,16 @@ class NewsController extends Controller
 
         $infos = [];
         foreach($results as $info) {
-            $staticImg = '\.tmp\cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
-            if (file_exists(public_path('upload/news' . rawurldecode($info->image)))) {
+            $staticImg = self::$thumImgNo;
+            $staticThumImg = self::$thumImgNo;
+
+            if (file_exists(public_path(rawurldecode($info->image)))) {
                 $staticImg = $info->image;
+                $staticThumImg = $info->image;
+            }
+            if (isset($info->image_thumb) && $info->image_thumb 
+                && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
+                $staticThumImg = '/.tmb' . $info->image_thumb;
             }
             $infos[] = [
                 'category_id'=> $info->category_id,
@@ -138,7 +147,8 @@ class NewsController extends Controller
                 'description' => htmlspecialchars_decode($info->sort_description),
                 'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
                 'image'=> $staticImg,
-                'imgUrl' => url("/upload/news{$staticImg}"),
+                'imgUrl' => url($staticImg),
+                'imgThumUrl' => url($staticThumImg),
                 'information_id' => $info->information_id,
                 'name'=> $info->name,
                 'name_slug' => $info->name_slug,
@@ -215,8 +225,8 @@ class NewsController extends Controller
 
                 $json = [];
                 foreach($results as $info) {
-                    $staticImg = '\.tmp\cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
-                    if (file_exists(public_path('upload/news' . rawurldecode($info->image)))) {
+                    $staticImg = '/images/cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
+                    if (file_exists(public_path(rawurldecode($info->image)))) {
                         $staticImg = $info->image;
                     }
                     $json[] = [
@@ -224,7 +234,7 @@ class NewsController extends Controller
                         'description' => htmlspecialchars_decode($info->sort_description),
                         'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
                         'image'=> $staticImg,
-                        'imgUrl' => url("/upload/news{$staticImg}"),
+                        'imgUrl' => url($staticImg),
                         'information_id' => $info->information_id,
                         'name'=> $info->name,
                         'name_slug' => $info->name_slug,
@@ -269,8 +279,8 @@ class NewsController extends Controller
 
                 $json = [];
                 foreach($results as $info) {
-                    $staticImg = '\.tmp\cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
-                    if (file_exists(public_path('upload/news' . rawurldecode($info->image)))) {
+                    $staticImg = '/images/cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
+                    if (file_exists(public_path( rawurldecode($info->image)))) {
                         $staticImg = $info->image;
                     }
                     $json[] = [
@@ -278,7 +288,7 @@ class NewsController extends Controller
                         'description' => htmlspecialchars_decode($info->sort_description),
                         'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
                         'image'=> $staticImg,
-                        'imgUrl' => url("/upload/news{$staticImg}"),
+                        'imgUrl' => url($staticImg),
                         'information_id' => $info->information_id,
                         'name'=> $info->name,
                         'name_slug' => $info->name_slug,

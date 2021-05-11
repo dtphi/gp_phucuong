@@ -71,9 +71,6 @@
     import TabAdvance from './TabAdvance';
     import TabLink from './TabLink';
     import TabMediaManager from './TabImage';
-    import {
-        fn_redirect_url
-    } from '@app/api/utils/fn-helper';
 
     export default {
         name: 'FormAdd',
@@ -124,12 +121,26 @@
             },
 
             _selectMainImg(file) {
-                if (typeof file === "object") {
-                    if (file.hasOwnProperty('selected')) {
-                        this.[ACTION_SET_IMAGE](file.selected);
-                    }
+                const image = {
+                    basename:"",
+                    dirname:"",
+                    extension:"",
+                    filename:"",
+                    path:"",
+                    size:0,
+                    thumb:"",
+                    timestamp:'',
+                    type:""
                 }
-                //console.log(file, '->type:', typeof file, '=> has', file.hasOwnProperty('selected'))
+                if (typeof file === "object") {
+                    let selected = image;
+
+                    if (file.hasOwnProperty('selected') && file.selected) {
+                        selected = file.selected;
+                    }
+                    
+                    this.[ACTION_SET_IMAGE](selected);
+                }
             }
         },
         setting: {

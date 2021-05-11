@@ -62,7 +62,6 @@
         MODULE_INFO_EDIT
     } from 'store@admin/types/module-types';
     import {
-        ACTION_GET_INFO_BY_ID,
         ACTION_UPDATE_INFO,
         ACTION_SET_IMAGE
     } from 'store@admin/types/action-types';
@@ -70,9 +69,6 @@
     import TabAdvance from './TabAdvance';
     import TabLink from './TabLink';
     import TabMediaManager from './TabImage';
-    import {
-        fn_redirect_url
-    } from '@app/api/utils/fn-helper';
 
     export default {
         name: 'InformationEditForm',
@@ -120,10 +116,25 @@
             },
 
             _selectMainImg(file) {
+                const image = {
+                    basename:"",
+                    dirname:"",
+                    extension:"",
+                    filename:"",
+                    path:"",
+                    size:0,
+                    thumb:"",
+                    timestamp:'',
+                    type:""
+                }
                 if (typeof file === "object") {
-                    if (file.hasOwnProperty('selected')) {
-                        this.[ACTION_SET_IMAGE](file.selected);
+                    let selected = image;
+
+                    if (file.hasOwnProperty('selected') && file.selected) {
+                        selected = file.selected;
                     }
+                    
+                    this.[ACTION_SET_IMAGE](selected);
                 }
                 //console.log(file, '->type:', typeof file, '=> has', file.hasOwnProperty('selected'))
             }

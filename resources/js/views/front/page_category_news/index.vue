@@ -4,12 +4,17 @@
             <main-menu></main-menu>
 
             <content-top v-if="_isContentTop">
-                <the-category-news-item class="figure" 
-                    v-for="(item,idx) in infoList" 
-                    :info="item" 
-                    :key="idx"></the-category-news-item>
-
+                <template v-if="loading">
+                    <loading-over-lay :active.sync="loading"
+                                        :is-full-page="fullPage"></loading-over-lay>
+                </template>
                 <paginate :is-resource="isResource"></paginate>
+                <div class="list-videos">
+                    <the-category-news-item class="figure" 
+                        v-for="(item,idx) in infoList" 
+                        :info="item" 
+                        :key="idx"></the-category-news-item>
+                </div>
             </content-top>
 
             <main-content v-if="_isContentMain"></main-content>
@@ -22,7 +27,6 @@
 
 <script>
 	import{
-      mapGetters,
       mapActions,
       mapState
   } from 'vuex';
@@ -57,12 +61,14 @@
         },
         data() {
             return {
+                fullPage: false,
                 isResource: false
             }
         },
         computed: {
             ...mapState(MODULE_INFO,{
-                infoList: state => state.pageLists
+                infoList: state => state.pageLists,
+                loading: state => state.loading
             }),
 
             _isContentTop() {

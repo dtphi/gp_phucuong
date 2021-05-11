@@ -33,11 +33,17 @@ class InformationRequest extends FormRequest
         if (!empty($formData['image']) && is_array($formData['image'])) {
 
             $formData['image_type']      = $formData['image']['type'];
+            $formData['image_size'] = $formData['image']['size'];
             $formData['image_path']      = $formData['image']['path'];
+            $formData['image_thumb']     = $formData['image']['thumb'];
+            if ((int)$formData['image_size'] > 1) {
+                $formData['image_path']      = '/Image/NewPicture/' . $formData['image']['path'];
+                $formData['image_thumb'] = $formData['image']['dirname'] . '/' .  $formData['image']['filename'] . '_150x150.' .  $formData['image']['extension'];
+            }
+           
             $formData['image_timestamp'] = $formData['image']['timestamp'];
             $formData['image_extension'] = $formData['image']['extension'];
             $formData['image_filename']  = $formData['image']['filename'];
-            $formData['image_thumb']     = $formData['image']['thumb'];
             $formData['image']           = null;
         }
 

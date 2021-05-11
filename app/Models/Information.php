@@ -78,6 +78,13 @@ class Information extends BaseModel
      */
     public function getImageAttribute($value)
     {
+        $imgThumb = $value;
+        if (isset($this->image_thumb) 
+            && $this->image_thumb 
+            && file_exists(public_path('/.tmb' . $this->image_thumb))) {
+            $imgThumb = '/.tmb' . $this->image_thumb;
+        }
+        
         return [
             'basename' => "",
             'dirname' => "",
@@ -87,7 +94,7 @@ class Information extends BaseModel
             'size'=> 0,
             'timestamp'=> null,
             'type'=> null,
-            'thumb' => $value
+            'thumb' => $imgThumb
         ];
     }
 
@@ -304,6 +311,7 @@ class Information extends BaseModel
      */
     protected $fillable = [
         'image',
+        'image_thumb',
         'information_type',
         'user_create',
         'name_slug',

@@ -23,7 +23,6 @@
 <script>
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
-        fn_get_base_url,
         fn_get_news_file_connector_url,
         fn_get_news_file_sound_url
     } from '@app/api/utils/fn-helper';

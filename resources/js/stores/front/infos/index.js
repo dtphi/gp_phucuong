@@ -21,6 +21,7 @@ import { MODULE_INFO } from '../../admin/types/module-types';
 export default {
     namespaced: true,
     state: {
+      loading: false,
       mainMenus: [],
       pageLists: [],
       infoLastedList: [],
@@ -48,6 +49,9 @@ export default {
         },
         SET_ERROR(state, payload) {
           state.errors = payload;
+        },
+        setLoading(state, payload) {
+          state.loading = payload;
         }
     },
 
@@ -103,6 +107,7 @@ export default {
           }
         },
         [GET_INFORMATION_LIST_TO_CATEGORY]({ commit, dispatch }, routeParams) {
+          commit('setLoading', true);
           let slug = '';
           if (routeParams.hasOwnProperty('slug')) {
             slug = routeParams.slug;
@@ -139,9 +144,11 @@ export default {
                 });
 
                 commit(SET_ERROR, []);
+                commit('setLoading', false);
               },
               (errors)=> {
-                  console.log(errors)
+                  console.log(errors);
+                  commit('setLoading', false);
               },
               routeParams
             )
@@ -169,9 +176,11 @@ export default {
                 });
 
                 commit(SET_ERROR, []);
+                commit('setLoading', false);
               },
               (errors)=> {
-                  console.log(errors)
+                  console.log(errors);
+                  commit('setLoading', false);
               },
               params
             )

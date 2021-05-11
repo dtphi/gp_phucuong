@@ -133,6 +133,7 @@ final class InformationService implements BaseModel, InformationModel
 
             if (isset($data['image_path'])) {
                 $this->model->image = $data['image_path'];
+                $this->model->image_thumb = $data['image_thumb'];
             }
             $this->model->name_slug =  Str::slug($data['name'] . ' ' . $infoId);
             $this->model->save();
@@ -210,6 +211,7 @@ final class InformationService implements BaseModel, InformationModel
 
             if (isset($data['image_path'])) {
                 $model->image = $data['image_path'];
+                $model->image_thumb = $data['image_thumb'];
                 $model->save();
             }
             $model->name_slug =  Str::slug($model->name . ' ' . $infoId);
