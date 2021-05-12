@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\Front;
 
 use App\Exceptions\HandlerMsgCommon;
-use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
-use Illuminate\Http\Request;
 use App\Helpers\Helper;
+use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use App\Http\Controllers\Api\Front\Services\Contracts\NewsModel as NewsSv;
-use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -40,64 +40,65 @@ class NewsController extends Controller
      * [getServiceContext:  ]
      * @return [type] [description]
      */
-    public function getServiceContext() {
+    public function getServiceContext()
+    {
         return $this->newsSv;
     }
 
     public function index()
     {
         $bannerPath = '/upload/home_banners';
-        
+
         try {
             $pageLists = [
                 [
-                    'sort' => 0,
-                    'img' => $bannerPath . '/news_banner.jpeg',
-                    'href' => '/tin-tuc',
+                    'sort'  => 0,
+                    'img'   => $bannerPath . '/news_banner.jpeg',
+                    'href'  => '/tin-tuc',
                     'title' => '>>>> XEM TIN TỨC'
                 ],
                 [
-                    'sort' => 1,
-                    'img' => $bannerPath . '/loi_chua_banner.jpeg',
-                    'href' => '/',
+                    'sort'  => 1,
+                    'img'   => $bannerPath . '/loi_chua_banner.jpeg',
+                    'href'  => '/',
                     'title' => '>>>> LỜI CHÚA'
                 ],
                 [
-                    'sort' => 2,
-                    'img' => $bannerPath . '/video_banner.jpg',
-                    'href' => '/video',
+                    'sort'  => 2,
+                    'img'   => $bannerPath . '/video_banner.jpg',
+                    'href'  => '/video',
                     'title' => '>>>> VIDEO'
                 ],
                 [
-                    'sort' => 3,
-                    'img' => $bannerPath . '/audio_podcast_banner.jpeg',
-                    'href' => '/',
+                    'sort'  => 3,
+                    'img'   => $bannerPath . '/audio_podcast_banner.jpeg',
+                    'href'  => '/',
                     'title' => '>>>> AUDIO/PODCAST'
                 ],
                 [
-                    'sort' => 4,
-                    'img' => $bannerPath . '/linh_muc_banner.jpeg',
-                    'href' => '/',
+                    'sort'  => 4,
+                    'img'   => $bannerPath . '/linh_muc_banner.jpeg',
+                    'href'  => '/',
                     'title' => '>>>> DANH SÁCH LINH MỤC'
                 ],
                 [
-                    'sort' => 5,
-                    'img' => $bannerPath . '/gx_chanh_toa_banner.jpeg',
-                    'href' => '/',
+                    'sort'  => 5,
+                    'img'   => $bannerPath . '/gx_chanh_toa_banner.jpeg',
+                    'href'  => '/',
                     'title' => '>>>> GIÁO XỨ TRONG GIÁO PHẬN'
                 ],
                 [
-                    'sort' => 6,
-                    'img' => $bannerPath . '/thong_bao_banner.jpeg',
-                    'href' => '/',
+                    'sort'  => 6,
+                    'img'   => $bannerPath . '/thong_bao_banner.jpeg',
+                    'href'  => '/',
                     'title' => '>>>> THÔNG BÁO'
                 ],
                 [
-                    'sort' => 7,
-                    'img' => $bannerPath . '/phung_vu_banner.jpg',
-                    'href' => '/',
+                    'sort'  => 7,
+                    'img'   => $bannerPath . '/phung_vu_banner.jpg',
+                    'href'  => '/',
                     'title' => '>>>> PHỤNG VỤ'
-                ]      
+                ]
             ];
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
@@ -108,10 +109,10 @@ class NewsController extends Controller
         ]);
     }
 
-    public function list(Request $request) 
+    public function list(Request $request)
     {
         $params = $request->all();
-        $page = 1;
+        $page   = 1;
         if ($request->query('page')) {
             $page = $request->query('page');
         }
@@ -119,42 +120,42 @@ class NewsController extends Controller
 
         $params['limit'] = 20;
 
-        $params['slug'] = isset($params['slug'])? $params['slug']: '';
+        $params['slug'] = isset($params['slug']) ? $params['slug'] : '';
         if (!empty($params['slug'])) {
-            $slugs = explode('-', $params['slug']);
+            $slugs                 = explode('-', $params['slug']);
             $params['category_id'] = end($slugs);
         }
 
-        $results = $this->newsSv->apiGetInfoList($params);
+        $results    = $this->newsSv->apiGetInfoList($params);
         $pagination = $this->_getTextPagination($results);
 
         $infos = [];
-        foreach($results as $info) {
-            $staticImg = self::$thumImgNo;
+        foreach ($results as $info) {
+            $staticImg     = self::$thumImgNo;
             $staticThumImg = self::$thumImgNo;
 
             if (file_exists(public_path(rawurldecode($info->image)))) {
-                $staticImg = $info->image;
+                $staticImg     = $info->image;
                 $staticThumImg = $info->image;
             }
-            if (isset($info->image_thumb) && $info->image_thumb 
+            if (isset($info->image_thumb) && $info->image_thumb
                 && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
                 $staticThumImg = '/.tmb' . $info->image_thumb;
             }
             $infos[] = [
-                'category_id'=> $info->category_id,
-                'created_at'=> $info->created_at,
-                'description' => htmlspecialchars_decode($info->sort_description),
-                'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
-                'image'=> $staticImg,
-                'imgUrl' => url($staticImg),
-                'imgThumUrl' => url($staticThumImg),
-                'information_id' => $info->information_id,
-                'name'=> $info->name,
-                'name_slug' => $info->name_slug,
-                'sort_name' =>  Str::substr($info->name, 0, 50),
-                'viewed'=> $info->viewed,
-                'vote'=> $info->vote
+                'category_id'      => $info->category_id,
+                'created_at'       => $info->created_at,
+                'description'      => htmlspecialchars_decode($info->sort_description),
+                'sort_description' => Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
+                'image'            => $staticImg,
+                'imgUrl'           => url($staticImg),
+                'imgThumUrl'       => url($staticThumImg),
+                'information_id'   => $info->information_id,
+                'name'             => $info->name,
+                'name_slug'        => $info->name_slug,
+                'sort_name'        => Str::substr($info->name, 0, 50),
+                'viewed'           => $info->viewed,
+                'vote'             => $info->vote
             ];
         }
 
@@ -183,12 +184,12 @@ class NewsController extends Controller
         return $data;
     }
 
-    public function detail(Request $request) 
+    public function detail(Request $request)
     {
-        $params = $request->all();
-        $params['slug'] = isset($params['slug'])? $params['slug']: '';
+        $params         = $request->all();
+        $params['slug'] = isset($params['slug']) ? $params['slug'] : '';
         if (!empty($params['slug'])) {
-            $slugs = explode('-', $params['slug']);
+            $slugs                    = explode('-', $params['slug']);
             $params['information_id'] = end($slugs);
         }
 
@@ -200,60 +201,61 @@ class NewsController extends Controller
         }
 
         return Helper::successResponse([
-            'results'    => $json
+            'results' => $json
         ]);
     }
 
-    public function showLastedList(Request $request) 
+    public function showLastedList(Request $request)
     {
         $json = [];
 
         $list = $this->newsSv->apiGetLatestInfos(20)->toArray();
 
         if (!empty($list)) {
-            $infoIds = array_reduce($list, function($carry, $item) {
+            $infoIds = array_reduce($list, function ($carry, $item) {
                 $carry[] = $item['information_id'];
 
                 return $carry;
             });
 
             if (!empty($infoIds)) {
-				$params = $request->all();
+                $params                    = $request->all();
                 $params['information_ids'] = $infoIds;
 
                 $results = $this->newsSv->apiGetInfoListByIds($params);
 
                 $json = [];
-                foreach($results as $info) {
+                foreach ($results as $info) {
                     $staticImg = '/images/cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
                     if (file_exists(public_path(rawurldecode($info->image)))) {
                         $staticImg = $info->image;
                     }
                     $json[] = [
-                        'created_at'=> $info->created_at,
-                        'description' => htmlspecialchars_decode($info->sort_description),
-                        'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
-                        'image'=> $staticImg,
-                        'imgUrl' => url($staticImg),
-                        'information_id' => $info->information_id,
-                        'name'=> $info->name,
-                        'name_slug' => $info->name_slug,
-                        'sort_name' =>  Str::substr($info->name, 0, 50),
-                        'viewed'=> $info->viewed,
-                        'vote'=> $info->vote
+                        'created_at'       => $info->created_at,
+                        'description'      => htmlspecialchars_decode($info->sort_description),
+                        'sort_description' => Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
+                        'image'            => $staticImg,
+                        'imgUrl'           => url($staticImg),
+                        'information_id'   => $info->information_id,
+                        'name'             => $info->name,
+                        'name_slug'        => $info->name_slug,
+                        'sort_name'        => Str::substr($info->name, 0, 50),
+                        'viewed'           => $info->viewed,
+                        'vote'             => $info->vote
                     ];
                 }
-			}
+            }
         }
 
         return Helper::successResponse([
-            'results'    => $json
+            'results' => $json
         ]);
     }
 
     function sum($carry, $item)
     {
         $carry += $item;
+
         return $carry;
     }
 
@@ -264,44 +266,44 @@ class NewsController extends Controller
 
         $list = $this->newsSv->apiGetPopularInfos(20)->toArray();
 
-        if(!empty($list)) {
-            $infoIds = array_reduce($list, function($carry, $item) {
+        if (!empty($list)) {
+            $infoIds = array_reduce($list, function ($carry, $item) {
                 $carry[] = $item['information_id'];
 
                 return $carry;
             });
-            
+
             if (!empty($infoIds)) {
-                $params = $request->all();
+                $params                    = $request->all();
                 $params['information_ids'] = $infoIds;
 
                 $results = $this->newsSv->apiGetInfoListByIds($params);
 
                 $json = [];
-                foreach($results as $info) {
+                foreach ($results as $info) {
                     $staticImg = '/images/cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
-                    if (file_exists(public_path( rawurldecode($info->image)))) {
+                    if (file_exists(public_path(rawurldecode($info->image)))) {
                         $staticImg = $info->image;
                     }
                     $json[] = [
-                        'created_at'=> $info->created_at,
-                        'description' => htmlspecialchars_decode($info->sort_description),
-                        'sort_description'=> Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
-                        'image'=> $staticImg,
-                        'imgUrl' => url($staticImg),
-                        'information_id' => $info->information_id,
-                        'name'=> $info->name,
-                        'name_slug' => $info->name_slug,
-                        'sort_name' =>  Str::substr($info->name, 0, 50),
-                        'viewed'=> $info->viewed,
-                        'vote'=> $info->vote
+                        'created_at'       => $info->created_at,
+                        'description'      => htmlspecialchars_decode($info->sort_description),
+                        'sort_description' => Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
+                        'image'            => $staticImg,
+                        'imgUrl'           => url($staticImg),
+                        'information_id'   => $info->information_id,
+                        'name'             => $info->name,
+                        'name_slug'        => $info->name_slug,
+                        'sort_name'        => Str::substr($info->name, 0, 50),
+                        'viewed'           => $info->viewed,
+                        'vote'             => $info->vote
                     ];
                 }
             }
         }
 
         return Helper::successResponse([
-            'results'    => $json
+            'results' => $json
         ]);
     }
 

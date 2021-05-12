@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
@@ -34,17 +34,18 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
 
-
-    public function importCsvToDb() {
+    public function importCsvToDb()
+    {
         $inputFileType = 'Csv';
         $inputFileName = './sampleData/example2.csv';
 
-        echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory with a defined reader type of ',$inputFileType,'<br />';
+        echo 'Loading file ', pathinfo($inputFileName,
+            PATHINFO_BASENAME), ' using IOFactory with a defined reader type of ', $inputFileType, '<br />';
         /**  Create a new Reader of the type defined in $inputFileType  **/
         $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
 
@@ -68,15 +69,15 @@ class Kernel extends ConsoleKernel
         /**  $startRow is set to 2 initially because we always read the headings in row #1  **/
         for ($startRow = 2; $startRow <= 1000000; $startRow += $chunkSize) {
             /**  Tell the Read Filter which rows we want to read this loop  **/
-            $chunkFilter->setRows($startRow,$chunkSize);
+            $chunkFilter->setRows($startRow, $chunkSize);
 
             /**  Increment the worksheet index pointer for the Reader  **/
             $reader->setSheetIndex($sheet);
             /**  Load only the rows that match our filter into a new worksheet  **/
-            $reader->loadIntoExisting($inputFileName,$spreadsheet);
+            $reader->loadIntoExisting($inputFileName, $spreadsheet);
             /**  Set the worksheet title for the sheet that we've justloaded)  **/
             /**    and increment the sheet index as well  **/
-            $spreadsheet->getActiveSheet()->setTitle('Country Data #'.(++$sheet));
+            $spreadsheet->getActiveSheet()->setTitle('Country Data #' . (++$sheet));
         }
     }
 }

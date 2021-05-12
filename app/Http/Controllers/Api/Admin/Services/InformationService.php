@@ -13,8 +13,8 @@ use App\Models\InformationImage;
 use App\Models\InformationRelated;
 use App\Models\InformationToCategory;
 use App\Models\InformationToDownload;
-use Illuminate\Support\Str;
 use DB;
+use Illuminate\Support\Str;
 
 final class InformationService implements BaseModel, InformationModel
 {
@@ -132,13 +132,14 @@ final class InformationService implements BaseModel, InformationModel
             $infoId = $this->model->information_id;
 
             if (isset($data['image_path'])) {
-                $this->model->image = $data['image_path'];
+                $this->model->image       = $data['image_path'];
                 $this->model->image_thumb = $data['image_thumb'];
             }
-            $this->model->name_slug =  Str::slug($data['name'] . ' ' . $infoId);
+            $this->model->name_slug = Str::slug($data['name'] . ' ' . $infoId);
             $this->model->save();
 
-            InformationDescription::insertByInfoId($infoId, $data['name'], htmlentities($data['description']), $data['tag'],
+            InformationDescription::insertByInfoId($infoId, $data['name'], htmlentities($data['description']),
+                $data['tag'],
                 $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
 
             if (isset($data['info_images']) && !empty($data['info_images'])) {
@@ -210,11 +211,11 @@ final class InformationService implements BaseModel, InformationModel
             $infoId = $model->information_id;
 
             if (isset($data['image_path'])) {
-                $model->image = $data['image_path'];
+                $model->image       = $data['image_path'];
                 $model->image_thumb = $data['image_thumb'];
                 $model->save();
             }
-            $model->name_slug =  Str::slug($model->name . ' ' . $infoId);
+            $model->name_slug = Str::slug($model->name . ' ' . $infoId);
             $model->save();
 
             $modelDes = $model->infoDes;
@@ -300,8 +301,8 @@ final class InformationService implements BaseModel, InformationModel
     public function apiGetInformations($data = array(), $limit = 5)
     {
         $query = $this->model->select()
-        ->orderBy('sort_order', 'DESC')
-        ->orderBy('date_available', 'DESC')->limit($limit);
+            ->orderBy('sort_order', 'DESC')
+            ->orderBy('date_available', 'DESC')->limit($limit);
 
         return $query;
     }
@@ -332,17 +333,18 @@ final class InformationService implements BaseModel, InformationModel
 
     public function importInformation()
     {
-        $data = [];
+        $data    = [];
         $results = DB::table('newss_groups')->get();
 
         DB::beginTransaction();
 
         foreach ($results as $info) {
-            $infoId = $info->id;
-            $sortDes = $info->description;
+            $infoId   = $info->id;
+            $sortDes  = $info->description;
             $nameSlug = Str::slug($name . ' ' . $infoId);
-            Information::insertForce($info->id, $info->picture, 0, 1, $info->sort, $info->context1, $info->description, $nameSlug);
-            
+            Information::insertForce($info->id, $info->picture, 0, 1, $info->sort, $info->context1, $info->description,
+                $nameSlug);
+
             $des = htmlentities($info->context);
 
             InformationDescription::insertByInfoId($infoId, $info->newsgroupname, $des, $info->tag,

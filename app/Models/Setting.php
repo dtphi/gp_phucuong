@@ -7,7 +7,7 @@ use DB;
 
 class Setting extends BaseModel
 {
-    protected $table =  DB_PREFIX . 'settings';
+    protected $table = DB_PREFIX . 'settings';
 
     /**
      * @var string
@@ -19,7 +19,7 @@ class Setting extends BaseModel
      */
     public $timestamps = false;
 
-        /**
+    /**
      * @author : dtphi .
      * The attributes that are mass assignable.
      *
@@ -43,6 +43,7 @@ class Setting extends BaseModel
         if (!empty($code) && !empty($key)) {
 
             $insertQuery = 'insert into ' . Tables::$settings . ' (code, key_data, value, serialized) values (?, ?, ?, ?)';
+
             return DB::insert($insertQuery, [$code, $key, $value, $serialized]);
         }
     }

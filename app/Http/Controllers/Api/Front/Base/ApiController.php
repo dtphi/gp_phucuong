@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Front\Base;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Services\Service;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
@@ -37,132 +37,132 @@ class ApiController extends Controller
     {
         $requestParams = $request->get('params');
 
-        $pathName = isset($requestParams['pathName']) ? $requestParams['pathName']:'home';
-        $pathName = trim($pathName,'/');
-       
+        $pathName = isset($requestParams['pathName']) ? $requestParams['pathName'] : 'home';
+        $pathName = trim($pathName, '/');
+
         try {
-            $menus = [];
-            $categories =  $this->sv->getMenuCategories(0);
-    
+            $menus      = [];
+            $categories = $this->sv->getMenuCategories(0);
+
             foreach ($categories as $cate) {
-                    // Level 2
-                    $children_data_2 = array();
+                // Level 2
+                $children_data_2 = array();
 
-                    if (!empty($cate->name)) {
-                        $children_2 = $this->sv->getMenuCategories($cate->category_id);
-    
-                        foreach ($children_2 as $child_2) {
-                            $path_2 = 'path=' . $cate->category_id . '_' . $child_2->category_id;
-                            $link_2 = $cate->name_slug . '/' . $child_2->name_slug;
-                            // Level 3
-                            $children_data_3 = array();
-                            
-                            if (!empty($child_2->name)) {
-                                $children_3 = $this->sv->getMenuCategories($child_2->category_id);
-            
-                                foreach ($children_3 as $child_3) {
-                                    $path_3 = $path_2 . '_' . $child_3->category_id;
-                                    $link_3 = $link_2 . '/' . $child_3->name_slug;
-                                    // Level 4
-                                    $children_data_4 = array();
-                
-                                    $children_4 = $this->sv->getMenuCategories($child_3->category_id);
-                    
-                                    foreach ($children_4 as $child_4) {
-                                        $path_4 = $path_3 . '_' . $child_4->category_id;
-                                        $link_4 = $link_3 . '/' . $child_4->name_slug;
-                                        // Level 5
-                                        $children_data_5 = array();
-                    
-                                        $children_5 = $this->sv->getMenuCategories($child_4->category_id);
-                        
-                                        foreach ($children_5 as $child_5) {
-                                            $path_5 = $path_4 . '_' . $child_5->category_id;
-                                            $link_5 = $link_4 . '/' . $child_5->name_slug;
+                if (!empty($cate->name)) {
+                    $children_2 = $this->sv->getMenuCategories($cate->category_id);
 
-                                            // Level 5-1
-                                            $filter_data = array(
-                                                'filter_category_id'  => $child_5->category_id,
-                                                'filter_sub_category' => true
-                                            );
-                        
-                                            $children_data_5[] = array(
-                                                'name'  => $child_5->name,
-                                                'href'  => $path_5,
-                                                'link' => $link_5
-                                            );
-                                        }
+                    foreach ($children_2 as $child_2) {
+                        $path_2 = 'path=' . $cate->category_id . '_' . $child_2->category_id;
+                        $link_2 = $cate->name_slug . '/' . $child_2->name_slug;
+                        // Level 3
+                        $children_data_3 = array();
 
-                                        // Level 4 - 1
+                        if (!empty($child_2->name)) {
+                            $children_3 = $this->sv->getMenuCategories($child_2->category_id);
+
+                            foreach ($children_3 as $child_3) {
+                                $path_3 = $path_2 . '_' . $child_3->category_id;
+                                $link_3 = $link_2 . '/' . $child_3->name_slug;
+                                // Level 4
+                                $children_data_4 = array();
+
+                                $children_4 = $this->sv->getMenuCategories($child_3->category_id);
+
+                                foreach ($children_4 as $child_4) {
+                                    $path_4 = $path_3 . '_' . $child_4->category_id;
+                                    $link_4 = $link_3 . '/' . $child_4->name_slug;
+                                    // Level 5
+                                    $children_data_5 = array();
+
+                                    $children_5 = $this->sv->getMenuCategories($child_4->category_id);
+
+                                    foreach ($children_5 as $child_5) {
+                                        $path_5 = $path_4 . '_' . $child_5->category_id;
+                                        $link_5 = $link_4 . '/' . $child_5->name_slug;
+
+                                        // Level 5-1
                                         $filter_data = array(
-                                            'filter_category_id'  => $child_4->category_id,
+                                            'filter_category_id'  => $child_5->category_id,
                                             'filter_sub_category' => true
                                         );
-                    
-                                        $children_data_4[] = array(
-                                            'name'  => $child_4->name,
-                                            'children' => $children_data_5,
-                                            'href'  => $path_4,
-                                            'link' => $link_4
+
+                                        $children_data_5[] = array(
+                                            'name' => $child_5->name,
+                                            'href' => $path_5,
+                                            'link' => $link_5
                                         );
                                     }
 
-                                    // Level 3 -1
+                                    // Level 4 - 1
                                     $filter_data = array(
-                                        'filter_category_id'  => $child_3->category_id,
+                                        'filter_category_id'  => $child_4->category_id,
                                         'filter_sub_category' => true
                                     );
-                
-                                    $children_data_3[] = array(
-                                        'name'  => $child_3->name,
-                                        'children' => $children_data_4,
-                                        'href'  => $path_3,
-                                        'link' => $link_3
+
+                                    $children_data_4[] = array(
+                                        'name'     => $child_4->name,
+                                        'children' => $children_data_5,
+                                        'href'     => $path_4,
+                                        'link'     => $link_4
                                     );
                                 }
+
+                                // Level 3 -1
+                                $filter_data = array(
+                                    'filter_category_id'  => $child_3->category_id,
+                                    'filter_sub_category' => true
+                                );
+
+                                $children_data_3[] = array(
+                                    'name'     => $child_3->name,
+                                    'children' => $children_data_4,
+                                    'href'     => $path_3,
+                                    'link'     => $link_3
+                                );
                             }
-                            
-                            // Level 2 - 1
-                            $filter_data = array(
-                                'filter_category_id'  => $child_2->category_id,
-                                'filter_sub_category' => true
-                            );
-        
-                            $children_data_2[] = array(
-                                'name'  => $child_2->name,
-                                'children' => $children_data_3,
-                                'href'  => $path_2,
-                                'link' => $link_2
-                            );
                         }
+
+                        // Level 2 - 1
+                        $filter_data = array(
+                            'filter_category_id'  => $child_2->category_id,
+                            'filter_sub_category' => true
+                        );
+
+                        $children_data_2[] = array(
+                            'name'     => $child_2->name,
+                            'children' => $children_data_3,
+                            'href'     => $path_2,
+                            'link'     => $link_2
+                        );
                     }
-    
-                    // Level 1
-                    $menus[] = array(
-                        'name'     => $cate->name,
-                        'children' => $children_data_2,
-                        'href'     => 'path=' . $cate->category_id,
-                        'link' => $cate->name_slug
-                    );
+                }
+
+                // Level 1
+                $menus[] = array(
+                    'name'     => $cate->name,
+                    'children' => $children_data_2,
+                    'href'     => 'path=' . $cate->category_id,
+                    'link'     => $cate->name_slug
+                );
             }
 
             $menuLayout_1 = [];
             $categories_1 = $this->sv->getMenuCategoriesToLayout(1);
 
-            foreach($categories_1 as $cate_1) {
-                 // Level 2
-                 $children_data_2 = array();
-    
-                 $children_2 = $this->sv->getMenuCategories($cate_1->category_id);
+            foreach ($categories_1 as $cate_1) {
+                // Level 2
+                $children_data_2 = array();
 
-                 foreach ($children_2 as $child_2) {
+                $children_2 = $this->sv->getMenuCategories($cate_1->category_id);
+
+                foreach ($children_2 as $child_2) {
                     $path_2 = 'path=' . $cate_1->category_id . '_' . $child_2->category_id;
                     $link_2 = $cate_1->name_slug . '/' . $child_2->name_slug;
 
                     // Level 3
                     $children_data_3 = array();
-                    $children_3 = $this->sv->getMenuCategories($child_2->category_id);
-    
+                    $children_3      = $this->sv->getMenuCategories($child_2->category_id);
+
                     foreach ($children_3 as $child_3) {
                         $path_3 = $path_2 . '_' . $child_3->category_id;
                         $link_3 = $link_2 . '/' . $child_3->name_slug;
@@ -172,12 +172,12 @@ class ApiController extends Controller
                             'filter_category_id'  => $child_3->category_id,
                             'filter_sub_category' => true
                         );
-    
+
                         $children_data_3[] = array(
-                            'name'  => $child_3->name,
+                            'name'     => $child_3->name,
                             'children' => [],
-                            'href'  => $path_3,
-                            'link' => $link_3
+                            'href'     => $path_3,
+                            'link'     => $link_3
                         );
                     }
 
@@ -188,74 +188,74 @@ class ApiController extends Controller
                     );
 
                     $children_data_2[] = array(
-                        'name'  => $child_2->name,
+                        'name'     => $child_2->name,
                         'children' => $children_data_3,
-                        'href'  => $path_2,
-                        'link' => $link_2
+                        'href'     => $path_2,
+                        'link'     => $link_2
                     );
-                 }
+                }
 
                 // Level 1
                 $menuLayout_1[] = array(
                     'name'     => $cate_1->name,
                     'children' => $children_data_2,
                     'href'     => 'path=' . $cate_1->category_id,
-                    'link' => $cate_1->name_slug
+                    'link'     => $cate_1->name_slug
                 );
             }
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        $appImgPath = '/upload/app';
-        $data['appList']  = [
+        $appImgPath      = '/upload/app';
+        $data['appList'] = [
             [
-                'sort' => 0,
-                'title' => 'App website gppc',
-                'img' => $appImgPath . '/app_website_gppc.png',
+                'sort'         => 0,
+                'title'        => 'App website gppc',
+                'img'          => $appImgPath . '/app_website_gppc.png',
                 'hrefAppStore' => '/',
-                'hrefChPlay' => '/'
+                'hrefChPlay'   => '/'
             ],
             [
-                'sort' => 1,
-                'title' => 'App sách nói công giáo',
-                'img' => $appImgPath . '/app_sach_noi_cong_giao.jpg',
+                'sort'         => 1,
+                'title'        => 'App sách nói công giáo',
+                'img'          => $appImgPath . '/app_sach_noi_cong_giao.jpg',
                 'hrefAppStore' => '/',
-                'hrefChPlay' => '/'
+                'hrefChPlay'   => '/'
             ],
             [
-                'sort' => 2,
-                'title' => 'App tìm nhà thờ gần nhất',
-                'img' => $appImgPath . '/app_tim_nha_tho.jpg',
+                'sort'         => 2,
+                'title'        => 'App tìm nhà thờ gần nhất',
+                'img'          => $appImgPath . '/app_tim_nha_tho.jpg',
                 'hrefAppStore' => '/',
-                'hrefChPlay' => '/'
+                'hrefChPlay'   => '/'
             ],
         ];
 
-        $data['logo'] = '/front/img/logo.png';
-        $data['banner'] = '/images/banner_image.jpg';
-        $data['menus'] = $menus;
+        $data['logo']    = '/front/img/logo.png';
+        $data['banner']  = '/images/banner_image.jpg';
+        $data['menus']   = $menus;
         $data['menus_1'] = $menuLayout_1;
-        $data['pages'] = [
-            'home' => [
+        $data['pages']   = [
+            'home'  => [
                 'title' => 'Trang chủ',
-                'id' => 1
+                'id'    => 1
             ],
             'video' => [
                 'title' => 'Trang video',
-                'id' => 2
+                'id'    => 2
             ],
-            'news' => [
+            'news'  => [
                 'title' => 'Trang tin tức',
-                'id' => 3
-            ]  
+                'id'    => 3
+            ]
         ];
 
         return response()->json($data);
     }
 
 
-     /**
+    /**
      * @author : dtphi .
      * @param $data
      * @param int $parent
@@ -272,7 +272,7 @@ class ApiController extends Controller
                 $newsGroupTree[$data[$i]['id']]['fatherId']      = $data[$i]['father_id'];
                 $newsGroupTree[$data[$i]['id']]['newsgroupname'] = $data[$i]['newsgroupname'];
 
-                $newsGroupTree[$data[$i]['id']]['children']      = $this->generateTree($data, $data[$i]['id'],
+                $newsGroupTree[$data[$i]['id']]['children'] = $this->generateTree($data, $data[$i]['id'],
                     $depth + 1);
             }
         }

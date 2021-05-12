@@ -13,8 +13,8 @@ use App\Models\CategoryPath;
 use App\Models\CategoryToLayout;
 use App\Models\InformationToCategory;
 use App\Models\NewsGroup;
-use Illuminate\Support\Str;
 use DB;
+use Illuminate\Support\Str;
 
 final class NewsGroupService implements BaseModel, NewsGroupModel
 {
@@ -147,7 +147,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             if ($this->model->save()) {
                 $data['category_id'] = $this->model->category_id;
 
-                $this->model->name_slug =  Str::slug($data['name'] . ' ' . $data['category_id']);
+                $this->model->name_slug = Str::slug($data['name'] . ' ' . $data['category_id']);
                 $this->model->save();
 
 
@@ -219,7 +219,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     public function apiUpdate($model, array $data = [])
     {
         // TODO: Implement apiInsertOrUpdate() method.
-        $data['name_slug'] =  Str::slug($data['name'] . ' ' . $model->category_id);
+        $data['name_slug'] = Str::slug($data['name'] . ' ' . $model->category_id);
 
         $model->fill($data);
 
@@ -246,7 +246,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                     $modelDes->save();
                 } else {
                     CategoryDescription::insertByCateId($categoryId, $data['name'], $data['description'],
-                    $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
+                        $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
                 }
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
@@ -455,8 +455,9 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         return $query->get();
     }
 
-    public function importCategory() {
-        $data = [];
+    public function importCategory()
+    {
+        $data    = [];
         $results = DB::table('news_groups')->get();
 
         /**
@@ -465,7 +466,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         DB::beginTransaction();
 
         try {
-            foreach($results as $group) {
+            foreach ($results as $group) {
                 Category::insertForce($group->id, $group->father_id);
                 $categoryId = $group->id;
 
@@ -491,24 +492,26 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         }
 
         DB::commit();
-    
+
     }
 
-    public function connectSqlServer() {
+    public function connectSqlServer()
+    {
         $servername = "103.139.202.9";
-        $username = "giaophanphucuong_db";
-        $password = "xY8uKdxKazxBguiV82gQ";
-        $database = "giaophanphucuong_db";
-        $port = "1433";
+        $username   = "giaophanphucuong_db";
+        $password   = "xY8uKdxKazxBguiV82gQ";
+        $database   = "giaophanphucuong_db";
+        $port       = "1433";
         try {
-            $conn = new \PDO("sqlsrv:server=103.139.202.9:1433;Database=giaophanphucuong_db;ConnectionPooling=0", "giaophanphucuong_db", "xY8uKdxKazxBguiV82gQ",
+            $conn = new \PDO("sqlsrv:server=103.139.202.9:1433;Database=giaophanphucuong_db;ConnectionPooling=0",
+                "giaophanphucuong_db", "xY8uKdxKazxBguiV82gQ",
                 array(
                     \PDO::ATTR_PERSISTENT => true,
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+                    \PDO::ATTR_ERRMODE    => \PDO::ERRMODE_EXCEPTION
                 )
             );
         } catch (\PDOException $e) {
-            echo ("Error connecting to SQL Server: " . $e->getMessage());
+            echo("Error connecting to SQL Server: " . $e->getMessage());
         }
 
         if (isset($conn)) {

@@ -2,13 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Common\Tables;
-use Illuminate\Console\Command;
 use App\Models\Category;
 use App\Models\CategoryDescription;
 use App\Models\CategoryPath;
-use Illuminate\Support\Str;
 use DB;
+use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class ImportCategoryCsv extends Command
 {
@@ -38,7 +37,8 @@ class ImportCategoryCsv extends Command
      * @return void
      */
     public function __construct()
-    {   $this->modelPath = new CategoryPath();
+    {
+        $this->modelPath = new CategoryPath();
         parent::__construct();
     }
 
@@ -50,12 +50,12 @@ class ImportCategoryCsv extends Command
     public function handle()
     {
         $arguments = $this->arguments();
-        $fileName = storage_path('import_csv') . '/' . $arguments['fileName'] . '.csv';
+        $fileName  = storage_path('import_csv') . '/' . $arguments['fileName'] . '.csv';
         $this->importCsvToDb($fileName);
 
         $this->info('File name import: ' . $fileName);
     }
-    
+
     /*
     array:17 [
         "A" => "NewsGroupId"
@@ -76,27 +76,28 @@ class ImportCategoryCsv extends Command
         "Q" => "UserIdCreate"
       ]
     */
-    public function importCsvToDb($inputFileName = '') {
+    public function importCsvToDb($inputFileName = '')
+    {
         $inputFileType = 'Csv';
         $inputFileName = $inputFileName;
         /**  Create a new Reader of the type defined in $inputFileType  **/
-        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+        $reader        = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
         $worksheetData = $reader->listWorksheetInfo($inputFileName);
 
         if (count($worksheetData)) {
             $spreadsheet = $reader->load($inputFileName);
-            $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+            $sheetData   = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
             $this->info('count: ' . count($sheetData));
             unset($sheetData[1]);
             foreach ($sheetData as $group) {
                 $categoryId = (int)$group['A'];
-                $parentId = (int)$group['B'];
+                $parentId   = (int)$group['B'];
                 if ($parentId == -1) {
                     $parentId = 0;
                 }
-                $name = $group['C'];
-                $metaTitle = $group['D'];
-                $nameSlug = Str::slug($name . ' ' . $categoryId);
+                $name       = $group['C'];
+                $metaTitle  = $group['D'];
+                $nameSlug   = Str::slug($name . ' ' . $categoryId);
                 $createUser = (int)$group['Q'];
 
                 if ($categoryId) {

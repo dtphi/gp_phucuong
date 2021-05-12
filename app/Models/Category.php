@@ -87,7 +87,7 @@ class Category extends BaseModel
         $createUser = 0,
         $status = 1
     ) {
-        $cateId = (int)$cateId;
+        $cateId   = (int)$cateId;
         $parentId = (int)$parentId;
         if ($parentId == -1) {
             $parentId = 0;

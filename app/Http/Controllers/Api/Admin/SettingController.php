@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Exceptions\HandlerMsgCommon;
-use App\Helpers\Helper;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Http\Controllers\Api\Admin\Services\Contracts\SettingModel as SettingSv;
 use App\Http\Requests\SettingRequest;
@@ -34,7 +33,7 @@ class SettingController extends ApiController
         parent::__construct($middleware);
     }
 
-        /**
+    /**
      * @author : dtphi .
      * @param null $id
      * @return mixed

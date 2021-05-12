@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Helpers;
 
+use iutbay\yii2\mm\models\Thumb;
 use League\Flysystem\Adapter\Local;
 use Yii;
-use iutbay\yii2\mm\models\Thumb;
 
 /**
  * AdapterLocal
@@ -12,39 +13,39 @@ use iutbay\yii2\mm\models\Thumb;
  */
 class AdapterLocal extends Local
 {
-	const SIZE_THUMB = 'thumb';
+    const SIZE_THUMB = 'thumb';
     const SIZE_MEDIUM = 'medium';
     const SIZE_LARGE = 'large';
     const SIZE_FULL = 'full';
 
     public static $extensions = [
-        'jpg' => 'jpeg',
+        'jpg'  => 'jpeg',
         'jpeg' => 'jpeg',
-        'png' => 'png',
-        'gif' => 'gif',
-        'bmp' => 'bmp',
+        'png'  => 'png',
+        'gif'  => 'gif',
+        'bmp'  => 'bmp',
     ];
 
     public static $sizes = [
-        self::SIZE_THUMB => [150, 150],
+        self::SIZE_THUMB  => [150, 150],
         self::SIZE_MEDIUM => [300, 300],
-        self::SIZE_LARGE => [600, 600],
+        self::SIZE_LARGE  => [600, 600],
     ];
 
-	/**
+    /**
      * @var string thumbs default size
      */
     public static $thumbsSize = self::SIZE_THUMB;
 
-	/**
+    /**
      * @inheritdoc
      */
     public function listContents($directory = '', $recursive = false)
     {
-        $result = [];
+        $result   = [];
         $location = $this->applyPathPrefix($directory);
 
-        if ( ! is_dir($location)) {
+        if (!is_dir($location)) {
             return [];
         }
 
@@ -61,7 +62,7 @@ class AdapterLocal extends Local
             if ($node['type'] === 'file') {
                 $thumb = Yii::createObject([
                     'class' => Thumb::className(),
-                    'path' => self::getThumbSrc($path),
+                    'path'  => self::getThumbSrc($path),
                 ]);
                 if ($thumb->validate() && $thumb->save()) {
                 } else {
@@ -84,14 +85,15 @@ class AdapterLocal extends Local
      */
     public static function getThumbSrc($path, $size = null)
     {
-        if ($size === null)
+        if ($size === null) {
             $size = self::$thumbsSize;
+        }
 
         $regexp = '#^(.*)\.(' . self::getExtensionsRegexp() . ')$#';
         if (preg_match($regexp, $path, $matches) && in_array($size, array_keys(self::$sizes))) {
-            $size = self::$sizes[$size];
+            $size    = self::$sizes[$size];
             $dstPath = "{$matches[1]}_{$size[0]}x{$size[1]}.{$matches[2]}";
-            
+
             return $dstPath;
         } else {
             throw new \yii\base\InvalidParamException();
@@ -105,6 +107,7 @@ class AdapterLocal extends Local
     public static function getExtensionsRegexp()
     {
         $keys = array_keys(self::$extensions);
+
         return '(?i)' . join('|', $keys);
     }
 }

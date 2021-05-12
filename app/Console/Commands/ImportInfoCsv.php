@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\Information;
 use App\Models\InformationDescription;
 use App\Models\InformationToCategory;
+use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
 class ImportInfoCsv extends Command
@@ -42,7 +42,7 @@ class ImportInfoCsv extends Command
     public function handle()
     {
         $arguments = $this->arguments();
-        $fileName = storage_path('import_csv') . '/' . $arguments['fileName'] . '.csv';
+        $fileName  = storage_path('import_csv') . '/' . $arguments['fileName'] . '.csv';
         $this->importCsvToDb($fileName);
 
         $this->info('File name import: ' . $fileName);
@@ -79,39 +79,40 @@ class ImportInfoCsv extends Command
         $inputFileType = 'Csv';
         $inputFileName = $inputFileName;
         /**  Create a new Reader of the type defined in $inputFileType  **/
-        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+        $reader        = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
         $worksheetData = $reader->listWorksheetInfo($inputFileName);
 
         if (count($worksheetData)) {
             $spreadsheet = $reader->load($inputFileName);
-            $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+            $sheetData   = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
             $this->info('count: ' . count($sheetData));
             unset($sheetData[1]);
 
             foreach ($sheetData as $info) {
-                $infoId = (int)$info['A'];
+                $infoId     = (int)$info['A'];
                 $createUser = (int)$info['B'];
-                $image = $info['G'];
-                $viewed = (int)$info['N'];
-                $vote = (int)$info['M'];
-                $sortDes = $info['J'];
+                $image      = $info['G'];
+                $viewed     = (int)$info['N'];
+                $vote       = (int)$info['M'];
+                $sortDes    = $info['J'];
 
-                $name = $info['C'];
-                $nameSlug = Str::slug($name . ' ' . $infoId);
-                $des = htmlentities($info['E']);
-                $tag = $info['O'];
+                $name      = $info['C'];
+                $nameSlug  = Str::slug($name . ' ' . $infoId);
+                $des       = htmlentities($info['E']);
+                $tag       = $info['O'];
                 $metaTitle = $info['P'];
-                $metaDes = $info['Q'];
-                $metaKey = $info['R'];
+                $metaDes   = $info['Q'];
+                $metaKey   = $info['R'];
 
-                $cateId = (int)$info['D'];
+                $cateId   = (int)$info['D'];
                 $infoType = 1;
                 if ($info['V'] == 'Video') {
                     $infoType = 2;
                 }
                 $dateAvailable = $info['T'];
 
-                Information::insertForce($infoId, $image, $dateAvailable, 0, 1, $viewed, $vote, $sortDes, $nameSlug, $createUser, $infoType);
+                Information::insertForce($infoId, $image, $dateAvailable, 0, 1, $viewed, $vote, $sortDes, $nameSlug,
+                    $createUser, $infoType);
                 InformationDescription::insertByInfoId($infoId, $name, $des, $tag, $metaTitle, $metaDes, $metaKey);
                 InformationToCategory::insertByInfoId($infoId, $cateId);
             }

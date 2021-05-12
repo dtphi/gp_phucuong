@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api\Front;
 
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
-use Illuminate\Http\Request;
-use App\Helpers\Helper;
 use App\Http\Controllers\Api\Front\Services\Contracts\SettingModel as SettingSv;
+use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
@@ -30,20 +29,20 @@ class ModuleController extends Controller
     public function showDataList(Request $request)
     {
         $params = $request->all();
-        $json = [];
+        $json   = [];
 
         try {
             $moduleData = $this->settingSv->apiGetList(['code' => $params['code']]);
-            $results = [];
-            foreach($moduleData as $setting) {
-                $value = ($setting->serialized) ? unserialize($setting->value): $setting->value;
+            $results    = [];
+            foreach ($moduleData as $setting) {
+                $value = ($setting->serialized) ? unserialize($setting->value) : $setting->value;
 
                 $categories = $this->settingSv->apiGetCategoryByIds($value);
-                foreach($categories as $cate) {
+                foreach ($categories as $cate) {
                     $results[$setting->key_data][] = [
-                        'name'     => $cate->name,
+                        'name' => $cate->name,
                         //'children' => $children_data_2,
-                        'href'     => 'path=' . $cate->category_id,
+                        'href' => 'path=' . $cate->category_id,
                         'link' => $cate->name_slug
                     ];
                 }

@@ -25,6 +25,7 @@ class NewsGroup extends BaseModel
         if ($value) {
             return unserialize($value);
         }
+
         return array('home_page' => false, 'news_page' => false);
     }
 

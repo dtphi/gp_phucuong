@@ -27,22 +27,22 @@ class SettingRequest extends FormRequest
         $formData = $this->all();
 
         $formData['settings'] = [];
-        $formData['code'] = isset($formData['code']) ? $formData['code'] : '';
-        $formData['keys'] = isset($formData['keys']) ? $formData['keys'] : [];
+        $formData['code']     = isset($formData['code']) ? $formData['code'] : '';
+        $formData['keys']     = isset($formData['keys']) ? $formData['keys'] : [];
 
         if (!empty($formData['keys']) && is_array($formData['keys'])) {
-            foreach($formData['keys'] as $setting) {
-                $serialized = ($setting['serialize']) ? 1: 0;
-                $value = ($serialized) ? serialize($setting['value']): $setting['value'];
+            foreach ($formData['keys'] as $setting) {
+                $serialized = ($setting['serialize']) ? 1 : 0;
+                $value      = ($serialized) ? serialize($setting['value']) : $setting['value'];
 
                 $formData['settings'][] = [
-                    'key' => $setting['key'],
+                    'key'        => $setting['key'],
                     'serialized' => $serialized,
-                    'value' => $value 
-                ];  
+                    'value'      => $value
+                ];
             }
         }
-        
+
         $this->merge($formData);
 
         return $this->all();
@@ -56,7 +56,7 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'code'       => 'required|min:5|max:128',
+            'code'     => 'required|min:5|max:128',
             'settings' => 'required'
         ];
     }

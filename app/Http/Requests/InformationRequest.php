@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
 class InformationRequest extends FormRequest
@@ -32,32 +32,32 @@ class InformationRequest extends FormRequest
 
         if (!empty($formData['image']) && is_array($formData['image'])) {
 
-            $formData['image_type']      = $formData['image']['type'];
-            $formData['image_size'] = $formData['image']['size'];
-            $formData['image_path']      = $formData['image']['path'];
-            $formData['image_thumb']     = $formData['image']['thumb'];
+            $formData['image_type']  = $formData['image']['type'];
+            $formData['image_size']  = $formData['image']['size'];
+            $formData['image_path']  = $formData['image']['path'];
+            $formData['image_thumb'] = $formData['image']['thumb'];
             if ((int)$formData['image_size'] > 1) {
-                $formData['image_path']      = '/Image/NewPicture/' . $formData['image']['path'];
-                $formData['image_thumb'] = $formData['image']['dirname'] . '/' .  $formData['image']['filename'] . '_150x150.' .  $formData['image']['extension'];
+                $formData['image_path']  = '/Image/NewPicture/' . $formData['image']['path'];
+                $formData['image_thumb'] = $formData['image']['dirname'] . '/' . $formData['image']['filename'] . '_150x150.' . $formData['image']['extension'];
             }
-           
+
             $formData['image_timestamp'] = $formData['image']['timestamp'];
             $formData['image_extension'] = $formData['image']['extension'];
             $formData['image_filename']  = $formData['image']['filename'];
             $formData['image']           = null;
         }
 
-        $formData['date_available'] = isset($formData['date_available']) ? $formData['date_available'] : now();
-        $formData['sort_order']     = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
-        $formData['status']         = isset($formData['status']) ? $formData['status'] : 0;
-        $formData['create_user']    = isset($formData['create_user']) ? $formData['create_user']: 0;
-        $formData['sort_description'] = isset($formData['sort_description']) ? $formData['sort_description']: '';
-        $formData['info_type'] = isset($formData['info_type']) ? $formData['info_type']: 1;
+        $formData['date_available']   = isset($formData['date_available']) ? $formData['date_available'] : now();
+        $formData['sort_order']       = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
+        $formData['status']           = isset($formData['status']) ? $formData['status'] : 0;
+        $formData['create_user']      = isset($formData['create_user']) ? $formData['create_user'] : 0;
+        $formData['sort_description'] = isset($formData['sort_description']) ? $formData['sort_description'] : '';
+        $formData['info_type']        = isset($formData['info_type']) ? $formData['info_type'] : 1;
 
         /*information descriptions*/
         $formData['name']             = isset($formData['name']) ? $formData['name'] : '';
-        $formData['name_slug'] =  Str::slug($formData['name']);
-        $formData['user_create'] = isset(Auth::user()->id) ? Auth::user()->id: 0;
+        $formData['name_slug']        = Str::slug($formData['name']);
+        $formData['user_create']      = isset(Auth::user()->id) ? Auth::user()->id : 0;
         $formData['meta_title']       = isset($formData['meta_title']) ? $formData['meta_title'] : '';
         $formData['description']      = isset($formData['description']) ? $formData['description'] : '';
         $formData['tag']              = isset($formData['tag']) ? $formData['tag'] : '';

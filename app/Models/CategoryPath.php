@@ -164,7 +164,7 @@ class CategoryPath extends BaseModel
         $cd2   = 'cd2';
 
         $query = $this->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id',
-                $cate1 . '.sort_order', self::getRawCategoryName($cd1))
+            $cate1 . '.sort_order', self::getRawCategoryName($cd1))
             ->gbByCategoryId()
             ->ljoinCategory($cate1)
             ->ljoinCategory($cate2)

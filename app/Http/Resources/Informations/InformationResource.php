@@ -29,17 +29,17 @@ class InformationResource extends JsonResource
         $res  = $this->resource;
         $json = parent::toArray($request);
         $json = array_merge($json, [
-            'name'             => $res->name,
-            'description'      => $res->description,
-            'date_available'   => $res->date_available,
-            'tag'              => $res->tag,
-            'meta_title'       => $res->meta_title,
-            'meta_description' => $res->meta_description,
-            'meta_keyword'     => $res->meta_keyword,
-            'relateds'         => $res->arr_related_list,
-            'multi_images'     => $res->arr_image_list,
-            'categorys'        => $res->arr_category_list,
-            'downloads'        => $res->arr_download_list,
+            'name'                  => $res->name,
+            'description'           => $res->description,
+            'date_available'        => $res->date_available,
+            'tag'                   => $res->tag,
+            'meta_title'            => $res->meta_title,
+            'meta_description'      => $res->meta_description,
+            'meta_keyword'          => $res->meta_keyword,
+            'relateds'              => $res->arr_related_list,
+            'multi_images'          => $res->arr_image_list,
+            'categorys'             => $res->arr_category_list,
+            'downloads'             => $res->arr_download_list,
             'category_display_list' => $res->category_display_list
         ]);
 

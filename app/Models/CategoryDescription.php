@@ -30,7 +30,7 @@ class CategoryDescription extends BaseModel
         'meta_keyword'
     ];
 
-    public function getDescriptionAttribute($value) 
+    public function getDescriptionAttribute($value)
     {
         return htmlspecialchars_decode($value);
     }

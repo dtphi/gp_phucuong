@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Http\Common\Tables;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\CategoryPath;
 
 class Information extends BaseModel
 {
@@ -79,22 +78,22 @@ class Information extends BaseModel
     public function getImageAttribute($value)
     {
         $imgThumb = $value;
-        if (isset($this->image_thumb) 
-            && $this->image_thumb 
+        if (isset($this->image_thumb)
+            && $this->image_thumb
             && file_exists(public_path('/.tmb' . $this->image_thumb))) {
             $imgThumb = '/.tmb' . $this->image_thumb;
         }
-        
+
         return [
-            'basename' => "",
-            'dirname' => "",
-            'extension'=> "",
-            'filename'=> "",
-            'path'=> $value,
-            'size'=> 0,
-            'timestamp'=> null,
-            'type'=> null,
-            'thumb' => $imgThumb
+            'basename'  => "",
+            'dirname'   => "",
+            'extension' => "",
+            'filename'  => "",
+            'path'      => $value,
+            'size'      => 0,
+            'timestamp' => null,
+            'type'      => null,
+            'thumb'     => $imgThumb
         ];
     }
 
@@ -287,12 +286,12 @@ class Information extends BaseModel
     {
         if (!empty($value)) {
             $modelPath = new CategoryPath();
-            $models = $modelPath->getQueryCategories()->whereIn('cate1.category_id', $value)->get();
+            $models    = $modelPath->getQueryCategories()->whereIn('cate1.category_id', $value)->get();
 
-            foreach($models as $model) {
+            foreach ($models as $model) {
                 $this->categoryDisplayList[] = [
                     'category_id' => $model->category_id,
-                    'name' => $model->name
+                    'name'        => $model->name
                 ];
             }
         }
@@ -368,11 +367,23 @@ class Information extends BaseModel
     ) {
         $infoId = (int)$infoId;
         $viewed = (int)$viewed;
-        $vote = (int)$vote;
+        $vote   = (int)$vote;
 
         if ($infoId) {
             DB::insert('insert into ' . Tables::$informations . ' (information_id, user_create, name_slug, image, date_available, sort_order, information_type, status, viewed, vote, sort_description) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [$infoId, $createUser, $nameSlug, $image, $dateAvailable, $sortOrder, $infoType, $status, $viewed, $vote, $sortDes]);
+                [
+                    $infoId,
+                    $createUser,
+                    $nameSlug,
+                    $image,
+                    $dateAvailable,
+                    $sortOrder,
+                    $infoType,
+                    $status,
+                    $viewed,
+                    $vote,
+                    $sortDes
+                ]);
         }
     }
 }
