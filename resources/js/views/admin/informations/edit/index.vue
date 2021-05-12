@@ -1,5 +1,5 @@
 <template>
-   <div id="content">
+    <div id="content">
         <template v-if="_errors">
             <div class="alert alert-danger">
                 <i class="fa fa-exclamation-circle"></i>
@@ -8,22 +8,21 @@
             </div>
         </template>
         <template v-if="loading">
-            <loading-over-lay 
+            <loading-over-lay
                 :active.sync="loading"
                 :is-full-page="fullPage"></loading-over-lay>
         </template>
-        <validation-observer 
-            ref="observerInfo" 
+        <validation-observer
+            ref="observerInfo"
             @submit.prevent="_submitInfo">
             <div class="page-header">
                 <div class="container-fluid">
                     <div class="pull-right">
                         <button type="button" @click="_submitInfo"
-                            data-toggle="tooltip" 
-                            title="Cập nhật" 
-                            class="btn btn-primary"><i class="fa fa-save"></i>
+                                data-toggle="tooltip"
+                                title="Cập nhật"
+                                class="btn btn-primary"><i class="fa fa-save"></i>
                         </button>
-
                         <the-btn-back-list-page></the-btn-back-list-page>
                     </div>
                     <h1>{{$options.setting.panel_title}}</h1>
@@ -36,9 +35,8 @@
                         <h3 class="panel-title">
                             <i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
                     </div>
-                
                     <div class="panel-body">
-                        <info-edit-form 
+                        <info-edit-form
                             ref="formEditUser"></info-edit-form>
                     </div>
                 </div>
@@ -74,35 +72,30 @@
             Breadcrumb,
             InfoEditForm,
         },
-
         beforeCreate() {
             const infoId = parseInt(this.$route.params.infoId);
             if (!infoId) {
                 return fn_redirect_url('admin/informations');
             }
         },
-
         data() {
             return {
                 fullPage: false,
                 updateLog: 0
             }
         },
-
         mounted() {
             const infoId = parseInt(this.$route.params.infoId);
             if (infoId) {
                 this.[ACTION_SHOW_MODAL_EDIT](infoId);
             }
         },
-
         updated() {
-            this.updateLog ++;
+            this.updateLog++;
             if (this.isNotExistValidate) {
                 fn_redirect_url('admin/informations');
             }
         },
-
         computed: {
             ...mapState(MODULE_INFO_EDIT, [
                 'loading',

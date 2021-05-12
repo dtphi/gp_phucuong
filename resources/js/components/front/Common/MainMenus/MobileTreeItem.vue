@@ -1,16 +1,18 @@
 <template>
     <li>
-        <mobile-collape-item 
+        <mobile-collape-item
             @onTogleSubMenu="_togleSubMenu"
             v-if="level === 0"
             :is-folder="isFolder"
             :group="item"></mobile-collape-item>
 
-        <mobile-nav-item 
+        <mobile-nav-item
             v-else
             :group="item"></mobile-nav-item>
 
-        <ul class="sub-menu pl-3" :class="togleClass" v-if="isFolder">
+        <ul class="sub-menu pl-3"
+            :class="togleClass"
+            v-if="isFolder">
             <mobile-nav-tree
                 v-for="(child, index) in item.children"
                 :level="_getLevel()"

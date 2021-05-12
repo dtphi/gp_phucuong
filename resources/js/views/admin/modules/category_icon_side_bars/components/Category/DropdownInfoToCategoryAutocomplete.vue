@@ -29,9 +29,9 @@
             }
         },
         methods: {
-        	...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
-        		ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
-        	]),
+            ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
+                ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
+            ]),
             _selectParentCategory() {
                 this.isSelected = true;
                 this.[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](this.category);

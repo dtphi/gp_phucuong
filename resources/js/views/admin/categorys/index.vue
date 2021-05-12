@@ -99,8 +99,7 @@
         mounted() {
             const params = {
                 perPage: this.perPage
-            }
-
+            };
             this.[ACTION_GET_NEWS_GROUP_LIST](params);
         },
         methods: {

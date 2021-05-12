@@ -1,9 +1,13 @@
 <template>
     <tr>
         <td>{{_getNo()}}</td>
-        <td class="text-left"><a :href="_getHref()">{{info.name}}</a></td>
+        <td class="text-left">
+            <a
+                :href="_getHref()">{{info.name}}</a></td>
         <td class="text-center" style="width:7%">
-            <img :src="_getImgUrl()" class="img-thumbnail" />
+            <img
+                :src="_getImgUrl()"
+                class="img-thumbnail"/>
         </td>
         <td class="text-center">{{_formatDate(info.created_at)}}</td>
     </tr>
@@ -30,7 +34,7 @@
                     return (id && name)
                 }
             },
-            no : {
+            no: {
                 default: 1
             }
         },
@@ -39,9 +43,6 @@
                 meta: state => state.cfApp.collectionData
             })
         },
-        data() {
-            return {};
-        },
         methods: {
             _getHref() {
                 return `/admin/informations/edit/${this.info.information_id}`;
@@ -49,11 +50,9 @@
             _getImgUrl() {
                 return fn_get_base_url_image(this.info.image);
             },
-
             _getNo() {
                 return (parseInt(this.no) + parseInt(this.meta.from));
             },
-
             _formatDate(date) {
                 return fn_format_dd_mm_yyyy(date);
             }

@@ -1,8 +1,10 @@
 <template>
-    <div v-if="_isExist" id="category-left-side-bar-module">
+    <div
+        v-if="_isExist"
+        id="category-left-side-bar-module">
         <ul class="menu">
-            <category-item 
-                v-for="(item, idx) in settingCategory" 
+            <category-item
+                v-for="(item, idx) in settingCategory"
                 :key="idx"
                 :group="item"></category-item>
         </ul>
@@ -18,7 +20,6 @@
     import {
         MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR
     } from '@app/stores/front/types/module-types';
-
     import {
         ACTION_GET_SETTING,
     } from '@app/stores/front/types/action-types';
@@ -42,13 +43,11 @@
                 return this.settingCategory.length;
             }
         },
-
         created() {
             this.[ACTION_GET_SETTING]();
         },
-        
         methods: {
-             ...mapActions(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [
+            ...mapActions(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [
                 ACTION_GET_SETTING,
             ]),
         },
@@ -61,5 +60,5 @@
 </script>
 
 <style lang="scss">
-    @import './styles.scss'
+    @import './styles.scss';
 </style>

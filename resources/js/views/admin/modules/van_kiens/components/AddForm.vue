@@ -1,8 +1,8 @@
 <template>
     <form class="form-horizontal">
-      <loading-over-lay 
-        :active.sync="loading" 
-        :is-full-page="fullPage"></loading-over-lay>
+        <loading-over-lay
+            :active.sync="loading"
+            :is-full-page="fullPage"></loading-over-lay>
         <ul class="nav nav-tabs">
             <li class="active">
                 <a href="#tab-link" data-toggle="tab">{{$options.setting.tab_link_title}}</a>
@@ -11,9 +11,9 @@
         <div class="tab-content">
             <div class="tab-pane active" id="tab-link">
                 <tab-data
-                        role="tabpanel"
-                        class="tab-pane active"
-                        :module-data="moduleData"></tab-data>
+                    role="tabpanel"
+                    class="tab-pane active"
+                    :module-data="moduleData"></tab-data>
             </div>
         </div>
     </form>
@@ -28,12 +28,10 @@
     import {
         MODULE_MODULE_VAN_KIEN
     } from 'store@admin/types/module-types';
-
     import {
         ACTION_GET_SETTING,
         ACTION_INSERT_SETTING
     } from 'store@admin/types/action-types';
-   
     import TabData from './TabData';
 
     export default {

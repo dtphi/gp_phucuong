@@ -9,8 +9,7 @@ import VanKien from './van_kiens';
 
 export default {
   namespaced: true,
-  actions: {
-  },
+  actions: {},
   modules: {
     category_icon_side_bar: CategoryIconSideBar,
     category_left_side_bar: CategoryLeftSideBar,

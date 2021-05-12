@@ -1,58 +1,66 @@
 <template>
     <form class="form-horizontal">
-      <loading-over-lay 
-        :active.sync="loading" 
-        :is-full-page="fullPage"></loading-over-lay>
-      <ul class="nav nav-tabs">
-        <li class="active">
-            <a href="#tab-general" data-toggle="tab">{{$options.setting.tab_general_title}}</a>
-        </li>
-        <li>
-            <a href="#tab-advance" data-toggle="tab">{{$options.setting.tab_advance_title}}</a>
-        </li>
-        <li>
-            <a href="#tab-link" data-toggle="tab">{{$options.setting.tab_link_title}}</a>
-        </li>
-        <li>
-            <a href="#tab-media-manager" data-toggle="tab">{{$options.setting.tab_image_title}}</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-
-        <div class="tab-pane active" id="tab-general">
-            <tab-general
+        <loading-over-lay
+            :active.sync="loading"
+            :is-full-page="fullPage"></loading-over-lay>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a
+                    href="#tab-general"
+                    data-toggle="tab">{{$options.setting.tab_general_title}}</a>
+            </li>
+            <li>
+                <a
+                    href="#tab-advance"
+                    data-toggle="tab">{{$options.setting.tab_advance_title}}</a>
+            </li>
+            <li>
+                <a
+                    href="#tab-link"
+                    data-toggle="tab">{{$options.setting.tab_link_title}}</a>
+            </li>
+            <li>
+                <a
+                    href="#tab-media-manager"
+                    data-toggle="tab">{{$options.setting.tab_image_title}}</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+                <tab-general
                     role="tabpanel"
                     class="tab-pane active"
                     :general-data="info"></tab-general>
-        </div>
+            </div>
 
-        <div class="tab-pane" id="tab-advance">
-            <tab-advance
+            <div class="tab-pane" id="tab-advance">
+                <tab-advance
                     role="tabpanel"
                     class="tab-pane"
                     :group-data="info"></tab-advance>
-        </div>
+            </div>
 
-        <div class="tab-pane" id="tab-link">
-            <tab-link
+            <div class="tab-pane" id="tab-link">
+                <tab-link
                     role="tabpanel"
                     class="tab-pane"
                     :is-form="$options.setting.isForm"
                     :group-data="info"></tab-link>
-        </div>
+            </div>
 
-        <div class="tab-pane" id="tab-media-manager">
-            <tab-media-manager ref="mediaManagerTab"
+            <div class="tab-pane" id="tab-media-manager">
+                <tab-media-manager
+                    ref="mediaManagerTab"
                     role="tabpanel"
                     class="tab-pane"
                     :group-data="info"></tab-media-manager>
+            </div>
         </div>
-      </div>
     </form>
 </template>
 
 <script>
-    import { EventBus } from '@app/api/utils/event-bus';
+    import {EventBus} from '@app/api/utils/event-bus';
     import {
         mapState,
         mapGetters,
@@ -90,7 +98,6 @@
             ...mapState(MODULE_INFO_ADD, {
                 loading: state => state.loading
             }),
-
             ...mapGetters(MODULE_INFO_ADD, [
                 'info',
             ])
@@ -103,7 +110,6 @@
                 _self._selectMainImg(imgItem);
             });
         },
-
         methods: {
             ...mapActions(MODULE_INFO_ADD, [
                 ACTION_SET_LOADING,
@@ -111,34 +117,31 @@
                 ACTION_INSERT_INFO_BACK,
                 ACTION_SET_IMAGE
             ]),
-
             _submitInfo() {
                 this.[ACTION_INSERT_INFO](this.info);
             },
-
             _submitInfoBack() {
                 this.[ACTION_INSERT_INFO_BACK](this.info);
             },
-
             _selectMainImg(file) {
                 const image = {
-                    basename:"",
-                    dirname:"",
-                    extension:"",
-                    filename:"",
-                    path:"",
-                    size:0,
-                    thumb:"",
-                    timestamp:'',
-                    type:""
-                }
+                    basename: "",
+                    dirname: "",
+                    extension: "",
+                    filename: "",
+                    path: "",
+                    size: 0,
+                    thumb: "",
+                    timestamp: '',
+                    type: ""
+                };
                 if (typeof file === "object") {
                     let selected = image;
 
                     if (file.hasOwnProperty('selected') && file.selected) {
                         selected = file.selected;
                     }
-                    
+
                     this.[ACTION_SET_IMAGE](selected);
                 }
             }

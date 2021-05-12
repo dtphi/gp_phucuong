@@ -3,7 +3,6 @@
         <keep-alive>
             <component v-bind:is="currentContentLeft"></component>
         </keep-alive>
-
         <keep-alive>
             <component v-bind:is="currentContentRight"></component>
         </keep-alive>
@@ -11,19 +10,17 @@
 </template>
 
 <script>
-	import{
-      mapGetters,
-      mapActions
-  } from 'vuex';
-  import ImgFooter from 'v@front/assets/img/image_footer.jpg';
-
-  import {
+    import {
+        mapGetters,
+        mapActions
+    } from 'vuex';
+    import ImgFooter from 'v@front/assets/img/image_footer.jpg';
+    import {
         MODULE_INFO_DETAIL
     } from '@app/stores/front/types/module-types';
     import {
         GET_DETAIL
     } from '@app/stores/front/types/action-types';
-
 
     export default {
         name: 'MainContent',
@@ -40,20 +37,20 @@
             ...mapGetters(MODULE_INFO_DETAIL, [
                 'pageLists'
             ]),
-            currentContentRight: function() {
-			  	let moduleName = 'bottom-right';
-                  if (this.$route.meta.layout_content.right_collumn) {
-                      return "content-" + moduleName.toLowerCase();
-                  }
-            	return false;
+            currentContentRight: function () {
+                let moduleName = 'bottom-right';
+                if (this.$route.meta.layout_content.right_collumn) {
+                    return "content-" + moduleName.toLowerCase();
+                }
+                return false;
             },
-            currentContentLeft: function() {
-			  	let moduleName = 'left';
-            	
+            currentContentLeft: function () {
+                let moduleName = 'left';
+
                 if (this.$route.meta.layout_content.left_collumn) {
-                      return "content-" + moduleName.toLowerCase();
-                  }
-            	return false;
+                    return "content-" + moduleName.toLowerCase();
+                }
+                return false;
             },
         },
         methods: {
@@ -63,6 +60,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-</style>

@@ -1,6 +1,8 @@
 <template>
     <div id="thong-bao-module" class="info">
-        <h4 class="tit-common clr-orange"><img :src="iconBook" alt=""> Thông báo</h4>
+        <h4 class="tit-common clr-orange">
+            <img
+                :src="iconBook" alt=""> Thông báo</h4>
         <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 3" :key="index">
             <span>
                 <i class="status bg-green">Live</i>
@@ -17,7 +19,6 @@
         mapGetters,
         mapActions
     } from 'vuex';
-
     import {
         MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
@@ -28,18 +29,12 @@
 
     export default {
         name: 'ModuleThongBao',
-        components: {
-        },
+        components: {},
         data() {
             return {
                 fullPage: true,
-
                 iconBook: IconBook,
             }
-        },
-        
-        methods: {
-             
         },
         setting: {
             panel_title: 'Module Danh Mục Icon',
@@ -50,5 +45,5 @@
 </script>
 
 <style lang="scss">
-    @import './styles.scss'
+    @import './styles.scss';
 </style>

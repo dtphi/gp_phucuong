@@ -19,11 +19,6 @@
                 iconBook: IconBook,
                 imgFooter: ImgFooter
             }
-        },
-        computed: {
         }
     }
 </script>
-
-<style lang="scss">
-</style>

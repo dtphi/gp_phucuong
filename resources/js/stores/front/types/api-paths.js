@@ -11,7 +11,7 @@ export const API_VIDEO_DETAIL = '/api/app/info/get-information';
 
 export const API_INFO_DETAIL = '/api/app/info/get-information';
 
-export const API_INFO_LIST =    '/api/app/info/get-information-list';
+export const API_INFO_LIST = '/api/app/info/get-information-list';
 
 export const API_INFO_GET_POPULAR_LIST = '/api/app/info/get-popular-information';
 

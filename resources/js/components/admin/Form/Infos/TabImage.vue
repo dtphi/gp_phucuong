@@ -1,12 +1,11 @@
 <template>
     <div class="tab-content">
         <div class="form-group">
-    		<div class="col-sm-12">
-    			<div id="media-info-manager"></div>
-    		</div>
-
-    		<div class="col-sm-12">
-    			<div class="table-responsive">
+            <div class="col-sm-12">
+                <div id="media-info-manager"></div>
+            </div>
+            <div class="col-sm-12">
+                <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
@@ -19,7 +18,7 @@
                             <td class="text-left">
                                 <div class="file animated fadeIn" style="height: 61px">
                                     <div class="file-preview">
-                                        <img :src="_getImgUrl()" class="thumb" />
+                                        <img :src="_getImgUrl()" class="thumb"/>
                                     </div>
                                 </div>
                             </td>
@@ -30,18 +29,19 @@
                         </tbody>
                     </table>
                 </div>
-    		</div>
+            </div>
         </div>
         <div class="form-group">
-            <info-image class="col-sm-12" :info-images="groupData.multi_images"></info-image>
+            <info-image class="col-sm-12"
+                        :info-images="groupData.multi_images"></info-image>
         </div>
     </div>
 </template>
 
 <script>
-    require ('@app/tools/mm/dist/style.css');
-    import { MM } from '@app/tools/mm/dist/mm.min';
-    import { EventBus } from '@app/api/utils/event-bus';
+    require('@app/tools/mm/dist/style.css');
+    import {MM} from '@app/tools/mm/dist/mm.min';
+    import {EventBus} from '@app/api/utils/event-bus';
     import {
         fn_get_base_url_image
     } from '@app/api/utils/fn-helper';
@@ -49,30 +49,25 @@
 
     export default {
         name: 'TabImageForm',
-
         components: {
             InfoImage
         },
-
         props: {
             groupData: {
                 type: Object
             }
         },
-
         data() {
             return {
-                mediaMM : null
+                mediaMM: null
             }
         },
-
         computed: {
             _isShowImgThumb() {
                 return this._isEditForm();
             }
         },
-
-        mounted () {
+        mounted() {
             const self = this;
 
             this.mediaMM = new MM({
@@ -85,16 +80,14 @@
                     deleteUrl: 'delete'       // optional
                 },
                 input: {
-			        el: '#file-input',
-			        multiple: false
-				},
-                onSelect : function(event) {
+                    el: '#file-input',
+                    multiple: false
+                },
+                onSelect: function (event) {
                     self._changeImage(event);
                 }
             });
-            console.log(this)
         },
-
         methods: {
             _changeImage(fi) {
                 if (typeof fi === "object") {
@@ -109,13 +102,12 @@
                 } else {
                     return fn_get_base_url_image();
                 }
-                
+
             },
             _isEditForm() {
-                return (Object.keys(this.groupData).length) ? (this.groupData.id ? true: false): false;
+                return (Object.keys(this.groupData).length) ? (this.groupData.id ? true : false) : false;
             }
         },
-
         setting: {
             image_main_txt: 'Hình ảnh',
             image_main_path_txt: 'Tên tập tin',

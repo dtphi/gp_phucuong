@@ -28,7 +28,7 @@ import {
   ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA,
 } from '../../types/action-types';
 const settingCategory = {
-  key: 'module_van_kien_categories', 
+  key: 'module_van_kien_categories',
   value: [],
   serialize: true
 }
@@ -162,7 +162,10 @@ export default {
       );
     },
 
-    [ACTION_GET_CATEGORY_LIST_BY_IDS]({commit, dispatch}, cateIds) {
+    [ACTION_GET_CATEGORY_LIST_BY_IDS]({
+      commit,
+      dispatch
+    }, cateIds) {
       const params = {
         cateIds: cateIds
       }
@@ -179,7 +182,10 @@ export default {
       );
     },
 
-    [ACTION_INSERT_SETTING]({commit, dispatch}, settingData) {
+    [ACTION_INSERT_SETTING]({
+      commit,
+      dispatch
+    }, settingData) {
       dispatch(ACTION_SET_LOADING, true);
       apiInsertSetting(
         settingData,
@@ -198,7 +204,9 @@ export default {
       )
     },
 
-    [ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA]({commit}, payload) {
+    [ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA]({
+      commit
+    }, payload) {
       commit(MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA, payload)
     },
 

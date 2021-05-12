@@ -42,7 +42,6 @@
         mapGetters,
         mapActions
     } from 'vuex';
-
     import {
         MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
@@ -53,18 +52,11 @@
 
     export default {
         name: 'ModuleNoiBat',
-        components: {
-        },
         data() {
             return {
                 fullPage: true,
-
                 iconBook: IconBook,
             }
-        },
-        
-        methods: {
-             
         },
         setting: {
             panel_title: 'Module Danh Mục Icon',
@@ -75,5 +67,5 @@
 </script>
 
 <style lang="scss">
-    @import './styles.scss'
+    @import './styles.scss';
 </style>

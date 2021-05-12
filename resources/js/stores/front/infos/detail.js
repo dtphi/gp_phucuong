@@ -1,6 +1,6 @@
 import {
-    apiGetDetail,
-  } from '@app/api/front/infos';
+  apiGetDetail,
+} from '@app/api/front/infos';
 import {
   INIT_LIST,
   SET_ERROR,
@@ -10,49 +10,50 @@ import {
 } from '@app/stores/front/types/action-types';
 
 export default {
-    namespaced: true,
-    state: {
-      mainMenus: [],
-      pageLists: {
-          name: '',
-          description: ''
+  namespaced: true,
+  state: {
+    mainMenus: [],
+    pageLists: {
+      name: '',
+      description: ''
     },
-      errors: []
+    errors: []
+  },
+  getters: {
+    mainMenus(state) {
+      return state.mainMenus
     },
-    getters: {
-      mainMenus(state) {
-        return state.mainMenus
-      },
-      pageLists(state) {
-        return state.pageLists;
+    pageLists(state) {
+      return state.pageLists;
+    }
+  },
+
+  mutations: {
+    INIT_LIST(state, payload) {
+      state.pageLists = payload;
+    },
+    SET_ERROR(state, payload) {
+      state.errors = payload;
+    }
+  },
+
+  actions: {
+    [GET_DETAIL]({
+      commit
+    }, routeParams) {
+      if (routeParams.hasOwnProperty('slug')) {
+        apiGetDetail(
+          routeParams.slug,
+          (result) => {
+            console.log(result)
+            commit(INIT_LIST, result.data.results);
+          },
+          (errors) => {
+            console.log(errors)
+          },
+          routeParams
+        )
       }
     },
-
-    mutations: {
-        INIT_LIST(state, payload) {
-          state.pageLists = payload;
-        },
-        SET_ERROR(state, payload) {
-          state.errors = payload;
-        }
-    },
-
-    actions: {
-        [GET_DETAIL]({ commit }, routeParams) {
-          if (routeParams.hasOwnProperty('slug')) {
-            apiGetDetail(
-              routeParams.slug, 
-              (result) => {
-                  console.log(result)
-                  commit(INIT_LIST, result.data.results);
-              },
-              (errors)=> {
-                  console.log(errors)
-              },
-                routeParams
-              )
-          }
-        },
-    }
+  }
 }
- 

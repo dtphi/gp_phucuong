@@ -1,12 +1,14 @@
 <template>
     <tr>
         <td>{{_getNo()}}</td>
-        <td class="text-center">                    
-            <input type="checkbox" name="selected[]" :id="`info_select_id_${info.information_id}`" :value="info.information_id">
+        <td class="text-center">
+            <input type="checkbox" name="selected[]"
+                   :id="`info_select_id_${info.information_id}`"
+                   :value="info.information_id">
         </td>
         <td class="text-left">{{info.name}}</td>
         <td class="text-center" style="width:7%">
-            <img :src="_getImgUrl()" class="img-thumbnail" />
+            <img :src="_getImgUrl()" class="img-thumbnail"/>
         </td>
         <td class="text-center">{{_formatDate(info.date_available)}}</td>
         <td class="text-center">{{_formatDate(info.created_at)}}</td>
@@ -47,7 +49,7 @@
                     return (id && name)
                 }
             },
-            no : {
+            no: {
                 default: 1
             }
         },
@@ -56,18 +58,13 @@
                 meta: state => state.cfApp.collectionData
             })
         },
-        data() {
-            return {};
-        },
         methods: {
             _getImgUrl() {
                 return fn_get_base_url_image(this.info.image);
             },
-
             _getNo() {
                 return (parseInt(this.no) + parseInt(this.meta.from));
             },
-
             _formatDate(date) {
                 return fn_format_dd_mm_yyyy(date);
             }

@@ -1,26 +1,5 @@
 <template>
     <div class="row">
-        <!--<template v-if="_isResource">
-            <div class="col-sm-6 text-left">
-                <div class="dataTables_info">
-                    {{_getTextPagination()}}
-                </div>
-            </div>
-            <div class="col-sm-6 text-right">
-                <div class="dataTables_paginate paging_simple_numbers">
-                    
-                    <resource-pagination
-                        :data="_resourceData"
-                        @pagination-change-page="_getResourceResults"
-                        :limit="_resourceData.meta.per_page"
-                        :show-disabled="showDisabled"
-                        :size="size"
-                        :align="align"></resource-pagination>
-
-                </div>
-            </div>
-        </template>-->
-
         <template>
             <div class="col-sm-6 text-left">
                 <div class="dataTables_info">
@@ -28,8 +7,8 @@
                 </div>
             </div>
             <div class="col-sm-6 text-right">
-                <div class="dataTables_paginate paging_simple_numbers" v-if="Object.keys(_collectionData).length">
-
+                <div class="dataTables_paginate paging_simple_numbers"
+                     v-if="Object.keys(_collectionData).length">
                     <collection-pagination
                         class="mb-0"
                         :data="_collectionData"
@@ -42,7 +21,6 @@
                 </div>
             </div>
         </template>
-        
     </div>
 </template>
 
@@ -50,25 +28,20 @@
     import {
         mapGetters
     } from 'vuex';
-    import ResourcePagination from './ResourcePagination';
     import CollectionPagination from './CollectionPagination';
 
     export default {
         name: 'Pagination',
-
         props: {
             isResource: {
                 type: Boolean,
                 default: true,
             }
         },
-
-        components: { 
-            ResourcePagination,
-            CollectionPagination 
+        components: {
+            CollectionPagination
         },
-
-        data () {
+        data() {
             return {
                 limit: 3,
                 showDisabled: false,
@@ -76,29 +49,17 @@
                 align: 'right'
             }
         },
-
         computed: {
-            _isResource() {
-                return this.isResource;
-            },
             ...mapGetters([
                 'collectionPaginationData',
-                'resourcePaginationData', 
-                'moduleNameActive', 
+                'moduleNameActive',
                 'moduleActionListActive'
             ]),
-
-            _resourceData() {
-                return this.resourcePaginationData;
-            },
-
             _collectionData() {
                 return this.collectionPaginationData;
             }
         },
-
         methods: {
-
             _paginationMsg(from, to, total) {
                 var textShow = "Hiển thị 0 đến 0 của 0";
                 if (typeof from !== "undefined" && typeof from !== null) {
@@ -114,8 +75,7 @@
 
                 return this._paginationMsg(from, to, total);
             },
-
-            _getCollectionResults (page) {
+            _getCollectionResults(page) {
                 const _self = this;
                 if (!page) {
                     page = 1;
@@ -127,32 +87,10 @@
                     page: parseInt(page),
                     ...this.$route.params
                 });
-            },
-
-            _getTextPagination() {
-                const from = this.resourcePaginationData.meta.from;
-                const to = this.resourcePaginationData.meta.to;
-                const total = this.resourcePaginationData.meta.total;
-
-                return this._paginationMsg(from, to, total);
-            },
-
-            _getResourceResults (page) {
-                const _self = this;
-                if (!page) {
-                    page = 1;
-                }
-                const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
-                _self.$store.dispatch(actionName, {
-                    perPage: _self.resourcePaginationData.meta.per_page,
-                    page: page,
-                    ...this.$route.params
-                });
             }
         },
-
-         watch: {
-            limit (newVal) {
+        watch: {
+            limit(newVal) {
                 this.limit = parseInt(newVal);
                 if (this.limit < 0) {
                     this.limit = 0;

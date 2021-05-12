@@ -1,5 +1,5 @@
 <template>
-  <main id="news" class="py-2">
+    <main id="news" class="py-2">
         <div class="container">
             <main-menu></main-menu>
             <b-row class="mt-3 notication">
@@ -9,8 +9,10 @@
                         :interval="4000"
                         controls
                         indicators
-                        >
-                        <b-carousel-slide img-src="https://giaophanphucuong.org/Image/Picture/Images/CacGiaoXu/HatPhuCuong/NhaThoChanhToa-Thuml.jpg"  v-for="(link, index) in 3" :key="index">
+                    >
+                        <b-carousel-slide
+                            img-src="https://giaophanphucuong.org/Image/Picture/Images/CacGiaoXu/HatPhuCuong/NhaThoChanhToa-Thuml.jpg"
+                            v-for="(link, index) in 3" :key="index">
                             <div class="description text-left">
                                 <h4>Thông báo:</h4>
                                 <p class="mb-2">
@@ -35,7 +37,7 @@
 
                         <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
                     </div>
-                    
+
                     <div class="box-care mt-3">
                         <h4 class="tit-common clr-blue">Quan tâm</h4>
 
@@ -53,9 +55,11 @@
                                     :interval="4000"
                                     controls
                                     indicators
-                                    >
-                                    <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-                                    <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                >
+                                    <b-carousel-slide
+                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                    <b-carousel-slide
+                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
                                 </b-carousel>
                             </b-col>
                         </b-row>
@@ -65,18 +69,16 @@
 
             <content-bottom v-if="isContentBottom"></content-bottom>
         </div>
-  </main>
+    </main>
 </template>
 
 <script>
-  import MainMenu from 'com@front/Common/MainMenu';
-  import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
-
+    import MainMenu from 'com@front/Common/MainMenu';
+    import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
     import ContentBottom from 'com@front/Common/ContentBottom';
 
-
     export default {
-        name: 'VideoPage',
+        name: 'InfoPage',
         components: {
             MainMenu,
             TabInfoViewedAndPopular,
@@ -87,11 +89,9 @@
                 isContentBottom: true
             }
         },
-        computed: {
-        },
     }
 </script>
 
 <style lang="scss">
-    @import './news-styles.scss'
+    @import './news-styles.scss';
 </style>

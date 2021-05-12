@@ -1,7 +1,7 @@
 <template>
     <div>
-        <i class="fa fa-minus-circle cms-text-red" 
-            @click="_deleteCategory"></i>{{infoToCategory.name}}
+        <i class="fa fa-minus-circle cms-text-red"
+           @click="_deleteCategory"></i>{{infoToCategory.name}}
     </div>
 </template>
 
@@ -24,9 +24,9 @@
             }
         },
         methods: {
-        	...mapActions(MODULE_INFO_EDIT, [
-        		ACTION_REMOVE_INFO_TO_CATEGORY_LIST
-        	]),
+            ...mapActions(MODULE_INFO_EDIT, [
+                ACTION_REMOVE_INFO_TO_CATEGORY_LIST
+            ]),
             _deleteCategory() {
                 this.[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
             },

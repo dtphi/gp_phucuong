@@ -1,15 +1,11 @@
 <template>
     <div id="container">
-        <notifications group="common-update"></notifications>
-
+        <notifications
+            group="common-update"></notifications>
         <main-header></main-header>
-
         <left-side-bar></left-side-bar>
-
         <slot></slot>
-
         <main-footer></main-footer>
-
         <v-dialog/>
         <modals-container/>
     </div>
@@ -27,7 +23,6 @@
             LeftSideBar,
             MainFooter
         },
-
         mounted() {
             require('../assets/javascript/cms.common');
         }

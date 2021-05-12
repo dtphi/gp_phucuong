@@ -15,7 +15,9 @@ import {
  * @return {[type]}             [description]
  */
 export const apiGetSettingByCode = (resolve, errResole, params) => {
-  axios.get(fn_get_base_api_url('/api/app/get-data-module'), {params: params})
+  axios.get(fn_get_base_api_url('/api/app/get-data-module'), {
+      params: params
+    })
     .then((response) => {
       console.log(response)
       if (response.status === 200) {

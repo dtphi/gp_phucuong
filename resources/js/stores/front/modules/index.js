@@ -3,8 +3,7 @@ import CategoryIconSideBar from './category_icon_side_bar';
 
 export default {
   namespaced: true,
-  actions: {
-  },
+  actions: {},
   modules: {
     category_left_side_bar: CategoryLeftSideBar,
     category_icon_side_bar: CategoryIconSideBar

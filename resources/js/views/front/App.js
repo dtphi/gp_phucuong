@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueLazyload from 'vue-lazyload'
 
 import loadingLazy from '@app/views/front/assets/loading/fading-loading-lazy.svg';
-/*Add vue lazyload*/ 
+/*Add vue lazyload*/
 Vue.use(VueLazyload, {
   error: loadingLazy,
   loading: loadingLazy,
@@ -24,7 +24,12 @@ import {
   faTimes,
   faCircle
 } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faYoutube, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import {
+  faFacebook,
+  faYoutube,
+  faGoogle,
+  faTwitter
+} from '@fortawesome/free-brands-svg-icons';
 import {
   FontAwesomeIcon,
   FontAwesomeLayers,
@@ -60,7 +65,10 @@ Vue.use(VModal, {
 });
 
 /* Add BootstrapVue */
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import {
+  BootstrapVue,
+  IconsPlugin
+} from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)

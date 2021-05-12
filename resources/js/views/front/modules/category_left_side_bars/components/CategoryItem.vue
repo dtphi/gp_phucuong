@@ -1,31 +1,35 @@
 <template>
-    <li :class="activeClass">
-    	<a :href="_getHref()"><img src="../../../assets/img/icon-book.png" alt="Icon">{{_getTitle()}}</a>
+    <li
+        :class="activeClass">
+        <a
+            :href="_getHref()">
+            <img src="../../../assets/img/icon-book.png" alt="Icon">{{_getTitle()}}</a>
     </li>
 </template>
 
 <script>
-import {
-    fn_get_href_base_url
-} from '@app/api/utils/fn-helper';
+    import {
+        fn_get_href_base_url
+    } from '@app/api/utils/fn-helper';
+
     export default {
         name: 'NavigationMainItem',
         props: {
-        	title: '',
+            title: '',
             link: '',
-        	activeClass: '',
-        	group: {}
+            activeClass: '',
+            group: {}
         },
         methods: {
-        	_getTitle() {
-        		if (this.title) return this.title;
+            _getTitle() {
+                if (this.title) return this.title;
 
-        		return this.group.name;
-        	},
+                return this.group.name;
+            },
             _getHref() {
                 if (this.link) return fn_get_href_base_url(this.link);
 
-                return fn_get_href_base_url('danh-muc-tin/'+this.group.link);
+                return fn_get_href_base_url('danh-muc-tin/' + this.group.link);
             }
         }
     }

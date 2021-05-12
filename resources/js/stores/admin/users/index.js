@@ -96,7 +96,8 @@ export default {
     async [ACTION_GET_USER_LIST]({
       dispatch,
       commit
-    }, params) {console.log(params)
+    }, params) {
+      console.log(params)
       dispatch(ACTION_SET_LOADING, true);
       await apiGetUsers(
         (users) => {

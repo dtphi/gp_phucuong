@@ -1,8 +1,8 @@
 <template>
-    <a href="javascript:void(0);" data-toggle="tooltip" 
-        @click="_showDiaglogConfirm()"
-        class="btn btn-default cms-btn" 
-        data-original-title="Xóa">
+    <a href="javascript:void(0);" data-toggle="tooltip"
+       @click="_showDiaglogConfirm()"
+       class="btn btn-default cms-btn"
+       data-original-title="Xóa">
         <font-awesome-layers size="xs" style="background:MistyRose">
             <font-awesome-icon icon="circle" style="color:Tomato"/>
             <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
@@ -40,7 +40,6 @@
                 ACTION_SET_INFO_DELETE_BY_ID,
                 ACTION_DELETE_INFO_BY_ID
             ]),
-
             _showDiaglogConfirm() {
                 this.[ACTION_SET_INFO_DELETE_BY_ID](this.infoId);
                 this.$modal.show('dialog', {

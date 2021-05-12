@@ -32,7 +32,8 @@ export default [{
         }
     }, {
         path: 'dashboards',
-        component: () => import('v@admin/dashboards'),
+        component: () =>
+            import ('v@admin/dashboards'),
         name: 'admin.dashboards',
         meta: {
             layout: DefaultLayout,
@@ -44,7 +45,8 @@ export default [{
         }
     }, {
         path: 'module-*',
-        component: () => import('v@admin/modules'),
+        component: () =>
+            import ('v@admin/modules'),
         name: 'admin.module.list',
         meta: {
             layout: DefaultLayout,
@@ -70,7 +72,8 @@ export default [{
         },
         children: [{
             path: '',
-            component: () => import('v@admin/categorys'),
+            component: () =>
+                import ('v@admin/categorys'),
             name: 'admin.category.list',
             meta: {
                 layout: DefaultLayout,
@@ -91,7 +94,8 @@ export default [{
             }
         }, {
             path: 'add',
-            component: () => import('v@admin/categorys/add'),
+            component: () =>
+                import ('v@admin/categorys/add'),
             name: 'admin.category.add',
             meta: {
                 layout: DefaultLayout,
@@ -116,7 +120,8 @@ export default [{
             }
         }, {
             path: 'edit/:categoryId',
-            component: () => import('v@admin/categorys/edit'),
+            component: () =>
+                import ('v@admin/categorys/edit'),
             name: 'admin.category.edit',
             meta: {
                 layout: DefaultLayout,
@@ -147,7 +152,8 @@ export default [{
         },
         children: [{
             path: '',
-            component: () => import('v@admin/users'),
+            component: () =>
+                import ('v@admin/users'),
             name: 'admin.users.list',
             meta: {
                 auth: true,
@@ -171,7 +177,8 @@ export default [{
         },
         children: [{
             path: '',
-            component: () => import('v@admin/informations'),
+            component: () =>
+                import ('v@admin/informations'),
             name: 'admin.informations.list',
             meta: {
                 auth: true,
@@ -189,7 +196,8 @@ export default [{
             }
         }, {
             path: 'add',
-            component: () => import('v@admin/informations/add'),
+            component: () =>
+                import ('v@admin/informations/add'),
             name: 'admin.informations.add',
             meta: {
                 auth: true,
@@ -211,7 +219,8 @@ export default [{
             }
         }, {
             path: 'edit/:infoId',
-            component: () => import('v@admin/informations/edit'),
+            component: () =>
+                import ('v@admin/informations/edit'),
             name: 'admin.informations.edit',
             meta: {
                 auth: true,
@@ -239,7 +248,8 @@ export default [{
         },
         children: [{
             path: '',
-            component: () => import('v@admin/filemanagers'),
+            component: () =>
+                import ('v@admin/filemanagers'),
             name: 'admin.filemanagers.list',
             meta: {
                 auth: true,

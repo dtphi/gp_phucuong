@@ -1,147 +1,140 @@
 <template>
     <div class="tab-content">
+        <div class="form-group required">
+            <label
+                for="input-info-name"
+                class="col-sm-2 control-label">{{$options.setting.name_txt}}</label>
+            <div class="col-sm-10">
+                <validation-provider
+                    name="info_name"
+                    rules="required|max:191"
+                    v-slot="{ errors }">
+                    <input
+                        v-model="generalData.name"
+                        type="text"
+                        id="input-info-name"
+                        class="form-control"
+                        :placeholder="$options.setting.name_txt">
 
-            <div class="form-group required">
-                <label 
-                    for="input-info-name" 
-                    class="col-sm-2 control-label">{{$options.setting.name_txt}}</label>
-                <div class="col-sm-10">
-                    <validation-provider 
-                        name="info_name" 
-                        rules="required|max:191" 
-                        v-slot="{ errors }">
-                        <input 
-                            v-model="generalData.name"
-                            type="text" 
-                            id="input-info-name" 
-                            class="form-control"
-                            :placeholder="$options.setting.name_txt">
-
-                        <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
+                    <span class="cms-text-red">{{ errors[0] }}</span>
+                </validation-provider>
             </div>
-
-            <div class="form-group required">
-                <label 
-                    for="input-info-sort-description" 
-                    class="col-sm-2 control-label">{{$options.setting.info_sort_description_txt}}</label>
-                <div class="col-sm-10">
-                    <validation-provider 
-                        name="info_sort_description" 
-                        rules="required|max:500" 
-                        v-slot="{ errors }">
-                        <textarea 
+        </div>
+        <div class="form-group required">
+            <label
+                for="input-info-sort-description"
+                class="col-sm-2 control-label">{{$options.setting.info_sort_description_txt}}</label>
+            <div class="col-sm-10">
+                <validation-provider
+                    name="info_sort_description"
+                    rules="required|max:500"
+                    v-slot="{ errors }">
+                        <textarea
                             id="input-info-sort-description"
-                            v-model="generalData.sort_description" 
+                            v-model="generalData.sort_description"
                             class="form-control"
                             :placeholder="$options.setting.info_sort_description_txt"></textarea>
 
-                        <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
+                    <span class="cms-text-red">{{ errors[0] }}</span>
+                </validation-provider>
             </div>
+        </div>
+        <div class="form-group required">
+            <label
+                for="input-info-description"
+                class="col-sm-2 control-label">{{$options.setting.info_description_txt}}</label>
+            <div class="col-sm-10">
+                <validation-provider
+                    name="info_sort_description"
+                    rules="required"
+                    v-slot="{ errors }">
+                    <tinymce
+                        id="input-info-description"
+                        :other_options="options"
+                        v-model="generalData.description"></tinymce>
 
-            <div class="form-group required">
-                <label 
-                    for="input-info-description" 
-                    class="col-sm-2 control-label">{{$options.setting.info_description_txt}}</label>
-                <div class="col-sm-10">
-                    <validation-provider 
-                        name="info_sort_description" 
-                        rules="required" 
-                        v-slot="{ errors }">
-                        <tinymce 
-                            id="input-info-description" 
-                            :other_options="options"
-                            v-model="generalData.description"></tinymce>
-
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
+                    <span class="cms-text-red">{{ errors[0] }}</span>
+                </validation-provider>
             </div>
+        </div>
+        <div class="form-group required">
+            <label
+                for="input-info-meta-title"
+                class="col-sm-2 control-label">{{$options.setting.info_meta_title_txt}}</label>
+            <div class="col-sm-10">
+                <validation-provider
+                    name="info_meta_title"
+                    rules="required|max:191" v-slot="{ errors }">
+                    <input
+                        id="input-info-meta-title"
+                        v-model="generalData.meta_title"
+                        class="form-control"
+                        :placeholder="$options.setting.info_meta_title_txt">
 
-            <div class="form-group required">
-                <label 
-                    for="input-info-meta-title"
-                    class="col-sm-2 control-label">{{$options.setting.info_meta_title_txt}}</label>
-                <div class="col-sm-10">
-                    <validation-provider 
-                        name="info_meta_title" 
-                        rules="required|max:191" v-slot="{ errors }">
-                        <input 
-                            id="input-info-meta-title"
-                            v-model="generalData.meta_title" 
-                            class="form-control"
-                            :placeholder="$options.setting.info_meta_title_txt">
-
-                        <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
+                    <span class="cms-text-red">{{ errors[0] }}</span>
+                </validation-provider>
             </div>
-
-            <div class="form-group">
-                <label 
-                    for="input-info-meta-description" 
-                    class="col-sm-2 control-label">{{$options.setting.info_meta_description_txt}}</label>
-                <div class="col-sm-10">
-                    <validation-provider 
-                        name="info_meta_description" 
-                        rules="max:255" 
-                        v-slot="{ errors }">
-                        <textarea 
+        </div>
+        <div class="form-group">
+            <label
+                for="input-info-meta-description"
+                class="col-sm-2 control-label">{{$options.setting.info_meta_description_txt}}</label>
+            <div class="col-sm-10">
+                <validation-provider
+                    name="info_meta_description"
+                    rules="max:255"
+                    v-slot="{ errors }">
+                        <textarea
                             id="input-info-meta-description"
-                            v-model="generalData.meta_description" 
+                            v-model="generalData.meta_description"
                             class="form-control"
                             :placeholder="$options.setting.info_meta_description_txt"></textarea>
 
-                        <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
+                    <span class="cms-text-red">{{ errors[0] }}</span>
+                </validation-provider>
             </div>
-
-            <div class="form-group">
-                <label 
-                    for="input-info-meta-keyword" 
-                    class="col-sm-2 control-label">{{$options.setting.info_key_word_txt}}</label>
-                <div class="col-sm-10">
-                    <validation-provider 
-                        name="info_meta_keyword" 
-                        rules="max:191" 
-                        v-slot="{ errors }">
+        </div>
+        <div class="form-group">
+            <label
+                for="input-info-meta-keyword"
+                class="col-sm-2 control-label">{{$options.setting.info_key_word_txt}}</label>
+            <div class="col-sm-10">
+                <validation-provider
+                    name="info_meta_keyword"
+                    rules="max:191"
+                    v-slot="{ errors }">
                         <textarea
                             id="input-info-meta-keyword"
-                            v-model="generalData.meta_keyword" 
+                            v-model="generalData.meta_keyword"
                             class="form-control"
                             :placeholder="$options.setting.info_key_word_txt"></textarea>
 
-                        <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
+                    <span class="cms-text-red">{{ errors[0] }}</span>
+                </validation-provider>
             </div>
+        </div>
+        <div class="form-group">
+            <label
+                for="input-info-tag"
+                class="col-sm-2 control-label">
+                <span data-toggle="tooltip"
+                      :data-original-title="$options.setting.info_tag_tooltip_txt">{{$options.setting.info_tag_txt}}</span>
+            </label>
+            <div class="col-sm-10">
+                <validation-provider
+                    name="info_tag"
+                    rules="max:191"
+                    v-slot="{ errors }">
+                    <input
+                        id="input-info-tag"
+                        v-model="generalData.tag"
+                        class="form-control"
+                        :placeholder="$options.setting.info_tag_txt">
 
-            <div class="form-group">
-                <label 
-                    for="input-info-tag" 
-                    class="col-sm-2 control-label">
-                    <span data-toggle="tooltip" :data-original-title="$options.setting.info_tag_tooltip_txt">{{$options.setting.info_tag_txt}}</span>
-                </label>
-                <div class="col-sm-10">
-                    <validation-provider 
-                        name="info_tag" 
-                        rules="max:191" 
-                        v-slot="{ errors }">
-                        <input
-                            id="input-info-tag"
-                            v-model="generalData.tag" 
-                            class="form-control"
-                            :placeholder="$options.setting.info_tag_txt">
-
-                        <span class="cms-text-red">{{ errors[0] }}</span>
-                    </validation-provider>
-                </div>
+                    <span class="cms-text-red">{{ errors[0] }}</span>
+                </validation-provider>
             </div>
-
+        </div>
     </div>
 </template>
 
@@ -165,7 +158,7 @@
 
     export default {
         name: 'TabGeneralForm',
-        components: { tinymce },
+        components: {tinymce},
         props: {
             generalData: {
                 type: Object
@@ -175,23 +168,21 @@
             return {
                 options: {
                     language_url: fn_get_tinymce_langs_url('vi_VN'),
-                    height : "500"
+                    height: "500"
                 }
             };
         },
-
         watch: {
             'generalData': {
                 immediate: true,
                 deep: true,
                 handler(newValue, oldValue) {
                     if (Object.keys(newValue).length) {
-                        return newValue.context = (newValue.context === null) ? "": newValue.context;
+                        return newValue.context = (newValue.context === null) ? "" : newValue.context;
                     }
                 }
             }
         },
-
         methods: {
             ...mapActions(MODULE_INFO_MODAL, [
                 ACTION_CLOSE_MODAL,

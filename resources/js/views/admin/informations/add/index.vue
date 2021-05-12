@@ -8,45 +8,43 @@
             </div>
         </template>
         <template v-if="loading">
-            <loading-over-lay 
+            <loading-over-lay
                 :active.sync="loading"
                 :is-full-page="fullPage"></loading-over-lay>
         </template>
-        <validation-observer 
-            ref="observerInfo" 
+        <validation-observer
+            ref="observerInfo"
             @submit.prevent="_submitInfo">
             <div class="page-header">
                 <div class="container-fluid">
-                  <div class="pull-right">
-                    <button 
-                        type="button" 
-                        @click="_submitInfo"
-                        data-toggle="tooltip" 
-                        :title="$options.setting.btn_save_txt" 
-                        class="btn btn-primary"><i class="fa fa-save"></i>
-                    </button>
-
-                    <button type="button" 
-                        @click="_submitInfoBack"
-                        data-toggle="tooltip"
-                        title="Lưu"
-                        class="btn btn-primary">{{$options.setting.btn_save_back_txt}}
-                    </button>
-
-                    <the-btn-back-list-page></the-btn-back-list-page>
-                  </div>
-                  <h1>{{$options.setting.panel_title}}</h1>
-                  <breadcrumb></breadcrumb>
+                    <div class="pull-right">
+                        <button
+                            type="button"
+                            @click="_submitInfo"
+                            data-toggle="tooltip"
+                            :title="$options.setting.btn_save_txt"
+                            class="btn btn-primary"><i class="fa fa-save"></i>
+                        </button>
+                        <button type="button"
+                                @click="_submitInfoBack"
+                                data-toggle="tooltip"
+                                title="Lưu"
+                                class="btn btn-primary">{{$options.setting.btn_save_back_txt}}
+                        </button>
+                        <the-btn-back-list-page></the-btn-back-list-page>
+                    </div>
+                    <h1>{{$options.setting.panel_title}}</h1>
+                    <breadcrumb></breadcrumb>
                 </div>
             </div>
             <div class="container-fluid">
                 <div class="panel panel-default">
-                      <div class="panel-heading">
+                    <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
-                      </div>
-                
+                    </div>
+
                     <div class="panel-body">
-                         <info-add-form 
+                        <info-add-form
                             ref="formAddUser"></info-add-form>
                     </div>
                 </div>
@@ -65,7 +63,6 @@
     import InfoAddForm from 'com@admin/Form/Infos/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from '../components/TheBtnBackListPage';
-
     import {
         MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
@@ -103,7 +100,7 @@
             }
         },
         methods: {
-             ...mapActions(MODULE_INFO_ADD, [
+            ...mapActions(MODULE_INFO_ADD, [
                 ACTION_RESET_NOTIFICATION_INFO
             ]),
             _errorToArrs() {

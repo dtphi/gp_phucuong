@@ -1,12 +1,17 @@
 <template>
-  <figure class="figure" @click="_redirectPage()">
-      <img v-lazy="_getImgUrl()" class="rounded img" alt="Giáo Phận Phú Cường">
-      <figcaption class="figure-caption" @click="_redirectPage()">{{pageItem.title}}</figcaption>
-  </figure>
+    <figure class="figure"
+            @click="_redirectPage()">
+        <img
+            v-lazy="_getImgUrl()"
+            class="rounded img" alt="Giáo Phận Phú Cường">
+        <figcaption class="figure-caption"
+                    @click="_redirectPage()">{{pageItem.title}}
+        </figcaption>
+    </figure>
 </template>
 
 <script>
-	import {
+    import {
         mapGetters
     } from 'vuex';
     import {
@@ -18,18 +23,15 @@
         name: 'TheItemPage',
         props: {
             pageItem: {},
-        	captionTitle: {
-        		default: '>>>>> Xem tin tức'
-        	}
-        },
-        components: {
-        },
-        data() {
-            return {
+            captionTitle: {
+                default: '>>>>> Xem tin tức'
             }
         },
+        data() {
+            return {}
+        },
         computed: {
-        	...mapGetters(['bannerUrl'])
+            ...mapGetters(['bannerUrl'])
         },
         methods: {
             _redirectPage() {
@@ -41,7 +43,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    
-</style>

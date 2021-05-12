@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   apiGetLists
 } from '@app/api/front/homes';
@@ -11,51 +10,57 @@ import {
 } from '@app/stores/front/types/action-types';
 
 export default {
-    namespaced: true,
-    state: {
-      mainMenus: [],
-      pageLists: [],
-      errors: []
+  namespaced: true,
+  state: {
+    mainMenus: [],
+    pageLists: [],
+    loading: false,
+    errors: []
+  },
+  getters: {
+    mainMenus(state) {
+      return state.mainMenus;
     },
-    getters: {
-      mainMenus(state) {
-        return state.mainMenus
-      },
-      pageLists(state) {
-        return state.pageLists;
-      }
+    pageLists(state) {
+      return state.pageLists;
     },
-
-    mutations: {
-        MAIN_MENU(state, value) {
-            state.mainMenus = value
-        },
-        INIT_LIST(state, payload) {
-          state.pageLists = payload;
-        },
-        SET_ERROR(state, payload) {
-          state.errors = payload;
-        }
-    },
-
-    actions: {
-      [GET_LISTS]({
-        commit
-      }, options) {
-        apiGetLists(
-        (responses) => {
-            commit(INIT_LIST, responses.pageLists);
-            commit(SET_ERROR, []);
-          },
-          (errors) => {
-            commit(SET_ERROR, error);
-          },
-          options
-        );
-      },
-        async menus ({ dispatch }) {
-            return await axios.get('/api/main-menus');
-        }
+    loading(state) {
+      return state.loading;
     }
+  }, 
+
+  mutations: {
+    MAIN_MENU(state, value) {
+      state.mainMenus = value
+    },
+    INIT_LIST(state, payload) {
+      state.pageLists = payload;
+    },
+    SET_ERROR(state, payload) {
+      state.errors = payload;
+    },
+    setLoading(state, payload) {
+      state.loading = payload;
+    }
+  },
+
+  actions: {
+    [GET_LISTS]({
+      commit
+    }, options) {
+      commit('setLoading', true);
+      apiGetLists(
+        (responses) => {
+          commit(INIT_LIST, responses.pageLists);
+          commit(SET_ERROR, []);
+          commit('setLoading', false);
+        },
+        (errors) => {
+          commit(SET_ERROR, errors);
+          commit('setLoading', false);
+        },
+        options
+      );
+    },
+  }
 }
- 

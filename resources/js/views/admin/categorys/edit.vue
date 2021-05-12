@@ -26,15 +26,12 @@
                                     class="btn btn-primary">
                                 <i class="fa fa-save"></i>
                             </button>
-
                             <the-btn-back-list-page></the-btn-back-list-page>
                         </div>
                         <h1>Nhóm Tin</h1>
-
                         <breadcrumb></breadcrumb>
                     </div>
                 </div>
-
                 <div class="container-fluid">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -45,10 +42,20 @@
                             <form class="form-horizontal">
                                 <ul class="nav nav-tabs">
                                     <li class="active">
-                                        <a href="#tab-general" data-toggle="tab">Tổng quan</a>
+                                        <a
+                                            href="#tab-general"
+                                            data-toggle="tab">Tổng quan</a>
                                     </li>
-                                    <li><a href="#tab-data" data-toggle="tab">Dữ liệu</a></li>
-                                    <li><a href="#tab-design" data-toggle="tab">Màn hình</a></li>
+                                    <li>
+                                        <a
+                                            href="#tab-data"
+                                            data-toggle="tab">Dữ liệu</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="#tab-design"
+                                            data-toggle="tab">Màn hình</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab-general">
@@ -57,7 +64,8 @@
                                                 <label class="col-sm-2 control-label"
                                                        for="input-name">Tên Nhóm Tin</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" v-model="newsGroup.category_name"
+                                                    <input type="text"
+                                                           v-model="newsGroup.category_name"
                                                            placeholder="Tên nhóm tin" id="input-name"
                                                            class="form-control">
                                                 </div>
@@ -76,23 +84,24 @@
                                                 <label class="col-sm-2 control-label"
                                                        for="input-meta-title">Meta title</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" v-model="newsGroup.meta_title"
+                                                    <input type="text"
+                                                           v-model="newsGroup.meta_title"
                                                            placeholder="Meta title" id="input-meta-title"
                                                            class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label 
-                                                    for="input-meta-description" 
+                                                <label
+                                                    for="input-meta-description"
                                                     class="col-sm-2 control-label">{{$options.setting.tab_general_meta_description_txt}}</label>
                                                 <div class="col-sm-10">
-                                                    <validation-provider 
-                                                        name="meta_description" 
-                                                        rules="max:191" 
+                                                    <validation-provider
+                                                        name="meta_description"
+                                                        rules="max:191"
                                                         v-slot="{ errors }">
-                                                        <textarea 
+                                                        <textarea
                                                             id="input-meta-description"
-                                                            v-model="newsGroup.meta_description" 
+                                                            v-model="newsGroup.meta_description"
                                                             class="form-control"
                                                             :placeholder="$options.setting.tab_general_meta_description_txt"></textarea>
 
@@ -102,17 +111,17 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label 
-                                                    for="input-meta-keyword" 
+                                                <label
+                                                    for="input-meta-keyword"
                                                     class="col-sm-2 control-label">{{$options.setting.tab_general_key_word_txt}}</label>
                                                 <div class="col-sm-10">
-                                                    <validation-provider 
-                                                        name="meta_keyword" 
-                                                        rules="max:191" 
+                                                    <validation-provider
+                                                        name="meta_keyword"
+                                                        rules="max:191"
                                                         v-slot="{ errors }">
                                                         <textarea
                                                             id="input-meta-keyword"
-                                                            v-model="newsGroup.meta_keyword" 
+                                                            v-model="newsGroup.meta_keyword"
                                                             class="form-control"
                                                             :placeholder="$options.setting.tab_general_key_word_txt"></textarea>
 
@@ -121,19 +130,20 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label 
-                                                    for="input-tag" 
+                                                <label
+                                                    for="input-tag"
                                                     class="col-sm-2 control-label">
-                                                    <span data-toggle="tooltip" :data-original-title="$options.setting.tab_general_tag_tooltip_txt">{{$options.setting.tab_general_tag_txt}}</span>
+                                                    <span data-toggle="tooltip"
+                                                          :data-original-title="$options.setting.tab_general_tag_tooltip_txt">{{$options.setting.tab_general_tag_txt}}</span>
                                                 </label>
                                                 <div class="col-sm-10">
-                                                    <validation-provider 
-                                                        name="tag" 
-                                                        rules="max:191" 
+                                                    <validation-provider
+                                                        name="tag"
+                                                        rules="max:191"
                                                         v-slot="{ errors }">
                                                         <input
                                                             id="input-tag"
-                                                            v-model="newsGroup.tag" 
+                                                            v-model="newsGroup.tag"
                                                             class="form-control"
                                                             :placeholder="$options.setting.tab_general_tag_txt">
 
@@ -152,14 +162,14 @@
                                             <label class="col-sm-2 control-label" for="input-sort-order">Thứ tự</label>
                                             <div class="col-sm-10">
                                                 <validation-provider
-                                                        name="sort_order"
-                                                        rules="numeric|max:191"
-                                                        v-slot="{ errors }">
+                                                    name="sort_order"
+                                                    rules="numeric|max:191"
+                                                    v-slot="{ errors }">
                                                     <input type="text" v-model="newsGroup.sort_order" name="sort_order"
                                                            placeholder="Thứ tự hiển thị" id="input-sort-order"
                                                            class="form-control"/>
-                                                           
-                                                     <span class="cms-text-red">{{ errors[0] }}</span>
+
+                                                    <span class="cms-text-red">{{ errors[0] }}</span>
                                                 </validation-provider>
                                             </div>
                                         </div>
@@ -211,7 +221,11 @@
 </template>
 
 <script>
-    import {mapState, mapGetters, mapActions} from 'vuex';
+    import {
+        mapState,
+        mapGetters,
+        mapActions
+    } from 'vuex';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import CategoryAutocomplete from './components/TheCategoryEditAutocomplete';
     import tinymce from 'vue-tinymce-editor';

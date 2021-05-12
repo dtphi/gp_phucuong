@@ -2,10 +2,8 @@
     <div class="tab-content">
         <template v-if="_isAdd">
             <info-to-category-autocomplete></info-to-category-autocomplete>
-
             <info-to-related-autocomplete></info-to-related-autocomplete>
         </template>
-
         <template v-if="_isEdit">
             <info-to-category-autocomplete-edit></info-to-category-autocomplete-edit>
         </template>
@@ -13,10 +11,10 @@
 </template>
 
 <script>
-     import InfoToCategoryAutocomplete from './Category/InfoToCategoryAutocomplete';
-     import InfoToRelatedAutocomplete from './Related/InfoRelatedAutocomplete';
+    import InfoToCategoryAutocomplete from './Category/InfoToCategoryAutocomplete';
+    import InfoToRelatedAutocomplete from './Related/InfoRelatedAutocomplete';
 
-     import InfoToCategoryAutocompleteEdit from './Category/InfoToCategoryAutocompleteEdit';
+    import InfoToCategoryAutocompleteEdit from './Category/InfoToCategoryAutocompleteEdit';
 
     export default {
         name: 'TabLinkForm',
@@ -42,7 +40,6 @@
 
                 return false;
             },
-
             _isEdit() {
                 if (this.isForm == 'edit') {
                     return true;

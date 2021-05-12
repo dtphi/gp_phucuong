@@ -1,23 +1,22 @@
 <template>
-  <main id="news" class="py-2">
+    <main id="news" class="py-2">
         <div class="container">
             <main-menu></main-menu>
-            
+
             <main-content v-if="_isContentMain"></main-content>
 
             <content-bottom v-if="_isContentBottom"></content-bottom>
         </div>
-  </main>
+    </main>
 </template>
 
 <script>
-	import{
-      mapGetters,
-      mapActions
-  } from 'vuex';
-  import MainMenu from 'com@front/Common/MainMenu';
-
-  import {
+    import {
+        mapGetters,
+        mapActions
+    } from 'vuex';
+    import MainMenu from 'com@front/Common/MainMenu';
+    import {
         MODULE_INFO_DETAIL
     } from '@app/stores/front/types/module-types';
     import {
@@ -25,7 +24,6 @@
     } from '@app/stores/front/types/action-types';
     import MainContent from 'com@front/Common/MainContent';
     import ContentBottom from 'com@front/Common/ContentBottom';
-
 
     export default {
         name: 'NewsDetailPage',
@@ -35,9 +33,7 @@
             ContentBottom
         },
         data() {
-            return {
-
-            }
+            return {}
         },
         computed: {
             ...mapGetters(MODULE_INFO_DETAIL, [
@@ -64,5 +60,5 @@
 </script>
 
 <style lang="scss">
-    @import './new-detail-styles.scss'
+    @import './new-detail-styles.scss';
 </style>

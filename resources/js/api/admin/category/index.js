@@ -216,18 +216,18 @@ export const apiGetDropdownCategories = (resolve, errResole, params) => {
 
 export const apiGetCategoryByIds = (resolve, errResole, params) => {
   return axios.get(fn_get_base_api_url(`/api/news-categories/dropdowns`), {
-    params: params
-  })
-  .then((response) => {
-    console.log(response)
-    if (response.status === 200) {
-      resolve(response.data);
-    } else {
-      errResole([{
-        status: response.status,
-        msg: 'error test'
-      }]);
-    }
-  })
-  .catch(errors => errResole(errors))
+      params: params
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        resolve(response.data);
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test'
+        }]);
+      }
+    })
+    .catch(errors => errResole(errors))
 }

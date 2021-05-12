@@ -71,7 +71,7 @@ export const apiGetInfos = (resolve, errResole, params) => {
           messages: errors.response.data.errors
         }])
       }
-      
+
     })
 }
 

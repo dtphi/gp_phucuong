@@ -36,7 +36,7 @@ export default {
     moduleData(state) {
       return state.moduleData
     },
-    
+
     loading(state) {
       return state.loading
     },
@@ -74,7 +74,7 @@ export default {
     }, options) {
       dispatch(ACTION_SET_LOADING, true);
       const params = {
-          code: state.moduleData.code
+        code: state.moduleData.code
       }
       apiGetSettingByCode(
         (res) => {

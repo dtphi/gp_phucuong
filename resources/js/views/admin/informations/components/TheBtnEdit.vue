@@ -1,8 +1,8 @@
 <template>
-    <a href="javascript:void(0);" data-toggle="tooltip" 
-        @click="_showModal()"
-        class="btn btn-default cms-btn" 
-        data-original-title="Sửa Tin">
+    <a href="javascript:void(0);" data-toggle="tooltip"
+       @click="_showModal()"
+       class="btn btn-default cms-btn"
+       data-original-title="Sửa Tin">
         <font-awesome-layers size="1x" style="background:honeydew">
             <font-awesome-icon icon="edit"/>
         </font-awesome-layers>
@@ -10,7 +10,9 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {
+        mapActions
+    } from 'vuex';
     import {
         MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
@@ -50,7 +52,6 @@
                     this.[ACTION_SHOW_MODAL_EDIT](this.infoId);
                 }
             },
-
             _redirectUrl() {
                 return fn_redirect_url(`admin/informations/edit/${this.infoId}`);
             }

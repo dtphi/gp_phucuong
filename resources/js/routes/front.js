@@ -21,7 +21,8 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () => import('v@front/page_homes'),
+            component: () =>
+                import ('v@front/page_homes'),
             name: 'home',
             meta: {
                 layout: MainLayout,
@@ -33,7 +34,8 @@ routeEnv = {
             }
         }, {
             path: 'home',
-            component: () => import('v@front/page_homes'),
+            component: () =>
+                import ('v@front/page_homes'),
             name: 'home_1',
             meta: {
                 layout: MainLayout,
@@ -51,7 +53,8 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () => import('v@front/page_category_news'),
+            component: () =>
+                import ('v@front/page_category_news'),
             name: 'news-category-all-page',
             meta: {
                 auth: false,
@@ -63,7 +66,7 @@ routeEnv = {
                     content_top: true,
                     content_bottom: false,
                     content_main: false,
-                    right_collumn:false,
+                    right_collumn: false,
                     middle_column: true,
                     left_collumn: true,
                     column_number: 2,
@@ -77,7 +80,8 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () => import('v@front/page_category_news'),
+            component: () =>
+                import ('v@front/page_category_news'),
             name: 'news-category-page',
             meta: {
                 auth: false,
@@ -89,7 +93,7 @@ routeEnv = {
                     content_top: true,
                     content_bottom: false,
                     content_main: false,
-                    right_collumn:false,
+                    right_collumn: false,
                     middle_column: true,
                     left_collumn: true,
                     column_number: 2,
@@ -103,7 +107,8 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () => import('v@front/page_category_news'),
+            component: () =>
+                import ('v@front/page_category_news'),
             name: 'news-category_1-page',
             meta: {
                 auth: false,
@@ -115,7 +120,7 @@ routeEnv = {
                     content_top: true,
                     content_bottom: false,
                     content_main: false,
-                    right_collumn:false,
+                    right_collumn: false,
                     middle_column: true,
                     left_collumn: true,
                     column_number: 2,
@@ -129,7 +134,8 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () => import('v@front/page_category_news'),
+            component: () =>
+                import ('v@front/page_category_news'),
             name: 'news-category_2-page',
             meta: {
                 auth: false,
@@ -141,7 +147,7 @@ routeEnv = {
                     content_top: true,
                     content_bottom: false,
                     content_main: false,
-                    right_collumn:false,
+                    right_collumn: false,
                     middle_column: true,
                     left_collumn: true,
                     column_number: 2,
@@ -155,7 +161,8 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () => import('v@front/page_category_news'),
+            component: () =>
+                import ('v@front/page_category_news'),
             name: 'news-category_3-page',
             meta: {
                 auth: false,
@@ -167,7 +174,7 @@ routeEnv = {
                     content_top: true,
                     content_bottom: false,
                     content_main: false,
-                    right_collumn:false,
+                    right_collumn: false,
                     middle_column: true,
                     left_collumn: true,
                     column_number: 2,
@@ -181,7 +188,8 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () => import('v@front/page_news'),
+            component: () =>
+                import ('v@front/page_news'),
             name: 'news-page',
             meta: {
                 auth: false,
@@ -190,10 +198,10 @@ routeEnv = {
                 role: 'guest',
                 title: 'Trang Tin Tức | ' + config.site_name
             }
-        },
-        {
+        }, {
             path: 'xem-nhieu',
-            component: () => import('v@front/page_news_populars'),
+            component: () =>
+                import ('v@front/page_news_populars'),
             name: 'news-popular-page',
             meta: {
                 auth: false,
@@ -205,16 +213,16 @@ routeEnv = {
                     content_top: true,
                     content_bottom: false,
                     content_main: false,
-                    right_collumn:false,
+                    right_collumn: false,
                     middle_column: true,
                     left_collumn: true,
                     column_number: 2,
                 }
             }
-        },
-        {
+        }, {
             path: 'chi-tiet/:slug',
-            component: () => import('v@front/page_news_details'),
+            component: () =>
+                import ('v@front/page_news_details'),
             name: 'news-slug-detail-page',
             meta: {
                 auth: false,
@@ -225,42 +233,41 @@ routeEnv = {
                 layout_content: {
                     content_bottom: false,
                     content_main: true,
-                    right_collumn:true,
+                    right_collumn: true,
                     left_collumn: true,
                 }
             }
-        }
-    ]
+        }]
     }, {
         path: 'video',
         component: {
             render: c => c('router-view')
         },
         children: [{
-                path: '',
-                component: () => import('v@front/page_videos'),
-                name: 'video-page',
-                meta: {
-                    auth: false,
-                    header: 'Video Page',
-                    layout: MainLayout,
-                    role: 'guest',
-                    title: 'Trang Video | ' + config.site_name
-                }
-            },
-            {
-                path: 'chi-tiet/:slug',
-                component: () => import('v@front/page_video_details'),
-                name: 'video-detail-page',
-                meta: {
-                    auth: false,
-                    header: 'Video Detail Page',
-                    layout: MainLayout,
-                    role: 'guest',
-                    title: 'Trang Chie Tiet Video | ' + config.site_name
-                }
+            path: '',
+            component: () =>
+                import ('v@front/page_videos'),
+            name: 'video-page',
+            meta: {
+                auth: false,
+                header: 'Video Page',
+                layout: MainLayout,
+                role: 'guest',
+                title: 'Trang Video | ' + config.site_name
             }
-        ]
+        }, {
+            path: 'chi-tiet/:slug',
+            component: () =>
+                import ('v@front/page_video_details'),
+            name: 'video-detail-page',
+            meta: {
+                auth: false,
+                header: 'Video Detail Page',
+                layout: MainLayout,
+                role: 'guest',
+                title: 'Trang Chie Tiet Video | ' + config.site_name
+            }
+        }]
     }]
 }
 

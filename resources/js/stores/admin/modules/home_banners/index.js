@@ -46,7 +46,7 @@ const defaultState = () => {
         filename: "",
         path: "",
         size: 0,
-        thumb: "",//url thumb
+        thumb: "", //url thumb
         timestamp: null,
         type: null
       },
@@ -96,8 +96,8 @@ export default {
       return state.errors.length
     },
     isNotExistValidate(state) {
-      if (state.isExistInfo !== config.existStatus.checking || 
-        state.isExistInfo !== config.existStatus.exist ) {
+      if (state.isExistInfo !== config.existStatus.checking ||
+        state.isExistInfo !== config.existStatus.exist) {
         return false;
       }
 
@@ -221,7 +221,10 @@ export default {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
     },
 
-    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({commit, state}, category) {
+    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({
+      commit,
+      state
+    }, category) {
       const categorys = state.info.categorys;
       const listCateShow = state.listCategorysDisplay;
 
@@ -236,7 +239,10 @@ export default {
       commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow);
     },
 
-    [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({state, commit}, category) {
+    [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({
+      state,
+      commit
+    }, category) {
       const categorys = state.info.categorys;
       const listCateShow = state.listCategorysDisplay;
 
@@ -248,7 +254,9 @@ export default {
       }));
     },
 
-    [ACTION_SET_IMAGE]({commit}, imgFile) {
+    [ACTION_SET_IMAGE]({
+      commit
+    }, imgFile) {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
     },
 

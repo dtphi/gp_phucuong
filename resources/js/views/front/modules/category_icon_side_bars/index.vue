@@ -1,9 +1,12 @@
 <template>
-    <div v-if="_isExist" id="category-icon-side-bar-module" class="category">
+    <div
+        v-if="_isExist"
+        id="category-icon-side-bar-module"
+        class="category">
         <h4 class="tit-common clr-blue">Danh mục</h4>
         <b-row>
-            <category-item 
-                v-for="(item, idx) in settingCategory" 
+            <category-item
+                v-for="(item, idx) in settingCategory"
                 :key="idx"
                 :idx="idx"
                 :group="item"></category-item>
@@ -17,11 +20,9 @@
         mapGetters,
         mapActions
     } from 'vuex';
-
     import {
         MODULE_MODULE_CATEGORY_ICON_SIDE_BAR
     } from '@app/stores/front/types/module-types';
-
     import {
         ACTION_GET_SETTING,
     } from '@app/stores/front/types/action-types';
@@ -37,7 +38,6 @@
                 fullPage: true
             }
         },
-        
         computed: {
             ...mapGetters(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
                 'settingCategory',
@@ -46,13 +46,11 @@
                 return this.settingCategory.length;
             }
         },
-
         created() {
             this.[ACTION_GET_SETTING]();
         },
-        
         methods: {
-             ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
+            ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
                 ACTION_GET_SETTING,
             ]),
         },
@@ -65,5 +63,5 @@
 </script>
 
 <style lang="scss">
-    @import './styles.scss'
+    @import './styles.scss';
 </style>

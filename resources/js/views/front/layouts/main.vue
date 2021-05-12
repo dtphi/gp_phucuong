@@ -1,8 +1,13 @@
 <template>
   <div class="wrapper-container">
-  	<default-header></default-header>
+	    <template v-if="pageLoading">
+            <loading-over-lay
+                :active.sync="pageLoading"
+                :is-full-page="pageFullPage"></loading-over-lay>
+        </template>
+  	    <default-header></default-header>
 		<slot></slot>
-	<default-footer></default-footer>
+        <default-footer></default-footer>
   </div>
 </template>
 
@@ -16,6 +21,15 @@
 		components: {
 			DefaultHeader,
 			DefaultFooter,
+		},
+		data() {
+			return {
+				pageFullPage: true,
+                pageLoading: true,
+			}
+		},
+		mounted() {
+			this.pageLoading = false;
 		}
 	};
 </script>

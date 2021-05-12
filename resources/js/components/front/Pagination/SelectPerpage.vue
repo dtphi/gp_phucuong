@@ -1,8 +1,9 @@
 <template>
     <select @change="_getResourceResults" class="form-control">
         <option :selected="_isSelectedCurrent(item)"
-            v-for="(item, idx) in $options.setting.perPageList" 
-            :value="item" :key="idx">{{item}}</option>
+                v-for="(item, idx) in $options.setting.perPageList"
+                :value="item" :key="idx">{{item}}
+        </option>
     </select>
 </template>
 
@@ -22,11 +23,11 @@
             ...mapGetters(['moduleNameActive', 'moduleActionListActive']),
         },
         methods: {
-            _getResourceResults (event) {
+            _getResourceResults(event) {
                 const _self = this;
-                
-                var perPage = event.target.value; 
-                
+
+                var perPage = event.target.value;
+
                 const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
                 _self.$store.dispatch(actionName, {
                     perPage: parseInt(perPage)

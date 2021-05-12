@@ -8,7 +8,7 @@ import {
 
 
 export const apiGetSettings = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(API_APP_SETTING),{
+  return axios.get(fn_get_base_api_url(API_APP_SETTING), {
       params: params
     })
     .then((response) => {

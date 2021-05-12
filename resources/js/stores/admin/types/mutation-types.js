@@ -1,4 +1,6 @@
-import { constant } from "lodash";
+import {
+	constant
+} from "lodash";
 
 export const AUTH_SET_AUTHENTICATED = 'AUTH_SET_AUTHENTICATED';
 export const AUTH_SET_USER = 'AUTH_SET_USER';

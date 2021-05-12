@@ -7,35 +7,35 @@
                 <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{err}}</p>
             </div>
         </template>
-        
-        <validation-observer 
-            ref="observerInfo" 
+
+        <validation-observer
+            ref="observerInfo"
             @submit.prevent="_submitInfo">
             <div class="page-header">
                 <div class="container-fluid">
-                  <div class="pull-right">
-                    <button 
-                        type="button" 
-                        @click="_submitInfo"
-                        data-toggle="tooltip" 
-                        :title="$options.setting.btn_save_txt" 
-                        class="btn btn-primary"><i class="fa fa-save"></i>
-                    </button>
+                    <div class="pull-right">
+                        <button
+                            type="button"
+                            @click="_submitInfo"
+                            data-toggle="tooltip"
+                            :title="$options.setting.btn_save_txt"
+                            class="btn btn-primary"><i class="fa fa-save"></i>
+                        </button>
 
-                  </div>
-                  <h1>{{$options.setting.panel_title}}</h1>
-                  <breadcrumb></breadcrumb>
+                    </div>
+                    <h1>{{$options.setting.panel_title}}</h1>
+                    <breadcrumb></breadcrumb>
                 </div>
             </div>
             <div class="container-fluid">
                 <div class="panel panel-default">
-                      <div class="panel-heading">
+                    <div class="panel-heading">
                         <h3 class="panel-title">
-							<i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
-                      </div>
-                
+                            <i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
+                    </div>
+
                     <div class="panel-body">
-                         <info-add-form 
+                        <info-add-form
                             ref="formAddSetting"></info-add-form>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
             }
         },
         methods: {
-             ...mapActions(MODULE_MODULE_TIN_GIAO_PHAN, [
+            ...mapActions(MODULE_MODULE_TIN_GIAO_PHAN, [
                 ACTION_RESET_NOTIFICATION_INFO
             ]),
             _errorToArrs() {

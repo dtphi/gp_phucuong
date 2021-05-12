@@ -1,13 +1,16 @@
 <template>
-    <b-col cols="8" class="col-mobile">
+    <b-col
+        cols="8"
+        class="col-mobile">
         <module-loi-chua></module-loi-chua>
-
         <b-row class="mt-4">
             <b-col cols="6" class="col-mobile">
                 <div class="new mt-3">
-                    <h4 class="tit-common mb-3"><img :src="iconBook" alt=""> Tin giáo hội</h4>
+                    <h4 class="tit-common mb-3">
+                        <img :src="iconBook" alt=""> Tin giáo hội</h4>
                     <p class="info-post mb-2">
-                        <img :src="iconBook" alt="">
+                        <img
+                            :src="iconBook" alt="">
                         <span class="name font-weight-bold mr-1">Giuse Quỳnh</span>
                         <b-icon class="alarm" icon="alarm"></b-icon>
                         <span>12/03/2021</span>
@@ -18,7 +21,7 @@
                     </h4>
                     <p class="name-post font-weight-bold mb-2">Posted by THANH LONG</p>
                     <a class="d-block" href="#"><img class="img" :src="imgFooter" alt=""></a>
-                    
+
                     <p class="mt-2">
                         <em>Thưa quý chúng sinh, quý tu sĩ, cùng toàn thể giáo dân giáo phận Phú Cường, trong tâm tình tạ ơn thiên chúa...</em>
                         <a class="font-weight-bold" href="#">Xem thêm</a>
@@ -57,14 +60,14 @@
                     </h4>
                     <p class="name-post font-weight-bold mb-2">Posted by THANH LONG</p>
                     <a class="d-block" href="#"><img class="img" :src="imgFooter" alt=""></a>
-                    
+
                     <p class="mt-2">
                         <em>Thưa quý chúng sinh, quý tu sĩ, cùng toàn thể giáo dân giáo phận Phú Cường, trong tâm tình tạ ơn thiên chúa...</em>
                         <a class="font-weight-bold" href="#">Xem thêm</a>
                     </p>
 
                     <hr>
-                    
+
                     <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 5" :key="index">
                         <span>
                             <i class="status bg-red">hot</i>
@@ -81,7 +84,6 @@
                 </div>
             </b-col>
         </b-row>
-
         <div class="mt-4 new-diocese">
             <h4 class="tit-common mb-3">
                 <img :src="iconBook" alt=""> Tin giáo phận
@@ -138,7 +140,6 @@
                 </b-col>
             </b-row>
         </div>
-
         <div class="mt-4 new-document">
             <h4 class="tit-common mb-3">
                 <img :src="iconBook" alt=""> Văn kiện
@@ -175,11 +176,6 @@
                 iconBook: IconBook,
                 imgFooter: ImgFooter
             }
-        },
-        computed: {
         }
     }
 </script>
-
-<style lang="scss">
-</style>

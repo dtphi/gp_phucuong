@@ -6,7 +6,6 @@
         :size="size"
         :align="align"
         v-on:pagination-change-page="onPaginationChangePage">
-
         <ul class="pagination"
             :class="{
                 'pagination-sm': size == 'small',
@@ -16,25 +15,42 @@
             }"
             v-if="computed.total > computed.perPage"
             slot-scope="{ data, limit, showDisabled, size, align, computed, prevButtonEvents, nextButtonEvents, pageButtonEvents }">
-
-            <li class="page-item pagination-prev-nav" :class="{'disabled': !computed.prevPageUrl}" v-if="computed.prevPageUrl || showDisabled">
-                <a class="page-link" href="#" aria-label="Previous" :tabindex="!computed.prevPageUrl && -1" v-on="prevButtonEvents">
+            <li class="page-item pagination-prev-nav"
+                :class="{'disabled': !computed.prevPageUrl}"
+                v-if="computed.prevPageUrl || showDisabled">
+                <a class="page-link"
+                   href="#"
+                   aria-label="Previous"
+                   :tabindex="!computed.prevPageUrl && -1"
+                   v-on="prevButtonEvents">
                     <slot name="prev-nav">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                     </slot>
                 </a>
             </li>
-
-            <li class="page-item pagination-page-nav" v-for="(page, key) in computed.pageRange" :key="key" :class="{ 'active': page == computed.currentPage }">
-                <a class="page-link" href="#" v-on="pageButtonEvents(page)">
+            <li class="page-item pagination-page-nav"
+                v-for="(page, key) in computed.pageRange"
+                :key="key"
+                :class="{ 'active': page == computed.currentPage }">
+                <a
+                    class="page-link"
+                    href="#"
+                    v-on="pageButtonEvents(page)">
                     {{ page }}
-                    <span class="sr-only" v-if="page == computed.currentPage">(current)</span>
+                    <span class="sr-only"
+                          v-if="page == computed.currentPage">(current)</span>
                 </a>
             </li>
-
-            <li class="page-item pagination-next-nav" :class="{'disabled': !computed.nextPageUrl}" v-if="computed.nextPageUrl || showDisabled">
-                <a class="page-link" href="#" aria-label="Next" :tabindex="!computed.nextPageUrl && -1" v-on="nextButtonEvents">
+            <li class="page-item pagination-next-nav"
+                :class="{'disabled': !computed.nextPageUrl}"
+                v-if="computed.nextPageUrl || showDisabled">
+                <a
+                    class="page-link"
+                    href="#"
+                    aria-label="Next"
+                    :tabindex="!computed.nextPageUrl && -1"
+                    v-on="nextButtonEvents">
                     <slot name="next-nav">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
@@ -43,51 +59,50 @@
             </li>
 
         </ul>
-
     </render-pagination>
 </template>
 
 <script>
-import RenderPagination from './RenderPagination.vue';
+    import RenderPagination from './RenderPagination.vue';
 
-export default {
-	name: 'CollectionPagination',
-	components: {
-        RenderPagination
-    },
-    props: {
-        data: {
-            type: Object,
-            default: () => {}
+    export default {
+        name: 'CollectionPagination',
+        components: {
+            RenderPagination
         },
-        limit: {
-            type: Number,
-            default: 0
-        },
-        showDisabled: {
-            type: Boolean,
-            default: false
-        },
-        size: {
-            type: String,
-            default: 'default',
-            validator: value => {
-                return ['small', 'default', 'large'].indexOf(value) !== -1;
+        props: {
+            data: {
+                type: Object,
+                default: () => {
+                }
+            },
+            limit: {
+                type: Number,
+                default: 0
+            },
+            showDisabled: {
+                type: Boolean,
+                default: false
+            },
+            size: {
+                type: String,
+                default: 'default',
+                validator: value => {
+                    return ['small', 'default', 'large'].indexOf(value) !== -1;
+                }
+            },
+            align: {
+                type: String,
+                default: 'left',
+                validator: value => {
+                    return ['left', 'center', 'right'].indexOf(value) !== -1;
+                }
             }
         },
-        align: {
-            type: String,
-            default: 'left',
-            validator: value => {
-                return ['left', 'center', 'right'].indexOf(value) !== -1;
+        methods: {
+            onPaginationChangePage(page) {
+                this.$emit('pagination-change-page', page);
             }
-        }
-    },
-
-    methods: {
-        onPaginationChangePage (page) {
-            this.$emit('pagination-change-page', page);
-        }
-    },
-}
+        },
+    }
 </script>
