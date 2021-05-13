@@ -9,7 +9,7 @@
                 <component v-bind:is="currentContentLeft"></component>
             </keep-alive>
             <keep-alive>
-				<component v-bind:is="currentColumnRight"></component>
+				<component v-bind:is="_currentColumnRight" :content-type="contentType"></component>
 			</keep-alive>
         </b-row>
     </div>
@@ -30,7 +30,8 @@
         data() {
             return {
                 iconBook: IconBook,
-                imgFooter: ImgFooter
+                imgFooter: ImgFooter,
+                contentType: 'bottom'
             }
         },
         computed: {
@@ -46,7 +47,7 @@
 			  	let moduleName = 'bottom-both';
             	return "content-" + moduleName.toLowerCase();
             },
-            currentColumnRight: function() {
+            _currentColumnRight: function() {
 			  	let moduleName = 'right';
             	return "column-" + moduleName.toLowerCase();
             },

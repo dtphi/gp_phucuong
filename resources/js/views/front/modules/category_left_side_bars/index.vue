@@ -13,7 +13,6 @@
 
 <script>
     import {
-        mapState,
         mapGetters,
         mapActions
     } from 'vuex';

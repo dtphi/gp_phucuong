@@ -1,7 +1,10 @@
 <template>
     <b-col
-        :cols="colMiddleClass"
+        :cols="_colMiddleClass"
         class="col-mobile">
+        <keep-alive>
+            <component v-bind:is="_currentModule"></component>
+        </keep-alive>
         <slot></slot>
     </b-col>
 </template>
@@ -22,8 +25,7 @@
     export default {
         name: 'ColumnMiddle',
         components: {
-            'content-bottom-right': () => import('com@front/Common/ContentBottomRight'),
-            'content-left': () => import('com@front/Common/ContentLeft')
+            'module-info-carousel': () => import('v@front/modules/info_carousels')
         },
         data() {
             return {
@@ -31,17 +33,23 @@
             }
         },
         computed: {
-            currentContentRight: function () {
-                let moduleName = 'bottom-right';
-                return "content-" + moduleName.toLowerCase();
-            },
-            colMiddleClass() {
-                if (this.$route.meta.layout_content.column_number == 3) {
+            _colMiddleClass() {
+                if (this.$route.meta.layout_content.content_top_column.column_number == 3) {
                     return '5';
+                }
+                if (this.$route.meta.layout_content.content_top_column.colClass) {
+                    return this.$route.meta.layout_content.content_top_column.colClass;
                 }
 
                 return '9';
-            }
+            },
+            _currentModule: function () {
+                let moduleName = this.$route.meta.layout_content.content_top_column.middle_module_info_carousel;
+                if (moduleName) {
+                    return "module-" + moduleName.toLowerCase();
+                }
+                return false;
+            },
         }
     }
 </script>

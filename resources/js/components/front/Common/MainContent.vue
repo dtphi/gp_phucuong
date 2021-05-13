@@ -4,7 +4,7 @@
             <component v-bind:is="currentContentLeft"></component>
         </keep-alive>
         <keep-alive>
-            <component v-bind:is="currentContentRight"></component>
+            <component v-bind:is="_currentContentRight" :content-type="contentType"></component>
         </keep-alive>
     </b-row>
 </template>
@@ -25,22 +25,23 @@
     export default {
         name: 'MainContent',
         components: {
-            'content-bottom-right': () => import('com@front/Common/ContentBottomRight'),
+            'column-right': () => import('com@front/Common/ColumnRight'),
             'content-left': () => import('com@front/Common/ContentLeft')
         },
         data() {
             return {
-                imgFooter: ImgFooter
+                imgFooter: ImgFooter,
+                contentType: 'main'
             }
         },
         computed: {
             ...mapGetters(MODULE_INFO_DETAIL, [
                 'pageLists'
             ]),
-            currentContentRight: function () {
-                let moduleName = 'bottom-right';
-                if (this.$route.meta.layout_content.right_collumn) {
-                    return "content-" + moduleName.toLowerCase();
+            _currentContentRight: function () {
+                let moduleName = 'right';
+                if (this.$route.meta.layout_content.content_main_column.right_collumn) {
+                    return "column-" + moduleName.toLowerCase();
                 }
                 return false;
             },

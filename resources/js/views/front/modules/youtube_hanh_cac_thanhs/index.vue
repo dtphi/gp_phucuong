@@ -1,15 +1,11 @@
 <template>
-    <div id="thong-bao-module" class="info">
-        <h4 class="tit-common clr-orange">
-            <img
-                :src="iconBook" alt=""> Thông báo</h4>
-            <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 3" :key="index">
-                <span>
-                    <i class="status bg-green">Live</i>
-                </span>
-                <span>50 năm thành lập giáo phận Phú Cường</span>
-                <span>Thanh Thúy</span>
-            </a>
+    <div class="mt-4">
+        <h4 class="tit-common clr-orange">Hạnh các thánh</h4>
+        <div id="Hanhcacthanh-PlaylistYoutube" class="embed-responsive embed-responsive-4by3">
+            <iframe allowfullscreen="" class="embed-responsive-item" frameborder="0" height="360"
+                    src="https://www.youtube-nocookie.com/embed/videoseries?list=PL-uyh2tqni7nLxdHqWjTbLyIoJEriY7lM"
+                    width="640"></iframe>
+        </div>
     </div>
 </template>
 
@@ -27,7 +23,7 @@
     import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
-        name: 'ModuleThongBao',
+        name: 'ModuleHanhCacThanh',
         components: {},
         data() {
             return {
@@ -44,21 +40,12 @@
             }
         },
         created() {
-            this.[ACTION_GET_SETTING]();
+            //this.[ACTION_GET_SETTING]();
         },
         methods: {
             ...mapActions(MODULE_MODULE_THONG_BAO, [
                 ACTION_GET_SETTING,
             ]),
-        },
-        setting: {
-            panel_title: 'Module Danh Mục Icon',
-            frm_title: 'Thêm danh mục Icon',
-            btn_save_txt: 'Lưu',
         }
     };
 </script>
-
-<style lang="scss">
-    @import './styles.scss';
-</style>

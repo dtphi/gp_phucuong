@@ -5,3 +5,4 @@ export const MODULE_VIDEO = 'video';
 export const MODULE_VIDEO_DETAIL = 'video/detail';
 export const MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR = 'appModule/category_left_side_bar';
 export const MODULE_MODULE_CATEGORY_ICON_SIDE_BAR = 'appModule/category_icon_side_bar';
+export const MODULE_MODULE_THONG_BAO = 'appModule/thong_bao';

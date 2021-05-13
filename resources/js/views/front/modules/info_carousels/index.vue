@@ -1,16 +1,23 @@
 <template>
-    <div id="thong-bao-module" class="info">
-        <h4 class="tit-common clr-orange">
-            <img
-                :src="iconBook" alt=""> Thông báo</h4>
-            <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 3" :key="index">
-                <span>
-                    <i class="status bg-green">Live</i>
-                </span>
-                <span>50 năm thành lập giáo phận Phú Cường</span>
-                <span>Thanh Thúy</span>
-            </a>
-    </div>
+    <b-carousel
+        id="carousel-1"
+        :interval="4000"
+        controls
+        indicators
+    >
+        <b-carousel-slide
+            img-src="https://giaophanphucuong.org/Image/Picture/Images/CacGiaoXu/HatPhuCuong/NhaThoChanhToa-Thuml.jpg"
+            v-for="(link, index) in 3" :key="index">
+            <div class="description text-left">
+                <h4>Thông báo:</h4>
+                <p class="mb-2">
+                    Ban Truyền Thông Giáo Phận 104 Lạc Long Quân, Phường Phú Cường, Tp. Thủ Dầu Một, Tỉnh Bình Dương...
+                    <a href="#" class="ml-2"><b>Xem thêm</b></a>
+                </p>
+                <p class="text-right mb-0">25/12/2021 Thanh Thúy</p>
+            </div>
+        </b-carousel-slide>
+    </b-carousel>
 </template>
 
 <script>
@@ -27,7 +34,7 @@
     import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
-        name: 'ModuleThongBao',
+        name: 'ModuleCarouselInfo',
         components: {},
         data() {
             return {
@@ -44,21 +51,12 @@
             }
         },
         created() {
-            this.[ACTION_GET_SETTING]();
+            //this.[ACTION_GET_SETTING]();
         },
         methods: {
             ...mapActions(MODULE_MODULE_THONG_BAO, [
                 ACTION_GET_SETTING,
             ]),
-        },
-        setting: {
-            panel_title: 'Module Danh Mục Icon',
-            frm_title: 'Thêm danh mục Icon',
-            btn_save_txt: 'Lưu',
         }
     };
 </script>
-
-<style lang="scss">
-    @import './styles.scss';
-</style>

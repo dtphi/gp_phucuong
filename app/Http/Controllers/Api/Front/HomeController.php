@@ -55,7 +55,7 @@ class HomeController extends Controller
                 [
                     'sort'  => 1,
                     'img'   => $bannerPath . '/loi_chua_banner.jpeg',
-                    'href'  => '/',
+                    'href'  => '/danh-muc-tin/loi-chua-210',
                     'title' => '>>>> LỜI CHÚA'
                 ],
                 [
@@ -73,25 +73,25 @@ class HomeController extends Controller
                 [
                     'sort'  => 4,
                     'img'   => $bannerPath . '/linh_muc_banner.jpeg',
-                    'href'  => '/',
+                    'href'  => '/danh-muc-tin/giam-muc-18',
                     'title' => '>>>> DANH SÁCH LINH MỤC'
                 ],
                 [
                     'sort'  => 5,
                     'img'   => $bannerPath . '/gx_chanh_toa_banner.jpeg',
-                    'href'  => '/',
+                    'href'  => '/danh-muc-tin/giao-phan-207',
                     'title' => '>>>> GIÁO XỨ TRONG GIÁO PHẬN'
                 ],
                 [
                     'sort'  => 6,
                     'img'   => $bannerPath . '/thong_bao_banner.jpeg',
-                    'href'  => '/',
+                    'href'  => '/danh-muc-tin/thong-bao-209',
                     'title' => '>>>> THÔNG BÁO'
                 ],
                 [
                     'sort'  => 7,
                     'img'   => $bannerPath . '/phung_vu_banner.jpg',
-                    'href'  => '/',
+                    'href'  => '/danh-muc-tin/phung-vu-213',
                     'title' => '>>>> PHỤNG VỤ'
                 ]
             ];

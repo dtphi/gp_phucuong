@@ -15,10 +15,6 @@
 </template>
 
 <script>
-    import {
-        mapGetters,
-        mapActions
-    } from 'vuex';
     import ImgFooter from 'v@front/assets/img/image_footer.jpg';
     import {} from '@app/stores/front/types/module-types';
     import {} from '@app/stores/front/types/action-types';
@@ -26,7 +22,7 @@
     export default {
         name: 'ContentTop',
         components: {
-            'content-bottom-right': () => import('com@front/Common/ContentBottomRight'),
+            'column-right': () => import('com@front/Common/ColumnRight'),
             'column-middle': () => import('com@front/Common/ColumnMiddle'),
             'column-left': () => import('com@front/Common/ColumnLeft')
         },
@@ -37,16 +33,16 @@
         },
         computed: {
             currentContentRight: function () {
-                let moduleName = 'bottom-right';
-                if (this.$route.meta.layout_content.right_collumn) {
-                    return "content-" + moduleName.toLowerCase();
+                let moduleName = 'right';
+                if (this.$route.meta.layout_content.content_top_column.right_collumn) {
+                    return "column-" + moduleName.toLowerCase();
                 }
                 return false;
             },
             currentContentLeft: function () {
                 let moduleName = 'left';
 
-                if (this.$route.meta.layout_content.left_collumn) {
+                if (this.$route.meta.layout_content.content_top_column.left_collumn) {
                     return "column-" + moduleName.toLowerCase();
                 }
                 return false;
@@ -54,7 +50,7 @@
             currentContentMiddle: function () {
                 let moduleName = 'middle';
 
-                if (this.$route.meta.layout_content.middle_column) {
+                if (this.$route.meta.layout_content.content_top_column.middle_column) {
                     return "column-" + moduleName.toLowerCase();
                 }
                 return false;
