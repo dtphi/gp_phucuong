@@ -1,32 +1,32 @@
 <template>
     <b-row class="my-3">
         <keep-alive>
-            <component v-bind:is="currentContentLeft"></component>
+            <component v-bind:is="_currentContentLeft" :content-type="contentType">
+                <slot name="column_left"></slot>
+            </component>
         </keep-alive>
         <keep-alive>
-            <component v-bind:is="_currentContentRight" :content-type="contentType"></component>
+            <component v-bind:is="_currentContentMiddle" :content-type="contentType">
+                <slot></slot>
+            </component>
+        </keep-alive>
+        <keep-alive>
+            <component v-bind:is="_currentContentRight" :content-type="contentType">
+                 <slot name="column_right"></slot>
+            </component>
         </keep-alive>
     </b-row>
 </template>
 
 <script>
-    import {
-        mapGetters,
-        mapActions
-    } from 'vuex';
     import ImgFooter from 'v@front/assets/img/image_footer.jpg';
-    import {
-        MODULE_INFO_DETAIL
-    } from '@app/stores/front/types/module-types';
-    import {
-        GET_DETAIL
-    } from '@app/stores/front/types/action-types';
 
     export default {
         name: 'MainContent',
         components: {
             'column-right': () => import('com@front/Common/ColumnRight'),
-            'content-left': () => import('com@front/Common/ContentLeft')
+            'column-middle': () => import('com@front/Common/ColumnMiddle'),
+            'column-left': () => import('com@front/Common/ColumnLeft')
         },
         data() {
             return {
@@ -35,9 +35,6 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_INFO_DETAIL, [
-                'pageLists'
-            ]),
             _currentContentRight: function () {
                 let moduleName = 'right';
                 if (this.$route.meta.layout_content.content_main_column.right_collumn) {
@@ -45,19 +42,24 @@
                 }
                 return false;
             },
-            currentContentLeft: function () {
+            _currentContentMiddle: function () {
+                let moduleName = 'middle';
+
+                if (this.$route.meta.layout_content.content_main_column.middle_column) {
+                    return "column-" + moduleName.toLowerCase();
+                }
+                return false;
+            },
+            _currentContentLeft: function () {
                 let moduleName = 'left';
 
-                if (this.$route.meta.layout_content.left_collumn) {
-                    return "content-" + moduleName.toLowerCase();
+                if (this.$route.meta.layout_content.content_main_column.left_collumn) {
+                    return "column-" + moduleName.toLowerCase();
                 }
                 return false;
             },
         },
         methods: {
-            ...mapActions(MODULE_INFO_DETAIL, [
-                GET_DETAIL,
-            ]),
         }
     }
 </script>

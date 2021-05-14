@@ -23,7 +23,6 @@
         name: 'ContentBottom',
         components: {
             'content-bottom-left': () => import('./ContentBottomLeft'),
-            'content-bottom-right': () => import('./ContentBottomRight'),
             'content-bottom-both': () => import('./ContentBottomBoth'),
             'column-right': () => import('./ColumnRight'),
         },

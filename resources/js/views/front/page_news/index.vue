@@ -8,52 +8,47 @@
                         :active.sync="loading"
                         :is-full-page="fullPage"></loading-over-lay>
                 </template>
-                <!--<b-row class="mt-3 notication">
-                    <b-col cols="8" class="col-mobile">-->
-                        
-                    <!--</b-col>-->
-                    <!--<b-col cols="4" class="col-mobile">
-                        <div class="box-social">
-                            <h4 class="tit-common clr-blue">Mạng xã hội</h4>
-                            <div class="list-icon">
-                                <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                                <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                                <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                                <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                                <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            </div>
-
-                            <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
+                <template v-slot:column_right>
+                    <div class="box-social">
+                        <h4 class="tit-common clr-blue">Mạng xã hội</h4>
+                        <div class="list-icon">
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
                         </div>
+                    </div>
+                    <div class="box-social">
+                        <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
+                    </div>
+                    <div class="box-care mt-3">
+                        <h4 class="tit-common clr-blue">Quan tâm</h4>
 
-                        <div class="box-care mt-3">
-                            <h4 class="tit-common clr-blue">Quan tâm</h4>
+                        <p class="font-weight-bold">Đăng ký để nhận tin mỗi ngày</p>
+                        <input id="email" type="text" placeholder="Enter your e-mail address">
+                        <input class="btn mt-2" type="button" value="Subscribe">
 
-                            <p class="font-weight-bold">Đăng ký để nhận tin mỗi ngày</p>
-                            <input id="email" type="text" placeholder="Enter your e-mail address">
-                            <input class="btn mt-2" type="button" value="Subscribe">
-
-                            <b-row class="mt-3">
-                                <b-col cols="5" class="m-auto">
-                                    <p class="mb-0 text-download">Tải app sách nói công giáo</p>
-                                </b-col>
-                                <b-col cols="7">
-                                    <b-carousel
-                                        id="carousel-2"
-                                        :interval="4000"
-                                        controls
-                                        indicators
-                                    >
-                                        <b-carousel-slide
-                                            img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-                                        <b-carousel-slide
-                                            img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-                                    </b-carousel>
-                                </b-col>
-                            </b-row>
-                        </div>
-                    </b-col>
-                </b-row>-->
+                        <b-row class="mt-3">
+                            <b-col cols="5" class="m-auto">
+                                <p class="mb-0 text-download">Tải app sách nói công giáo</p>
+                            </b-col>
+                            <b-col cols="7">
+                                <b-carousel
+                                    id="carousel-2"
+                                    :interval="4000"
+                                    controls
+                                    indicators
+                                >
+                                    <b-carousel-slide
+                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                    <b-carousel-slide
+                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                </b-carousel>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </template>
             </content-top>
             
             <content-bottom v-if="_isContentBottom"></content-bottom>

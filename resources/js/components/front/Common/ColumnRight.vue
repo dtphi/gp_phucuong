@@ -2,6 +2,7 @@
     <b-col
         cols="4"
         class="col-mobile">
+        <slot></slot>
         <keep-alive>
             <component v-bind:is="_currentModuleCategoryIconSideBar"></component>
         </keep-alive>
@@ -17,7 +18,6 @@
         <keep-alive>
             <component v-bind:is="_currentModuleYoutube"></component>
         </keep-alive>
-        <slot></slot>
     </b-col>
 </template>
 
@@ -26,7 +26,7 @@
     import ImgFooter from 'v@front/assets/img/image_footer.jpg';
 
     export default {
-        name: 'ContentBottomRight',
+        name: 'ContentColumnRight',
         props: {
             contentType: {
                 default: 'top'

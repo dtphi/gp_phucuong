@@ -51,8 +51,6 @@
             SideBar,
             InfoLeftSideBar,
             ModuleCategoryMenuLeft,
-            'content-bottom-right': () => import('com@front/Common/ContentBottomRight'),
-            'content-left': () => import('com@front/Common/ContentLeft')
         },
         data() {
             return {
@@ -60,13 +58,6 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_INFO_DETAIL, [
-                'pageLists'
-            ]),
-            currentContentRight: function() {
-			  	let moduleName = 'bottom-right';
-            	return "content-" + moduleName.toLowerCase();
-            },
         },
         methods: {
             ...mapActions(MODULE_INFO_DETAIL, [

@@ -1,23 +1,25 @@
 <template>
     <b-row class="my-3">
         <keep-alive>
-            <component v-bind:is="currentContentLeft"></component>
+            <component v-bind:is="_currentContentLeft">
+                <slot name="column_left"></slot>
+            </component>
         </keep-alive>
         <keep-alive>
-            <component v-bind:is="currentContentMiddle">
+            <component v-bind:is="_currentContentMiddle">
                 <slot></slot>
             </component>
         </keep-alive>
         <keep-alive>
-            <component v-bind:is="currentContentRight"></component>
+            <component v-bind:is="_currentContentRight">
+                <slot name="column_right"></slot>
+            </component>
         </keep-alive>
     </b-row>
 </template>
 
 <script>
     import ImgFooter from 'v@front/assets/img/image_footer.jpg';
-    import {} from '@app/stores/front/types/module-types';
-    import {} from '@app/stores/front/types/action-types';
 
     export default {
         name: 'ContentTop',
@@ -32,14 +34,14 @@
             }
         },
         computed: {
-            currentContentRight: function () {
+            _currentContentRight: function () {
                 let moduleName = 'right';
                 if (this.$route.meta.layout_content.content_top_column.right_collumn) {
                     return "column-" + moduleName.toLowerCase();
                 }
                 return false;
             },
-            currentContentLeft: function () {
+            _currentContentLeft: function () {
                 let moduleName = 'left';
 
                 if (this.$route.meta.layout_content.content_top_column.left_collumn) {
@@ -47,7 +49,7 @@
                 }
                 return false;
             },
-            currentContentMiddle: function () {
+            _currentContentMiddle: function () {
                 let moduleName = 'middle';
 
                 if (this.$route.meta.layout_content.content_top_column.middle_column) {
