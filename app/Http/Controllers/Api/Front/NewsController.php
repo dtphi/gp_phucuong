@@ -134,7 +134,7 @@ class NewsController extends Controller
             $staticImg     = self::$thumImgNo;
             $staticThumImg = self::$thumImgNo;
 
-            if (file_exists(public_path(rawurldecode($info->image)))) {
+            if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                 $staticImg     = $info->image;
                 $staticThumImg = $info->image;
             }

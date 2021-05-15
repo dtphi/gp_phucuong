@@ -23,7 +23,7 @@
     } from 'vuex';
     import ImgFooter from 'v@front/assets/img/image_footer.jpg';
     import {
-        MODULE_INFO_DETAIL
+        MODULE_VIDEO_DETAIL
     } from '@app/stores/front/types/module-types';
     import {
         GET_DETAIL
@@ -39,7 +39,7 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_INFO_DETAIL, [
+            ...mapGetters(MODULE_VIDEO_DETAIL, [
                 'pageLists'
             ]),
         }

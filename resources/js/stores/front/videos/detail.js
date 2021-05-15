@@ -1,19 +1,22 @@
 import {
   apiGetDetail,
-} from '@app/api/front/videos';
+} from '@app/api/front/infos';
 import {
   INIT_LIST,
   SET_ERROR,
 } from '@app/stores/front/types/mutation-types';
 import {
-  GET_DETAIL
+  GET_DETAIL,
 } from '@app/stores/front/types/action-types';
 
 export default {
   namespaced: true,
   state: {
     mainMenus: [],
-    pageLists: {},
+    pageLists: {
+      name: '',
+      description: ''
+    },
     errors: []
   },
   getters: {
@@ -26,9 +29,6 @@ export default {
   },
 
   mutations: {
-    MAIN_MENU(state, value) {
-      state.mainMenus = value
-    },
     INIT_LIST(state, payload) {
       state.pageLists = payload;
     },
