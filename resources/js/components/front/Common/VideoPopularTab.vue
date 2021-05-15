@@ -18,15 +18,15 @@
 
 <script>
 	import{
-      mapState,
-      mapActions
-  } from 'vuex';
-  import {
-    fn_get_href_base_url,
-    fn_change_to_slug
-} from '@app/api/utils/fn-helper';
+        mapState,
+        mapActions
+    } from 'vuex';
+    import {
+        fn_get_href_base_url,
+        fn_change_to_slug
+    } from '@app/api/utils/fn-helper';
 
-  import {
+    import {
         MODULE_INFO
     } from '@app/stores/front/types/module-types';
     import {
