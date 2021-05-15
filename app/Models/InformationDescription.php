@@ -104,4 +104,9 @@ class InformationDescription extends BaseModel
             return DB::delete("delete from " . Tables::$information_descriptions . " where information_id = '" . $infoId . "'");
         }
     }
+
+    public static function truncateForce()
+    {
+        DB::statement('truncate table ' . Tables::$information_descriptions);
+    }
 }

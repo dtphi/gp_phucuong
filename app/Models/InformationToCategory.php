@@ -76,4 +76,9 @@ class InformationToCategory extends BaseModel
             return DB::delete("delete from " . Tables::$information_to_categorys . " where information_id = '" . $infoId . "'");
         }
     }
+
+    public static function truncateForce()
+    {
+        DB::statement('truncate table ' . Tables::$information_to_categorys);
+    }
 }

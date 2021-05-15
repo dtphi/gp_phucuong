@@ -173,4 +173,9 @@ class CategoryPath extends BaseModel
 
         return $query;
     }
+
+    public static function truncateForce()
+    {
+        DB::statement('truncate table ' . Tables::$category_paths);
+    }
 }

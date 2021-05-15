@@ -68,4 +68,9 @@ class CategoryDescription extends BaseModel
                 [$cateId, $name, $description, $metaTitle, $metaDescription, $metaKeyword]);
         }
     }
+
+    public static function truncateForce()
+    {
+        DB::statement('truncate table ' . Tables::$category_descriptions);
+    }
 }

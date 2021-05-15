@@ -98,4 +98,9 @@ class Category extends BaseModel
                 [$cateId, $parentId, $status, $nameSlug, $createUser]);
         }
     }
+
+    public static function truncateForce()
+    {
+        DB::statement('truncate table ' . Tables::$categorys);
+    }
 }

@@ -30,6 +30,7 @@ class InformationResource extends JsonResource
         $json = parent::toArray($request);
         $json = array_merge($json, [
             'name'                  => $res->name,
+            'sort_description'      => html_entity_decode($res->sort_description),
             'description'           => $res->description,
             'date_available'        => $res->date_available,
             'tag'                   => $res->tag,

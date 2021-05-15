@@ -146,7 +146,7 @@ class NewsController extends Controller
                 'category_id'      => $info->category_id,
                 'created_at'       => $info->created_at,
                 'description'      => htmlspecialchars_decode($info->sort_description),
-                'sort_description' => Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
+                'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
                 'image'            => $staticImg,
                 'imgUrl'           => url($staticImg),
                 'imgThumUrl'       => url($staticThumImg),
@@ -233,7 +233,7 @@ class NewsController extends Controller
                     $json[] = [
                         'created_at'       => $info->created_at,
                         'description'      => htmlspecialchars_decode($info->sort_description),
-                        'sort_description' => Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
+                        'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
                         'information_id'   => $info->information_id,
@@ -288,7 +288,7 @@ class NewsController extends Controller
                     $json[] = [
                         'created_at'       => $info->created_at,
                         'description'      => htmlspecialchars_decode($info->sort_description),
-                        'sort_description' => Str::substr(htmlspecialchars_decode($info->sort_description), 0, 100),
+                        'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
                         'information_id'   => $info->information_id,

@@ -43,6 +43,11 @@ class ImportTestInfoCsv extends Command
     {
         $arguments = $this->arguments();
         $fileName  = storage_path('import_csv') . '/' . $arguments['fileName'] . '.csv';
+
+        Information::truncateForce();
+        InformationDescription::truncateForce();
+        InformationToCategory::truncateForce();
+
         $this->importCsvToDb($fileName);
 
         $this->info('File name import: ' . $fileName);
@@ -97,12 +102,11 @@ class ImportTestInfoCsv extends Command
                 $image      = $info['G'];
                 $viewed     = (int)$info['N'];
                 $vote       = (int)$info['M'];
-                $sortDes    = $info['J'];
+                $sortDes    = empty($info['J'])?$info['C']:nl2br(strip_tags($info['J']));
 
                 $name      = $info['C'];
                 $nameSlug  = Str::slug($name . ' ' . $infoId);
-                //$des       = htmlentities($info['E']);
-                $des       = $info['E'];
+                $des       = empty($info['E'])?$name: $info['E'];
                 $tag       = $info['O'];
                 $metaTitle = $info['P'];
                 $metaDes   = $info['Q'];

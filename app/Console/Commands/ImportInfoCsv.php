@@ -43,6 +43,11 @@ class ImportInfoCsv extends Command
     {
         $arguments = $this->arguments();
         $fileName  = storage_path('import_csv') . '/' . $arguments['fileName'] . '.csv';
+
+        Information::truncateForce();
+        InformationDescription::truncateForce();
+        InformationToCategory::truncateForce();
+
         $this->importCsvToDb($fileName);
 
         $this->info('File name import: ' . $fileName);
@@ -94,7 +99,7 @@ class ImportInfoCsv extends Command
                 $image      = $info['G'];
                 $viewed     = (int)$info['N'];
                 $vote       = (int)$info['M'];
-                $sortDes    = $info['J'];
+                $sortDes    = empty($info['J'])?$info['C']:nl2br(strip_tags($info['J']));
 
                 $name      = $info['C'];
                 $nameSlug  = Str::slug($name . ' ' . $infoId);
@@ -109,7 +114,8 @@ class ImportInfoCsv extends Command
                 if ($info['V'] == 'Video') {
                     $infoType = 2;
                 }
-                $dateAvailable = $info['T'];
+                $date = date_create($info['T']);
+                $dateAvailable = date_format($date,"Y/m/d H:i:s");
 
                 Information::insertForce($infoId, $image, $dateAvailable, 0, 1, $viewed, $vote, $sortDes, $nameSlug,
                     $createUser, $infoType);

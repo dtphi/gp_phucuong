@@ -51,6 +51,11 @@ class ImportCategoryCsv extends Command
     {
         $arguments = $this->arguments();
         $fileName  = storage_path('import_csv') . '/' . $arguments['fileName'] . '.csv';
+
+        Category::truncateForce();
+        CategoryDescription::truncateForce();
+        CategoryPath::truncateForce();
+
         $this->importCsvToDb($fileName);
 
         $this->info('File name import: ' . $fileName);

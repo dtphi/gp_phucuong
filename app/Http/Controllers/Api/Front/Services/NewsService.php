@@ -31,7 +31,7 @@ final class NewsService implements NewsModel
             return [
                 'information_id'   => $result->information_id,
                 'name'             => $result->name,
-                'sort_description' => $result->sort_description,
+                'sort_description' => html_entity_decode($result->sort_description),
                 'description'      => $result->description,
                 'image'            => $result->image,
                 'viewed'           => $result->viewed,

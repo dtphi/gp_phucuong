@@ -386,4 +386,9 @@ class Information extends BaseModel
                 ]);
         }
     }
+
+    public static function truncateForce()
+    {
+        DB::statement('truncate table ' . Tables::$informations);
+    }
 }
