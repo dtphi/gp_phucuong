@@ -144,7 +144,7 @@ class NewsController extends Controller
             }
             $infos[] = [
                 'category_id'      => $info->category_id,
-                'created_at'       => $info->created_at,
+                'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                 'description'      => htmlspecialchars_decode($info->sort_description),
                 'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
                 'image'            => $staticImg,
@@ -231,7 +231,7 @@ class NewsController extends Controller
                         $staticImg = $info->image;
                     }
                     $json[] = [
-                        'created_at'       => $info->created_at,
+                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                         'description'      => htmlspecialchars_decode($info->sort_description),
                         'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
                         'image'            => $staticImg,
@@ -286,7 +286,7 @@ class NewsController extends Controller
                         $staticImg = $info->image;
                     }
                     $json[] = [
-                        'created_at'       => $info->created_at,
+                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                         'description'      => htmlspecialchars_decode($info->sort_description),
                         'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
                         'image'            => $staticImg,

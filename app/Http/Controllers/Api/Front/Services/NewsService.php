@@ -31,6 +31,7 @@ final class NewsService implements NewsModel
             return [
                 'information_id'   => $result->information_id,
                 'name'             => $result->name,
+                'date_available'   => date_format(date_create($result->date_available),"d-m-Y"),
                 'sort_description' => html_entity_decode($result->sort_description),
                 'description'      => $result->description,
                 'image'            => $result->image,

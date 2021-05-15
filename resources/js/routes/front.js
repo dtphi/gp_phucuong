@@ -414,6 +414,20 @@ routeEnv = {
                 role: 'guest',
                 title: 'Trang Tin Tức Chi Tiet | ' + config.site_name,
                 layout_content: {
+                    content_top: true,
+                    content_top_column: {
+                        right_collumn: true,
+                        middle_column: true,
+                        left_collumn: false,
+                        colClass: '8 notication',
+                        middle_module_info_carousel: '',
+                        module_right_info_fanpage: ModuleContent.module_right_info_fanpage,
+                        module_right_youtube_hanh_cac_thanh: ModuleContent.module_right_youtube_hanh_cac_thanh,
+                        module_right_lich_cong_giao: ModuleContent.module_right_lich_cong_giao,
+                        module_right_thong_bao: ModuleContent.module_right_thong_bao,
+                        module_right_category_icon_side_bar: '',
+                        column_number: 2
+                    },
                     content_bottom: false,
                     content_main: true,
                     content_main_column: {
@@ -422,11 +436,11 @@ routeEnv = {
                         left_collumn: false,
                         colClass: '8',
                         middle_module_info_carousel: '',
-                        module_right_info_fanpage: ModuleContent.module_right_info_fanpage,
-                        module_right_youtube_hanh_cac_thanh: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                        module_right_lich_cong_giao: ModuleContent.module_right_lich_cong_giao,
-                        module_right_thong_bao: ModuleContent.module_right_thong_bao,
-                        module_right_category_icon_side_bar: ModuleContent.module_right_category_icon_side_bar,
+                        module_right_info_fanpage: '',
+                        module_right_youtube_hanh_cac_thanh: '',
+                        module_right_lich_cong_giao: '',
+                        module_right_thong_bao: '',
+                        module_right_category_icon_side_bar: '',
                         column_number: 2
                     },
                     right_collumn: true,

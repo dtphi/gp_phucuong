@@ -3,9 +3,34 @@
         <div class="container">
             <main-menu></main-menu>
 
-            <main-content v-if="_isContentMain">
+            <content-top v-if="_isContentTop">
+                <template v-if="loading">
+                    <loading-over-lay
+                        :active.sync="loading"
+                        :is-full-page="fullPage"></loading-over-lay>
+                </template>
                 <info-data-detail></info-data-detail>
-                <div class="mt-4 new-related">
+                <template v-slot:column_right>
+                    <div class="box-social">
+                        <h4 class="tit-common clr-blue">Mạng xã hội</h4>
+                        <div class="list-icon">
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="box-social">
+                        <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
+                    </div>
+                </template>
+            </content-top>
+
+            <main-content v-if="_isContentMain">
+                
+            </main-content>
+            <div class="mt-4 new-related">
                     <h4 class="tit-common clr-blue mb-3">Tin liên quan</h4>
                     <b-row>
                         <b-col class="col-mobile" cols="4" v-for="(item, index) in 6" :key="index">
@@ -30,7 +55,6 @@
                         </a>
                     </div>
                 </div>
-            </main-content>
 
             <content-bottom v-if="_isContentBottom"></content-bottom>
         </div>
@@ -39,6 +63,7 @@
 
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
@@ -50,27 +75,38 @@
     import {
         GET_DETAIL
     } from '@app/stores/front/types/action-types';
+    import ContentTop from 'com@front/Common/ContentTop';
     import MainContent from 'com@front/Common/MainContent';
     import ContentBottom from 'com@front/Common/ContentBottom';
     import InfoDataDetail from 'com@front/Common/InfoDetail';
+    import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
 
     export default {
         name: 'NewsDetailPage',
         components: {
             MainMenu,
+            ContentTop,
             MainContent,
             ContentBottom,
             InfoDataDetail,
+            TabInfoViewedAndPopular,
         },
         data() {
             return {
-                imgFooter: ImgFooter
+                imgFooter: ImgFooter,
+                fullPage: false,
             }
         },
         computed: {
+            ...mapState(MODULE_INFO_DETAIL, {
+                loading: state => state.loading
+            }),
             ...mapGetters(MODULE_INFO_DETAIL, [
                 'pageLists'
             ]),
+            _isContentTop() {
+                return this.$route.meta.layout_content.content_top;
+            },
             _isContentBottom() {
                 return this.$route.meta.layout_content.content_bottom;
             },
