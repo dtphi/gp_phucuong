@@ -118,7 +118,11 @@ class NewsController extends Controller
         }
         $params['page'] = $page;
 
-        $params['limit'] = 20;
+        $limit = 20;
+        if ($request->query('limit')) {
+            $limit = $request->query('limit');
+        }
+        $params['limit'] = $limit;
 
         $params['slug'] = isset($params['slug']) ? $params['slug'] : '';
         if (!empty($params['slug'])) {

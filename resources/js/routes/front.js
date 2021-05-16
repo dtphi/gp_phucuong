@@ -329,7 +329,7 @@ routeEnv = {
                     },
                     content_bottom: true,
                     content_bottom_column: {
-                        right_collumn: false,
+                        right_collumn: true,
                         middle_column: true,
                         left_collumn: false,
                         middle_module_info_carousel: '',
@@ -338,7 +338,8 @@ routeEnv = {
                         module_right_lich_cong_giao: ModuleContent.module_right_lich_cong_giao,
                         module_right_thong_bao: ModuleContent.module_right_thong_bao,
                         module_right_category_icon_side_bar: ModuleContent.module_right_category_icon_side_bar,
-                        column_number: 2
+                        column_number: 2,
+                        colClass: '8'
                     },
                     content_main: false,
                     content_main_column: {
