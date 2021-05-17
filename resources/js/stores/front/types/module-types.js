@@ -7,3 +7,5 @@ export const MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR = 'appModule/category_left_sid
 export const MODULE_MODULE_CATEGORY_ICON_SIDE_BAR = 'appModule/category_icon_side_bar';
 export const MODULE_MODULE_THONG_BAO = 'appModule/thong_bao';
 export const MODULE_MODULE_VAN_KIEN = 'appModule/van_kien';
+export const MODULE_MODULE_TIN_GIAO_PHAN = 'appModule/tin_giao_phan';
+export const MODULE_MODULE_LOI_CHUA = 'appModule/loi_chua';

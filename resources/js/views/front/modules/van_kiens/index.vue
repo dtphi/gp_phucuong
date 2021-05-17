@@ -2,7 +2,7 @@
     <div id="van-kien-module" class="mt-4 new-document" v-if="pageLists.length">
         <h4 class="tit-common mb-3">
             <img :src="iconBook" alt=""> Văn kiện
-            <a href="#" class="view-all">View all</a>
+            <a :href="_getHrefCate()" class="view-all">View all</a>
         </h4>
         <b-row>
             <b-col cols="4" class="col-mobile" 
@@ -73,6 +73,9 @@
                 } else {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + fn_change_to_slug(info.name));
                 }
+            },
+            _getHrefCate() {
+                return fn_get_href_base_url('danh-muc-tin/' + this.settingCategory[0].link)
             }
         },
         setting: {

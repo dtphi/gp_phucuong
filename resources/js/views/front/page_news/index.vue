@@ -52,7 +52,6 @@
             </content-top>
             
             <content-bottom v-if="_isContentBottom">
-                <module-loi-chua></module-loi-chua>
                 <b-row class="mt-4">
                     <b-col cols="6" class="col-mobile">
                         <div class="new mt-3">
@@ -134,63 +133,6 @@
                         </div>
                     </b-col>
                 </b-row>
-                <div class="mt-4 new-diocese">
-                    <h4 class="tit-common mb-3">
-                        <img :src="iconBook" alt=""> Tin giáo phận
-                        <a href="#" class="view-all">View all</a>
-                    </h4>
-                    <b-row>
-                        <b-col cols="7" class="col-mobile">
-                            <a class="d-block" href="#"><img class="img" :src="imgFooter" alt=""></a>
-                            <h4 class="tit-bg-common mt-2">
-                                <a href="#">Thông báo: Bế mạc năm thánh mừng kính các thánh tử đạo Việt Nam</a>
-                            </h4>
-                            <p class="info-post">
-                                <img :src="iconBook" alt="">
-                                <span class="name font-weight-bold mr-1">Giuse Quỳnh</span>
-                                <b-icon class="alarm" icon="alarm"></b-icon>
-                                <span>12/03/2021</span>
-                            </p>
-                        </b-col>
-                        <b-col cols="5" class="col-r col-mobile">
-                            <a class="d-block" href="#"><img class="img" :src="imgFooter" alt=""></a>
-                            <h4 class="tit-bg-common mt-2">
-                                <a href="#">Thông báo: Bế mạc năm thánh mừng kính các thánh tử đạo Việt Nam</a>
-                            </h4>
-                            <p class="info-post">
-                                <img :src="iconBook" alt="">
-                                <span class="name font-weight-bold mr-1">Giuse Quỳnh</span>
-                                <b-icon class="alarm" icon="alarm"></b-icon>
-                                <span>12/03/2021</span>
-                            </p>
-
-                            <hr class="my-2">
-
-                            <h4 class="tit-bg-common">
-                                <a href="#">Thông báo: Bế mạc năm thánh mừng kính các thánh tử đạo Việt Nam</a>
-                            </h4>
-                            <p class="info-post">
-                                <img :src="iconBook" alt="">
-                                <span class="name font-weight-bold mr-1">Giuse Quỳnh</span>
-                                <b-icon class="alarm" icon="alarm"></b-icon>
-                                <span>12/03/2021</span>
-                            </p>
-
-                            <hr class="my-2">
-
-                            <h4 class="tit-bg-common">
-                                <a href="#">Thông báo: Bế mạc năm thánh mừng kính các thánh tử đạo Việt Nam</a>
-                            </h4>
-                            <p class="info-post">
-                                <img :src="iconBook" alt="">
-                                <span class="name font-weight-bold mr-1">Giuse Quỳnh</span>
-                                <b-icon class="alarm" icon="alarm"></b-icon>
-                                <span>12/03/2021</span>
-                            </p>
-                        </b-col>
-                    </b-row>
-                </div>
-                <module-van-kien></module-van-kien>
             </content-bottom>
         </div>
     </main>
@@ -211,8 +153,7 @@
     import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
     import ContentTop from 'com@front/Common/ContentTop';
     import ContentBottom from 'com@front/Common/ContentBottom';
-    import ModuleLoiChua from 'v@front/modules/loi_chuas';
-    import ModuleVanKien from 'v@front/modules/van_kiens';
+    
     import ImgFooter from 'v@front/assets/img/image_footer.jpg';
     import IconBook from 'v@front/assets/img/icon-book.png';
 
@@ -223,8 +164,6 @@
             TabInfoViewedAndPopular,
             ContentTop,
             ContentBottom,
-            ModuleLoiChua,
-            ModuleVanKien
         },
         data() {
             return {
