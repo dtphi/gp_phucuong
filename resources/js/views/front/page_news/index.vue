@@ -53,85 +53,8 @@
             
             <content-bottom v-if="_isContentBottom">
                 <b-row class="mt-4">
-                    <b-col cols="6" class="col-mobile">
-                        <div class="new mt-3">
-                            <h4 class="tit-common mb-3">
-                                <img :src="iconBook" alt=""> Tin giáo hội</h4>
-                            <p class="info-post mb-2">
-                                <img
-                                    :src="iconBook" alt="">
-                                <span class="name font-weight-bold mr-1">Giuse Quỳnh</span>
-                                <b-icon class="alarm" icon="alarm"></b-icon>
-                                <span>12/03/2021</span>
-                            </p>
-                            <h4 class="tit-bg-common">
-                                <span><i class="bg-orange">hot</i></span>
-                                <a href="#">Chúc mừng Đức Tổng Giám Mục Leopoldo Girelli</a>
-                            </h4>
-                            <p class="name-post font-weight-bold mb-2">Posted by THANH LONG</p>
-                            <a class="d-block" href="#"><img class="img" :src="imgFooter" alt=""></a>
-
-                            <p class="mt-2">
-                                <em>Thưa quý chúng sinh, quý tu sĩ, cùng toàn thể giáo dân giáo phận Phú Cường, trong tâm tình tạ ơn thiên chúa...</em>
-                                <a class="font-weight-bold" href="#">Xem thêm</a>
-                            </p>
-
-                            <hr>
-
-                            <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 5" :key="index">
-                                <span>
-                                    <i class="status bg-green">Live</i>
-                                </span>
-                                <span>
-                                    <img :src="iconBook" alt="">
-                                    <i>Điểm tin giáo hội</i>
-                                </span>
-                                <span>
-                                    <img :src="iconBook" alt="">
-                                    <i>Thanh Thúy</i>
-                                </span>
-                            </a>
-                        </div>
-                    </b-col>
-
-                    <b-col cols="6" class="col-mobile">
-                        <div class="new mt-3">
-                            <h4 class="tit-common mb-3"><img :src="iconBook" alt=""> Tin giáo hội việt nam</h4>
-                            <p class="info-post mb-2">
-                                <img :src="iconBook" alt="">
-                                <span class="name font-weight-bold mr-1">Giuse Quỳnh</span>
-                                <b-icon class="alarm" icon="alarm"></b-icon>
-                                <span>12/03/2021</span>
-                            </p>
-                            <h4 class="tit-bg-common">
-                                <span><i class="bg-green">live</i></span>
-                                <a href="#">Chúc mừng Đức Tổng Giám Mục Leopoldo Girelli</a>
-                            </h4>
-                            <p class="name-post font-weight-bold mb-2">Posted by THANH LONG</p>
-                            <a class="d-block" href="#"><img class="img" :src="imgFooter" alt=""></a>
-
-                            <p class="mt-2">
-                                <em>Thưa quý chúng sinh, quý tu sĩ, cùng toàn thể giáo dân giáo phận Phú Cường, trong tâm tình tạ ơn thiên chúa...</em>
-                                <a class="font-weight-bold" href="#">Xem thêm</a>
-                            </p>
-
-                            <hr>
-
-                            <a href="#" class="row-item-3 d-block mb-2 pb-2" v-for="(item, index) in 5" :key="index">
-                                <span>
-                                    <i class="status bg-red">hot</i>
-                                </span>
-                                <span>
-                                    <img :src="iconBook" alt="">
-                                    <i>Điểm tin giáo hội</i>
-                                </span>
-                                <span>
-                                    <img :src="iconBook" alt="">
-                                    <i>Thanh Thúy</i>
-                                </span>
-                            </a>
-                        </div>
-                    </b-col>
+                    <module-tin-giao-hoi></module-tin-giao-hoi>
+                    <module-tin-giao-hoi-viet-nam></module-tin-giao-hoi-viet-nam>
                 </b-row>
             </content-bottom>
         </div>
@@ -153,9 +76,8 @@
     import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
     import ContentTop from 'com@front/Common/ContentTop';
     import ContentBottom from 'com@front/Common/ContentBottom';
-    
-    import ImgFooter from 'v@front/assets/img/image_footer.jpg';
-    import IconBook from 'v@front/assets/img/icon-book.png';
+    import ModuleTinGiaoHoi from 'v@front/modules/tin_giao_hois';
+    import ModuleTinGiaoHoiVietNam from 'v@front/modules/tin_giao_hoi_viet_nams';
 
     export default {
         name: 'InfoPage',
@@ -164,13 +86,13 @@
             TabInfoViewedAndPopular,
             ContentTop,
             ContentBottom,
+            ModuleTinGiaoHoi,
+            ModuleTinGiaoHoiVietNam
         },
         data() {
             return {
                 isContentBottom: true,
                 fullPage: false,
-                imgFooter: ImgFooter,
-                iconBook: IconBook,
             }
         },
         computed: {

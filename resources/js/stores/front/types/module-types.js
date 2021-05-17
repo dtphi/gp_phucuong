@@ -9,3 +9,5 @@ export const MODULE_MODULE_THONG_BAO = 'appModule/thong_bao';
 export const MODULE_MODULE_VAN_KIEN = 'appModule/van_kien';
 export const MODULE_MODULE_TIN_GIAO_PHAN = 'appModule/tin_giao_phan';
 export const MODULE_MODULE_LOI_CHUA = 'appModule/loi_chua';
+export const MODULE_MODULE_TIN_GIAO_HOI = 'appModule/tin_giao_hoi';
+export const MODULE_MODULE_TIN_GIAO_HOI_VIET_NAM = 'appModule/tin_giao_hoi_viet_nam';
