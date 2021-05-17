@@ -12,11 +12,9 @@
                     <div class="box-social">
                         <h4 class="tit-common clr-blue">Mạng xã hội</h4>
                         <div class="list-icon">
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
+                            <share-it url="http://haydesachnoipodcast.com/" 
+                                :shareConfig="share"
+                                :targets="['twitter', 'facebook', 'linkedin']"></share-it>
                         </div>
                     </div>
                     <div class="box-social">
@@ -78,6 +76,9 @@
     import ContentBottom from 'com@front/Common/ContentBottom';
     import ModuleTinGiaoHoi from 'v@front/modules/tin_giao_hois';
     import ModuleTinGiaoHoiVietNam from 'v@front/modules/tin_giao_hoi_viet_nams';
+    import Vue from 'vue';
+    import shareIt from 'vue-share-it';console.log(shareIt)
+    Vue.use(shareIt);
 
     export default {
         name: 'InfoPage',
@@ -87,12 +88,31 @@
             ContentTop,
             ContentBottom,
             ModuleTinGiaoHoi,
-            ModuleTinGiaoHoiVietNam
+            ModuleTinGiaoHoiVietNam,
         },
         data() {
             return {
                 isContentBottom: true,
                 fullPage: false,
+                share: {
+                    twitter: {
+                        label: 'Tw',
+                        dense: true,
+                    },
+                    linkedin: {
+                        color: "#fff",
+                        backgroundColor: "black",
+                        dense: true,
+                    },
+                    facebook: {
+                        label: 'Fb',
+                        dense: true,
+                    },
+                    whatsapp: {
+                        size: "xs",
+                        dense: true
+                    },
+                }
             }
         },
         computed: {
