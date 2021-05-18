@@ -19,7 +19,7 @@
                 </p>
             </b-col>
             <b-col cols="5" class="col-r col-mobile">
-                <div>
+                <div v-if="_getSecondInfoModuleList">
                     <a class="d-block" :href="_getHref(_getSecondInfoModuleList)">
                         <img class="img" :src="_getSecondInfoModuleList.imgThumUrl" alt="">
                     </a>
@@ -91,8 +91,11 @@
             },
             _getInfoListModule() {
                 let lists = [];
-                lists.push(this.pageLists[2]);
-                lists.push(this.pageLists[3]);
+                _.forEach(this.pageLists, function(item, index) {
+                    if (index >= 2) {
+                        lists.push(item)
+                    }
+                })
 
                 return lists;
             },
@@ -100,7 +103,10 @@
                 return this.pageLists[0];
             },
             _getSecondInfoModuleList() {
-                return this.pageLists[1];
+                if (this.pageLists.length >= 2) {
+                    return this.pageLists[1];
+                }
+                return null;
             }
         },
         created() {

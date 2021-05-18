@@ -82,20 +82,17 @@
             },
             _getInfoListModule() {
                 let lists = [];
-                lists.push(this.pageLists[1]);
-                lists.push(this.pageLists[2]);
-                lists.push(this.pageLists[3]);
-                lists.push(this.pageLists[4]);
-                lists.push(this.pageLists[5]);
+                _.forEach(this.pageLists, function(item, index) {
+                    if (index) {
+                        lists.push(item)
+                    }
+                })
 
                 return lists;
             },
             _getLastedModuleInfo() {
                 return this.pageLists[0];
             },
-            _getSecondInfoModuleList() {
-                return this.pageLists[1];
-            }
         },
         created() {
             this.[ACTION_GET_SETTING]();
@@ -105,7 +102,7 @@
                 ACTION_GET_SETTING,
             ]),
             _getHref(info) {
-                if (info.hasOwnProperty('name_slug')) {
+                if (info & info.hasOwnProperty('name_slug')) {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);
                 } else {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + fn_change_to_slug(info.name));

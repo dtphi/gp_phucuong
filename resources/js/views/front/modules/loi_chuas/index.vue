@@ -22,7 +22,7 @@
                 </p>
             </b-col>
             <b-col cols="7" class="col-mobile">
-                <div>
+                <div v-if="_getSecondInfoModuleList">
                     <p class="info-post">
                         <span>{{_getSecondInfoModuleList.date_available}}</span>
                         <span class="name font-weight-bold ml-1">Admin</span>
@@ -95,8 +95,11 @@
             },
             _getInfoListModule() {
                 let lists = [];
-                lists.push(this.pageLists[2]);
-                lists.push(this.pageLists[3]);
+                _.forEach(this.pageLists, function(item, index) {
+                    if (index >= 2) {
+                        lists.push(item)
+                    }
+                })
 
                 return lists;
             },
@@ -104,7 +107,10 @@
                 return this.pageLists[0];
             },
             _getSecondInfoModuleList() {
-                return this.pageLists[1];
+                if (this.pageLists.length >= 2) {
+                    return this.pageLists[1];
+                }
+                return null;
             }
         },
         created() {
