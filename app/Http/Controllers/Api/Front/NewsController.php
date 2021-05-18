@@ -201,11 +201,13 @@ class NewsController extends Controller
         if (isset($params['information_id'])) {
             $this->newsSv->apiUpdateViewed($params['information_id']);
 
-            $json = $this->newsSv->apiGetInfo($params['information_id']);
+            $json['results'] = $this->newsSv->apiGetInfo($params['information_id']);
+            $json['result_category_relateds'] = $json['results']['related_category'];
         }
 
         return Helper::successResponse([
-            'results' => $json
+            'results' => $json['results'],
+            'result_category_relateds' => $json['result_category_relateds']
         ]);
     }
 

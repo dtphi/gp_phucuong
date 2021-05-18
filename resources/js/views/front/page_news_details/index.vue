@@ -11,50 +11,16 @@
                 </template>
                 <info-data-detail></info-data-detail>
                 <template v-slot:column_right>
-                    <div class="box-social">
-                        <h4 class="tit-common clr-blue">Mạng xã hội</h4>
-                        <div class="list-icon">
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                            <a href="#"><img src="../assets/img/icon-book.png" alt=""></a>
-                        </div>
-                    </div>
+                    <social-network></social-network>
                     <div class="box-social">
                         <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
                     </div>
                 </template>
             </content-top>
 
-            <main-content v-if="_isContentMain">
-                
-            </main-content>
-            <div class="mt-4 new-related">
-                    <h4 class="tit-common clr-blue mb-3">Tin liên quan</h4>
-                    <b-row>
-                        <b-col class="col-mobile" cols="4" v-for="(item, index) in 6" :key="index">
-                            <a class="d-block" href="#"><img class="img" :src="imgFooter" alt=""></a>
-                            <h4 class="tit-bg-common mt-2">
-                                <a class="pl-0" href="#">Thông báo: Bế mạc năm thánh mừng kính các thánh tử đạo Việt Nam</a>
-                            </h4>
-                            <p class="info-post">
-                                <b-icon class="alarm" icon="alarm"></b-icon>
-                                <span>12/03/2021</span>
-                            </p>
-                        </b-col>
-                    </b-row>
-                </div>
-                <div class="mt-2 mb-3 new-care">
-                    <h4 class="tit-common clr-blue mb-3">Có thể bạn quan tâm</h4>
-                    <div class="list-new">
-                        <a class="d-block mb-2" href="#" v-for="(item, index) in 10" :key="index">
-                            <span><b-icon class="arrow-right-circle-fill" icon="arrow-right-circle-fill"></b-icon></span>
-                            <span class="mr-2">Giáo Xứ Rạch Kiến Mừng Đón Giáng Sinh</span>
-                            <span><b-icon class="alarm" icon="alarm"></b-icon> 27/12/2019</span>
-                        </a>
-                    </div>
-                </div>
+            <main-content v-if="_isContentMain"></main-content>
+            <the-related-info></the-related-info>
+            <module-co-the-ban-quan-tam></module-co-the-ban-quan-tam>
 
             <content-bottom v-if="_isContentBottom"></content-bottom>
         </div>
@@ -80,6 +46,9 @@
     import ContentBottom from 'com@front/Common/ContentBottom';
     import InfoDataDetail from 'com@front/Common/InfoDetail';
     import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
+    import SocialNetwork from 'com@front/Common/SocialNetwork';
+    import TheRelatedInfo from './components/TheRelatedInfo';
+    import ModuleCoTheBanQuanTam from 'v@front/modules/co_the_ban_quan_tams';
 
     export default {
         name: 'NewsDetailPage',
@@ -90,6 +59,9 @@
             ContentBottom,
             InfoDataDetail,
             TabInfoViewedAndPopular,
+            SocialNetwork,
+            TheRelatedInfo,
+            ModuleCoTheBanQuanTam
         },
         data() {
             return {

@@ -36,7 +36,8 @@ final class NewsService implements NewsModel
                 'description'      => $result->description,
                 'image'            => $result->image,
                 'viewed'           => $result->viewed,
-                'vote'             => $result->vote
+                'vote'             => $result->vote,
+                'related_category' => !empty($result->arr_category_list)? $result->arr_category_list[0]: null
             ];
         } else {
             return false;

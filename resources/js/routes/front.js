@@ -548,7 +548,44 @@ routeEnv = {
                 header: 'Video Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Video | ' + config.site_name
+                title: 'Trang Video | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_top_column: {
+                        right_collumn: false,
+                        middle_column: true,
+                        left_collumn: true,
+                        colClass: '',
+                        middle_module_info_carousel: '',
+                        module_middle_loi_chua: '',
+                        module_middle_van_kien: '',
+                        module_middle_tin_giao_phan: '',
+                        module_right_info_fanpage: '',
+                        module_right_youtube_hanh_cac_thanh: '',
+                        module_right_lich_cong_giao: '',
+                        module_right_thong_bao: '',
+                        module_right_category_icon_side_bar: '',
+                        column_number: 2
+                    },
+                    content_bottom: false,
+                    content_main: false,
+                    content_main_column: {
+                        right_collumn: false,
+                        middle_column: false,
+                        left_collumn: false,
+                        colClass: '',
+                        middle_module_info_carousel: '',
+                        module_middle_loi_chua: '',
+                        module_middle_van_kien: '',
+                        module_middle_tin_giao_phan: '',
+                        module_right_info_fanpage: '',
+                        module_right_youtube_hanh_cac_thanh: '',
+                        module_right_lich_cong_giao: '',
+                        module_right_thong_bao: '',
+                        module_right_category_icon_side_bar: '',
+                        column_number: 2
+                    },
+                }
             }
         }, {
             path: 'chi-tiet/:slug',
