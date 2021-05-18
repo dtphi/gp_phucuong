@@ -8,13 +8,13 @@
                 :alt="_getHref()">
         </a>
         <figcaption class="figure-caption">
-            <h4 class="title mt-2">
+            <h4 class="title mt-2 ellipsis-two-lines">
                 <img
                     :src="iconBook" alt="Icon">
-                {{info.sort_name}}...
+                <a href="#">{{info.sort_name}}...</a>
             </h4>
             <span class="d-block mb-1">
-                <div v-html="info.sort_description.substring(0, 100)"></div>
+                <div class="ellipsis-three-lines" v-html="info.sort_description.substring(0, 100)"></div>
                 <a
                     :href="_getHref()">...</a>
             </span>

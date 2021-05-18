@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row mb-3">
         <template>
             <div class="col-sm-6 text-left">
                 <div class="dataTables_info">

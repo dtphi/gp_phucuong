@@ -45,3 +45,15 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @media screen and (max-width: 767px) {
+        .new-detail {
+            .text-detail {
+                iframe {
+                    width: 100% !important;
+                }
+            }
+        }
+    }
+</style>

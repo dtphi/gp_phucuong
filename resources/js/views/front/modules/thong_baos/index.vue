@@ -1,5 +1,5 @@
 <template>
-    <div id="thong-bao-module" class="info" v-if="pageLists.length">
+    <div id="thong-bao-module" class="info mt-4" v-if="pageLists.length">
         <h4 class="tit-common clr-orange">
             <img
                 :src="iconBook" alt=""> Thông báo</h4>

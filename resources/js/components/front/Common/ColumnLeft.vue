@@ -1,5 +1,5 @@
 <template>
-    <b-col cols="3">
+    <b-col class="col-mobile" cols="3">
         <aside>
             <slot></slot>
             <info-left-side-bar></info-left-side-bar>

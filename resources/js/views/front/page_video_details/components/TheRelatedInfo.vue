@@ -3,7 +3,7 @@
         <h4 class="tit-common clr-blue mb-3">Tin liên quan</h4>
         <b-row>
             <b-col class="col-mobile" cols="4" v-for="(item, idx) in _getRelatedListInfo" :key="idx">
-                <a class="d-block" :href="_getHref(item)">
+                <a class="d-block img-related" :href="_getHref(item)">
                     <img class="img" v-lazy="item.imgThumUrl" alt=""></a>
                 <h4 class="tit-bg-common mt-2">
                     <a class="pl-0" :href="_getHref(item)">{{item.name}}</a>
@@ -58,3 +58,11 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .new-related {
+        .img-related {
+            height: 230px;
+        }
+    }
+</style>
