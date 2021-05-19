@@ -1,7 +1,7 @@
 <template>
     <figure>
         <a class="img-video" :href="_getHref()">
-            <img :src="info.imgUrl" class="rounded img" :alt="_getHref()">
+            <img v-lazy="info.imgThumUrl" class="rounded img" :alt="_getHref()">
         </a>
         <figcaption class="figure-caption">
             <h4 class="title mt-2">
@@ -9,10 +9,10 @@
                 {{info.sort_name}}...
             </h4>
             <span class="d-block mb-1">
-                <div v-html="info.sort_description.substring(0, 100)"></div>
+                <div v-html="info.sort_description"></div>
                 <a :href="_getHref()">...</a></span>
             <span class="d-block mb-1"></span>
-            <span class="d-block">{{info.viewed}} lượt xem | 3 tháng trước</span>
+            <span class="d-block">{{info.viewed}} lượt xem | {{info.date_available}}</span>
         </figcaption>
     </figure>
 </template>

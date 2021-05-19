@@ -233,16 +233,26 @@ class NewsController extends Controller
 
                 $json = [];
                 foreach ($results as $info) {
-                    $staticImg = '/images/cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
-                    if (file_exists(public_path(rawurldecode($info->image)))) {
-                        $staticImg = $info->image;
+                    $staticImg     = self::$thumImgNo;
+                    $staticThumImg = self::$thumImgNo;
+
+                    if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
+                        $staticImg     = $info->image;
+                        $staticThumImg = $info->image;
                     }
+                    if (isset($info->image_thumb) && $info->image_thumb
+                        && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
+                        $staticThumImg = '/.tmb' . $info->image_thumb;
+                    }
+                    $sortDes = html_entity_decode($info->sort_description);
                     $json[] = [
+                        'category_id'      => $info->category_id,
                         'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
-                        'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
+                        'sort_description' => Str::substr($sortDes, 0, 100),
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
+                        'imgThumUrl'       => url($staticThumImg),
                         'information_id'   => $info->information_id,
                         'name'             => $info->name,
                         'name_slug'        => $info->name_slug,
@@ -288,16 +298,26 @@ class NewsController extends Controller
 
                 $json = [];
                 foreach ($results as $info) {
-                    $staticImg = '/images/cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
-                    if (file_exists(public_path(rawurldecode($info->image)))) {
-                        $staticImg = $info->image;
+                    $staticImg     = self::$thumImgNo;
+                    $staticThumImg = self::$thumImgNo;
+
+                    if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
+                        $staticImg     = $info->image;
+                        $staticThumImg = $info->image;
                     }
+                    if (isset($info->image_thumb) && $info->image_thumb
+                        && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
+                        $staticThumImg = '/.tmb' . $info->image_thumb;
+                    }
+                    $sortDes = html_entity_decode($info->sort_description);
                     $json[] = [
+                        'category_id'      => $info->category_id,
                         'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
-                        'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
+                        'sort_description' => Str::substr($sortDes, 0, 100),
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
+                        'imgThumUrl'       => url($staticThumImg),
                         'information_id'   => $info->information_id,
                         'name'             => $info->name,
                         'name_slug'        => $info->name_slug,
