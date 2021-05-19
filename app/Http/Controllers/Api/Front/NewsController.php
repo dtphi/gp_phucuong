@@ -246,7 +246,6 @@ class NewsController extends Controller
                     }
                     $sortDes = html_entity_decode($info->sort_description);
                     $json[] = [
-                        'category_id'      => $info->category_id,
                         'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr($sortDes, 0, 100),
@@ -311,7 +310,6 @@ class NewsController extends Controller
                     }
                     $sortDes = html_entity_decode($info->sort_description);
                     $json[] = [
-                        'category_id'      => $info->category_id,
                         'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr($sortDes, 0, 100),
