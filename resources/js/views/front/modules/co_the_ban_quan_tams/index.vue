@@ -2,31 +2,33 @@
     <div id="co-the-ban-quan-tam-module" class="mt-2 mb-3 new-care">
         <h4 class="tit-common clr-blue mb-3">Có thể bạn quan tâm</h4>
         <div class="list-new">
-            <a class="d-block mb-2" href="#" v-for="(item, index) in 10" :key="index">
+            <a class="d-block mb-2" :href="_getHref(item)" v-for="(item, index) in _getInfoCarousel" :key="index">
                 <span><b-icon class="arrow-right-circle-fill" icon="arrow-right-circle-fill"></b-icon></span>
-                <span class="mr-2">Giáo Xứ Rạch Kiến Mừng Đón Giáng Sinh</span>
-                <span><b-icon class="alarm" icon="alarm"></b-icon> 27/12/2019</span>
+                <span class="mr-2">{{item.description}}</span>
+                <p><b-icon class="alarm" icon="alarm"></b-icon> {{item.date_available}}</p>
             </a>
         </div>
     </div>
 </template>
 
 <script>
-    import {
-        mapGetters,
+    import{
+        mapState,
         mapActions
     } from 'vuex';
-    import {
-        MODULE_MODULE_THONG_BAO
-    } from 'store@front/types/module-types';
-    import {
-        ACTION_GET_SETTING
-    } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
     import {
         fn_get_href_base_url,
         fn_change_to_slug
     } from '@app/api/utils/fn-helper';
+
+    import {
+        MODULE_INFO
+    } from '@app/stores/front/types/module-types';
+    import {
+        GET_POPULAR_INFORMATION_LIST_TO_CATEGORY
+    } from '@app/stores/front/types/action-types';
+
+    import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
         name: 'ModuleThongBao',
@@ -38,20 +40,26 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_THONG_BAO, [
-                'settingCategory',
-                'pageLists'
-            ]),
-            _isExist() {
-                return this.settingCategory.length;
+            ...mapState(MODULE_INFO,{
+                infoList: state => state.infoPopularList
+            }),
+            _getInfoCarousel() {
+                let lists = [];
+                _.forEach(this.infoList, function(item, index) {
+                    if (index < 10) {
+                        lists.push(item)
+                    }
+                });
+
+                return lists;
             }
         },
-        created() {
-            this.[ACTION_GET_SETTING]();
+        mounted() {
+            //this.[GET_POPULAR_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
         },
         methods: {
-            ...mapActions(MODULE_MODULE_THONG_BAO, [
-                ACTION_GET_SETTING,
+            ...mapActions(MODULE_INFO, [
+                GET_POPULAR_INFORMATION_LIST_TO_CATEGORY
             ]),
             _getHref(info) {
                 if (info.hasOwnProperty('name_slug')) {
@@ -63,12 +71,6 @@
         },
         setting: {
             panel_title: 'Module Danh Mục Icon',
-            frm_title: 'Thêm danh mục Icon',
-            btn_save_txt: 'Lưu',
         }
     };
 </script>
-
-<style lang="scss">
-    @import './styles.scss';
-</style>

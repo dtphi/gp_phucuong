@@ -76,6 +76,10 @@ export default {
           routeParams
         )
       } else {
+        let params = {
+          limit: 15,
+          ...routeParams
+        };
         apiGetLastedList(
           (result) => {
             commit(INIT_INFO_LASTED_LIST, result.data.results);
@@ -85,7 +89,8 @@ export default {
           (errors) => {
             console.log(errors);
             commit('setLoading', false);
-          }
+          },
+          params
         )
       }
     },

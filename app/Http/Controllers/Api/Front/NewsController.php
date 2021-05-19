@@ -146,11 +146,12 @@ class NewsController extends Controller
                 && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
                 $staticThumImg = '/.tmb' . $info->image_thumb;
             }
+            $sortDes = html_entity_decode($info->sort_description);
             $infos[] = [
                 'category_id'      => $info->category_id,
                 'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
-                'description'      => htmlspecialchars_decode($info->sort_description),
-                'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
+                'description'      => html_entity_decode($info->sort_description),
+                'sort_description' => Str::substr($sortDes, 0, 100),
                 'image'            => $staticImg,
                 'imgUrl'           => url($staticImg),
                 'imgThumUrl'       => url($staticThumImg),
@@ -238,7 +239,7 @@ class NewsController extends Controller
                     }
                     $json[] = [
                         'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
-                        'description'      => htmlspecialchars_decode($info->sort_description),
+                        'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
@@ -293,7 +294,7 @@ class NewsController extends Controller
                     }
                     $json[] = [
                         'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
-                        'description'      => htmlspecialchars_decode($info->sort_description),
+                        'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr(html_entity_decode($info->sort_description), 0, 100),
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
