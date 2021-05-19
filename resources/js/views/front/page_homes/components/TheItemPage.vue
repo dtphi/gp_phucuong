@@ -15,7 +15,6 @@
         mapGetters
     } from 'vuex';
     import {
-        fn_redirect_url,
         fn_get_base_url
     } from '@app/api/utils/fn-helper'
 
@@ -35,7 +34,7 @@
         },
         methods: {
             _redirectPage() {
-                return fn_redirect_url(this.pageItem.href);
+                return window.location = this.pageItem.url;
             },
             _getImgUrl() {
                 return fn_get_base_url() + this.pageItem.img;
