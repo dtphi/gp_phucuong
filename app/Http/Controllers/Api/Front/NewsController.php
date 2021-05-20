@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\Front\Services\Contracts\NewsModel as NewsSv;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
+use Storage;
+use Image;
 
 class NewsController extends Controller
 {
@@ -151,6 +153,7 @@ class NewsController extends Controller
         foreach ($results as $info) {
             $staticImg     = self::$thumImgNo;
             $staticThumImg = self::$thumImgNo;
+            $imgThumUrl = '';
 
             if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                 $staticImg     = $info->image;
@@ -159,7 +162,23 @@ class NewsController extends Controller
             if (isset($info->image_thumb) && $info->image_thumb
                 && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
                 $staticThumImg = '/.tmb' . $info->image_thumb;
+            } else {
+                if (file_exists(storage_path('app/public/.tmb' . rawurldecode($info->image)))) {
+                    $staticThumImg = 'app/public/.tmb' . $info->image;
+                } else {
+                    $fileResize = new \Illuminate\Http\File(public_path($staticThumImg));
+                    $extension = $fileResize->extension();
+                    $resize = Image::make($fileResize)->resize(200, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->encode($extension);
+            
+                    $thumbDir = '.tmb/' . trim($staticThumImg, '/');
+                    Storage::disk('public')->put($thumbDir, $resize->__toString());
+                }
+
+                $imgThumUrl = Storage::url('.tmb/' . trim($staticThumImg, '/'));
             }
+
             $sortDes = html_entity_decode($info->sort_description);
             $infos[] = [
                 'category_id'      => $info->category_id,
@@ -168,7 +187,7 @@ class NewsController extends Controller
                 'sort_description' => Str::substr($sortDes, 0, 100),
                 'image'            => $staticImg,
                 'imgUrl'           => url($staticImg),
-                'imgThumUrl'       => url($staticThumImg),
+                'imgThumUrl'       => empty($imgThumUrl) ? url($staticThumImg) :url($imgThumUrl),
                 'information_id'   => $info->information_id,
                 'information_type' => $info->information_type,
                 'name'             => $info->name,
