@@ -112,7 +112,7 @@ import {
       [GET_INFORMATION_LIST_TO_CATEGORY]({
         commit,
         dispatch
-      }, routeParams) {console.log('route params',routeParams)
+      }, routeParams) {
         let slug = '';
         if (routeParams.hasOwnProperty('link')) {
           slug = routeParams.link;
@@ -120,7 +120,8 @@ import {
         let page = 1;
         let params = {
           page: page,
-          slug: slug
+          slug: slug,
+          limit: 5
         };
         apiGetListsToCategory(
           (result) => {

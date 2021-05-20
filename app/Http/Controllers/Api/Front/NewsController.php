@@ -170,6 +170,7 @@ class NewsController extends Controller
                 'imgUrl'           => url($staticImg),
                 'imgThumUrl'       => url($staticThumImg),
                 'information_id'   => $info->information_id,
+                'information_type' => $info->information_type,
                 'name'             => $info->name,
                 'name_slug'        => $info->name_slug,
                 'sort_name'        => Str::substr($info->name, 0, 50),

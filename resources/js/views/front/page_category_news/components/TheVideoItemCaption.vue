@@ -1,15 +1,11 @@
 <template>
-    <figure>
-        <a class="img-video"
-           :href="_getHref()">
+    <figcaption class="figure-caption">
+        <h4 class="title mt-2 ellipsis-two-lines">
             <img
-                v-lazy="info.imgThumUrl"
-                class="rounded img"
-                :alt="_getHref()">
-        </a>
-        <video-caption v-if="info.information_type == 2" :info="info"></video-caption>
-        <news-caption v-else :info="info"></news-caption>
-    </figure>
+                :src="iconBook" alt="Icon">
+            <a :href="_getHref()">{{info.sort_name}}...</a>
+        </h4>
+    </figcaption>
 </template>
 
 <script>
@@ -22,12 +18,9 @@
         fn_change_to_slug
     } from '@app/api/utils/fn-helper';
     import IconBook from 'v@front/assets/img/icon-book.png';
-    import VideoCaption from './TheVideoItemCaption';
-    import NewsCaption from './TheNewsItemCaption';
 
     export default {
         name: 'TheCategoryNewsItem',
-        components: {VideoCaption, NewsCaption},
         props: {
             info: {}
         },
@@ -42,9 +35,9 @@
         methods: {
             _getHref() {
                 if (this.info.hasOwnProperty('name_slug')) {
-                    return fn_get_href_base_url('tin-tuc/chi-tiet/' + this.info.name_slug);
+                    return fn_get_href_base_url('video/chi-tiet/' + this.info.name_slug);
                 } else {
-                    return fn_get_href_base_url('tin-tuc/chi-tiet/' + fn_change_to_slug(this.info.name));
+                    return fn_get_href_base_url('video/chi-tiet/' + fn_change_to_slug(this.info.name));
                 }
             }
         }

@@ -1,15 +1,18 @@
 <template>
-    <figure>
-        <a class="img-video"
-           :href="_getHref()">
+    <figcaption class="figure-caption">
+        <h4 class="title mt-2 ellipsis-two-lines">
             <img
-                v-lazy="info.imgThumUrl"
-                class="rounded img"
-                :alt="_getHref()">
-        </a>
-        <video-caption v-if="info.information_type == 2" :info="info"></video-caption>
-        <news-caption v-else :info="info"></news-caption>
-    </figure>
+                :src="iconBook" alt="Icon">
+            <a :href="_getHref()">{{info.sort_name}}...</a>
+        </h4>
+        <span class="d-block mb-1">
+            <div class="ellipsis-three-lines" v-html="info.sort_description.substring(0, 100)"></div>
+            <a
+                :href="_getHref()">...</a>
+        </span>
+        <span class="d-block mb-1"></span>
+        <span class="d-block">{{info.viewed}} lượt xem | {{info.date_available}}</span>
+    </figcaption>
 </template>
 
 <script>
@@ -22,12 +25,9 @@
         fn_change_to_slug
     } from '@app/api/utils/fn-helper';
     import IconBook from 'v@front/assets/img/icon-book.png';
-    import VideoCaption from './TheVideoItemCaption';
-    import NewsCaption from './TheNewsItemCaption';
 
     export default {
         name: 'TheCategoryNewsItem',
-        components: {VideoCaption, NewsCaption},
         props: {
             info: {}
         },
