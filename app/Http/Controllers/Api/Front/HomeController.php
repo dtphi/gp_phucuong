@@ -55,7 +55,7 @@ class HomeController extends Controller
                 [
                     'sort'  => 1,
                     'img'   => $bannerPath . '/loi_chua_banner.jpeg',
-                    'url'  => url('/danh-muc-tin/loi-chua-210'),
+                    'url'  => url('/danh-muc-tin/loi-chua-210/suy-niem-hang-ngay-27'),
                     'title' => '>>>> LỜI CHÚA'
                 ],
                 [

@@ -5,13 +5,9 @@
             <info-left-side-bar></info-left-side-bar>
             <module-category-menu-left></module-category-menu-left>
             <hr class="border my-3">
-            <div class="form">
-                <p class="font-weight-bold txt">Đăng ký để nhận tin mỗi ngày</p>
-                <div class="input">
-                    <input class="d-block mb-3" type="email" name="email" id="email" placeholder="Enter your e-mail address">
-                    <input class="btn" type="button" value="Subscribe">
-                </div>
-            </div>
+    
+            <newsletter-register class="form"></newsletter-register>
+            
             <hr class="border my-4">
             <div class="logo">
                 <p class="mb-4">
@@ -34,7 +30,7 @@
   import ImgFooter from 'v@front/assets/img/image_footer.jpg';
   import InfoLeftSideBar from '../SideBar/SideBarInfoLeft';
   import ModuleCategoryMenuLeft from 'v@front/modules/category_left_side_bars';
-
+  import NewsletterRegister from 'com@front/Common/NewsletterRegister';
   import SideBar from 'com@front/SideBar';
 
   import {
@@ -51,6 +47,7 @@
             SideBar,
             InfoLeftSideBar,
             ModuleCategoryMenuLeft,
+            NewsletterRegister
         },
         data() {
             return {

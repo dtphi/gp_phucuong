@@ -14,11 +14,7 @@
                         <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
                     </div>
                     <div class="box-care mt-3">
-                        <h4 class="tit-common clr-blue">Quan tâm</h4>
-
-                        <p class="font-weight-bold">Đăng ký để nhận tin mỗi ngày</p>
-                        <input id="email" type="text" placeholder="Enter your e-mail address">
-                        <input class="btn mt-2" type="button" value="Subscribe">
+                        <newsletter-register></newsletter-register>
 
                         <b-row class="mt-3">
                             <b-col cols="5" class="m-auto">
@@ -70,6 +66,7 @@
     import ModuleTinGiaoHoi from 'v@front/modules/tin_giao_hois';
     import ModuleTinGiaoHoiVietNam from 'v@front/modules/tin_giao_hoi_viet_nams';
     import SocialNetwork from './components/TheSocialNetwork';
+    import NewsletterRegister from 'com@front/Common/NewsletterRegister';
 
     export default {
         name: 'InfoPage',
@@ -80,7 +77,8 @@
             ContentBottom,
             ModuleTinGiaoHoi,
             ModuleTinGiaoHoiVietNam,
-            SocialNetwork
+            SocialNetwork,
+            NewsletterRegister
         },
         data() {
             return {

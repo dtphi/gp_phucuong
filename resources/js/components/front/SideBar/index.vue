@@ -15,13 +15,7 @@
 
         <hr class="border my-3">
 
-        <div class="form">
-            <p class="font-weight-bold txt">Đăng ký để nhận tin mỗi ngày</p>
-            <div class="input">
-                <input class="d-block mb-3" type="email" name="email" id="email" placeholder="Enter your e-mail address">
-                <input class="btn" type="button" value="Subscribe">
-            </div>
-        </div>
+        <newsletter-register></newsletter-register>
 
         <hr class="border my-4">
 
@@ -42,11 +36,13 @@
       mapActions
   } from 'vuex';
   import InfoLeftSideBar from './SideBarInfoLeft';
+  import NewsletterRegister from 'com@front/Common/NewsletterRegister';
 
     export default {
         name: 'SideBar',
         components: {
-            InfoLeftSideBar
+            InfoLeftSideBar,
+            NewsletterRegister
         },
         data() {
             return {

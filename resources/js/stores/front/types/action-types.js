@@ -5,3 +5,4 @@ export const GET_RELATED_INFORMATION_LIST_TO_CATEGORY = 'getRelatedInformationLi
 export const GET_POPULAR_INFORMATION_LIST_TO_CATEGORY = 'getPopularInformationListToCategory';
 export const GET_LASTED_INFORMATION_LIST_TO_CATEGORY = 'getLastedInformationListToCategory';
 export const ACTION_GET_SETTING = 'getSetting';
+export const ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER = 'registryToNewsletter';
