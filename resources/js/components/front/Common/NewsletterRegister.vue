@@ -5,6 +5,8 @@
         <p class="font-weight-bold">Đăng ký để nhận tin mỗi ngày</p>
         <input id="email" type="text" v-model="subscribe.email" placeholder="Enter your e-mail address">
         <input class="btn mt-2" type="button" value="Subscribe" @click="_submitRegistry()">
+
+        <hr class="border my-4">
     </div>
 </template>
 

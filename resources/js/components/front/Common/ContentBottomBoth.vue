@@ -5,8 +5,6 @@
 </template>
 
 <script>
-    import IconBook from 'v@front/assets/img/icon-book.png';
-    import ImgFooter from 'v@front/assets/img/image_footer.jpg';
     import ModuleNoiBat from 'v@front/modules/noi_bats';
 
     export default {
@@ -16,8 +14,6 @@
         },
         data() {
             return {
-                iconBook: IconBook,
-                imgFooter: ImgFooter
             }
         }
     }

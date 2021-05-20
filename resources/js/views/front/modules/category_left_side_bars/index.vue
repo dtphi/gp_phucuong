@@ -8,6 +8,8 @@
                 :key="idx"
                 :group="item"></category-item>
         </ul>
+
+        <hr class="border my-3">
     </div>
 </template>
 

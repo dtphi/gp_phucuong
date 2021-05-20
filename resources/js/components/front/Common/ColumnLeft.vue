@@ -4,42 +4,18 @@
             <slot></slot>
             <info-left-side-bar></info-left-side-bar>
             <module-category-menu-left></module-category-menu-left>
-            <hr class="border my-3">
-    
             <newsletter-register class="form"></newsletter-register>
-            
-            <hr class="border my-4">
-            <div class="logo">
-                <p class="mb-4">
-                    <img src="../../../views/front/assets/img/logo.png" alt="Logo Phú Cường"></p>
-                <h4 class="title mb-3">Giáo Phận Phú Cường</h4>
-                <p class="mb-0">Ban Truyền Thông Giáo Phận</p>
-                <p>104 Lạc Long Quân, Phường Phú Cường, Tp. Thủ Dầu Một, Tỉnh Bình Dương</p>
-                <p class="mb-0">+84 274 730 7788</p>
-                <p class="mb-0">giaophanphucuong@gmail.com</p>
-            </div>
+            <summary-contact class="logo"></summary-contact>
         </aside>
     </b-col>
 </template>
 
 <script>
-	import{
-      mapGetters,
-      mapActions
-  } from 'vuex';
-  import ImgFooter from 'v@front/assets/img/image_footer.jpg';
-  import InfoLeftSideBar from '../SideBar/SideBarInfoLeft';
-  import ModuleCategoryMenuLeft from 'v@front/modules/category_left_side_bars';
-  import NewsletterRegister from 'com@front/Common/NewsletterRegister';
-  import SideBar from 'com@front/SideBar';
-
-  import {
-        MODULE_INFO_DETAIL
-    } from '@app/stores/front/types/module-types';
-    import {
-        GET_DETAIL
-    } from '@app/stores/front/types/action-types';
-
+    import InfoLeftSideBar from '../SideBar/SideBarInfoLeft';
+    import ModuleCategoryMenuLeft from 'v@front/modules/category_left_side_bars';
+    import NewsletterRegister from 'com@front/Common/NewsletterRegister';
+    import SideBar from 'com@front/SideBar';
+    import SummaryContact from 'com@front/SummaryContact';
 
     export default {
         name: 'ColumnLeft',
@@ -47,20 +23,12 @@
             SideBar,
             InfoLeftSideBar,
             ModuleCategoryMenuLeft,
-            NewsletterRegister
+            NewsletterRegister,
+            SummaryContact
         },
         data() {
-            return {
-                imgFooter: ImgFooter
-            }
+            return {}
         },
-        computed: {
-        },
-        methods: {
-            ...mapActions(MODULE_INFO_DETAIL, [
-                GET_DETAIL,
-            ]),
-        }
     }
 </script>
 
