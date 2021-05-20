@@ -10,7 +10,7 @@ use App\Models\InformationToCategory;
 use DB;
 use Illuminate\Http\Request;
 
-final class NewsService implements NewsModel
+final class NewsService extends Service implements NewsModel
 {
     /**
      * @author : dtphi .
@@ -47,7 +47,7 @@ final class NewsService implements NewsModel
     public function apiGetLatestInfos($limit = 5)
     {
         $query = $this->model->select('information_id')
-            ->orderByDesc('created_at')
+            ->orderByDesc('date_available')
             ->limit($limit);
 
         return $query->get();
@@ -108,16 +108,21 @@ final class NewsService implements NewsModel
             ->where('status', '=', '1')
             ->where('information_type', '=', $infoType);
 
-        if (isset($data['category_id'])) {
-            $query->where('category_id', '=', $data['category_id']);
+        if (isset($data['all_category_children']) && !empty($data['all_category_children'])) {
+            $query->whereIn('category_id', $data['all_category_children']);
+        } else {
+            if (isset($data['category_id'])) { 
+                $query->where('category_id', '=', $data['category_id']);
+            }
         }
+
         $limit = 20;
         if (isset($data['limit'])) {
             $limit = (int)$data['limit'];
         }
 
-        $query->orderBy('sort_order', 'DESC');
-        $query->orderBy('date_available', 'DESC');
+        $query->orderByDesc('sort_order');
+        $query->orderByDesc('date_available');
 
         return $query->paginate($limit);
     }
@@ -138,6 +143,14 @@ final class NewsService implements NewsModel
         if (isset($data['information_ids'])) {
             $query->whereIn(Tables::$informations . '.information_id', $data['information_ids']);
         }
+
+        $limit = 20;
+        if (isset($data['limit'])) {
+            $limit = (int)$data['limit'];
+        }
+
+        $query->orderByDesc('sort_order');
+        $query->orderByDesc('date_available');
 
         return $query->get();
     }

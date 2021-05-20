@@ -11,7 +11,7 @@
             <h4 class="title mt-2 ellipsis-two-lines">
                 <img
                     :src="iconBook" alt="Icon">
-                <a href="#">{{info.sort_name}}...</a>
+                <a :href="_getHref()">{{info.sort_name}}...</a>
             </h4>
             <span class="d-block mb-1">
                 <div class="ellipsis-three-lines" v-html="info.sort_description.substring(0, 100)"></div>

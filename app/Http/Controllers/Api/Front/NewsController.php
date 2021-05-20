@@ -127,7 +127,21 @@ class NewsController extends Controller
         $params['slug'] = isset($params['slug']) ? $params['slug'] : '';
         if (!empty($params['slug'])) {
             $slugs                 = explode('-', $params['slug']);
-            $params['category_id'] = end($slugs);
+            $params['category_id'] = (int)end($slugs);
+        }
+
+        $params['all_category_children'] = [];
+        if (isset($params['category_id']) && in_array($params['category_id'], [63,209,210,211,213,214,216,220,241,248])) {
+            $subCategory = $this->newsSv->apiGetMenuCategoryIds($params['category_id']);
+            if (!empty($subCategory)) {
+                $params['all_category_children'] = array_reduce($subCategory, function ($carry, $item) {
+                    $carry[] = $item->category_id;
+    
+                    return $carry;
+                });
+            }
+            
+            $params['all_category_children'][] = $params['category_id'];
         }
 
         $results    = $this->newsSv->apiGetInfoList($params);
@@ -267,14 +281,6 @@ class NewsController extends Controller
             'results' => $json
         ]);
     }
-
-    function sum($carry, $item)
-    {
-        $carry += $item;
-
-        return $carry;
-    }
-
 
     public function showPopularList(Request $request)
     {

@@ -6,7 +6,7 @@
         <figcaption class="figure-caption">
             <h4 class="title mt-2">
                 <img :src="iconBook" alt="Icon">
-                {{info.sort_name}}...
+                <a :href="_getHref()">{{info.sort_name}}...</a>
             </h4>
             <span class="d-block mb-1">
                 <div v-html="info.sort_description"></div>
