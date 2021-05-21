@@ -16,7 +16,7 @@ class ApiController extends Controller
 
     public static $thumSize = 200;
 
-    public static $menuFullInfos = [63,209,210,211,213,214,216,220,241,248];
+    public static $menuFullInfos = [63,205,207,208,209,210,211,213,214,216,220,241,248,273];
 
     public static $tmbThumbDir = '.tmb';
 
@@ -52,7 +52,7 @@ class ApiController extends Controller
         }
 
         $staticThumImg = rawurldecode(trim($imgOrigin, '/'));
-        if (!file_exists(public_path('/' . 'storage/' . self::$tmbThumbDir . '/' . $staticThumImg))) {
+        if (!file_exists(public_path('/' . $staticThumImg))) {
             $staticThumImg = trim(self::$thumImgNo, '/');
         }
        
