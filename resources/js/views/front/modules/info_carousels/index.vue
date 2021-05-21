@@ -6,7 +6,7 @@
         indicators
     >
         <b-carousel-slide
-            :img-src="item.imgThumUrl"
+            :img-src="item.imgCarThumUrl"
             v-for="(item, index) in _getInfoCarousel" :key="index">
             <div class="description text-left">
                 <h4>{{item.sort_name}}</h4>

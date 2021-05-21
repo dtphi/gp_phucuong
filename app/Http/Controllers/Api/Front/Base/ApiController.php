@@ -45,47 +45,55 @@ class ApiController extends Controller
         $this->sv = new Service();
     }
 
-    public function getThumbnail($imgOrigin, $staticThumImg, $thumbSize = 0, $thumbHeight= 0, $force = false) {
+    public function getThumbnail($imgOrigin, $thumbSize = 0, $thumbHeight= 0, $force = false) {
         $imgThumUrl = '';
         if ($thumbSize <= 0) {
             $thumbSize = self::$thumSize;
         }
-        if ($thumbHeight <= 0) {
-            $thumbHeight = 200;
-        }
 
+        $staticThumImg = rawurldecode(trim($imgOrigin, '/'));
+        if (!file_exists(public_path('/' . 'storage/' . self::$tmbThumbDir . '/' . $staticThumImg))) {
+            $staticThumImg = trim(self::$thumImgNo, '/');
+        }
+       
         if ($force) {
-            if (!file_exists(public_path('storage/' . self::$tmbThumbDir . rawurldecode($staticThumImg)))) {
-                $staticThumImg = self::$thumImgNo;
-            }
-            $fileResize = new File(public_path(rawurldecode($staticThumImg)));
-            $extension = $fileResize->extension();
-            $resize = Image::make($fileResize)->resize($thumbSize, $thumbHeight)->encode($extension);
-    
-            $thumbDir = self::$tmbThumbDir . '/' . $thumbSize . 'x' . $thumbHeight . '/' . trim($staticThumImg, '/');
-            Storage::disk(self::$disk)->put($thumbDir, $resize->__toString());
-
-            return Storage::url($thumbDir);
+            return $this->forceThumbnail($staticThumImg, $thumbSize, $thumbHeight);
         }
 
-        if (file_exists(public_path('storage/' . self::$tmbThumbDir . rawurldecode($imgOrigin)))) {
-            $staticThumImg = $imgOrigin;
+        if ((int)$thumbHeight > 0) {
+            $thumbDir = self::$tmbThumbDir . '/thumb_' . $thumbSize . 'x' . $thumbHeight . '/' . $staticThumImg;
+            if (file_exists(public_path('/' . 'storage/' . $thumbDir))) {
+                return Storage::url($thumbDir);
+            }
+
+            return $this->forceThumbnail($staticThumImg, $thumbSize, $thumbHeight);
         } else {
-            $fileResize = new File(public_path($staticThumImg));
-            $extension = $fileResize->extension();
+            $thumbDir = self::$tmbThumbDir . '/' . $staticThumImg;
+            if (file_exists(public_path('/' . 'storage/' . $thumbDir))) {
+                return Storage::url($thumbDir);
+            }
+
+            return $this->forceThumbnail($staticThumImg, $thumbSize);
+        }
+    }
+
+    public function forceThumbnail($staticThumImg, $thumbSize = 200, $thumbHeight= 0) {
+        $fileResize = new File(public_path($staticThumImg));
+        $extension = $fileResize->extension();
+        $thumbDir = self::$tmbThumbDir . '/' . $staticThumImg;
+        if ((int)$thumbHeight > 0) {
+            $thumbDir = self::$tmbThumbDir . '/thumb_' . $thumbSize . 'x' . $thumbHeight . '/' . $staticThumImg;
+            $resize = Image::make($fileResize)->resize($thumbSize, $thumbHeight)->encode($extension);
+        } else {
             $resize = Image::make($fileResize)->resize($thumbSize, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->encode($extension);
-    
-            $thumbDir = self::$tmbThumbDir . '/' . trim($staticThumImg, '/');
-            Storage::disk(self::$disk)->put($thumbDir, $resize->__toString());
         }
 
-        $imgThumUrl = Storage::url(self::$tmbThumbDir . '/' . trim($staticThumImg, '/'));
+        Storage::disk(self::$disk)->put($thumbDir, $resize->__toString());
 
-        return $imgThumUrl;
+        return Storage::url($thumbDir);
     }
-
 
     public function getSetting(Request $request)
     {

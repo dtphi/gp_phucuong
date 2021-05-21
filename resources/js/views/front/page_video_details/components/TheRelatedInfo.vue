@@ -4,7 +4,7 @@
         <b-row>
             <b-col class="col-mobile" cols="4" v-for="(item, idx) in _getRelatedListInfo" :key="idx">
                 <a class="d-block img-related" :href="_getHref(item)">
-                    <img class="img" v-lazy="item.imgThumUrl" alt=""></a>
+                    <img class="img" v-lazy="item.imgThumMediumImg" alt=""></a>
                 <h4 class="tit-bg-common mt-2">
                     <a class="pl-0" :href="_getHref(item)">{{item.name}}</a>
                 </h4>
@@ -50,9 +50,9 @@
         methods: {
             _getHref(info) {
                 if (info.hasOwnProperty('name_slug')) {
-                    return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);
+                    return fn_get_href_base_url('video/chi-tiet/' + info.name_slug);
                 } else {
-                    return fn_get_href_base_url('tin-tuc/chi-tiet/' + fn_change_to_slug(info.name));
+                    return fn_get_href_base_url('video/chi-tiet/' + fn_change_to_slug(info.name));
                 }
             }
         }
