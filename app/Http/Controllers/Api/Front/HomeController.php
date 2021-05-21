@@ -42,7 +42,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $bannerPath = config('app.asset_url') . '/upload/home_banners';
+        $bannerPath = '/Image/NewPicture/home_banners';
 
         try {
             $pageLists = [
@@ -95,12 +95,25 @@ class HomeController extends Controller
                     'title' => '>>>> PHỤNG VỤ'
                 ]
             ];
+            $data = [];
+            //$staticThumImg = self::$thumImgNo;
+            foreach($pageLists as $pageList) {
+                $imgThumUrl = $this->getThumbnail($pageList['img'], $pageList['img']);
+
+                $data[] = [
+                    'sort' => $pageList['sort'],
+                    'img' => $pageList['img'],
+                    'imgThumbUrl' => url($imgThumUrl),
+                    'url' => $pageList['url'],
+                    'title' => $pageList['title']
+                ];
+            }
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
         return response()->json([
-            'pageLists' => $pageLists
+            'pageLists' => $data
         ]);
     }
 }

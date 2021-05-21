@@ -9,8 +9,6 @@ use App\Http\Controllers\Api\Front\Services\Contracts\NewsModel as NewsSv;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
-use Storage;
-use Image;
 
 class NewsController extends Controller
 {
@@ -18,8 +16,6 @@ class NewsController extends Controller
      * @var string
      */
     protected $resourceName = 'news';
-
-    public static $thumImgNo = '/images/cong-doan-co-the-doc-phuc-am-trong-thanh-le-khong_150x150.jpg';
 
     /**
      * @var NewsSv|null
@@ -133,7 +129,7 @@ class NewsController extends Controller
         }
 
         $params['all_category_children'] = [];
-        if (isset($params['category_id']) && in_array($params['category_id'], [63,209,210,211,213,214,216,220,241,248])) {
+        if (isset($params['category_id']) && in_array($params['category_id'], self::$menuFullInfos)) {
             $subCategory = $this->newsSv->apiGetMenuCategoryIds($params['category_id']);
             if (!empty($subCategory)) {
                 $params['all_category_children'] = array_reduce($subCategory, function ($carry, $item) {
@@ -156,27 +152,14 @@ class NewsController extends Controller
             $imgThumUrl = '';
 
             if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
-                $staticImg     = $info->image;
-                $staticThumImg = $info->image;
+                $staticImg     = rawurldecode($info->image);
+                $staticThumImg = rawurldecode($info->image);
             }
             if (isset($info->image_thumb) && $info->image_thumb
-                && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
-                $staticThumImg = '/.tmb' . $info->image_thumb;
+                && file_exists(public_path('/' . self::$tmbThumbDir . rawurldecode($info->image_thumb)))) {
+                $staticThumImg = '/' . self::$tmbThumbDir . $info->image_thumb;
             } else {
-                if (file_exists(storage_path('app/public/.tmb' . rawurldecode($info->image)))) {
-                    $staticThumImg = 'app/public/.tmb' . $info->image;
-                } else {
-                    $fileResize = new \Illuminate\Http\File(public_path($staticThumImg));
-                    $extension = $fileResize->extension();
-                    $resize = Image::make($fileResize)->resize(200, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode($extension);
-            
-                    $thumbDir = '.tmb/' . trim($staticThumImg, '/');
-                    Storage::disk('public')->put($thumbDir, $resize->__toString());
-                }
-
-                $imgThumUrl = Storage::url('.tmb/' . trim($staticThumImg, '/'));
+                $imgThumUrl = $this->getThumbnail($info->image, $staticThumImg);
             }
 
             $sortDes = html_entity_decode($info->sort_description);
@@ -269,15 +252,21 @@ class NewsController extends Controller
                 foreach ($results as $info) {
                     $staticImg     = self::$thumImgNo;
                     $staticThumImg = self::$thumImgNo;
+                    $imgThumUrl = '';
 
                     if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                         $staticImg     = $info->image;
                         $staticThumImg = $info->image;
                     }
+                    
                     if (isset($info->image_thumb) && $info->image_thumb
-                        && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
-                        $staticThumImg = '/.tmb' . $info->image_thumb;
+                        && file_exists(public_path('/' . self::$tmbThumbDir . rawurldecode($info->image_thumb)))) {
+                        $staticThumImg = '/' . self::$tmbThumbDir . $info->image_thumb;
+                    } else {
+                        $imgThumUrl = $this->getThumbnail($info->image, $staticThumImg);
                     }
+
+                    $imgCarouselThumUrl = $this->getThumbnail($info->image,  $info->image, 700, 500, true);
                     $sortDes = html_entity_decode($info->sort_description);
                     $json[] = [
                         'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
@@ -285,7 +274,8 @@ class NewsController extends Controller
                         'sort_description' => Str::substr($sortDes, 0, 100),
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
-                        'imgThumUrl'       => url($staticThumImg),
+                        //'imgThumUrl'       => empty($imgThumUrl) ? url($staticThumImg) :url($imgThumUrl),
+                        'imgThumUrl'       => url($imgCarouselThumUrl),
                         'information_id'   => $info->information_id,
                         'name'             => $info->name,
                         'name_slug'        => $info->name_slug,
@@ -325,14 +315,17 @@ class NewsController extends Controller
                 foreach ($results as $info) {
                     $staticImg     = self::$thumImgNo;
                     $staticThumImg = self::$thumImgNo;
+                    $imgThumUrl = '';
 
                     if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                         $staticImg     = $info->image;
                         $staticThumImg = $info->image;
                     }
                     if (isset($info->image_thumb) && $info->image_thumb
-                        && file_exists(public_path('/.tmb' . rawurldecode($info->image_thumb)))) {
-                        $staticThumImg = '/.tmb' . $info->image_thumb;
+                        && file_exists(public_path('/' . self::$tmbThumbDir . rawurldecode($info->image_thumb)))) {
+                        $staticThumImg = '/' . self::$tmbThumbDir . $info->image_thumb;
+                    } else {
+                        $imgThumUrl = $this->getThumbnail($info->image, $staticThumImg);
                     }
                     $sortDes = html_entity_decode($info->sort_description);
                     $json[] = [
@@ -341,7 +334,7 @@ class NewsController extends Controller
                         'sort_description' => Str::substr($sortDes, 0, 100),
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
-                        'imgThumUrl'       => url($staticThumImg),
+                        'imgThumUrl'       => empty($imgThumUrl) ? url($staticThumImg) :url($imgThumUrl),
                         'information_id'   => $info->information_id,
                         'name'             => $info->name,
                         'name_slug'        => $info->name_slug,
