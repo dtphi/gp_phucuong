@@ -267,7 +267,7 @@ class NewsController extends Controller
                         'information_id'   => $info->information_id,
                         'name'             => $info->name,
                         'name_slug'        => $info->name_slug,
-                        'sort_name'        => Str::substr($info->name, 0, 50),
+                        'sort_name'        => Str::substr($info->name, 0, 28),
                         'viewed'           => $info->viewed,
                         'vote'             => $info->vote
                     ];
@@ -320,7 +320,7 @@ class NewsController extends Controller
                         'information_id'   => $info->information_id,
                         'name'             => $info->name,
                         'name_slug'        => $info->name_slug,
-                        'sort_name'        => Str::substr($info->name, 0, 50),
+                        'sort_name'        => Str::substr($info->name, 0, 25),
                         'viewed'           => $info->viewed,
                         'vote'             => $info->vote
                     ];

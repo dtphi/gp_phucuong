@@ -7,7 +7,7 @@
                 </span>
                 <span>
                     <img :src="iconBook" alt="">
-                    <i>{{item.sort_name.substring(0, 40)}}...</i>
+                    <i>{{item.sort_name}}...</i>
                 </span>
                 <!--<span>
                     <img :src="iconBook" alt="">
