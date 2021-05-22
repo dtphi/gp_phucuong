@@ -6,6 +6,7 @@ import TinGiaoHoi from './tin_giao_hois';
 import TinGiaoHoiVietNam from './tin_giao_hoi_viet_nams';
 import TinGiaoPhan from './tin_giao_phans';
 import VanKien from './van_kiens';
+import NoiBat from './noi_bats';
 
 export default {
   namespaced: true,
@@ -19,5 +20,6 @@ export default {
     tin_giao_hoi_viet_nam: TinGiaoHoiVietNam,
     tin_giao_phan: TinGiaoPhan,
     van_kien: VanKien,
+    noi_bat: NoiBat,
   }
 }

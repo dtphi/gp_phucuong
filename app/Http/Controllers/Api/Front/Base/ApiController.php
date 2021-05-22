@@ -209,7 +209,7 @@ class ApiController extends Controller
             }
 
             $menuLayout_1 = [];
-            $categories_1 = $this->sv->getMenuCategoriesToLayout(1);
+            /*$categories_1 = $this->sv->getMenuCategoriesToLayout(1);
 
             foreach ($categories_1 as $cate_1) {
                 // Level 2
@@ -264,7 +264,7 @@ class ApiController extends Controller
                     'href'     => 'path=' . $cate_1->category_id,
                     'link'     => $cate_1->name_slug
                 );
-            }
+            }*/
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -315,7 +315,6 @@ class ApiController extends Controller
 
         return response()->json($data);
     }
-
 
     /**
      * @author : dtphi .

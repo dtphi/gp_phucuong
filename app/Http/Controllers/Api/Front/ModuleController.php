@@ -37,17 +37,22 @@ class ModuleController extends Controller
             foreach ($moduleData as $setting) {
                 $value = ($setting->serialized) ? unserialize($setting->value) : $setting->value;
 
-                $categories = $this->settingSv->apiGetCategoryByIds($value);
-                foreach ($categories as $cate) {
-                    $results[$setting->key_data][] = [
-                        'name' => $cate->name,
-                        //'children' => $children_data_2,
-                        'href' => 'path=' . $cate->category_id,
-                        'link' => $cate->name_slug
-                    ];
+                if (!empty($value)) {
+                    if (is_array($value[0])) {
+                        $results[$setting->key_data] = $value;
+                    } else {
+                        $categories = $this->settingSv->apiGetCategoryByIds($value);
+                        foreach ($categories as $cate) {
+                            $results[$setting->key_data][] = [
+                                'name' => $cate->name,
+                                'href' => 'path=' . $cate->category_id,
+                                'link' => $cate->name_slug
+                            ];
+                        }
+                    }
+                } else {
+                    $results[$setting->key_data] = [];
                 }
-
-
             }
 
             $json['moduleData'] = $results;

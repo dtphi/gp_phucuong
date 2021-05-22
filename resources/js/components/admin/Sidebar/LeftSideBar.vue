@@ -78,6 +78,10 @@
                         <a
                             :href="_getHref('module-van-kiens')">{{$options.setting.module_van_kien}}</a>
                     </li>
+                    <li>
+                        <a
+                            :href="_getHref('module-noi-bats')">{{$options.setting.module_noi_bat}}</a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -112,6 +116,7 @@
             module_tin_giao_hoi: 'Tin giáo hội',
             module_tin_giao_phan: 'Tin giáo phận',
             module_van_kien: 'Văn kiện',
+            module_noi_bat: 'Nổi bật',
         }
     };
 </script>

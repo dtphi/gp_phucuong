@@ -19,3 +19,4 @@ export const MODULE_MODULE_TIN_GIAO_HOI_VIET_NAM = 'app_module/tin_giao_hoi_viet
 export const MODULE_MODULE_TIN_GIAO_HOI = 'app_module/tin_giao_hoi';
 export const MODULE_MODULE_TIN_GIAO_PHAN = 'app_module/tin_giao_phan';
 export const MODULE_MODULE_VAN_KIEN = 'app_module/van_kien';
+export const MODULE_MODULE_NOI_BAT = 'app_module/noi_bat';

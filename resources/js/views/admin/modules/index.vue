@@ -31,10 +31,12 @@
 
 			'module-van-kiens': () => import('./van_kiens'),
 
+			'module-noi-bats': () => import('./noi_bats'),
+
         },
 		computed: {
           currentModule: function() {
-			  	let moduleName = this.$route.params.pathMatch;console.log("module-" + moduleName.toLowerCase());
+			  	let moduleName = this.$route.params.pathMatch;
             	return "module-" + moduleName.toLowerCase();
           }
         }
