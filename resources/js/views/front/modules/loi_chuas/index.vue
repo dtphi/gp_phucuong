@@ -4,7 +4,7 @@
         <b-row>
             <b-col cols="5" class="col-mobile">
                 <a class="d-block" :href="_getHref(_getLastedModuleInfo)">
-                    <img class="img" :src="_getLastedModuleInfo.imgThumUrl" alt="">
+                    <img class="img" :src="_getLastedModuleInfo.imgThumMediumImg" alt="">
                 </a>
                 <h4 class="tit-bg-common mt-2">
                     <span><i class="bg-red">Nổi bật</i></span>

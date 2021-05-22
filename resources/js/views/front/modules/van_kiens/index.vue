@@ -9,7 +9,7 @@
                 v-for="(item, index) in pageLists" 
                 :key="index">
                 <a class="d-block" :href="_getHref(item)">
-                    <img class="img" :src="item.imgThumUrl" :alt="item.name">
+                    <img class="img" :src="item.imgThumMediumImg" :alt="item.name">
                 </a>
                 <h4 class="tit-bg-common mt-2">
                     <a :href="_getHref(item)">{{item.name}}</a>

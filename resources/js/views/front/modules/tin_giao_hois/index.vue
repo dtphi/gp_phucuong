@@ -16,7 +16,9 @@
                     <a :href="_getHref(_getLastedModuleInfo)">{{_getLastedModuleInfo.name}}</a>
                 </h4>
                 <p class="name-post font-weight-bold mb-2">Posted by Admin</p>
-                <a class="d-block" :href="_getHref(_getLastedModuleInfo)"><img class="img" :src="_getLastedModuleInfo.imgThumUrl" alt=""></a>
+                <a class="d-block" :href="_getHref(_getLastedModuleInfo)">
+                    <img class="img" :src="_getLastedModuleInfo.imgThumMediumImg" alt="">
+                </a>
 
                 <p class="mt-2">
                     <em>{{_getLastedModuleInfo.sort_description}}</em>

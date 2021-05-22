@@ -7,7 +7,7 @@
         <b-row>
             <b-col cols="7" class="col-mobile">
                 <a class="d-block" :href="_getHref(_getLastedModuleInfo)">
-                    <img class="img" :src="_getLastedModuleInfo.imgThumUrl" alt=""></a>
+                    <img class="img" :src="_getLastedModuleInfo.imgUrl" alt=""></a>
                 <h4 class="tit-bg-common mt-2">
                     <a :href="_getHref(_getLastedModuleInfo)">{{_getLastedModuleInfo.name}}</a>
                 </h4>
@@ -21,7 +21,7 @@
             <b-col cols="5" class="col-r col-mobile">
                 <div v-if="_getSecondInfoModuleList">
                     <a class="d-block" :href="_getHref(_getSecondInfoModuleList)">
-                        <img class="img" :src="_getSecondInfoModuleList.imgThumUrl" alt="">
+                        <img class="img" :src="_getSecondInfoModuleList.imgThumMediumImg" alt="">
                     </a>
                     <h4 class="tit-bg-common mt-2">
                         <a :href="_getHref(_getSecondInfoModuleList)">{{_getSecondInfoModuleList.name}}</a>
