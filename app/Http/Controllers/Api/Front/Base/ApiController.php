@@ -289,8 +289,8 @@ class ApiController extends Controller
                 'sort'         => 2,
                 'title'        => 'App tìm nhà thờ gần nhất',
                 'img'          => $appImgPath . '/app_tim_nha_tho.jpg',
-                'hrefAppStore' => '/',
-                'hrefChPlay'   => '/'
+                'hrefAppStore' => 'https://apps.apple.com/us/app/tìm-nhà-thờ-gần-nhất/id1485257114?ls=1',
+                'hrefChPlay'   => 'https://play.google.com/store/apps/details?id=com.phucuong.churchfinder&hl=en_AU&gl=US'
             ],
         ];
 

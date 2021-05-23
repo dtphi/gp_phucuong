@@ -5,8 +5,8 @@
         </div>
         <div class="col-8 col-detail pl-0">
             <h4 class="tit-app-ft mt-2">{{appItem.title}}</h4>
-            <a class="link-app d-block mb-2" :href="appItem.hrefAppStore">- Download từ Apple Store</a>
-            <a class="link-app d-block" :href="appItem.hrefChPlay">- Download từ CH Play</a>
+            <a class="link-app d-block mb-2" :href="appItem.hrefAppStore" target="_blank">- Download từ Apple Store</a>
+            <a class="link-app d-block" :href="appItem.hrefChPlay" target="_blank">- Download từ CH Play</a>
         </div>
     </div>
 </template>
