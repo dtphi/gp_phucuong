@@ -105,14 +105,15 @@ final class NewsService extends Service implements NewsModel
                 Tables::$informations . '.information_id')
             ->leftJoin(Tables::$information_descriptions, Tables::$informations . '.information_id', '=',
                 Tables::$information_descriptions . '.information_id')
-            ->where('status', '=', '1')
-            ->where('information_type', '=', $infoType);
+            ->where('status', '=', '1');
 
         if (isset($data['all_category_children']) && !empty($data['all_category_children'])) {
             $query->whereIn('category_id', $data['all_category_children']);
         } else {
-            if (isset($data['category_id'])) { 
+            if (isset($data['category_id']) && $data['category_id']) { 
                 $query->where('category_id', '=', $data['category_id']);
+            } else {
+                $query->where('information_type', '=', $infoType);
             }
         }
 

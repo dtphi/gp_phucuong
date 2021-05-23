@@ -284,6 +284,10 @@ class NewsController extends Controller
     {
         $json = [];
 
+        if (!empty($request->query('slug'))) {
+            return $this->list($request);
+        }
+
         $list = $this->newsSv->apiGetPopularInfos(20)->toArray();
 
         if (!empty($list)) {
@@ -333,9 +337,12 @@ class NewsController extends Controller
         ]);
     }
 
-    public function showRelatedList($informationId = null)
+    public function showRelatedList($informationId = null, Request $request)
     {
         $json = [];
+        if (!empty($request->query('slug'))) {
+            return $this->list($request);
+        }
 
         $list = $this->newsSv->apiGetInfoRelated($informationId);
 

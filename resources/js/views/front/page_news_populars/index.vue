@@ -8,6 +8,7 @@
                         :active.sync="loading"
                         :is-full-page="fullPage"></loading-over-lay>
                 </template>
+                <paginate></paginate>
                 <div class="list-videos">
                     <the-category-news-item 
                         class="figure"
@@ -39,6 +40,7 @@
     import MainContent from 'com@front/Common/MainContent';
     import ContentBottom from 'com@front/Common/ContentBottom';
     import ContentTop from 'com@front/Common/ContentTop';
+    import Paginate from 'com@front/Pagination';
 
     export default {
         name: 'InfoListtoCategory',
@@ -47,7 +49,8 @@
             ContentTop,
             MainContent,
             ContentBottom,
-            TheCategoryNewsItem
+            TheCategoryNewsItem,
+            Paginate
         },
         data() {
             return {

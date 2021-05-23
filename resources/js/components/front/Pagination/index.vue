@@ -1,14 +1,13 @@
 <template>
-    <div class="row mb-3">
-        <template>
+    <div class="row mb-3" v-if="Object.keys(_collectionData).length">
+        <template v-if="_collectionData.total">
             <div class="col-sm-6 text-left">
                 <div class="dataTables_info">
                     {{_getTextPaginationCollection()}}
                 </div>
             </div>
             <div class="col-sm-6 text-right">
-                <div class="dataTables_paginate paging_simple_numbers"
-                     v-if="Object.keys(_collectionData).length">
+                <div class="dataTables_paginate paging_simple_numbers">
                     <collection-pagination
                         class="mb-0"
                         :data="_collectionData"
@@ -26,6 +25,7 @@
 
 <script>
     import {
+        mapState,
         mapGetters
     } from 'vuex';
     import CollectionPagination from './CollectionPagination';
@@ -50,6 +50,9 @@
             }
         },
         computed: {
+            ...mapState({
+                paginationRoot: state => state.paginationRoot
+            }),
             ...mapGetters([
                 'collectionPaginationData',
                 'moduleNameActive',
@@ -80,12 +83,19 @@
                 if (!page) {
                     page = 1;
                 }
+                let infoType = 1;
+                const pageName = this.$route.name;
+                if (pageName == 'video-page') {
+                    infoType = 2;
+                }
+
 
                 const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
                 _self.$store.dispatch(actionName, {
+                    ...this.paginationRoot.moduleActive.params,
                     perPage: parseInt(_self.collectionPaginationData.per_page),
                     page: parseInt(page),
-                    ...this.$route.params
+                    infoType: infoType
                 });
             }
         },

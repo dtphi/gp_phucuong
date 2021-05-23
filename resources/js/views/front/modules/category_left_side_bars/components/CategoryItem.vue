@@ -2,12 +2,15 @@
     <li
         :class="activeClass">
         <a
-            :href="_getHref()">
+            @click="_getHref()">
             <img src="../../../assets/img/icon-book.png" alt="Icon">{{_getTitle()}}</a>
     </li>
 </template>
 
 <script>
+    import {
+        mapGetters
+    } from 'vuex';
     import {
         fn_get_href_base_url
     } from '@app/api/utils/fn-helper';
@@ -20,6 +23,12 @@
             activeClass: '',
             group: {}
         },
+        computed: {
+            ...mapGetters([
+                'moduleNameActive',
+                'moduleActionListActive'
+            ]),
+        },
         methods: {
             _getTitle() {
                 if (this.title) return this.title;
@@ -27,9 +36,11 @@
                 return this.group.name;
             },
             _getHref() {
-                if (this.link) return fn_get_href_base_url(this.link);
-
-                return fn_get_href_base_url('danh-muc-tin/' + this.group.link);
+                const _self = this;
+                const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
+                _self.$store.dispatch(actionName, {
+                    slug: _self.group.link
+                });
             }
         }
     }

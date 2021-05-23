@@ -7,6 +7,12 @@ import info from './infos';
 import subscribe from './subscribes';
 import appModule from './modules';
 import createLogger from '../../plugins/logger';
+import {
+  GET_INFORMATION_LIST_TO_CATEGORY
+} from '@app/stores/front/types/action-types';
+import {
+  MODULE_INFO
+} from '@app/stores/front/types/module-types';
 
 Vue.use(Vuex);
 
@@ -45,8 +51,9 @@ const initPaginationState = () => {
     meta: {},
     perPage: 20,
     moduleActive: {
-      name: '',
-      actionList: ''
+      name: MODULE_INFO,
+      actionList: GET_INFORMATION_LIST_TO_CATEGORY,
+      params: {}
     },
     collectionData: {
       current_page: 1,

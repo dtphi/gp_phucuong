@@ -18,7 +18,7 @@ import {
 } from '@app/stores/front/types/action-types';
 import {
   MODULE_INFO
-} from '../../admin/types/module-types';
+} from '@app/stores/front/types/module-types';
 
 export default {
   namespaced: true,
@@ -59,13 +59,46 @@ export default {
 
   actions: {
     [GET_LASTED_INFORMATION_LIST_TO_CATEGORY]({
-      commit
+      commit,
+      dispatch
     }, routeParams) {
       commit('setLoading', true);
+      let slug = '';
+      if (routeParams.hasOwnProperty('slug')) {
+        slug = routeParams.slug;
+      }
+      let page = 1;
+      if (routeParams.hasOwnProperty('page')) {
+        page = routeParams.page;
+      }
+      let params = {
+        ...routeParams,
+        page: page,
+        slug: slug
+      };
       if (routeParams.hasOwnProperty('infoType')) {
         apiGetLastedList(
           (result) => {
             commit(INIT_INFO_LASTED_LIST, result.data.results);
+            var pagination = {
+              current_page: 1,
+              total: 0
+            };
+            if (result.data.hasOwnProperty('pagination')) {
+              pagination = result.data.pagination;
+            }
+            var configs = {
+              moduleActive: {
+                name: MODULE_INFO,
+                actionList: GET_LASTED_INFORMATION_LIST_TO_CATEGORY,
+                params: params
+              },
+              collectionData: pagination
+            };
+
+            dispatch('setConfigApp', configs, {
+              root: true
+            });
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
@@ -73,16 +106,35 @@ export default {
             console.log(errors);
             commit('setLoading', false);
           },
-          routeParams
+          params
         )
       } else {
-        let params = {
-          limit: 15,
-          ...routeParams
+        params = {
+          ...params,
+          limit: 15
         };
         apiGetLastedList(
           (result) => {
             commit(INIT_INFO_LASTED_LIST, result.data.results);
+            var pagination = {
+              current_page: 1,
+              total: 0
+            };
+            if (result.data.hasOwnProperty('pagination')) {
+              pagination = result.data.pagination;
+            }
+            var configs = {
+              moduleActive: {
+                name: MODULE_INFO,
+                actionList: GET_LASTED_INFORMATION_LIST_TO_CATEGORY,
+                params: params
+              },
+              collectionData: pagination
+            };
+
+            dispatch('setConfigApp', configs, {
+              root: true
+            });
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
@@ -95,13 +147,46 @@ export default {
       }
     },
     [GET_POPULAR_INFORMATION_LIST_TO_CATEGORY]({
-      commit
+      commit,
+      dispatch
     }, routeParams) {
       commit('setLoading', true);
+      let slug = '';
+      if (routeParams.hasOwnProperty('slug')) {
+        slug = routeParams.slug;
+      }
+      let page = 1;
+      if (routeParams.hasOwnProperty('page')) {
+        page = routeParams.page;
+      }
+      let params = {
+        ...routeParams,
+        page: page,
+        slug: slug
+      };
       if (routeParams.hasOwnProperty('infoType')) {
         apiGetPopularList(
           (result) => {
             commit(INIT_INFO_POPULAR_LIST, result.data.results);
+            var pagination = {
+              current_page: 1,
+              total: 0
+            };
+            if (result.data.hasOwnProperty('pagination')) {
+              pagination = result.data.pagination;
+            }
+            var configs = {
+              moduleActive: {
+                name: MODULE_INFO,
+                actionList: GET_POPULAR_INFORMATION_LIST_TO_CATEGORY,
+                params: params
+              },
+              collectionData: pagination
+            };
+
+            dispatch('setConfigApp', configs, {
+              root: true
+            });
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
@@ -109,19 +194,39 @@ export default {
             console.log(errors);
             commit('setLoading', false);
           },
-          routeParams
+          params
         )
       } else {
         apiGetPopularList(
           (result) => {
             commit(INIT_INFO_POPULAR_LIST, result.data.results);
+            var pagination = {
+              current_page: 1,
+              total: 0
+            };
+            if (result.data.hasOwnProperty('pagination')) {
+              pagination = result.data.pagination;
+            }
+            var configs = {
+              moduleActive: {
+                name: MODULE_INFO,
+                actionList: GET_POPULAR_INFORMATION_LIST_TO_CATEGORY,
+                params: params
+              },
+              collectionData: pagination
+            };
+
+            dispatch('setConfigApp', configs, {
+              root: true
+            });
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
           (errors) => {
             console.log(errors);
             commit('setLoading', false);
-          }
+          },
+          params
         )
       }
     },
@@ -156,7 +261,8 @@ export default {
             var configs = {
               moduleActive: {
                 name: MODULE_INFO,
-                actionList: GET_INFORMATION_LIST_TO_CATEGORY
+                actionList: GET_INFORMATION_LIST_TO_CATEGORY,
+                params: params
               },
               collectionData: pagination
             };
@@ -188,7 +294,8 @@ export default {
             var configs = {
               moduleActive: {
                 name: MODULE_INFO,
-                actionList: GET_INFORMATION_LIST_TO_CATEGORY
+                actionList: GET_INFORMATION_LIST_TO_CATEGORY,
+                params: params
               },
               collectionData: pagination
             };
