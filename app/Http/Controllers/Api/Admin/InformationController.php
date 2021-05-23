@@ -53,11 +53,18 @@ class InformationController extends ApiController
             $pagination  = $this->_getTextPagination($collections);
 
             $results = [];
+            $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
+                if (file_exists(public_path($info->image['path']))) {
+                    $staticImgThum = $info->image['path'];
+                }
                 $results[] = [
                     'information_id' => (int)$info->information_id,
                     'image'          => $info->image,
+                    'imgThum'        => url($this->getThumbnail($staticImgThum, 0, 40)),
                     'name'           => $info->name,
+                    'status'         => $info->status,
+                    'status_text'    => $info->status_text,
                     'sort_order'     => $info->sort_order,
                     'date_available' => $info->date_available,
                     'created_at'     => $info->created_at

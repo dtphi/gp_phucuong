@@ -38,6 +38,13 @@
                                             <th style="width: 100px" class="text-center">
                                                 Ngày tạo
                                             </th>
+                                            <th class="text-center">Trạng thái</th>
+                                            <th class="text-center">
+                                                <select @change="_submitAction">
+                                                    <option>Thêm</option>
+                                                    <option value="module_special_info_ids">Tiêu điểm</option>
+                                                </select>
+                                            </th>
                                             <th style="width: 100px" class="text-right">Action
                                             </th>
                                         </tr>
@@ -76,6 +83,7 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
+        ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
     export default {
@@ -92,6 +100,13 @@
                 isResource: false,
             }
         },
+        watch: {
+            'updateSuccess'(newValue, oldValue) {
+                if (newValue) {
+                    this._notificationUpdate(newValue);
+                }
+            }
+        },
         computed: {
             ...mapState({
                 perPage: state => state.cfApp.perPage
@@ -99,7 +114,8 @@
             ...mapGetters(['isNotEmptyList']),
             ...mapState(MODULE_INFO, [
                 'infos',
-                'loading'
+                'loading',
+                'updateSuccess',
             ]),
             _infoList() {
                 return this.infos;
@@ -110,8 +126,23 @@
         },
         methods: {
             ...mapActions(MODULE_INFO, [
-                ACTION_GET_INFO_LIST
+                ACTION_GET_INFO_LIST,
+                ACTION_RESET_NOTIFICATION_INFO,
+                'module_special_info_ids',
+                'get_module_special_info_ids'
             ]),
+            _submitAction(event) {
+                this[event.target.value]({
+                    action: event.target.value
+                });
+            },
+            _notificationUpdate(notification) {
+                this.$notify(notification);
+                this.[ACTION_RESET_NOTIFICATION_INFO]();
+            },
+        },
+        created() {
+            this.get_module_special_info_ids();
         },
         mounted() {
             const params = {

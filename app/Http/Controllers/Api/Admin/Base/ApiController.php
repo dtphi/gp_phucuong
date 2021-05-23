@@ -6,10 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\File;
+use Storage;
+use Image;
 
 class ApiController extends Controller
 {
     use AuthorizesRequests;
+
+    public static $thumImgNo = '/images/no-photo.jpg';
+
+    public static $thumSize = 40;
+
+    public static $tmbThumbDir = '.tmb';
+
+    public static $disk = 'public';
 
     /**
      * @var string
@@ -68,6 +79,56 @@ class ApiController extends Controller
     public function __construct($middleware = [])
     {
         parent::__construct($middleware);
+    }
+
+    public function getThumbnail($imgOrigin, $thumbSize = 0, $thumbHeight= 0, $force = false) {
+        $imgThumUrl = '';
+        if ($thumbSize <= 0) {
+            $thumbSize = self::$thumSize;
+        }
+
+        $staticThumImg = rawurldecode(trim($imgOrigin, '/'));
+        if (!file_exists(public_path('/' . $staticThumImg))) {
+            $staticThumImg = trim(self::$thumImgNo, '/');
+        }
+       
+        if ($force) {
+            return $this->forceThumbnail($staticThumImg, $thumbSize, $thumbHeight);
+        }
+
+        if ((int)$thumbHeight > 0) {
+            $thumbDir = self::$tmbThumbDir . '/thumb_' . $thumbSize . 'x' . $thumbHeight . '/' . $staticThumImg;
+            if (file_exists(public_path('/' . 'storage/' . $thumbDir))) {
+                return Storage::url($thumbDir);
+            }
+
+            return $this->forceThumbnail($staticThumImg, $thumbSize, $thumbHeight);
+        } else {
+            $thumbDir = self::$tmbThumbDir . '/' . $staticThumImg;
+            if (file_exists(public_path('/' . 'storage/' . $thumbDir))) {
+                return Storage::url($thumbDir);
+            }
+
+            return $this->forceThumbnail($staticThumImg, $thumbSize);
+        }
+    }
+
+    public function forceThumbnail($staticThumImg, $thumbSize = 200, $thumbHeight= 0) {
+        $fileResize = new File(public_path($staticThumImg));
+        $extension = $fileResize->extension();
+        $thumbDir = self::$tmbThumbDir . '/' . $staticThumImg;
+        if ((int)$thumbHeight > 0) {
+            $thumbDir = self::$tmbThumbDir . '/thumb_' . $thumbSize . 'x' . $thumbHeight . '/' . $staticThumImg;
+            $resize = Image::make($fileResize)->resize($thumbSize, $thumbHeight)->encode($extension);
+        } else {
+            $resize = Image::make($fileResize)->resize($thumbSize, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode($extension);
+        }
+
+        Storage::disk(self::$disk)->put($thumbDir, $resize->__toString());
+
+        return Storage::url($thumbDir);
     }
 
     /**

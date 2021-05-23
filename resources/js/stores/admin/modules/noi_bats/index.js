@@ -121,7 +121,6 @@ export default {
 
   actions: {
     module_noi_bat_sach_nois({state}, value) {
-      console.log(value),
       state.module_noi_bat_sach_nois.value.push({
         title: '',
         url_title: '',
@@ -130,7 +129,6 @@ export default {
       })
     },
     module_noi_bat_youtubes({state}, value) {
-      console.log(value)
       state.module_noi_bat_youtubes.value.push({
         title: '',
         url_full: '',
@@ -139,7 +137,6 @@ export default {
       })
     },
     module_noi_bat_hanh_cac_thanhs({state}, value) {
-      console.log(value)
       state.module_noi_bat_hanh_cac_thanhs.value.push({
         title: '',
         url_full: '',
@@ -160,7 +157,6 @@ export default {
             commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.results);
 
             dispatch(ACTION_SET_LOADING, false);
-            //dispatch(ACTION_GET_CATEGORY_LIST_BY_IDS, res.data.results.module_noi_bat_hanh_cac_thanhs.value);
           } else {
             dispatch(ACTION_SET_LOADING, false);
           }
@@ -193,8 +189,6 @@ export default {
         }
       )
     },
-
- 
 
     [ACTION_SET_LOADING]({
       commit

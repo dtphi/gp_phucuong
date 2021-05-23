@@ -17,4 +17,9 @@ final class Tables
     public static $information_descriptions = DB_PREFIX . 'information_descriptions';
 
     public static $settings = DB_PREFIX . 'settings';
+
+    public static $infoStatus = [
+        'Ẩn',
+        'Xảy ra'
+    ];
 }

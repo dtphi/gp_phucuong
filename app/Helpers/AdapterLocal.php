@@ -50,7 +50,7 @@ class AdapterLocal extends Local
         }
 
         $iterator = $recursive ? $this->getRecursiveDirectoryIterator($location) : $this->getDirectoryIterator($location);
-
+        
         foreach ($iterator as $file) {
             $path = $this->getFilePath($file);
 
@@ -66,7 +66,7 @@ class AdapterLocal extends Local
                 ]);
                 if ($thumb->validate() && $thumb->save()) {
                 } else {
-                    throw new \yii\web\NotFoundHttpException();
+                    throw new \yii\web\NotFoundHttpException($path);
                 }
             }
 

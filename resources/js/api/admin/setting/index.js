@@ -46,21 +46,12 @@ export const apiInsertSetting = (settingData, resolve, errResole) => {
   return axios.post(fn_get_base_api_url(API_SETTING_RESOURCE), settingData)
     .then((response) => {
       console.log(response)
-      if (response.status === 201) {
-        var json = {};
-        json['data'] = response.data.result;
-        json['code'] = response.data.code;
-        resolve(json);
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test'
-        }]);
-      }
+      var json = [];
+      json['data'] = response.data.result;
+      json['code'] = response.data.code;
+      resolve(json);
     })
     .catch(errors => errResole([{
-      status: errors.response.status,
-      messageCommon: errors.response.data.message,
-      messages: errors.response.data.errors
+      errors: errors
     }]))
 }

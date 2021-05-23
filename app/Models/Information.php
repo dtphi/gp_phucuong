@@ -137,6 +137,11 @@ class Information extends BaseModel
         return (int)$value;
     }
 
+    public function getStatusTextAttribute($value)
+    {
+        return Tables::$infoStatus[$this->status];
+    }
+
     /**
      * @author : dtphi .
      * @param $value
