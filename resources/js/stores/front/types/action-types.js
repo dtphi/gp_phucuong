@@ -6,3 +6,5 @@ export const GET_POPULAR_INFORMATION_LIST_TO_CATEGORY = 'getPopularInformationLi
 export const GET_LASTED_INFORMATION_LIST_TO_CATEGORY = 'getLastedInformationListToCategory';
 export const ACTION_GET_SETTING = 'getSetting';
 export const ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER = 'registryToNewsletter';
+export const ACTION_GET_SPECIAL_INFORMATION_LIST_TO_MODULE = 'getSpecialInformationListToModule';
+export const ACTION_SET_LOADING = 'setLoading';

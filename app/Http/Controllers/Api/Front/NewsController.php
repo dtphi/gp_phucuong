@@ -354,4 +354,69 @@ class NewsController extends Controller
 
         return $json;
     }
+
+    public function showSpecialModuleList(Request $request)
+    {
+        $param['info_collection'] = [];
+        if (!empty($request->query('specialInfoIds'))) {
+            $param['info_collection'] = array_reduce($request->query('specialInfoIds'), function ($carry, $item) {
+                $carry[] = $item->id;
+    
+                return $carry;
+            });
+        }
+    
+        $json = [];
+
+        $list = $this->newsSv->apiGetLatestInfos(20)->toArray();
+
+        if (!empty($list)) {
+            $infoIds = array_reduce($list, function ($carry, $item) {
+                $carry[] = $item['information_id'];
+
+                return $carry;
+            });
+
+            if (!empty($infoIds)) {
+                $params                    = $request->all();
+                $params['information_ids'] = $infoIds;
+
+                $results = $this->newsSv->apiGetInfoListByIds($params);
+
+                $json = [];
+                foreach ($results as $info) {
+                    $staticImg     = self::$thumImgNo;
+                    $staticThumImg = self::$thumImgNo;
+
+                    if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
+                        $staticImg     = $info->image;
+                    }
+                    
+                    $staticThumImg = $this->getThumbnail($info->image, 0, 150);
+                    $imgCarouselThumUrl = $this->getThumbnail($info->image, 700, 450);
+                    $sortDes = html_entity_decode($info->sort_description);
+
+                    $json[] = [
+                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                        'description'      => html_entity_decode($info->sort_description),
+                        'sort_description' => Str::substr($sortDes, 0, 100),
+                        'image'            => $staticImg,
+                        'imgUrl'           => url($staticImg),
+                        'imgThumUrl'       => url($staticThumImg),
+                        'imgCarThumUrl'    => url($imgCarouselThumUrl),
+                        'information_id'   => $info->information_id,
+                        'name'             => $info->name,
+                        'name_slug'        => $info->name_slug,
+                        'sort_name'        => Str::substr($info->name, 0, 28),
+                        'viewed'           => $info->viewed,
+                        'vote'             => $info->vote
+                    ];
+                }
+            }
+        }
+
+        return Helper::successResponse([
+            'results' => $json
+        ]);
+    }
 }

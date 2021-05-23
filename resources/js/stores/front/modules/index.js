@@ -7,6 +7,7 @@ import LoiChua from './loi_chua';
 import TinGiaoHoi from './tin_giao_hoi';
 import TinGiaoHoiVietNam from './tin_giao_hoi_viet_nam';
 import NoiBat from './noi_bat';
+import SpecialInfo from './special_info';
 
 export default {
   namespaced: true,
@@ -21,5 +22,6 @@ export default {
     tin_giao_hoi: TinGiaoHoi,
     tin_giao_hoi_viet_nam: TinGiaoHoiVietNam,
     noi_bat: NoiBat,
+    special_info: SpecialInfo,
   }
 }

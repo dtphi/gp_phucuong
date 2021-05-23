@@ -24,7 +24,7 @@
     export default {
         name: 'ColumnMiddle',
         components: {
-            'module-info-carousel': () => import('v@front/modules/info_carousels'),
+            'module-info-carousel': () => import('v@front/modules/special_infos'),
             'module-loi-chua': () => import('v@front/modules/loi_chuas'),
             'module-tin-giao-phan': () => import('v@front/modules/tin_giao_phans'),
             'module-van-kien': () => import('v@front/modules/van_kiens'),

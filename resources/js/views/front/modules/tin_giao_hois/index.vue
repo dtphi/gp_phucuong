@@ -104,7 +104,7 @@
                 ACTION_GET_SETTING,
             ]),
             _getHref(info) {
-                if (info & info.hasOwnProperty('name_slug')) {
+                if (info && info.hasOwnProperty('name_slug')) {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);
                 } else {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + fn_change_to_slug(info.name));

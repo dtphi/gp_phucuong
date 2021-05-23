@@ -13,3 +13,4 @@ export const MODULE_MODULE_LOI_CHUA = 'appModule/loi_chua';
 export const MODULE_MODULE_TIN_GIAO_HOI = 'appModule/tin_giao_hoi';
 export const MODULE_MODULE_TIN_GIAO_HOI_VIET_NAM = 'appModule/tin_giao_hoi_viet_nam';
 export const MODULE_MODULE_NOI_BAT= 'appModule/noi_bat';
+export const MODULE_MODULE_SPECIAL_INFO = 'appModule/special_info';
