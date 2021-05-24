@@ -30,7 +30,7 @@ $config = [
         ],
         'fs' => [
             'class' => 'App\Helpers\UploadLocalFilesystem',
-            'path' => '@webroot/Image/NewPicture',
+            'path' => '@webroot/' . env('APP_TOOL_MM_FILE_MANAGER_PATH'),
         ],
     ],
     'modules' => [
@@ -47,8 +47,8 @@ $config = [
                            'Access-Control-Expose-Headers' => [],
                        ],
                    ],
-           'thumbsPath' => '@webroot/.tmb',
-           'thumbsUrl' => '@web/.tmb',
+           'thumbsPath' => '@webroot/' . env('APP_TOOL_MM_FILE_MANAGER_THUMB_DIR'),
+           'thumbsUrl' => '@web/' . env('APP_TOOL_MM_FILE_MANAGER_THUMB_DIR'),
            'thumbsSize' => 'thumb',
         ],
     ],

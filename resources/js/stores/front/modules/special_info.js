@@ -2,7 +2,7 @@ import {
     apiGetSettingByCode,
   } from '@app/api/front/setting';
   import {
-    apiGetLastedList
+    apiGetSpecialModuleList
   } from '@app/api/front/infos';
   import {
     INIT_LIST,
@@ -119,7 +119,7 @@ import { relativeTimeRounding } from 'moment';
         const params = {
           specialInfoIds: specialIds
         }
-        apiGetLastedList(
+        apiGetSpecialModuleList(
           (result) => {
             commit(INIT_LIST, result.data.results);
             

@@ -41,7 +41,7 @@
     } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'ModuleCarouselInfo',
+        name: 'ModuleCarouselSpecialInfo',
         components: {},
         data() {
             return {
@@ -61,14 +61,11 @@
                 return this.settingSpecialInfo.length;
             },
             _getInfoCarousel() {
-                let lists = [];
-                _.forEach(this.infoList, function(item, index) {
-                    if (index < 5) {
-                        lists.push(item)
-                    }
-                });
-
-                return lists;
+                if (this.pageLists.length) {
+                    return this.pageLists;
+                } else {
+                    return this._getLastedInfoCarousel();
+                }
             }
         },
         created() {
@@ -81,6 +78,16 @@
             ...mapActions(MODULE_MODULE_SPECIAL_INFO, [
                 ACTION_GET_SETTING,
             ]),
+            _getLastedInfoCarousel() {
+                let lists = [];
+                _.forEach(this.infoList, function(item, index) {
+                    if (index < 5) {
+                        lists.push(item)
+                    }
+                });
+
+                return lists;
+            },
             _getHref(info) {
                 if (info.hasOwnProperty('name_slug')) {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);

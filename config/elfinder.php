@@ -10,7 +10,7 @@ return array(
     | The dir where to store the images (relative from public)
     |
     */
-    'dir' => ['upload/news'],
+    'dir' => [env('APP_FILE_MANAGER_DIR')],
 
     /*
     |--------------------------------------------------------------------------
@@ -39,8 +39,8 @@ return array(
     */
 
     'route' => [
-        'prefix' => 'admin/filemanagers/news',
-        'middleware' => array('web'), //Set to null to disable middleware filter
+        'prefix' => env('APP_FILE_MANAGER_ROUTE_PREFIX'),
+        'middleware' => array(env('APP_FILE_MANAGER_ROUTE_MIDDLEWARE')), //Set to null to disable middleware filter
     ],
 
     /*
