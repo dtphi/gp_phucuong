@@ -1,18 +1,5 @@
 <template>
     <div>
-        <div class="form-group">
-            <label
-                class="col-sm-2 control-label"
-                for="input-parent-category-name">
-                    <span data-toggle="tooltip"
-                        data-original-title="(Tự động hoàn toàn)">Key</span>
-            </label>
-            <div class="col-sm-10">
-                <input class="form-control" v-model="settingSachNoi.key" type="text" disabled/>
-            </div>
-        
-        </div>
-
         <info-list :lists="settingSachNoi"></info-list>
     </div>
 </template>

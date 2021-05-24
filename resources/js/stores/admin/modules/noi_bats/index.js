@@ -36,18 +36,25 @@ const settingHanhCacThanh = {
   value: [],
   serialize: true
 }
+const settingBanner = {
+  key: 'module_noi_bat_banners',
+  value: [],
+  serialize: true
+}
 
 const defaultState = () => {
   return {
     module_noi_bat_sach_nois: settingSachNoi,
     module_noi_bat_youtubes: settingYoutube,
     module_noi_bat_hanh_cac_thanhs: settingHanhCacThanh,
+    module_noi_bat_banners: settingBanner,
     moduleData: {
       code: 'module_noi_bat',
       keys: [
         settingSachNoi,
         settingYoutube,
-        settingHanhCacThanh
+        settingHanhCacThanh,
+        settingBanner
       ]
     },
     loading: false,
@@ -68,6 +75,9 @@ export default {
     },
     settingHanhCacThanh(state) {
       return state.module_noi_bat_hanh_cac_thanhs;
+    },
+    settingBanner(state) {
+      return state.module_noi_bat_banners;
     },
     moduleData(state) {
       return state.moduleData
@@ -112,10 +122,12 @@ export default {
       state.module_noi_bat_sach_nois = payload.module_noi_bat_sach_nois;
       state.module_noi_bat_youtubes = payload.module_noi_bat_youtubes;
       state.module_noi_bat_hanh_cac_thanhs = payload.module_noi_bat_hanh_cac_thanhs;
+      state.module_noi_bat_banners = payload.module_noi_bat_banners;
       state.moduleData.keys = [];
       state.moduleData.keys.push(payload.module_noi_bat_sach_nois);
       state.moduleData.keys.push(payload.module_noi_bat_youtubes);
       state.moduleData.keys.push(payload.module_noi_bat_hanh_cac_thanhs);
+      state.moduleData.keys.push(payload.module_noi_bat_banners);
     }
   },
 
@@ -142,6 +154,12 @@ export default {
         url_full: '',
         author: '',
         sort_order: 0
+      })
+    },
+    module_noi_bat_banners({state}, value) {
+      state.module_noi_bat_banners.value.push({
+        image: '',
+        url_full: ''
       })
     },
     [ACTION_GET_SETTING]({

@@ -24,6 +24,11 @@
                     href="#tab-media-manager"
                     data-toggle="tab">{{$options.setting.tab_image_title}}</a>
             </li>
+            <li>
+                <a
+                    href="#tab-special-info"
+                    data-toggle="tab">{{$options.setting.tab_special_info_title}}</a>
+            </li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -55,6 +60,14 @@
                     class="tab-pane"
                     :group-data="info"></tab-media-manager>
             </div>
+
+            <div class="tab-pane" id="tab-special-info">
+                <tab-special-info
+                    ref="specialInfoTab"
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"></tab-special-info>
+            </div>
         </div>
     </form>
 </template>
@@ -79,6 +92,7 @@
     import TabAdvance from './TabAdvance';
     import TabLink from './TabLink';
     import TabMediaManager from './TabImage';
+    import TabSpecialInfo from './TabSpecialInfo';
 
     export default {
         name: 'FormAdd',
@@ -86,7 +100,8 @@
             TabGeneral,
             TabAdvance,
             TabLink,
-            TabMediaManager
+            TabMediaManager,
+            TabSpecialInfo,
         },
         data() {
             return {
@@ -152,6 +167,7 @@
             tab_link_title: 'Liên kết',
             tab_image_title: 'Hình ảnh',
             tab_design_title: 'Màn hình',
+            tab_special_info_title: 'Slide tin tức tiêu điểm',
             error_msg_system: 'Lỗi hệ thống !',
             isForm: 'add'
         }

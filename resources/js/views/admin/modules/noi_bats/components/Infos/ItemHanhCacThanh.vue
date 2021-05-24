@@ -59,37 +59,9 @@
             ...mapActions(MODULE_INFO_EDIT, [
                 ACTION_ADD_INFO_TO_CATEGORY_LIST
             ]),
-        
-            _initAddCategoryModule(cateList) {
-                const _self = this;
-                _.forEach(this.settingHanhCacThanh.value, function (categoryId) {
-                    const isCategory = _.find(cateList, {category_id: categoryId})
-                    if (isCategory) {
-                        _self._addInfoToCategory(isCategory)
-                    }
-                })
-            },
         },
         setting: {
             paren_category_txt: 'Danh mục hiển thị thông báo'
         }
     };
 </script>
-
-<style type="text/css" lang="css" scoped>
-    .cms-ul-cate-dropdown {
-        top: 35px;
-        left: 15px;
-    }
-
-    .cms-ul-cate-dropdown > li > a:hover, .cms-dropdown-menu > li > a:focus {
-        background-color: green !important
-    }
-
-    .cms-btn-dropdown {
-        position: absolute;
-        right: 0px;
-        top: 0px;
-        font-size: 0.5em;
-    }
-</style>

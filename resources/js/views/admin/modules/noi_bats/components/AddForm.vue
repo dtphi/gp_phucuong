@@ -15,6 +15,10 @@
             <li>
                 <a href="#tab-hanh-cac-thanh" data-toggle="tab">{{$options.setting.tab_hanh_cac_thanh_title}}</a>
             </li>
+
+            <li>
+                <a href="#tab-banner" data-toggle="tab">{{$options.setting.tab_banner_title}}</a>
+            </li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab-sach-noi">
@@ -36,6 +40,13 @@
                     role="tabpanel"
                     class="tab-pane"
                     :module-data="moduleData"></tab-hanh-cac-thanh>
+            </div>
+
+            <div class="tab-pane" id="tab-banner">
+                <tab-banner
+                    role="tabpanel"
+                    class="tab-pane"
+                    :module-data="moduleData"></tab-banner>
             </div>
         </div>
     </form>
@@ -59,13 +70,15 @@
     import TabSachNoi from './TabSachNoi';
     import TabYoutube from './TabYoutube';
     import TabHanhCacThanh from './TabHanhCacThanh';
+    import TabBanner from './TabBanner';
 
     export default {
         name: 'TheModuleForm',
         components: {
             TabSachNoi,
             TabYoutube,
-            TabHanhCacThanh
+            TabHanhCacThanh,
+            TabBanner,
         },
         data() {
             return {
@@ -100,6 +113,7 @@
             tab_design_title: 'Màn hình',
             tab_sach_noi_title: 'Sach Noi',
             tab_youtube_title: 'Youtube',
+            tab_banner_title: 'Banner',
             tab_hanh_cac_thanh_title: 'Hạnh Các Thánh',
             error_msg_system: 'Lỗi hệ thống !',
         }
