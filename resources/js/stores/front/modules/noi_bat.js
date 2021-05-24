@@ -18,18 +18,21 @@ import {
   const settingSachNoi = {};
   const      settingYoutube ={};
   const     settingHanhCacThanh ={};
+  const settingBanner = {};
   
   const defaultState = () => {
     return {
       module_noi_bat_sach_nois: {},
       module_noi_bat_youtubes: {},
       module_noi_bat_hanh_cac_thanhs: {},
+      module_noi_bat_banners: {},
       moduleData: {
         code: 'module_noi_bat',
         keys: [
           settingSachNoi,
           settingYoutube,
-          settingHanhCacThanh
+          settingHanhCacThanh,
+          settingBanner
         ]
       },
       pageLists: [],
@@ -50,6 +53,9 @@ import {
       },
       settingHanhCacThanh(state) {
         return state.module_noi_bat_hanh_cac_thanhs;
+      },
+      settingBanner(state) {
+        return state.module_noi_bat_banners
       },
       moduleData(state) {
         return state.moduleData
@@ -84,13 +90,23 @@ import {
   
   
       [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
-        state.module_noi_bat_sach_nois = payload.module_noi_bat_sach_nois;
-        state.module_noi_bat_youtubes = payload.module_noi_bat_youtubes;
-        state.module_noi_bat_hanh_cac_thanhs = payload.module_noi_bat_hanh_cac_thanhs;
+        if (payload.hasOwnProperty('module_noi_bat_banners')) {
+          state.module_noi_bat_banners = payload.module_noi_bat_banners;
+        }
+        if (payload.hasOwnProperty('module_noi_bat_sach_nois')) {
+          state.module_noi_bat_sach_nois  = payload.module_noi_bat_sach_nois;
+        }
+        if (payload.hasOwnProperty('module_noi_bat_youtubes')) {
+          state.module_noi_bat_youtubes = payload.module_noi_bat_youtubes;
+        }
+        if (payload.hasOwnProperty('module_noi_bat_hanh_cac_thanhs')) {
+          state.module_noi_bat_hanh_cac_thanhs = payload.module_noi_bat_hanh_cac_thanhs;
+        }
         state.moduleData.keys = [];
         state.moduleData.keys.push(payload.module_noi_bat_sach_nois);
         state.moduleData.keys.push(payload.module_noi_bat_youtubes);
         state.moduleData.keys.push(payload.module_noi_bat_hanh_cac_thanhs);
+        state.moduleData.keys.push(state.module_noi_bat_banners);
       },
     },
   

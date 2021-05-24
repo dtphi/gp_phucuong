@@ -119,15 +119,24 @@ export default {
     },
 
     [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
-      state.module_noi_bat_sach_nois = payload.module_noi_bat_sach_nois;
-      state.module_noi_bat_youtubes = payload.module_noi_bat_youtubes;
-      state.module_noi_bat_hanh_cac_thanhs = payload.module_noi_bat_hanh_cac_thanhs;
-      state.module_noi_bat_banners = payload.module_noi_bat_banners;
+      if (payload.hasOwnProperty('module_noi_bat_banners')) {
+        state.module_noi_bat_banners = payload.module_noi_bat_banners;
+      }
+      if (payload.hasOwnProperty('module_noi_bat_sach_nois')) {
+        state.module_noi_bat_sach_nois  = payload.module_noi_bat_sach_nois;
+      }
+      if (payload.hasOwnProperty('module_noi_bat_youtubes')) {
+        state.module_noi_bat_youtubes = payload.module_noi_bat_youtubes;
+      }
+      if (payload.hasOwnProperty('module_noi_bat_hanh_cac_thanhs')) {
+        state.module_noi_bat_hanh_cac_thanhs = payload.module_noi_bat_hanh_cac_thanhs;
+      }
+      
       state.moduleData.keys = [];
-      state.moduleData.keys.push(payload.module_noi_bat_sach_nois);
-      state.moduleData.keys.push(payload.module_noi_bat_youtubes);
-      state.moduleData.keys.push(payload.module_noi_bat_hanh_cac_thanhs);
-      state.moduleData.keys.push(payload.module_noi_bat_banners);
+      state.moduleData.keys.push(state.module_noi_bat_sach_nois);
+      state.moduleData.keys.push(state.module_noi_bat_youtubes);
+      state.moduleData.keys.push(state.module_noi_bat_hanh_cac_thanhs);
+      state.moduleData.keys.push(state.module_noi_bat_banners);
     }
   },
 
@@ -157,10 +166,14 @@ export default {
       })
     },
     module_noi_bat_banners({state}, value) {
-      state.module_noi_bat_banners.value.push({
-        image: '',
-        url_full: ''
-      })
+      console.log(value)
+      const data = {
+        image: value.filePath,
+        url_full: '',
+        width: 700,
+        height: 150
+      };
+      state.module_noi_bat_banners.value.push(data);
     },
     [ACTION_GET_SETTING]({
       dispatch,

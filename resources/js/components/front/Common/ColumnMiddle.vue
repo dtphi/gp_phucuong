@@ -5,6 +5,9 @@
         <keep-alive>
             <component v-bind:is="_currentModule"></component>
         </keep-alive>
+        <keep-alive>
+            <component v-bind:is="_currentModuleSpecialBanner"></component>
+        </keep-alive>
          <keep-alive>
             <component v-bind:is="_currentModuleLoiChua"></component>
         </keep-alive>
@@ -25,6 +28,7 @@
         name: 'ColumnMiddle',
         components: {
             'module-info-carousel': () => import('v@front/modules/special_infos'),
+            'module-special-banner': () => import('v@front/modules/special_banners'),
             'module-loi-chua': () => import('v@front/modules/loi_chuas'),
             'module-tin-giao-phan': () => import('v@front/modules/tin_giao_phans'),
             'module-van-kien': () => import('v@front/modules/van_kiens'),
@@ -54,6 +58,14 @@
             _currentModule: function () {
                 let contentType = 'content_' + this.contentType + '_column';
                 let moduleName = this.$route.meta.layout_content[contentType].middle_module_info_carousel;
+                if (moduleName) {
+                    return "module-" + moduleName.toLowerCase();
+                }
+                return false;
+            },
+            _currentModuleSpecialBanner: function () {
+                let contentType = 'content_' + this.contentType + '_column';
+                let moduleName = this.$route.meta.layout_content[contentType].middle_module_special_banner;
                 if (moduleName) {
                     return "module-" + moduleName.toLowerCase();
                 }
