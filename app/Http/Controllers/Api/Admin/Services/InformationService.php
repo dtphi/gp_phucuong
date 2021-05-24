@@ -47,7 +47,7 @@ final class InformationService implements BaseModel, InformationModel
     public function apiGetList(array $options = [], $limit = 5)
     {
         // TODO: Implement apiGetList() method.
-        $query = $this->apiGetInformations($options, $limit);
+        $query = $this->apiGetInformations($options);
 
         return $query->paginate($limit);
     }
@@ -302,7 +302,7 @@ final class InformationService implements BaseModel, InformationModel
     {
         $query = $this->model->select()
             ->orderBy('sort_order', 'DESC')
-            ->orderBy('date_available', 'DESC')->limit($limit);
+            ->orderBy('date_available', 'DESC');
 
         return $query;
     }

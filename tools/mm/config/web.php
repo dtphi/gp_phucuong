@@ -29,8 +29,8 @@ $config = [
             ],
         ],
         'fs' => [
-            'class' => 'App\Helpers\UploadLocalFilesystem',
-            'path' => '@webroot/' . env('APP_TOOL_MM_FILE_MANAGER_PATH'),
+            'class' => APP_TOOL_MM_FILE_MANAGER_UPLOAD_HELPER_CLASS,
+            'path' => '@webroot/' . APP_TOOL_MM_FILE_MANAGER_PATH,
         ],
     ],
     'modules' => [
@@ -47,9 +47,9 @@ $config = [
                            'Access-Control-Expose-Headers' => [],
                        ],
                    ],
-           'thumbsPath' => '@webroot/' . env('APP_TOOL_MM_FILE_MANAGER_THUMB_DIR'),
-           'thumbsUrl' => '@web/' . env('APP_TOOL_MM_FILE_MANAGER_THUMB_DIR'),
-           'thumbsSize' => 'thumb',
+           'thumbsPath' => '@webroot/' . APP_TOOL_MM_FILE_MANAGER_THUMB_DIR,
+           'thumbsUrl' => '@web/' . APP_TOOL_MM_FILE_MANAGER_THUMB_DIR,
+           'thumbsSize' => APP_TOOL_MM_FILE_MANAGER_THUMB_SIZE,
         ],
     ],
 ];
