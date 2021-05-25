@@ -62,17 +62,22 @@
             </div>
 
             <div class="tab-pane" id="tab-special-info">
-                <tab-special-info
-                    ref="specialInfoTab"
+                <tab-special-info-carousel
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-special-info>
+                    :module-data="moduleData"></tab-special-info-carousel>
             </div>
         </div>
     </form>
 </template>
 
 <script>
+    import {
+        MODULE_MODULE_NOI_BAT
+    } from 'store@admin/types/module-types';
+    import {
+        ACTION_INSERT_SETTING
+    } from 'store@admin/types/action-types';
     import {EventBus} from '@app/api/utils/event-bus';
     import {
         mapState,
@@ -92,7 +97,7 @@
     import TabAdvance from './TabAdvance';
     import TabLink from './TabLink';
     import TabMediaManager from './TabImage';
-    import TabSpecialInfo from './TabSpecialInfo';
+    import TabSpecialInfoCarousel from './TabSpecialInfoCarousel';
 
     export default {
         name: 'FormAdd',
@@ -101,7 +106,7 @@
             TabAdvance,
             TabLink,
             TabMediaManager,
-            TabSpecialInfo,
+            TabSpecialInfoCarousel,
         },
         data() {
             return {
@@ -110,6 +115,9 @@
             };
         },
         computed: {
+            ...mapGetters(MODULE_MODULE_NOI_BAT, [
+                'moduleData',
+            ]),
             ...mapState(MODULE_INFO_ADD, {
                 loading: state => state.loading
             }),
@@ -117,7 +125,6 @@
                 'info',
             ])
         },
-
         mounted() {
             const _self = this;
             EventBus.$on('on-selected-image', (imgItem) => {
@@ -126,6 +133,12 @@
             });
         },
         methods: {
+            ...mapActions(MODULE_MODULE_NOI_BAT, [
+                ACTION_INSERT_SETTING
+            ]),
+            _submitInfo() {
+                this.[ACTION_INSERT_SETTING](this.moduleData);
+            },
             ...mapActions(MODULE_INFO_ADD, [
                 ACTION_SET_LOADING,
                 ACTION_INSERT_INFO,

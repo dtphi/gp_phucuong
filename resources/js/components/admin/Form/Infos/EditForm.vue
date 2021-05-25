@@ -24,6 +24,11 @@
                     href="#tab-media-manager"
                     data-toggle="tab">{{$options.setting.tab_image_title}}</a>
             </li>
+            <li>
+                <a
+                    href="#tab-special-info"
+                    data-toggle="tab">{{$options.setting.tab_special_info_title}}</a>
+            </li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -55,11 +60,26 @@
                     class="tab-pane"
                     :group-data="info"></tab-media-manager>
             </div>
+
+            <div class="tab-pane" id="tab-special-info">
+                <tab-special-info-carousel
+                    role="tabpanel"
+                    class="tab-pane"
+                    :module-data="moduleData"></tab-special-info-carousel>
+            </div>
         </div>
     </form>
 </template>
 
 <script>
+    import {
+        MODULE_MODULE_NOI_BAT
+    } from 'store@admin/types/module-types';
+    import {
+        ACTION_GET_SETTING,
+        ACTION_INSERT_SETTING
+    } from 'store@admin/types/action-types';
+    import TabSpecialInfoCarousel from './TabSpecialInfoCarousel';
     import {EventBus} from '@app/api/utils/event-bus';
     import {
         mapState,
@@ -81,6 +101,7 @@
     export default {
         name: 'InformationEditForm',
         components: {
+            TabSpecialInfoCarousel,
             TabGeneral,
             TabMediaManager,
             TabAdvance,
@@ -93,13 +114,18 @@
             };
         },
         computed: {
+            ...mapGetters(MODULE_MODULE_NOI_BAT, [
+                'moduleData',
+            ]),
             ...mapState(MODULE_INFO_EDIT, {
                 loading: state => state.loading
             }),
-
             ...mapGetters(MODULE_INFO_EDIT, [
                 'info'
             ])
+        },
+        created() {
+            this.[ACTION_GET_SETTING]();
         },
         mounted() {
             const _self = this;
@@ -109,6 +135,13 @@
             });
         },
         methods: {
+            ...mapActions(MODULE_MODULE_NOI_BAT, [
+                ACTION_GET_SETTING,
+                ACTION_INSERT_SETTING
+            ]),
+            _submitInfo() {
+                this.[ACTION_INSERT_SETTING](this.moduleData);
+            },
             ...mapActions(MODULE_INFO_EDIT, [
                 ACTION_UPDATE_INFO,
                 ACTION_SET_IMAGE
@@ -148,7 +181,8 @@
             tab_link_title: 'Liên kết',
             tab_design_title: 'Màn hình',
             error_msg_system: 'Lỗi hệ thống !',
-            isForm: 'edit'
+            isForm: 'edit',
+            tab_special_info_title: 'Slide tin tức tiêu điểm',
         }
     };
 </script>
