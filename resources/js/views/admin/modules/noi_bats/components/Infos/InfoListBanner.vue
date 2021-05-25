@@ -26,6 +26,9 @@
                             <td>{{$options.setting.image_url_title}}</td>
                             <td>Width</td>
                             <td>Height</td>
+                            <td>Trạng thái</td>
+                            <td>Mở</td>
+                            <td>Thực hiện </td>
                         </tr>
                         </thead>
                         <tbody v-if="_getBannerList.length">
@@ -103,6 +106,7 @@
                     }
                 }
             },
+            
         },
         setting: {
             image_title: 'Banner',

@@ -7,6 +7,8 @@
                     <td class="text-left">{{$options.setting.info_url_title}}</td>
                     <td class="text-left">{{$options.setting.info_author_titile}}</td>
                     <td class="text-left">{{$options.setting.info_sort_order_title}}</td>
+                    <td class="text-left">Trạng thái</td>
+                    <td class="text-left">Mở</td>
                     <td calss="text-right">{{$options.setting.info_action_title}}</td>
                 </tr>
             </thead>
@@ -25,8 +27,23 @@
                         <input v-model="item.sort_order" class="form-control" type="number"/>
                     </td>
                     <td>
+                        <select 
+                            v-model="item.status">
+                            <option value="1" :selected="item.status == 1">Xảy ra</option>
+                            <option value="0" :selected="item.status == 0">Ẩn</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select 
+                            v-model="item.open">
+                            <option value="0" :selected="item.open == 0">_blank</option>
+                            <option value="1" :selected="item.open == 1">_self</option>
+                        </select>
+                    </td>
+                    <td>
                         <button 
                             type="button" 
+                            @click="_removeItem(item)"
                             data-toggle="tooltip"
                             class="btn btn-default cms-btn">
                                 <font-awesome-layers size="1x" style="background:MistyRose">
@@ -40,7 +57,7 @@
 
             <tfoot>
                 <tr>
-                    <td colspan="4"></td>
+                    <td colspan="6"></td>
                     <td class="text-right">
                         <btn-add-setting :module-key="lists.key"></btn-add-setting>
                     </td>
@@ -51,29 +68,42 @@
 </template>
 
 <script>
+import {
+    mapActions
+} from 'vuex';
     import {
         fn_get_base_url_image
     } from '@app/api/utils/fn-helper';
     import BtnAddSetting from '../Btn/BtnAddSetting';
+    import {
+        MODULE_MODULE_NOI_BAT
+    } from 'store@admin/types/module-types';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAddSetting,
         },
-
         props: {
             lists: {
                 default: {}
             }
         },
-
         computed: {
         },
-
         methods: {
+            ...mapActions(MODULE_MODULE_NOI_BAT, [
+                'module_noi_bat_sach_nois_action_remove',
+                'module_noi_bat_hanh_cac_thanhs_action_remove',
+                'module_noi_bat_youtubes_action_remove'
+            ]),
+            _removeItem(item) {
+                this[this.lists.key+'_action_remove']({
+                    action: this.lists.key,
+                    item: item
+                });
+            }
         },
-
         setting: {
             info_title: 'Tiêu đề',
             info_url_title: 'Url tiêu đề',

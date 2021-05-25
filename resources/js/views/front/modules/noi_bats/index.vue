@@ -5,7 +5,7 @@
             <b-col cols="4" class="mb-3 col-mobile">
                 <h4 class="tit-common">Sách nói</h4>
                 <a :href="item.url_title" target="_blank" class="row-item-2" 
-                    v-for="(item, index) in settingSachNoi" 
+                    v-for="(item, index) in _getSachNoiList" 
                     :key="index">
                     <span>{{item.title}}</span>
                     <span v-if="item.author">
@@ -17,7 +17,7 @@
             <b-col cols="4" class="mb-3 col-mobile">
                 <h4 class="tit-common">Youtube</h4>
                 <a :href="item.url_title" target="_blank"  class="row-item-2" 
-                    v-for="(item, index) in settingYoutube" 
+                    v-for="(item, index) in _getYoutubeList" 
                     :key="index">
                     <span>{{item.title}}</span>
                     <span v-if="item.author">
@@ -29,7 +29,7 @@
             <b-col cols="4" class="mb-3 col-mobile">
                 <h4 class="tit-common">Hát thanh vịnh</h4>
                 <a :href="item.url_title" target="_blank" class="row-item-2" 
-                    v-for="(item, index) in settingHanhCacThanh" 
+                    v-for="(item, index) in _getHanhCacThanhList" 
                     :key="index">
                     <span>{{item.title}}</span>
                     <span v-if="item.author">
@@ -71,6 +71,39 @@
             ]),
             _isExist() {
                 return (this.settingSachNoi.length || this.settingYoutube.length || this.settingHanhCacThanh.length);
+            },
+            _getSachNoiList() {
+                const lists = _.remove(this.settingSachNoi, function(item) {
+                    return parseInt(item.status);
+                });
+
+                if (lists && lists.length) {
+                    return lists;
+                }
+
+                return [];
+            },
+            _getYoutubeList() {
+                const lists = _.remove(this.settingYoutube, function(item) {
+                    return parseInt(item.status);
+                });
+
+                if (lists && lists.length) {
+                    return lists;
+                }
+
+                return [];
+            },
+            _getHanhCacThanhList() {
+                const lists = _.remove(this.settingHanhCacThanh, function(item) {
+                    return parseInt(item.status);
+                });
+
+                if (lists && lists.length) {
+                    return lists;
+                }
+
+                return [];
             }
         },
         created() {

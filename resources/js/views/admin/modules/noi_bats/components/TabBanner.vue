@@ -28,7 +28,6 @@
             ...mapActions(MODULE_MODULE_NOI_BAT, [
                 'module_noi_bat_banners'
             ]),
-
             _onSelectMultipleBannerImg(imgFiles) {
                 this.module_noi_bat_banners(imgFiles);
             }

@@ -1,4 +1,5 @@
 import AppConfig from 'api@admin/constants/app-config';
+import { v4 as uuidv4 } from 'uuid';
 import {
   apiGetSettingByCode,
   apiInsertSetting
@@ -21,6 +22,7 @@ import {
   ACTION_INSERT_SETTING,
   ACTION_GET_SETTING,
 } from '../../types/action-types';
+import _ from 'lodash';
 const settingSachNoi = {
   key: 'module_noi_bat_sach_nois',
   value: [],
@@ -133,9 +135,78 @@ export default {
       }
       
       state.moduleData.keys = [];
+      state.module_noi_bat_sach_nois.value = _.forEach(state.module_noi_bat_sach_nois.value, function(item) {
+        if (!item.hasOwnProperty('id')) {
+          _.update(item, 'id', function(id) {
+            return id = uuidv4();
+          })
+        }
+        if (!item.hasOwnProperty('status')) {
+          _.update(item, 'status', function(id) {
+            return status = 1;
+          })
+        }
+        if (!item.hasOwnProperty('open')) {
+          _.update(item, 'open', function(id) {
+            return open = 0;
+          })
+        }
+      });
       state.moduleData.keys.push(state.module_noi_bat_sach_nois);
+      state.module_noi_bat_youtubes.value = _.forEach(state.module_noi_bat_youtubes.value, function(item) {
+        if (!item.hasOwnProperty('id')) {
+          _.update(item, 'id', function(id) {
+            return id = uuidv4();
+          })
+        }
+        if (!item.hasOwnProperty('status')) {
+          _.update(item, 'status', function(id) {
+            return status = 1;
+          })
+        }
+        if (!item.hasOwnProperty('open')) {
+          _.update(item, 'open', function(id) {
+            return open = 0;
+          })
+        }
+      });
       state.moduleData.keys.push(state.module_noi_bat_youtubes);
+      state.module_noi_bat_hanh_cac_thanhs.value = _.forEach(state.module_noi_bat_hanh_cac_thanhs.value, function(item) {
+        if (!item.hasOwnProperty('id')) {
+          _.update(item, 'id', function(id) {
+            return id = uuidv4();
+          })
+        }
+        if (!item.hasOwnProperty('status')) {
+          _.update(item, 'status', function(id) {
+            return status = 1;
+          })
+        }
+        if (!item.hasOwnProperty('open')) {
+          _.update(item, 'open', function(id) {
+            return open = 0;
+          })
+        }
+      });
       state.moduleData.keys.push(state.module_noi_bat_hanh_cac_thanhs);
+      state.module_noi_bat_banners.value = _.forEach(state.module_noi_bat_banners.value, function(item) {
+        if (!item.hasOwnProperty('id')) {
+          _.update(item, 'id', function(id) {
+            return id = uuidv4();
+          })
+        }
+        if (!item.hasOwnProperty('status')) {
+          _.update(item, 'status', function(id) {
+            return status = 1;
+          })
+        }
+        if (!item.hasOwnProperty('open')) {
+          _.update(item, 'open', function(id) {
+            return open = 0;
+          })
+        }
+      });
+
       state.moduleData.keys.push(state.module_noi_bat_banners);
     }
   },
@@ -143,37 +214,88 @@ export default {
   actions: {
     module_noi_bat_sach_nois({state}, value) {
       state.module_noi_bat_sach_nois.value.push({
+        id: uuidv4(),
+        status: 1,
+        open: 0,
         title: '',
         url_title: '',
         author: '',
         sort_order: 0
       })
     },
+    module_noi_bat_sach_nois_action_remove({state}, params) {
+      let sachnois = state.module_noi_bat_sach_nois.value;
+      const data = params.item;
+
+      if(state.module_noi_bat_sach_nois.value.length > 1) {
+        state.module_noi_bat_sach_nois.value = _.remove(sachnois, function(item) {
+          return !(item.id == data.id);
+        })
+      }
+    },
     module_noi_bat_youtubes({state}, value) {
       state.module_noi_bat_youtubes.value.push({
+        id: uuidv4(),
+        status: 1,
         title: '',
+        open: 0,
         url_full: '',
         author: '',
         sort_order: 0
       })
     },
+    module_noi_bat_youtubes_action_remove({state}, params) {
+      let youtubes = state.module_noi_bat_youtubes.value;
+      const data = params.item;
+
+      if(state.module_noi_bat_youtubes.value.length > 1) {
+        state.module_noi_bat_youtubes.value = _.remove(youtubes, function(item) {
+          return !(item.id == data.id);
+        })
+      }
+    },
     module_noi_bat_hanh_cac_thanhs({state}, value) {
       state.module_noi_bat_hanh_cac_thanhs.value.push({
+        id: uuidv4(),
+        status: 1,
         title: '',
+        open: 0,
         url_full: '',
         author: '',
         sort_order: 0
       })
+    },
+    module_noi_bat_hanh_cac_thanhs_action_remove({state}, params) {
+      let hanhCacThanhs = state.module_noi_bat_hanh_cac_thanhs.value;
+      const data = params.item;
+
+      if(state.module_noi_bat_hanh_cac_thanhs.value.length > 1) {
+        state.module_noi_bat_hanh_cac_thanhs.value = _.remove(hanhCacThanhs, function(item) {
+          return !(item.id == data.id);
+        })
+      }
     },
     module_noi_bat_banners({state}, value) {
       console.log(value)
       const data = {
+        id: uuidv4(),
+        status: 1,
+        open: 0,
         image: value.filePath,
         url_full: '',
         width: 700,
         height: 150
       };
       state.module_noi_bat_banners.value.push(data);
+    },
+    module_noi_bat_banners_action_remove({state}, banner) {
+      let banners = state.module_noi_bat_banners.value;
+
+      if(state.module_noi_bat_banners.value.length > 1) {
+        state.module_noi_bat_banners.value = _.remove(banners, function(item) {
+          return !(item.id == banner.id);
+        })
+      }
     },
     [ACTION_GET_SETTING]({
       dispatch,

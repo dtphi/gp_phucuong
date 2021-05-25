@@ -1,10 +1,14 @@
 <template>
-    <div id="special-module" v-if="_isExist">
+    <div id="special-module" v-if="_getBanner">
         <h4 class="tit-highlights"><span></span></h4>
         <b-row>
             <b-col cols="12" class="col-mobile">
                 <div class="banner-image d-inline-block">
-                    <img v-bind:style="{ width: _bannerW + 'px', height: _bannerH + 'px' }"  :src="'/Image/NewPicture/'+settingBanner[0].image" alt="Hình ảnh Phú Cường" class="img">
+                    <a :href="_getBanner.url_full" :target="(_getBanner.open)?'_self':'_blank'">  
+                        <img v-bind:style="{ width: _getBanner.width + 'px', height: _getBanner.height + 'px' }"  
+                            :src="'/Image/NewPicture/'+_getBanner.image" 
+                            alt="Hình ảnh Phú Cường" class="img">
+                    </a>
                 </div>
             </b-col>
         </b-row>
@@ -39,12 +43,17 @@
             _isExist() {
                 return this.settingBanner.length 
             },
-            _bannerW() {
-                return this.settingBanner[0].width
+            _getBanner() {
+                const lists = _.remove(this.settingBanner, function(item) {
+                    return parseInt(item.status);
+                });
+
+                if (lists.length) {
+                    return lists[0];
+                }
+
+                return null;
             },
-            _bannerH() {
-                return this.settingBanner[0].height;
-            }
         },
         methods: {
             ...mapActions(MODULE_MODULE_NOI_BAT, [
