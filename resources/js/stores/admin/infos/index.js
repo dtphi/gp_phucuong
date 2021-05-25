@@ -36,13 +36,11 @@ import {
   ACTION_RELOAD_GET_INFO_LIST,
   ACTION_SET_LOADING,
   ACTION_SEARCH_ALL,
-  ACTION_UPDATE_INFO_SPECIAL,
   ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
 import {
   fn_redirect_url
 } from '@app/api/utils/fn-helper';
-import infos from '../../front/infos';
 import _ from 'lodash';
 
 const defaultState = () => {

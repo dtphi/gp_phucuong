@@ -15,16 +15,44 @@
             <tbody>
                 <tr v-for="(item, idx) in lists.value" :key="idx">
                     <td>
-                        <input v-model="item.title" class="form-control" type="text"/>
+                        <validation-provider
+                            name="item_title"
+                            rules="required|max:191"
+                            v-slot="{ errors }">
+                                <input v-model="item.title" class="form-control" type="text"/>
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                        </validation-provider>
                     </td>
                     <td>
-                        <input v-model="item.url_title" class="form-control" type="text"/>
+                        <validation-provider
+                            name="item_url_title"
+                            rules="required|url|max:500"
+                            v-slot="{ errors }">
+                            <input v-model="item.url_title" class="form-control" type="text"/>
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                        </validation-provider>
                     </td>
                     <td>
-                        <input v-model="item.author" class="form-control" type="text"/>
+                        <validation-provider
+                            name="item_author"
+                            rules="max:255"
+                            v-slot="{ errors }">
+                            <input v-model="item.author" class="form-control" type="text"/>
+
+                        <span class="cms-text-red">{{ errors[0] }}</span>
+                        </validation-provider>
                     </td>
                     <td>
-                        <input v-model="item.sort_order" class="form-control" type="number"/>
+                        <validation-provider
+                            name="item_sort_order"
+                            rules="numeric|max:11"
+                            v-slot="{ errors }">
+                            <input v-model="item.sort_order" class="form-control" type="number"/>
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                        </validation-provider>
                     </td>
                     <td>
                         <select 

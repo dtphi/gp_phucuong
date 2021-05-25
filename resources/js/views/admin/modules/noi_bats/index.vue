@@ -16,6 +16,7 @@
                     <div class="pull-right">
                         <button
                             type="button"
+                            :disabled="loading"
                             @click="_submitInfo"
                             data-toggle="tooltip"
                             :title="$options.setting.btn_save_txt"

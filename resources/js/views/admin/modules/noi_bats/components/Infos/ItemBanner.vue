@@ -8,16 +8,37 @@
             </div>
         </td>
         <td>
-            <input 
-                v-model="banner.url_full" type="text" class="form-control" />
+            <validation-provider
+                name="item_url_full"
+                rules="required|url|max:500"
+                v-slot="{ errors }">
+                    <input 
+                        v-model="banner.url_full" type="text" class="form-control" />
+
+                <span class="cms-text-red">{{ errors[0] }}</span>
+            </validation-provider>
         </td>
         <td>
-            <input 
-                v-model="banner.width" type="text" class="form-control" />
+            <validation-provider
+                name="item_sort_order"
+                rules="numeric|max:5"
+                v-slot="{ errors }">
+                <input 
+                    v-model="banner.width" type="text" class="form-control" />
+
+                <span class="cms-text-red">{{ errors[0] }}</span>
+            </validation-provider>
         </td>
         <td>
-            <input 
-                v-model="banner.height" type="text" class="form-control" />
+            <validation-provider
+                name="item_sort_order"
+                rules="numeric|max:5"
+                v-slot="{ errors }">
+                <input 
+                    v-model="banner.height" type="text" class="form-control" />
+
+                <span class="cms-text-red">{{ errors[0] }}</span>
+            </validation-provider>
         </td>
         <td>
             <select 
@@ -65,12 +86,6 @@
             banner: {
                 default: {}
             }
-        },
-        data() {
-            return {
-            }
-        },
-        computed: {
         },
         methods: {
             ...mapActions(MODULE_MODULE_NOI_BAT, [

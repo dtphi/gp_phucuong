@@ -1,13 +1,16 @@
 <template>
-    <div id="special-module" v-if="_getBanner">
+    <div id="special-module" v-if="_getBanner" style="margin-top:15px;margin-bottom:15px">
         <h4 class="tit-highlights"><span></span></h4>
         <b-row>
             <b-col cols="12" class="col-mobile">
-                <div class="banner-image d-inline-block">
-                    <a :href="_getBanner.url_full" :target="(_getBanner.open)?'_self':'_blank'">  
-                        <img v-bind:style="{ width: _getBanner.width + 'px', height: _getBanner.height + 'px' }"  
+                <div class="banner-image">
+                    <a :href="_getBanner.url_full" :target="(_getBanner.open)?'_self':'_blank'" style="width:100%">  
+                        <img style="width:inherit" v-bind:style="{ height: _getBanner.height + 'px' }"  
                             :src="'/Image/NewPicture/'+_getBanner.image" 
                             alt="Hình ảnh Phú Cường" class="img">
+                        <!--<img v-bind:style="{ width: _getBanner.width + 'px', height: _getBanner.height + 'px' }"  
+                            :src="'/Image/NewPicture/'+_getBanner.image" 
+                            alt="Hình ảnh Phú Cường" class="img">-->
                     </a>
                 </div>
             </b-col>
