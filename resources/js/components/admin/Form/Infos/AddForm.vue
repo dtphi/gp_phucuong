@@ -73,7 +73,7 @@
 
 <script>
     import {
-        MODULE_MODULE_NOI_BAT
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
     import {
         ACTION_INSERT_SETTING
@@ -115,7 +115,7 @@
             };
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_NOI_BAT, [
+            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 'moduleData',
             ]),
             ...mapState(MODULE_INFO_ADD, {
@@ -133,7 +133,7 @@
             });
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
+            ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 ACTION_INSERT_SETTING
             ]),
             _submitInfo() {

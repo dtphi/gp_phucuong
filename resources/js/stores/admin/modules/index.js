@@ -7,6 +7,7 @@ import TinGiaoHoiVietNam from './tin_giao_hoi_viet_nams';
 import TinGiaoPhan from './tin_giao_phans';
 import VanKien from './van_kiens';
 import NoiBat from './noi_bats';
+import SpecialInfoCarousel from './special_info_carousels';
 
 export default {
   namespaced: true,
@@ -21,5 +22,6 @@ export default {
     tin_giao_phan: TinGiaoPhan,
     van_kien: VanKien,
     noi_bat: NoiBat,
+    special_info_carousel: SpecialInfoCarousel,
   }
 }

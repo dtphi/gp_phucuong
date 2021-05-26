@@ -77,7 +77,7 @@
         fn_get_base_url_image
     } from '@app/api/utils/fn-helper';
     import {
-        MODULE_MODULE_NOI_BAT
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
 
     export default {
@@ -88,7 +88,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
+            ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 'module_noi_bat_banners_action_remove'
             ]),
             _getImgUrl() {

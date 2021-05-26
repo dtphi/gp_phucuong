@@ -31,7 +31,7 @@
     import InfoAddForm from './SpecialInfo/AddForm';
 
     import {
-        MODULE_MODULE_NOI_BAT
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO
@@ -48,7 +48,7 @@
             }
         },
         computed: {
-            ...mapState(MODULE_MODULE_NOI_BAT, {
+            ...mapState(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, {
                 loading: state => state.loading,
                 errors: state => state.errors,
                 updateSuccess: state => state.updateSuccess
@@ -65,7 +65,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
+            ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 ACTION_RESET_NOTIFICATION_INFO
             ]),
             _errorToArrs() {

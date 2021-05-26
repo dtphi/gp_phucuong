@@ -73,7 +73,7 @@
 
 <script>
     import {
-        MODULE_MODULE_NOI_BAT
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_SETTING,
@@ -114,7 +114,7 @@
             };
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_NOI_BAT, [
+            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 'moduleData',
             ]),
             ...mapState(MODULE_INFO_EDIT, {
@@ -135,7 +135,7 @@
             });
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
+            ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 ACTION_GET_SETTING,
                 ACTION_INSERT_SETTING
             ]),

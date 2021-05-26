@@ -37,7 +37,7 @@
     require('@app/tools/mm/dist/style.css');
     import {MM} from '@app/tools/mm/dist/mm.min';
     import {
-        MODULE_MODULE_NOI_BAT,
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL,
     } from 'store@admin/types/module-types';
     import lodash from 'lodash';
     import ItemCarousel from './ItemCarousel';
@@ -53,7 +53,7 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_NOI_BAT, [
+            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 'settingBanner',
             ]),
             _getBannerList() {

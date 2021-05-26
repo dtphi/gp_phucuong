@@ -26,7 +26,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_NOI_BAT
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
 
     import {
@@ -47,11 +47,11 @@
             };
         },
         computed: {
-            ...mapState(MODULE_MODULE_NOI_BAT, {
+            ...mapState(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, {
                 loading: state => state.loading
             }),
 
-            ...mapGetters(MODULE_MODULE_NOI_BAT, [
+            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 'moduleData',
             ])
         },
@@ -59,7 +59,7 @@
             this.[ACTION_GET_SETTING]();
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
+            ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 ACTION_GET_SETTING,
                 ACTION_INSERT_SETTING
             ]),
