@@ -64,7 +64,8 @@ const defaultState = () => {
       multi_images: [],
       relateds: [],
       categorys: [],
-      downloads: []
+      downloads: [],
+      special_carousels: [],
     },
     isImgChange: true,
     listCategorysDisplay: [],
@@ -160,6 +161,9 @@ export default {
   },
 
   actions: {
+    update_special_carousel({state}, specialCarousel) {
+      state.info.special_carousels = specialCarousel;
+    },
 
     [ACTION_SET_LOADING]({
       commit

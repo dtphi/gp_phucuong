@@ -56,15 +56,16 @@
 <script>
     import {
         mapState,
-        mapGetters,
-        mapActions
+        mapActions,
+        mapGetters
     } from 'vuex';
 
     import InfoAddForm from 'com@admin/Form/Infos/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from '../components/TheBtnBackListPage';
     import {
-        MODULE_INFO_ADD
+        MODULE_INFO_ADD,
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO
@@ -83,6 +84,9 @@
             }
         },
         computed: {
+            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
+                'specialInfoCarousel'
+            ]),
             ...mapState(MODULE_INFO_ADD, {
                 loading: state => state.loading,
                 errors: state => state.errors,
@@ -101,7 +105,8 @@
         },
         methods: {
             ...mapActions(MODULE_INFO_ADD, [
-                ACTION_RESET_NOTIFICATION_INFO
+                ACTION_RESET_NOTIFICATION_INFO,
+                'update_special_carousel'
             ]),
             _errorToArrs() {
                 let errs = [];
@@ -117,6 +122,8 @@
             },
             _submitInfo() {
                 const _self = this;
+
+                this.update_special_carousel(this.specialInfoCarousel);
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
                         _self.$refs.formAddUser._submitInfo();

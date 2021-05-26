@@ -24,6 +24,7 @@
                                 class="btn btn-primary"><i class="fa fa-save"></i>
                         </button>
                         <the-btn-back-list-page></the-btn-back-list-page>
+                        <btn-add></btn-add>
                     </div>
                     <h1>{{$options.setting.panel_title}}</h1>
                     <breadcrumb></breadcrumb>
@@ -54,6 +55,7 @@
     import TheBtnBackListPage from '../components/TheBtnBackListPage';
     import InfoEditForm from 'com@admin/Form/Infos/EditForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
+    import BtnAdd from '../components/TheBtnAdd';
     import {
         MODULE_INFO_EDIT,
     } from 'store@admin/types/module-types';
@@ -71,6 +73,7 @@
             TheBtnBackListPage,
             Breadcrumb,
             InfoEditForm,
+            BtnAdd,
         },
         beforeCreate() {
             const infoId = parseInt(this.$route.params.infoId);

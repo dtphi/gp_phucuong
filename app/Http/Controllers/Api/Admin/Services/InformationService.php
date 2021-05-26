@@ -13,6 +13,7 @@ use App\Models\InformationImage;
 use App\Models\InformationRelated;
 use App\Models\InformationToCategory;
 use App\Models\InformationToDownload;
+use App\Models\InformationCarousel;
 use DB;
 use Illuminate\Support\Str;
 
@@ -168,6 +169,23 @@ final class InformationService implements BaseModel, InformationModel
                     InformationRelated::fcDeleteByInfoAndRelatedId($relatedId, $infoId);
                     InformationRelated::insertByInfoId($relatedId, $infoId);
                 }
+            }
+
+            if (isset($data['special_carousels']) && !empty($data['special_carousels'])) {
+                $carouselData = [
+                    'name' => $data['name'],
+                    'name_slug' => $this->model->name_slug,
+                    'sort_description' => $data['sort_description'],
+                    'description' => htmlentities($data['description']),
+                    'image_origin' => $this->model->image['path'],
+                    'image' => serialize($data['special_carousels']['value']),
+                    'sort_order' => $data['sort_order'],
+                    'date_available' => $data['date_available'],
+                    'information_type' => $data['info_type'],
+                    'viewed' => 0,
+                    'vote' => 0
+                ];
+                InformationCarousel::insertByInfoId($infoId, $carouselData);
             }
         } else {
             DB::rollBack();

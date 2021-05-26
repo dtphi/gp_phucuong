@@ -26,10 +26,10 @@
         },
         methods: {
             ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'module_noi_bat_banners'
+                'pushSpecialInfoCarousel'
             ]),
             _onSelectMultipleBannerImg(imgFiles) {
-                this.module_noi_bat_banners(imgFiles);
+                this.pushSpecialInfoCarousel(imgFiles);
             }
         }
     };

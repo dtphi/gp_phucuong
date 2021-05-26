@@ -87,6 +87,9 @@ class InformationRequest extends FormRequest
         /*information downloads*/
         $formData['downloads'] = isset($formData['downloads']) ? $formData['downloads'] : '';
 
+        /*information carousel*/
+        $formData['special_carousels'] = isset($formData['special_carousels']) ? $formData['special_carousels'] : '';
+
         $this->merge($formData);
 
         return $this->all();

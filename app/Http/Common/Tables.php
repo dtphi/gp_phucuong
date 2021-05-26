@@ -15,11 +15,16 @@ final class Tables
     public static $information_relateds = DB_PREFIX . 'information_relateds';
     public static $information_images = DB_PREFIX . 'information_images';
     public static $information_descriptions = DB_PREFIX . 'information_descriptions';
+    public static $information_carousel = DB_PREFIX . 'information_corousels';
 
     public static $settings = DB_PREFIX . 'settings';
 
     public static $infoStatus = [
         'Ẩn',
         'Xảy ra'
+    ];
+    public static $tagetLink = [
+        '_blank',
+        '_self'
     ];
 }

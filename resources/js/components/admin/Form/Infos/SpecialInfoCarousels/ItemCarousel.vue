@@ -9,17 +9,6 @@
         </td>
         <td>
             <validation-provider
-                name="item_url_full"
-                rules="required|url|max:500"
-                v-slot="{ errors }">
-                    <input 
-                        v-model="banner.url_full" type="text" class="form-control" />
-
-                <span class="cms-text-red">{{ errors[0] }}</span>
-            </validation-provider>
-        </td>
-        <td>
-            <validation-provider
                 name="item_sort_order"
                 rules="numeric|max:5"
                 v-slot="{ errors }">
@@ -74,9 +63,6 @@
         mapActions
     } from 'vuex';
     import {
-        fn_get_base_url_image
-    } from '@app/api/utils/fn-helper';
-    import {
         MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
 
@@ -89,13 +75,13 @@
         },
         methods: {
             ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'module_noi_bat_banners_action_remove'
+                'specialInfoCarouselRemove'
             ]),
             _getImgUrl() {
                 return '/Image/NewPicture/'+this.banner.image;
             },
             _removeBanner() {
-                this.module_noi_bat_banners_action_remove(this.banner);
+                this.specialInfoCarouselRemove(this.banner);
             }
         },
         setting: {

@@ -2,8 +2,8 @@
     <div>
         <div class="form-group">
             <div class="col-sm-12">
-                <div id="media-info-banner-manager"></div>
-                <input type="hidden" class="form-control" id="file-banner-input" disabled>
+                <div id="media-info-special-carousel-manager"></div>
+                <input type="hidden" class="form-control" id="file-special-carousel-input" disabled>
             </div>
             <div class="col-sm-12">
                 <div class="table-responsive">
@@ -11,7 +11,6 @@
                         <thead>
                         <tr>
                             <td class="text-left">{{$options.setting.image_title}}</td>
-                            <td>{{$options.setting.image_url_title}}</td>
                             <td>Width</td>
                             <td>Height</td>
                             <td>Trạng thái</td>
@@ -54,17 +53,17 @@
         },
         computed: {
             ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'settingBanner',
+                'specialInfoCarousel',
             ]),
             _getBannerList() {
-                return this.settingBanner.value;
+                return this.specialInfoCarousel.value;
             }
         },
         mounted() {
             const self = this;
 
             this.mediaMM = new MM({
-                el: '#media-info-banner-manager',
+                el: '#media-info-special-carousel-manager',
                 api: {
                     baseUrl: window.origin + '/api/mmedia',
                     listUrl: 'list',
@@ -73,7 +72,7 @@
                     deleteUrl: 'delete' 
                 },
                 input: {
-                    el: '#file-banner-input',
+                    el: '#file-special-carousel-input',
                     multiple: false
                 },
                 onSelect: function (event) {

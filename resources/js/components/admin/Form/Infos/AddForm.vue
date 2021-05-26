@@ -64,20 +64,13 @@
             <div class="tab-pane" id="tab-special-info">
                 <tab-special-info-carousel
                     role="tabpanel"
-                    class="tab-pane"
-                    :module-data="moduleData"></tab-special-info-carousel>
+                    class="tab-pane"></tab-special-info-carousel>
             </div>
         </div>
     </form>
 </template>
 
 <script>
-    import {
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_INSERT_SETTING
-    } from 'store@admin/types/action-types';
     import {EventBus} from '@app/api/utils/event-bus';
     import {
         mapState,
@@ -85,7 +78,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO_ADD
+        MODULE_INFO_ADD,
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_LOADING,
@@ -115,9 +108,6 @@
             };
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'moduleData',
-            ]),
             ...mapState(MODULE_INFO_ADD, {
                 loading: state => state.loading
             }),
@@ -133,12 +123,6 @@
             });
         },
         methods: {
-            ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                ACTION_INSERT_SETTING
-            ]),
-            _submitInfo() {
-                this.[ACTION_INSERT_SETTING](this.moduleData);
-            },
             ...mapActions(MODULE_INFO_ADD, [
                 ACTION_SET_LOADING,
                 ACTION_INSERT_INFO,

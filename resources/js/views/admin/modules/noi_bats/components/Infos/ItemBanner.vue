@@ -9,7 +9,7 @@
         </td>
         <td>
             <validation-provider
-                name="item_url_full"
+                :name="`item_url_full_${banner.id}`"
                 rules="required|url|max:500"
                 v-slot="{ errors }">
                     <input 
@@ -20,7 +20,7 @@
         </td>
         <td>
             <validation-provider
-                name="item_sort_order"
+                :name="`item_sort_order${banner.id}`"
                 rules="numeric|max:5"
                 v-slot="{ errors }">
                 <input 
@@ -31,7 +31,7 @@
         </td>
         <td>
             <validation-provider
-                name="item_sort_order"
+                :name="`item_sort_order${banner.id}`"
                 rules="numeric|max:5"
                 v-slot="{ errors }">
                 <input 
@@ -73,9 +73,6 @@
     import {
         mapActions
     } from 'vuex';
-    import {
-        fn_get_base_url_image
-    } from '@app/api/utils/fn-helper';
     import {
         MODULE_MODULE_NOI_BAT
     } from 'store@admin/types/module-types';

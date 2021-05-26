@@ -16,7 +16,7 @@
                 <tr v-for="(item, idx) in lists.value" :key="idx">
                     <td>
                         <validation-provider
-                            name="item_title"
+                            :name="`item_title${item.id}`"
                             rules="required|max:191"
                             v-slot="{ errors }">
                                 <input v-model="item.title" class="form-control" type="text"/>
@@ -26,7 +26,7 @@
                     </td>
                     <td>
                         <validation-provider
-                            name="item_url_title"
+                            :name="`item_url_title${item.id}`"
                             rules="required|url|max:500"
                             v-slot="{ errors }">
                             <input v-model="item.url_title" class="form-control" type="text"/>
@@ -36,7 +36,7 @@
                     </td>
                     <td>
                         <validation-provider
-                            name="item_author"
+                            :name="`item_author${item.id}`"
                             rules="max:255"
                             v-slot="{ errors }">
                             <input v-model="item.author" class="form-control" type="text"/>
@@ -46,7 +46,7 @@
                     </td>
                     <td>
                         <validation-provider
-                            name="item_sort_order"
+                            :name="`item_sort_order${item.id}`"
                             rules="numeric|max:11"
                             v-slot="{ errors }">
                             <input v-model="item.sort_order" class="form-control" type="number"/>

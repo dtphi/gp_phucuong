@@ -64,7 +64,8 @@ const defaultState = () => {
       multi_images: [],
       relateds: [],
       categorys: [],
-      downloads: []
+      downloads: [],
+      special_carousels: [],
     },
     isImgChange: false,
     listCategorysDisplay: [],
