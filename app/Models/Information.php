@@ -63,6 +63,15 @@ class Information extends BaseModel
 
     /**
      * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function infoCarousel()
+    {
+        return $this->hasOne(InformationCarousel::class, $this->primaryKey);
+    }
+
+    /**
+     * @author : dtphi .
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function downloads()
@@ -229,6 +238,18 @@ class Information extends BaseModel
         }
 
         return $relateds;
+    }
+
+    public function getSpecialCarouselsAttribute($value)
+    {
+        $value = [];
+        if ($this->infoCarousel) {
+            if ($this->infoCarousel->image) {
+                $value = unserialize($this->infoCarousel->image);
+            }
+        }
+
+        return $value;
     }
 
     /**

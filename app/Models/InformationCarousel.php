@@ -44,13 +44,12 @@ class InformationCarousel extends BaseModel
         $infoId = (int)$infoId;
 
         if ($infoId) {
-            DB::insert('insert into ' . Tables::$information_carousel . ' (information_id, name, name_slug, sort_description, description, image_origin, image, sort_order, date_available, information_type, viewed, vote) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            DB::insert('insert into ' . Tables::$information_carousel . ' (information_id, name, name_slug, sort_description, image_origin, image, sort_order, date_available, information_type, viewed, vote) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [
                     $infoId,
                     $data['name'],
                     $data['name_slug'],
                     $data['sort_description'],
-                    $data['description'],
                     $data['image_origin'],
                     $data['image'],
                     $data['sort_order'],

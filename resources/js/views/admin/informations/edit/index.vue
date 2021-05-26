@@ -58,10 +58,11 @@
     import BtnAdd from '../components/TheBtnAdd';
     import {
         MODULE_INFO_EDIT,
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
     import {
         ACTION_SHOW_MODAL_EDIT,
-        ACTION_RESET_NOTIFICATION_INFO
+        ACTION_RESET_NOTIFICATION_INFO,
     } from 'store@admin/types/action-types';
     import {
         fn_redirect_url
@@ -100,6 +101,9 @@
             }
         },
         computed: {
+            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
+                'specialInfoCarousel'
+            ]),
             ...mapState(MODULE_INFO_EDIT, [
                 'loading',
                 'updateSuccess',
@@ -123,7 +127,8 @@
         methods: {
             ...mapActions(MODULE_INFO_EDIT, [
                 ACTION_RESET_NOTIFICATION_INFO,
-                ACTION_SHOW_MODAL_EDIT
+                ACTION_SHOW_MODAL_EDIT,
+                'update_special_carousel'
             ]),
             _errorToArrs() {
                 let errs = [];
@@ -143,6 +148,7 @@
             },
             _submitInfo() {
                 const _self = this;
+                this.update_special_carousel(this.specialInfoCarousel);
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
                         _self.$refs.formEditUser._submitInfo();

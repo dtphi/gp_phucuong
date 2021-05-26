@@ -1,7 +1,6 @@
 import AppConfig from 'api@admin/constants/app-config';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  apiGetSettingByCode,
   apiInsertSetting
 } from 'api@admin/setting';
 import {
@@ -67,26 +66,7 @@ export default {
       state.errors = payload
     },
     [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
-      if (payload.hasOwnProperty('specialInfoCarousel')) {
-        state.specialInfoCarousel = payload.specialInfoCarousel;
-      }
-      state.specialInfoCarousel.value = _.forEach(state.specialInfoCarousel.value, function(item) {
-        if (!item.hasOwnProperty('id')) {
-          _.update(item, 'id', function(id) {
-            return id = uuidv4();
-          })
-        }
-        if (!item.hasOwnProperty('status')) {
-          _.update(item, 'status', function(id) {
-            return status = 1;
-          })
-        }
-        if (!item.hasOwnProperty('open')) {
-          _.update(item, 'open', function(id) {
-            return open = 0;
-          })
-        }
-      });
+      state.specialInfoCarousel.value = payload;
     }
   },
 
@@ -98,7 +78,7 @@ export default {
         open: 0,
         image: value.filePath,
         width: 700,
-        height: 150
+        height: 450
       };
       state.specialInfoCarousel.value.push(data);
     },
@@ -111,26 +91,11 @@ export default {
       }
     },
     [ACTION_GET_SETTING]({
-      dispatch,
-      state,
       commit
-    }, params) {
-      dispatch(ACTION_SET_LOADING, true);
-      apiGetSettingByCode(
-        state.infoId,
-        (res) => {
-          if (Object.keys(res.data.results).length) {
-            commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.results);
-
-            dispatch(ACTION_SET_LOADING, false);
-          } else {
-            dispatch(ACTION_SET_LOADING, false);
-          }
-        },
-        (errors) => {
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      );
+    }, specialCarousels) {
+      if (specialCarousels.length) {
+        commit(MODULE_UPDATE_SET_KEYS_DATA, specialCarousels);
+      }
     },
     [ACTION_INSERT_SETTING]({
       commit,

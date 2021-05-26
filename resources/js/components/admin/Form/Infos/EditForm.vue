@@ -64,21 +64,13 @@
             <div class="tab-pane" id="tab-special-info">
                 <tab-special-info-carousel
                     role="tabpanel"
-                    class="tab-pane"
-                    :module-data="moduleData"></tab-special-info-carousel>
+                    class="tab-pane"></tab-special-info-carousel>
             </div>
         </div>
     </form>
 </template>
 
 <script>
-    import {
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_SETTING,
-        ACTION_INSERT_SETTING
-    } from 'store@admin/types/action-types';
     import TabSpecialInfoCarousel from './TabSpecialInfoCarousel';
     import {EventBus} from '@app/api/utils/event-bus';
     import {
@@ -87,11 +79,13 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO_EDIT
+        MODULE_INFO_EDIT,
+        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
     import {
         ACTION_UPDATE_INFO,
-        ACTION_SET_IMAGE
+        ACTION_SET_IMAGE,
+        ACTION_GET_SETTING
     } from 'store@admin/types/action-types';
     import TabGeneral from './TabGeneral';
     import TabAdvance from './TabAdvance';
@@ -114,9 +108,6 @@
             };
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'moduleData',
-            ]),
             ...mapState(MODULE_INFO_EDIT, {
                 loading: state => state.loading
             }),
@@ -124,8 +115,12 @@
                 'info'
             ])
         },
-        created() {
-            this.[ACTION_GET_SETTING]();
+        watch: {
+            'info.special_carousels'(newValue, oldValue) {
+                if (newValue) {
+                    this._setInfoCarousel(newValue);
+                }
+            }
         },
         mounted() {
             const _self = this;
@@ -136,12 +131,8 @@
         },
         methods: {
             ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                ACTION_GET_SETTING,
-                ACTION_INSERT_SETTING
+                ACTION_GET_SETTING
             ]),
-            _submitInfo() {
-                this.[ACTION_INSERT_SETTING](this.moduleData);
-            },
             ...mapActions(MODULE_INFO_EDIT, [
                 ACTION_UPDATE_INFO,
                 ACTION_SET_IMAGE
@@ -171,6 +162,9 @@
 
                     this.[ACTION_SET_IMAGE](selected);
                 }
+            },
+            _setInfoCarousel() {
+                this.[ACTION_GET_SETTING](this.info.special_carousels);
             }
         },
         setting: {

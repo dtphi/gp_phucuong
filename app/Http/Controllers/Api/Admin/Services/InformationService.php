@@ -176,7 +176,7 @@ final class InformationService implements BaseModel, InformationModel
                     'name' => $data['name'],
                     'name_slug' => $this->model->name_slug,
                     'sort_description' => $data['sort_description'],
-                    'description' => htmlentities($data['description']),
+                    //'description' => htmlentities($data['description']),
                     'image_origin' => $this->model->image['path'],
                     'image' => serialize($data['special_carousels']['value']),
                     'sort_order' => $data['sort_order'],
@@ -282,6 +282,26 @@ final class InformationService implements BaseModel, InformationModel
                     InformationRelated::fcDeleteByInfoAndRelatedId($relatedId, $infoId);
                     InformationRelated::insertByInfoId($relatedId, $infoId);
                 }
+            }
+
+            $modelCarousel = $model->infoCarousel;
+            if ($modelCarousel) {
+                $dataCarousel = [
+                    'name' => $data['name'],
+                    'name_slug' => $this->model->name_slug,
+                    'sort_description' => $data['sort_description'],
+                    //'description' => htmlentities($data['description']),
+                    'image_origin' => $this->model->image['path'],
+                    'image' => serialize($data['special_carousels']['value']),
+                    'sort_order' => $data['sort_order'],
+                    'date_available' => $data['date_available'],
+                    'information_type' => $data['info_type'],
+                    'viewed' => $this->model->viewed,
+                    'vote' => $this->model->vote
+                ];
+
+                $modelCarousel->fill($dataCarousel);
+                $modelCarousel->save();
             }
         } else {
             DB::rollBack();

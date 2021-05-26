@@ -9,7 +9,7 @@
         </td>
         <td>
             <validation-provider
-                name="item_sort_order"
+                :name="`item_width_${banner.id}`"
                 rules="numeric|max:5"
                 v-slot="{ errors }">
                 <input 
@@ -20,7 +20,7 @@
         </td>
         <td>
             <validation-provider
-                name="item_sort_order"
+                :name="`item_height_${banner.height}`"
                 rules="numeric|max:5"
                 v-slot="{ errors }">
                 <input 

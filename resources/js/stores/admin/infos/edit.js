@@ -162,6 +162,9 @@ export default {
   },
 
   actions: {
+    update_special_carousel({state}, specialCarousel) {
+      state.info.special_carousels = specialCarousel;
+    },
 
     [ACTION_SHOW_MODAL_EDIT]({
       dispatch,
