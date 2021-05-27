@@ -355,6 +355,23 @@ class NewsController extends Controller
         return $json;
     }
 
+    private function _getInforCarousel(&$context, &$info, $staticImg) {
+        $imgCarouselThumUrl = $this->getThumbnail($staticImg, 700, 450);
+        $sortDes = html_entity_decode($info->sort_description);
+
+        $context[] = [
+            'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+            'sort_description' => Str::substr($sortDes, 0, 100),
+            'imgUrl'           => url($staticImg),
+            'imgCarThumUrl'    => url($imgCarouselThumUrl),
+            'name'             => $info->name,
+            'name_slug'        => $info->name_slug,
+            'sort_name'        => Str::substr($info->name, 0, 28)
+        ];
+
+        return $context;
+    }
+
     public function showSpecialModuleList(Request $request)
     {
         $json = [];
@@ -370,27 +387,39 @@ class NewsController extends Controller
         }
 
         if (!empty($params['information_ids'])) {
-            $results = $this->newsSv->apiGetInfoListByIds($params);
-
-            foreach ($results as $info) {
+            $infoCarousels = $this->newsSv->apiGetInfoCarouselListByIds($params);
+            foreach ($infoCarousels as $info) {
+                $images = unserialize($info->image);
                 $staticImg     = self::$thumImgNo;
-
-                if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
-                    $staticImg     = $info->image;
+                if (empty($info->image_origin) && empty($images)) {
+                    continue;
                 }
-                
-                $imgCarouselThumUrl = $this->getThumbnail($info->image, 700, 450);
-                $sortDes = html_entity_decode($info->sort_description);
 
-                $json['results'][] = [
-                    'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
-                    'sort_description' => Str::substr($sortDes, 0, 100),
-                    'imgUrl'           => url($staticImg),
-                    'imgCarThumUrl'    => url($imgCarouselThumUrl),
-                    'name'             => $info->name,
-                    'name_slug'        => $info->name_slug,
-                    'sort_name'        => Str::substr($info->name, 0, 28)
-                ];
+                if (isset($images[0]['image']) && file_exists(public_path(rawurldecode('/Image/NewPicture/' . $images[0]['image'])))) {
+                    $staticImg     = '/Image/NewPicture/' . $images[0]['image'];
+                } else {
+                    $staticImg = $info->image_origin;
+                }
+
+                $this->_getInforCarousel($json['results'], $info, $staticImg);
+                
+                if (($key = array_search($info->information_id, $params['information_ids'])) !== false) {
+                    unset($params['information_ids'][$key]);
+                }
+            }
+
+            if ($params['information_ids']) {
+                $results = $this->newsSv->apiGetInfoListByIds($params);
+
+                foreach ($results as $info) {
+                    $staticImg     = self::$thumImgNo;
+    
+                    if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
+                        $staticImg     = $info->image;
+                    }
+
+                    $this->_getInforCarousel($json['results'], $info, $staticImg);
+                }
             }
         }
 
