@@ -35,8 +35,11 @@
 </script>
 
 <style lang="scss">
+	@import url('https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,vietnamese');
+	
 	.wrapper-container {
 		font-size: 14px;
+		font-family: 'Roboto', sans-serif;
 
 		// Text overflow ellipsis on two lines
 		.ellipsis-three-lines {

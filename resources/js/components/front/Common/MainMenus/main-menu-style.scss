@@ -172,9 +172,13 @@
             .hambuger {
               display: inline-block;
               position: absolute;
-              top: 4px;
-              right: 10px;
+              top: 0;
+              right: 0;
+              width: 60px;
+              height: 28px;
+              padding: 5px 0 0 28px;
               cursor: pointer;
+
               .bar1, .bar2, .bar3 {
                   width: 25px;
                   height: 2px;

@@ -5,3 +5,13 @@
         }
     }
 }
+
+@media screen and (max-width: 767px) {
+    .new-detail {
+        .text-detail {
+            img {
+                height: auto;
+            }
+        }
+    }
+}
