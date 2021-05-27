@@ -100,7 +100,18 @@ final class NewsService extends Service implements NewsModel
             $infoType = (int)$data['infoType'];
         }
 
-        $query = DB::table(Tables::$information_to_categorys)->select()
+        $query = DB::table(Tables::$information_to_categorys)->select([
+            'category_id',
+            'date_available',
+            'sort_description',
+            'image',
+            Tables::$informations . '.information_id',
+            'information_type',
+            'name',
+            'name_slug',
+            'viewed',
+            'vote'
+        ])
             ->leftJoin(Tables::$informations, Tables::$information_to_categorys . '.information_id', '=',
                 Tables::$informations . '.information_id')
             ->leftJoin(Tables::$information_descriptions, Tables::$informations . '.information_id', '=',
@@ -135,7 +146,19 @@ final class NewsService extends Service implements NewsModel
             $infoType = (int)$data['infoType'];
         }
 
-        $query = DB::table(Tables::$informations)->select()
+        $query = DB::table(Tables::$informations)->select(
+            [
+                'date_available',
+                'sort_description',
+                'image',
+                Tables::$informations . '.information_id',
+                'information_type',
+                'name',
+                'name_slug',
+                'viewed',
+                'vote'
+            ]
+        )
             ->leftJoin(Tables::$information_descriptions, Tables::$informations . '.information_id', '=',
                 Tables::$information_descriptions . '.information_id')
             ->where('status', '=', '1')
