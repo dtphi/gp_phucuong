@@ -178,4 +178,32 @@ final class NewsService extends Service implements NewsModel
 
         return $query->get();
     }
+
+    public function apiGetInfoCarouselListByIds($data = array())
+    {
+
+        $query = DB::table(Tables::$information_carousel)->select(
+            [
+                'date_available',
+                'sort_description',
+                'image',
+                'image_origin',
+                'information_id',
+                'information_type',
+                'name',
+                'name_slug',
+                'viewed',
+                'vote'
+            ]
+        );
+
+        if (isset($data['information_ids'])) {
+            $query->whereIn(Tables::$information_carousel . '.information_id', $data['information_ids']);
+        }
+
+        $query->orderByDesc('sort_order');
+        $query->orderByDesc('date_available');
+
+        return $query->get();
+    }
 }
