@@ -7,7 +7,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_name"
-                    rules="required|max:191"
+                    rules="required|max:200"
                     v-slot="{ errors }">
                     <input
                         v-model="generalData.name"
@@ -64,7 +64,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_meta_title"
-                    rules="required|max:191" v-slot="{ errors }">
+                    rules="required|max:255" v-slot="{ errors }">
                     <input
                         id="input-info-meta-title"
                         v-model="generalData.meta_title"
@@ -101,7 +101,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_meta_keyword"
-                    rules="max:191"
+                    rules="max:255"
                     v-slot="{ errors }">
                         <textarea
                             id="input-info-meta-keyword"
@@ -123,7 +123,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_tag"
-                    rules="max:191"
+                    rules="max:255"
                     v-slot="{ errors }">
                     <input
                         id="input-info-tag"

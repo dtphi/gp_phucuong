@@ -105,7 +105,7 @@ class InformationRequest extends FormRequest
     {
         return [
             'name'       => 'required|max:200',
-            'meta_title' => 'required|max:200'
+            'meta_title' => 'required|max:255'
         ];
     }
 }

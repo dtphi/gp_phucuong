@@ -15,7 +15,7 @@ class ImportInfoFullColumnCsv extends Command
      *
      * @var string
      */
-    protected $signature = 'import:allinfo {fileName}';
+    protected $signature = 'import:allinfo {fileName} {truncat}';
 
     /**
      * The console command description.
@@ -44,9 +44,11 @@ class ImportInfoFullColumnCsv extends Command
         $arguments = $this->arguments();
         $fileName  = storage_path('import_csv') . '/' . $arguments['fileName'] . '.csv';
 
-        Information::truncateForce();
-        InformationDescription::truncateForce();
-        InformationToCategory::truncateForce();
+        if ($arguments['truncat']) {
+            Information::truncateForce();
+            InformationDescription::truncateForce();
+            InformationToCategory::truncateForce();
+        }
 
         $this->importCsvToDb($fileName);
 

@@ -2,21 +2,9 @@
     <b-col
         :cols="_colMiddleClass"
         class="col-mobile">
-        <keep-alive>
-            <component v-bind:is="_currentModule"></component>
-        </keep-alive>
-        <keep-alive>
-            <component v-bind:is="_currentModuleSpecialBanner"></component>
-        </keep-alive>
-         <keep-alive>
-            <component v-bind:is="_currentModuleLoiChua"></component>
-        </keep-alive>
         <slot></slot>
-        <keep-alive>
-            <component v-bind:is="_currentModuleTinGiaoPhan"></component>
-        </keep-alive>
-        <keep-alive>
-            <component v-bind:is="_currentModuleVanKien"></component>
+        <keep-alive v-for="(item,idx) in _moduleList"  :key="idx">
+            <component  v-bind:is="item"></component>
         </keep-alive>
     </b-col>
 </template>
@@ -32,6 +20,7 @@
             'module-loi-chua': () => import('v@front/modules/loi_chuas'),
             'module-tin-giao-phan': () => import('v@front/modules/tin_giao_phans'),
             'module-van-kien': () => import('v@front/modules/van_kiens'),
+            'module-tin-giao-hoi': () => import('v@front/modules/tin_giao_hois'),
         },
         props: {
             contentType: {
@@ -44,6 +33,32 @@
             }
         },
         computed: {
+            _loadModules: function () {
+                let list = [];
+                let contentType = 'content_' + this.contentType + '_column';
+                let modules = this.$route.meta.layout_content[contentType].middle_modules;
+                if (modules && modules.length) {
+                    
+                    _.forEach(modules, function(item){
+                        list.push("module-" + item.moduleName.toLowerCase());
+                    });
+                }
+
+                return list;
+            },
+            _moduleList() {
+                let list = [];
+                let contentType = 'content_' + this.contentType + '_column';
+                let modules = this.$route.meta.layout_content[contentType].middle_modules;
+                if (modules && modules.length) {
+                    
+                    _.forEach(modules, function(item){
+                        list.push("module-" + item.moduleName.toLowerCase());
+                    });
+                }
+
+                return list;
+            },
             _colMiddleClass() {
                 let contentType = 'content_' + this.contentType + '_column';
                 if (this.$route.meta.layout_content[contentType].column_number == 3) {

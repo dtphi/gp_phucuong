@@ -1,4 +1,5 @@
 <template>
+<b-row class="mt-4">
     <b-col id="tin-giao-hoi-module" cols="6" class="col-mobile" v-if="pageLists.length">
         <div class="new mt-3">
             <div>
@@ -46,6 +47,9 @@
             </a>
         </div>
     </b-col>
+
+    <module-tin-giao-hoi-viet-nam></module-tin-giao-hoi-viet-nam>
+</b-row>
 </template>
 
 <script>
@@ -64,10 +68,13 @@
         fn_get_href_base_url,
         fn_change_to_slug
     } from '@app/api/utils/fn-helper';
+    import ModuleTinGiaoHoiVietNam from 'v@front/modules/tin_giao_hoi_viet_nams';
 
     export default {
         name: 'ModuleTinGiaoHoi',
-        components: {},
+        components: {
+            ModuleTinGiaoHoiVietNam
+        },
         data() {
             return {
                 fullPage: true,

@@ -39,10 +39,6 @@
             </content-top>
             
             <content-bottom v-if="_isContentBottom">
-                <b-row class="mt-4">
-                    <module-tin-giao-hoi></module-tin-giao-hoi>
-                    <module-tin-giao-hoi-viet-nam></module-tin-giao-hoi-viet-nam>
-                </b-row>
             </content-bottom>
         </div>
     </main>
@@ -63,8 +59,6 @@
     import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
     import ContentTop from 'com@front/Common/ContentTop';
     import ContentBottom from 'com@front/Common/ContentBottom';
-    import ModuleTinGiaoHoi from 'v@front/modules/tin_giao_hois';
-    import ModuleTinGiaoHoiVietNam from 'v@front/modules/tin_giao_hoi_viet_nams';
     import SocialNetwork from './components/TheSocialNetwork';
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
 
@@ -75,8 +69,6 @@
             TabInfoViewedAndPopular,
             ContentTop,
             ContentBottom,
-            ModuleTinGiaoHoi,
-            ModuleTinGiaoHoiVietNam,
             SocialNetwork,
             NewsletterRegister
         },
