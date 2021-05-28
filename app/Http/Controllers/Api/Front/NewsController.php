@@ -153,8 +153,8 @@ class NewsController extends Controller
             if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                 $staticImg     = rawurldecode($info->image);
             }
-            $staticThumImg = $this->getThumbnail($info->image, 0, 150);
-            $staticThumMediumImg = $this->getThumbnail($info->image, 350, 230);
+            $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
+            $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 350, 230);
 
             $sortDes = html_entity_decode($info->sort_description);
             $infos[] = [
@@ -252,8 +252,9 @@ class NewsController extends Controller
                         $staticImg     = $info->image;
                     }
                     
-                    $staticThumImg = $this->getThumbnail($info->image, 0, 150);
-                    $imgCarouselThumUrl = $this->getThumbnail($info->image, 700, 450);
+                    $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
+                    $imgCarouselThumUrl = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 700, 450);
+
                     $sortDes = html_entity_decode($info->sort_description);
 
                     $json[] = [
@@ -311,7 +312,7 @@ class NewsController extends Controller
                     if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                         $staticImg     = $info->image;
                     }
-                    $staticThumImg = $this->getThumbnail($info->image, 0, 150);
+                    $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
                     $sortDes = html_entity_decode($info->sort_description);
 
                     $json[] = [
