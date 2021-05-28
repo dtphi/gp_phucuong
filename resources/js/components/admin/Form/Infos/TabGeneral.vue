@@ -82,7 +82,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_meta_description"
-                    rules="max:255"
+                    rules="max:500"
                     v-slot="{ errors }">
                         <textarea
                             id="input-info-meta-description"
@@ -101,7 +101,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_meta_keyword"
-                    rules="max:255"
+                    rules="max:500"
                     v-slot="{ errors }">
                         <textarea
                             id="input-info-meta-keyword"
@@ -152,11 +152,7 @@
         ACTION_UPDATE_INFO
     } from 'store@admin/types/action-types';
     import tinymce from 'vue-tinymce-editor';
-    /*tinymce.init({
-        
-        font_formats:
-            "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Oswald=oswald; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
-    });*/
+    
     console.log('tinymce', tinymce)
     import {
         fn_get_tinymce_langs_url
