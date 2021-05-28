@@ -10,7 +10,6 @@
 </template>
 
 <script>
-    import ImgFooter from 'v@front/assets/img/image_footer.jpg';
 
     export default {
         name: 'ColumnMiddle',
@@ -29,23 +28,9 @@
         },
         data() {
             return {
-                imgFooter: ImgFooter
             }
         },
         computed: {
-            _loadModules: function () {
-                let list = [];
-                let contentType = 'content_' + this.contentType + '_column';
-                let modules = this.$route.meta.layout_content[contentType].middle_modules;
-                if (modules && modules.length) {
-                    
-                    _.forEach(modules, function(item){
-                        list.push("module-" + item.moduleName.toLowerCase());
-                    });
-                }
-
-                return list;
-            },
             _moduleList() {
                 let list = [];
                 let contentType = 'content_' + this.contentType + '_column';
@@ -69,46 +54,6 @@
                 }
 
                 return '9';
-            },
-            _currentModule: function () {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].middle_module_info_carousel;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
-            },
-            _currentModuleSpecialBanner: function () {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].middle_module_special_banner;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
-            },
-            _currentModuleLoiChua: function () {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].module_middle_loi_chua;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
-            },
-            _currentModuleTinGiaoPhan: function() {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].module_middle_tin_giao_phan;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
-            },
-            _currentModuleVanKien: function () {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].module_middle_van_kien;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
             },
         }
     }

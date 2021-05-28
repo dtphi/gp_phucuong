@@ -7,10 +7,10 @@ import {
 const debug = process.env.NODE_ENV === 'debuger';
 
 const ModuleContent = {
-    module_left_info_left_side_bar: 'info_left_side_bar',
-    module_left_category_left_side_bar: 'category_left_side_bar',
-    module_left_newsletter_register:'newsletter_register',
-    module_left_summary_contact: 'summary_contact',
+    module_left_info_left_side_bar: 'info-left-side-bar',
+    module_left_category_left_side_bar: 'category-left-side-bar',
+    module_left_newsletter_register:'newsletter-register',
+    module_left_summary_contact: 'summary-contact',
 
     middle_module_info_carousel: 'info-carousel',
     middle_module_special_banner: 'special-banner',
@@ -33,17 +33,30 @@ const ModuleContentCategory = {
         middle_column: true,
         left_collumn: true,
         colClass: '',
-        module_left_info_left_side_bar: '',
-        module_left_category_left_side_bar: '',
-        module_left_newsletter_register:'',
-        module_left_summary_contact: '',
-        middle_modules: [
+        left_modules: [
+            {
+                moduleName: ModuleContent.module_left_info_left_side_bar,
+                sortOrder: 0,
+                componentClass: ''
+            },
+            {
+                moduleName: ModuleContent.module_left_category_left_side_bar,
+                sortOrder: 0,
+                componentClass: ''
+            },
+            {
+                moduleName: ModuleContent.module_left_newsletter_register,
+                sortOrder: 0,
+                componentClass: 'form test'
+            },
+            {
+                moduleName: ModuleContent.module_left_summary_contact,
+                sortOrder: 0,
+                componentClass: 'logo test'
+            }
         ],
-        module_right_info_fanpage: '',
-        module_right_youtube_hanh_cac_thanh: '',
-        module_right_lich_cong_giao: '',
-        module_right_thong_bao: '',
-        module_right_category_icon_side_bar: '',
+        middle_modules: [],
+        right_modules: [],
         column_number: 2
     },
     content_bottom: false,
@@ -52,17 +65,9 @@ const ModuleContentCategory = {
         middle_column: false,
         left_collumn: false,
         colClass: '',
-        module_left_info_left_side_bar: '',
-        module_left_category_left_side_bar: '',
-        module_left_newsletter_register:'',
-        module_left_summary_contact: '',
-        middle_modules: [
-        ],
-        module_right_info_fanpage: '',
-        module_right_youtube_hanh_cac_thanh: '',
-        module_right_lich_cong_giao: '',
-        module_right_thong_bao: '',
-        module_right_category_icon_side_bar: '',
+        left_modules: [],
+        middle_modules: [],
+        right_modules: [],
         column_number: 2
     },
     content_main: false,
@@ -71,17 +76,9 @@ const ModuleContentCategory = {
         middle_column: false,
         left_collumn: false,
         colClass: '',
-        module_left_info_left_side_bar: '',
-        module_left_category_left_side_bar: '',
-        module_left_newsletter_register:'',
-        module_left_summary_contact: '',
-        middle_modules: [
-        ],
-        module_right_info_fanpage: '',
-        module_right_youtube_hanh_cac_thanh: '',
-        module_right_lich_cong_giao: '',
-        module_right_thong_bao: '',
-        module_right_category_icon_side_bar: '',
+        left_modules: [],
+        middle_modules: [],
+        right_modules: [],
         column_number: 2
     },
     right_collumn: false,
@@ -248,10 +245,7 @@ routeEnv = {
                         middle_column: true,
                         left_collumn: false,
                         colClass: '8 notication',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
+                        left_modules: [],
                         middle_modules: [
                             {
                                 moduleName: ModuleContent.middle_module_info_carousel,
@@ -262,11 +256,7 @@ routeEnv = {
                                 sortOrder: 0
                             },
                         ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        right_modules: [],
                         column_number: 2
                     },
                     content_bottom: true,
@@ -274,10 +264,7 @@ routeEnv = {
                         right_collumn: true,
                         middle_column: true,
                         left_collumn: false,
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
+                        left_modules: [],
                         middle_modules: [
                             {
                                 moduleName: ModuleContent.module_middle_loi_chua,
@@ -296,12 +283,28 @@ routeEnv = {
                                 sortOrder: 0
                             }
                         ],
-                        
-                        module_right_info_fanpage: ModuleContent.module_right_info_fanpage,
-                        module_right_youtube_hanh_cac_thanh: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                        module_right_lich_cong_giao: ModuleContent.module_right_lich_cong_giao,
-                        module_right_thong_bao: ModuleContent.module_right_thong_bao,
-                        module_right_category_icon_side_bar: ModuleContent.module_right_category_icon_side_bar,
+                        right_modules: [
+                            {
+                                moduleName: ModuleContent.module_right_category_icon_side_bar,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_thong_bao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_lich_cong_giao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_info_fanpage,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
+                                sortOrder: 0
+                            }
+                        ],
                         column_number: 2,
                         colClass: '8'
                     },
@@ -311,17 +314,9 @@ routeEnv = {
                         middle_column: true,
                         left_collumn: false,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     right_collumn: false,
@@ -348,17 +343,30 @@ routeEnv = {
                         middle_column: true,
                         left_collumn: true,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
+                        left_modules: [
+                            {
+                                moduleName: ModuleContent.module_left_info_left_side_bar,
+                                sortOrder: 0,
+                                componentClass: ''
+                            },
+                            {
+                                moduleName: ModuleContent.module_left_category_left_side_bar,
+                                sortOrder: 0,
+                                componentClass: ''
+                            },
+                            {
+                                moduleName: ModuleContent.module_left_newsletter_register,
+                                sortOrder: 0,
+                                componentClass: 'form test'
+                            },
+                            {
+                                moduleName: ModuleContent.module_left_summary_contact,
+                                sortOrder: 0,
+                                componentClass: 'logo test'
+                            }
                         ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     content_bottom: false,
@@ -367,17 +375,9 @@ routeEnv = {
                         middle_column: false,
                         left_collumn: false,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     content_main: false,
@@ -386,17 +386,9 @@ routeEnv = {
                         middle_column: false,
                         left_collumn: false,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     right_collumn: false,
@@ -423,17 +415,26 @@ routeEnv = {
                         middle_column: true,
                         left_collumn: false,
                         colClass: '8 notication',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [
+                            {
+                                moduleName: ModuleContent.module_right_thong_bao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_lich_cong_giao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_info_fanpage,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
+                                sortOrder: 0
+                            }
                         ],
-                        module_right_info_fanpage: ModuleContent.module_right_info_fanpage,
-                        module_right_youtube_hanh_cac_thanh: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                        module_right_lich_cong_giao: ModuleContent.module_right_lich_cong_giao,
-                        module_right_thong_bao: ModuleContent.module_right_thong_bao,
-                        module_right_category_icon_side_bar: '',
                         column_number: 2
                     },
                     content_bottom: false,
@@ -442,17 +443,9 @@ routeEnv = {
                         middle_column: false,
                         left_collumn: false,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     content_main: true,
@@ -461,17 +454,9 @@ routeEnv = {
                         middle_column: true,
                         left_collumn: false,
                         colClass: '8',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     right_collumn: true,
@@ -502,17 +487,30 @@ routeEnv = {
                         middle_column: true,
                         left_collumn: true,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
+                        left_modules: [
+                            {
+                                moduleName: ModuleContent.module_left_info_left_side_bar,
+                                sortOrder: 0,
+                                componentClass: ''
+                            },
+                            {
+                                moduleName: ModuleContent.module_left_category_left_side_bar,
+                                sortOrder: 0,
+                                componentClass: ''
+                            },
+                            {
+                                moduleName: ModuleContent.module_left_newsletter_register,
+                                sortOrder: 0,
+                                componentClass: 'form test'
+                            },
+                            {
+                                moduleName: ModuleContent.module_left_summary_contact,
+                                sortOrder: 0,
+                                componentClass: 'logo test'
+                            }
                         ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     content_bottom: false,
@@ -521,17 +519,9 @@ routeEnv = {
                         middle_column: false,
                         left_collumn: false,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     content_main: false,
@@ -540,17 +530,9 @@ routeEnv = {
                         middle_column: false,
                         left_collumn: false,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                 }
@@ -573,17 +555,26 @@ routeEnv = {
                         middle_column: true,
                         left_collumn: false,
                         colClass: '8 notication',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [
+                            {
+                                moduleName: ModuleContent.module_right_thong_bao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_lich_cong_giao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_info_fanpage,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
+                                sortOrder: 0
+                            }
                         ],
-                        module_right_info_fanpage: ModuleContent.module_right_info_fanpage,
-                        module_right_youtube_hanh_cac_thanh: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                        module_right_lich_cong_giao: ModuleContent.module_right_lich_cong_giao,
-                        module_right_thong_bao: ModuleContent.module_right_thong_bao,
-                        module_right_category_icon_side_bar: '',
                         column_number: 2
                     },
                     content_bottom: false,
@@ -592,17 +583,9 @@ routeEnv = {
                         middle_column: false,
                         left_collumn: false,
                         colClass: '',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                     content_main: true,
@@ -611,17 +594,9 @@ routeEnv = {
                         middle_column: true,
                         left_collumn: false,
                         colClass: '8',
-                        module_left_info_left_side_bar: '',
-                        module_left_category_left_side_bar: '',
-                        module_left_newsletter_register:'',
-                        module_left_summary_contact: '',
-                        middle_modules: [
-                        ],
-                        module_right_info_fanpage: '',
-                        module_right_youtube_hanh_cac_thanh: '',
-                        module_right_lich_cong_giao: '',
-                        module_right_thong_bao: '',
-                        module_right_category_icon_side_bar: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
                         column_number: 2
                     },
                 }

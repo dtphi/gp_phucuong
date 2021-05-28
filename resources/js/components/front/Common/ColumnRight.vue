@@ -3,27 +3,14 @@
         cols="4"
         class="col-mobile">
         <slot></slot>
-        <keep-alive>
-            <component v-bind:is="_currentModuleCategoryIconSideBar"></component>
-        </keep-alive>
-        <keep-alive>
-            <component v-bind:is="_currentModuleThongBao"></component>
-        </keep-alive>
-        <keep-alive>
-            <component v-bind:is="_currentModuleLichCongGiao"></component>
-        </keep-alive>
-        <keep-alive>
-            <component v-bind:is="_currentModuleFanpage"></component>
-        </keep-alive>
-        <keep-alive>
-            <component v-bind:is="_currentModuleYoutube"></component>
+
+        <keep-alive v-for="(item,idx) in _moduleList"  :key="idx">
+            <component  v-bind:is="item"></component>
         </keep-alive>
     </b-col>
 </template>
 
 <script>
-    import IconBook from 'v@front/assets/img/icon-book.png';
-    import ImgFooter from 'v@front/assets/img/image_footer.jpg';
 
     export default {
         name: 'ContentColumnRight',
@@ -41,51 +28,22 @@
         },
         data() {
             return {
-                iconBook: IconBook,
-                imgFooter: ImgFooter
             }
         },
         computed: {
-            _currentModuleCategoryIconSideBar: function () {
+            _moduleList() {
+                let list = [];
                 let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].module_right_category_icon_side_bar;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
+                let modules = this.$route.meta.layout_content[contentType].right_modules;
+                if (modules && modules.length) {
+                    
+                    _.forEach(modules, function(item){
+                        list.push("module-" + item.moduleName.toLowerCase());
+                    });
                 }
-                return false;
-            },
-            _currentModuleFanpage: function () {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].module_right_info_fanpage;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
-            },
-            _currentModuleYoutube: function () {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].module_right_youtube_hanh_cac_thanh;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
-            },
-            _currentModuleLichCongGiao: function () {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].module_right_lich_cong_giao;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
-            },
-            _currentModuleThongBao: function () {
-                let contentType = 'content_' + this.contentType + '_column';
-                let moduleName = this.$route.meta.layout_content[contentType].module_right_thong_bao;
-                if (moduleName) {
-                    return "module-" + moduleName.toLowerCase();
-                }
-                return false;
-            },
+
+                return list;
+            }
         }
     }
 </script>

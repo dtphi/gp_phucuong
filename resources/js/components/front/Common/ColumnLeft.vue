@@ -2,33 +2,49 @@
     <b-col class="col-mobile" cols="3">
         <aside>
             <slot></slot>
-            <info-left-side-bar></info-left-side-bar>
-            <module-category-menu-left></module-category-menu-left>
-            <newsletter-register class="form"></newsletter-register>
-            <summary-contact class="logo"></summary-contact>
+            <keep-alive v-for="(item,idx) in _moduleList"  :key="idx">
+                <component  v-bind:is="item.name" :class="item.cCl"></component>
+            </keep-alive>
         </aside>
     </b-col>
 </template>
 
 <script>
-    import InfoLeftSideBar from '../SideBar/SideBarInfoLeft';
-    import ModuleCategoryMenuLeft from 'v@front/modules/category_left_side_bars';
-    import NewsletterRegister from 'com@front/Common/NewsletterRegister';
-    import SideBar from 'com@front/SideBar';
-    import SummaryContact from 'com@front/SummaryContact';
 
     export default {
         name: 'ColumnLeft',
         components: {
-            SideBar,
-            InfoLeftSideBar,
-            ModuleCategoryMenuLeft,
-            NewsletterRegister,
-            SummaryContact
+            'module-info-left-side-bar': () => import('../SideBar/SideBarInfoLeft'),
+            'module-category-left-side-bar': () => import('v@front/modules/category_left_side_bars'),
+            'module-newsletter-register': () => import('com@front/Common/NewsletterRegister'),
+            'module-summary-contact': () => import('com@front/SummaryContact'),
+        },
+        props: {
+            contentType: {
+                default: 'top'
+            }
         },
         data() {
             return {}
         },
+        computed: {
+            _moduleList() {
+                let list = [];
+                let contentType = 'content_' + this.contentType + '_column';
+                let modules = this.$route.meta.layout_content[contentType].left_modules;
+                if (modules && modules.length) {
+                    
+                    _.forEach(modules, function(item){
+                        list.push({
+                            name: "module-" + item.moduleName.toLowerCase(),
+                            cCl: item.componentClass
+                        });
+                    });
+                }
+
+                return list;
+            }
+        }
     }
 </script>
 
