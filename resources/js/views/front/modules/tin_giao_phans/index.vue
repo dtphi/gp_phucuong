@@ -7,7 +7,7 @@
         <b-row>
             <b-col cols="7" class="col-mobile">
                 <a class="d-block" :href="_getHref(_getLastedModuleInfo)">
-                    <img class="img" :src="_getLastedModuleInfo.imgUrl" alt=""></a>
+                    <img class="img" :src="_getLastedModuleInfo.imgThumMediumImg" alt=""></a>
                 <h4 class="tit-bg-common mt-2">
                     <a :href="_getHref(_getLastedModuleInfo)">{{_getLastedModuleInfo.name}}</a>
                 </h4>

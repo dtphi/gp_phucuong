@@ -154,7 +154,7 @@ class NewsController extends Controller
                 $staticImg     = rawurldecode($info->image);
             }
             $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
-            $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 350, 230);
+            $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, 550, 450):$this->getThumbnail($staticImg, 550, 450);
 
             $sortDes = html_entity_decode($info->sort_description);
             $infos[] = [
@@ -253,7 +253,7 @@ class NewsController extends Controller
                     }
                     
                     $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
-                    $imgCarouselThumUrl = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 700, 450);
+                    $imgCarouselThumUrl = (!empty($info->image))?$this->getThumbnail($info->image, 750, 550):$this->getThumbnail($staticImg, 750, 550);
 
                     $sortDes = html_entity_decode($info->sort_description);
 
@@ -357,7 +357,7 @@ class NewsController extends Controller
     }
 
     private function _getInforCarousel(&$context, &$info, $staticImg) {
-        $imgCarouselThumUrl = $this->getThumbnail($staticImg, 700, 450);
+        $imgCarouselThumUrl = $this->getThumbnail($staticImg, 750, 550);
         $sortDes = html_entity_decode($info->sort_description);
 
         $context[] = [

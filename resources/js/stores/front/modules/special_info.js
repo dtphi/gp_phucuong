@@ -113,11 +113,13 @@ import { relativeTimeRounding } from 'moment';
         commit(MODULE_UPDATE_SET_LOADING, isLoading);
       },
       [ACTION_GET_SPECIAL_INFORMATION_LIST_TO_MODULE]({
+        state,
         commit,
         dispatch
       }, specialIds) {
         const params = {
-          specialInfoIds: specialIds
+          specialInfoIds: specialIds,
+          moduleName: state.moduleData.code
         }
         apiGetSpecialModuleList(
           (result) => {

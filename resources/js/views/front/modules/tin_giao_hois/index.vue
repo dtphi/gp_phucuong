@@ -14,7 +14,7 @@
                 </p>
                 <h4 class="tit-bg-common">
                     <span><i class="bg-orange">hot</i></span>
-                    <a :href="_getHref(_getLastedModuleInfo)">{{_getLastedModuleInfo.name}}</a>
+                    <a :href="_getHref(_getLastedModuleInfo)">{{_getLastedModuleInfo.sort_name}} ...</a>
                 </h4>
                 <p class="name-post font-weight-bold mb-2">Posted by Admin</p>
                 <a class="d-block" :href="_getHref(_getLastedModuleInfo)">

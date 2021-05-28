@@ -113,8 +113,8 @@ import {
       },
 
       [GET_INFORMATION_LIST_TO_CATEGORY]({
-        commit,
-        dispatch
+        state,
+        commit
       }, routeParams) {
         let slug = '';
         if (routeParams.hasOwnProperty('link')) {
@@ -122,6 +122,7 @@ import {
         }
         let page = 1;
         let params = {
+          moduleName: state.moduleData.code,
           limit: 7,
           page: page,
           slug: slug

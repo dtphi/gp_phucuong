@@ -113,15 +113,16 @@ import {
       },
 
       [GET_INFORMATION_LIST_TO_CATEGORY]({
+        state,
         commit,
-        dispatch
-      }, routeParams) {console.log('route params',routeParams)
+      }, routeParams) {
         let slug = '';
         if (routeParams.hasOwnProperty('link')) {
           slug = routeParams.link;
         }
         let page = 1;
         let params = {
+          moduleName: state.moduleData.code,
           limit: 6,
           page: page,
           slug: slug
