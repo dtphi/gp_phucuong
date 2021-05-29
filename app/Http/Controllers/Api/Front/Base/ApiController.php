@@ -295,7 +295,7 @@ class ApiController extends Controller
         ];
 
         $data['logo']    = '/front/img/logo.png';
-        $data['banner']  = '/images/banner_image.jpg';
+        $data['banner']  = url('Image/NewPicture/home_banners/banner_image.jpg');
         $data['menus']   = $menus;
         $data['menus_1'] = $menuLayout_1;
         $data['pages']   = [

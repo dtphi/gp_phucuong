@@ -2,12 +2,12 @@
     <header id="header">
         <div class="header-news">
             <div class="container">
-                <div class="breaking-news d-inline-block">
-                    <h4 class="title-breaking-news d-inline-block">breaking news:</h4>
-                    <p class="txt-breaking-news d-inline-block">Thứ 4 tuần V thường niên C - GKCĐ Giáo phận Phú Cường</p>
+                <div class="breaking-news d-inline-block" style="text-align: right;">
+                    <h4 class="title-breaking-news d-inline-block"></h4>
+                    <p class="txt-breaking-news d-inline-block" >Truyền Thông và Lòng Thương Xót: Một cuộc gặp gỡ đem lại hoa trái</p>
                 </div>
                 <div class="subscribe d-inline-block">
-                    <button class="btn">subscribe</button>
+                    <button class="btn">0274.73077088</button>
                 </div>
             </div>
         </div>
