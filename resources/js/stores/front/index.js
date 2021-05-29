@@ -36,7 +36,7 @@ const fnIsObject = (obj) => {
 const defaultState = () => {
   return {
     logo: '/front/img/logo.png',
-    banner: '/images/banner_image.jpg',
+    banner: '/Image/NewPicture/home_banners/banner_image.jpg',
     iconBookUrl: '/',
     navMainLists: [],
     pageLists: [],
