@@ -153,9 +153,33 @@ class NewsController extends Controller
             if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                 $staticImg     = rawurldecode($info->image);
             }
-            $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
-            $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, 550, 450):$this->getThumbnail($staticImg, 550, 450);
 
+            $width = 550;
+            $height = 450;
+            if (in_array($request->query('moduleName'), ['module_tin_giao_hoi','module_tin_giao_hoi_viet_nam'])){
+                    $width = 350;
+                    $height = 230;
+            }
+            if ($request->query('moduleName') == 'module_loi_chua') {
+                    $width = 287;
+                    $height = 191;
+            }
+            if ($request->query('moduleName') == 'module_tin_giao_phan') {
+                    $width = 413;
+                    $height = 275;
+
+                    $width1 = 287;
+                    $height1 = 195;
+                    $staticThumMediumImg1 = (!empty($info->image))?$this->getThumbnail($info->image, $width1, $height1):$this->getThumbnail($staticImg, $width1, $height1);
+            }
+            if ($request->query('moduleName') == 'module_van_kien') {
+                    $width = 223;
+                    $height = 152;
+            }
+
+            $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
+            $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, $width, $height):$this->getThumbnail($staticImg, $width, $height);
+ 
             $sortDes = html_entity_decode($info->sort_description);
             $infos[] = [
                 'category_id'      => $info->category_id,
@@ -166,6 +190,7 @@ class NewsController extends Controller
                 'imgUrl'           => url($staticImg),
                 'imgThumUrl'       => url($staticThumImg),
                 'imgThumMediumImg' => url($staticThumMediumImg),
+                'imgThumMediumImg1'=> isset($staticThumMediumImg1)?url($staticThumMediumImg1):'',
                 'information_id'   => $info->information_id,
                 'information_type' => $info->information_type,
                 'name'             => $info->name,
@@ -357,7 +382,7 @@ class NewsController extends Controller
     }
 
     private function _getInforCarousel(&$context, &$info, $staticImg) {
-        $imgCarouselThumUrl = $this->getThumbnail($staticImg, 750, 550);
+        $imgCarouselThumUrl = $this->getThumbnail($staticImg, 730, 410);
         $sortDes = html_entity_decode($info->sort_description);
 
         $context[] = [

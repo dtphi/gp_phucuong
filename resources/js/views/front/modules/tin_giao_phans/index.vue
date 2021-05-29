@@ -21,7 +21,7 @@
             <b-col cols="5" class="col-r col-mobile">
                 <div v-if="_getSecondInfoModuleList">
                     <a class="d-block" :href="_getHref(_getSecondInfoModuleList)">
-                        <img class="img" :src="_getSecondInfoModuleList.imgThumMediumImg" alt="">
+                        <img class="img" :src="_getSecondInfoModuleList.imgThumMediumImg1" alt="">
                     </a>
                     <h4 class="tit-bg-common mt-2">
                         <a :href="_getHref(_getSecondInfoModuleList)">{{_getSecondInfoModuleList.name}}</a>
