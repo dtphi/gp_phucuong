@@ -31,10 +31,6 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <info-image class="col-sm-12"
-                        :info-images="groupData.multi_images"></info-image>
-        </div>
     </div>
 </template>
 
@@ -45,12 +41,10 @@
     import {
         fn_get_base_url_image
     } from '@app/api/utils/fn-helper';
-    import InfoImage from './Images/InfoImage';
 
     export default {
         name: 'TabImageForm',
         components: {
-            InfoImage
         },
         props: {
             groupData: {

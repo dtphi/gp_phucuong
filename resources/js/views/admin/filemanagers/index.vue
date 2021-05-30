@@ -45,7 +45,7 @@
                 $('#elfinder').elfinder({
                     lang: 'vi',
                     customData: {
-                        _token: ''
+                        _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     url: fn_get_news_file_connector_url(),
                     soundPath: fn_get_news_file_sound_url()

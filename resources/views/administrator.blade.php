@@ -22,5 +22,24 @@
 
   <?php echo $css->cssSetting['mapScript']; ?>
   <script src="{{ asset('js/app-admin.js') }}" defer></script>
+
+  <link rel="stylesheet" href="{{ asset('/administrator/javascript/font-awesome/css/font-awesome.css') }}">
+  <link rel="stylesheet" href="{{ asset('administrator/plugins/mm/style.css') }}"></link>
+  <script src="{{ asset('administrator/plugins/mm/mm.min.js') }}"></script>
+  <div id="media-file-manager-content" style="display:none" class="modal-open">
+  <div class="mce-container mce-panel mce-floatpanel mce-window mce-in" role="dialog" style="border-width: 1px; z-index: 655369999;min-height: 500; top: 15px; width:-webkit-fill-available">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" aria-hidden="true" onclick="document.getElementById('media-file-manager-content').style='display:none'">&times;</button>
+          <h4 class="modal-title">Chọn hình ảnh</h4>
+        </div>
+        <div class="modal-body">
+            <div id="modal-general-info-manager"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
 </body>
 </html>
