@@ -154,6 +154,8 @@ class NewsController extends Controller
                 $staticImg     = rawurldecode($info->image);
             }
 
+            $widthThumbInfoList = 184; 
+            $heightThumbInfoList = 120;
             $width = 550;
             $height = 450;
             if (in_array($request->query('moduleName'), ['module_tin_giao_hoi','module_tin_giao_hoi_viet_nam'])){
@@ -177,7 +179,7 @@ class NewsController extends Controller
                     $height = 152;
             }
 
-            $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
+            $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
             $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, $width, $height):$this->getThumbnail($staticImg, $width, $height);
  
             $sortDes = html_entity_decode($info->sort_description);
@@ -252,6 +254,8 @@ class NewsController extends Controller
     public function showLastedList(Request $request)
     {
         $json = [];
+        $widthThumbInfoList = 184; 
+        $heightThumbInfoList = 120;
 
         $list = $this->newsSv->apiGetLatestInfos(20)->toArray();
 
@@ -277,7 +281,7 @@ class NewsController extends Controller
                         $staticImg     = $info->image;
                     }
                     
-                    $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
+                    $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
                     $imgCarouselThumUrl = (!empty($info->image))?$this->getThumbnail($info->image, 750, 550):$this->getThumbnail($staticImg, 750, 550);
 
                     $sortDes = html_entity_decode($info->sort_description);
@@ -309,6 +313,8 @@ class NewsController extends Controller
     public function showPopularList(Request $request)
     {
         $json = [];
+        $widthThumbInfoList = 184; 
+        $heightThumbInfoList = 120;
 
         if (!empty($request->query('slug'))) {
             return $this->list($request);
@@ -337,7 +343,7 @@ class NewsController extends Controller
                     if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                         $staticImg     = $info->image;
                     }
-                    $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, 0, 150):$this->getThumbnail($staticImg, 0, 150);
+                    $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
                     $sortDes = html_entity_decode($info->sort_description);
 
                     $json[] = [
