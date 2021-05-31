@@ -1,14 +1,15 @@
 #header {
-    background-color: #ED1C24;
+    background-color: /*#ED1C24*/#2354a4;
 
     .header-news {
-        background-color: #C1272D;
+        background-color: /*#C1272D*/#0071bc;
         color: #ffffff;
         font-size: 0;
 
         .breaking-news {
             width: 80%;
             font-size: 14px;
+            padding: 0px 15px;
 
             .title-breaking-news {
                 font-size: 14px;
@@ -24,7 +25,7 @@
         .subscribe {
             width: 20%;
             font-size: 14px;
-            background-color: #ED1C24;
+            background-color: /*#ED1C24*/#3aacda;
             text-align: center;
 
             .btn {

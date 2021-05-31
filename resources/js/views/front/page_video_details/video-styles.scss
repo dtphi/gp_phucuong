@@ -93,6 +93,17 @@
     }
 }
 
+@media screen and (max-width: 990px) {
+    .new-detail {
+        .text-detail {
+            img,
+            iframe {
+                width: 100% !important;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 767px) {
     #video {
         .row {
@@ -172,6 +183,15 @@
             .figure-caption {
                 .title {
                     font-size: 13px;
+                }
+            }
+        }
+
+        .new-detail {
+            .text-detail {
+                img,
+                iframe {
+                    height: auto !important;
                 }
             }
         }

@@ -1,16 +1,11 @@
-.new-detail {
-    .text-detail {
-        img {
-            width: 100% !important;
-        }
-    }
-}
 
-@media screen and (max-width: 767px) {
+
+@media screen and (max-width: 990px) {
     .new-detail {
         .text-detail {
             img {
-                height: auto;
+                width: 100% !important;
+                height: auto !important;
             }
         }
     }

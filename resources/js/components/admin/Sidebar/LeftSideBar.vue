@@ -1,5 +1,5 @@
 <template>
-    <nav id="column-left" class="active">
+    <nav id="column-left" class="active" style="min-height:400px">
         <div id="profile">
             <div>
                 <i class="fa fa-user"></i>
@@ -84,6 +84,18 @@
                     </li>
                 </ul>
             </li>
+
+            <li id="system" class="">
+                <a class="parent">
+                    <i class="fa fa-cog fw"></i>
+                    <span>{{$options.setting.system_root_title}}</span></a>
+                <ul class="collapse">
+                    <li>
+                        <a
+                            :href="_getHref('system')">{{$options.setting.sytem_title}}</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </template>
@@ -117,6 +129,8 @@
             module_tin_giao_phan: 'Tin giáo phận',
             module_van_kien: 'Văn kiện',
             module_noi_bat: 'Nổi bật',
+            system_root_title: 'Hệ thống',
+            sytem_title: 'Cài đặt'
         }
     };
 </script>

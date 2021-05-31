@@ -266,5 +266,33 @@ export default [{
                 title: 'Danh sách hình ảnh | ' + config.site_name
             }
         }]
-    }]
+    }, {
+        path: 'system',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: () =>
+                import ('v@admin/systems'),
+            name: 'admin.system',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Cài đặt'
+                }],
+                header: 'Danh sách cài đặt',
+                role: 'admin',
+                title: 'Cài đặt chung | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, ]
 }];
