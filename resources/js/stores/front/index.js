@@ -41,7 +41,7 @@ const defaultState = () => {
     navMainLists: [],
     pageLists: [],
     appLists: [],
-    pages: {},
+    pages: {}
   }
 }
 
@@ -70,7 +70,8 @@ export default new Vuex.Store({
       setting: defaultState()
     },
     paginationRoot: initPaginationState(),
-    errors: []
+    errors: [],
+    clientsTestimonialsPage: 4
   },
   getters: {
     cfApp(state) {
@@ -146,6 +147,9 @@ export default new Vuex.Store({
       }
 
       return mAction;
+    },
+    isScreen767(state) {
+      return state.clientsTestimonialsPage == 1;
     }
   },
   mutations: {
@@ -214,7 +218,20 @@ export default new Vuex.Store({
       };
 
       commit('configApp', _configs);
-    }
+    },
+
+    winWidth({state}) {
+      var w = window.innerWidth;
+      if (w < 768) {
+        state.clientsTestimonialsPage = 1
+      } else if (w < 960) {
+        state.clientsTestimonialsPage = 2
+      } else if (w < 1200) {
+        state.clientsTestimonialsPage = 3
+      } else {
+        state.clientsTestimonialsPage = 4
+      }
+    },
   },
   modules: {
     home,

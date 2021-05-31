@@ -122,10 +122,20 @@ class NewsController extends Controller
         }
         $params['limit'] = $limit;
 
+        $widthThumbInfoList = 184; 
+        $heightThumbInfoList = 120;
+        $width = 550;
+        $height = 450;
+
         $params['slug'] = isset($params['slug']) ? $params['slug'] : '';
         if (!empty($params['slug'])) {
             $slugs                 = explode('-', $params['slug']);
             $params['category_id'] = (int)end($slugs);
+            if (isset($slugs[1]) && $slugs[1] == 'related') {
+                $params['is_category_related'] = true;
+                $width = 350;
+                $height = 230;
+            }
         }
 
         $params['all_category_children'] = [];
@@ -154,10 +164,6 @@ class NewsController extends Controller
                 $staticImg     = rawurldecode($info->image);
             }
 
-            $widthThumbInfoList = 184; 
-            $heightThumbInfoList = 120;
-            $width = 550;
-            $height = 450;
             if (in_array($request->query('moduleName'), ['module_tin_giao_hoi','module_tin_giao_hoi_viet_nam'])){
                     $width = 350;
                     $height = 230;

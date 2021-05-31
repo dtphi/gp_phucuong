@@ -15,6 +15,7 @@
 
 	import DefaultHeader from 'com@front/Header/Default';
 	import DefaultFooter from 'com@front/Footers';
+	import { mapState, mapActions } from 'vuex';
 
 	export default {
 		name: 'MainLayout',
@@ -28,9 +29,32 @@
                 pageLoading: true,
 			}
 		},
+		computed: {
+			...mapState({
+				screenWidth: state => state.clientsTestimonialsPage
+			})
+		},
+		methods: {
+			...mapActions([
+				'winWidth'
+			])
+		},
 		mounted() {
 			this.pageLoading = false;
-		}
+		},
+		created() {
+			const _self = this;
+			_self.winWidth();
+			window.addEventListener("resize", function() {
+				_self.winWidth();
+			});
+		},
+		destroyed() {
+			const _self = this;
+			window.removeEventListener("resize", function() {
+				_self.winWidth();
+			});
+		},
 	};
 </script>
 

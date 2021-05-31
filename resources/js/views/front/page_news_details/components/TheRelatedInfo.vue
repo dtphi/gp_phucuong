@@ -4,7 +4,9 @@
         <b-row>
             <b-col class="col-mobile" cols="4" v-for="(item, idx) in _getRelatedListInfo" :key="idx">
                 <a class="d-block img-related" :href="_getHref(item)">
-                    <img class="img" v-lazy="item.imgThumMediumImg" alt=""></a>
+                    <img v-if="_innerScreen767" class="img" v-lazy="item.imgUrl" alt="">
+                    <img v-else class="img" v-lazy="item.imgThumMediumImg" alt="">
+                </a>
                 <h4 class="tit-bg-common mt-2">
                     <a class="pl-0" :href="_getHref(item)">{{item.name}}</a>
                 </h4>
@@ -19,6 +21,7 @@
 
 <script>
     import {
+        mapActions,
         mapGetters,
     } from 'vuex';
     import {
@@ -36,6 +39,9 @@
             return {}
         },
         computed: {
+            ...mapGetters([
+                'isScreen767'
+            ]),
             ...mapGetters(MODULE_INFO_DETAIL, [
                 'pageLists',
                 'infoRelateds'
@@ -45,6 +51,9 @@
                 return _.filter(this.infoRelateds, function(o) { 
                     return o.information_id !== _self.pageLists.information_id; 
                 });
+            },
+            _innerScreen767 () {
+                return this.isScreen767;
             }
         },
         methods: {
@@ -55,7 +64,7 @@
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + fn_change_to_slug(info.name));
                 }
             }
-        }
+        },
     }
 </script>
 
