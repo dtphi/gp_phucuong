@@ -37,22 +37,26 @@ const ModuleContentCategory = {
             {
                 moduleName: ModuleContent.module_left_info_left_side_bar,
                 sortOrder: 0,
-                componentClass: ''
+                componentClass: '',
+                isShowMobile: false
             },
             {
                 moduleName: ModuleContent.module_left_category_left_side_bar,
                 sortOrder: 0,
-                componentClass: ''
+                componentClass: '',
+                isShowMobile: false
             },
             {
                 moduleName: ModuleContent.module_left_newsletter_register,
                 sortOrder: 0,
-                componentClass: 'form test'
+                componentClass: 'form test',
+                isShowMobile: false
             },
             {
                 moduleName: ModuleContent.module_left_summary_contact,
                 sortOrder: 0,
-                componentClass: 'logo test'
+                componentClass: 'logo test',
+                isShowMobile: false
             }
         ],
         middle_modules: [],
@@ -347,22 +351,26 @@ routeEnv = {
                             {
                                 moduleName: ModuleContent.module_left_info_left_side_bar,
                                 sortOrder: 0,
-                                componentClass: ''
+                                componentClass: '',
+                                isShowMobile: false
                             },
                             {
                                 moduleName: ModuleContent.module_left_category_left_side_bar,
                                 sortOrder: 0,
-                                componentClass: ''
+                                componentClass: '',
+                                isShowMobile: false
                             },
                             {
                                 moduleName: ModuleContent.module_left_newsletter_register,
                                 sortOrder: 0,
-                                componentClass: 'form test'
+                                componentClass: 'form test',
+                                isShowMobile: false
                             },
                             {
                                 moduleName: ModuleContent.module_left_summary_contact,
                                 sortOrder: 0,
-                                componentClass: 'logo test'
+                                componentClass: 'logo test',
+                                isShowMobile: false
                             }
                         ],
                         middle_modules: [],
@@ -491,22 +499,26 @@ routeEnv = {
                             {
                                 moduleName: ModuleContent.module_left_info_left_side_bar,
                                 sortOrder: 0,
-                                componentClass: ''
+                                componentClass: '',
+                                isShowMobile: false
                             },
                             {
                                 moduleName: ModuleContent.module_left_category_left_side_bar,
                                 sortOrder: 0,
-                                componentClass: ''
+                                componentClass: '',
+                                isShowMobile: false
                             },
                             {
                                 moduleName: ModuleContent.module_left_newsletter_register,
                                 sortOrder: 0,
-                                componentClass: 'form test'
+                                componentClass: 'form test',
+                                isShowMobile: false
                             },
                             {
                                 moduleName: ModuleContent.module_left_summary_contact,
                                 sortOrder: 0,
-                                componentClass: 'logo test'
+                                componentClass: 'logo test',
+                                isShowMobile: false
                             }
                         ],
                         middle_modules: [],

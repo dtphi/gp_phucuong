@@ -10,6 +10,9 @@
 </template>
 
 <script>
+    import {
+        mapGetters,
+    } from 'vuex';
 
     export default {
         name: 'ColumnLeft',
@@ -28,18 +31,32 @@
             return {}
         },
         computed: {
+            ...mapGetters([
+                'isScreen767'
+            ]),
             _moduleList() {
                 let list = [];
+                let listMobile = [];
                 let contentType = 'content_' + this.contentType + '_column';
                 let modules = this.$route.meta.layout_content[contentType].left_modules;
                 if (modules && modules.length) {
                     
                     _.forEach(modules, function(item){
+                        if (item.isShowMobile) {
+                            listMobile.push({
+                                name: "module-" + item.moduleName.toLowerCase(),
+                                cCl: item.componentClass
+                            });
+                        }
                         list.push({
                             name: "module-" + item.moduleName.toLowerCase(),
                             cCl: item.componentClass
                         });
                     });
+                }
+
+                if (this.isScreen767) {
+                    return listMobile;
                 }
 
                 return list;

@@ -8,7 +8,10 @@
         <b-carousel-slide
             :img-src="item.imgCarThumUrl"
             v-for="(item, index) in _getInfoCarousel" :key="index">
-            <div class="description text-left">
+            <div v-if="_innerScreen1200" class="description text-left">
+                <p class="text-right mb-0"><a :href="_getHref(item)">{{item.date_available}}</a></p>
+            </div>
+            <div v-else class="description text-left">
                 <h4>{{item.sort_name}}</h4>
                 <p class="mb-2">
                     {{item.sort_description}}
@@ -50,6 +53,9 @@
             }
         },
         computed: {
+            ...mapGetters([
+                'isScreen1200'
+            ]),
             ...mapState(MODULE_INFO, {
                 infoList: state => state.infoLastedList
             }),
@@ -64,8 +70,11 @@
                 if (this.pageLists.length) {
                     return this.pageLists;
                 } else {
-                    return this._getLastedInfoCarousel();
+                    //return this._getLastedInfoCarousel();
                 }
+            },
+            _innerScreen1200 () {
+                return this.isScreen1200;
             }
         },
         created() {

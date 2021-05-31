@@ -150,6 +150,12 @@ export default new Vuex.Store({
     },
     isScreen767(state) {
       return state.clientsTestimonialsPage == 1;
+    },
+    isScreen1200(state) {
+      return state.clientsTestimonialsPage <= 3;
+    },
+    isScreen960(state) {
+      return state.clientsTestimonialsPage <= 2;
     }
   },
   mutations: {
