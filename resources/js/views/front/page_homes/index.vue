@@ -3,6 +3,20 @@
         <div class="container">
             <main-menu 
                 :layout-id="_layoutId"></main-menu>
+            <content-top v-if="_isContentTop">
+                <template v-if="loading">
+                    <loading-over-lay
+                        :active.sync="loading"
+                        :is-full-page="fullPage"></loading-over-lay>
+                </template>
+                <template v-slot:column_right>
+                    <social-network></social-network>
+                    <div class="box-social">
+                        <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
+                    </div>
+                </template>
+            </content-top>
+
             <div class="list-home mt-4 mb-3">
                 <template v-if="loading">
                     <loading-over-lay
@@ -32,6 +46,9 @@
     import {
         GET_LISTS
     } from '@app/stores/front/types/action-types';
+    import ContentTop from 'com@front/Common/ContentTop';
+    import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
+    import SocialNetwork from 'com@front/Common/SocialNetwork';
 
     const fnIsObject = (obj) => {
         if (typeof obj !== "undefined"
@@ -48,6 +65,9 @@
         components: {
             FigureItemPage,
             MainMenu,
+            ContentTop,
+            SocialNetwork,
+            TabInfoViewedAndPopular
         },
         data() {
             return {
@@ -74,7 +94,10 @@
                 }
 
                 return this.layoutId;
-            }
+            },
+            _isContentTop() {
+                return this.$route.meta.layout_content.content_top;
+            },
         },
         methods: {
             ...mapActions(MODULE_HOME, [

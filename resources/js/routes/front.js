@@ -26,6 +26,47 @@ const ModuleContent = {
     module_right_category_icon_side_bar: 'category-icon-side-bar',
 }
 
+const ModuleContentHome = {
+    content_top: true,
+    content_top_column: {
+        right_collumn: true,
+        middle_column: true,
+        left_collumn: false,
+        colClass: '8 notication',
+        left_modules: [],
+        middle_modules: [
+            {
+                moduleName: ModuleContent.middle_module_info_carousel,
+                sortOrder: 0
+            }
+        ],
+        right_modules: [],
+        column_number: 2
+    },
+    content_bottom: false,
+    content_bottom_column: {
+        right_collumn: false,
+        middle_column: false,
+        left_collumn: false,
+        colClass: '',
+        left_modules: [],
+        middle_modules: [],
+        right_modules: [],
+        column_number: 2
+    },
+    content_main: false,
+    content_main_column: {
+        right_collumn: false,
+        middle_column: false,
+        left_collumn: false,
+        colClass: '',
+        left_modules: [],
+        middle_modules: [],
+        right_modules: [],
+        column_number: 2
+    }
+}
+
 const ModuleContentCategory = {
     content_top: true,
     content_top_column: {
@@ -115,7 +156,8 @@ routeEnv = {
                 show: {
                     footer: true
                 },
-                title: 'Trang chủ | ' + config.site_name
+                title: 'Trang chủ | ' + config.site_name,
+                layout_content: ModuleContentHome
             }
         }, {
             path: 'home',
@@ -128,7 +170,8 @@ routeEnv = {
                 show: {
                     footer: true
                 },
-                title: 'Trang chủ | ' + config.site_name
+                title: 'Trang chủ | ' + config.site_name,
+                layout_content: ModuleContentHome
             }
         }]
     }, {
