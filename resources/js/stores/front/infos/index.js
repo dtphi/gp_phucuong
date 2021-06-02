@@ -100,9 +100,9 @@ export default {
               collectionData: pagination
             };
 
-            dispatch('setConfigApp', configs, {
+            /*dispatch('setConfigApp', configs, {
               root: true
-            });
+            });*/
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
@@ -136,9 +136,9 @@ export default {
               collectionData: pagination
             };
 
-            dispatch('setConfigApp', configs, {
+            /*dispatch('setConfigApp', configs, {
               root: true
-            });
+            });*/
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
@@ -188,9 +188,9 @@ export default {
               collectionData: pagination
             };
 
-            dispatch('setConfigApp', configs, {
+            /*dispatch('setConfigApp', configs, {
               root: true
-            });
+            });*/
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
@@ -220,9 +220,9 @@ export default {
               collectionData: pagination
             };
 
-            dispatch('setConfigApp', configs, {
+            /*dispatch('setConfigApp', configs, {
               root: true
-            });
+            });*/
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
@@ -292,12 +292,16 @@ export default {
             if (result.data.hasOwnProperty('subCategoryMenu')) {
               commit('init_list_sub_category_side_bar', result.data.subCategoryMenu);
             }
+            
             var pagination = {
               current_page: 1,
               total: 0
             };
             if (result.data.hasOwnProperty('pagination')) {
               pagination = result.data.pagination;
+            }
+            if (result.data.hasOwnProperty('params')) {
+              console.log('params', result.data.params)
             }
             var configs = {
               moduleActive: {
