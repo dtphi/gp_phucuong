@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <a href="/">
+    <a class="d-inline-block" href="/">
       <img v-if="logoUrl" :src="logoUrl" alt="Logo Phú Cường">
     </a>
   </transition>

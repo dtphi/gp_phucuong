@@ -42,16 +42,36 @@
         padding: 15px 0;
 
         .logo {
-            width: 30%;
+            width: 40%;
 
             img {
-                width: 20%;
+                width: 62%;
+            }
+
+            .col-9 {
+                margin: auto;
+                padding-left: 0;
+                margin-left: -10px;
+                margin-bottom: 0;
+
+                h2 {
+                    color: #ffffff;
+                    text-transform: uppercase;
+                    font-size: 26px;
+                }
+
+                h4 {
+                    color: #FFFF00;
+                    text-transform: uppercase;
+                    font-size: 18px;
+                }
             }
         }
 
         .banner-image {
-            width: 70%;
-            height: 100px;
+            width: 60%;
+            height: 80px;
+            vertical-align: bottom;
         }
     }
 
