@@ -72,6 +72,17 @@ class Service implements BaseModel
         return $query->get();
     }
 
+    public function apiGetCategoryById($categoryId = 0)
+    {
+        $query = DB::table('pc_categorys')->select()
+            ->leftJoin('pc_category_descriptions', 'pc_categorys.category_id',
+            '=', 'pc_category_descriptions.category_id')
+            ->where('pc_categorys.category_id', (int)$categoryId)
+            ->where('pc_categorys.status', '1');
+
+        return $query->first();
+    }
+
     public function apiGetMenuCategoryIds($parentId = 0)
     {
         $query = DB::table('pc_categorys')->select('category_id')

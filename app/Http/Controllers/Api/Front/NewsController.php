@@ -179,14 +179,21 @@ class NewsController extends Controller
         $results    = $this->newsSv->apiGetInfoList($params);
         $pagination = $this->_getTextPagination($results);
 
-        $subCategoryMenu = [];
+        $rootCategory = [];
         if ($params['renderType'] == 1) {
             $cateIdToSub = !empty($params['isRootCateId'])? $params['isRootCateId']: 0;
             $cateIdToSubSlugs                 = explode('-', $cateIdToSub);
             $cateIdToSub = (int)end($cateIdToSubSlugs);
-            $categories = $this->sv->getMenuCategories($cateIdToSub);
+            $rootCategory = $this->sv->apiGetCategoryById($cateIdToSub);
+            $rootCategory = array(
+                'name'     => $rootCategory->name,
+                'children' => [],
+                'link'     => $rootCategory->name_slug
+            );
+            $subCategories = $this->sv->getMenuCategories($cateIdToSub);
 
-            foreach ($categories as $cate) {
+            $link1 = $rootCategory['link'];
+            foreach ($subCategories as $cate) {
                 // Level 2
                 $children_data_2 = array();
 
@@ -194,7 +201,7 @@ class NewsController extends Controller
                     $children_2 = $this->sv->getMenuCategories($cate->category_id);
 
                     foreach ($children_2 as $child_2) {
-                        $link_2 = $cate->name_slug . '/' . $child_2->name_slug;
+                        $link_2 = $link1 . '/' . $cate->name_slug . '/' . $child_2->name_slug;
                         // Level 3
                         $children_data_3 = array();
 
@@ -275,9 +282,11 @@ class NewsController extends Controller
                 $subCategoryMenu[] = array(
                     'name'     => $cate->name,
                     'children' => $children_data_2,
-                    'link'     => $cate->name_slug
+                    'link'     => $link1 . '/' . $cate->name_slug
                 );
             }
+
+            $rootCategory['children'] = $subCategoryMenu;
         }
 
         $infos = [];
@@ -357,7 +366,7 @@ class NewsController extends Controller
 
         return Helper::successResponse([
             'results'    => $infos,
-            'subCategoryMenu' => $subCategoryMenu,
+            'subCategoryMenu' => $rootCategory,
             'pagination' => $pagination,
             'page'       => $page
         ]);

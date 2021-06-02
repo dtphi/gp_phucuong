@@ -1,10 +1,10 @@
 <template>
-    <div class="fz-0">
-        <h4 class="title"><span>Danh mục</span></h4>
+    <div class="fz-0" v-if="_isExistMenu">
+        <h4 class="title"><span>{{menuLists.name}}</span></h4>
         <nav id="nav">
             <ul class="menu-pc nav-menu">
                 <nav-tree
-                    v-for="(itemMenu,idx) in menuLists"
+                    v-for="(itemMenu,idx) in menuLists.children"
                     :item="itemMenu"
                     :key="idx"></nav-tree>
             </ul>
@@ -39,6 +39,9 @@
             ...mapState({
                 menuLists: state => state.info.module_category_sub_left_side_bar,
             }),
+            _isExistMenu() {
+                return Object.keys(this.menuLists).length > 0;
+            }
         },
         setting: {
             menuHome: {
