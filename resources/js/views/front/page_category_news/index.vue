@@ -8,14 +8,43 @@
                         :active.sync="loading"
                         :is-full-page="fullPage"></loading-over-lay>
                 </template>
-                <paginate></paginate>
+                
                 <div class="list-videos">
-                    <the-category-news-item
-                        class="figure"
+                    <the-list-category-news-item
+                        class="info-list"
                         v-for="(item,idx) in infoList"
                         :info="item"
-                        :key="idx"></the-category-news-item>
+                        :key="idx"></the-list-category-news-item>
                 </div>
+                <paginate></paginate>
+                <template v-slot:column_right>
+                    <social-network></social-network>
+                    <div class="box-social">
+                        <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
+                    </div>
+                    <div class="box-care mt-3">
+                        <newsletter-register></newsletter-register>
+
+                        <b-row class="mt-3">
+                            <b-col cols="5" class="m-auto">
+                                <p class="mb-0 text-download">Tải app sách nói công giáo</p>
+                            </b-col>
+                            <b-col cols="7">
+                                <b-carousel
+                                    id="carousel-2"
+                                    :interval="4000"
+                                    controls
+                                    indicators
+                                >
+                                    <b-carousel-slide
+                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                    <b-carousel-slide
+                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                </b-carousel>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </template>
             </content-top>
             <main-content v-if="_isContentMain"></main-content>
             <content-bottom v-if="_isContentBottom"></content-bottom>
@@ -29,7 +58,7 @@
         mapState
     } from 'vuex';
     import MainMenu from 'com@front/Common/MainMenu';
-    import TheCategoryNewsItem from './components/TheCategoryNewsItem';
+    import TheListCategoryNewsItem from './components/TheListCategoryNewsItem';
     import Paginate from 'com@front/Pagination';
     import {
         MODULE_INFO
@@ -40,6 +69,9 @@
     import MainContent from 'com@front/Common/MainContent';
     import ContentBottom from 'com@front/Common/ContentBottom';
     import ContentTop from 'com@front/Common/ContentTop';
+    import SocialNetwork from 'com@front/Common/SocialNetwork';
+    import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
+    import NewsletterRegister from 'com@front/Common/NewsletterRegister';
 
     export default {
         name: 'InfoListtoCategory',
@@ -48,8 +80,11 @@
             ContentTop,
             MainContent,
             ContentBottom,
-            TheCategoryNewsItem,
-            Paginate
+            TheListCategoryNewsItem,
+            Paginate,
+            SocialNetwork,
+            TabInfoViewedAndPopular,
+            NewsletterRegister
         },
         data() {
             return {
@@ -73,7 +108,10 @@
             },
         },
         mounted() {
-            this.[GET_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
+            this.[GET_INFORMATION_LIST_TO_CATEGORY]({
+                ...this.$route.params,
+                renderType: 1
+            });
         },
         methods: {
             ...mapActions(MODULE_INFO, [

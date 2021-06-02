@@ -21,6 +21,7 @@
             'module-category-left-side-bar': () => import('v@front/modules/category_left_side_bars'),
             'module-newsletter-register': () => import('com@front/Common/NewsletterRegister'),
             'module-summary-contact': () => import('com@front/SummaryContact'),
+            'module-category-sub-left-side-bar': () => import('v@front/modules/category_sub_left_side_bars'),
         },
         props: {
             contentType: {

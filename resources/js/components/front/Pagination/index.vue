@@ -1,12 +1,12 @@
 <template>
     <div class="row mb-3" v-if="Object.keys(_collectionData).length">
         <template v-if="_collectionData.total">
-            <div class="col-sm-6 text-left">
+            <!--<div class="col-sm-6 text-left">
                 <div class="dataTables_info">
                     {{_getTextPaginationCollection()}}
                 </div>
-            </div>
-            <div class="col-sm-6 text-right">
+            </div>-->
+            <div class="col-sm-12" style="margin-top:15px">
                 <div class="dataTables_paginate paging_simple_numbers">
                     <collection-pagination
                         class="mb-0"

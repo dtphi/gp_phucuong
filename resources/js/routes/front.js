@@ -11,6 +11,7 @@ const ModuleContent = {
     module_left_category_left_side_bar: 'category-left-side-bar',
     module_left_newsletter_register:'newsletter-register',
     module_left_summary_contact: 'summary-contact',
+    module_left_category_sub_left_side_bar: 'category-sub-left-side-bar',
 
     middle_module_info_carousel: 'info-carousel',
     middle_module_special_banner: 'special-banner',
@@ -70,38 +71,35 @@ const ModuleContentHome = {
 const ModuleContentCategory = {
     content_top: true,
     content_top_column: {
-        right_collumn: false,
+        right_collumn: true,
         middle_column: true,
         left_collumn: true,
-        colClass: '',
+        colClass: '5',
         left_modules: [
             {
-                moduleName: ModuleContent.module_left_info_left_side_bar,
-                sortOrder: 0,
-                componentClass: '',
-                isShowMobile: false
-            },
-            {
-                moduleName: ModuleContent.module_left_category_left_side_bar,
-                sortOrder: 0,
-                componentClass: '',
-                isShowMobile: false
-            },
-            {
-                moduleName: ModuleContent.module_left_newsletter_register,
-                sortOrder: 0,
-                componentClass: 'form test',
-                isShowMobile: false
-            },
-            {
-                moduleName: ModuleContent.module_left_summary_contact,
-                sortOrder: 0,
-                componentClass: 'logo test',
-                isShowMobile: false
+                moduleName: ModuleContent.module_left_category_sub_left_side_bar,
+                sortOrder: 0
             }
         ],
         middle_modules: [],
-        right_modules: [],
+        right_modules: [
+            {
+                moduleName: ModuleContent.module_right_thong_bao,
+                sortOrder: 0
+            },
+            {
+                moduleName: ModuleContent.module_right_lich_cong_giao,
+                sortOrder: 0
+            },
+            {
+                moduleName: ModuleContent.module_right_info_fanpage,
+                sortOrder: 0
+            },
+            {
+                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
+                sortOrder: 0
+            }
+        ],
         column_number: 2
     },
     content_bottom: false,

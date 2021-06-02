@@ -28,6 +28,7 @@ export default {
     pageLists: [],
     infoLastedList: [],
     infoPopularList: [],
+    module_category_sub_left_side_bar: [],
     errors: []
   },
   getters: {
@@ -40,6 +41,9 @@ export default {
   },
 
   mutations: {
+    init_list_sub_category_side_bar(state, payload) {
+      state.module_category_sub_left_side_bar = payload;
+    },
     INIT_LIST(state, payload) {
       state.pageLists = payload;
     },
@@ -244,6 +248,7 @@ export default {
         page = routeParams.page;
       }
       let params = {
+        ...routeParams,
         page: page,
         slug: slug
       };
@@ -284,6 +289,9 @@ export default {
         apiGetListsToCategory(
           (result) => {
             commit(INIT_LIST, result.data.results);
+            if (result.data.hasOwnProperty('subCategoryMenu')) {
+              commit('init_list_sub_category_side_bar', result.data.subCategoryMenu);
+            }
             var pagination = {
               current_page: 1,
               total: 0

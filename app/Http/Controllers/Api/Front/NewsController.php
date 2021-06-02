@@ -121,6 +121,10 @@ class NewsController extends Controller
             $limit = $request->query('limit');
         }
         $params['limit'] = $limit;
+        $params['renderType'] = 0;
+        if ($request->query('renderType')) {
+            $params['renderType'] = $request->query('renderType');
+        }
 
         $widthThumbInfoList = 184; 
         $heightThumbInfoList = 120;
@@ -155,8 +159,106 @@ class NewsController extends Controller
         $results    = $this->newsSv->apiGetInfoList($params);
         $pagination = $this->_getTextPagination($results);
 
+        $subCategoryMenu = [];
+        if ($params['renderType'] == 1 && !empty($params['category_id'])) {
+            $categories = $this->sv->getMenuCategories($params['category_id']);
+
+            foreach ($categories as $cate) {
+                // Level 2
+                $children_data_2 = array();
+
+                if (!empty($cate->name)) {
+                    $children_2 = $this->sv->getMenuCategories($cate->category_id);
+
+                    foreach ($children_2 as $child_2) {
+                        $link_2 = $cate->name_slug . '/' . $child_2->name_slug;
+                        // Level 3
+                        $children_data_3 = array();
+
+                        if (!empty($child_2->name)) {
+                            $children_3 = $this->sv->getMenuCategories($child_2->category_id);
+
+                            foreach ($children_3 as $child_3) {
+                                $link_3 = $link_2 . '/' . $child_3->name_slug;
+                                // Level 4
+                                $children_data_4 = array();
+
+                                $children_4 = $this->sv->getMenuCategories($child_3->category_id);
+
+                                foreach ($children_4 as $child_4) {
+                                    $link_4 = $link_3 . '/' . $child_4->name_slug;
+                                    // Level 5
+                                    $children_data_5 = array();
+
+                                    $children_5 = $this->sv->getMenuCategories($child_4->category_id);
+
+                                    foreach ($children_5 as $child_5) {
+                                        $link_5 = $link_4 . '/' . $child_5->name_slug;
+
+                                        // Level 5-1
+                                        $filter_data = array(
+                                            'filter_category_id'  => $child_5->category_id,
+                                            'filter_sub_category' => true
+                                        );
+
+                                        $children_data_5[] = array(
+                                            'name' => $child_5->name,
+                                            'link' => $link_5
+                                        );
+                                    }
+
+                                    // Level 4 - 1
+                                    $filter_data = array(
+                                        'filter_category_id'  => $child_4->category_id,
+                                        'filter_sub_category' => true
+                                    );
+
+                                    $children_data_4[] = array(
+                                        'name'     => $child_4->name,
+                                        'children' => $children_data_5,
+                                        'link'     => $link_4
+                                    );
+                                }
+
+                                // Level 3 -1
+                                $filter_data = array(
+                                    'filter_category_id'  => $child_3->category_id,
+                                    'filter_sub_category' => true
+                                );
+
+                                $children_data_3[] = array(
+                                    'name'     => $child_3->name,
+                                    'children' => $children_data_4,
+                                    'link'     => $link_3
+                                );
+                            }
+                        }
+
+                        // Level 2 - 1
+                        $filter_data = array(
+                            'filter_category_id'  => $child_2->category_id,
+                            'filter_sub_category' => true
+                        );
+
+                        $children_data_2[] = array(
+                            'name'     => $child_2->name,
+                            'children' => $children_data_3,
+                            'link'     => $link_2
+                        );
+                    }
+                }
+
+                // Level 1
+                $subCategoryMenu[] = array(
+                    'name'     => $cate->name,
+                    'children' => $children_data_2,
+                    'link'     => $cate->name_slug
+                );
+            }
+        }
+
         $infos = [];
-        foreach ($results as $info) {
+        foreach ($results as $key => $info) {
             $staticImg     = self::$thumImgNo;
             $staticThumImg = self::$thumImgNo;
 
@@ -185,32 +287,54 @@ class NewsController extends Controller
                     $height = 152;
             }
 
-            $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
-            $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, $width, $height):$this->getThumbnail($staticImg, $width, $height);
- 
-            $sortDes = html_entity_decode($info->sort_description);
-            $infos[] = [
-                'category_id'      => $info->category_id,
-                'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
-                'description'      => html_entity_decode($info->sort_description),
-                'sort_description' => Str::substr($sortDes, 0, 100),
-                'image'            => $staticImg,
-                'imgUrl'           => url($staticImg),
-                'imgThumUrl'       => url($staticThumImg),
-                'imgThumMediumImg' => url($staticThumMediumImg),
-                'imgThumMediumImg1'=> isset($staticThumMediumImg1)?url($staticThumMediumImg1):'',
-                'information_id'   => $info->information_id,
-                'information_type' => $info->information_type,
-                'name'             => $info->name,
-                'name_slug'        => $info->name_slug,
-                'sort_name'        => Str::substr($info->name, 0, 50),
-                'viewed'           => $info->viewed,
-                'vote'             => $info->vote
-            ];
+            if($params['renderType'] == 1) {
+    
+                $sortDes = html_entity_decode($info->sort_description);
+                $isImgRender = ($key == 0);
+                $infos[] = [
+                    'category_id'      => $info->category_id,
+                    'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                    'description'      => html_entity_decode($info->sort_description),
+                    'sort_description' => Str::substr($sortDes, 0, 100),
+                    'isImgRender'      => $isImgRender,
+                    'imgUrl'           => url($staticImg),
+                    'information_id'   => $info->information_id,
+                    'information_type' => $info->information_type,
+                    'name'             => $info->name,
+                    'name_slug'        => $info->name_slug,
+                    'sort_name'        => Str::substr($info->name, 0, 50),
+                    'viewed'           => $info->viewed,
+                    'vote'             => $info->vote
+                ];
+            } elseif ($params != 1) {
+                $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
+                $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, $width, $height):$this->getThumbnail($staticImg, $width, $height);
+    
+                $sortDes = html_entity_decode($info->sort_description);
+                $infos[] = [
+                    'category_id'      => $info->category_id,
+                    'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                    'description'      => html_entity_decode($info->sort_description),
+                    'sort_description' => Str::substr($sortDes, 0, 100),
+                    'image'            => $staticImg,
+                    'imgUrl'           => url($staticImg),
+                    'imgThumUrl'       => url($staticThumImg),
+                    'imgThumMediumImg' => url($staticThumMediumImg),
+                    'imgThumMediumImg1'=> isset($staticThumMediumImg1)?url($staticThumMediumImg1):'',
+                    'information_id'   => $info->information_id,
+                    'information_type' => $info->information_type,
+                    'name'             => $info->name,
+                    'name_slug'        => $info->name_slug,
+                    'sort_name'        => Str::substr($info->name, 0, 50),
+                    'viewed'           => $info->viewed,
+                    'vote'             => $info->vote
+                ];
+            }
         }
 
         return Helper::successResponse([
             'results'    => $infos,
+            'subCategoryMenu' => $subCategoryMenu,
             'pagination' => $pagination,
             'page'       => $page
         ]);

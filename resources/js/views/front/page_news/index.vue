@@ -56,10 +56,10 @@
         GET_INFORMATION_LIST_TO_CATEGORY
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
-    import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
     import ContentTop from 'com@front/Common/ContentTop';
     import ContentBottom from 'com@front/Common/ContentBottom';
     import SocialNetwork from './components/TheSocialNetwork';
+    import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
 
     export default {
