@@ -160,8 +160,9 @@ class NewsController extends Controller
         $pagination = $this->_getTextPagination($results);
 
         $subCategoryMenu = [];
-        if ($params['renderType'] == 1 && !empty($params['category_id'])) {
-            $categories = $this->sv->getMenuCategories($params['category_id']);
+        if ($params['renderType'] == 1) {
+            $cateIdToSub = !empty($params['category_id'])? $params['category_id']: 0;
+            $categories = $this->sv->getMenuCategories($cateIdToSub);
 
             foreach ($categories as $cate) {
                 // Level 2
