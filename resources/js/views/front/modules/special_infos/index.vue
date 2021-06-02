@@ -10,8 +10,7 @@
             v-for="(item, index) in _getInfoCarousel" :key="index">
             <template #img>
                 <img @click="_redirectUrl(item)"
-                    v-lazy="item.imgCarThumUrl"
-                >
+                    :src="item.imgCarThumUrl">
             </template>
             <div v-if="_innerScreen1200" class="description text-left">
                 <p class="text-right mb-0">{{item.date_available}}</p>
@@ -30,19 +29,15 @@
 
 <script>
     import {
-        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO,
         MODULE_MODULE_SPECIAL_INFO
     } from 'store@front/types/module-types';
     import {
-        ACTION_GET_SETTING,
-        GET_LASTED_INFORMATION_LIST_TO_CATEGORY
+        ACTION_GET_SETTING
     } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
     import {
         fn_get_href_base_url,
         fn_change_to_slug
@@ -54,28 +49,18 @@
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
             }
         },
         computed: {
             ...mapGetters([
                 'isScreen1200'
             ]),
-            ...mapState(MODULE_INFO, {
-                infoList: state => state.infoLastedList
-            }),
             ...mapGetters(MODULE_MODULE_SPECIAL_INFO, [
-                'settingSpecialInfo',
                 'pageLists'
             ]),
-            _isExist() {
-                return this.settingSpecialInfo.length;
-            },
             _getInfoCarousel() {
                 if (this.pageLists.length) {
                     return this.pageLists;
-                } else {
-                    //return this._getLastedInfoCarousel();
                 }
             },
             _innerScreen1200 () {
@@ -86,22 +71,9 @@
             this.[ACTION_GET_SETTING]();
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                GET_LASTED_INFORMATION_LIST_TO_CATEGORY
-            ]),
             ...mapActions(MODULE_MODULE_SPECIAL_INFO, [
                 ACTION_GET_SETTING,
             ]),
-            _getLastedInfoCarousel() {
-                let lists = [];
-                _.forEach(this.infoList, function(item, index) {
-                    if (index < 5) {
-                        lists.push(item)
-                    }
-                });
-
-                return lists;
-            },
             _getHref(info) {
                 if (info.hasOwnProperty('name_slug')) {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);

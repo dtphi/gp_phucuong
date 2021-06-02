@@ -23,6 +23,8 @@ final class Tables
         'Ẩn',
         'Xảy ra'
     ];
+    public static $infoStatusActive = 1;
+    public static $infoStatusDisabled = 0;
     public static $tagetLink = [
         '_blank',
         '_self'

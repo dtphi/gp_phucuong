@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\Front\Services;
 
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
-use App\Models\NewsGroup;
+use App\Models\Category;
+use App\Http\Common\Tables;
 use DB;
 
 class Service implements BaseModel
@@ -20,7 +21,7 @@ class Service implements BaseModel
      */
     public function __construct()
     {
-        $this->modelNewGroup = new NewsGroup();
+        $this->modelNewGroup = new Category();
     }
 
     /**
@@ -51,7 +52,9 @@ class Service implements BaseModel
     public function apiGetNewsGroupTrees()
     {
         // TODO: Implement apiGetNewsGroupTrees() method.
-        $query = $this->modelNewGroup->select('id', 'father_id', 'newsgroupname', 'displays', 'sort')->orderBySortAsc();
+        $query = $this->modelNewGroup
+            ->select('id', 'father_id', 'newsgroupname', 'displays', 'sort')
+            ->orderBySortAsc();
 
         return [
             'total' => $query->count(),
@@ -61,24 +64,22 @@ class Service implements BaseModel
 
     public function getMenuCategories($parentId = 0)
     {
-        $query = DB::table('pc_categorys')->select()
-            ->leftJoin('pc_category_descriptions', 'pc_categorys.category_id',
-            '=', 'pc_category_descriptions.category_id')
-            ->where('pc_categorys.parent_id', (int)$parentId)
-            ->where('pc_categorys.status', '1')
-            ->orderBy('pc_categorys.sort_order')
-            ->orderBy('pc_category_descriptions.category_id');
+        $query = $this->modelNewGroup->select()
+            ->lfJoinDescription()
+            ->filterParentId($parentId)
+            ->filterActiveStatus()
+            ->orderByAscSort()
+            ->orderByAscParentId();
 
         return $query->get();
     }
 
     public function apiGetCategoryById($categoryId = 0)
     {
-        $query = DB::table('pc_categorys')->select()
-            ->leftJoin('pc_category_descriptions', 'pc_categorys.category_id',
-            '=', 'pc_category_descriptions.category_id')
-            ->where('pc_categorys.category_id', (int)$categoryId)
-            ->where('pc_categorys.status', '1');
+        $query = $this->modelNewGroup->select()
+            ->lfJoinDescription()
+            ->filterById($categoryId)
+            ->filterActiveStatus();
 
         return $query->first();
     }
@@ -94,12 +95,13 @@ class Service implements BaseModel
 
     public function getMenuCategoriesToLayout($layoutId = 1)
     {
-        $query = DB::table('pc_categorys')->select()->leftJoin('pc_category_descriptions', 'pc_categorys.category_id',
-            '=', 'pc_category_descriptions.category_id')
-            ->leftJoin('pc_category_to_layouts', 'pc_categorys.category_id', '=', 'pc_category_to_layouts.category_id')
-            ->where('pc_category_to_layouts.layout_id', (int)$layoutId)
-            ->where('pc_categorys.status', '1')
-            ->orderBy('pc_categorys.sort_order')->orderBy('pc_category_descriptions.category_id');
+        $query = $this->modelNewGroup->select()
+            ->lfJoinDescription()
+            ->lfJoinToLayout()
+            ->filterLayoutId($layoutId)
+            ->filterActiveStatus()
+            ->orderByAscSort()
+            ->orderByAscParentId();
 
         return $query->get();
     }
