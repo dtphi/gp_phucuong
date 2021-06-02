@@ -3,13 +3,18 @@
         id="carousel-1"
         :interval="4000"
         controls
+        style="cursor: pointer;"
         indicators
     >
         <b-carousel-slide
-            :img-src="item.imgCarThumUrl"
             v-for="(item, index) in _getInfoCarousel" :key="index">
+            <template #img>
+                <img @click="_redirectUrl(item)"
+                    v-lazy="item.imgCarThumUrl"
+                >
+            </template>
             <div v-if="_innerScreen1200" class="description text-left">
-                <p class="text-right mb-0"><a :href="_getHref(item)">{{item.date_available}}</a></p>
+                <p class="text-right mb-0">{{item.date_available}}</p>
             </div>
             <div v-else class="description text-left">
                 <h4>{{item.sort_name}}</h4>
@@ -103,6 +108,9 @@
                 } else {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + fn_change_to_slug(info.name));
                 }
+            },
+            _redirectUrl(info) {
+                window.location = this._getHref(info);
             }
         }
     };
