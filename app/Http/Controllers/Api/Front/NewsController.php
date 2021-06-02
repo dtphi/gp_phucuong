@@ -141,6 +141,26 @@ class NewsController extends Controller
                 $height = 230;
             }
         }
+        $params['isRootCateId'] = '';
+        
+        if (isset($params['slug'])) {
+            $params['isRootCateId'] = $params['slug'];
+        } 
+        if (isset($params['slug_1'])) {
+            $params['isRootCateId'] = $params['slug_1'];
+        } 
+        if (isset($params['slug_2'])) {
+            $params['isRootCateId'] = $params['slug_2'];
+        } 
+        if (isset($params['slug_3'])) {
+            $params['isRootCateId'] = $params['slug_3'];
+        } 
+        if (isset($params['slug_4'])) {
+            $params['isRootCateId'] = $params['slug_4'];
+        } 
+        if (isset($params['slug_5'])) {
+            $params['isRootCateId'] = $params['slug_5'];
+        }
 
         $params['all_category_children'] = [];
         if (isset($params['category_id']) && in_array($params['category_id'], self::$menuFullInfos)) {
@@ -161,7 +181,9 @@ class NewsController extends Controller
 
         $subCategoryMenu = [];
         if ($params['renderType'] == 1) {
-            $cateIdToSub = !empty($params['category_id'])? $params['category_id']: 0;
+            $cateIdToSub = !empty($params['isRootCateId'])? $params['isRootCateId']: 0;
+            $cateIdToSubSlugs                 = explode('-', $cateIdToSub);
+            $cateIdToSub = (int)end($cateIdToSubSlugs);
             $categories = $this->sv->getMenuCategories($cateIdToSub);
 
             foreach ($categories as $cate) {
