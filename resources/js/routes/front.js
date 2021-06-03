@@ -214,10 +214,6 @@ routeEnv = {
                         left_modules: [],
                         middle_modules: [
                             {
-                                moduleName: ModuleContent.module_middle_loi_chua,
-                                sortOrder: 0
-                            },
-                            {
                                 moduleName: ModuleContent.module_middle_tin_giao_hoi,
                                 sortOrder: 0
                             },
