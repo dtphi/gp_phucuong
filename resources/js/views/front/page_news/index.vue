@@ -2,6 +2,7 @@
     <main id="news" class="py-2">
         <div class="container">
             <main-menu></main-menu>
+            <div style="background-color: #80808008;">
             <content-top v-if="_isContentTop">
                 <template v-if="loading">
                     <loading-over-lay
@@ -14,8 +15,6 @@
                         <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
                     </div>
                     <div class="box-care mt-3">
-                        <newsletter-register></newsletter-register>
-
                         <b-row class="mt-3">
                             <b-col cols="5" class="m-auto">
                                 <p class="mb-0 text-download">Tải app sách nói công giáo</p>
@@ -40,6 +39,7 @@
             
             <content-bottom v-if="_isContentBottom">
             </content-bottom>
+            </div>
         </div>
     </main>
 </template>
