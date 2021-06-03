@@ -75,4 +75,19 @@ class InformationRelated extends BaseModel
             return DB::delete("delete from " . Tables::$information_relateds . " where related_id = '" . $relatedId . "'");
         }
     }
+
+    public function scopeLfJoinInfo($query)
+    {
+        $query->leftJoin(Tables::$informations, $this->table . '.related_id',
+        '=', Tables::$informations . '.information_id');
+
+        return $query;
+    }
+
+    public function scopeFilterByInfoId($query, $infoId)
+    {
+        $query->where($this->table . '.information_id', (int)$infoId);
+
+        return $query;
+    }
 }

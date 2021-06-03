@@ -1,4 +1,6 @@
 import MainLayout from 'v@front/layouts/main';
+import HomePage from 'v@front/page_news';
+import CategoryPage from 'v@front/page_category_news';
 
 import {
     config
@@ -175,31 +177,205 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@front/page_homes'),
-            name: 'home',
+            component: HomePage,
+            name: 'news-page',
             meta: {
+                auth: false,
+                header: 'News Page',
                 layout: MainLayout,
-                role: 'public',
-                show: {
-                    footer: true
-                },
-                title: 'Trang chủ | ' + config.site_name,
-                layout_content: ModuleContentHome
+                role: 'guest',
+                title: 'Trang Tin Tức | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_top_column: {
+                        right_collumn: true,
+                        middle_column: true,
+                        left_collumn: false,
+                        colClass: '8 notication',
+                        left_modules: [],
+                        middle_modules: [
+                            {
+                                moduleName: ModuleContent.middle_module_info_carousel,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.middle_module_special_banner,
+                                sortOrder: 0
+                            },
+                        ],
+                        right_modules: [],
+                        column_number: 2
+                    },
+                    content_bottom: true,
+                    content_bottom_column: {
+                        right_collumn: true,
+                        middle_column: true,
+                        left_collumn: false,
+                        left_modules: [],
+                        middle_modules: [
+                            {
+                                moduleName: ModuleContent.module_middle_loi_chua,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_middle_tin_giao_hoi,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_middle_tin_giao_phan,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_middle_van_kien,
+                                sortOrder: 0
+                            }
+                        ],
+                        right_modules: [
+                            {
+                                moduleName: ModuleContent.module_right_category_icon_side_bar,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_thong_bao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_lich_cong_giao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_sach_noi_iframe,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_info_fanpage,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
+                                sortOrder: 0
+                            }
+                        ],
+                        column_number: 2,
+                        colClass: '8'
+                    },
+                    content_main: false,
+                    content_main_column: {
+                        right_collumn: false,
+                        middle_column: true,
+                        left_collumn: false,
+                        colClass: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
+                        column_number: 2
+                    },
+                    right_collumn: false,
+                    middle_column: true,
+                    left_collumn: false,
+                    column_number: 2,
+                }
             }
         }, {
-            path: 'home',
-            component: () =>
-                import ('v@front/page_homes'),
-            name: 'home_1',
+            path: 'trang-chu',
+            component: HomePage,
+            name: 'news-page',
             meta: {
+                auth: false,
+                header: 'News Page',
                 layout: MainLayout,
-                role: 'public',
-                show: {
-                    footer: true
-                },
-                title: 'Trang chủ | ' + config.site_name,
-                layout_content: ModuleContentHome
+                role: 'guest',
+                title: 'Trang Tin Tức | ' + config.site_name,
+                layout_content: {
+                    content_top: true,
+                    content_top_column: {
+                        right_collumn: true,
+                        middle_column: true,
+                        left_collumn: false,
+                        colClass: '8 notication',
+                        left_modules: [],
+                        middle_modules: [
+                            {
+                                moduleName: ModuleContent.middle_module_info_carousel,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.middle_module_special_banner,
+                                sortOrder: 0
+                            },
+                        ],
+                        right_modules: [],
+                        column_number: 2
+                    },
+                    content_bottom: true,
+                    content_bottom_column: {
+                        right_collumn: true,
+                        middle_column: true,
+                        left_collumn: false,
+                        left_modules: [],
+                        middle_modules: [
+                            {
+                                moduleName: ModuleContent.module_middle_loi_chua,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_middle_tin_giao_hoi,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_middle_tin_giao_phan,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_middle_van_kien,
+                                sortOrder: 0
+                            }
+                        ],
+                        right_modules: [
+                            {
+                                moduleName: ModuleContent.module_right_category_icon_side_bar,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_thong_bao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_lich_cong_giao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_sach_noi_iframe,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_info_fanpage,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
+                                sortOrder: 0
+                            }
+                        ],
+                        column_number: 2,
+                        colClass: '8'
+                    },
+                    content_main: false,
+                    content_main_column: {
+                        right_collumn: false,
+                        middle_column: true,
+                        left_collumn: false,
+                        colClass: '',
+                        left_modules: [],
+                        middle_modules: [],
+                        right_modules: [],
+                        column_number: 2
+                    },
+                    right_collumn: false,
+                    middle_column: true,
+                    left_collumn: false,
+                    column_number: 2,
+                }
             }
         }]
     }, {
@@ -209,8 +385,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@front/page_category_news'),
+            component: CategoryPage,
             name: 'news-category-all-page',
             meta: {
                 auth: false,
@@ -228,8 +403,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@front/page_category_news'),
+            component: CategoryPage,
             name: 'news-category-page',
             meta: {
                 auth: false,
@@ -247,8 +421,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@front/page_category_news'),
+            component: CategoryPage,
             name: 'news-category_1-page',
             meta: {
                 auth: false,
@@ -266,8 +439,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@front/page_category_news'),
+            component: CategoryPage,
             name: 'news-category_2-page',
             meta: {
                 auth: false,
@@ -285,8 +457,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@front/page_category_news'),
+            component: CategoryPage,
             name: 'news-category_3-page',
             meta: {
                 auth: false,

@@ -96,7 +96,7 @@ class HomeController extends Controller
                 ]
             ];
             $data = [];
-            //$staticThumImg = self::$thumImgNo;
+          
             foreach($pageLists as $pageList) {
                 $imgThumUrl = $this->getThumbnail($pageList['img'], 273, 170);
 

@@ -73,9 +73,8 @@ final class NewsService extends Service implements NewsModel
     public function apiGetInfoRelated($infoId)
     {
         $query = $this->infoRelated->select()
-            ->leftJoin(Tables::$informations, Tables::$information_relateds . '.related_id', '=',
-                Tables::$informations . '.information_id')
-            ->where(Tables::$information_relateds . '.information_id', '=', $infoId);
+            ->lfJoinInfo()
+            ->filterByInfoId($infoId);
 
 
         return $query->get();

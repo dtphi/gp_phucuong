@@ -47,7 +47,7 @@
             menuHome: {
                 children: [],
                 name: 'Home',
-                link: 'home'
+                link: 'trang-chu'
             }
         }
     }

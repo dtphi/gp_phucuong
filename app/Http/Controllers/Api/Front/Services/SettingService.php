@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Front\Services;
 
 use App\Http\Controllers\Api\Front\Services\Contracts\SettingModel;
 use App\Models\Setting;
+use App\Models\Category;
+use App\Http\Common\Tables;
 use DB;
 
 final class SettingService implements SettingModel
@@ -14,17 +16,24 @@ final class SettingService implements SettingModel
     private $model = null;
 
     /**
+     * [$modelNewGroup description]
+     * @var null
+     */
+    private $modelNewGroup = null;
+
+    /**
      * @author : dtphi .
      * SettingService constructor.
      */
     public function __construct()
     {
         $this->model = new Setting();
+        $this->modelNewGroup = new Category();
     }
 
     public function apiGetList(array $options = [], $limit = 15)
     {
-        $query = $this->model->where('code', $options['code']);
+        $query = $this->model->filterCode($options['code']);
 
         if ($limit) {
             $query->limit($limit);
@@ -35,20 +44,19 @@ final class SettingService implements SettingModel
 
     public function apiGetCategoryByIds($ids = [])
     {
-        $query = DB::table('pc_categorys')->select()
-            ->leftJoin('pc_category_descriptions', 'pc_categorys.category_id', '=',
-                'pc_category_descriptions.category_id')
-            ->whereIn('pc_categorys.category_id', $ids)
-            ->where('pc_categorys.status', '1')
-            ->orderBy('pc_categorys.sort_order')
-            ->orderBy('pc_category_descriptions.category_id');
+        $query = $this->modelNewGroup->select()
+            ->lfJoinDescription()
+            ->filterInByIds($ids)
+            ->filterActiveStatus()
+            ->orderByAscSort()
+            ->orderByAscParentId();
 
         return $query->get();
     }
 
     public function apiGetDetail($id = null)
     {
-        $this->model = $this->model->where('key', $id)->get();
+        $this->model = $this->model->filterKey('key', $id)->get();
 
         return $this->model;
     }

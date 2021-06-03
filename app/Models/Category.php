@@ -139,6 +139,13 @@ class Category extends BaseModel
         return $query;
     }
 
+    public function scopeFilterInByIds($query, $categoryIds = [])
+    {
+        $query->whereIn($this->table . '.category_id', $categoryIds);
+
+        return $query;
+    }
+
     public function scopeFilterLayoutId($query, $layoutId)
     {
         $query->where(Tables::$category_to_layouts . '.layout_id', (int)$layoutId);
