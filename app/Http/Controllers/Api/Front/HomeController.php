@@ -96,9 +96,9 @@ class HomeController extends Controller
                 ]
             ];
             $data = [];
-            //$staticThumImg = self::$thumImgNo;
+          
             foreach($pageLists as $pageList) {
-                $imgThumUrl = $this->getThumbnail($pageList['img'], 300, 170);
+                $imgThumUrl = $this->getThumbnail($pageList['img'], 273, 170);
 
                 $data[] = [
                     'sort' => $pageList['sort'],

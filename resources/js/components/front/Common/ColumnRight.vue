@@ -24,7 +24,8 @@
             'module-thong-bao': () => import('v@front/modules/thong_baos'),
             'module-lich-cong-giao': () => import('v@front/modules/lich_cong_giaos'),
             'module-info-fanpage': () => import('v@front/modules/info_fanpages'),
-            'module-youtube-hanh-cac-thanh': () => import('v@front/modules/youtube_hanh_cac_thanhs')
+            'module-youtube-hanh-cac-thanh': () => import('v@front/modules/youtube_hanh_cac_thanhs'),
+            'module-sach-noi-iframe': () => import('v@front/modules/sach_noi_iframes'),
         },
         data() {
             return {

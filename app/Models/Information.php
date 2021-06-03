@@ -417,4 +417,18 @@ class Information extends BaseModel
     {
         DB::statement('truncate table ' . Tables::$informations);
     }
+
+    public function scopeOrderByDescDateAvailable($query)
+    {
+        $query->orderByDesc($this->table . '.date_available');
+
+        return $query;
+    }
+
+    public function scopeOrderByDescViewed($query)
+    {
+        $query->orderByDesc($this->table . '.viewed');
+
+        return $query;
+    }
 }

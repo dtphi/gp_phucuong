@@ -47,7 +47,7 @@ final class NewsService extends Service implements NewsModel
     public function apiGetLatestInfos($limit = 5)
     {
         $query = $this->model->select('information_id')
-            ->orderByDesc('date_available')
+            ->orderByDescDateAvailable()
             ->limit($limit);
 
         return $query->get();
@@ -56,7 +56,7 @@ final class NewsService extends Service implements NewsModel
     public function apiGetPopularInfos($limit = 5)
     {
         $query = $this->model->select('information_id')
-            ->orderByDesc('viewed')
+            ->orderByDescViewed()
             ->limit($limit);
 
         return $query->get();
@@ -65,7 +65,7 @@ final class NewsService extends Service implements NewsModel
     public function apiGetCategories($infoId)
     {
         $query = $this->infoCate->select()
-            ->where('information_id', '=', $infoId);
+            ->filterByInfoId($infoId);
 
         return $query->get();
     }
@@ -73,9 +73,8 @@ final class NewsService extends Service implements NewsModel
     public function apiGetInfoRelated($infoId)
     {
         $query = $this->infoRelated->select()
-            ->leftJoin(Tables::$informations, Tables::$information_relateds . '.related_id', '=',
-                Tables::$informations . '.information_id')
-            ->where(Tables::$information_relateds . '.information_id', '=', $infoId);
+            ->lfJoinInfo()
+            ->filterByInfoId($infoId);
 
 
         return $query->get();

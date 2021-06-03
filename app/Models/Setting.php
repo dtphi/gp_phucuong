@@ -54,4 +54,18 @@ class Setting extends BaseModel
             return DB::delete("delete from " . Tables::$settings . " where code = '" . $code . "'");
         }
     }
+
+    public function scopeFilterCode($query, $code = '')
+    {
+        $query->where($this->table . '.code', $code);
+
+        return $query;
+    }
+
+    public function scopeFilterKey($query, $key = '')
+    {
+        $query->where($this->table . '.key', $key);
+
+        return $query;
+    }
 }

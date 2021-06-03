@@ -4,10 +4,18 @@ namespace App\Http\Controllers\Api\Front\Services;
 
 use App\Http\Controllers\Api\Front\Services\Contracts\HomeModel;
 use App\Models\Information;
+use App\Models\Category;
+use App\Http\Common\Tables;
 use DB;
 
 final class HomeService implements HomeModel
 {
+    /**
+     * [$modelNewGroup description]
+     * @var null
+     */
+    private $modelNewGroup = null;
+
     /**
      * @var Admin|null
      */
@@ -21,15 +29,17 @@ final class HomeService implements HomeModel
     public function __construct()
     {
         $this->model = new Information();
+        $this->modelNewGroup = new Category();
     }
 
     public function getMenuCategories($parentId = 0)
     {
-        $query = DB::table('pc_categorys')->select()->leftJoin('pc_category_descriptions', 'pc_categorys.category_id',
-            '=', 'pc_category_descriptions.category_id')
-            ->where('pc_categorys.parent_id', (int)$parentId)
-            ->where('pc_categorys.status', '1')
-            ->orderBy('pc_categorys.sort_order')->orderBy('pc_category_descriptions.category_id');
+        $query = $this->modelNewGroup->select()
+            ->lfJoinDescription()
+            ->filterParentId($parentId)
+            ->filterActiveStatus()
+            ->orderByAscSort()
+            ->orderByAscParentId();
 
         return $query->get();
     }

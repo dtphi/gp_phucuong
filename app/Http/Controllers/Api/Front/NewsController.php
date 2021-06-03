@@ -109,6 +109,7 @@ class NewsController extends Controller
 
     public function list(Request $request)
     {
+        $responseParams = [];
         $params = $request->all();
         $page   = 1;
         if ($request->query('page')) {
@@ -116,7 +117,7 @@ class NewsController extends Controller
         }
         $params['page'] = $page;
 
-        $limit = 20;
+        $limit = 10;
         if ($request->query('limit')) {
             $limit = $request->query('limit');
         }
@@ -179,104 +180,116 @@ class NewsController extends Controller
         $results    = $this->newsSv->apiGetInfoList($params);
         $pagination = $this->_getTextPagination($results);
 
-        $subCategoryMenu = [];
+        $rootCategory = [];
         if ($params['renderType'] == 1) {
             $cateIdToSub = !empty($params['isRootCateId'])? $params['isRootCateId']: 0;
-            $cateIdToSubSlugs                 = explode('-', $cateIdToSub);
-            $cateIdToSub = (int)end($cateIdToSubSlugs);
-            $categories = $this->sv->getMenuCategories($cateIdToSub);
+            if (!empty($cateIdToSub)) {
+                $cateIdToSubSlugs                 = explode('-', $cateIdToSub);
+                $cateIdToSub = (int)end($cateIdToSubSlugs);
+                $rootCategory = $this->sv->apiGetCategoryById($cateIdToSub);
+                $rootCategory = array(
+                    'name'     => $rootCategory->name,
+                    'children' => [],
+                    'link'     => $rootCategory->name_slug
+                );
+                $subCategories = $this->sv->getMenuCategories($cateIdToSub);
 
-            foreach ($categories as $cate) {
-                // Level 2
-                $children_data_2 = array();
+                $link1 = $rootCategory['link'];
+                $subCategoryMenu = [];
+                foreach ($subCategories as $cate) {
+                    // Level 2
+                    $children_data_2 = array();
 
-                if (!empty($cate->name)) {
-                    $children_2 = $this->sv->getMenuCategories($cate->category_id);
+                    if (!empty($cate->name)) {
+                        $children_2 = $this->sv->getMenuCategories($cate->category_id);
 
-                    foreach ($children_2 as $child_2) {
-                        $link_2 = $cate->name_slug . '/' . $child_2->name_slug;
-                        // Level 3
-                        $children_data_3 = array();
+                        foreach ($children_2 as $child_2) {
+                            $link_2 = $link1 . '/' . $cate->name_slug . '/' . $child_2->name_slug;
+                            // Level 3
+                            $children_data_3 = array();
 
-                        if (!empty($child_2->name)) {
-                            $children_3 = $this->sv->getMenuCategories($child_2->category_id);
+                            if (!empty($child_2->name)) {
+                                $children_3 = $this->sv->getMenuCategories($child_2->category_id);
 
-                            foreach ($children_3 as $child_3) {
-                                $link_3 = $link_2 . '/' . $child_3->name_slug;
-                                // Level 4
-                                $children_data_4 = array();
+                                foreach ($children_3 as $child_3) {
+                                    $link_3 = $link_2 . '/' . $child_3->name_slug;
+                                    // Level 4
+                                    $children_data_4 = array();
 
-                                $children_4 = $this->sv->getMenuCategories($child_3->category_id);
+                                    $children_4 = $this->sv->getMenuCategories($child_3->category_id);
 
-                                foreach ($children_4 as $child_4) {
-                                    $link_4 = $link_3 . '/' . $child_4->name_slug;
-                                    // Level 5
-                                    $children_data_5 = array();
+                                    foreach ($children_4 as $child_4) {
+                                        $link_4 = $link_3 . '/' . $child_4->name_slug;
+                                        // Level 5
+                                        $children_data_5 = array();
 
-                                    $children_5 = $this->sv->getMenuCategories($child_4->category_id);
+                                        $children_5 = $this->sv->getMenuCategories($child_4->category_id);
 
-                                    foreach ($children_5 as $child_5) {
-                                        $link_5 = $link_4 . '/' . $child_5->name_slug;
+                                        foreach ($children_5 as $child_5) {
+                                            $link_5 = $link_4 . '/' . $child_5->name_slug;
 
-                                        // Level 5-1
+                                            // Level 5-1
+                                            $filter_data = array(
+                                                'filter_category_id'  => $child_5->category_id,
+                                                'filter_sub_category' => true
+                                            );
+
+                                            $children_data_5[] = array(
+                                                'name' => $child_5->name,
+                                                'link' => $link_5
+                                            );
+                                        }
+
+                                        // Level 4 - 1
                                         $filter_data = array(
-                                            'filter_category_id'  => $child_5->category_id,
+                                            'filter_category_id'  => $child_4->category_id,
                                             'filter_sub_category' => true
                                         );
 
-                                        $children_data_5[] = array(
-                                            'name' => $child_5->name,
-                                            'link' => $link_5
+                                        $children_data_4[] = array(
+                                            'name'     => $child_4->name,
+                                            'children' => $children_data_5,
+                                            'link'     => $link_4
                                         );
                                     }
 
-                                    // Level 4 - 1
+                                    // Level 3 -1
                                     $filter_data = array(
-                                        'filter_category_id'  => $child_4->category_id,
+                                        'filter_category_id'  => $child_3->category_id,
                                         'filter_sub_category' => true
                                     );
 
-                                    $children_data_4[] = array(
-                                        'name'     => $child_4->name,
-                                        'children' => $children_data_5,
-                                        'link'     => $link_4
+                                    $children_data_3[] = array(
+                                        'name'     => $child_3->name,
+                                        'children' => $children_data_4,
+                                        'link'     => $link_3
                                     );
                                 }
-
-                                // Level 3 -1
-                                $filter_data = array(
-                                    'filter_category_id'  => $child_3->category_id,
-                                    'filter_sub_category' => true
-                                );
-
-                                $children_data_3[] = array(
-                                    'name'     => $child_3->name,
-                                    'children' => $children_data_4,
-                                    'link'     => $link_3
-                                );
                             }
+
+                            // Level 2 - 1
+                            $filter_data = array(
+                                'filter_category_id'  => $child_2->category_id,
+                                'filter_sub_category' => true
+                            );
+
+                            $children_data_2[] = array(
+                                'name'     => $child_2->name,
+                                'children' => $children_data_3,
+                                'link'     => $link_2
+                            );
                         }
-
-                        // Level 2 - 1
-                        $filter_data = array(
-                            'filter_category_id'  => $child_2->category_id,
-                            'filter_sub_category' => true
-                        );
-
-                        $children_data_2[] = array(
-                            'name'     => $child_2->name,
-                            'children' => $children_data_3,
-                            'link'     => $link_2
-                        );
                     }
+
+                    // Level 1
+                    $subCategoryMenu[] = array(
+                        'name'     => $cate->name,
+                        'children' => $children_data_2,
+                        'link'     => $link1 . '/' . $cate->name_slug
+                    );
                 }
 
-                // Level 1
-                $subCategoryMenu[] = array(
-                    'name'     => $cate->name,
-                    'children' => $children_data_2,
-                    'link'     => $cate->name_slug
-                );
+                $rootCategory['children'] = $subCategoryMenu;
             }
         }
 
@@ -355,11 +368,14 @@ class NewsController extends Controller
             }
         }
 
+        $responseParams['renderType'] = $params['renderType'];
+
         return Helper::successResponse([
             'results'    => $infos,
-            'subCategoryMenu' => $subCategoryMenu,
+            'subCategoryMenu' => $rootCategory,
             'pagination' => $pagination,
-            'page'       => $page
+            'page'       => $page,
+            'params' => $responseParams
         ]);
     }
 

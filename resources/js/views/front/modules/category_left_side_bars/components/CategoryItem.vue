@@ -39,6 +39,7 @@
                 const _self = this;
                 const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
                 _self.$store.dispatch(actionName, {
+                    ...this.$route.params,
                     slug: _self.group.link
                 });
             }

@@ -1,14 +1,14 @@
 <template>
     <main id="homepage" class="py-2">
+        <template v-if="loading">
+            <loading-over-lay
+                :active.sync="loading"
+                :is-full-page="fullPage"></loading-over-lay>
+        </template>
         <div class="container">
             <main-menu 
                 :layout-id="_layoutId"></main-menu>
             <content-top v-if="_isContentTop">
-                <template v-if="loading">
-                    <loading-over-lay
-                        :active.sync="loading"
-                        :is-full-page="fullPage"></loading-over-lay>
-                </template>
                 <template v-slot:column_right>
                     <social-network></social-network>
                     <div class="box-social">
@@ -16,13 +16,7 @@
                     </div>
                 </template>
             </content-top>
-
             <div class="list-home mt-4 mb-3">
-                <template v-if="loading">
-                    <loading-over-lay
-                        :active.sync="loading"
-                        :is-full-page="fullPage"></loading-over-lay>
-                </template>
                 <figure-item-page 
                     v-for="(item, idx) in pageLists" 
                     :key="idx" 
