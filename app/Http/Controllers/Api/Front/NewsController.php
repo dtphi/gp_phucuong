@@ -195,6 +195,7 @@ class NewsController extends Controller
                 $subCategories = $this->sv->getMenuCategories($cateIdToSub);
 
                 $link1 = $rootCategory['link'];
+                $subCategoryMenu = [];
                 foreach ($subCategories as $cate) {
                     // Level 2
                     $children_data_2 = array();
