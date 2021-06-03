@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Front\Services\Service;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
+use Illuminate\Support\Str;
 use Storage;
 use Image;
 
@@ -313,7 +314,96 @@ class ApiController extends Controller
             ]
         ];
 
+        $data['infoLasteds'] = $this->getLastedInfoList($request); 
+        $data['infoPopulars'] = $this->getPopularList($request);
+
         return response()->json($data);
+    }
+
+    public function getLastedInfoList(Request $request) 
+    {
+        $json = [];
+
+        $list = $this->sv->apiGetLatestInfos(20)->toArray();
+
+        if (!empty($list)) {
+            $infoIds = array_reduce($list, function ($carry, $item) {
+                $carry[] = $item['information_id'];
+
+                return $carry;
+            });
+
+            if (!empty($infoIds)) {
+                $params                    = $request->all();
+                $params['information_ids'] = $infoIds;
+
+                $results = $this->sv->apiGetInfoListByIds($params);
+
+                $json = [];
+                foreach ($results as $info) {
+                    $sortDes = html_entity_decode($info->sort_description);
+
+                    $json[] = [
+                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                        'description'      => html_entity_decode($info->sort_description),
+                        'sort_description' => Str::substr($sortDes, 0, 100),
+                        'information_id'   => $info->information_id,
+                        'name'             => $info->name,
+                        'name_slug'        => $info->name_slug,
+                        'sort_name'        => Str::substr($info->name, 0, 28),
+                        'viewed'           => $info->viewed,
+                        'vote'             => $info->vote
+                    ];
+                }
+            }
+        }
+
+        return $json;
+    }
+
+    public function getPopularList(Request $request)
+    {
+        $json = [];
+
+        if (!empty($request->query('slug'))) {
+            return $this->list($request);
+        }
+
+        $list = $this->sv->apiGetPopularInfos(20)->toArray();
+
+        if (!empty($list)) {
+            $infoIds = array_reduce($list, function ($carry, $item) {
+                $carry[] = $item['information_id'];
+
+                return $carry;
+            });
+
+            if (!empty($infoIds)) {
+                $params                    = $request->all();
+                $params['information_ids'] = $infoIds;
+
+                $results = $this->sv->apiGetInfoListByIds($params);
+
+                $json = [];
+                foreach ($results as $info) {
+                    $sortDes = html_entity_decode($info->sort_description);
+
+                    $json[] = [
+                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                        'description'      => html_entity_decode($info->sort_description),
+                        'sort_description' => Str::substr($sortDes, 0, 100),
+                        'information_id'   => $info->information_id,
+                        'name'             => $info->name,
+                        'name_slug'        => $info->name_slug,
+                        'sort_name'        => Str::substr($info->name, 0, 25),
+                        'viewed'           => $info->viewed,
+                        'vote'             => $info->vote
+                    ];
+                }
+            }
+        }
+
+        return $json;
     }
 
     /**

@@ -41,6 +41,8 @@ const defaultState = () => {
     navMainLists: [],
     pageLists: [],
     appLists: [],
+    infoLasteds: [],
+    infoPopulars: [],
     pages: {}
   }
 }

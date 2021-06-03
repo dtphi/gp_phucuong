@@ -4,10 +4,7 @@
             <span>
                 <i class="status bg-orange">Hot</i>
             </span>
-            <span>
-                <img :src="iconBook" alt="">
-                <i>{{item.sort_name.substring( 0, 40 )}}...</i>
-            </span>
+            <span>👥<i>{{item.sort_name.substring( 0, 40 )}} …</i></span>
             <!--<span>
                 <img :src="iconBook" alt="">
                 <i>Thanh Thúy</i>
@@ -18,44 +15,25 @@
 
 <script>
 	import{
-      mapState,
-      mapActions
-  } from 'vuex';
-  import {
-    fn_get_href_base_url,
-    fn_change_to_slug
-} from '@app/api/utils/fn-helper';
-
-  import {
-        MODULE_INFO
-    } from '@app/stores/front/types/module-types';
+        mapState
+    } from 'vuex';
     import {
-        GET_POPULAR_INFORMATION_LIST_TO_CATEGORY
-    } from '@app/stores/front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
-
+        fn_get_href_base_url,
+        fn_change_to_slug
+    } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'TabInfoViewedAndPopular',
-        components: {
-        },
+        name: 'TabInfoPopular',
         data() {
             return {
-                iconBook: IconBook
             }
         },
         computed: {
-            ...mapState(MODULE_INFO,{
-                infoList: state => state.infoPopularList
+            ...mapState({
+                infoList: state => state.cfApp.setting.infoPopulars
             }),
         },
-        mounted() {
-            this.[GET_POPULAR_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
-        },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                GET_POPULAR_INFORMATION_LIST_TO_CATEGORY
-            ]),
             _getHref(info) {
                 if (info.hasOwnProperty('name_slug')) {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);

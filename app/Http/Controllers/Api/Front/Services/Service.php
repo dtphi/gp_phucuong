@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Front\Services;
 
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
 use App\Models\Category;
+use App\Models\Information;
 use App\Http\Common\Tables;
 use DB;
 
@@ -21,6 +22,7 @@ class Service implements BaseModel
      */
     public function __construct()
     {
+        $this->modelInfo = new Information();
         $this->modelNewGroup = new Category();
     }
 
@@ -102,6 +104,64 @@ class Service implements BaseModel
             ->filterActiveStatus()
             ->orderByAscSort()
             ->orderByAscParentId();
+
+        return $query->get();
+    }
+
+    public function apiGetLatestInfos($limit = 5)
+    {
+        $query = $this->modelInfo->select('information_id')
+            ->orderByDescDateAvailable()
+            ->limit($limit);
+
+        return $query->get();
+    }
+
+    public function apiGetPopularInfos($limit = 5)
+    {
+        $query = $this->modelInfo->select('information_id')
+            ->orderByDescViewed()
+            ->limit($limit);
+
+        return $query->get();
+    }
+
+    public function apiGetInfoListByIds($data = array())
+    {
+        $infoType = 1;
+        if (isset($data['infoType'])) {
+            $infoType = (int)$data['infoType'];
+        }
+
+        $query = DB::table(Tables::$informations)->select(
+            [
+                'date_available',
+                'sort_description',
+                'image',
+                Tables::$informations . '.information_id',
+                'information_type',
+                'name',
+                'name_slug',
+                'viewed',
+                'vote'
+            ]
+        )
+            ->leftJoin(Tables::$information_descriptions, Tables::$informations . '.information_id', '=',
+                Tables::$information_descriptions . '.information_id')
+            ->where('status', '=', '1')
+            ->where('information_type', '=', $infoType);
+
+        if (isset($data['information_ids'])) {
+            $query->whereIn(Tables::$informations . '.information_id', $data['information_ids']);
+        }
+
+        $limit = 20;
+        if (isset($data['limit'])) {
+            $limit = (int)$data['limit'];
+        }
+
+        $query->orderByDesc('sort_order');
+        $query->orderByDesc('date_available');
 
         return $query->get();
     }

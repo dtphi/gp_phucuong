@@ -8,10 +8,7 @@
                     v-for="(item, index) in _getSachNoiList" 
                     :key="index">
                     <span>{{item.title}}</span>
-                    <span v-if="item.author">
-                        <img :src="iconBook" alt="">
-                        <i>{{item.author}}</i>
-                    </span>
+                    <span v-if="item.author"><i>🎙 {{item.author}}</i></span>
                 </a>
             </b-col>
             <b-col cols="4" class="mb-3 col-mobile">
@@ -21,8 +18,7 @@
                     :key="index">
                     <span>{{item.title}}</span>
                     <span v-if="item.author">
-                        <img :src="iconBook" alt="">
-                        <i>{{item.author}}</i>
+                        <i>🎵{{item.author}}</i>
                     </span>
                 </a>
             </b-col>
@@ -33,8 +29,7 @@
                     :key="index">
                     <span>{{item.title}}</span>
                     <span v-if="item.author">
-                        <img :src="iconBook" alt="">
-                        <i>{{item.author}}</i>
+                        <i>🎼{{item.author}}</i>
                     </span>
                 </a>
             </b-col>
@@ -53,14 +48,12 @@
     import {
         ACTION_GET_SETTING
     } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
         name: 'ModuleNoiBat',
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
             }
         },
         computed: {

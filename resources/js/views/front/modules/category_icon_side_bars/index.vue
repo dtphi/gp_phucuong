@@ -3,7 +3,7 @@
         v-if="_isExist"
         id="category-icon-side-bar-module"
         class="category">
-        <h4 class="tit-common clr-blue">Danh mục</h4>
+        <h4 class="tit-common clr-blue">{{$options.setting.module_title}}</h4>
         <b-row>
             <category-item
                 v-for="(item, idx) in settingCategory"
@@ -16,7 +16,6 @@
 
 <script>
     import {
-        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
@@ -35,7 +34,6 @@
         },
         data() {
             return {
-                fullPage: true
             }
         },
         computed: {
@@ -55,9 +53,7 @@
             ]),
         },
         setting: {
-            panel_title: 'Module Danh Mục Icon',
-            frm_title: 'Thêm danh mục Icon',
-            btn_save_txt: 'Lưu',
+            module_title: 'Danh Mục',
         }
     };
 </script>

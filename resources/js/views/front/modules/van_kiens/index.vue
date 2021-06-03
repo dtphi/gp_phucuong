@@ -1,7 +1,6 @@
 <template>
     <div id="van-kien-module" class="mt-4 new-document" v-if="pageLists.length">
-        <h4 class="tit-common mb-3">
-            <img :src="iconBook" alt=""> Văn kiện
+        <h4 class="tit-common mb-3">📁 Văn kiện
             <a :href="_getHrefCate()" class="view-all">View all</a>
         </h4>
         <b-row>
@@ -34,8 +33,6 @@
     import {
         ACTION_GET_SETTING
     } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
-    import ImgFooter from 'v@front/assets/img/image_footer.jpg';
     import {
         fn_get_href_base_url,
         fn_change_to_slug
@@ -47,8 +44,6 @@
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
-                imgFooter: ImgFooter
             }
         },
         computed: {
