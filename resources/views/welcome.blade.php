@@ -13,7 +13,20 @@
         <meta property="og:title" content="GIÁO PHẬN PHÚ CƯỜNG " />
         <meta property="og:site_name" content="Giáo Phận Phú Cường" />
 
-        <link rel="dns-prefetch" href="//staticxx.facebook.com">
+        <!--
+        <link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+        -->
+        
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.min.js"></script>    
+        <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>   
+        <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>  
+        <![endif]-->
+
+        <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=231785784518885&ev=PageView&noscript=1"
+        /></noscript>
+
     </head>
     <body class="antialiased">
         <div id="gp-phu-cuong" class="relative items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">

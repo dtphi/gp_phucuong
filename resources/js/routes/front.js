@@ -232,14 +232,6 @@ routeEnv = {
                         ],
                         right_modules: [
                             {
-                                moduleName: ModuleContent.module_right_category_icon_side_bar,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_thong_bao,
-                                sortOrder: 0
-                            },
-                            {
                                 moduleName: ModuleContent.module_right_lich_cong_giao,
                                 sortOrder: 0
                             },
@@ -259,16 +251,30 @@ routeEnv = {
                         column_number: 2,
                         colClass: '8'
                     },
-                    content_main: false,
+                    content_main: true,
                     content_main_column: {
-                        right_collumn: false,
+                        right_collumn: true,
                         middle_column: true,
                         left_collumn: false,
-                        colClass: '',
                         left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        column_number: 2
+                        middle_modules: [
+                            {
+                                moduleName: ModuleContent.module_middle_loi_chua,
+                                sortOrder: 0
+                            }
+                        ],
+                        right_modules: [
+                            {
+                                moduleName: ModuleContent.module_right_category_icon_side_bar,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_thong_bao,
+                                sortOrder: 0
+                            }
+                        ],
+                        column_number: 2,
+                        colClass: '8'
                     },
                     right_collumn: false,
                     middle_column: true,

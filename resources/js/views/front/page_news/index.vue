@@ -36,8 +36,12 @@
                     </div>
                 </template>
             </content-top>
-            
-            <content-bottom v-if="_isContentBottom">
+            <main-content v-if="_isContentMain">
+            </main-content>
+            <content-bottom v-if="_isContentBottom" :is-top-bottom-both="isTopBottomBoth">
+                <template v-slot:before>
+                    <module-page-banner-list></module-page-banner-list>
+                </template>
             </content-bottom>
             </div>
         </div>
@@ -61,6 +65,8 @@
     import SocialNetwork from './components/TheSocialNetwork';
     import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular';
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
+    import MainContent from 'com@front/Common/MainContent';
+    import ModulePageBannerList from 'v@front/modules/page_banner_lists';
 
     export default {
         name: 'InfoPage',
@@ -70,12 +76,15 @@
             ContentTop,
             ContentBottom,
             SocialNetwork,
-            NewsletterRegister
+            NewsletterRegister,
+            MainContent,
+            ModulePageBannerList
         },
         data() {
             return {
                 isContentBottom: true,
                 fullPage: false,
+                isTopBottomBoth: false
             }
         },
         computed: {

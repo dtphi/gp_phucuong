@@ -1,5 +1,9 @@
 <template>
-    <b-row class="my-3">
+    <b-row id="content-main" class="my-3">
+        <slot name="before"></slot>
+        <keep-alive>
+            <component v-bind:is="_currentContentBoth" class="col-mobile col-12"></component>
+        </keep-alive>
         <keep-alive>
             <component v-bind:is="_currentContentLeft" :content-type="contentType">
                 <slot name="column_left"></slot>
@@ -24,6 +28,7 @@
     export default {
         name: 'MainContent',
         components: {
+            'content-bottom-both': () => import('./ContentBottomBoth'),
             'column-right': () => import('com@front/Common/ColumnRight'),
             'column-middle': () => import('com@front/Common/ColumnMiddle'),
             'column-left': () => import('com@front/Common/ColumnLeft')
@@ -35,6 +40,10 @@
             }
         },
         computed: {
+            _currentContentBoth: function() {
+			  	let moduleName = 'bottom-both';
+            	return "content-" + moduleName.toLowerCase();
+            },
             _currentContentRight: function () {
                 let moduleName = 'right';
                 if (this.$route.meta.layout_content.content_main_column.right_collumn) {

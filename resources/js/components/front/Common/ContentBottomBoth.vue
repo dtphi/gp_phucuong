@@ -1,6 +1,5 @@
 <template>
     <div id="content-bottom-both">
-        <module-page-banner-list></module-page-banner-list>
         <module-noi-bat></module-noi-bat>
     </div>
 </template>

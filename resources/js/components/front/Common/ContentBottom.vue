@@ -1,5 +1,6 @@
 <template>
     <div class="highlights mt-3">
+        <slot name="before"></slot>
         <keep-alive>
             <component v-bind:is="currentContentBoth"></component>
         </keep-alive>
@@ -35,11 +36,16 @@
             'column-left': () => import('com@front/Common/ColumnLeft'),
             'column-right': () => import('com@front/Common/ColumnRight')
         },
+        props: {
+            isTopBottomBoth: {
+                default: true
+            }
+        },
         data() {
             return {
                 iconBook: IconBook,
                 imgFooter: ImgFooter,
-                contentType: 'bottom'
+                contentType: 'bottom',
             }
         },
         computed: {
@@ -53,7 +59,11 @@
             },
             currentContentBoth: function() {
 			  	let moduleName = 'bottom-both';
-            	return "content-" + moduleName.toLowerCase();
+                  if (this.isTopBottomBoth) {
+                      return "content-" + moduleName.toLowerCase();
+                  }
+            	
+                return null;
             },
             _currentContentLeft: function () {
                 let moduleName = 'left';
