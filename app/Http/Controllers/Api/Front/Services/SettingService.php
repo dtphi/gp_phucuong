@@ -56,7 +56,7 @@ final class SettingService implements SettingModel
 
     public function apiGetDetail($id = null)
     {
-        $this->model = $this->model->filterKey('key', $id)->get();
+        $this->model = $this->model->filterKey($id)->get();
 
         return $this->model;
     }
