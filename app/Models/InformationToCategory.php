@@ -81,4 +81,11 @@ class InformationToCategory extends BaseModel
     {
         DB::statement('truncate table ' . Tables::$information_to_categorys);
     }
+
+    public function scopeFilterByInfoId($query, $infoId)
+    {
+        $query->where($this->table . '.information_id', (int)$infoId);
+
+        return $query;
+    }
 }

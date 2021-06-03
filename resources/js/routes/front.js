@@ -25,6 +25,7 @@ const ModuleContent = {
     module_right_lich_cong_giao: 'lich-cong-giao',
     module_right_thong_bao: 'thong-bao',
     module_right_category_icon_side_bar: 'category-icon-side-bar',
+    module_right_sach_noi_iframe: 'sach-noi-iframe',
 }
 
 const ModuleContentHome = {
@@ -114,6 +115,10 @@ const ModuleContentCategory = {
             },
             {
                 moduleName: ModuleContent.module_right_lich_cong_giao,
+                sortOrder: 0
+            },
+            {
+                moduleName: ModuleContent.module_right_sach_noi_iframe,
                 sortOrder: 0
             },
             {
@@ -367,6 +372,10 @@ routeEnv = {
                                 sortOrder: 0
                             },
                             {
+                                moduleName: ModuleContent.module_right_sach_noi_iframe,
+                                sortOrder: 0
+                            },
+                            {
                                 moduleName: ModuleContent.module_right_info_fanpage,
                                 sortOrder: 0
                             },
@@ -498,6 +507,10 @@ routeEnv = {
                             },
                             {
                                 moduleName: ModuleContent.module_right_lich_cong_giao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_sach_noi_iframe,
                                 sortOrder: 0
                             },
                             {
@@ -642,6 +655,10 @@ routeEnv = {
                             },
                             {
                                 moduleName: ModuleContent.module_right_lich_cong_giao,
+                                sortOrder: 0
+                            },
+                            {
+                                moduleName: ModuleContent.module_right_sach_noi_iframe,
                                 sortOrder: 0
                             },
                             {
