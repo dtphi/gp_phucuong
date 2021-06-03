@@ -22,8 +22,9 @@
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <td class="text-left">{{$options.setting.image_title}}</td>
-                            <td>{{$options.setting.image_url_title}}</td>
+                            <td style="width:10%" class="text-left">{{$options.setting.image_title}}</td>
+                            <td style="width:35%" class="text-left">Tiêu đề</td>
+                            <td style="width:25%">{{$options.setting.image_url_title}}</td>
                             <td>Width</td>
                             <td>Height</td>
                             <td>Trạng thái</td>

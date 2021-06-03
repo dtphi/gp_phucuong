@@ -5,6 +5,7 @@
             <b-col cols="12" class="col-mobile">
                 <div class="banner-image">
                     <a :href="_getBanner.url_full" :target="(_getBanner.open)?'_self':'_blank'" style="width:100%">  
+                        <span :style="$options.setting.styleTitle">{{_getBanner.title}}</span>
                         <img style="width:inherit" v-bind:style="{ height: _getBanner.height + 'px' }"  
                             :src="'/Image/NewPicture/'+_getBanner.image" 
                             alt="Hình ảnh Phú Cường" class="img">
@@ -64,9 +65,7 @@
             ])
         },
         setting: {
-            panel_title: 'Module Danh Mục Icon',
-            frm_title: 'Thêm danh mục Icon',
-            btn_save_txt: 'Lưu',
+            styleTitle: "position: absolute;left: 15%;top: 41%;color: white;font-weight: 600;font-size: 36px;"
         }
     };
 </script>

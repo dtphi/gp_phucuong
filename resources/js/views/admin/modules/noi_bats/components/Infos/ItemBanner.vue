@@ -9,6 +9,17 @@
         </td>
         <td>
             <validation-provider
+                :name="`item_title_${banner.id}`"
+                rules="max:200"
+                v-slot="{ errors }">
+                    <input 
+                        v-model="banner.title" type="text" class="form-control" />
+
+                <span class="cms-text-red">{{ errors[0] }}</span>
+            </validation-provider>
+        </td>
+        <td>
+            <validation-provider
                 :name="`item_url_full_${banner.id}`"
                 rules="required|url|max:500"
                 v-slot="{ errors }">

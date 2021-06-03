@@ -196,13 +196,18 @@ export default {
           })
         }
         if (!item.hasOwnProperty('status')) {
-          _.update(item, 'status', function(id) {
+          _.update(item, 'status', function(status) {
             return status = 1;
           })
         }
         if (!item.hasOwnProperty('open')) {
-          _.update(item, 'open', function(id) {
+          _.update(item, 'open', function(open) {
             return open = 0;
+          })
+        }
+        if (!item.hasOwnProperty('title')) {
+          _.update(item, 'title', function(title) {
+            return title = '';
           })
         }
       });
@@ -279,6 +284,7 @@ export default {
       console.log(value)
       const data = {
         id: uuidv4(),
+        title: '',
         status: 1,
         open: 0,
         image: value.filePath,
