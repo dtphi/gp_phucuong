@@ -143,6 +143,18 @@
         .header-image {
             padding: 10px 0;
 
+            .logo {
+                .col-9 {
+                    h2 {
+                        font-size: 22px;
+                    }
+    
+                    h4 {
+                        font-size: 16px;
+                    }
+                }
+            }
+
             .banner-image {
                 height: 80px;
             }
@@ -199,6 +211,18 @@
 
         .header-image {
             padding: 10px 0;
+
+            .logo {
+                .col-9 {
+                    h2 {
+                        font-size: 20px;
+                    }
+    
+                    h4 {
+                        font-size: 14px;
+                    }
+                }
+            }
 
             .banner-image {
                 height: 80px;
