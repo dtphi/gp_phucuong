@@ -55,3 +55,24 @@ export const apiInsertSetting = (settingData, resolve, errResole) => {
       errors: errors
     }]))
 }
+
+/**
+ * [description]
+ * @param  {[type]} settingData [description]
+ * @param  {[type]} resolve   [description]
+ * @param  {[type]} errResole [description]
+ * @return {[type]}           [description]
+ */
+ export const apiUpdateSettingByKey = (settingData, resolve, errResole) => {
+  return axios.post(fn_get_base_api_url(API_SETTING_RESOURCE), settingData)
+    .then((response) => {
+      console.log(response)
+      var json = [];
+      json['data'] = response.data.result;
+      json['code'] = response.data.code;
+      resolve(json);
+    })
+    .catch(errors => errResole([{
+      errors: errors
+    }]))
+}

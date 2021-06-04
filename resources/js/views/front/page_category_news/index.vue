@@ -2,52 +2,54 @@
     <main id="video" class="py-2">
         <div class="container">
             <main-menu></main-menu>
-            <content-top v-if="_isContentTop">
-                <template v-if="loading">
-                    <loading-over-lay
-                        :active.sync="loading"
-                        :is-full-page="fullPage"></loading-over-lay>
-                </template>
-                
-                <div class="list-videos">
-                    <the-list-category-news-item
-                        class="info-list"
-                        v-for="(item,idx) in infoList"
-                        :info="item"
-                        :key="idx"></the-list-category-news-item>
-                </div>
-                <paginate></paginate>
-                <template v-slot:column_right>
-                    <social-network></social-network>
-                    <div class="box-social">
-                        <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
+            <div style="background-color: #80808008;">
+                <content-top v-if="_isContentTop">
+                    <template v-if="loading">
+                        <loading-over-lay
+                            :active.sync="loading"
+                            :is-full-page="fullPage"></loading-over-lay>
+                    </template>
+                    
+                    <div class="list-videos">
+                        <the-list-category-news-item
+                            class="info-list"
+                            v-for="(item,idx) in infoList"
+                            :info="item"
+                            :key="idx"></the-list-category-news-item>
                     </div>
-                    <div class="box-care mt-3">
-                        <newsletter-register></newsletter-register>
+                    <paginate></paginate>
+                    <template v-slot:column_right>
+                        <social-network></social-network>
+                        <div class="box-social">
+                            <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
+                        </div>
+                        <div class="box-care mt-3">
+                            <newsletter-register></newsletter-register>
 
-                        <b-row class="mt-3">
-                            <b-col cols="5" class="m-auto">
-                                <p class="mb-0 text-download">Tải app sách nói công giáo</p>
-                            </b-col>
-                            <b-col cols="7">
-                                <b-carousel
-                                    id="carousel-2"
-                                    :interval="4000"
-                                    controls
-                                    indicators
-                                >
-                                    <b-carousel-slide
-                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-                                    <b-carousel-slide
-                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-                                </b-carousel>
-                            </b-col>
-                        </b-row>
-                    </div>
-                </template>
-            </content-top>
-            <main-content v-if="_isContentMain"></main-content>
-            <content-bottom v-if="_isContentBottom"></content-bottom>
+                            <b-row class="mt-3">
+                                <b-col cols="5" class="m-auto">
+                                    <p class="mb-0 text-download">Tải app sách nói công giáo</p>
+                                </b-col>
+                                <b-col cols="7">
+                                    <b-carousel
+                                        id="carousel-2"
+                                        :interval="4000"
+                                        controls
+                                        indicators
+                                    >
+                                        <b-carousel-slide
+                                            img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                        <b-carousel-slide
+                                            img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                    </b-carousel>
+                                </b-col>
+                            </b-row>
+                        </div>
+                    </template>
+                </content-top>
+                <main-content v-if="_isContentMain"></main-content>
+                <content-bottom v-if="_isContentBottom"></content-bottom>
+            </div>
         </div>
     </main>
 </template>

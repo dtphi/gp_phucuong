@@ -2,7 +2,8 @@ import AppConfig from 'api@admin/constants/app-config';
 import { v4 as uuidv4 } from 'uuid';
 import {
   apiGetSettingByCode,
-  apiInsertSetting
+  apiInsertSetting,
+  apiUpdateSettingByKey
 } from 'api@admin/setting';
 import {
   SELECT_DROPDOWN_PARENT_CATEGORY,
@@ -43,6 +44,17 @@ const settingBanner = {
   value: [],
   serialize: true
 }
+const settingBannerFormat = {
+  key: 'module_noi_bat_banner_formats',
+  value: [{
+    top: 32,
+    left: 20,
+    color: 'ffffff',
+    font_weight: 500,
+    font_size: 36
+  }],
+  serialize: true
+}
 
 const defaultState = () => {
   return {
@@ -50,13 +62,15 @@ const defaultState = () => {
     module_noi_bat_youtubes: settingYoutube,
     module_noi_bat_hanh_cac_thanhs: settingHanhCacThanh,
     module_noi_bat_banners: settingBanner,
+    module_noi_bat_banner_formats: settingBannerFormat,
     moduleData: {
       code: 'module_noi_bat',
       keys: [
         settingSachNoi,
         settingYoutube,
         settingHanhCacThanh,
-        settingBanner
+        settingBanner,
+        settingBannerFormat
       ]
     },
     loading: false,
@@ -80,6 +94,9 @@ export default {
     },
     settingBanner(state) {
       return state.module_noi_bat_banners;
+    },
+    settingBannerFormat(state) {
+      return state.module_noi_bat_banner_formats;
     },
     moduleData(state) {
       return state.moduleData
@@ -123,6 +140,9 @@ export default {
     [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
       if (payload.hasOwnProperty('module_noi_bat_banners')) {
         state.module_noi_bat_banners = payload.module_noi_bat_banners;
+      }
+      if (payload.hasOwnProperty('module_noi_bat_banner_formats')) {
+        state.module_noi_bat_banner_formats = payload.module_noi_bat_banner_formats;
       }
       if (payload.hasOwnProperty('module_noi_bat_sach_nois')) {
         state.module_noi_bat_sach_nois  = payload.module_noi_bat_sach_nois;
@@ -213,10 +233,71 @@ export default {
       });
 
       state.moduleData.keys.push(state.module_noi_bat_banners);
+      
+      state.module_noi_bat_banner_formats.value = _.forEach(state.module_noi_bat_banner_formats.value, function(item) {
+        if (!item.hasOwnProperty('top')) {
+          _.update(item, 'top', function(top) {
+            return top = 1;
+          })
+        }
+        if (!item.hasOwnProperty('left')) {
+          _.update(item, 'left', function(left) {
+            return left = 1;
+          })
+        }
+        if (!item.hasOwnProperty('color')) {
+          _.update(item, 'color', function(color) {
+            return color = '';
+          })
+        }
+        if (!item.hasOwnProperty('font_weight')) {
+          _.update(item, 'font_weight', function(font_weight) {
+            return font_weight = 100;
+          })
+        }
+        
+        if (!item.hasOwnProperty('font_size')) {
+          _.update(item, 'font_size', function(font_size) {
+            return font_size = 12;
+          })
+        }
+      });
+
+      state.moduleData.keys.push(state.module_noi_bat_banner_formats);
     }
   },
 
   actions: {
+    updateSettingByKey({
+      state,
+      commit,
+      dispatch
+    }, settingData) {
+      console.log(settingData)
+      dispatch(ACTION_SET_LOADING, true);
+      apiUpdateSettingByKey(
+        {
+          action: 'update',
+          code: state.moduleData.code,
+          keys: [
+              settingData.banner,
+              settingData.format
+          ]
+        },
+        (result) => {
+          commit(MODULE_UPDATE_SETTING_SUCCESS, AppConfig.comInsertNoSuccess);
+          commit(MODULE_UPDATE_SET_ERROR, []);
+
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          commit(MODULE_UPDATE_SETTING_FAILED, AppConfig.comInsertNoFail);
+          commit(MODULE_UPDATE_SET_ERROR, errors);
+
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
     module_noi_bat_sach_nois({state}, value) {
       state.module_noi_bat_sach_nois.value.push({
         id: uuidv4(),

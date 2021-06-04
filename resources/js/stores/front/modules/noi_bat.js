@@ -16,9 +16,10 @@ import {
   } from '../../admin/types/action-types';
   
   const settingSachNoi = {};
-  const      settingYoutube ={};
-  const     settingHanhCacThanh ={};
+  const settingYoutube ={};
+  const settingHanhCacThanh ={};
   const settingBanner = {};
+  const settingBannerFormat = {};
   
   const defaultState = () => {
     return {
@@ -26,13 +27,15 @@ import {
       module_noi_bat_youtubes: {},
       module_noi_bat_hanh_cac_thanhs: {},
       module_noi_bat_banners: {},
+      module_noi_bat_banner_formats: {},
       moduleData: {
         code: 'module_noi_bat',
         keys: [
           settingSachNoi,
           settingYoutube,
           settingHanhCacThanh,
-          settingBanner
+          settingBanner,
+          settingBannerFormat
         ]
       },
       pageLists: [],
@@ -56,6 +59,9 @@ import {
       },
       settingBanner(state) {
         return state.module_noi_bat_banners
+      },
+      settingBannerFormat(state) {
+        return state.module_noi_bat_banner_formats
       },
       moduleData(state) {
         return state.moduleData
@@ -90,6 +96,9 @@ import {
   
   
       [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
+        if (payload.hasOwnProperty('module_noi_bat_banner_formats')) {
+          state.module_noi_bat_banner_formats = payload.module_noi_bat_banner_formats;
+        }
         if (payload.hasOwnProperty('module_noi_bat_banners')) {
           state.module_noi_bat_banners = payload.module_noi_bat_banners;
         }
@@ -107,6 +116,7 @@ import {
         state.moduleData.keys.push(payload.module_noi_bat_youtubes);
         state.moduleData.keys.push(payload.module_noi_bat_hanh_cac_thanhs);
         state.moduleData.keys.push(state.module_noi_bat_banners);
+        state.moduleData.keys.push(state.module_noi_bat_banner_formats);
       },
     },
   
@@ -116,7 +126,7 @@ import {
         state,
         commit
       }, options) {
-        dispatch(ACTION_SET_LOADING, true);console.log('noi bat')
+        dispatch(ACTION_SET_LOADING, true);
         const params = {
           code: state.moduleData.code
         }

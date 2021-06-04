@@ -38,7 +38,7 @@
             </content-top>
             <main-content v-if="_isContentMain">
             </main-content>
-            <content-bottom v-if="_isContentBottom" :is-top-bottom-both="isTopBottomBoth">
+            <content-bottom v-if="_isContentBottom">
                 <template v-slot:before>
                     <module-page-banner-list></module-page-banner-list>
                 </template>

@@ -2,8 +2,7 @@
     <li
         :class="activeClass">
         <a
-            @click="_getHref()">
-            <img src="../../../assets/img/icon-book.png" alt="Icon">{{_getTitle()}}</a>
+            @click="_getHref()">≫ {{_getTitle()}}</a>
     </li>
 </template>
 

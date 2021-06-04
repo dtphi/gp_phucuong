@@ -5,7 +5,7 @@
             <b-col cols="12" class="col-mobile">
                 <div class="banner-image">
                     <a :href="_getBanner.url_full" :target="(_getBanner.open)?'_self':'_blank'" style="width:100%">  
-                        <span :style="$options.setting.styleTitle">{{_getBanner.title}}</span>
+                        <span style="position:absolute" :style="_getSettingFormat">{{_getBanner.title}}</span>
                         <img style="width:inherit" v-bind:style="{ height: _getBanner.height + 'px' }"  
                             :src="'/Image/NewPicture/'+_getBanner.image" 
                             alt="Hình ảnh Phú Cường" class="img">
@@ -43,6 +43,7 @@
         computed: {
             ...mapGetters(MODULE_MODULE_NOI_BAT, [
                 'settingBanner',
+                'settingBannerFormat'
             ]),
             _isExist() {
                 return this.settingBanner.length 
@@ -58,6 +59,23 @@
 
                 return null;
             },
+            _getSettingFormat() {
+                if (this.settingBannerFormat.length) {
+                    const format = this.settingBannerFormat[0];
+
+                    let top = format.top;
+                    let left = format.left;
+                    let color = format.color;
+                    let fontWeight = format.font_weight;
+                    let fontSize = format.font_size;
+
+                    let styleTitle = `top: ${top}%; left: ${left}%;color: ${color};font-weight: ${fontWeight};font-size: ${fontSize}px`;
+
+                    return styleTitle;
+                }
+
+                return "";
+            }
         },
         methods: {
             ...mapActions(MODULE_MODULE_NOI_BAT, [

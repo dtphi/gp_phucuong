@@ -28,14 +28,17 @@ const ModuleContent = {
     module_right_thong_bao: 'thong-bao',
     module_right_category_icon_side_bar: 'category-icon-side-bar',
     module_right_sach_noi_iframe: 'sach-noi-iframe',
+
+    module_both_noi_bat: 'noi-bat',
+    module_both_page_banner_list: 'page-banner-list'
 }
 
 const ModuleContentHome = {
     content_top: true,
     content_top_column: {
-        right_collumn: true,
+        right_column: true,
         middle_column: true,
-        left_collumn: false,
+        left_column: false,
         colClass: '8 notication',
         left_modules: [],
         middle_modules: [
@@ -45,28 +48,34 @@ const ModuleContentHome = {
             }
         ],
         right_modules: [],
+        both_column: false,
+        both_modules: [],
         column_number: 2
     },
     content_bottom: false,
     content_bottom_column: {
-        right_collumn: false,
+        right_column: false,
         middle_column: false,
-        left_collumn: false,
+        left_column: false,
         colClass: '',
         left_modules: [],
         middle_modules: [],
         right_modules: [],
+        both_column: false,
+        both_modules: [],
         column_number: 2
     },
     content_main: false,
     content_main_column: {
-        right_collumn: false,
+        right_column: false,
         middle_column: false,
-        left_collumn: false,
+        left_column: false,
         colClass: '',
         left_modules: [],
         middle_modules: [],
         right_modules: [],
+        both_column: false,
+        both_modules: [],
         column_number: 2
     }
 }
@@ -74,9 +83,9 @@ const ModuleContentHome = {
 const ModuleContentCategory = {
     content_top: true,
     content_top_column: {
-        right_collumn: true,
+        right_column: true,
         middle_column: true,
-        left_collumn: true,
+        left_column: true,
         colClass: '5',
         left_modules: [
             {
@@ -132,33 +141,39 @@ const ModuleContentCategory = {
                 sortOrder: 0
             }
         ],
+        both_column: false,
+        both_modules: [],
         column_number: 2
     },
     content_bottom: false,
     content_bottom_column: {
-        right_collumn: false,
+        right_column: false,
         middle_column: false,
-        left_collumn: false,
+        left_column: false,
         colClass: '',
         left_modules: [],
         middle_modules: [],
         right_modules: [],
+        both_column: false,
+        both_modules: [],
         column_number: 2
     },
     content_main: false,
     content_main_column: {
-        right_collumn: false,
+        right_column: false,
         middle_column: false,
-        left_collumn: false,
+        left_column: false,
         colClass: '',
         left_modules: [],
         middle_modules: [],
         right_modules: [],
+        both_column: false,
+        both_modules: [],
         column_number: 2
     },
-    right_collumn: false,
+    right_column: false,
     middle_column: true,
-    left_collumn: true,
+    left_column: true,
     column_number: 2,
 }
 
@@ -188,9 +203,9 @@ routeEnv = {
                 layout_content: {
                     content_top: true,
                     content_top_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '8 notication',
                         left_modules: [],
                         middle_modules: [
@@ -204,13 +219,15 @@ routeEnv = {
                             },
                         ],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_bottom: true,
                     content_bottom_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         left_modules: [],
                         middle_modules: [
                             {
@@ -244,14 +261,16 @@ routeEnv = {
                                 sortOrder: 0
                             }
                         ],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2,
                         colClass: '8'
                     },
                     content_main: true,
                     content_main_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         left_modules: [],
                         middle_modules: [
                             {
@@ -269,12 +288,19 @@ routeEnv = {
                                 sortOrder: 0
                             }
                         ],
+                        both_column: true,
+                        both_modules: [
+                            {
+                                moduleName: ModuleContent.module_both_noi_bat,
+                                sortOrder: 0
+                            }
+                        ],
                         column_number: 2,
                         colClass: '8'
                     },
-                    right_collumn: false,
+                    right_column: false,
                     middle_column: true,
-                    left_collumn: false,
+                    left_column: false,
                     column_number: 2,
                 }
             }
@@ -291,9 +317,9 @@ routeEnv = {
                 layout_content: {
                     content_top: true,
                     content_top_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '8 notication',
                         left_modules: [],
                         middle_modules: [
@@ -307,13 +333,15 @@ routeEnv = {
                             },
                         ],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_bottom: true,
                     content_bottom_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         left_modules: [],
                         middle_modules: [
                             {
@@ -351,14 +379,16 @@ routeEnv = {
                                 sortOrder: 0
                             }
                         ],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2,
                         colClass: '8'
                     },
                     content_main: true,
                     content_main_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         left_modules: [],
                         middle_modules: [
                             {
@@ -376,12 +406,19 @@ routeEnv = {
                                 sortOrder: 0
                             }
                         ],
+                        both_column: true,
+                        both_modules: [
+                            {
+                                moduleName: ModuleContent.module_both_noi_bat,
+                                sortOrder: 0
+                            }
+                        ],
                         column_number: 2,
                         colClass: '8'
                     },
-                    right_collumn: false,
+                    right_column: false,
                     middle_column: true,
-                    left_collumn: false,
+                    left_column: false,
                     column_number: 2,
                 }
             }
@@ -495,9 +532,9 @@ routeEnv = {
                 layout_content: {
                     content_top: true,
                     content_top_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '8 notication',
                         left_modules: [],
                         middle_modules: [
@@ -511,13 +548,15 @@ routeEnv = {
                             },
                         ],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_bottom: true,
                     content_bottom_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         left_modules: [],
                         middle_modules: [
                             {
@@ -563,23 +602,27 @@ routeEnv = {
                                 sortOrder: 0
                             }
                         ],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2,
                         colClass: '8'
                     },
                     content_main: false,
                     content_main_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
-                    right_collumn: false,
+                    right_column: false,
                     middle_column: true,
-                    left_collumn: false,
+                    left_column: false,
                     column_number: 2,
                 }
             }
@@ -597,9 +640,9 @@ routeEnv = {
                 layout_content: {
                     content_top: true,
                     content_top_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: true,
-                        left_collumn: true,
+                        left_column: true,
                         colClass: '',
                         left_modules: [
                             {
@@ -629,33 +672,39 @@ routeEnv = {
                         ],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_bottom: false,
                     content_bottom_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: false,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_main: false,
                     content_main_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: false,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
-                    right_collumn: false,
+                    right_column: false,
                     middle_column: true,
-                    left_collumn: true,
+                    left_column: true,
                     column_number: 2,
                 }
             }
@@ -673,9 +722,9 @@ routeEnv = {
                 layout_content: {
                     content_top: true,
                     content_top_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '8 notication',
                         left_modules: [],
                         middle_modules: [],
@@ -701,32 +750,38 @@ routeEnv = {
                                 sortOrder: 0
                             }
                         ],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_bottom: false,
                     content_bottom_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: false,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_main: true,
                     content_main_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '8',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
-                    right_collumn: true,
-                    left_collumn: true,
+                    right_column: true,
+                    left_column: true,
                 }
             }
         }]
@@ -749,9 +804,9 @@ routeEnv = {
                 layout_content: {
                     content_top: true,
                     content_top_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: true,
-                        left_collumn: true,
+                        left_column: true,
                         colClass: '',
                         left_modules: [
                             {
@@ -781,28 +836,34 @@ routeEnv = {
                         ],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_bottom: false,
                     content_bottom_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: false,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_main: false,
                     content_main_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: false,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                 }
@@ -821,9 +882,9 @@ routeEnv = {
                 layout_content: {
                     content_top: true,
                     content_top_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '8 notication',
                         left_modules: [],
                         middle_modules: [],
@@ -849,28 +910,34 @@ routeEnv = {
                                 sortOrder: 0
                             }
                         ],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_bottom: false,
                     content_bottom_column: {
-                        right_collumn: false,
+                        right_column: false,
                         middle_column: false,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                     content_main: true,
                     content_main_column: {
-                        right_collumn: true,
+                        right_column: true,
                         middle_column: true,
-                        left_collumn: false,
+                        left_column: false,
                         colClass: '8',
                         left_modules: [],
                         middle_modules: [],
                         right_modules: [],
+                        both_column: false,
+                        both_modules: [],
                         column_number: 2
                     },
                 }

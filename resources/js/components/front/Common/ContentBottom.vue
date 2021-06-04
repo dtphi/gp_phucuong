@@ -2,11 +2,11 @@
     <div class="highlights mt-3">
         <slot name="before"></slot>
         <keep-alive>
-            <component v-bind:is="currentContentBoth"></component>
+            <component v-bind:is="_currentContentBoth" :content-type="contentType"></component>
         </keep-alive>
         <b-row class="mt-2">
             <keep-alive>
-                <component v-bind:is="_currentContentLeft">
+                <component v-bind:is="_currentContentLeft" :content-type="contentType">
                     <slot name="column_left"></slot>
                 </component>
             </keep-alive>
@@ -21,17 +21,16 @@
                 </component>
             </keep-alive>
         </b-row>
+        <slot name="bottom"></slot>
     </div>
 </template>
 
 <script>
-    import IconBook from 'v@front/assets/img/icon-book.png';
-    import ImgFooter from 'v@front/assets/img/image_footer.jpg';
 
     export default {
         name: 'ContentBottom',
         components: {
-            'content-bottom-both': () => import('./ContentBottomBoth'),
+            'column-both': () => import('./ColumnBoth'),
             'column-middle': () => import('com@front/Common/ColumnMiddle'),
             'column-left': () => import('com@front/Common/ColumnLeft'),
             'column-right': () => import('com@front/Common/ColumnRight')
@@ -43,8 +42,6 @@
         },
         data() {
             return {
-                iconBook: IconBook,
-                imgFooter: ImgFooter,
                 contentType: 'bottom',
             }
         },
@@ -57,10 +54,10 @@
 			  	let moduleName = 'bottom-right';
             	return "content-" + moduleName.toLowerCase();
             },
-            currentContentBoth: function() {
-			  	let moduleName = 'bottom-both';
-                  if (this.isTopBottomBoth) {
-                      return "content-" + moduleName.toLowerCase();
+            _currentContentBoth: function() {
+			  	let moduleName = 'both';
+                  if (this.$route.meta.layout_content.content_bottom_column.both_column) {
+                      return "column-" + moduleName.toLowerCase();
                   }
             	
                 return null;
@@ -68,7 +65,7 @@
             _currentContentLeft: function () {
                 let moduleName = 'left';
 
-                if (this.$route.meta.layout_content.content_bottom_column.left_collumn) {
+                if (this.$route.meta.layout_content.content_bottom_column.left_column) {
                     return "column-" + moduleName.toLowerCase();
                 }
                 return false;
@@ -83,7 +80,7 @@
             },
             _currentContentRight: function () {
                 let moduleName = 'right';
-                if (this.$route.meta.layout_content.content_bottom_column.right_collumn) {
+                if (this.$route.meta.layout_content.content_bottom_column.right_column) {
                     return "column-" + moduleName.toLowerCase();
                 }
                 return false;

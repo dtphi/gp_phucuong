@@ -1,8 +1,6 @@
 <template>
     <div id="thong-bao-module" class="info mt-4" v-if="pageLists.length">
-        <h4 class="tit-common clr-orange">
-            <img
-                :src="iconBook" alt=""> Thông báo</h4>
+        <h4 class="tit-common clr-orange">📢 {{$options.setting.module_title}}</h4>
             <a 
                 :href="_getHref(item)" 
                 class="row-item-3 d-block mb-2 pb-2" 
@@ -11,7 +9,7 @@
                 <span>
                     <i class="status bg-green">Live</i>
                 </span>
-                <span>{{item.sort_name.substring( 0, 40 )}}...</span>
+                <span>{{item.sort_name.substring( 0, 40 )}} …</span>
                 <span>Admin</span>
             </a>
     </div>
@@ -28,7 +26,6 @@
     import {
         ACTION_GET_SETTING
     } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
     import {
         fn_get_href_base_url,
         fn_change_to_slug
@@ -40,7 +37,6 @@
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
             }
         },
         computed: {
@@ -68,9 +64,7 @@
             }
         },
         setting: {
-            panel_title: 'Module Danh Mục Icon',
-            frm_title: 'Thêm danh mục Icon',
-            btn_save_txt: 'Lưu',
+            module_title: 'Thông báo'
         }
     };
 </script>

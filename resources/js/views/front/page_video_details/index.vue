@@ -3,26 +3,28 @@
         <div class="container">
             <main-menu></main-menu>
 
-            <content-top v-if="_isContentTop">
-                <template v-if="loading">
-                    <loading-over-lay
-                        :active.sync="loading"
-                        :is-full-page="fullPage"></loading-over-lay>
-                </template>
-                <video-data-detail></video-data-detail>
-                <template v-slot:column_right>
-                    <social-network></social-network>
-                    <div class="box-social">
-                        <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
-                    </div>
-                </template>
-            </content-top>
+            <div style="background-color: #80808008;">
+                <content-top v-if="_isContentTop">
+                    <template v-if="loading">
+                        <loading-over-lay
+                            :active.sync="loading"
+                            :is-full-page="fullPage"></loading-over-lay>
+                    </template>
+                    <video-data-detail></video-data-detail>
+                    <template v-slot:column_right>
+                        <social-network></social-network>
+                        <div class="box-social">
+                            <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
+                        </div>
+                    </template>
+                </content-top>
 
-            <main-content v-if="_isContentMain"></main-content>
-            <the-related-info></the-related-info>
-            <module-co-the-ban-quan-tam></module-co-the-ban-quan-tam>
+                <main-content v-if="_isContentMain"></main-content>
+                <the-related-info></the-related-info>
+                <module-co-the-ban-quan-tam></module-co-the-ban-quan-tam>
 
-            <content-bottom v-if="_isContentBottom"></content-bottom>
+                <content-bottom v-if="_isContentBottom"></content-bottom>
+            </div>
         </div>
     </main>
 </template>

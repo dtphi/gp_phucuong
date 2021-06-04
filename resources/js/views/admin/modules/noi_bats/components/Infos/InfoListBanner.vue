@@ -18,6 +18,40 @@
                 <input type="hidden" class="form-control" id="file-banner-input" disabled>
             </div>
             <div class="col-sm-12">
+                Định dạng banner
+            </div>
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td style="width:10%" class="text-left">Top (%)</td>
+                            <td style="width:35%" class="text-left">Left (%)</td>
+                            <td style="width:25%">Color(tên hoặc mã màu: ffffff)</td>
+                            <td>Font-weight</td>
+                            <td>Font-size (px)</td>
+                            <td>
+                                <button 
+                                    type="button"
+                                    @click="_updateBanner"
+                                    data-toggle="tooltip"
+                                    class="btn btn-default cms-btn"
+                                        data-original-title="Sửa Tin">
+                                            <font-awesome-layers size="1x" style="background:honeydew">
+                                                <font-awesome-icon icon="edit"/>
+                                            </font-awesome-layers>
+                                </button>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody v-if="_getBannerFormatList.length">
+                            <item-format-banner v-for="(item, idx) in _getBannerFormatList" 
+                                :key="idx" :banner="item"></item-format-banner>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
@@ -45,6 +79,7 @@
 
 <script>
     import {
+        mapActions,
         mapGetters,
     } from 'vuex';
     require('@app/tools/mm/dist/style.css');
@@ -54,11 +89,13 @@
     } from 'store@admin/types/module-types';
     import lodash from 'lodash';
     import ItemBanner from './ItemBanner';
+    import ItemFormatBanner from './ItemFormatBanner';
 
     export default {
         name: 'TheInfoListBanner',
         components: {
-            ItemBanner
+            ItemBanner,
+            ItemFormatBanner
         },
         data() {
             return {
@@ -68,9 +105,13 @@
         computed: {
             ...mapGetters(MODULE_MODULE_NOI_BAT, [
                 'settingBanner',
+                'settingBannerFormat'
             ]),
             _getBannerList() {
                 return this.settingBanner.value;
+            },
+            _getBannerFormatList() {
+                return this.settingBannerFormat.value;
             }
         },
         mounted() {
@@ -95,6 +136,9 @@
             });
         },
         methods: {
+            ...mapActions(MODULE_MODULE_NOI_BAT, [
+                'updateSettingByKey'
+            ]),
             _changeImage(fi) {
                 if (typeof fi === "object") {
                     if (fi.hasOwnProperty('selected') && fi.selected) {
@@ -107,7 +151,12 @@
                     }
                 }
             },
-            
+            _updateBanner() {
+                this.updateSettingByKey({
+                    banner: this.settingBanner,
+                    format: this.settingBannerFormat
+                });
+            }
         },
         setting: {
             image_title: 'Banner',

@@ -2,23 +2,26 @@
     <main id="video" class="py-2">
         <div class="container">
             <main-menu></main-menu>
-            <content-top v-if="_isContentTop">
-                <template v-if="loading">
-                    <loading-over-lay
-                        :active.sync="loading"
-                        :is-full-page="fullPage"></loading-over-lay>
-                </template>
-                <paginate></paginate>
-                <div class="list-videos">
-                    <the-category-news-item
-                        class="figure"
-                        v-for="(item,idx) in infoList"
-                        :info="item"
-                        :key="idx"></the-category-news-item>
-                </div>
-            </content-top>
-            <main-content v-if="_isContentMain"></main-content>
-            <content-bottom v-if="_isContentBottom"></content-bottom>
+
+            <div style="background-color: #80808008;">
+                <content-top v-if="_isContentTop">
+                    <template v-if="loading">
+                        <loading-over-lay
+                            :active.sync="loading"
+                            :is-full-page="fullPage"></loading-over-lay>
+                    </template>
+                    <paginate></paginate>
+                    <div class="list-videos">
+                        <the-category-news-item
+                            class="figure"
+                            v-for="(item,idx) in infoList"
+                            :info="item"
+                            :key="idx"></the-category-news-item>
+                    </div>
+                </content-top>
+                <main-content v-if="_isContentMain"></main-content>
+                <content-bottom v-if="_isContentBottom"></content-bottom>
+            </div>
         </div>
     </main>
 </template>
