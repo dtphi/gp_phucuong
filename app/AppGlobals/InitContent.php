@@ -24,7 +24,7 @@ class InitContent
             'meta_title' => 'GIÁO PHẬN PHÚ CƯỜNG ',
             'meta_description' => 'Chuyên trang truyền thông Giáo Phận Phú Cường',
             'meta_keyword' => 'Giáo Phận Phú Cường, giao phan phu cuong',
-            'og_image' => 'http://localhost:8000/images/default_image.jpg',
+            'og_image' => url('images/default_image.jpg'),
         ];
 
         $segments = request()->segments();
