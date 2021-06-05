@@ -2,7 +2,9 @@
     <div class="box-social">
         <h4 class="tit-common clr-blue">Mạng xã hội</h4>
         <div class="list-icon">
-            <share-it url="http://haydesachnoipodcast.com/" 
+            <share-it 
+                :url="_getUrl" 
+                :text="_getText"
                 :shareConfig="share"
                 :targets="['twitter', 'facebook', 'linkedin', 'whatsapp', 'reddit']"></share-it>
         </div>
@@ -18,6 +20,7 @@
         name: 'SocialNetwork',
         data() {
             return {
+                text: '',
                 share: {
                     twitter: {
                         label: ' ',
@@ -49,5 +52,16 @@
                 }
             }
         },
+        computed: {
+            _getUrl() {
+                return window.location.origin + window.location.pathname;
+            },
+            _getText() {
+                return this.text;
+            }
+        },
+        mounted() {
+            this.text = document.querySelector('meta[property="og:title"]').content;
+        }
     }
 </script>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\AppGlobals\InitContent;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/{any}', 'welcome')->where('any', '.*');
+Route::view('/{any}', 'welcome', ['data' => new InitContent()])->where('any', '.*');

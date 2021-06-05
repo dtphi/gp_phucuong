@@ -193,10 +193,10 @@ routeEnv = {
         children: [{
             path: '',
             component: HomePage,
-            name: 'news-page',
+            name: 'home-page',
             meta: {
                 auth: false,
-                header: 'News Page',
+                header: 'Trang chủ',
                 layout: MainLayout,
                 role: 'guest',
                 title: 'Trang Tin Tức | ' + config.site_name,
@@ -307,10 +307,10 @@ routeEnv = {
         }, {
             path: 'trang-chu',
             component: HomePage,
-            name: 'news-page',
+            name: 'home-page1',
             meta: {
                 auth: false,
-                header: 'News Page',
+                header: 'Trang chủ',
                 layout: MainLayout,
                 role: 'guest',
                 title: 'Trang Tin Tức | ' + config.site_name,

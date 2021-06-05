@@ -8,8 +8,11 @@
     >
         <b-carousel-slide
             v-for="(item, index) in _getInfoCarousel" :key="index">
-            <template #img>
+            <template v-slot:img>
                 <img @click="_redirectUrl(item)"
+                    class="d-block img-fluid w-100"
+                    width="730"
+                    height="410"
                     :src="item.imgCarThumUrl">
             </template>
             <div v-if="_innerScreen1200" class="description text-left">

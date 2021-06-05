@@ -210,62 +210,6 @@ class ApiController extends Controller
             }
 
             $menuLayout_1 = [];
-            /*$categories_1 = $this->sv->getMenuCategoriesToLayout(1);
-
-            foreach ($categories_1 as $cate_1) {
-                // Level 2
-                $children_data_2 = array();
-
-                $children_2 = $this->sv->getMenuCategories($cate_1->category_id);
-
-                foreach ($children_2 as $child_2) {
-                    $path_2 = 'path=' . $cate_1->category_id . '_' . $child_2->category_id;
-                    $link_2 = $cate_1->name_slug . '/' . $child_2->name_slug;
-
-                    // Level 3
-                    $children_data_3 = array();
-                    $children_3      = $this->sv->getMenuCategories($child_2->category_id);
-
-                    foreach ($children_3 as $child_3) {
-                        $path_3 = $path_2 . '_' . $child_3->category_id;
-                        $link_3 = $link_2 . '/' . $child_3->name_slug;
-
-                        // Level 3 -1
-                        $filter_data = array(
-                            'filter_category_id'  => $child_3->category_id,
-                            'filter_sub_category' => true
-                        );
-
-                        $children_data_3[] = array(
-                            'name'     => $child_3->name,
-                            'children' => [],
-                            'href'     => $path_3,
-                            'link'     => $link_3
-                        );
-                    }
-
-                    // Level 2 - 1
-                    $filter_data = array(
-                        'filter_category_id'  => $child_2->category_id,
-                        'filter_sub_category' => true
-                    );
-
-                    $children_data_2[] = array(
-                        'name'     => $child_2->name,
-                        'children' => $children_data_3,
-                        'href'     => $path_2,
-                        'link'     => $link_2
-                    );
-                }
-
-                // Level 1
-                $menuLayout_1[] = array(
-                    'name'     => $cate_1->name,
-                    'children' => $children_data_2,
-                    'href'     => 'path=' . $cate_1->category_id,
-                    'link'     => $cate_1->name_slug
-                );
-            }*/
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
