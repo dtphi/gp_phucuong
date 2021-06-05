@@ -30,11 +30,11 @@
         <meta name="VisitorPath" content="">
 
         <meta property="og:url" content="{{$data->settings['og_url']}}"/>
-        <meta property="og:type" content="Website" />
+        <meta property="og:type" content="website" />
         <meta property="og:locale" content="vi_VN" />
         <meta property="og:image" content="{{ $data->settings['og_image'] }}" />
-        <meta property="og:image:width" content=""/>
-        <meta property="og:image:height" content=""/>
+        <meta property="og:image:width" content="{{$data->settings['og_width']}}"/>
+        <meta property="og:image:height" content="{{$data->settings['og_height']}}"/>
         <meta property="og:description" content="{{ $data->settings['meta_description'] }}" />
         <meta property="og:title" content="{{$data->settings['meta_title']}}" />
         <meta property="og:site_name" content="Giáo Phận Phú Cường" />

@@ -19,10 +19,12 @@ class InitContent
 
         $this->settings = [
             'og_url' => request()->fullUrl(),
+            'og_width' => 500,
+            'og_height' => 300,
             'meta_title' => 'GIÁO PHẬN PHÚ CƯỜNG ',
             'meta_description' => 'Chuyên trang truyền thông Giáo Phận Phú Cường',
             'meta_keyword' => 'Giáo Phận Phú Cường, giao phan phu cuong',
-            'og_image' => 'http://haydesachnoipodcast.com/Image/Picture/Logo/logo-lg.jpg',
+            'og_image' => 'http://localhost:8000/images/default_image.jpg',
         ];
 
         $segments = request()->segments();
