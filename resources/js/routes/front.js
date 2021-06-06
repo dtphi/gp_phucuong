@@ -199,110 +199,7 @@ routeEnv = {
                 header: 'Trang chủ',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name,
-                layout_content: {
-                    content_top: true,
-                    content_top_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        colClass: '8 notication',
-                        left_modules: [],
-                        middle_modules: [
-                            {
-                                moduleName: ModuleContent.middle_module_info_carousel,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.middle_module_special_banner,
-                                sortOrder: 0
-                            },
-                        ],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_bottom: true,
-                    content_bottom_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        left_modules: [],
-                        middle_modules: [
-                            {
-                                moduleName: ModuleContent.module_middle_tin_giao_hoi,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_middle_tin_giao_phan,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_middle_van_kien,
-                                sortOrder: 0
-                            }
-                        ],
-                        right_modules: [
-                            {
-                                moduleName: ModuleContent.module_right_lich_cong_giao,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_sach_noi_iframe,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_info_fanpage,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                                sortOrder: 0
-                            }
-                        ],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2,
-                        colClass: '8'
-                    },
-                    content_main: true,
-                    content_main_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        left_modules: [],
-                        middle_modules: [
-                            {
-                                moduleName: ModuleContent.module_middle_loi_chua,
-                                sortOrder: 0
-                            }
-                        ],
-                        right_modules: [
-                            {
-                                moduleName: ModuleContent.module_right_category_icon_side_bar,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_thong_bao,
-                                sortOrder: 0
-                            }
-                        ],
-                        both_column: true,
-                        both_modules: [
-                            {
-                                moduleName: ModuleContent.module_both_noi_bat,
-                                sortOrder: 0
-                            }
-                        ],
-                        column_number: 2,
-                        colClass: '8'
-                    },
-                    right_column: false,
-                    middle_column: true,
-                    left_column: false,
-                    column_number: 2,
-                }
+                layout_content: {}
             }
         }, {
             path: 'trang-chu',
@@ -313,113 +210,7 @@ routeEnv = {
                 header: 'Trang chủ',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name,
                 layout_content: {
-                    content_top: true,
-                    content_top_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        colClass: '8 notication',
-                        left_modules: [],
-                        middle_modules: [
-                            {
-                                moduleName: ModuleContent.middle_module_info_carousel,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.middle_module_special_banner,
-                                sortOrder: 0
-                            },
-                        ],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_bottom: true,
-                    content_bottom_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        left_modules: [],
-                        middle_modules: [
-                            {
-                                moduleName: ModuleContent.module_middle_loi_chua,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_middle_tin_giao_hoi,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_middle_tin_giao_phan,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_middle_van_kien,
-                                sortOrder: 0
-                            }
-                        ],
-                        right_modules: [
-                            {
-                                moduleName: ModuleContent.module_right_lich_cong_giao,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_sach_noi_iframe,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_info_fanpage,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                                sortOrder: 0
-                            }
-                        ],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2,
-                        colClass: '8'
-                    },
-                    content_main: true,
-                    content_main_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        left_modules: [],
-                        middle_modules: [
-                            {
-                                moduleName: ModuleContent.module_middle_loi_chua,
-                                sortOrder: 0
-                            }
-                        ],
-                        right_modules: [
-                            {
-                                moduleName: ModuleContent.module_right_category_icon_side_bar,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_thong_bao,
-                                sortOrder: 0
-                            }
-                        ],
-                        both_column: true,
-                        both_modules: [
-                            {
-                                moduleName: ModuleContent.module_both_noi_bat,
-                                sortOrder: 0
-                            }
-                        ],
-                        column_number: 2,
-                        colClass: '8'
-                    },
-                    right_column: false,
-                    middle_column: true,
-                    left_column: false,
-                    column_number: 2,
                 }
             }
         }]
@@ -437,8 +228,7 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Danh Mục Tin Tức | ' + config.site_name,
-                layout_content: ModuleContentCategory
+                layout_content: {}
             }
         }]
     }, {
@@ -455,8 +245,7 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Danh Mục Tin Tức | ' + config.site_name,
-                layout_content: ModuleContentCategory
+                layout_content: {}
             }
         }]
     }, {
@@ -473,8 +262,7 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name,
-                layout_content: ModuleContentCategory
+                layout_content: {}
             }
         }]
     }, {
@@ -491,8 +279,7 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name,
-                layout_content: ModuleContentCategory
+                layout_content: {}
             }
         }]
     }, {
@@ -509,8 +296,7 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name,
-                layout_content: ModuleContentCategory
+                layout_content: {}
             }
         }]
     }, {
@@ -519,114 +305,6 @@ routeEnv = {
             render: c => c('router-view')
         },
         children: [{
-            path: '',
-            component: () =>
-                import ('v@front/page_news'),
-            name: 'news-page',
-            meta: {
-                auth: false,
-                header: 'News Page',
-                layout: MainLayout,
-                role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name,
-                layout_content: {
-                    content_top: true,
-                    content_top_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        colClass: '8 notication',
-                        left_modules: [],
-                        middle_modules: [
-                            {
-                                moduleName: ModuleContent.middle_module_info_carousel,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.middle_module_special_banner,
-                                sortOrder: 0
-                            },
-                        ],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_bottom: true,
-                    content_bottom_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        left_modules: [],
-                        middle_modules: [
-                            {
-                                moduleName: ModuleContent.module_middle_loi_chua,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_middle_tin_giao_hoi,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_middle_tin_giao_phan,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_middle_van_kien,
-                                sortOrder: 0
-                            }
-                        ],
-                        right_modules: [
-                            {
-                                moduleName: ModuleContent.module_right_category_icon_side_bar,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_thong_bao,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_lich_cong_giao,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_sach_noi_iframe,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_info_fanpage,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                                sortOrder: 0
-                            }
-                        ],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2,
-                        colClass: '8'
-                    },
-                    content_main: false,
-                    content_main_column: {
-                        right_column: false,
-                        middle_column: true,
-                        left_column: false,
-                        colClass: '',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    right_column: false,
-                    middle_column: true,
-                    left_column: false,
-                    column_number: 2,
-                }
-            }
-        }, {
             path: 'xem-nhieu',
             component: () =>
                 import ('v@front/page_news_populars'),
@@ -718,71 +396,7 @@ routeEnv = {
                 header: 'News Detail Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức Chi Tiet | ' + config.site_name,
-                layout_content: {
-                    content_top: true,
-                    content_top_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        colClass: '8 notication',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [
-                            {
-                                moduleName: ModuleContent.module_right_thong_bao,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_lich_cong_giao,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_sach_noi_iframe,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_info_fanpage,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                                sortOrder: 0
-                            }
-                        ],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_bottom: false,
-                    content_bottom_column: {
-                        right_column: false,
-                        middle_column: false,
-                        left_column: false,
-                        colClass: '',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_main: true,
-                    content_main_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        colClass: '8',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    right_column: true,
-                    left_column: true,
-                }
+                layout_content: {}
             }
         }]
     }, {
@@ -800,73 +414,7 @@ routeEnv = {
                 header: 'Video Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Video | ' + config.site_name,
-                layout_content: {
-                    content_top: true,
-                    content_top_column: {
-                        right_column: false,
-                        middle_column: true,
-                        left_column: true,
-                        colClass: '',
-                        left_modules: [
-                            {
-                                moduleName: ModuleContent.module_left_info_left_side_bar,
-                                sortOrder: 0,
-                                componentClass: '',
-                                isShowMobile: false
-                            },
-                            {
-                                moduleName: ModuleContent.module_left_category_left_side_bar,
-                                sortOrder: 0,
-                                componentClass: '',
-                                isShowMobile: false
-                            },
-                            {
-                                moduleName: ModuleContent.module_left_newsletter_register,
-                                sortOrder: 0,
-                                componentClass: 'form test',
-                                isShowMobile: false
-                            },
-                            {
-                                moduleName: ModuleContent.module_left_summary_contact,
-                                sortOrder: 0,
-                                componentClass: 'logo test',
-                                isShowMobile: false
-                            }
-                        ],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_bottom: false,
-                    content_bottom_column: {
-                        right_column: false,
-                        middle_column: false,
-                        left_column: false,
-                        colClass: '',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_main: false,
-                    content_main_column: {
-                        right_column: false,
-                        middle_column: false,
-                        left_column: false,
-                        colClass: '',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                }
+                layout_content: {}
             }
         }, {
             path: 'chi-tiet/:slug',
@@ -878,69 +426,7 @@ routeEnv = {
                 header: 'Video Detail Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Chie Tiet Video | ' + config.site_name,
-                layout_content: {
-                    content_top: true,
-                    content_top_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        colClass: '8 notication',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [
-                            {
-                                moduleName: ModuleContent.module_right_thong_bao,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_lich_cong_giao,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_sach_noi_iframe,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_info_fanpage,
-                                sortOrder: 0
-                            },
-                            {
-                                moduleName: ModuleContent.module_right_youtube_hanh_cac_thanh,
-                                sortOrder: 0
-                            }
-                        ],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_bottom: false,
-                    content_bottom_column: {
-                        right_column: false,
-                        middle_column: false,
-                        left_column: false,
-                        colClass: '',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_main: true,
-                    content_main_column: {
-                        right_column: true,
-                        middle_column: true,
-                        left_column: false,
-                        colClass: '8',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                }
+                layout_content: {}
             }
         }]
     }]

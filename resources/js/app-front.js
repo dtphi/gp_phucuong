@@ -23,7 +23,10 @@ const initParamsApp = {
 }
 
 router.beforeEach(async (to, from, next) => {
-    document.title = to.meta.title;
+    let pageData = JSON.parse(window.page);
+    if (Object.keys(to.meta.layout_content).length === 0) {
+      to.meta.layout_content = pageData.layout_content;
+    }
 
     next();
 });

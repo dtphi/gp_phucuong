@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Str;
+use App\Http\Common\Tables;
 use Storage;
 use Image;
 
@@ -96,6 +97,9 @@ class ApiController extends Controller
         return Storage::url($thumbDir);
     }
 
+    /**
+     * Get config app.
+     */
     public function getSetting(Request $request)
     {
         $requestParams = $request->get('params');
@@ -243,10 +247,122 @@ class ApiController extends Controller
         $data['banner']  = url('Image/NewPicture/home_banners/banner_image.png');
         $data['menus']   = $menus;
         $data['menus_1'] = $menuLayout_1;
+
+        $homeLayout = [
+            'auth'=> false,
+            'header'=> 'Trang chủ',
+            'layout'=> 'MainLayout',
+            'role'=> 'guest',
+            'title'=> 'Trang Tin Tức | ',
+            'layout_content'=> [
+                'content_top'=> true,
+                'content_top_column'=> [
+                    'right_column'=> true,
+                    'middle_column'=> true,
+                    'left_column'=> false,
+                    'colClass'=> '8 notication',
+                    'left_modules'=> [],
+                    'middle_modules'=> [
+                        [
+                            'moduleName'=> Tables::$middle_module_info_carousel,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$middle_module_special_banner,
+                            'sortOrder'=> 0
+                        ],
+                    ],
+                    'right_modules'=> [],
+                    'both_column'=> false,
+                    'both_modules'=> [],
+                    'column_number'=> 2
+                ],
+                'content_bottom'=> true,
+                'content_bottom_column'=> [
+                    'right_column'=> true,
+                    'middle_column'=> true,
+                    'left_column'=> false,
+                    'left_modules'=> [],
+                    'middle_modules'=> [
+                        [
+                            'moduleName'=> Tables::$module_middle_tin_giao_hoi,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_middle_tin_giao_phan,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_middle_van_kien,
+                            'sortOrder'=> 0
+                        ]
+                    ],
+                    'right_modules'=> [
+                        [
+                            'moduleName'=> Tables::$module_right_lich_cong_giao,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_sach_noi_iframe,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_info_fanpage,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_youtube_hanh_cac_thanh,
+                            'sortOrder'=> 0
+                        ]
+                    ],
+                    'both_column'=> false,
+                    'both_modules'=> [],
+                    'column_number'=> 2,
+                    'colClass'=> '8'
+                ],
+                'content_main'=> true,
+                'content_main_column'=> [
+                    'right_column'=> true,
+                    'middle_column'=> true,
+                    'left_column'=> false,
+                    'left_modules'=> [],
+                    'middle_modules'=> [
+                        [
+                            'moduleName'=> Tables::$module_middle_loi_chua,
+                            'sortOrder'=> 0
+                        ]
+                    ],
+                    'right_modules'=> [
+                        [
+                            'moduleName'=> Tables::$module_right_category_icon_side_bar,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_thong_bao,
+                            'sortOrder'=> 0
+                        ]
+                    ],
+                    'both_column'=> true,
+                    'both_modules'=> [
+                        [
+                            'moduleName'=> Tables::$module_both_noi_bat,
+                            'sortOrder'=> 0
+                        ]
+                    ],
+                    'column_number'=> 2,
+                    'colClass'=> '8'
+                ],
+                'right_column'=> false,
+                'middle_column'=> true,
+                'left_column'=> false,
+                'column_number'=> 2,
+            ]
+        ];
         $data['pages']   = [
             'home'  => [
                 'title' => 'Trang chủ',
-                'id'    => 1
+                'id'    => 1,
+                'layout' => $homeLayout
             ],
             'video' => [
                 'title' => 'Trang video',

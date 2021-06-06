@@ -347,11 +347,13 @@ class NewsController extends Controller
                 $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, $width, $height):$this->getThumbnail($staticImg, $width, $height);
     
                 $sortDes = html_entity_decode($info->sort_description);
+                $isImgRender = ($key == 0);
                 $infos[] = [
                     'category_id'      => $info->category_id,
                     'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                     'description'      => html_entity_decode($info->sort_description),
                     'sort_description' => Str::substr($sortDes, 0, 100),
+                    'isImgRender'      => $isImgRender,
                     'image'            => $staticImg,
                     'imgUrl'           => url($staticImg),
                     'imgThumUrl'       => url($staticThumImg),

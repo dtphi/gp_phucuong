@@ -92,6 +92,8 @@
                     console.log('Laravel PWA: ServiceWorker registration failed: ', err);
                 });
             }
+
+            window.page = '<?php echo json_encode($data->settings['page']); ?>';
         </script>
     </head>
     <body class="antialiased">
@@ -108,6 +110,8 @@
             </component>
         </div>
         <!-- Scripts -->
+        <script>
+        </script>
         <script src="{{ asset('js/app-front.js') }}" defer></script>
     </body>
 </html>
