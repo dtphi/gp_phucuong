@@ -62,6 +62,24 @@ class InitContent
                 }
             }
         }
+
+        if (isset($segments[0]) && ($segments[0] == 'video') && (count($segments) >= 2)) {
+            $model = new \App\Models\Information();
+            
+            $endSegment = end($segments);
+            $arrSegments = explode('-', $endSegment);
+            $idSegment = (int)end($arrSegments);
+
+            if ($idSegment) {
+                $result = $model->select()->where('information_id', $idSegment)->first();
+                if ($result) {
+                    $this->settings['meta_title'] = $result->infoDes->meta_title;
+                    $this->settings['meta_description'] = $result->infoDes->meta_description;
+                    $this->settings['meta_keyword'] = $result->infoDes->meta_keyword;
+                    $this->settings['og_image'] = url($result->image['path']);
+                }
+            }
+        }
     }
 
     public function getDistJsScript($src)
