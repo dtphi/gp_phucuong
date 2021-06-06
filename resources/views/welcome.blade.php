@@ -45,29 +45,27 @@
 		<meta name="keywords" content="{{ $data->settings['meta_keyword'] }}">
 
         <!-- basic favicon -->
-        <link rel="shortcut icon" href="https://developer.mozilla.org/static/img/favicon32.png">
-        <link rel="shortcut icon" type="image/ico" hre="<?php echo asset('images/icons/favicon.ico'); ?>" />
-        <link rel="icon" type="image/x-icon" href="<?php echo asset('images/icons/favicon.ico'); ?>" />
-        <link rel="icon" type="image/vnd.microsoft.icon" href="<?php echo asset('images/icons/favicon.ico'); ?>" />
-        <link rel="icon" sizes="16x16" href="<?php echo asset('images/icons/favicon.ico'); ?>">
-        <link rel="icon" sizes="33x33" href="<?php echo asset('images/icons/favicon.ico'); ?>">
-        <link rel="icon" sizes="49x49" href="<?php echo asset('images/icons/favicon.ico'); ?>">
-        <link rel="icon" sizes="64x64" href="<?php echo asset('images/icons/favicon.ico'); ?>">
-        <link rel="icon" sizes="152x152" href="<?php echo asset('images/icons/favicon.ico'); ?>">
+        <link rel="shortcut icon" href="<?php echo asset('images/icons/favicon-33x33.png'); ?>">
+        <link rel="shortcut icon" type="image/ico" href="<?php echo asset('images/icons/favicon.png'); ?>" />
+        <link rel="icon" type="image/x-icon" href="<?php echo asset('images/icons/favicon.png'); ?>" />
+        <link rel="icon" type="image/vnd.microsoft.icon" href="<?php echo asset('images/icons/favicon.png'); ?>" />
+        <link rel="icon" sizes="16x16" href="<?php echo asset('images/icons/favicon-16x16.png'); ?>">
+        <link rel="icon" sizes="49x49" href="<?php echo asset('images/icons/favicon-49x49.png'); ?>">
+        <link rel="icon" sizes="64x64" href="<?php echo asset('images/icons/favicon-64x64.png'); ?>">
 
-        <link rel="apple-touch-icon" sizes="60x60" href="<?php echo asset('images/icons/favicon.ico'); ?>">
-        <link rel="apple-touch-icon" sizes="76x76" href="<?php echo asset('images/icons/favicon.ico'); ?>">
-        <link rel="apple-touch-icon" sizes="120x120" href="<?php echo asset('images/icons/favicon.ico'); ?>">
-        <link rel="apple-touch-icon" sizes="152x152" href="<?php echo asset('images/icons/favicon.ico'); ?>">
+        <link rel="apple-touch-icon" sizes="60x60" href="<?php echo asset('images/icons/favicon-60x60.png'); ?>">
+        <link rel="apple-touch-icon" sizes="76x76" href="<?php echo asset('images/icons/favicon-76x76.png'); ?>">
+        <link rel="apple-touch-icon" sizes="120x120" href="<?php echo asset('images/icons/favicon-120x120.png'); ?>">
+        <link rel="apple-touch-icon" sizes="152x152" href="<?php echo asset('images/icons/favicon-152x152.png'); ?>">
 
         <!-- third-generation iPad with high-resolution Retina display: -->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://developer.mozilla.org/static/img/favicon144.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo asset('images/icons/favicon-144x144.png'); ?>">
         <!-- iPhone with high-resolution Retina display: -->
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://developer.mozilla.org/static/img/favicon114.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo asset('images/icons/favicon-114x114.png'); ?>">
         <!-- first- and second-generation iPad: -->
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://developer.mozilla.org/static/img/favicon72.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo asset('images/icons/favicon-72x72.png'); ?>">
         <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-        <link rel="apple-touch-icon-precomposed" href="https://developer.mozilla.org/static/img/favicon57.png">
+        <link rel="apple-touch-icon-precomposed" href="<?php echo asset('images/icons/favicon-57x57.png'); ?>">
 
         <!-- Facebook Metadata /-->
         <meta property="fb:app_id" content="581209272088537"/>
