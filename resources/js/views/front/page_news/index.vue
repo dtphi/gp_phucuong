@@ -17,19 +17,32 @@
                     <div class="box-care mt-3">
                         <b-row class="mt-3">
                             <b-col cols="12" class="m-auto">
-                                <p class="mb-0 text-download">Tải app sách nói công giáo</p>
+                                <p class="mb-0 text-download" style="padding: 4px 0">Tải app sách nói công giáo</p>
                             </b-col>
                             <b-col cols="12">
                                 <b-carousel
                                     id="carousel-2"
                                     :interval="4000"
+                                    style="cursor: pointer;height:150px"
                                     controls
                                     indicators
                                 >
-                                    <b-carousel-slide
-                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-                                    <b-carousel-slide
-                                        img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+                                    <b-carousel-slide>
+                                            <template v-slot:img>
+                                                <img
+                                                    class="d-block img-fluid w-100"
+                                                    style="width:100%; height:150px !important"
+                                                    :src="imgCarousel">
+                                            </template>
+                                    </b-carousel-slide>
+                                    <b-carousel-slide>
+                                        <template v-slot:img>
+                                                <img
+                                                    class="d-block img-fluid w-100"
+                                                    style="width:100%; height:150px !important"
+                                                    :src="imgCarousel">
+                                            </template>
+                                    </b-carousel-slide>
                                 </b-carousel>
                             </b-col>
                         </b-row>
@@ -84,7 +97,8 @@
             return {
                 isContentBottom: true,
                 fullPage: false,
-                isTopBottomBoth: false
+                isTopBottomBoth: false,
+                imgCarousel: 'https://picsum.photos/1024/480/?image=58'
             }
         },
         computed: {

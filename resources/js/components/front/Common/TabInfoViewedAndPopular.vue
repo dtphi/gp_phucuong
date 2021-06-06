@@ -1,5 +1,5 @@
 <template>
-    <b-card no-body class="mt-3" style="height: 343px">
+    <b-card no-body class="mt-3" style="height: 345px">
         <b-tabs card>
             <info-lasted-tab></info-lasted-tab>
             <info-popular-tab></info-popular-tab>

@@ -20,7 +20,6 @@
         fn_get_href_base_url,
         fn_change_to_slug
     } from '@app/api/utils/fn-helper';
-    import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
         name: 'TheCategoryNewsItem',
@@ -29,11 +28,7 @@
         },
         data() {
             return {
-                iconBook: IconBook
             }
-        },
-        computed: {
-            ...mapGetters(['iconBookUrl'])
         },
         methods: {
             _getHref() {

@@ -19,7 +19,7 @@
                 <p class="text-right mb-0">{{item.date_available}}</p>
             </div>
             <div v-else class="description text-left">
-                <h4>{{item.sort_name}}</h4>
+                <h6>{{item.name}}</h6>
                 <p class="mb-2">
                     {{item.sort_description}}
                     <a :href="_getHref(item)" class="ml-2"><b>Xem thêm</b></a>

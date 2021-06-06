@@ -29,9 +29,6 @@
             return {
             }
         },
-        computed: {
-            ...mapGetters(['iconBookUrl'])
-        },
         methods: {
             _getHref() {
                 if (this.info.hasOwnProperty('name_slug')) {

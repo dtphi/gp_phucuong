@@ -20,7 +20,6 @@
     import {
         ACTION_GET_SETTING
     } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
         name: 'ModuleHanhCacThanh',
@@ -28,7 +27,6 @@
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
             }
         },
         computed: {

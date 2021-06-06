@@ -28,15 +28,12 @@
         GET_POPULAR_INFORMATION_LIST_TO_CATEGORY
     } from '@app/stores/front/types/action-types';
 
-    import IconBook from 'v@front/assets/img/icon-book.png';
-
     export default {
         name: 'ModuleThongBao',
         components: {},
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
             }
         },
         computed: {

@@ -8,20 +8,28 @@
   	    <default-header></default-header>
 		<slot></slot>
         <default-footer></default-footer>
+		<croll-to-top-767 v-if="_innerScreen767"></croll-to-top-767>
+		<croll-to-top v-else></croll-to-top>
   </div>
 </template>
 
 <script>
-
+	import {
+		mapGetters
+	} from 'vuex';
 	import DefaultHeader from 'com@front/Header/Default';
 	import DefaultFooter from 'com@front/Footers';
 	import { mapState, mapActions } from 'vuex';
+	import CrollToTop from 'com@front/Common/CrollToTop';
+	import CrollToTop767 from 'com@front/Common/CrollToTop767';
 
 	export default {
 		name: 'MainLayout',
 		components: {
 			DefaultHeader,
 			DefaultFooter,
+			CrollToTop,
+			CrollToTop767
 		},
 		data() {
 			return {
@@ -32,7 +40,13 @@
 		computed: {
 			...mapState({
 				screenWidth: state => state.clientsTestimonialsPage
-			})
+			}),
+			 ...mapGetters([
+				'isScreen767'
+			]),
+			_innerScreen767 () {
+                return this.isScreen767;
+            }
 		},
 		methods: {
 			...mapActions([

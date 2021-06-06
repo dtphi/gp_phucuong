@@ -2,10 +2,8 @@
     <b-col id="tin-giao-hoi-viet-nam" cols="6" class="col-mobile" v-if="pageLists.length">
         <div class="new mt-3">
             <div>
-                <h4 class="tit-common mb-3">
-                    <img :src="iconBook" alt=""> Tin giáo hội việt nam</h4>
-                <p class="info-post mb-2">
-                    <img :src="iconBook" alt="">
+                <h4 class="tit-common mb-3">📒 Tin giáo hội việt nam</h4>
+                <p class="info-post mb-2">📃
                     <span class="name font-weight-bold mr-1">Admin</span>
                     <b-icon class="alarm" icon="alarm"></b-icon>
                     <span>{{_getLastedModuleInfo.date_available}}</span>
@@ -34,12 +32,10 @@
                 <span>
                     <i class="status bg-red">hot</i>
                 </span>
-                <span>
-                    <img :src="iconBook" alt="">
+                <span>📃
                     <i>{{item.name}}</i>
                 </span>
-                <span>
-                    <img :src="iconBook" alt="">
+                <span>👤
                     <i>Admin</i>
                 </span>
             </a>
@@ -58,7 +54,6 @@
     import {
         ACTION_GET_SETTING
     } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
     import {
         fn_get_href_base_url,
         fn_change_to_slug
@@ -70,7 +65,6 @@
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
             }
         },
         computed: {

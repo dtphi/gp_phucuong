@@ -1,24 +1,11 @@
 <template>
     <div id="lich-cong-giao-module" class="calendar mt-4">
         <h4 class="title"><span>Lịch</span></h4>
-        <b-calendar class="w-100"  locale="en-US"></b-calendar>
+        <b-calendar class="w-100"  locale="vi-VN"></b-calendar>
     </div>
 </template>
 
 <script>
-    import {
-        mapState,
-        mapGetters,
-        mapActions
-    } from 'vuex';
-
-    import {
-        MODULE_INFO_ADD
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_RESET_NOTIFICATION_INFO
-    } from 'store@admin/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
         name: 'ModuleLichCongGiao',
@@ -27,8 +14,6 @@
         data() {
             return {
                 fullPage: true,
-
-                iconBook: IconBook,
             }
         },
         

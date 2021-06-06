@@ -1,7 +1,6 @@
 <template>
     <div id="tin_giao_phan_module" class="mt-4 new-diocese" v-if="pageLists.length">
-        <h4 class="tit-common mb-3">
-            <img :src="iconBook" alt=""> Tin giáo phận
+        <h4 class="tit-common mb-3">📒 Tin giáo phận
             <a :href="_getHrefCate()" class="view-all">View all</a>
         </h4>
         <b-row>
@@ -11,8 +10,7 @@
                 <h4 class="tit-bg-common mt-2">
                     <a :href="_getHref(_getLastedModuleInfo)">{{_getLastedModuleInfo.name}}</a>
                 </h4>
-                <p class="info-post">
-                    <img :src="iconBook" alt="">
+                <p class="info-post">👤
                     <span class="name font-weight-bold mr-1">Admin</span>
                     <b-icon class="alarm" icon="alarm"></b-icon>
                     <span>{{_getLastedModuleInfo.date_available}}</span>
@@ -26,8 +24,7 @@
                     <h4 class="tit-bg-common mt-2">
                         <a :href="_getHref(_getSecondInfoModuleList)">{{_getSecondInfoModuleList.name}}</a>
                     </h4>
-                    <p class="info-post">
-                        <img :src="iconBook" alt="">
+                    <p class="info-post">👤
                         <span class="name font-weight-bold mr-1">Admin</span>
                         <b-icon class="alarm" icon="alarm"></b-icon>
                         <span>{{_getSecondInfoModuleList.date_available}}</span>
@@ -41,8 +38,7 @@
                     <h4 class="tit-bg-common">
                         <a href="#">{{item.name}}</a>
                     </h4>
-                    <p class="info-post">
-                        <img :src="iconBook" alt="">
+                    <p class="info-post">👤
                         <span class="name font-weight-bold mr-1">Admin</span>
                         <b-icon class="alarm" icon="alarm"></b-icon>
                         <span>{{item.date_available}}</span>
@@ -66,7 +62,6 @@
     import {
         ACTION_GET_SETTING
     } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
     import {
         fn_get_href_base_url,
         fn_change_to_slug
@@ -78,7 +73,6 @@
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
             }
         },
         computed: {

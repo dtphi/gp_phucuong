@@ -6,7 +6,7 @@
                 <div class="banner-image">
                     <a :href="_getBanner.url_full" :target="(_getBanner.open)?'_self':'_blank'" style="width:100%">  
                         <span style="position:absolute" :style="_getSettingFormat">{{_getBanner.title}}</span>
-                        <img style="width:inherit" v-bind:style="{ height: _getBanner.height + 'px' }"  
+                        <img style="width:100%" v-bind:style="{ height: _getBanner.height + 'px' }"  
                             :src="'/Image/NewPicture/'+_getBanner.image" 
                             alt="Hình ảnh Phú Cường" class="img">
                         <!--<img v-bind:style="{ width: _getBanner.width + 'px', height: _getBanner.height + 'px' }"  
@@ -30,14 +30,12 @@
     import {
         ACTION_GET_SETTING
     } from 'store@front/types/action-types';
-    import IconBook from 'v@front/assets/img/icon-book.png';
 
     export default {
         name: 'ModuleNoiBat',
         data() {
             return {
                 fullPage: true,
-                iconBook: IconBook,
             }
         },
         computed: {
