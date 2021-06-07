@@ -10,14 +10,15 @@
                             :active.sync="loading"
                             :is-full-page="fullPage"></loading-over-lay>
                     </template>
-                    <paginate></paginate>
+                    
                     <div class="list-videos">
-                        <the-category-news-item 
-                            class="figure"
+                        <the-list-category-news-item 
+                            class="info-list"
                             v-for="(item,idx) in infoList"
                             :info="item"
-                            :key="idx"></the-category-news-item>
+                            :key="idx"></the-list-category-news-item>
                     </div>
+                    <paginate></paginate>
                 </content-top>
                 <main-content v-if="_isContentMain"></main-content>
                 <content-bottom v-if="_isContentBottom"></content-bottom>
@@ -33,7 +34,7 @@
         mapState
     } from 'vuex';
     import MainMenu from 'com@front/Common/MainMenu';
-    import TheCategoryNewsItem from './components/TheCategoryNewsItem';
+    import TheListCategoryNewsItem from './components/TheListCategoryNewsItem';
     import {
         MODULE_INFO
     } from '@app/stores/front/types/module-types';
@@ -52,7 +53,7 @@
             ContentTop,
             MainContent,
             ContentBottom,
-            TheCategoryNewsItem,
+            TheListCategoryNewsItem,
             Paginate
         },
         data() {

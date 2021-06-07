@@ -3,7 +3,7 @@
         <div class="new mt-3">
             <div>
                 <h4 class="tit-common mb-3">📒 Tin giáo hội việt nam</h4>
-                <p class="info-post mb-2">📃
+                <p class="info-post mb-2">👤
                     <span class="name font-weight-bold mr-1">Admin</span>
                     <b-icon class="alarm" icon="alarm"></b-icon>
                     <span>{{_getLastedModuleInfo.date_available}}</span>

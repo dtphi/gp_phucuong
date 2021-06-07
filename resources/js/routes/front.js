@@ -1,10 +1,7 @@
 import MainLayout from 'v@front/layouts/main';
 import HomePage from 'v@front/page_news';
 import CategoryPage from 'v@front/page_category_news';
-
-import {
-    config
-} from '../common/config';
+import VideoPage from 'v@front/page_videos';
 
 const debug = process.env.NODE_ENV === 'debuger';
 
@@ -314,77 +311,7 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                title: 'Trang Tin Tức | ' + config.site_name,
-                layout_content: {
-                    content_top: true,
-                    content_top_column: {
-                        right_column: false,
-                        middle_column: true,
-                        left_column: true,
-                        colClass: '',
-                        left_modules: [
-                            {
-                                moduleName: ModuleContent.module_left_info_left_side_bar,
-                                sortOrder: 0,
-                                componentClass: '',
-                                isShowMobile: false
-                            },
-                            {
-                                moduleName: ModuleContent.module_left_category_left_side_bar,
-                                sortOrder: 0,
-                                componentClass: '',
-                                isShowMobile: false
-                            },
-                            {
-                                moduleName: ModuleContent.module_left_newsletter_register,
-                                sortOrder: 0,
-                                componentClass: 'form test',
-                                isShowMobile: false
-                            },
-                            {
-                                moduleName: ModuleContent.module_left_summary_contact,
-                                sortOrder: 0,
-                                componentClass: 'logo test',
-                                isShowMobile: false
-                            }
-                        ],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_bottom: false,
-                    content_bottom_column: {
-                        right_column: false,
-                        middle_column: false,
-                        left_column: false,
-                        colClass: '',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    content_main: false,
-                    content_main_column: {
-                        right_column: false,
-                        middle_column: false,
-                        left_column: false,
-                        colClass: '',
-                        left_modules: [],
-                        middle_modules: [],
-                        right_modules: [],
-                        both_column: false,
-                        both_modules: [],
-                        column_number: 2
-                    },
-                    right_column: false,
-                    middle_column: true,
-                    left_column: true,
-                    column_number: 2,
-                }
+                layout_content: {}
             }
         }, {
             path: 'chi-tiet/:slug',
@@ -406,8 +333,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@front/page_videos'),
+            component: VideoPage,
             name: 'video-page',
             meta: {
                 auth: false,

@@ -29,6 +29,7 @@ export default {
     infoLastedList: [],
     infoPopularList: [],
     module_category_sub_left_side_bar: [],
+    listActive: 'pageList',
     errors: []
   },
   getters: {
@@ -41,17 +42,29 @@ export default {
   },
 
   mutations: {
+    init_list_active(state, payload) {
+      state.listActive = payload;
+    },
     init_list_sub_category_side_bar(state, payload) {
       state.module_category_sub_left_side_bar = payload;
     },
     INIT_LIST(state, payload) {
-      state.pageLists = payload;
+      if (state.listActive == 'popular') {
+        state.infoPopularList = payload;
+      }
+      if (state.listActive == 'lasted') {
+        state.infoLastedList = payload;
+      } else {
+        state.pageLists = payload;
+      }
     },
     INIT_INFO_LASTED_LIST(state, payload) {
       state.infoLastedList = payload;
+      state.listActive = 'lasted';
     },
     INIT_INFO_POPULAR_LIST(state, payload) {
       state.infoPopularList = payload;
+      state.listActive = 'popular';
     },
     SET_ERROR(state, payload) {
       state.errors = payload;
@@ -166,31 +179,14 @@ export default {
       let params = {
         ...routeParams,
         page: page,
-        slug: slug
+        slug: slug,
+        renderType: 1
       };
       if (routeParams.hasOwnProperty('infoType')) {
         apiGetPopularList(
           (result) => {
             commit(INIT_INFO_POPULAR_LIST, result.data.results);
-            var pagination = {
-              current_page: 1,
-              total: 0
-            };
-            if (result.data.hasOwnProperty('pagination')) {
-              pagination = result.data.pagination;
-            }
-            var configs = {
-              moduleActive: {
-                name: MODULE_INFO,
-                actionList: GET_POPULAR_INFORMATION_LIST_TO_CATEGORY,
-                params: params
-              },
-              collectionData: pagination
-            };
-
-            /*dispatch('setConfigApp', configs, {
-              root: true
-            });*/
+            
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },
@@ -204,25 +200,6 @@ export default {
         apiGetPopularList(
           (result) => {
             commit(INIT_INFO_POPULAR_LIST, result.data.results);
-            var pagination = {
-              current_page: 1,
-              total: 0
-            };
-            if (result.data.hasOwnProperty('pagination')) {
-              pagination = result.data.pagination;
-            }
-            var configs = {
-              moduleActive: {
-                name: MODULE_INFO,
-                actionList: GET_POPULAR_INFORMATION_LIST_TO_CATEGORY,
-                params: params
-              },
-              collectionData: pagination
-            };
-
-            /*dispatch('setConfigApp', configs, {
-              root: true
-            });*/
             commit(SET_ERROR, []);
             commit('setLoading', false);
           },

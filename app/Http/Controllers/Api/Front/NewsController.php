@@ -293,11 +293,10 @@ class NewsController extends Controller
             }
         }
 
+        $staticImg     = self::$thumImgNo;
+        $staticThumImg = self::$thumImgNo;
         $infos = [];
         foreach ($results as $key => $info) {
-            $staticImg     = self::$thumImgNo;
-            $staticThumImg = self::$thumImgNo;
-
             if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                 $staticImg     = rawurldecode($info->image);
             }
@@ -324,7 +323,7 @@ class NewsController extends Controller
             }
 
             if($params['renderType'] == 1) {
-    
+                $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
                 $sortDes = html_entity_decode($info->sort_description);
                 $isImgRender = ($key == 0);
                 $infos[] = [
@@ -334,6 +333,7 @@ class NewsController extends Controller
                     'sort_description' => Str::substr($sortDes, 0, 100),
                     'isImgRender'      => $isImgRender,
                     'imgUrl'           => url($staticImg),
+                    'imgThumUrl'       => url($staticThumImg),
                     'information_id'   => $info->information_id,
                     'information_type' => $info->information_type,
                     'name'             => $info->name,
@@ -342,18 +342,16 @@ class NewsController extends Controller
                     'viewed'           => $info->viewed,
                     'vote'             => $info->vote
                 ];
-            } elseif ($params != 1) {
+            } else {
                 $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
                 $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, $width, $height):$this->getThumbnail($staticImg, $width, $height);
     
                 $sortDes = html_entity_decode($info->sort_description);
-                $isImgRender = ($key == 0);
                 $infos[] = [
                     'category_id'      => $info->category_id,
                     'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                     'description'      => html_entity_decode($info->sort_description),
                     'sort_description' => Str::substr($sortDes, 0, 100),
-                    'isImgRender'      => $isImgRender,
                     'image'            => $staticImg,
                     'imgUrl'           => url($staticImg),
                     'imgThumUrl'       => url($staticThumImg),
@@ -506,11 +504,14 @@ class NewsController extends Controller
 
                 $results = $this->newsSv->apiGetInfoListByIds($params);
 
+                $staticImg     = self::$thumImgNo;
+                $staticThumImg = self::$thumImgNo;
                 $json = [];
-                foreach ($results as $info) {
-                    $staticImg     = self::$thumImgNo;
-                    $staticThumImg = self::$thumImgNo;
-
+                foreach ($results as $key => $info) {
+                    $isImgRender = false;
+                    if($params['renderType'] == 1) {
+                        $isImgRender = ($key == 0);
+                    }
                     if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
                         $staticImg     = $info->image;
                     }
@@ -521,6 +522,7 @@ class NewsController extends Controller
                         'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr($sortDes, 0, 100),
+                        'isImgRender'      => $isImgRender,
                         'image'            => $staticImg,
                         'imgUrl'           => url($staticImg),
                         'imgThumUrl'       => url($staticThumImg),

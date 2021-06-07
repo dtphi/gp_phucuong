@@ -114,110 +114,104 @@ class InitContent
                     'column_number'=> 2,
                     'colClass'=> '8'
                 ],
-                'right_column'=> false,
-                'middle_column'=> true,
-                'left_column'=> false,
                 'column_number'=> 2,
             ]
         ];
 
         $categoryLayout = [
             'layout_content' => [
-            'content_top'=> true,
-            'content_top_column'=> [
-                'right_column'=> true,
-                'middle_column'=> true,
-                'left_column'=> true,
-                'colClass'=> '5',
-                'left_modules'=> [
-                    [
-                        'moduleName'=> Tables::$module_left_category_sub_left_side_bar,
-                        'sortOrder'=> 0,
-                        'isShowMobile'=> false
+                'content_top'=> true,
+                'content_top_column'=> [
+                    'right_column'=> true,
+                    'middle_column'=> true,
+                    'left_column'=> true,
+                    'colClass'=> '5',
+                    'left_modules'=> [
+                        [
+                            'moduleName'=> Tables::$module_left_category_sub_left_side_bar,
+                            'sortOrder'=> 0,
+                            'isShowMobile'=> false
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_left_info_left_side_bar,
+                            'sortOrder'=> 0,
+                            'componentClass'=> '',
+                            'isShowMobile'=> false
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_left_category_left_side_bar,
+                            'sortOrder'=> 0,
+                            'componentClass'=> '',
+                            'isShowMobile'=> false
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_left_newsletter_register,
+                            'sortOrder'=> 0,
+                            'componentClass'=> 'form test',
+                            'isShowMobile'=> false
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_left_summary_contact,
+                            'sortOrder'=> 0,
+                            'componentClass'=> 'logo test',
+                            'isShowMobile'=> false
+                        ]
                     ],
-                    [
-                        'moduleName'=> Tables::$module_left_info_left_side_bar,
-                        'sortOrder'=> 0,
-                        'componentClass'=> '',
-                        'isShowMobile'=> false
+                    'middle_modules'=> [],
+                    'right_modules'=> [
+                        [
+                            'moduleName'=> Tables::$module_right_thong_bao,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_lich_cong_giao,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_sach_noi_iframe,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_info_fanpage,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_youtube_hanh_cac_thanh,
+                            'sortOrder'=> 0
+                        ]
                     ],
-                    [
-                        'moduleName'=> Tables::$module_left_category_left_side_bar,
-                        'sortOrder'=> 0,
-                        'componentClass'=> '',
-                        'isShowMobile'=> false
-                    ],
-                    [
-                        'moduleName'=> Tables::$module_left_newsletter_register,
-                        'sortOrder'=> 0,
-                        'componentClass'=> 'form test',
-                        'isShowMobile'=> false
-                    ],
-                    [
-                        'moduleName'=> Tables::$module_left_summary_contact,
-                        'sortOrder'=> 0,
-                        'componentClass'=> 'logo test',
-                        'isShowMobile'=> false
-                    ]
+                    'both_column'=> false,
+                    'both_modules'=> [],
+                    'column_number'=> 2
                 ],
-                'middle_modules'=> [],
-                'right_modules'=> [
-                    [
-                        'moduleName'=> Tables::$module_right_thong_bao,
-                        'sortOrder'=> 0
-                    ],
-                    [
-                        'moduleName'=> Tables::$module_right_lich_cong_giao,
-                        'sortOrder'=> 0
-                    ],
-                    [
-                        'moduleName'=> Tables::$module_right_sach_noi_iframe,
-                        'sortOrder'=> 0
-                    ],
-                    [
-                        'moduleName'=> Tables::$module_right_info_fanpage,
-                        'sortOrder'=> 0
-                    ],
-                    [
-                        'moduleName'=> Tables::$module_right_youtube_hanh_cac_thanh,
-                        'sortOrder'=> 0
-                    ]
+                'content_bottom'=> false,
+                'content_bottom_column'=> [
+                    'right_column'=> false,
+                    'middle_column'=> false,
+                    'left_column'=> false,
+                    'colClass'=> '',
+                    'left_modules'=> [],
+                    'middle_modules'=> [],
+                    'right_modules'=> [],
+                    'both_column'=> false,
+                    'both_modules'=> [],
+                    'column_number'=> 2
                 ],
-                'both_column'=> false,
-                'both_modules'=> [],
-                'column_number'=> 2
-            ],
-            'content_bottom'=> false,
-            'content_bottom_column'=> [
-                'right_column'=> false,
-                'middle_column'=> false,
-                'left_column'=> false,
-                'colClass'=> '',
-                'left_modules'=> [],
-                'middle_modules'=> [],
-                'right_modules'=> [],
-                'both_column'=> false,
-                'both_modules'=> [],
-                'column_number'=> 2
-            ],
-            'content_main'=> false,
-            'content_main_column'=> [
-                'right_column'=> false,
-                'middle_column'=> false,
-                'left_column'=> false,
-                'colClass'=> '',
-                'left_modules'=> [],
-                'middle_modules'=> [],
-                'right_modules'=> [],
-                'both_column'=> false,
-                'both_modules'=> [],
-                'column_number'=> 2
-            ],
-            'right_column'=> false,
-            'middle_column'=> true,
-            'left_column'=> true,
-            'column_number'=> 2,
-        ]];
+                'content_main'=> false,
+                'content_main_column'=> [
+                    'right_column'=> false,
+                    'middle_column'=> false,
+                    'left_column'=> false,
+                    'colClass'=> '',
+                    'left_modules'=> [],
+                    'middle_modules'=> [],
+                    'right_modules'=> [],
+                    'both_column'=> false,
+                    'both_modules'=> [],
+                    'column_number'=> 2
+                ]
+            ]
+        ];
 
         $videoLayout = [
             'layout_content' => [
@@ -284,42 +278,45 @@ class InitContent
                 'both_column'=> false,
                 'both_modules'=> [],
                 'column_number'=> 2
-            ],
-            'column_number'=> 2,
+            ]
         ]];
 
-        $detail = [
+        $popularLayout = [
             'layout_content' => [
             'content_top'=> true,
             'content_top_column'=> [
-                'right_column'=> true,
+                'right_column'=> false,
                 'middle_column'=> true,
-                'left_column'=> false,
-                'colClass'=> '8 notication',
-                'left_modules'=> [],
-                'middle_modules'=> [],
-                'right_modules'=> [
+                'left_column'=> true,
+                'colClass'=> '',
+                'left_modules'=> [
                     [
-                        'moduleName'=> Tables::$module_right_thong_bao,
-                        'sortOrder'=> 0
+                        'moduleName'=> Tables::$module_left_info_left_side_bar,
+                        'sortOrder'=> 0,
+                        'componentClass'=> '',
+                        'isShowMobile'=> false
                     ],
                     [
-                        'moduleName'=> Tables::$module_right_lich_cong_giao,
-                        'sortOrder'=> 0
+                        'moduleName'=> Tables::$module_left_category_left_side_bar,
+                        'sortOrder'=> 0,
+                        'componentClass'=> '',
+                        'isShowMobile'=> false
                     ],
                     [
-                        'moduleName'=> Tables::$module_right_sach_noi_iframe,
-                        'sortOrder'=> 0
+                        'moduleName'=> Tables::$module_left_newsletter_register,
+                        'sortOrder'=> 0,
+                        'componentClass'=> 'form test',
+                        'isShowMobile'=> false
                     ],
                     [
-                        'moduleName'=> Tables::$module_right_info_fanpage,
-                        'sortOrder'=> 0
-                    ],
-                    [
-                        'moduleName'=> Tables::$module_right_youtube_hanh_cac_thanh,
-                        'sortOrder'=> 0
+                        'moduleName'=> Tables::$module_left_summary_contact,
+                        'sortOrder'=> 0,
+                        'componentClass'=> 'logo test',
+                        'isShowMobile'=> false
                     ]
                 ],
+                'middle_modules'=> [],
+                'right_modules'=> [],
                 'both_column'=> false,
                 'both_modules'=> [],
                 'column_number'=> 2
@@ -339,19 +336,83 @@ class InitContent
             ],
             'content_main'=> false,
             'content_main_column'=> [
-                'right_column'=> true,
-                'middle_column'=> true,
+                'right_column'=> false,
+                'middle_column'=> false,
                 'left_column'=> false,
-                'colClass'=> '8',
+                'colClass'=> '',
                 'left_modules'=> [],
                 'middle_modules'=> [],
                 'right_modules'=> [],
                 'both_column'=> false,
                 'both_modules'=> [],
                 'column_number'=> 2
-            ],
-            'column_number'=> 2,
+            ]
         ]];
+
+        $detail = [
+            'layout_content' => [
+                'content_top'=> true,
+                'content_top_column'=> [
+                    'right_column'=> true,
+                    'middle_column'=> true,
+                    'left_column'=> false,
+                    'colClass'=> '8 notication',
+                    'left_modules'=> [],
+                    'middle_modules'=> [],
+                    'right_modules'=> [
+                        [
+                            'moduleName'=> Tables::$module_right_thong_bao,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_lich_cong_giao,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_sach_noi_iframe,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_info_fanpage,
+                            'sortOrder'=> 0
+                        ],
+                        [
+                            'moduleName'=> Tables::$module_right_youtube_hanh_cac_thanh,
+                            'sortOrder'=> 0
+                        ]
+                    ],
+                    'both_column'=> false,
+                    'both_modules'=> [],
+                    'column_number'=> 2
+                ],
+                'content_bottom'=> false,
+                'content_bottom_column'=> [
+                    'right_column'=> false,
+                    'middle_column'=> false,
+                    'left_column'=> false,
+                    'colClass'=> '',
+                    'left_modules'=> [],
+                    'middle_modules'=> [],
+                    'right_modules'=> [],
+                    'both_column'=> false,
+                    'both_modules'=> [],
+                    'column_number'=> 2
+                ],
+                'content_main'=> false,
+                'content_main_column'=> [
+                    'right_column'=> true,
+                    'middle_column'=> true,
+                    'left_column'=> false,
+                    'colClass'=> '8',
+                    'left_modules'=> [],
+                    'middle_modules'=> [],
+                    'right_modules'=> [],
+                    'both_column'=> false,
+                    'both_modules'=> [],
+                    'column_number'=> 2
+                ]
+            ]
+        ];
 
         $layout = $homeLayout;
 
@@ -366,9 +427,9 @@ class InitContent
         ];
 
         $segments = request()->segments();
-        if (isset($segments[0]) && $segments[0] == 'danh-muc-tin') {
+        if (isset($segments[0]) && Request::is('danh-muc-tin/*')) {
             $layout = $categoryLayout;
-            
+            $this->settings['meta_title'] = 'Danh mục Giáo Phận Phú Cường';
             $model = new \App\Models\CategoryDescription();
 
             $endSegment = end($segments);
@@ -385,28 +446,37 @@ class InitContent
             }
         }
         
-        if (isset($segments[0]) && $segments[0] == 'tin-tuc') {
-            $model = new \App\Models\Information();
-            
-            $endSegment = end($segments);
-            $arrSegments = explode('-', $endSegment);
-            $idSegment = (int)end($arrSegments);
+        if (isset($segments[0]) && Request::is('tin-tuc*')) {
+            if (isset($segments[1]) && Request::is('tin-tuc/xem-nhieu*')) {
+                $this->settings['meta_title'] = 'Tin tức xem nhiều';
+                $layout = $popularLayout;
+            }
 
-            if ($idSegment) {
-                $result = $model->select()->where('information_id', $idSegment)->first();
-                if ($result) {
-                    $this->settings['meta_title'] = $result->infoDes->meta_title;
-                    $this->settings['meta_description'] = $result->infoDes->meta_description;
-                    $this->settings['meta_keyword'] = $result->infoDes->meta_keyword;
-                    $this->settings['og_image'] = url($result->image['path']);
+            if (isset($segments[1]) && Request::is('tin-tuc/chi-tiet*')) {
+                $layout = $detail;
+                $model = new \App\Models\Information();
+            
+                $endSegment = end($segments);
+                $arrSegments = explode('-', $endSegment);
+                $idSegment = (int)end($arrSegments);
+
+                if ($idSegment) {
+                    $result = $model->select()->where('information_id', $idSegment)->first();
+                    if ($result) {
+                        $this->settings['meta_title'] = $result->infoDes->meta_title;
+                        $this->settings['meta_description'] = $result->infoDes->meta_description;
+                        $this->settings['meta_keyword'] = $result->infoDes->meta_keyword;
+                        $this->settings['og_image'] = url($result->image['path']);
+                    }
                 }
             }
         }
 
-        if (isset($segments[0]) && ($segments[0] == 'video')) {
+        if (isset($segments[0]) && Request::is('video*')) {
             $layout = $videoLayout;
+            $this->settings['meta_title'] = 'Video';
 
-            if ((count($segments) >= 2)) {
+            if (isset($segments[1]) && Request::is('video/chi-tiet*')) {
                 $layout = $detail;
                 $model = new \App\Models\Information();
             
@@ -488,47 +558,6 @@ class InitContent
 
     public function init()
     {
-        /*$optionClass = 'hold-transition login-page';
-        $cssStype    = $this->mapCss();
-        $scripts     = '';
-
-        if (Request::is('admin/test')) {
-            $cssStype    = $this->mapCssTest();
-            $scripts     = $this->mapScriptTest();
-            $optionClass = '';
-        }
-
-        if (Request::is('admin/dashboard')) {
-            $cssStype    = $this->mapCssTest();
-            $scripts     = $this->mapScriptTest();
-            $optionClass = '';
-        }
-
-        if (Request::is('admin/user*')) {
-            $cssStype    = $this->mapCssUser();
-            $scripts     = $this->mapScriptUser();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/news*') && !Request::is('*-groups*')) {
-            $cssStype    = $this->mapCssUser();
-            $scripts     = $this->mapScriptNews();
-            $scripts     .= $this->mapScriptFileManager();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/news-groups*')) {
-            $cssStype    = $this->mapCssNewsGroups();
-            $scripts     = $this->mapScriptNewsGroups();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/filemanagers*')) {
-            $cssStype    = $this->mapCss();
-            $scripts     = $this->mapScriptFileManager();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-
-            return [
-                $this->mapCss(),
-                $this->mapScriptFileManager(),
-                ''
-            ];
-        }*/
-
         if (Request::is('admin/filemanagers*')) {
             $cssStype    = $this->mapCss();
             $scripts     = $this->mapScriptFileManager();

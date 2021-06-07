@@ -21,6 +21,7 @@ const defaultState = () => {
         settingCategory
       ]
     },
+    linkActive: '',
     loading: false,
     errors: []
   }
@@ -67,6 +68,9 @@ export default {
   },
 
   actions: {
+    setActiveLink({state}, link) {
+      state.linkActive = link;
+    },
     [ACTION_GET_SETTING]({
       dispatch,
       state,

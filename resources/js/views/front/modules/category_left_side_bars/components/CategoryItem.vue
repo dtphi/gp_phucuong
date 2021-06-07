@@ -1,6 +1,6 @@
 <template>
     <li
-        :class="activeClass">
+        :class="_getActiveClass">
         <a
             @click="_getHref()">≫ {{_getTitle()}}</a>
     </li>
@@ -8,11 +8,13 @@
 
 <script>
     import {
-        mapGetters
+        mapActions,
+        mapGetters,
+        mapState
     } from 'vuex';
     import {
-        fn_get_href_base_url
-    } from '@app/api/utils/fn-helper';
+        MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR
+    } from '@app/stores/front/types/module-types';
 
     export default {
         name: 'NavigationMainItem',
@@ -25,10 +27,23 @@
         computed: {
             ...mapGetters([
                 'moduleNameActive',
-                'moduleActionListActive'
+                'moduleActionListActive',
             ]),
+            ...mapState(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR,[
+                'linkActive'
+            ]),
+            _getActiveClass() {
+                if (this.group.link == this.linkActive) {
+                    return 'active';
+                }
+
+                return '';
+            }
         },
         methods: {
+            ...mapActions(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [
+                'setActiveLink'
+            ]),
             _getTitle() {
                 if (this.title) return this.title;
 
@@ -39,8 +54,11 @@
                 const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
                 _self.$store.dispatch(actionName, {
                     ...this.$route.params,
-                    slug: _self.group.link
+                    slug: _self.group.link,
+                    moduleName: 'category_left_side_bar',
+                    renderType: 1
                 });
+                this.setActiveLink(_self.group.link);
             }
         }
     }

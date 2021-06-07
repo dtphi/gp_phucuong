@@ -1,8 +1,17 @@
 <template>
         <ul class="menu">
-            <li class="active"><a href="/danh-muc-tin"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Tất cả</a></li>
-            <li><a href="/tin-tuc/xem-nhieu"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Xem nhiều</a></li>
-            <li><a href="/"><img src="../../../views/front/assets/img/icon-book.png" alt="Icon">Đã xem</a></li>
+            <li class="active">
+                <a href="/danh-muc-tin">📃 Tất cả</a>
+            </li>
+            <li>
+                <a href="/tin-tuc/xem-nhieu">📃 Xem nhiều</a>
+            </li>
+            <li>
+                <a href="http://www.sachnoiconggiao.com/" target="_blank">📃 Audio/Podcast</a>
+            </li>
+            <li>
+                <a href="/video">📃 Video</a>
+            </li>
             <hr class="border my-3">
         </ul>
 </template>
