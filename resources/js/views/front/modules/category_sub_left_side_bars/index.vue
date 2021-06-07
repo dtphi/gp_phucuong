@@ -1,8 +1,8 @@
 <template>
-    <div class="fz-0" v-if="_isExistMenu">
+    <div class="category-sub-left" v-if="_isExistMenu">
         <h4 class="title"><span>{{menuLists.name}}</span></h4>
-        <nav id="nav">
-            <ul class="menu-pc nav-menu">
+        <nav id="nav-category">
+            <ul class="nav-menu">
                 <nav-tree
                     v-for="(itemMenu,idx) in menuLists.children"
                     :item="itemMenu"

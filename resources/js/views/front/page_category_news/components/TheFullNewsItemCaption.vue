@@ -3,7 +3,7 @@
         <h4 class="title mt-2 ellipsis-two-lines">
             <a :href="_getHref()">{{info.name}}</a>
         </h4>
-        <span class="d-block">{{info.viewed}} lượt xem | {{info.date_available}}</span>
+        <span class="d-block view-date">{{info.viewed}} lượt xem | {{info.date_available}}</span>
         <span class="d-block mb-1">
             <div class="ellipsis-three-lines" v-html="info.description"></div>
         </span>
