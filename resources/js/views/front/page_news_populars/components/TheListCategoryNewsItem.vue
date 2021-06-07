@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="list-item-category">
         <div v-if="info.isImgRender">
             <img style="width:100%" v-lazy="info.imgUrl"/>
         </div>

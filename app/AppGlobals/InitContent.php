@@ -18,6 +18,8 @@ class InitContent
     {
         $this->pathInfo     = trim(request()->getPathInfo(), '/');
 
+        $networkTarget = ['facebook', 'twitter', 'linkedin', 'reddit'];
+
         $homeLayout = [
             'layout_content'=> [
                 'content_top'=> true,
@@ -40,7 +42,10 @@ class InitContent
                     'right_modules'=> [],
                     'both_column'=> false,
                     'both_modules'=> [],
-                    'column_number'=> 2
+                    'column_number'=> 2,
+                    'left_column' => 0,
+                    'middle_column' => 8,
+                    'right_column' => 4
                 ],
                 'content_bottom'=> true,
                 'content_bottom_column'=> [
@@ -80,7 +85,9 @@ class InitContent
                             'sortOrder'=> 0
                         ]
                     ],
-                    'colClass'=> '8'
+                    'left_column' => 0,
+                    'middle_column' => 8,
+                    'right_column' => 4
                 ],
                 'content_main'=> true,
                 'content_main_column'=> [
@@ -112,9 +119,10 @@ class InitContent
                         ]
                     ],
                     'column_number'=> 2,
-                    'colClass'=> '8'
-                ],
-                'column_number'=> 2,
+                    'left_column' => 0,
+                    'middle_column' => 8,
+                    'right_column' => 4
+                ]
             ]
         ];
 
@@ -171,10 +179,10 @@ class InitContent
                             'moduleName'=> Tables::$module_right_sach_noi_iframe,
                             'sortOrder'=> 0
                         ],
-                        [
+                        /*[
                             'moduleName'=> Tables::$module_right_info_fanpage,
                             'sortOrder'=> 0
-                        ],
+                        ],*/
                         [
                             'moduleName'=> Tables::$module_right_youtube_hanh_cac_thanh,
                             'sortOrder'=> 0
@@ -182,20 +190,27 @@ class InitContent
                     ],
                     'both_column'=> false,
                     'both_modules'=> [],
-                    'column_number'=> 2
+                    'column_number'=> 2,
+                    'left_column' => 2,
+                    'middle_column' => 7,
+                    'right_column' => 3,
                 ],
-                'content_bottom'=> false,
+                'content_bottom'=> true,
                 'content_bottom_column'=> [
-                    'right_column'=> false,
-                    'middle_column'=> false,
+                    'right_column'=> true,
+                    'middle_column'=> true,
                     'left_column'=> false,
                     'colClass'=> '',
                     'left_modules'=> [],
                     'middle_modules'=> [],
-                    'right_modules'=> [],
+                    'right_modules'=> [
+                    ],
                     'both_column'=> false,
                     'both_modules'=> [],
-                    'column_number'=> 2
+                    'column_number'=> 2,
+                    'left_column' => 0,
+                    'middle_column' => 8,
+                    'right_column' => 4
                 ],
                 'content_main'=> false,
                 'content_main_column'=> [
@@ -208,9 +223,13 @@ class InitContent
                     'right_modules'=> [],
                     'both_column'=> false,
                     'both_modules'=> [],
-                    'column_number'=> 2
-                ]
-            ]
+                    'column_number'=> 2,
+                    'left_column' => 2,
+                    'middle_column' => 6,
+                    'right_column' => 4
+                ],
+            ],
+            'network' => $networkTarget
         ];
 
         $videoLayout = [
@@ -251,7 +270,10 @@ class InitContent
                 'right_modules'=> [],
                 'both_column'=> false,
                 'both_modules'=> [],
-                'column_number'=> 2
+                'column_number'=> 2,
+                'left_column' => 3,
+                'middle_column' => 9,
+                'right_column' => 0
             ],
             'content_bottom'=> false,
             'content_bottom_column'=> [
@@ -264,7 +286,10 @@ class InitContent
                 'right_modules'=> [],
                 'both_column'=> false,
                 'both_modules'=> [],
-                'column_number'=> 2
+                'column_number'=> 2,
+                'left_column' => 3,
+                'middle_column' => 9,
+                'right_column' => 0
             ],
             'content_main'=> false,
             'content_main_column'=> [
@@ -277,7 +302,10 @@ class InitContent
                 'right_modules'=> [],
                 'both_column'=> false,
                 'both_modules'=> [],
-                'column_number'=> 2
+                'column_number'=> 2,
+                'left_column' => 3,
+                'middle_column' => 9,
+                'right_column' => 0
             ]
         ]];
 
@@ -319,7 +347,10 @@ class InitContent
                 'right_modules'=> [],
                 'both_column'=> false,
                 'both_modules'=> [],
-                'column_number'=> 2
+                'column_number'=> 2,
+                'left_column' => 3,
+                'middle_column' => 9,
+                'right_column' => 0
             ],
             'content_bottom'=> false,
             'content_bottom_column'=> [
@@ -332,7 +363,10 @@ class InitContent
                 'right_modules'=> [],
                 'both_column'=> false,
                 'both_modules'=> [],
-                'column_number'=> 2
+                'column_number'=> 2,
+                'left_column' => 3,
+                'middle_column' => 9,
+                'right_column' => 0
             ],
             'content_main'=> false,
             'content_main_column'=> [
@@ -345,7 +379,10 @@ class InitContent
                 'right_modules'=> [],
                 'both_column'=> false,
                 'both_modules'=> [],
-                'column_number'=> 2
+                'column_number'=> 2,
+                'left_column' => 3,
+                'middle_column' => 9,
+                'right_column' => 0
             ]
         ]];
 
@@ -383,7 +420,10 @@ class InitContent
                     ],
                     'both_column'=> false,
                     'both_modules'=> [],
-                    'column_number'=> 2
+                    'column_number'=> 2,
+                    'left_column' => 0,
+                    'middle_column' => 8,
+                    'right_column' => 4
                 ],
                 'content_bottom'=> false,
                 'content_bottom_column'=> [
@@ -396,7 +436,10 @@ class InitContent
                     'right_modules'=> [],
                     'both_column'=> false,
                     'both_modules'=> [],
-                    'column_number'=> 2
+                    'column_number'=> 2,
+                    'left_column' => 0,
+                    'middle_column' => 8,
+                    'right_column' => 4
                 ],
                 'content_main'=> false,
                 'content_main_column'=> [
@@ -409,9 +452,13 @@ class InitContent
                     'right_modules'=> [],
                     'both_column'=> false,
                     'both_modules'=> [],
-                    'column_number'=> 2
+                    'column_number'=> 2,
+                    'left_column' => 0,
+                    'middle_column' => 8,
+                    'right_column' => 4
                 ]
-            ]
+            ],
+            'network' => $networkTarget
         ];
 
         $layout = $homeLayout;
@@ -427,7 +474,7 @@ class InitContent
         ];
 
         $segments = request()->segments();
-        if (isset($segments[0]) && Request::is('danh-muc-tin/*')) {
+        if (isset($segments[0]) && Request::is('danh-muc-tin*')) {
             $layout = $categoryLayout;
             $this->settings['meta_title'] = 'Danh mục Giáo Phận Phú Cường';
             $model = new \App\Models\CategoryDescription();

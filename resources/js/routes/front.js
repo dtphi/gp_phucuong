@@ -174,6 +174,7 @@ const ModuleContentCategory = {
     column_number: 2,
 }
 
+const network = ['facebook', 'twitter', 'linkedin', 'whatsapp'];
 let routeEnv = {};
 
 routeEnv = {
@@ -225,7 +226,8 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                layout_content: {}
+                layout_content: {},
+                network: network
             }
         }]
     }, {
@@ -242,7 +244,8 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                layout_content: {}
+                layout_content: {},
+                network: network
             }
         }]
     }, {
@@ -259,7 +262,8 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                layout_content: {}
+                layout_content: {},
+                network: network
             }
         }]
     }, {
@@ -276,7 +280,8 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                layout_content: {}
+                layout_content: {},
+                network: network
             }
         }]
     }, {
@@ -293,7 +298,8 @@ routeEnv = {
                 header: 'News Page',
                 layout: MainLayout,
                 role: 'guest',
-                layout_content: {}
+                layout_content: {},
+                network: network
             }
         }]
     }, {

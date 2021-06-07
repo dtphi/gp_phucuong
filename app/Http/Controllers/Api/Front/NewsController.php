@@ -323,6 +323,9 @@ class NewsController extends Controller
             }
 
             if($params['renderType'] == 1) {
+                $widthThumbInfoList = 605;
+                $heightThumbInfoList = 411;
+
                 $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
                 $sortDes = html_entity_decode($info->sort_description);
                 $isImgRender = ($key == 0);

@@ -6,7 +6,7 @@
                 :url="_getUrl" 
                 :text="_getText"
                 :shareConfig="share"
-                :targets="['twitter', 'facebook', 'linkedin', 'whatsapp', 'reddit']"></share-it>
+                :targets="_getTargets()"></share-it>
         </div>
     </div>
 </template>
@@ -49,7 +49,8 @@
                         size: "xs",
                         dense: true
                     },
-                }
+                },
+                targets: ['twitter', 'facebook', 'linkedin', 'whatsapp', 'reddit']
             }
         },
         computed: {
@@ -62,6 +63,15 @@
         },
         mounted() {
             this.text = document.querySelector('meta[property="og:title"]').content;
+        },
+        methods: {
+            _getTargets() {
+                if (this.$route.meta.hasOwnProperty('network')) {
+                    return this.$route.meta.network;
+                }
+
+                return this.targets;
+            }
         }
     }
 </script>

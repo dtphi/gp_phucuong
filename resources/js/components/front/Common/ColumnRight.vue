@@ -1,6 +1,6 @@
 <template>
     <b-col
-        cols="4"
+        :cols="_getColumnNumber()"
         class="col-mobile">
         <slot></slot>
 
@@ -44,6 +44,13 @@
                 }
 
                 return list;
+            }
+        },
+        methods: {
+            _getColumnNumber() {
+                let contentType = 'content_' + this.contentType + '_column';
+                
+                return this.$route.meta.layout_content[contentType].right_column;
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <b-col
-        :cols="_colMiddleClass"
+        :cols="_getColumnNumber()"
         class="col-mobile">
         <slot></slot>
         <keep-alive v-for="(item,idx) in _moduleList"  :key="idx">
@@ -55,6 +55,13 @@
 
                 return '9';
             },
+        },
+        methods: {
+            _getColumnNumber() {
+                let contentType = 'content_' + this.contentType + '_column';
+                
+                return this.$route.meta.layout_content[contentType].middle_column;
+            }
         }
     }
 </script>

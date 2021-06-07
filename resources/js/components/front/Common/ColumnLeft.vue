@@ -1,5 +1,5 @@
 <template>
-    <b-col class="col-mobile" cols="3">
+    <b-col class="col-mobile" :cols="_getColumnNumber()">
         <aside>
             <slot></slot>
             <keep-alive v-for="(item,idx) in _moduleList"  :key="idx">
@@ -61,6 +61,13 @@
                 }
 
                 return list;
+            }
+        },
+        methods: {
+            _getColumnNumber() {
+                let contentType = 'content_' + this.contentType + '_column';
+                
+                return this.$route.meta.layout_content[contentType].left_column;
             }
         }
     }

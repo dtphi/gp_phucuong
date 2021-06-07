@@ -20,17 +20,15 @@
                     <paginate></paginate>
                     <template v-slot:column_right>
                         <social-network></social-network>
-                        <div class="box-social">
+                        <!--<div class="box-social">
                             <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
-                        </div>
+                        </div>-->
                         <div class="box-care mt-3">
-                            <newsletter-register></newsletter-register>
-
                             <b-row class="mt-3">
-                                <b-col cols="5" class="m-auto">
+                                <b-col cols="12" class="m-auto">
                                     <p class="mb-0 text-download">Tải app sách nói công giáo</p>
                                 </b-col>
-                                <b-col cols="7">
+                                <b-col cols="12">
                                     <b-carousel
                                         id="carousel-2"
                                         :interval="4000"

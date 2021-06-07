@@ -10,7 +10,7 @@
                             :active.sync="loading"
                             :is-full-page="fullPage"></loading-over-lay>
                     </template>
-                    <paginate></paginate>
+                    
                     <div class="list-videos">
                         <the-category-news-item
                             class="figure"
@@ -18,6 +18,7 @@
                             :info="item"
                             :key="idx"></the-category-news-item>
                     </div>
+                    <paginate></paginate>
                 </content-top>
                 <main-content v-if="_isContentMain"></main-content>
                 <content-bottom v-if="_isContentBottom"></content-bottom>
