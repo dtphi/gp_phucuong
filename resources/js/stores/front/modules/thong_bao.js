@@ -88,25 +88,31 @@ import {
         state,
         commit
       }, options) {
-        dispatch(ACTION_SET_LOADING, true);
-        const params = {
-          code: state.moduleData.code
-        }
-        apiGetSettingByCode(
-          (res) => {
-            if (Object.keys(res.data.moduleData).length) {
-              commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.moduleData);
-
-              dispatch(GET_INFORMATION_LIST_TO_CATEGORY, res.data.moduleData.module_thong_bao_categories[0]);
-            } else {
+        if (options) {
+          commit(MODULE_UPDATE_SET_KEYS_DATA, options);
+  
+          dispatch(GET_INFORMATION_LIST_TO_CATEGORY, options[0]);
+        } else {
+          dispatch(ACTION_SET_LOADING, true);
+          const params = {
+            code: state.moduleData.code
+          }
+          apiGetSettingByCode(
+            (res) => {
+              if (Object.keys(res.data.moduleData).length) {
+                commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.moduleData);
+  
+                dispatch(GET_INFORMATION_LIST_TO_CATEGORY, res.data.moduleData.module_thong_bao_categories[0]);
+              } else {
+                dispatch(ACTION_SET_LOADING, false);
+              }
+            },
+            (errors) => {
               dispatch(ACTION_SET_LOADING, false);
-            }
-          },
-          (errors) => {
-            dispatch(ACTION_SET_LOADING, false);
-          },
-          params
-        );
+            },
+            params
+          );
+        }
       },
 
       [GET_INFORMATION_LIST_TO_CATEGORY]({

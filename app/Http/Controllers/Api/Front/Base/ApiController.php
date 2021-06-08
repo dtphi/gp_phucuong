@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Front\Base;
 
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Services\Service;
+use App\Http\Controllers\Api\Front\Services\SettingService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
@@ -29,6 +30,11 @@ class ApiController extends Controller
      */
     protected $sv = null;
 
+    /**
+     * @var null
+     */
+    private $settingSv = null;
+
     // Success
     const RESPONSE_OK = 2000;
     const RESPONSE_CREATED = 2001;
@@ -45,6 +51,7 @@ class ApiController extends Controller
     {
         parent::__construct($middleware);
         $this->sv = new Service();
+        $this->settingSv = new SettingService();
     }
 
     public function getThumbnail($imgOrigin, $thumbSize = 0, $thumbHeight= 0, $force = false) {
@@ -214,170 +221,109 @@ class ApiController extends Controller
             }
 
             $menuLayout_1 = [];
+
+            $appImgPath      = '/upload/app';
+            $data['appList'] = [
+                [
+                    'sort'         => 0,
+                    'title'        => 'App website gppc',
+                    'img'          => $appImgPath . '/app_website_gppc.png',
+                    'hrefAppStore' => '/',
+                    'hrefChPlay'   => '/'
+                ],
+                [
+                    'sort'         => 1,
+                    'title'        => 'App sách nói công giáo',
+                    'img'          => $appImgPath . '/app_sach_noi_cong_giao.jpg',
+                    'hrefAppStore' => '/',
+                    'hrefChPlay'   => '/'
+                ],
+                [
+                    'sort'         => 2,
+                    'title'        => 'App tìm nhà thờ gần nhất',
+                    'img'          => $appImgPath . '/app_tim_nha_tho.jpg',
+                    'hrefAppStore' => 'https://apps.apple.com/us/app/tìm-nhà-thờ-gần-nhất/id1485257114?ls=1',
+                    'hrefChPlay'   => 'https://play.google.com/store/apps/details?id=com.phucuong.churchfinder&hl=en_AU&gl=US'
+                ],
+            ];
+
+            $data['logo']    = '/front/img/logo.png';
+            $data['banner']  = url('Image/NewPicture/home_banners/banner_image.png');
+            $data['menus']   = $menus;
+            $data['menus_1'] = $menuLayout_1;
+
+            $data['modules'] = $this->_getModules($request);
+
+            $data['pages']   = [
+                'home'  => [
+                    'title' => 'Trang chủ',
+                    'id'    => 1,
+                ],
+                'video' => [
+                    'title' => 'Trang video',
+                    'id'    => 2
+                ],
+                'news'  => [
+                    'title' => 'Trang tin tức',
+                    'id'    => 3
+                ]
+            ];
+
+            $data['infoLasteds'] = $this->getLastedInfoList($request); 
+            $data['infoPopulars'] = $this->getPopularList($request);
+            
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        $appImgPath      = '/upload/app';
-        $data['appList'] = [
-            [
-                'sort'         => 0,
-                'title'        => 'App website gppc',
-                'img'          => $appImgPath . '/app_website_gppc.png',
-                'hrefAppStore' => '/',
-                'hrefChPlay'   => '/'
-            ],
-            [
-                'sort'         => 1,
-                'title'        => 'App sách nói công giáo',
-                'img'          => $appImgPath . '/app_sach_noi_cong_giao.jpg',
-                'hrefAppStore' => '/',
-                'hrefChPlay'   => '/'
-            ],
-            [
-                'sort'         => 2,
-                'title'        => 'App tìm nhà thờ gần nhất',
-                'img'          => $appImgPath . '/app_tim_nha_tho.jpg',
-                'hrefAppStore' => 'https://apps.apple.com/us/app/tìm-nhà-thờ-gần-nhất/id1485257114?ls=1',
-                'hrefChPlay'   => 'https://play.google.com/store/apps/details?id=com.phucuong.churchfinder&hl=en_AU&gl=US'
-            ],
-        ];
-
-        $data['logo']    = '/front/img/logo.png';
-        $data['banner']  = url('Image/NewPicture/home_banners/banner_image.png');
-        $data['menus']   = $menus;
-        $data['menus_1'] = $menuLayout_1;
-
-        $homeLayout = [
-            'auth'=> false,
-            'header'=> 'Trang chủ',
-            'layout'=> 'MainLayout',
-            'role'=> 'guest',
-            'title'=> 'Trang Tin Tức | ',
-            'layout_content'=> [
-                'content_top'=> true,
-                'content_top_column'=> [
-                    'right_column'=> true,
-                    'middle_column'=> true,
-                    'left_column'=> false,
-                    'colClass'=> '8 notication',
-                    'left_modules'=> [],
-                    'middle_modules'=> [
-                        [
-                            'moduleName'=> Tables::$middle_module_info_carousel,
-                            'sortOrder'=> 0
-                        ],
-                        [
-                            'moduleName'=> Tables::$middle_module_special_banner,
-                            'sortOrder'=> 0
-                        ],
-                    ],
-                    'right_modules'=> [],
-                    'both_column'=> false,
-                    'both_modules'=> [],
-                    'column_number'=> 2
-                ],
-                'content_bottom'=> true,
-                'content_bottom_column'=> [
-                    'right_column'=> true,
-                    'middle_column'=> true,
-                    'left_column'=> false,
-                    'left_modules'=> [],
-                    'middle_modules'=> [
-                        [
-                            'moduleName'=> Tables::$module_middle_tin_giao_hoi,
-                            'sortOrder'=> 0
-                        ],
-                        [
-                            'moduleName'=> Tables::$module_middle_tin_giao_phan,
-                            'sortOrder'=> 0
-                        ],
-                        [
-                            'moduleName'=> Tables::$module_middle_van_kien,
-                            'sortOrder'=> 0
-                        ]
-                    ],
-                    'right_modules'=> [
-                        [
-                            'moduleName'=> Tables::$module_right_lich_cong_giao,
-                            'sortOrder'=> 0
-                        ],
-                        [
-                            'moduleName'=> Tables::$module_right_sach_noi_iframe,
-                            'sortOrder'=> 0
-                        ],
-                        [
-                            'moduleName'=> Tables::$module_right_info_fanpage,
-                            'sortOrder'=> 0
-                        ],
-                        [
-                            'moduleName'=> Tables::$module_right_youtube_hanh_cac_thanh,
-                            'sortOrder'=> 0
-                        ]
-                    ],
-                    'both_column'=> false,
-                    'both_modules'=> [],
-                    'column_number'=> 2,
-                    'colClass'=> '8'
-                ],
-                'content_main'=> true,
-                'content_main_column'=> [
-                    'right_column'=> true,
-                    'middle_column'=> true,
-                    'left_column'=> false,
-                    'left_modules'=> [],
-                    'middle_modules'=> [
-                        [
-                            'moduleName'=> Tables::$module_middle_loi_chua,
-                            'sortOrder'=> 0
-                        ]
-                    ],
-                    'right_modules'=> [
-                        [
-                            'moduleName'=> Tables::$module_right_category_icon_side_bar,
-                            'sortOrder'=> 0
-                        ],
-                        [
-                            'moduleName'=> Tables::$module_right_thong_bao,
-                            'sortOrder'=> 0
-                        ]
-                    ],
-                    'both_column'=> true,
-                    'both_modules'=> [
-                        [
-                            'moduleName'=> Tables::$module_both_noi_bat,
-                            'sortOrder'=> 0
-                        ]
-                    ],
-                    'column_number'=> 2,
-                    'colClass'=> '8'
-                ],
-                'right_column'=> false,
-                'middle_column'=> true,
-                'left_column'=> false,
-                'column_number'=> 2,
-            ]
-        ];
-        $data['pages']   = [
-            'home'  => [
-                'title' => 'Trang chủ',
-                'id'    => 1,
-                'layout' => $homeLayout
-            ],
-            'video' => [
-                'title' => 'Trang video',
-                'id'    => 2
-            ],
-            'news'  => [
-                'title' => 'Trang tin tức',
-                'id'    => 3
-            ]
-        ];
-
-        $data['infoLasteds'] = $this->getLastedInfoList($request); 
-        $data['infoPopulars'] = $this->getPopularList($request);
-
         return response()->json($data);
+    }
+
+    protected function _getModules(&$request) {
+        $layout = json_decode($request->get('layout'));
+        $page = isset($layout->page)?$layout->page:'home';
+        $modules = [
+            'module_noi_bat', 
+            'module_thong_bao', 
+            'module_category_left_side_bar', 
+            'module_special_info',
+            'module_tin_giao_hoi_viet_nam',
+            'module_tin_giao_hoi',
+            'module_tin_giao_phan',
+            'module_loi_chua',
+            'module_van_kien',
+            'module_category_icon_side_bar'
+        ];
+
+        $results    = [];
+
+        foreach($modules as $module) {
+            $moduleData = $this->settingSv->apiGetList(['code' => $module]);
+            $results[$module] = [];
+
+            foreach ($moduleData as $setting) {
+                $value = ($setting->serialized) ? unserialize($setting->value) : $setting->value;
+
+                if (!empty($value)) {
+                    if (is_array($value[0])) {
+                        $results[$module][$setting->key_data] = $value;
+                    } else {
+                        $categories = $this->settingSv->apiGetCategoryByIds($value);
+                        foreach ($categories as $cate) {
+                            $results[$module][$setting->key_data][] = [
+                                'name' => $cate->name,
+                                'href' => 'path=' . $cate->category_id,
+                                'link' => $cate->name_slug
+                            ];
+                        }
+                    }
+                } else {
+                    $results[$module][$setting->key_data] = [];
+                }
+            }
+        }
+
+        return $results;
     }
 
     public function getLastedInfoList(Request $request) 

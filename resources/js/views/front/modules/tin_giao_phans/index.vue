@@ -53,6 +53,7 @@
 
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
@@ -76,13 +77,13 @@
             }
         },
         computed: {
+            ...mapState({
+                settingCategorys: state => state.cfApp.setting.modules.module_tin_giao_phan
+            }),
             ...mapGetters(MODULE_MODULE_TIN_GIAO_PHAN, [
                 'settingCategory',
                 'pageLists'
             ]),
-            _isExist() {
-                return this.settingCategory.length;
-            },
             _getInfoListModule() {
                 let lists = [];
                 _.forEach(this.pageLists, function(item, index) {
@@ -103,8 +104,12 @@
                 return null;
             }
         },
-        created() {
-            this.[ACTION_GET_SETTING]();
+        mounted() {
+            let moduleData = null;
+            if (this.settingCategorys.hasOwnProperty('module_tin_giao_phan_categories')) {
+                moduleData = this.settingCategorys.module_tin_giao_phan_categories;
+            }
+            this.[ACTION_GET_SETTING](moduleData);
         },
         methods: {
             ...mapActions(MODULE_MODULE_TIN_GIAO_PHAN, [
@@ -118,7 +123,7 @@
                 }
             },
             _getHrefCate() {
-                return fn_get_href_base_url('danh-muc-tin/' + this.settingCategory[0].link)
+                return fn_get_href_base_url('danh-muc-tin/' + this.settingCategorys.module_tin_giao_phan_categories[0].link)
             }
         },
         setting: {

@@ -45,6 +45,7 @@
 
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
@@ -68,13 +69,13 @@
             }
         },
         computed: {
+            ...mapState({
+                settingCategorys: state => state.cfApp.setting.modules.module_tin_giao_hoi_viet_nam
+            }),
             ...mapGetters(MODULE_MODULE_TIN_GIAO_HOI_VIET_NAM, [
                 'settingCategory',
                 'pageLists'
             ]),
-            _isExist() {
-                return this.settingCategory.length;
-            },
             _getInfoListModule() {
                 let lists = [];
                 _.forEach(this.pageLists, function(item, index) {
@@ -89,8 +90,12 @@
                 return this.pageLists[0];
             }
         },
-        created() {
-            this.[ACTION_GET_SETTING]();
+        mounted() {
+            let moduleData = null;
+            if (this.settingCategorys.hasOwnProperty('module_tin_giao_hoi_viet_nam_categories')) {
+                moduleData = this.settingCategorys.module_tin_giao_hoi_viet_nam_categories;
+            }
+            this.[ACTION_GET_SETTING](moduleData);
         },
         methods: {
             ...mapActions(MODULE_MODULE_TIN_GIAO_HOI_VIET_NAM, [

@@ -4,7 +4,7 @@
         id="category-left-side-bar-module">
         <ul class="menu">
             <category-item
-                v-for="(item, idx) in settingCategory"
+                v-for="(item, idx) in _settingCategory"
                 :key="idx"
                 :group="item"></category-item>
         </ul>
@@ -15,7 +15,7 @@
 
 <script>
     import {
-        mapGetters,
+        mapState,
         mapActions
     } from 'vuex';
     import {
@@ -37,15 +37,20 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [
-                'settingCategory',
-            ]),
+            ...mapState({
+                settingCategorys: state => state.cfApp.setting.modules.module_category_left_side_bar
+            }),
+            
             _isExist() {
-                return this.settingCategory.length;
+                 if (this.settingCategorys.hasOwnProperty('module_category_left_side_bar_categories')) {
+                    return this.settingCategorys.module_category_left_side_bar_categories.length;
+                }
+                
+                return 0;
+            },
+            _settingCategory() {
+                return this.settingCategorys.module_category_left_side_bar_categories;
             }
-        },
-        created() {
-            this.[ACTION_GET_SETTING]();
         },
         methods: {
             ...mapActions(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [

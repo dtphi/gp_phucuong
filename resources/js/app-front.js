@@ -9,6 +9,8 @@ Vue.use(Router);
 window.vue = Vue;
 require('./views/front/App');
 
+const layout = JSON.parse(window.page);
+
 const router = new Router({
   history: true,
   mode: 'history',
@@ -19,13 +21,13 @@ const router = new Router({
 
 const initParamsApp = {
   type: 'init',
-  pathName: window.location.pathname
+  pathName: window.location.pathname,
+  layout: layout
 }
 
 router.beforeEach(async (to, from, next) => {
-    let pageData = JSON.parse(window.page);
     if (Object.keys(to.meta.layout_content).length === 0) {
-      to.meta.layout_content = pageData.layout_content;
+      to.meta.layout_content = layout.layout_content;
     }
 
     next();

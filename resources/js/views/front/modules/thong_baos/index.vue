@@ -17,6 +17,7 @@
 
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
@@ -40,16 +41,20 @@
             }
         },
         computed: {
+            ...mapState({
+                settingCategorys: state => state.cfApp.setting.modules.module_thong_bao
+            }),
             ...mapGetters(MODULE_MODULE_THONG_BAO, [
                 'settingCategory',
                 'pageLists'
-            ]),
-            _isExist() {
-                return this.settingCategory.length;
-            }
+            ])
         },
-        created() {
-            this.[ACTION_GET_SETTING]();
+        mounted() {
+            let moduleData = null;
+            if (this.settingCategorys.hasOwnProperty('module_thong_bao_categories')) {
+                moduleData = this.settingCategorys.module_thong_bao_categories;
+            }
+            this.[ACTION_GET_SETTING](moduleData);
         },
         methods: {
             ...mapActions(MODULE_MODULE_THONG_BAO, [

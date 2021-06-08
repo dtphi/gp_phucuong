@@ -126,23 +126,27 @@ import {
         state,
         commit
       }, options) {
-        dispatch(ACTION_SET_LOADING, true);
-        const params = {
-          code: state.moduleData.code
-        }
-        apiGetSettingByCode(
-          (res) => {
-            if (Object.keys(res.data.moduleData).length) {
-              commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.moduleData);
-            } else {
+        if (options) {
+          commit(MODULE_UPDATE_SET_KEYS_DATA, options);
+        } else {
+          dispatch(ACTION_SET_LOADING, true);
+          const params = {
+            code: state.moduleData.code
+          }
+          apiGetSettingByCode(
+            (res) => {
+              if (Object.keys(res.data.moduleData).length) {
+                commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.moduleData);
+              } else {
+                dispatch(ACTION_SET_LOADING, false);
+              }
+            },
+            (errors) => {
               dispatch(ACTION_SET_LOADING, false);
-            }
-          },
-          (errors) => {
-            dispatch(ACTION_SET_LOADING, false);
-          },
-          params
-        );
+            },
+            params
+          );
+        }
       },
   
       [ACTION_SET_LOADING]({

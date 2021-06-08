@@ -24,6 +24,7 @@
 
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
@@ -47,6 +48,9 @@
             }
         },
         computed: {
+            ...mapState({
+                settingCategorys: state => state.cfApp.setting.modules.module_van_kien
+            }),
             ...mapGetters(MODULE_MODULE_VAN_KIEN, [
                 'settingCategory',
                 'pageLists'
@@ -55,8 +59,12 @@
                 return this.settingCategory.length;
             }
         },
-        created() {
-            this.[ACTION_GET_SETTING]();
+        mounted() {
+            let moduleData = null;
+            if (this.settingCategorys.hasOwnProperty('module_van_kien_categories')) {
+                moduleData = this.settingCategorys.module_van_kien_categories;
+            }
+            this.[ACTION_GET_SETTING](moduleData);
         },
         methods: {
             ...mapActions(MODULE_MODULE_VAN_KIEN, [
@@ -70,7 +78,7 @@
                 }
             },
             _getHrefCate() {
-                return fn_get_href_base_url('danh-muc-tin/' + this.settingCategory[0].link)
+                return fn_get_href_base_url('danh-muc-tin/' + this.settingCategorys.module_van_kien_categories[0].link)
             }
         },
         setting: {

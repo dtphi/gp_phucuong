@@ -7,7 +7,7 @@
                     <p class="txt-breaking-news d-inline-block" >Truyền Thông và Lòng Thương Xót: Một cuộc gặp gỡ đem lại hoa trái</p>
                 </div>
                 <div class="subscribe d-inline-block">
-                    <button class="btn">0274.73077088</button>
+                    <button class="btn"><i class="fa fa-phone" aria-hidden="true"></i>02747307788</button>
                 </div>
             </div>
         </div>

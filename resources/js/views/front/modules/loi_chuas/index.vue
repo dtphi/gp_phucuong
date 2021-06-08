@@ -60,6 +60,7 @@
 
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
@@ -76,20 +77,21 @@
 
     export default {
         name: 'ModuleLoiChua',
-        components: {},
         data() {
             return {
                 fullPage: true,
             }
         },
         computed: {
+            ...mapState({
+                settingCategorys: state => state.cfApp.setting.modules.module_loi_chua
+            }),
+            _settingCategory() {
+                return this.settingCategorys.module_loi_chua_categories;
+            },
             ...mapGetters(MODULE_MODULE_LOI_CHUA, [
-                'settingCategory',
                 'pageLists'
             ]),
-            _isExist() {
-                return this.settingCategory.length;
-            },
             _getInfoListModule() {
                 let lists = [];
                 _.forEach(this.pageLists, function(item, index) {
@@ -110,8 +112,12 @@
                 return null;
             }
         },
-        created() {
-            this.[ACTION_GET_SETTING]();
+        mounted() {
+            let moduleData = null;
+            if (this.settingCategorys.hasOwnProperty('module_loi_chua_categories')) {
+                moduleData = this.settingCategorys.module_loi_chua_categories;
+            }
+            this.[ACTION_GET_SETTING](moduleData);
         },
         methods: {
             ...mapActions(MODULE_MODULE_LOI_CHUA, [

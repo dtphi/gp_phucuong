@@ -6,7 +6,7 @@
         <h4 class="tit-common clr-blue">{{$options.setting.module_title}}</h4>
         <b-row>
             <category-item
-                v-for="(item, idx) in settingCategory"
+                v-for="(item, idx) in _settingCategory"
                 :key="idx"
                 :idx="idx"
                 :group="item"></category-item>
@@ -16,7 +16,7 @@
 
 <script>
     import {
-        mapGetters,
+        mapState,
         mapActions
     } from 'vuex';
     import {
@@ -37,15 +37,19 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
-                'settingCategory',
-            ]),
+            ...mapState({
+                settingCategorys: state => state.cfApp.setting.modules.module_category_icon_side_bar
+            }),
             _isExist() {
-                return this.settingCategory.length;
+                if (this.settingCategorys.hasOwnProperty('module_category_icon_side_bar_categories')) {
+                    return this.settingCategorys.module_category_icon_side_bar_categories.length;
+                }
+                
+                return 0;
+            },
+            _settingCategory() {
+                return this.settingCategorys.module_category_icon_side_bar_categories;
             }
-        },
-        created() {
-            this.[ACTION_GET_SETTING]();
         },
         methods: {
             ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [

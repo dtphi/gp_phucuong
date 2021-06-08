@@ -21,6 +21,7 @@ class InitContent
         $networkTarget = ['facebook', 'twitter', 'linkedin', 'reddit'];
 
         $homeLayout = [
+            'page' => 'home',
             'layout_content'=> [
                 'content_top'=> true,
                 'content_top_column'=> [
@@ -127,6 +128,7 @@ class InitContent
         ];
 
         $categoryLayout = [
+            'page' => 'category',
             'layout_content' => [
                 'content_top'=> true,
                 'content_top_column'=> [
@@ -233,6 +235,7 @@ class InitContent
         ];
 
         $videoLayout = [
+            'page' => 'video',
             'layout_content' => [
             'content_top'=> true,
             'content_top_column'=> [
@@ -310,6 +313,7 @@ class InitContent
         ]];
 
         $popularLayout = [
+            'page' => 'popular',
             'layout_content' => [
             'content_top'=> true,
             'content_top_column'=> [
@@ -387,6 +391,7 @@ class InitContent
         ]];
 
         $detail = [
+            'page' => 'detail',
             'layout_content' => [
                 'content_top'=> true,
                 'content_top_column'=> [

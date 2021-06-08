@@ -39,6 +39,7 @@
 
 <script>
     import {
+        mapState,
         mapGetters,
         mapActions
     } from 'vuex';
@@ -57,6 +58,9 @@
             }
         },
         computed: {
+            ...mapState({
+                settingCategorys: state => state.cfApp.setting.modules.module_noi_bat
+            }),
             ...mapGetters(MODULE_MODULE_NOI_BAT, [
                 'settingSachNoi',
                 'settingYoutube',
@@ -99,8 +103,12 @@
                 return [];
             }
         },
-        created() {
-            this.[ACTION_GET_SETTING]();
+        mounted() {
+            let moduleData = null;
+            if (Object.keys(this.settingCategorys).length) {
+                moduleData = this.settingCategorys;
+            }
+            this.[ACTION_GET_SETTING](moduleData);
         },
         methods: {
             ...mapActions(MODULE_MODULE_NOI_BAT, [
