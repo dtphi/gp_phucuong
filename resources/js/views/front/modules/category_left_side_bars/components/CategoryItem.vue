@@ -51,7 +51,7 @@
             },
             _getHref() {
                 const _self = this;
-                const actionName = _self.moduleNameActive + '/' + _self.moduleActionListActive;
+                const actionName = _self.moduleNameActive + '/' + 'GET_INFORMATION_LIST_TO_LEFT_CATEGORY';
                 _self.$store.dispatch(actionName, {
                     ...this.$route.params,
                     slug: _self.group.link,

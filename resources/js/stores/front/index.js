@@ -216,15 +216,26 @@ export default new Vuex.Store({
       const links = (configs.hasOwnProperty('links')) ? configs.links : undefined;
       const meta = (configs.hasOwnProperty('meta')) ? configs.meta : undefined;
       const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive : undefined;
-      const collectionData = (configs.hasOwnProperty('collectionData')) ? configs.collectionData : undefined;
+
+      let defaultState = initPaginationState();
+
+      let moduleActiveData = {
+        ...defaultState.moduleActive,
+        moduleActive
+      }
+      let collectionPg = (configs.hasOwnProperty('collectionData')) ? configs.collectionData : undefined;
+      
+      if (collectionPg.length == 0) {
+        collectionPg = defaultState.collectionData;
+      }
 
       var _configs = {
         ...initPaginationState(),
         ...{
           links: links,
           meta: meta,
-          moduleActive: moduleActive,
-          collectionData: collectionData
+          moduleActive: moduleActiveData,
+          collectionData: collectionPg
         }
       };
 

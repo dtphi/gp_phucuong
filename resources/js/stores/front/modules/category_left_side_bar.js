@@ -22,6 +22,7 @@ const defaultState = () => {
       ]
     },
     linkActive: '',
+    linkSubActive: '',
     loading: false,
     errors: []
   }
@@ -68,8 +69,13 @@ export default {
   },
 
   actions: {
+    setSubActiveLink({state}, link) {
+      state.linkSubActive = link;
+      state.linkActive = '';
+    },
     setActiveLink({state}, link) {
       state.linkActive = link;
+      state.linkSubActive = '';
     },
     [ACTION_GET_SETTING]({
       dispatch,

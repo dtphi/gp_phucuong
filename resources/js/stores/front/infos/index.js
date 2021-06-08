@@ -277,9 +277,6 @@ export default {
             if (result.data.hasOwnProperty('pagination')) {
               pagination = result.data.pagination;
             }
-            if (result.data.hasOwnProperty('params')) {
-              console.log('params', result.data.params)
-            }
             var configs = {
               moduleActive: {
                 name: MODULE_INFO,
@@ -289,6 +286,170 @@ export default {
               collectionData: pagination
             };
 
+            dispatch('setConfigApp', configs, {
+              root: true
+            });
+
+            commit(SET_ERROR, []);
+            commit('setLoading', false);
+          },
+          (errors) => {
+            console.log(errors);
+            commit('setLoading', false);
+          },
+          params
+        )
+      }
+    },
+    GET_INFORMATION_LIST_TO_SUB_CATEGORY({
+      commit,
+      dispatch
+    }, routeParams) {
+      commit('setLoading', true);
+      let slug = '';
+      if (routeParams.hasOwnProperty('slug')) {
+        slug = routeParams.slug;
+      }
+      let page = 1;
+      if (routeParams.hasOwnProperty('page')) {
+        page = routeParams.page;
+      }
+      let params = {
+        ...routeParams,
+        page: page,
+        slug: slug
+      };
+      if (routeParams.hasOwnProperty('infoType')) {
+        apiGetVideoListsToCategory(
+          (result) => {
+            commit(INIT_LIST, result.data.results);
+            var pagination = {
+              current_page: 1,
+              total: 0
+            };
+            if (result.data.hasOwnProperty('pagination')) {
+              pagination = result.data.pagination;
+            }
+            var configs = {
+              moduleActive: {
+                params: params
+              },
+              collectionData: pagination
+            };
+
+            dispatch('setConfigApp', configs, {
+              root: true
+            });
+
+            commit(SET_ERROR, []);
+            commit('setLoading', false);
+          },
+          (errors) => {
+            console.log(errors);
+            commit('setLoading', false);
+          },
+          routeParams
+        )
+      } else {
+        apiGetListsToCategory(
+          (result) => {
+            commit(INIT_LIST, result.data.results);
+            var pagination = {
+              current_page: 1,
+              total: 0
+            };
+            if (result.data.hasOwnProperty('pagination')) {
+              pagination = result.data.pagination;
+            }
+            var configs = {
+              moduleActive: {
+                params: params
+              },
+              collectionData: pagination
+            };
+            
+            dispatch('setConfigApp', configs, {
+              root: true
+            });
+
+            commit(SET_ERROR, []);
+            commit('setLoading', false);
+          },
+          (errors) => {
+            console.log(errors);
+            commit('setLoading', false);
+          },
+          params
+        )
+      }
+    },
+    GET_INFORMATION_LIST_TO_LEFT_CATEGORY({
+      commit,
+      dispatch
+    }, routeParams) {
+      commit('setLoading', true);
+      let slug = '';
+      if (routeParams.hasOwnProperty('slug')) {
+        slug = routeParams.slug;
+      }
+      let page = 1;
+      if (routeParams.hasOwnProperty('page')) {
+        page = routeParams.page;
+      }
+      let params = {
+        ...routeParams,
+        page: page,
+        slug: slug
+      };
+      if (routeParams.hasOwnProperty('infoType')) {
+        apiGetVideoListsToCategory(
+          (result) => {
+            commit(INIT_LIST, result.data.results);
+            var pagination = {
+              current_page: 1,
+              total: 0
+            };
+            if (result.data.hasOwnProperty('pagination')) {
+              pagination = result.data.pagination;
+            }
+            var configs = {
+              moduleActive: {
+                params: params
+              },
+              collectionData: pagination
+            };
+
+            dispatch('setConfigApp', configs, {
+              root: true
+            });
+
+            commit(SET_ERROR, []);
+            commit('setLoading', false);
+          },
+          (errors) => {
+            console.log(errors);
+            commit('setLoading', false);
+          },
+          routeParams
+        )
+      } else {
+        apiGetListsToCategory(
+          (result) => {
+            commit(INIT_LIST, result.data.results);
+            var pagination = {
+              current_page: 1,
+              total: 0
+            };
+            if (result.data.hasOwnProperty('pagination')) {
+              pagination = result.data.pagination;
+            }
+            var configs = {
+              moduleActive: {
+                params: params
+              },
+              collectionData: pagination
+            };
+            
             dispatch('setConfigApp', configs, {
               root: true
             });

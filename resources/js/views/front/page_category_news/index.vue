@@ -16,6 +16,11 @@
                             v-for="(item,idx) in infoList"
                             :info="item"
                             :key="idx"></the-list-category-news-item>
+                        <template v-if="infoList.length == 0">
+                            <div style="text-align: center;font-size: 30px;color: #f0f8ffc7;">
+                                Nội Dung Danh Mục Chưa Có Thông Tin
+                            </div>
+                        </template>
                     </div>
                     <paginate></paginate>
                     <template v-slot:column_right>
