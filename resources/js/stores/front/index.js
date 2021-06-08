@@ -219,27 +219,32 @@ export default new Vuex.Store({
 
       let defaultState = initPaginationState();
 
-      let moduleActiveData = {
-        ...defaultState.moduleActive,
-        moduleActive
+      if (typeof links !== "undefined") {
+        defaultState.links = links;
       }
+      if (typeof meta != "undefined") {
+        defaultState.meta = meta;
+      }
+      if (typeof moduleActive != "undefined") {
+        if (moduleActive.hasOwnProperty('name')) {
+          defaultState.moduleActive.name = moduleActive.name;
+        }
+        if (moduleActive.hasOwnProperty('actionList')) {
+          defaultState.moduleActive.actionList = moduleActive.actionList;
+        }
+        if (moduleActive.hasOwnProperty('params')) {
+          defaultState.moduleActive.params = moduleActive.params;
+        }
+      }
+
       let collectionPg = (configs.hasOwnProperty('collectionData')) ? configs.collectionData : undefined;
       
       if (collectionPg.length == 0) {
         collectionPg = defaultState.collectionData;
       }
+      defaultState.collectionData = collectionPg;
 
-      var _configs = {
-        ...initPaginationState(),
-        ...{
-          links: links,
-          meta: meta,
-          moduleActive: moduleActiveData,
-          collectionData: collectionPg
-        }
-      };
-
-      commit('configApp', _configs);
+      commit('configApp', defaultState);
     },
 
     winWidth({state}) {
