@@ -76,35 +76,35 @@ const settingBannerFormat = {
     font_size: 36
   },{
     media: 768,
-    top: 32,
-    left: 20,
+    top: 39,
+    left: 15,
     color: 'ffffff',
     font_weight: 500,
-    font_size: 36
+    font_size: 28
   },{
     media: 736,
-    top: 32,
-    left: 20,
+    top: 39,
+    left: 15,
     color: 'ffffff',
     font_weight: 500,
-    font_size: 36
+    font_size: 28
   }, {
     media: 667,
-    top: 32,
-    left: 20,
+    top: 39,
+    left: 15,
     color: 'ffffff',
     font_weight: 500,
-    font_size: 36
+    font_size: 28
   }, {
     media: 414,
-    top: 32,
-    left: 20,
+    top: 44,
+    left: 16,
     color: 'ffffff',
-    font_weight: 500,
-    font_size: 36
+    font_weight: 700,
+    font_size: 18
   }, {
     media: 375,
-    top: 38,
+    top: 44,
     left: 16,
     color: 'ffffff',
     font_weight: 700,

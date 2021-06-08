@@ -243,7 +243,7 @@ export default new Vuex.Store({
       if (w < 769) {
         state.clientsTestimonialsPage = 1
       }
-      if (w < 415) {
+      if (w < 500) {
         state.clientsTestimonialsPage = 414
       }
     },

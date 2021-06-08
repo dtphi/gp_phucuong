@@ -15,16 +15,17 @@
                     height="410"
                     :src="item.imgCarThumUrl">
             </template>
-            <div v-if="_innerScreen414" class="description text-left">
+            <div v-if="_getSettingFormat == 3" class="description text-left">
                 <p class="text-right mb-0">{{item.date_available}}</p>
             </div>
-            <div v-if="_innerScreen767" class="description text-left">
+            <div v-if="_getSettingFormat == 2" class="description text-left">
                 <p class="mb-2">
                     {{item.sort_description}}
                     <a :href="_getHref(item)" class="ml-2"><b>Xem thêm</b></a>
                 </p>
+                <p class="text-right mb-0">{{item.date_available}}</p>
             </div>
-            <div v-else class="description text-left">
+            <div v-if="_getSettingFormat == 1" class="description text-left">
                 <h6>{{item.name}}</h6>
                 <p class="mb-2">
                     {{item.sort_description}}
@@ -73,11 +74,16 @@
                     return this.pageLists;
                 }
             },
-            _innerScreen767 () {
-                return this.isScreen767;
-            },
-            _innerScreen414 () {
-                return this.isScreen414;
+            _getSettingFormat() {
+                let des = 1;
+                if (this.isScreen767) {
+                    des = 2;
+                }
+                if (this.isScreen414) {
+                    des = 3;
+                }
+                
+                return des;
             }
         },
         created() {
@@ -96,7 +102,7 @@
             },
             _redirectUrl(info) {
                 window.location = this._getHref(info);
-            }
+            },
         }
     };
 </script>

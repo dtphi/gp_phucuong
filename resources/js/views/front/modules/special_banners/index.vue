@@ -92,8 +92,8 @@
                         if (sreen414.length) {
                             format = sreen414[0];
                         }
-                    } console.log(this.isScreen767, this.isScreen414, format)
-
+                    }
+                    
                     return this._getStyle(format);
                 }
 
