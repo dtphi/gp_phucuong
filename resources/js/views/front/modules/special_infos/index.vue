@@ -15,8 +15,14 @@
                     height="410"
                     :src="item.imgCarThumUrl">
             </template>
-            <div v-if="_innerScreen1200" class="description text-left">
+            <div v-if="_innerScreen414" class="description text-left">
                 <p class="text-right mb-0">{{item.date_available}}</p>
+            </div>
+            <div v-if="_innerScreen767" class="description text-left">
+                <p class="mb-2">
+                    {{item.sort_description}}
+                    <a :href="_getHref(item)" class="ml-2"><b>Xem thêm</b></a>
+                </p>
             </div>
             <div v-else class="description text-left">
                 <h6>{{item.name}}</h6>
@@ -56,7 +62,8 @@
         },
         computed: {
             ...mapGetters([
-                'isScreen1200'
+                'isScreen414',
+                'isScreen767'
             ]),
             ...mapGetters(MODULE_MODULE_SPECIAL_INFO, [
                 'pageLists'
@@ -66,8 +73,11 @@
                     return this.pageLists;
                 }
             },
-            _innerScreen1200 () {
-                return this.isScreen1200;
+            _innerScreen767 () {
+                return this.isScreen767;
+            },
+            _innerScreen414 () {
+                return this.isScreen414;
             }
         },
         created() {

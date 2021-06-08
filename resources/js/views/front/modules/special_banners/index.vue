@@ -22,7 +22,8 @@
 <script>
     import {
         mapGetters,
-        mapActions
+        mapActions,
+        mapState
     } from 'vuex';
     import {
         MODULE_MODULE_NOI_BAT
@@ -39,6 +40,10 @@
             }
         },
         computed: {
+            ...mapGetters([
+                'isScreen414',
+                'isScreen767'
+            ]),
             ...mapGetters(MODULE_MODULE_NOI_BAT, [
                 'settingBanner',
                 'settingBannerFormat'
@@ -59,17 +64,37 @@
             },
             _getSettingFormat() {
                 if (this.settingBannerFormat.length) {
-                    const format = this.settingBannerFormat[0];
+                    let format = this.settingBannerFormat[0];
 
-                    let top = format.top;
-                    let left = format.left;
-                    let color = format.color;
-                    let fontWeight = format.font_weight;
-                    let fontSize = format.font_size;
+                     if (this.isScreen767) {
+                        const sreen767 = _.filter(this.settingBannerFormat, style => style.media == 768);
+                        format = {
+                            top: 39,
+                            left: 15,
+                            color: 'ffffff',
+                            font_weight: 500,
+                            font_size: 28
+                        };
+                        if (sreen767.length) {
+                            format = sreen767[0];
+                        }
+                    }
 
-                    let styleTitle = `top: ${top}%; left: ${left}%;color: ${color};font-weight: ${fontWeight};font-size: ${fontSize}px`;
+                    if (this.isScreen414) {
+                        const sreen414 = _.filter(this.settingBannerFormat, style => style.media == 414);
+                        format = {
+                            top: 44,
+                            left: 16,
+                            color: 'ffffff',
+                            font_weight: 700,
+                            font_size: 18
+                        };
+                        if (sreen414.length) {
+                            format = sreen414[0];
+                        }
+                    } console.log(this.isScreen767, this.isScreen414, format)
 
-                    return styleTitle;
+                    return this._getStyle(format);
                 }
 
                 return "";
@@ -78,7 +103,18 @@
         methods: {
             ...mapActions(MODULE_MODULE_NOI_BAT, [
                 ACTION_GET_SETTING,
-            ])
+            ]),
+            _getStyle(format) {
+                let top = format.top;
+                let left = format.left;
+                let color = format.color;
+                let fontWeight = format.font_weight;
+                let fontSize = format.font_size;
+
+                let styleTitle = `top: ${top}%; left: ${left}%;color: ${color};font-weight: ${fontWeight};font-size: ${fontSize}px`;
+
+                return styleTitle;
+            }
         },
         setting: {
             styleTitle: "position: absolute;left: 15%;top: 41%;color: white;font-weight: 600;font-size: 36px;"

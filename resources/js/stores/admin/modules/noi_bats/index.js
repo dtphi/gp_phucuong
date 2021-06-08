@@ -47,11 +47,68 @@ const settingBanner = {
 const settingBannerFormat = {
   key: 'module_noi_bat_banner_formats',
   value: [{
+    media: 1200,
     top: 32,
     left: 20,
     color: 'ffffff',
     font_weight: 500,
     font_size: 36
+  },{
+    media: 1024,
+    top: 32,
+    left: 20,
+    color: 'ffffff',
+    font_weight: 500,
+    font_size: 36
+  }, {
+    media: 960,
+    top: 32,
+    left: 20,
+    color: 'ffffff',
+    font_weight: 500,
+    font_size: 36
+  },{
+    media: 812,
+    top: 32,
+    left: 20,
+    color: 'ffffff',
+    font_weight: 500,
+    font_size: 36
+  },{
+    media: 768,
+    top: 32,
+    left: 20,
+    color: 'ffffff',
+    font_weight: 500,
+    font_size: 36
+  },{
+    media: 736,
+    top: 32,
+    left: 20,
+    color: 'ffffff',
+    font_weight: 500,
+    font_size: 36
+  }, {
+    media: 667,
+    top: 32,
+    left: 20,
+    color: 'ffffff',
+    font_weight: 500,
+    font_size: 36
+  }, {
+    media: 414,
+    top: 32,
+    left: 20,
+    color: 'ffffff',
+    font_weight: 500,
+    font_size: 36
+  }, {
+    media: 375,
+    top: 38,
+    left: 16,
+    color: 'ffffff',
+    font_weight: 700,
+    font_size: 18
   }],
   serialize: true
 }

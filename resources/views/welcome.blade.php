@@ -46,7 +46,6 @@
 
         <!-- basic favicon -->
         <link rel="shortcut icon" href="<?php echo asset('images/icons/favicon-33x33.png'); ?>">
-        <link rel="shortcut icon" type="image/ico" href="<?php echo asset('images/icons/favicon.png'); ?>" />
         <link rel="icon" type="image/x-icon" href="<?php echo asset('images/icons/favicon.png'); ?>" />
         <link rel="icon" type="image/vnd.microsoft.icon" href="<?php echo asset('images/icons/favicon.png'); ?>" />
         <link rel="icon" sizes="16x16" href="<?php echo asset('images/icons/favicon-16x16.png'); ?>">

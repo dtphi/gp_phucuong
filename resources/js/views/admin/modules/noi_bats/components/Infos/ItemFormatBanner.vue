@@ -51,18 +51,12 @@
                     :selected="banner.font_size == item">{{item}}</option>
             </select>
         </td>
-        <td>
+        <td><span>@screen-media:{{banner.media}}</span>
         </td>
     </tr>   
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_MODULE_NOI_BAT
-    } from 'store@admin/types/module-types';
 
     export default {
         name: 'TheItemBannerFormat',
@@ -72,6 +66,7 @@
             }
         },
         setting: {
+            arrMedia: 4,
             positionTop: 50,
             positionLeft: 50,
             fontWeight: [100,200,300,400,500,600,700,800,900,'bold', 'inherit', 'lighter', 'normal'],

@@ -150,6 +150,9 @@ export default new Vuex.Store({
 
       return mAction;
     },
+    isScreen414(state) {
+      return state.clientsTestimonialsPage == 414;
+    },
     isScreen767(state) {
       return state.clientsTestimonialsPage == 1;
     },
@@ -230,14 +233,18 @@ export default new Vuex.Store({
 
     winWidth({state}) {
       var w = window.innerWidth;
-      if (w < 768) {
-        state.clientsTestimonialsPage = 1
-      } else if (w < 960) {
-        state.clientsTestimonialsPage = 2
-      } else if (w < 1200) {
+      state.clientsTestimonialsPage = 4
+      if (w < 1200) {
         state.clientsTestimonialsPage = 3
-      } else {
-        state.clientsTestimonialsPage = 4
+      } 
+      if (w < 960) {
+        state.clientsTestimonialsPage = 2
+      }
+      if (w < 769) {
+        state.clientsTestimonialsPage = 1
+      }
+      if (w < 415) {
+        state.clientsTestimonialsPage = 414
       }
     },
   },
