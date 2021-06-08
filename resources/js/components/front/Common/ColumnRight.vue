@@ -11,6 +11,9 @@
 </template>
 
 <script>
+    import {
+        mapState
+    } from 'vuex';
 
     export default {
         name: 'ContentColumnRight',
@@ -32,15 +35,21 @@
             }
         },
         computed: {
+            ...mapState({
+                setting: state => state.cfApp.setting
+            }),
             _moduleList() {
                 let list = [];
-                let contentType = 'content_' + this.contentType + '_column';
-                let modules = this.$route.meta.layout_content[contentType].right_modules;
-                if (modules && modules.length) {
-                    
-                    _.forEach(modules, function(item){
-                        list.push("module-" + item.moduleName.toLowerCase());
-                    });
+
+                if (Object.keys(this.setting) && this.setting.hasOwnProperty('modules')) {
+                    let contentType = 'content_' + this.contentType + '_column';
+                    let modules = this.$route.meta.layout_content[contentType].right_modules;
+                    if (modules && modules.length) {
+                        
+                        _.forEach(modules, function(item){
+                            list.push("module-" + item.moduleName.toLowerCase());
+                        });
+                    }
                 }
 
                 return list;
