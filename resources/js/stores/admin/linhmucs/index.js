@@ -1,20 +1,19 @@
 import AppConfig from 'api@admin/constants/app-config';
-import modals from './modal';
 import adds from './add';
 import edits from './edit';
 import {
   apiGetInfoById,
-  apiGetInfos,
+  apiGetLinhMucInfos,
   apiDeleteInfo,
   apiSearchAll,
   apiGetSlideSpecialInfos
-} from 'api@admin/information';
+} from 'api@admin/linhmuc';
 import {
   apiGetSettingByCode,
   apiInsertSetting
 } from 'api@admin/setting';
 import {
-  MODULE_INFO,
+  MODULE_LINH_MUC,
 } from '../types/module-types';
 import {
   INFOS_SET_LOADING,
@@ -186,22 +185,6 @@ export default {
           if (Object.keys(res.data.results).length) {
             commit('updateSpecialInfoData', res.data.results);
 
-            dispatch(ACTION_SET_LOADING, false);
-          }
-        },
-        (errors) => {
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      )
-    },
-    get_module_special_info_and_info_ids({dispatch,commit,state}) {
-      dispatch(ACTION_SET_LOADING, true);
-      apiGetSettingByCode(
-        state.moduleSpecialData.code,
-        (res) => {
-          if (Object.keys(res.data.results).length) {
-            commit('updateSpecialInfoData', res.data.results);
-
             dispatch('ACTION_GET_SLIDE_SPECIAL_INFO_LIST', {
               infoType: 'module_special_info',
               infoIds: res.data.results.module_special_info_ids.value
@@ -250,7 +233,7 @@ export default {
       commit
     }, params) {
       dispatch(ACTION_SET_LOADING, true);
-      await apiGetInfos(
+      await apiGetLinhMucInfos(
         (infos) => {
           console.log(infos)
           commit(INFOS_SET_INFO_LIST, infos.data.results);
@@ -265,7 +248,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_INFO,
+              name: MODULE_LINH_MUC,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination
@@ -390,7 +373,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_INFO,
+              name: MODULE_LINH_MUC,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination
@@ -413,7 +396,6 @@ export default {
   },
 
   modules: {
-    modal: modals,
     add: adds,
     edit: edits
   }

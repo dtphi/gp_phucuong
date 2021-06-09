@@ -34,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\SettingModel::class,
             \App\Http\Controllers\Api\Admin\Services\SettingService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel::class,
+            \App\Http\Controllers\Api\Admin\Services\LinhMucService::class
+        );
 
         /*=====================Front end======================== .*/
         $this->app->bind(

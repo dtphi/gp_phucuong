@@ -8,3 +8,4 @@ export const API_USERS_RESOURCE = '/api/users';
 export const API_NEWS_GROUPS_RESOURCE = '/api/news-groups';
 export const API_INFOMATIONS_RESOURCE = '/api/news';
 export const API_SETTING_RESOURCE = '/api/settings';
+export const API_LINH_MUCS_RESOURCE = '/api/linh-mucs';

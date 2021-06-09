@@ -35,7 +35,6 @@
 
 <script>
     import {
-        mapState,
         mapActions
     } from 'vuex';
     import BtnAdd from './TheBtnAdd';
@@ -58,18 +57,12 @@
             Breadcrumb
         },
         methods: {
-            ...mapState({
-                perPage: state => state.cfApp.perPage
-            }),
             ...mapActions(MODULE_INFO, [ACTION_GET_INFO_LIST]),
             _pushAddPage() {
                 this.$router.push(`/admin/informations/add`);
             },
             _refreshList() {
-                const params = {
-                    perPage: this.perPage
-                };
-                this.[ACTION_GET_INFO_LIST](params);
+                this.[ACTION_GET_INFO_LIST]();
             }
         },
         setting: {

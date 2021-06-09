@@ -47,7 +47,15 @@ class InformationRequest extends FormRequest
             $formData['image']           = null;
         }
 
-        $formData['date_available']   = isset($formData['date_available']) ? $formData['date_available'] : now();
+        $formData['date_available']   = isset($formData['date_available']) ? $formData['date_available'] : '';
+        if (!empty($formData['date_available'])) {
+            $date = date_create($formData['date_available']);
+            $dateAvailable = date_format($date,"Y-m-d H:i:s");
+            $formData['date_available'] = $dateAvailable;
+        } else {
+            $formData['date_available'] = now();
+        }
+
         $formData['sort_order']       = isset($formData['sort_order']) ? $formData['sort_order'] : 0;
         $formData['status']           = isset($formData['status']) ? $formData['status'] : 0;
         $formData['create_user']      = isset($formData['create_user']) ? $formData['create_user'] : 0;

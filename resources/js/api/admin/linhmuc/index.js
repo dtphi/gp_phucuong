@@ -3,7 +3,7 @@ import {
   fn_get_base_api_detail_url
 } from '@app/api/utils/fn-helper';
 import {
-  API_INFOMATIONS_RESOURCE
+  API_LINH_MUCS_RESOURCE
 } from 'store@admin/types/api-paths';
 
 
@@ -75,8 +75,8 @@ export const apiGetSlideSpecialInfos = (resolve, errResole, params) => {
  * @param  {[type]} params    [description]
  * @return {[type]}           [description]
  */
-export const apiGetInfos = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(API_INFOMATIONS_RESOURCE), {
+export const apiGetLinhMucInfos = (resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_url(API_LINH_MUCS_RESOURCE), {
       params: params
     })
     .then((response) => {

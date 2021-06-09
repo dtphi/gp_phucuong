@@ -50,6 +50,10 @@ final class InformationService implements BaseModel, InformationModel
         // TODO: Implement apiGetList() method.
         $query = $this->apiGetInformations($options);
 
+        if (isset($options['infoType']) && $options['infoType'] == 'module_special_info') {
+            return $query->get();
+        }
+
         return $query->paginate($limit);
     }
 
@@ -339,9 +343,24 @@ final class InformationService implements BaseModel, InformationModel
      */
     public function apiGetInformations($data = array(), $limit = 5)
     {
-        $query = $this->model->select()
+        if (isset($data['infoIds']) && isset($data['infoType']) && $data['infoType'] == 'module_special_info') {
+            $infoIds = [];
+            foreach ($data['infoIds'] as $info) {
+                $infoSlide = json_decode($info);
+                if (isset($infoSlide->id)) {
+                    $infoIds[] = (int)$infoSlide->id;
+                }
+            }
+           
+            $query = $this->model->select()
+                ->whereIn('information_id', $infoIds)
+                ->orderBy('sort_order', 'DESC')
+                ->orderBy('date_available', 'DESC');
+        } else {
+            $query = $this->model->select()
             ->orderBy('sort_order', 'DESC')
             ->orderBy('date_available', 'DESC');
+        }
 
         return $query;
     }

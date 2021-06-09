@@ -19,6 +19,8 @@ final class Tables
 
     public static $settings = DB_PREFIX . 'settings';
 
+    public static $linhmucs = DB_PREFIX . 'linhmucs';
+
     public static $infoStatus = [
         'Ẩn',
         'Xảy ra'

@@ -43,37 +43,42 @@
     import ListSearch from 'com@admin/Search';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
-        MODULE_INFO
+        MODULE_LINH_MUC,
     } from 'store@admin/types/module-types';
+
     import {
         ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'InformationHeaderPage',
+        name: 'LinhMucHeaderPage',
         components: {
             BtnAdd,
             Perpage,
             ListSearch,
             Breadcrumb
         },
-        methods: {
+        computed: {
             ...mapState({
                 perPage: state => state.cfApp.perPage
             }),
-            ...mapActions(MODULE_INFO, [ACTION_GET_INFO_LIST]),
+        },
+        methods: {
+            ...mapActions(MODULE_LINH_MUC, [
+                ACTION_GET_INFO_LIST
+            ]),
             _pushAddPage() {
-                this.$router.push(`/admin/informations/add`);
+                this.$router.push(`/admin/linh-mucs/add`);
             },
             _refreshList() {
                 const params = {
                     perPage: this.perPage
                 };
-                this.[ACTION_GET_INFO_LIST](params);
+                this.[ACTION_GET_INFO_LIST]();
             }
         },
         setting: {
-            title: 'Tin Tức',
+            title: 'Linh mục',
             refresh_txt: 'Tải lại danh sách'
         }
     };

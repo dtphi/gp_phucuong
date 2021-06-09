@@ -3,6 +3,7 @@ import Login from 'v@admin/auth/Login';
 
 /*default layout*/
 import DefaultLayout from 'v@admin/layouts/default';
+import LinhMucPage from 'v@admin/linhmucs';
 
 import {
     config
@@ -242,6 +243,31 @@ export default [{
             }
         }]
     }, {
+        path: 'slide-info-specials',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: () =>
+                import ('v@admin/slideinfospecials'),
+            name: 'admin.slide-info-specials.list',
+            meta: {
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Slide Tin Tức'
+                }],
+                header: 'Danh sách slide tin tức',
+                layout: DefaultLayout,
+                role: 'admin',
+                title: 'Slide Tin tức | ' + config.site_name
+            }
+        }]
+    }, {
         path: 'filemanagers',
         component: {
             render: c => c('router-view')
@@ -294,5 +320,32 @@ export default [{
                 }
             }
         }]
-    }, ]
+    }, {
+        path: 'linh-mucs',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: LinhMucPage,
+            name: 'admin.system',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Cài đặt'
+                }],
+                header: 'Danh sách cài đặt',
+                role: 'admin',
+                title: 'Cài đặt chung | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    },]
 }];

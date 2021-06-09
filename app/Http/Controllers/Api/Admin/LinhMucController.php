@@ -4,34 +4,34 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
-use App\Http\Controllers\Api\Admin\Services\Contracts\InformationModel as InfoSv;
+use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel as LinhMucSv;
 use App\Http\Requests\InformationRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Log;
 
-class InformationController extends ApiController
+class LinhMucController extends ApiController
 {
     /**
      * @var string
      */
-    protected $resourceName = 'information';
+    protected $resourceName = 'linh-muc';
 
     /**
      * @var null
      */
-    private $infoSv = null;
+    private $linhMucSv = null;
 
     /**
      * @author: dtphi .
      * InformationController constructor.
-     * @param InfoSv $infoSv
+     * @param LinhMucSv $linhMucSv
      * @param array $middleware
      */
-    public function __construct(InfoSv $infoSv, array $middleware = [])
+    public function __construct(LinhMucSv $linhMucSv, array $middleware = [])
     {
-        $this->infoSv = $infoSv;
+        $this->linhMucSv = $linhMucSv;
         parent::__construct($middleware);
     }
 
@@ -49,30 +49,25 @@ class InformationController extends ApiController
         }
         try {
             $limit       = $this->_getPerPage();
-            $collections = $this->infoSv->apiGetList($data, $limit);
-
-            if (isset($data['infoType']) && $data['infoType'] == 'module_special_info') {
-                $pagination = [];
-            } else {
-                $pagination  = $this->_getTextPagination($collections);
-            }
-
+            $collections = $this->linhMucSv->apiGetList($data, $limit);
+            $pagination  = $this->_getTextPagination($collections);
             $results = [];
+            
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
-                if (file_exists(public_path($info->image['path']))) {
-                    $staticImgThum = $info->image['path'];
+                if (file_exists(public_path($info->image))) {
+                    $staticImgThum = $info->image;
                 }
                 $results[] = [
-                    'information_id' => (int)$info->information_id,
+                    'id' => (int)$info->id,
+                    'ten'           => $info->ten,
+                    'ten_thanh'         => $info->ten_thanh,
                     'image'          => $info->image,
                     'imgThum'        => url($this->getThumbnail($staticImgThum, 0, 40)),
-                    'name'           => $info->name,
-                    'status'         => $info->status,
-                    'status_text'    => $info->status_text,
-                    'sort_order'     => $info->sort_order,
-                    'date_available' => $info->date_available,
-                    'created_at'     => $info->created_at
+                    //'status_text'    => $info->status_text,
+                    'active'     => $info->active,
+                    'updatetime' => $info->updatetime,
+                    //'created_at'     => $info->created_at
                 ];
             }
 

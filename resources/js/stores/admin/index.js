@@ -8,6 +8,7 @@ import user from './users';
 import info from './infos';
 import news_category from './categories';
 import app_module from './modules';
+import linh_muc from './linhmucs';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -141,6 +142,7 @@ export default new Vuex.Store({
     info,
     news_category,
     app_module,
+    linh_muc
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

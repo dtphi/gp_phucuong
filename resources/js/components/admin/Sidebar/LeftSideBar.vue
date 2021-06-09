@@ -18,9 +18,23 @@
             </li>
             <li id="user">
                 <a
-                    :href="_getHref('users')">
+                    class="parent">
                     <i class="fa fa-user fa-fw"></i>
                     <span>{{$options.setting.users_title}}</span></a>
+                <ul class="collapse">
+                    <li>
+                        <a
+                            :href="_getHref('linh-mucs')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.linhmucs_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('users')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.users_title}}</span></a>
+                    </li>
+                </ul>
             </li>
             <li id="catalog" class="">
                 <a class="parent">
@@ -34,6 +48,9 @@
                     <li>
                         <a
                             :href="_getHref('informations')">{{$options.setting.category_sub_info_title}}</a>
+                    </li>
+                    <li>
+                        <a :href="_getHref('slide-info-specials')">{{$options.setting.slide_info_special_title}}</a>
                     </li>
                     <li>
                         <a
@@ -130,7 +147,9 @@
             module_van_kien: 'Văn kiện',
             module_noi_bat: 'Nổi bật',
             system_root_title: 'Hệ thống',
-            sytem_title: 'Cài đặt'
+            sytem_title: 'Cài đặt',
+            linhmucs_title: 'Linh mục',
+            slide_info_special_title: 'Slide tiêu điểm'
         }
     };
 </script>
