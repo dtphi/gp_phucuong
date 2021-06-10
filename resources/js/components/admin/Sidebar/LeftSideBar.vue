@@ -16,6 +16,38 @@
                     <i class="fa fa-dashboard fa-fw"></i>
                     <span>{{$options.setting.dashboards_title}}</span></a>
             </li>
+            <li id="giao-phan">
+                <a
+                    class="parent">
+                    <i class="fa fa-user fa-fw"></i>
+                    <span>{{$options.setting.giaophans_title}}</span></a>
+                <ul class="collapse">
+                    <li>
+                        <a
+                            :href="_getHref('giao-phans')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.giaophans_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('giao-hats')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.giaohats_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('giao-xus')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.giaoxus_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('giao-diems')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.giaodiems_title}}</span></a>
+                    </li>
+                </ul>
+            </li>
             <li id="user">
                 <a
                     class="parent">
@@ -154,7 +186,11 @@
             system_root_title: 'Hệ thống',
             sytem_title: 'Cài đặt',
             linhmucs_title: 'Linh mục',
-            slide_info_special_title: 'Slide tiêu điểm'
+            slide_info_special_title: 'Slide tiêu điểm',
+            giaophans_title: 'Giáo phận',
+            giaohats_title: 'Giáo hạt',
+            giaoxus_title: 'Giáo xứ',
+            giaodiems_title: 'Giáo điểm'
         }
     };
 </script>

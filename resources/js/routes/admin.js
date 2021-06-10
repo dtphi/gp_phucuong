@@ -4,6 +4,10 @@ import Login from 'v@admin/auth/Login';
 /*default layout*/
 import DefaultLayout from 'v@admin/layouts/default';
 import LinhMucPage from 'v@admin/linhmucs';
+import GiaoPhanPage from 'v@admin/giaophans';
+import GiaoHatPage from 'v@admin/giaohats';
+import GiaoXuPage from 'v@admin/giaoxus';
+import GiaoDiemPage from 'v@admin/giaodiems';
 
 import {
     config
@@ -342,6 +346,114 @@ export default [{
                 header: 'Danh sách cài đặt',
                 role: 'admin',
                 title: 'Cài đặt chung | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'giao-phans',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: GiaoPhanPage,
+            name: 'admin.system',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Giáo phận'
+                }],
+                header: 'Danh sách giáo phận',
+                role: 'admin',
+                title: 'Giao phận | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'giao-hats',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: GiaoHatPage,
+            name: 'admin.system',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Giáo hạt'
+                }],
+                header: 'Danh sách giáo hạt',
+                role: 'admin',
+                title: 'Giao hạt | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'giao-xus',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: GiaoXuPage,
+            name: 'admin.system',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Giáo xứ'
+                }],
+                header: 'Danh sách giáo xứ',
+                role: 'admin',
+                title: 'Giao xứ | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'giao-diems',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: GiaoDiemPage,
+            name: 'admin.system',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Giáo điểm'
+                }],
+                header: 'Danh sách giáo điểm',
+                role: 'admin',
+                title: 'Giao điểm | ' + config.site_name,
                 show: {
                     footer: true
                 }

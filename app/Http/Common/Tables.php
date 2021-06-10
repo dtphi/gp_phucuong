@@ -20,6 +20,10 @@ final class Tables
     public static $settings = DB_PREFIX . 'settings';
 
     public static $linhmucs = DB_PREFIX . 'linhmucs';
+    public static $giaophans = DB_PREFIX . 'giaophans';
+    public static $giaophan_hats = DB_PREFIX . 'giaophan_hats';
+    public static $giaophan_hat_xus = DB_PREFIX . 'giaophan_hat_xus';
+    public static $giaophan_hat_xu_diems = DB_PREFIX . 'giaophan_hat_xu_diems';
 
     public static $infoStatus = [
         'Ẩn',

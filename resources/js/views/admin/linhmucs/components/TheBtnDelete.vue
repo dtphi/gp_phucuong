@@ -13,7 +13,7 @@
 <script>
     import {mapActions} from 'vuex';
     import {
-        MODULE_LINH_MUC,
+        MODULE_MODULE_LINH_MUC,
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_INFO_DELETE_BY_ID,
@@ -35,7 +35,7 @@
             return {};
         },
         methods: {
-            ...mapActions(MODULE_LINH_MUC, [
+            ...mapActions(MODULE_MODULE_LINH_MUC, [
                 ACTION_SET_INFO_DELETE_BY_ID,
                 ACTION_DELETE_INFO_BY_ID
             ]),

@@ -9,3 +9,7 @@ export const API_NEWS_GROUPS_RESOURCE = '/api/news-groups';
 export const API_INFOMATIONS_RESOURCE = '/api/news';
 export const API_SETTING_RESOURCE = '/api/settings';
 export const API_LINH_MUCS_RESOURCE = '/api/linh-mucs';
+export const API_GIAO_PHANS_RESOURCE = '/api/giao-phans';
+export const API_GIAO_HATS_RESOURCE = '/api/giao-hats';
+export const API_GIAO_XUS_RESOURCE = '/api/giao-xus';
+export const API_GIAO_DIEMS_RESOURCE = '/api/giao-diems';

@@ -38,6 +38,22 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel::class,
             \App\Http\Controllers\Api\Admin\Services\LinhMucService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanModel::class,
+            \App\Http\Controllers\Api\Admin\Services\GiaoPhanService::class
+        );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\GiaoHatModel::class,
+            \App\Http\Controllers\Api\Admin\Services\GiaoHatService::class
+        );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\GiaoXuModel::class,
+            \App\Http\Controllers\Api\Admin\Services\GiaoXuService::class
+        );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\GiaoDiemModel::class,
+            \App\Http\Controllers\Api\Admin\Services\GiaoDiemService::class
+        );
 
         /*=====================Front end======================== .*/
         $this->app->bind(

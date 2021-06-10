@@ -43,7 +43,7 @@
     import ListSearch from 'com@admin/Search';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
-        MODULE_LINH_MUC,
+        MODULE_MODULE_LINH_MUC,
     } from 'store@admin/types/module-types';
 
     import {
@@ -64,7 +64,7 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_LINH_MUC, [
+            ...mapActions(MODULE_MODULE_LINH_MUC, [
                 ACTION_GET_INFO_LIST
             ]),
             _pushAddPage() {

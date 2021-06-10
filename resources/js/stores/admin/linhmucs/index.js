@@ -13,7 +13,7 @@ import {
   apiInsertSetting
 } from 'api@admin/setting';
 import {
-  MODULE_LINH_MUC,
+  MODULE_MODULE_LINH_MUC,
 } from '../types/module-types';
 import {
   INFOS_SET_LOADING,
@@ -248,7 +248,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_LINH_MUC,
+              name: MODULE_MODULE_LINH_MUC,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination
@@ -373,7 +373,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_LINH_MUC,
+              name: MODULE_MODULE_LINH_MUC,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination

@@ -71,7 +71,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Paginate from 'com@admin/Pagination';
     import {
-        MODULE_LINH_MUC,
+        MODULE_MODULE_LINH_MUC,
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -104,7 +104,7 @@
                 perPage: state => state.cfApp.perPage
             }),
             ...mapGetters(['isNotEmptyList']),
-            ...mapState(MODULE_LINH_MUC, [
+            ...mapState(MODULE_MODULE_LINH_MUC, [
                 'infos',
                 'loading',
                 'updateSuccess',
@@ -117,7 +117,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_LINH_MUC, [
+            ...mapActions(MODULE_MODULE_LINH_MUC, [
                 ACTION_GET_INFO_LIST,
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),

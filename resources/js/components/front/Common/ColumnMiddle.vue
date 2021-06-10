@@ -13,16 +13,22 @@
     import {
         mapState
     } from 'vuex';
+    import special_infos from 'v@front/modules/special_infos';
+    import special_banners from 'v@front/modules/special_banners';
+    import loi_chuas from 'v@front/modules/loi_chuas';
+    import tin_giao_phans from 'v@front/modules/tin_giao_phans';
+    import van_kiens from 'v@front/modules/van_kiens';
+    import tin_giao_hois from 'v@front/modules/tin_giao_hois';
 
     export default {
         name: 'ColumnMiddle',
         components: {
-            'module-info-carousel': () => import('v@front/modules/special_infos'),
-            'module-special-banner': () => import('v@front/modules/special_banners'),
-            'module-loi-chua': () => import('v@front/modules/loi_chuas'),
-            'module-tin-giao-phan': () => import('v@front/modules/tin_giao_phans'),
-            'module-van-kien': () => import('v@front/modules/van_kiens'),
-            'module-tin-giao-hoi': () => import('v@front/modules/tin_giao_hois'),
+            'module-info-carousel': special_infos,
+            'module-special-banner': special_banners,
+            'module-loi-chua': loi_chuas,
+            'module-tin-giao-phan': tin_giao_phans,
+            'module-van-kien': van_kiens,
+            'module-tin-giao-hoi': tin_giao_hois,
         },
         props: {
             contentType: {

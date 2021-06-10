@@ -14,6 +14,12 @@
     import {
         mapState
     } from 'vuex';
+    import category_icon_side_bars from 'v@front/modules/category_icon_side_bars';
+    import thong_baos from 'v@front/modules/thong_baos';
+    import lich_cong_giaos from 'v@front/modules/lich_cong_giaos';
+    import info_fanpages from 'v@front/modules/info_fanpages';
+    import youtube_hanh_cac_thanhs from 'v@front/modules/youtube_hanh_cac_thanhs';
+    import sach_noi_iframes from 'v@front/modules/sach_noi_iframes';
 
     export default {
         name: 'ContentColumnRight',
@@ -23,12 +29,12 @@
             }
         },
         components: {
-            'module-category-icon-side-bar': () => import('v@front/modules/category_icon_side_bars'),
-            'module-thong-bao': () => import('v@front/modules/thong_baos'),
-            'module-lich-cong-giao': () => import('v@front/modules/lich_cong_giaos'),
-            'module-info-fanpage': () => import('v@front/modules/info_fanpages'),
-            'module-youtube-hanh-cac-thanh': () => import('v@front/modules/youtube_hanh_cac_thanhs'),
-            'module-sach-noi-iframe': () => import('v@front/modules/sach_noi_iframes'),
+            'module-category-icon-side-bar': category_icon_side_bars,
+            'module-thong-bao': thong_baos,
+            'module-lich-cong-giao': lich_cong_giaos,
+            'module-info-fanpage': info_fanpages,
+            'module-youtube-hanh-cac-thanh': youtube_hanh_cac_thanhs,
+            'module-sach-noi-iframe': sach_noi_iframes,
         },
         data() {
             return {

@@ -10,12 +10,14 @@
     import {
         mapState
     } from 'vuex';
+    import noi_bats from 'v@front/modules/noi_bats';
+    import page_banner_lists from 'v@front/modules/page_banner_lists';
 
     export default {
         name: 'ColumnBoth',
         components: {
-            'module-noi-bat': () => import('v@front/modules/noi_bats'),
-            'module-page-banner-list': () => import('v@front/modules/page_banner_lists'),
+            'module-noi-bat': noi_bats,
+            'module-page-banner-list': page_banner_lists,
         },
         props: {
             contentType: {

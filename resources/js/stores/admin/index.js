@@ -9,6 +9,10 @@ import info from './infos';
 import news_category from './categories';
 import app_module from './modules';
 import linh_muc from './linhmucs';
+import giao_phan from './giaophans';
+import giao_hat from './giaohats';
+import giao_xu from './giaoxus';
+import giao_diem from './giaodiems';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -142,7 +146,11 @@ export default new Vuex.Store({
     info,
     news_category,
     app_module,
-    linh_muc
+    linh_muc,
+    giao_phan,
+    giao_hat,
+    giao_xu,
+    giao_diem
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

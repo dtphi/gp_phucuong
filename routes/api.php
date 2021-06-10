@@ -53,6 +53,10 @@ Route::namespace('App\Http\Controllers\Api\Admin')
         Route::get('/informations/dropdowns','InformationController@dropdown');
         Route::apiResource('settings', 'SettingController');
         Route::apiResource('linh-mucs', 'LinhMucController');
+        Route::apiResource('giao-phans', 'GiaoPhanController');
+        Route::apiResource('giao-hats', 'GiaoHatController');
+        Route::apiResource('giao-xus', 'GiaoXuController');
+        Route::apiResource('giao-diems', 'GiaoDiemController');
 
         Route::any('/mmedia/{any}', function () {});
     });
