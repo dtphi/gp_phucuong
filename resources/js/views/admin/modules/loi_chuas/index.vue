@@ -40,7 +40,7 @@
 
                     <div class="panel-body">
                         <info-add-form
-                            ref="formAddUser"></info-add-form>
+                            ref="formAddSetting"></info-add-form>
                     </div>
                 </div>
             </div>
