@@ -15,14 +15,20 @@
         mapGetters,
     } from 'vuex';
 
+    import SideBarInfoLeft from '../SideBar/SideBarInfoLeft';
+    import category_left_side_bars from 'v@front/modules/category_left_side_bars';
+    import NewsletterRegister from 'com@front/Common/NewsletterRegister';
+    import SummaryContact from 'com@front/SummaryContact';
+    import category_sub_left_side_bars from 'v@front/modules/category_sub_left_side_bars';
+
     export default {
         name: 'ColumnLeft',
         components: {
-            'module-info-left-side-bar': () => import('../SideBar/SideBarInfoLeft'),
-            'module-category-left-side-bar': () => import('v@front/modules/category_left_side_bars'),
-            'module-newsletter-register': () => import('com@front/Common/NewsletterRegister'),
-            'module-summary-contact': () => import('com@front/SummaryContact'),
-            'module-category-sub-left-side-bar': () => import('v@front/modules/category_sub_left_side_bars'),
+            'module-info-left-side-bar': SideBarInfoLeft,
+            'module-category-left-side-bar': category_left_side_bars,
+            'module-newsletter-register': NewsletterRegister,
+            'module-summary-contact': SummaryContact,
+            'module-category-sub-left-side-bar': category_sub_left_side_bars,
         },
         props: {
             contentType: {

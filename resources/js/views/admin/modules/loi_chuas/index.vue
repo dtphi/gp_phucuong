@@ -51,7 +51,6 @@
 <script>
     import {
         mapState,
-        mapGetters,
         mapActions
     } from 'vuex';
 
@@ -59,14 +58,14 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
 
     import {
-        MODULE_INFO_ADD
+        MODULE_MODULE_LOI_CHUA
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'InformationAdd',
+        name: 'ModuleThongBao',
         components: {
             Breadcrumb,
             InfoAddForm,
@@ -77,24 +76,24 @@
             }
         },
         computed: {
-            ...mapState(MODULE_INFO_ADD, {
+            ...mapState(MODULE_MODULE_LOI_CHUA, {
                 loading: state => state.loading,
                 errors: state => state.errors,
-                insertSuccess: state => state.insertSuccess
+                updateSuccess: state => state.updateSuccess
             }),
             _errors() {
                 return this.errors.length;
             }
         },
         watch: {
-            'insertSuccess'(newValue, oldValue) {
+            'updateSuccess'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }
             }
         },
         methods: {
-            ...mapActions(MODULE_INFO_ADD, [
+            ...mapActions(MODULE_MODULE_LOI_CHUA, [
                 ACTION_RESET_NOTIFICATION_INFO
             ]),
             _errorToArrs() {
@@ -113,16 +112,7 @@
                 const _self = this;
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
-                        //_self.$refs.formAddUser._submitInfo();
-                    }
-                });
-            },
-            _submitInfoBack() {
-                const _self = this;
-
-                _self.$refs.observerInfo.validate().then((isValid) => {
-                    if (isValid) {
-                        //_self.$refs.formAddUser._submitInfoBack();
+                        _self.$refs.formAddSetting._submitInfo();
                     }
                 });
             },
@@ -132,7 +122,7 @@
             }
         },
         setting: {
-            panel_title: 'Module Lời Chúa',
+            panel_title: 'Module Thông Báo',
             frm_title: 'Thêm danh mục',
             btn_save_txt: 'Lưu',
         }

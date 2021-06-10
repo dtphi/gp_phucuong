@@ -65,6 +65,10 @@
                 <ul class="collapse">
                     <li>
                         <a
+                            :href="_getHref('module-loi-chuas')">{{$options.setting.module_loi_chua}}</a>
+                    </li>
+                    <li>
+                        <a
                             :href="_getHref('module-category-left-side-bars')">{{$options.setting.module_category_left_side_bar}}</a>
                     </li>
                     <li>
@@ -141,6 +145,7 @@
             module_category_icon_side_bar: 'Danh mục Icon',
             module_home_banner: 'Banner trang chủ',
             module_thong_bao: 'Danh mục thông báo',
+            module_loi_chua: 'Danh mục Lời Chúa',
             module_tin_giao_hoi_viet_nam: 'Tin giáo hội việt nam',
             module_tin_giao_hoi: 'Tin giáo hội',
             module_tin_giao_phan: 'Tin giáo phận',

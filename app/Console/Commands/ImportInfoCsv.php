@@ -115,7 +115,7 @@ class ImportInfoCsv extends Command
                     $infoType = 2;
                 }
                 $date = date_create($info['T']);
-                $dateAvailable = date_format($date,"Y/m/d H:i:s");
+                $dateAvailable = date_format($date,"Y-m-d H:i:s");
 
                 Information::insertForce($infoId, $image, $dateAvailable, 0, 1, $viewed, $vote, $sortDes, $nameSlug,
                     $createUser, $infoType);

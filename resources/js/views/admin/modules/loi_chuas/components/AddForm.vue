@@ -1,78 +1,76 @@
 <template>
     <form class="form-horizontal">
-      <loading-over-lay 
-        :active.sync="loading" 
-        :is-full-page="fullPage"></loading-over-lay>
+        <loading-over-lay
+            :active.sync="loading"
+            :is-full-page="fullPage"></loading-over-lay>
         <ul class="nav nav-tabs">
-            
-            <li>
+            <li class="active">
                 <a href="#tab-link" data-toggle="tab">{{$options.setting.tab_link_title}}</a>
             </li>
-            
         </ul>
         <div class="tab-content">
-
             <div class="tab-pane active" id="tab-link">
-                <tab-link
-                        role="tabpanel"
-                        class="tab-pane active"
-                        :is-form="$options.setting.isForm"
-                        :group-data="info"></tab-link>
+                <tab-data
+                    role="tabpanel"
+                    class="tab-pane active"
+                    :module-data="moduleData"></tab-data>
             </div>
-
         </div>
     </form>
 </template>
 
 <script>
-    import { EventBus } from '@app/api/utils/event-bus';
     import {
         mapState,
         mapGetters,
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO_ADD
+        MODULE_MODULE_LOI_CHUA
     } from 'store@admin/types/module-types';
+
     import {
-        ACTION_SET_LOADING,
+        ACTION_GET_SETTING,
+        ACTION_INSERT_SETTING
     } from 'store@admin/types/action-types';
-    import TabLink from './TabLink';
+
+    import TabData from './TabData';
 
     export default {
-        name: 'FormAdd',
+        name: 'TheModuleForm',
         components: {
-            TabLink,
+            TabData,
         },
         data() {
             return {
                 fullPage: false,
-                file: null
             };
         },
         computed: {
-            ...mapState(MODULE_INFO_ADD, {
+            ...mapState(MODULE_MODULE_LOI_CHUA, {
                 loading: state => state.loading
             }),
 
-            ...mapGetters(MODULE_INFO_ADD, [
-                'info',
+            ...mapGetters(MODULE_MODULE_LOI_CHUA, [
+                'moduleData',
             ])
         },
-
+        created() {
+            this.[ACTION_GET_SETTING]();
+        },
         methods: {
-            ...mapActions(MODULE_INFO_ADD, [
-                ACTION_SET_LOADING,
+            ...mapActions(MODULE_MODULE_LOI_CHUA, [
+                ACTION_GET_SETTING,
+                ACTION_INSERT_SETTING
             ]),
-
             _submitInfo() {
-                //this.[ACTION_INSERT_INFO](this.info);
+                this.[ACTION_INSERT_SETTING](this.moduleData);
             },
         },
         setting: {
             tab_general_title: 'Tổng quan',
             tab_advance_title: 'Mở rộng',
-            tab_link_title: 'Danh sách',
+            tab_link_title: 'Dữ liệu',
             tab_design_title: 'Màn hình',
             error_msg_system: 'Lỗi hệ thống !',
         }

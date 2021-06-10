@@ -1,7 +1,7 @@
 <template>
     <div>
-        <i class="fa fa-minus-circle cms-text-red" 
-            @click="_deleteCategory"></i>{{infoToCategory.name}}
+        <i class="fa fa-minus-circle cms-text-red"
+           @click="_deleteCategory"></i>{{infoToCategory.name}}
     </div>
 </template>
 
@@ -17,19 +17,19 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'CategoryItemEdit',
+        name: 'TheCategoryItem',
         props: {
             infoToCategory: {
                 default: null
             }
         },
         methods: {
-        	...mapActions(MODULE_INFO_EDIT, [
-        		ACTION_REMOVE_INFO_TO_CATEGORY_LIST
-        	]),
-          _deleteCategory() {
-              this.[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
-          },
+            ...mapActions(MODULE_INFO_EDIT, [
+                ACTION_REMOVE_INFO_TO_CATEGORY_LIST
+            ]),
+            _deleteCategory() {
+                this.[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
+            },
         },
     };
 </script>

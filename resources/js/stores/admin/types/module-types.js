@@ -15,6 +15,7 @@ export const MODULE_MODULE_CATEGORY_ICON_SIDE_BAR = 'app_module/category_icon_si
 export const MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR = 'app_module/category_left_side_bar';
 export const MODULE_MODULE_HOME_BANNER = 'app_module/home_banner';
 export const MODULE_MODULE_THONG_BAO = 'app_module/thong_bao';
+export const MODULE_MODULE_LOI_CHUA = 'app_module/loi_chua';
 export const MODULE_MODULE_TIN_GIAO_HOI_VIET_NAM = 'app_module/tin_giao_hoi_viet_nam';
 export const MODULE_MODULE_TIN_GIAO_HOI = 'app_module/tin_giao_hoi';
 export const MODULE_MODULE_TIN_GIAO_PHAN = 'app_module/tin_giao_phan';
