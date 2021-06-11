@@ -80,9 +80,7 @@
         <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>  
         <![endif]-->
 
-        <script type="text/javascript">
-            // Initialize the service worker
-            if ('serviceWorker' in navigator) {
+        <!-- /*if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/serviceworker.js', {
                     scope: '.'
                 }).then(function (registration) {
@@ -90,8 +88,9 @@
                 }, function (err) {
                     console.log('Laravel PWA: ServiceWorker registration failed: ', err);
                 });
-            }
-
+            }*/ -->
+        <script type="text/javascript">
+            // Initialize the service worker
             window.page = '<?php echo json_encode($data->settings['page']); ?>';
         </script>
     </head>

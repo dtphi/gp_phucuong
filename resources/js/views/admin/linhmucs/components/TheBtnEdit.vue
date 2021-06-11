@@ -42,7 +42,7 @@
                 }
             },
             _redirectUrl() {
-                return fn_redirect_url(`admin/informations/edit/${this.infoId}`);
+                return fn_redirect_url(`admin/linh-mucs/edit/${this.infoId}`);
             }
         }
     };

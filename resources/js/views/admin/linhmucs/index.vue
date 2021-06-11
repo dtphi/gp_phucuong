@@ -1,6 +1,6 @@
 <template>
     <div id="content">
-        <!--<the-header-page></the-header-page>-->
+        <the-header-page></the-header-page>
         <div class="container-fluid">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -67,7 +67,7 @@
         mapActions
     } from 'vuex';
     import Item from './components/TheItem';
-    //import TheHeaderPage from './components/TheHeaderPage';
+    import TheHeaderPage from './components/TheHeaderPage';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Paginate from 'com@admin/Pagination';
     import {
@@ -82,7 +82,7 @@
         name: 'InformationList',
         components: {
             Breadcrumb,
-            //TheHeaderPage,
+            TheHeaderPage,
             Item,
             Paginate
         },

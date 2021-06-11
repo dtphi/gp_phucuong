@@ -61,3 +61,7 @@ Vue.use(VModal, {
 /*Add vue notification*/
 import Notifications from 'vue-notification';
 Vue.use(Notifications);
+
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+Vue.component('CmsDatePicker',DatePicker);

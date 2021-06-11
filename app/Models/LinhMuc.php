@@ -7,7 +7,7 @@ use App\Http\Common\Tables;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class LinhMuc extends BaseModel
+class Linhmuc extends BaseModel
 {
     use SoftDeletes;
 

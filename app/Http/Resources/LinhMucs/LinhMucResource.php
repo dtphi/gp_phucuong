@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\LinhMucs;
+namespace App\Http\Resources\Linhmucs;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LinhMucResource extends JsonResource
+class LinhmucResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

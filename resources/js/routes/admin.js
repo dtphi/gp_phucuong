@@ -8,6 +8,12 @@ import GiaoPhanPage from 'v@admin/giaophans';
 import GiaoHatPage from 'v@admin/giaohats';
 import GiaoXuPage from 'v@admin/giaoxus';
 import GiaoDiemPage from 'v@admin/giaodiems';
+import SystemPage from 'v@admin/systems';
+import DashboardPage from 'v@admin/dashboards';
+import CategoryListPage from 'v@admin/categorys';
+import UserListPage from 'v@admin/users';
+import InformationListPage from 'v@admin/informations';
+import FileManagerListPage from 'v@admin/filemanagers';
 
 import {
     config
@@ -37,8 +43,7 @@ export default [{
         }
     }, {
         path: 'dashboards',
-        component: () =>
-            import ('v@admin/dashboards'),
+        component: DashboardPage,
         name: 'admin.dashboards',
         meta: {
             layout: DefaultLayout,
@@ -77,8 +82,7 @@ export default [{
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@admin/categorys'),
+            component: CategoryListPage,
             name: 'admin.category.list',
             meta: {
                 layout: DefaultLayout,
@@ -157,8 +161,7 @@ export default [{
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@admin/users'),
+            component: UserListPage,
             name: 'admin.users.list',
             meta: {
                 auth: true,
@@ -182,8 +185,7 @@ export default [{
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@admin/informations'),
+            component: InformationListPage,
             name: 'admin.informations.list',
             meta: {
                 auth: true,
@@ -278,8 +280,7 @@ export default [{
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@admin/filemanagers'),
+            component: FileManagerListPage,
             name: 'admin.filemanagers.list',
             meta: {
                 auth: true,
@@ -303,9 +304,8 @@ export default [{
         },
         children: [{
             path: '',
-            component: () =>
-                import ('v@admin/systems'),
-            name: 'admin.system',
+            component: SystemPage,
+            name: 'admin.system.setting',
             meta: {
                 layout: DefaultLayout,
                 auth: true,
@@ -332,7 +332,7 @@ export default [{
         children: [{
             path: '',
             component: LinhMucPage,
-            name: 'admin.system',
+            name: 'admin.linh_muc.list',
             meta: {
                 layout: DefaultLayout,
                 auth: true,
@@ -350,7 +350,32 @@ export default [{
                     footer: true
                 }
             }
-        }]
+        },{
+            path: 'add',
+            component: () => import ('v@admin/linhmucs/add'),
+            name: 'admin.linh_muc.add',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Danh mục tin',
+                    linkName: 'admin.linh_muc.list',
+                    linkPath: '/linh-mucs'
+                }, {
+                    name: 'Thêm Linh Muc'
+                }],
+                header: 'Thêm linh mục',
+                role: 'admin',
+                title: 'Thêm linh mục | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        },]
     }, {
         path: 'giao-phans',
         component: {
@@ -359,7 +384,7 @@ export default [{
         children: [{
             path: '',
             component: GiaoPhanPage,
-            name: 'admin.system',
+            name: 'admin.giao_phan.list',
             meta: {
                 layout: DefaultLayout,
                 auth: true,
@@ -386,7 +411,7 @@ export default [{
         children: [{
             path: '',
             component: GiaoHatPage,
-            name: 'admin.system',
+            name: 'admin.giao_hat.list',
             meta: {
                 layout: DefaultLayout,
                 auth: true,
@@ -440,7 +465,7 @@ export default [{
         children: [{
             path: '',
             component: GiaoDiemPage,
-            name: 'admin.system',
+            name: 'admin.giao_diem.list',
             meta: {
                 layout: DefaultLayout,
                 auth: true,

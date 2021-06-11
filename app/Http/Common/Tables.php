@@ -20,9 +20,15 @@ final class Tables
     public static $settings = DB_PREFIX . 'settings';
 
     public static $linhmucs = DB_PREFIX . 'linhmucs';
+    public static $linhmuc_bangcaps = DB_PREFIX . 'linhmuc_bangcaps';
+    public static $linhmuc_vanthus = DB_PREFIX . 'linhmuc_vanthus';
+    public static $linhmuc_chucthanhs = DB_PREFIX . 'linhmuc_chucthanhs';
+    public static $linhmuc_thuyenchuyens = DB_PREFIX . 'linhmuc_thuyenchuyens';
+
     public static $giaophans = DB_PREFIX . 'giaophans';
     public static $giaophan_hats = DB_PREFIX . 'giaophan_hats';
     public static $giaophan_hat_xus = DB_PREFIX . 'giaophan_hat_xus';
+    public static $giaophan_hat_congdoantusis = DB_PREFIX . 'giaophan_hat_congdoantusis'; 
     public static $giaophan_hat_xu_diems = DB_PREFIX . 'giaophan_hat_xu_diems';
 
     public static $infoStatus = [
@@ -82,5 +88,13 @@ final class Tables
     
         'module_both_noi_bat'=> 'noi-bat',
         'module_both_page_banner_list'=> 'page-banner-list'
+    ];
+
+    public static $chucThanhs = [
+        '','Phó Tế', 'Linh Mục', 'Giám Mục'
+    ];
+
+    public static $trieuDongs = [
+        'Tu Triều', 'Tu Dòng'
     ];
 }

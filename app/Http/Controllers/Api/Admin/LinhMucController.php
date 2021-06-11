@@ -61,7 +61,7 @@ class LinhMucController extends ApiController
                 $results[] = [
                     'id' => (int)$info->id,
                     'ten'           => $info->ten,
-                    'ten_thanh'         => $info->ten_thanh,
+                    'ten_thanh'         => $info->ten_thanh_id,
                     'image'          => $info->image,
                     'imgThum'        => url($this->getThumbnail($staticImgThum, 0, 40)),
                     //'status_text'    => $info->status_text,
@@ -94,7 +94,7 @@ class LinhMucController extends ApiController
     public function show($id = null)
     {
         try {
-            $json = $this->infoSv->apiGetResourceDetail($id);
+            $json = $this->linhMucSv->apiGetResourceDetail($id);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -129,7 +129,7 @@ class LinhMucController extends ApiController
     public function update(InformationRequest $request, $id = null)
     {
         try {
-            $model = $this->infoSv->apiGetDetail($id);
+            $model = $this->linhMucSv->apiGetDetail($id);
 
         } catch (HandlerMsgCommon $e) {
             Log::debug('User not found, Request ID = ' . $id);
@@ -148,12 +148,12 @@ class LinhMucController extends ApiController
     public function destroy($id = null)
     {
         try {
-            $model = $this->infoSv->apiGetDetail($id);
+            $model = $this->linhMucSv->apiGetDetail($id);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
 
-        $this->infoSv->deleteInformation($model);
+        $this->linhMucSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -167,7 +167,7 @@ class LinhMucController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->infoSv->apiInsert($formData)) {
+        if ($result = $this->linhMucSv->apiInsert($formData)) {
             return $this->respondUpdated($result);
         }
 
@@ -184,7 +184,7 @@ class LinhMucController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->infoSv->apiUpdate($model, $formData)) {
+        if ($result = $this->linhMucSv->apiUpdate($model, $formData)) {
             return $this->respondUpdated($result);
         }
 
@@ -214,7 +214,7 @@ class LinhMucController extends ApiController
     {
         $data = $request->all();
 
-        $results     = $this->infoSv->apiGetList($data);
+        $results     = $this->linhMucSv->apiGetList($data);
         $collections = [];
 
         foreach ($results as $key => $value) {
