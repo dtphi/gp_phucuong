@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api\Admin\Services;
 
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
-use App\Http\Controllers\Api\Admin\Services\Contracts\LinhmucModel;
+use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
 use App\Http\Resources\Linhmucs\LinhmucCollection;
 use App\Http\Resources\Linhmucs\LinhmucResource;
 use App\Models\Linhmuc;
 use App\Http\Common\Tables;
 use DB;
 
-final class LinhmucService implements BaseModel, LinhmucModel
+final class LinhmucService implements BaseModel, LinhMucModel
 {
     /**
      * @var Linhmuc|null
