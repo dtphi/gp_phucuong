@@ -358,8 +358,7 @@ final class InformationService implements BaseModel, InformationModel
                 ->orderBy('date_available', 'DESC');
         } else {
             $query = $this->model->select()
-            ->orderBy('sort_order', 'DESC')
-            ->orderBy('date_available', 'DESC');
+            ->orderBy('information_id', 'DESC');
         }
 
         return $query;

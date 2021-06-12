@@ -156,9 +156,8 @@ export default {
     addSpecial({commit, state},data) {
       let infos = state.module_special_info_ids;
       let values = state.module_special_infos;
-      console.log(data)
+      
       if (data.isChecked) {
-        console.log('add')
         infos.push(data.info.information_id);
 
         values.push({
@@ -166,7 +165,6 @@ export default {
           img: data.info.image.path
         });
       } else {
-        console.log('remove')
         _.remove(infos, function (itemId) {
             return !(parseInt(itemId) - parseInt(data.info.information_id));
         });
@@ -216,12 +214,22 @@ export default {
       )
     },
     module_special_info_ids({dispatch, commit,state}, value) {
+      let infos = state.module_special_infos;
+      var asorts = _.orderBy(infos, o => o.id, 'desc');
+      let values = [];
+      _.forEach(asorts, function(item, idx) {
+        if (idx < 5) {
+          values.push(item);
+        } else {
+          return;
+        }
+      });
       const moduleData = {
         code: 'module_special_info',
         keys: [
           {
             key: 'module_special_info_ids',
-            value: state.module_special_infos,
+            value: infos,
             serialize: true
           }
         ]
