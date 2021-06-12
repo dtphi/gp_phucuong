@@ -2,8 +2,8 @@
 	<button 
 		type="button" 
 		data-toggle="tooltip"
-		@click="_addInfo()"
-        title="Thêm bằng cấp" class="btn btn-default cms-btn">
+		@click="_showModal()"
+    :title="$options.setting.btn_add_txt" class="btn btn-default cms-btn">
           <font-awesome-layers style="background:honeydew">
               <font-awesome-icon size="1x" icon="plus"/>
           </font-awesome-layers>
@@ -15,26 +15,25 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_NOI_BAT
+        MODULE_USER_MODAL
     } from 'store@admin/types/module-types';
+    import {
+        ACTION_SHOW_MODAL
+    } from 'store@admin/types/action-types';
 
     export default {
         name: 'TheButtonAdd',
-        props: {
-            moduleKey: {
-                default: ''
-            }
-        },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
-                'module_noi_bat_youtubes'
+            ...mapActions(MODULE_USER_MODAL, [
+                ACTION_SHOW_MODAL
             ]),
 
-            _addInfo() {
-                this.module_noi_bat_youtubes({
-                    action: this.moduleKey
-                });
+            _showModal() {
+                this.[ACTION_SHOW_MODAL]({action: 'add'});
             }
         },
+        setting: {
+            btn_add_txt: 'Thêm hình ảnh bổ sung',
+        }
     };
 </script>

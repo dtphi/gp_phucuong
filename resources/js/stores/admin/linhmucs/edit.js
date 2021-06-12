@@ -1,4 +1,5 @@
 import AppConfig from 'api@admin/constants/app-config';
+import { v4 as uuidv4 } from 'uuid';
 import {
   apiGetInfoById,
   apiUpdateInfo
@@ -70,12 +71,14 @@ const defaultState = () => {
       noicap_cmnd:'',
       ngay_cap_cmnd:null,
       trieu_dong:null,
-      ten_dong:'',
+      ten_dong_id:'',
       ngay_trieu_dong:null,
       ngay_khan:null,
       ngay_rip:null,
       rip_giaoxu_id:null,
       rip_ghi_chu:'',
+      ghichu: '',
+      active: 1,
 
       bang_caps: [],
       chuc_thanhs: [],
@@ -177,6 +180,87 @@ export default {
   },
 
   actions: {
+    addBangCaps({state}, params) {
+      state.info.bang_caps.push({
+        id: uuidv4(),
+        name: '',
+        type: 0,
+        ghichu: '',
+        active: 1
+      })
+    },
+    removeBangCap({state}, params) {
+      let bangCaps = state.info.bang_caps;
+      const data = params.item;
+
+      state.info.bang_caps = _.remove(bangCaps, function(item) {
+        return !(item.id == data.id);
+      })
+    },
+    addChucThanhs({state}, params) {
+      state.info.chuc_thanhs.push({
+        id: uuidv4(),
+        chuc_thanh_id: 1,
+        ngay_thang_nam_chuc_thanh: null,
+        noi_thu_phong:'',
+        nguoi_thu_phong:'',
+        ghichu: '',
+        active: 1
+      })
+    },
+    removeChucThanh({state}, params) {
+      let chuc_thanhs = state.info.chuc_thanhs;
+      const data = params.item;
+
+      state.info.chuc_thanhs = _.remove(chuc_thanhs, function(item) {
+        return !(item.id == data.id);
+      })
+    },
+    addVanThus({state}, params) {
+      state.info.van_thus.push({
+        id: uuidv4(),
+        parent_id: 0,
+        title: null,
+        type:'',
+        ghichu: '',
+        active: 1
+      })
+    },
+    removeVanThu({state}, params) {
+      let van_thus = state.info.van_thus;
+      const data = params.item;
+
+      state.info.van_thus = _.remove(van_thus, function(item) {
+        return !(item.id == data.id);
+      })
+    },
+    addThuyenChuyen({state}, params) {
+      state.info.thuyen_chuyens.push({
+        id: uuidv4(),
+        fromgiaoxu_id: null,
+        fromchucvu_id: null,
+        from_date: null,
+        duccha_id: null,
+        to_date: null,
+        chucvu_id: null,
+        giaoxu_id: null,
+        cosogp_id: null,
+        dong_id: null,
+        banchuyentrach_id: null,
+        duhoc: null,
+        quocgia: null,
+        ghichu: '',
+        active: 1
+      })
+    },
+    removeThuyenChuyen({state}, params) {
+      let thuyen_chuyens = state.info.thuyen_chuyens;
+      const data = params.item;
+
+      state.info.thuyen_chuyens = _.remove(thuyen_chuyens, function(item) {
+        return !(item.id == data.id);
+      })
+    },
     update_special_carousel({state}, specialCarousel) {
       state.info.special_carousels = specialCarousel;
     },

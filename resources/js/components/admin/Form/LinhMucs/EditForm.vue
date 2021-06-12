@@ -11,23 +11,23 @@
             </li>
             <li>
                 <a
-                    href="#tab-advance"
-                    data-toggle="tab">{{$options.setting.tab_advance_title}}</a>
+                    href="#tab-bang-cap"
+                    data-toggle="tab">{{$options.setting.tab_bang_cap_title}}</a>
             </li>
             <li>
                 <a
-                    href="#tab-link"
-                    data-toggle="tab">{{$options.setting.tab_link_title}}</a>
+                    href="#tab-chuc-thanh"
+                    data-toggle="tab">{{$options.setting.tab_chuc_thanh_title}}</a>
             </li>
             <li>
                 <a
-                    href="#tab-media-manager"
-                    data-toggle="tab">{{$options.setting.tab_image_title}}</a>
+                    href="#tab-van-thu"
+                    data-toggle="tab">{{$options.setting.tab_van_thu_title}}</a>
             </li>
             <li>
                 <a
-                    href="#tab-special-info"
-                    data-toggle="tab">{{$options.setting.tab_special_info_title}}</a>
+                    href="#tab-thuyen-chuyen"
+                    data-toggle="tab">{{$options.setting.tab_thuyen_chuyen_title}}</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -38,40 +38,38 @@
                     :general-data="info"></tab-general>
             </div>
 
-            <div class="tab-pane" id="tab-advance">
-                <tab-advance
+            <div class="tab-pane" id="tab-bang-cap">
+                <tab-bang-cap
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-advance>
+                    :group-data="info"></tab-bang-cap>
             </div>
 
-            <div class="tab-pane" id="tab-link">
-                <tab-link
+            <div class="tab-pane" id="tab-chuc-thanh">
+                <tab-chuc-thanh
                     role="tabpanel"
                     class="tab-pane"
-                    :is-form="$options.setting.isForm"
-                    :group-data="info"></tab-link>
+                    :group-data="info"></tab-chuc-thanh>
             </div>
 
-            <div class="tab-pane" id="tab-media-manager">
-                <tab-media-manager
-                    ref="mediaManagerTab"
+            <div class="tab-pane" id="tab-van-thu">
+                <tab-van-thu
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-media-manager>
+                    :group-data="info"></tab-van-thu>
             </div>
 
-            <div class="tab-pane" id="tab-special-info">
-                <tab-special-info-carousel
+            <div class="tab-pane" id="tab-thuyen-chuyen">
+                <tab-thuyen-chuyen
                     role="tabpanel"
-                    class="tab-pane"></tab-special-info-carousel>
+                    class="tab-pane"
+                    :group-data="info"></tab-thuyen-chuyen>
             </div>
         </div>
     </form>
 </template>
 
 <script>
-    import TabSpecialInfoCarousel from './TabSpecialInfoCarousel';
     import {EventBus} from '@app/api/utils/event-bus';
     import {
         mapState,
@@ -79,27 +77,28 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO_EDIT,
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
+        MODULE_MODULE_LINH_MUC_EDIT,
     } from 'store@admin/types/module-types';
     import {
-        ACTION_UPDATE_INFO,
+        ACTION_SET_LOADING,
+        ACTION_INSERT_INFO,
         ACTION_SET_IMAGE,
-        ACTION_GET_SETTING
+        ACTION_INSERT_INFO_BACK
     } from 'store@admin/types/action-types';
-    import TabGeneral from './TabGeneral';
-    import TabAdvance from './TabAdvance';
-    import TabLink from './TabLink';
-    import TabMediaManager from './TabImage';
+    import TabGeneral from './edits/TabGeneral';
+    import TabBangCap from './edits/TabBangCap';
+    import TabChucThanh from './edits/TabChucThanh';
+    import TabVanThu from './edits/TabVanThu';
+    import TabThuyenChuyen from './edits/TabThuyenChuyen';
 
     export default {
-        name: 'InformationEditForm',
+        name: 'FormEdit',
         components: {
-            TabSpecialInfoCarousel,
             TabGeneral,
-            TabMediaManager,
-            TabAdvance,
-            TabLink
+            TabBangCap,
+            TabChucThanh,
+            TabVanThu,
+            TabThuyenChuyen
         },
         data() {
             return {
@@ -108,19 +107,12 @@
             };
         },
         computed: {
-            ...mapState(MODULE_INFO_EDIT, {
+            ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
                 loading: state => state.loading
             }),
-            ...mapGetters(MODULE_INFO_EDIT, [
-                'info'
+            ...mapGetters(MODULE_MODULE_LINH_MUC_EDIT, [
+                'info',
             ])
-        },
-        watch: {
-            'info.special_carousels'(newValue, oldValue) {
-                if (newValue) {
-                    this._setInfoCarousel(newValue);
-                }
-            }
         },
         mounted() {
             const _self = this;
@@ -130,16 +122,17 @@
             });
         },
         methods: {
-            ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                ACTION_GET_SETTING
-            ]),
-            ...mapActions(MODULE_INFO_EDIT, [
-                ACTION_UPDATE_INFO,
+            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
+                ACTION_SET_LOADING,
+                ACTION_INSERT_INFO,
+                ACTION_INSERT_INFO_BACK,
                 ACTION_SET_IMAGE
             ]),
             _submitInfo() {
-                const _self = this;
-                _self.[ACTION_UPDATE_INFO](_self.info);
+                this.[ACTION_INSERT_INFO](this.info);
+            },
+            _submitInfoBack() {
+                this.[ACTION_INSERT_INFO_BACK](this.info);
             },
             _selectMainImg(file) {
                 const image = {
@@ -152,7 +145,7 @@
                     thumb: "",
                     timestamp: '',
                     type: ""
-                }
+                };
                 if (typeof file === "object") {
                     let selected = image;
 
@@ -162,21 +155,17 @@
 
                     this.[ACTION_SET_IMAGE](selected);
                 }
-            },
-            _setInfoCarousel() {
-                this.[ACTION_GET_SETTING](this.info.special_carousels);
             }
         },
         setting: {
-            btnSubmitTxt: 'Update',
             tab_general_title: 'Tổng quan',
-            tab_advance_title: 'Mở rộng',
-            tab_image_title: 'Hình ảnh',
-            tab_link_title: 'Liên kết',
-            tab_design_title: 'Màn hình',
-            error_msg_system: 'Lỗi hệ thống !',
-            isForm: 'edit',
+            tab_bang_cap_title: 'Bằng Cấp',
+            tab_chuc_thanh_title: 'Chức Thánh',
+            tab_thuyen_chuyen_title: 'Thuyên Chuyển',
+            tab_van_thu_title: 'Văn Thư',
             tab_special_info_title: 'Slide tin tức tiêu điểm',
+            error_msg_system: 'Lỗi hệ thống !',
+            isForm: 'edit'
         }
     };
 </script>

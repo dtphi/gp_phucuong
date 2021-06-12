@@ -375,6 +375,31 @@ export default [{
                     footer: true
                 }
             }
+        }, {
+            path: 'edit/:linhmucId',
+            component: () => import ('v@admin/linhmucs/edit'),
+            name: 'admin.linh_muc.edit',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Danh mục tin',
+                    linkName: 'admin.linh_muc.list',
+                    linkPath: '/linh-mucs'
+                }, {
+                    name: 'Sửa Linh Muc'
+                }],
+                header: 'Thêm linh mục',
+                role: 'admin',
+                title: 'Thêm linh mục | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
         },]
     }, {
         path: 'giao-phans',

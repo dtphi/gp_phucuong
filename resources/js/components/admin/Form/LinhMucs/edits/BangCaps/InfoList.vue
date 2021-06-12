@@ -3,10 +3,10 @@
         <table id="info-bang-cap-list" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <td class="text-left">{{$options.setting.info_title}}</td>
-                    <td class="text-left">{{$options.setting.info_author_titile}}</td>
-                    <td class="text-left">Trạng thái</td>
-                    <td class="text-left">Mở</td>
+                    <td class="text-left">Tên bằng</td>
+                    <td class="text-left">Ghi chú</td>
+                    <td class="text-left">Loại</td>
+                    <td class="text-left">Tình trạng</td>
                     <td calss="text-right">{{$options.setting.info_action_title}}</td>
                 </tr>
             </thead>
@@ -15,7 +15,7 @@
                     <td>
                         <validation-provider
                             :name="`item_name${item.id}`"
-                            rules="required|url|max:500"
+                            rules="required|max:255"
                             v-slot="{ errors }">
                             <input v-model="item.name" class="form-control" type="text"/>
 
@@ -23,18 +23,25 @@
                         </validation-provider>
                     </td>
                     <td>
-                        <textarea 
-                            v-model="item.ghichu"></textarea>
+                        <validation-provider
+                            :name="`item_name${item.id}`"
+                            rules="max:500"
+                            v-slot="{ errors }">
+                            <textarea class="form-control"
+                                v-model="item.ghichu"></textarea>
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                        </validation-provider>
                     </td>
                     <td>
-                        <select 
+                        <select class="form-control"
                             v-model="item.type">
-                            <option value="0" :selected="item.type == 0">_blank</option>
-                            <option value="1" :selected="item.type == 1">_self</option>
+                            <option value="0" :selected="item.type == 0">Loại 1</option>
+                            <option value="1" :selected="item.type == 1">Loại 2</option>
                         </select>
                     </td>
                     <td>
-                        <select 
+                        <select class="form-control"
                             v-model="item.active">
                             <option value="1" :selected="item.active == 1">Xảy ra</option>
                             <option value="0" :selected="item.active == 0">Ẩn</option>
@@ -68,15 +75,12 @@
 </template>
 
 <script>
-import {
-    mapActions
-} from 'vuex';
     import {
-        fn_get_base_url_image
-    } from '@app/api/utils/fn-helper';
+        mapActions
+    } from 'vuex';
     import BtnAdd from './BtnAdd';
     import {
-        MODULE_MODULE_NOI_BAT
+        MODULE_MODULE_LINH_MUC_EDIT
     } from 'store@admin/types/module-types';
 
     export default {
@@ -92,12 +96,12 @@ import {
         computed: {
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
-                'module_noi_bat_youtubes_action_remove'
+            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
+                'removeBangCap'
             ]),
             _removeItem(item) {
-                this.module_noi_bat_youtubes_action_remove({
-                    action: this.lists.key,
+                this.removeBangCap({
+                    action: '',
                     item: item
                 });
             }

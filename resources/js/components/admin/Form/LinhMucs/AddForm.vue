@@ -62,7 +62,8 @@
             <div class="tab-pane" id="tab-thuyen-chuyen">
                 <tab-thuyen-chuyen
                     role="tabpanel"
-                    class="tab-pane"></tab-thuyen-chuyen>
+                    class="tab-pane"
+                    :group-data="info"></tab-thuyen-chuyen>
             </div>
         </div>
     </form>
@@ -84,11 +85,11 @@
         ACTION_SET_IMAGE,
         ACTION_INSERT_INFO_BACK
     } from 'store@admin/types/action-types';
-    import TabGeneral from './TabGeneral';
-    import TabBangCap from './TabBangCap';
-    import TabChucThanh from './TabChucThanh';
-    import TabVanThu from './TabVanThu';
-    import TabThuyenChuyen from './TabThuyenChuyen';
+    import TabGeneral from './adds/TabGeneral';
+    import TabBangCap from './adds/TabBangCap';
+    import TabChucThanh from './adds/TabChucThanh';
+    import TabVanThu from './adds/TabVanThu';
+    import TabThuyenChuyen from './adds/TabThuyenChuyen';
 
     export default {
         name: 'FormAdd',

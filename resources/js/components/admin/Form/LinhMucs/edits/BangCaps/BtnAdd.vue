@@ -15,7 +15,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_NOI_BAT
+        MODULE_MODULE_LINH_MUC_EDIT
     } from 'store@admin/types/module-types';
 
     export default {
@@ -26,13 +26,13 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
-                'module_noi_bat_youtubes'
+            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
+                'addBangCaps'
             ]),
 
             _addInfo() {
-                this.module_noi_bat_youtubes({
-                    action: this.moduleKey
+                this.addBangCaps({
+                    action: ''
                 });
             }
         },
