@@ -28,8 +28,11 @@ final class Tables
     public static $giaophans = DB_PREFIX . 'giaophans';
     public static $giaophan_hats = DB_PREFIX . 'giaophan_hats';
     public static $giaophan_hat_xus = DB_PREFIX . 'giaophan_hat_xus';
-    public static $giaophan_hat_congdoantusis = DB_PREFIX . 'giaophan_hat_congdoantusis'; 
     public static $giaophan_hat_xu_diems = DB_PREFIX . 'giaophan_hat_xu_diems';
+    public static $giaophan_hat_congdoantusis = DB_PREFIX . 'giaophan_hat_congdoantusis';
+    public static $giaophan_dongs = DB_PREFIX . 'giaophan_dongs';
+    public static $giaophan_cosos = DB_PREFIX . 'giaophan_cosos';
+    public static $giaophan_banchuyentrachs = DB_PREFIX . 'giaophan_banchuyentrachs';
 
     public static $thanhs = DB_PREFIX . 'thanhs';
     public static $chuc_vus = DB_PREFIX . 'chuc_vus';
@@ -37,7 +40,9 @@ final class Tables
     public static $dongs = DB_PREFIX . 'dongs';
     public static $ban_chuyen_trachs = DB_PREFIX . 'ban_chuyen_trachs';
     public static $cong_doan_tu_sis = DB_PREFIX . 'cong_doan_tu_sis';
+    public static $giao_hats = DB_PREFIX . 'giao_hats';
     public static $giao_xus = DB_PREFIX . 'giao_xus';
+    public static $giao_diems = DB_PREFIX . 'giao_diems';
 
     public static $infoStatus = [
         'Ẩn',

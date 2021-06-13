@@ -14,5 +14,5 @@ class GiaoHat extends BaseModel
     /**
      * @var string
      */
-    protected $table = DB_PREFIX . 'giaophan_hats';
+    protected $table = DB_PREFIX . 'giao_hats';
 }

@@ -14,5 +14,5 @@ class GiaoDiem extends BaseModel
     /**
      * @var string
      */
-    protected $table = DB_PREFIX . 'giaophan_hat_xu_diems';
+    protected $table = DB_PREFIX . 'giao_diems';
 }
