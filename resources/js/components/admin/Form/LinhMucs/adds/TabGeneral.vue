@@ -1,5 +1,8 @@
 <template>
     <div class="tab-content">
+        <div>
+            <info-ten-thanh-autocomplete></info-ten-thanh-autocomplete>
+        </div>
         <div class="form-group required">
             <label
                 for="input-info-name"
@@ -19,9 +22,6 @@
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
-        </div>
-        <div>
-            <info-to-category-autocomplete></info-to-category-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div>
-            <info-to-category-autocomplete></info-to-category-autocomplete>
+            <info-giao-xu-autocomplete @on-select-giao-xu="_selectGiaoXu"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -237,70 +237,6 @@
         </div>
         <div class="form-group required">
             <label
-                for="input-info-chuc-thanh"
-                class="col-sm-2 control-label">Chuc thánh:</label>
-            <div class="col-sm-10">
-                <select class="form-control" v-model="generalData.chuc_thanh_id">
-                    <option value="">--Chọn chức thánh--</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group required">
-            <label
-                for="input-info-so-cmnd"
-                class="col-sm-2 control-label">Số CMND</label>
-            <div class="col-sm-10">
-                <validation-provider
-                    name="info_so_cmnd"
-                    rules="required|max:200"
-                    v-slot="{ errors }">
-                    <input
-                        v-model="generalData.so_cmnd"
-                        type="text"
-                        id="input-info-so-cmnd"
-                        class="form-control"
-                        :placeholder="$options.setting.name_txt">
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
-            </div>
-        </div>
-        <div class="form-group required">
-            <label
-                for="input-info-noicap-cmnd"
-                class="col-sm-2 control-label">Nơi cấp CMND:</label>
-            <div class="col-sm-10">
-                <validation-provider
-                    name="info_noicap_cmnd"
-                    rules="required|max:200"
-                    v-slot="{ errors }">
-                    <input
-                        v-model="generalData.noicap_cmnd"
-                        type="text"
-                        id="input-info-noicap-cmnd"
-                        class="form-control"
-                        :placeholder="$options.setting.name_txt">
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
-            </div>
-        </div>
-        <div class="form-group required">
-            <label
-                for="input-info-ngay-cap-cmnd"
-                class="col-sm-2 control-label">Ngày cấp CMND:</label>
-            <div class="col-sm-10">
-                <validation-provider
-                    name="info_ngay_cap_cmnd"
-                    rules="required|max:500"
-                    v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_cap_cmnd" type="datetime"></cms-date-picker>
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
-            </div>
-        </div>
-        <div class="form-group required">
-            <label
                 for="input-info-trieu-dong"
                 class="col-sm-2 control-label">Triệu dòng:</label>
             <div class="col-sm-10">
@@ -308,12 +244,14 @@
                     name="info_trieu_dong"
                     rules="required|max:200"
                     v-slot="{ errors }">
-                    <input
-                        v-model="generalData.trieu_dong"
-                        type="text"
+                    <select class="form-control" 
                         id="input-info-trieu-dong"
-                        class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        v-model="generalData.trieu_dong">
+                        <option 
+                            :selected="(generalData.trieu_dong==idx)?'selected':''" 
+                            :value="idx" v-for="(item, idx) in $options.setting.cf.trieuDongs" 
+                            :key="idx">{{item}}</option>
+                    </select>
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -381,25 +319,8 @@
                 </validation-provider>
             </div>
         </div>
-        <div class="form-group required">
-            <label
-                for="input-info-rip-giaoxu-id"
-                class="col-sm-2 control-label">Triệu dòng:</label>
-            <div class="col-sm-10">
-                <validation-provider
-                    name="info_rip_giaoxu_id"
-                    rules="required|max:200"
-                    v-slot="{ errors }">
-                    <input
-                        v-model="generalData.rip_giaoxu_id"
-                        type="text"
-                        id="input-info-rip-giaoxu-id"
-                        class="form-control"
-                        :placeholder="$options.setting.name_txt">
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
-            </div>
+        <div>
+            <info-giao-xu-autocomplete></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -419,52 +340,26 @@
                 </validation-provider>
             </div>
         </div>
-        <div class="form-group required">
-            <label
-                for="input-info-ghi-chu"
-                class="col-sm-2 control-label">Ghi chú</label>
-            <div class="col-sm-10">
-                <validation-provider
-                    name="info_ghi_chu"
-                    rules="required"
-                    v-slot="{ errors }">
-                    <tinymce 
-                        id="input-ghi-chu"
-                        :other_options="options"
-                        v-model="generalData.ghi_chu"></tinymce>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label"
-                   for="input-info-status">Trạng thái</label>
-            <div class="col-sm-10">
-                <select
-                    v-model="generalData.active"
-                    id="input-info-active"
-                    class="form-control">
-                    <option value="1" selected="selected">Xảy ra</option>
-                    <option value="0">Ẩn</option>
-                </select>
-            </div>
-        </div>
     </div>
 </template>
 
 <script>
+    import {
+        config
+    } from '@app/common/config';
     import tinymce from 'vue-tinymce-editor';
     import {
         fn_get_tinymce_langs_url
     } from '@app/api/utils/fn-helper';
-    import InfoToCategoryAutocomplete from './Category/InfoToCategoryAutocomplete';
+    import InfoGiaoXuAutocomplete from './Groups/InfoGiaoXuAutocomplete';
+    import InfoTenThanhAutocomplete from './Groups/InfoTenThanhAutocomplete';
 
     export default {
         name: 'TabGeneralForm',
         components: {
             tinymce,
-            InfoToCategoryAutocomplete,
+            InfoGiaoXuAutocomplete,
+            InfoTenThanhAutocomplete
         },
         props: {
             generalData: {
@@ -569,8 +464,12 @@
             }
         },
         methods: {
+            _selectGiaoXu(giaoxu) {
+                console.log('giao xu', giaoxu)
+            }
         },
         setting: {
+            cf: config,
             name_txt: 'Tên',
             info_sort_description_txt: 'Mô tả',
             info_description_txt: 'Nội dung',

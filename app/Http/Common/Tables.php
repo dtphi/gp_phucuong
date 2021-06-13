@@ -31,6 +31,14 @@ final class Tables
     public static $giaophan_hat_congdoantusis = DB_PREFIX . 'giaophan_hat_congdoantusis'; 
     public static $giaophan_hat_xu_diems = DB_PREFIX . 'giaophan_hat_xu_diems';
 
+    public static $thanhs = DB_PREFIX . 'thanhs';
+    public static $chuc_vus = DB_PREFIX . 'chuc_vus';
+    public static $co_so_giao_phans = DB_PREFIX . 'co_so_giao_phans';
+    public static $dongs = DB_PREFIX . 'dongs';
+    public static $ban_chuyen_trachs = DB_PREFIX . 'ban_chuyen_trachs';
+    public static $cong_doan_tu_sis = DB_PREFIX . 'cong_doan_tu_sis';
+    public static $giao_xus = DB_PREFIX . 'giao_xus';
+
     public static $infoStatus = [
         'Ẩn',
         'Xảy ra'

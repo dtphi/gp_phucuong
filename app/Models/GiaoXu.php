@@ -14,5 +14,5 @@ class GiaoXu extends BaseModel
     /**
      * @var string
      */
-    protected $table = DB_PREFIX . 'giaophan_hat_xus';
+    protected $table = DB_PREFIX . 'giao_xus';
 }

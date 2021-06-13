@@ -12,19 +12,13 @@
                 <tr>
                     <td class="text-left">Từ giáo xứ</td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.fromgiaoxu_id">
-                            <option value="0" :selected="item.fromgiaoxu_id == null">Từ giáo xứ</option>
-                        </select>
+                        <info-giao-xu-autocomplete></info-giao-xu-autocomplete>
                     </td>
                 </tr>
                 <tr>
                     <td class="text-left">Chức vụ</td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.fromchucvu_id">
-                            <option value="0" :selected="item.fromchucvu_id == null">Từ chức vụ</option>
-                        </select>
+                        <info-chuc-vu-autocomplete></info-chuc-vu-autocomplete>
                     </td>
                 </tr>
                 <tr>
@@ -36,10 +30,7 @@
                 <tr>
                     <td class="text-left">Đức cha</td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.duccha_id">
-                            <option value="0" :selected="item.duccha_id == null">Đức cha</option>
-                        </select>
+                        <info-duc-cha-autocomplete></info-duc-cha-autocomplete>
                     </td>
                 </tr>
                 <tr>
@@ -51,19 +42,13 @@
                 <tr>
                     <td class="text-left">Chức vụ</td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.chucvu_id">
-                            <option value="0" :selected="item.chucvu_id == null">Chức vụ</option>
-                        </select>
+                        <info-chuc-vu-autocomplete></info-chuc-vu-autocomplete>
                     </td>
                 </tr>
                 <tr>
                     <td class="text-left">Giáo xứ</td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.giaoxu_id">
-                            <option value="0" :selected="item.giaoxu_id == null">Giáo xứ</option>
-                        </select>
+                        <info-giao-xu-autocomplete></info-giao-xu-autocomplete>
                     </td>
                 </tr>
                 <tr>
@@ -165,11 +150,17 @@
     import {
         MODULE_MODULE_LINH_MUC_ADD
     } from 'store@admin/types/module-types';
+    import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete';
+    import InfoChucVuAutocomplete from '../Groups/InfoChucVuAutocomplete';
+    import InfoDucChaAutocomplete from '../Groups/InfoDucChaAutocomplete';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAdd,
+            InfoGiaoXuAutocomplete,
+            InfoChucVuAutocomplete,
+            InfoDucChaAutocomplete
         },
         props: {
             lists: {

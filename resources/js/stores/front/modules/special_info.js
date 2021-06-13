@@ -1,5 +1,5 @@
-import {config} from '@app/common/config';
-import {
+  import {config} from '@app/common/config';
+  import {
     apiGetSettingByCode,
   } from '@app/api/front/setting';
   import {

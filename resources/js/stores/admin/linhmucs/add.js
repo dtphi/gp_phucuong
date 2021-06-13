@@ -51,8 +51,8 @@ const defaultState = () => {
         timestamp: null,
         type: null
       },
-      ten: '',
       ten_thanh_id: null,
+      ten: '',
       ngay_thang_nam_sinh: null,
       noi_sinh: '',
       giao_xu_id: null,

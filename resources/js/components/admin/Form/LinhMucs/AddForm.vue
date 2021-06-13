@@ -11,6 +11,11 @@
             </li>
             <li>
                 <a
+                    href="#tab-mo-rong"
+                    data-toggle="tab">{{$options.setting.tab_mo_rong_title}}</a>
+            </li>
+            <li>
+                <a
                     href="#tab-bang-cap"
                     data-toggle="tab">{{$options.setting.tab_bang_cap_title}}</a>
             </li>
@@ -36,6 +41,13 @@
                     role="tabpanel"
                     class="tab-pane active"
                     :general-data="info"></tab-general>
+            </div>
+
+            <div class="tab-pane" id="tab-mo-rong">
+                <tab-mo-rong
+                    role="tabpanel"
+                    class="tab-pane"
+                    :general-data="info"></tab-mo-rong>
             </div>
 
             <div class="tab-pane" id="tab-bang-cap">
@@ -86,6 +98,7 @@
         ACTION_INSERT_INFO_BACK
     } from 'store@admin/types/action-types';
     import TabGeneral from './adds/TabGeneral';
+    import TabMoRong from './adds/TabMoRong';
     import TabBangCap from './adds/TabBangCap';
     import TabChucThanh from './adds/TabChucThanh';
     import TabVanThu from './adds/TabVanThu';
@@ -95,6 +108,7 @@
         name: 'FormAdd',
         components: {
             TabGeneral,
+            TabMoRong,
             TabBangCap,
             TabChucThanh,
             TabVanThu,
@@ -159,6 +173,7 @@
         },
         setting: {
             tab_general_title: 'Tổng quan',
+            tab_mo_rong_title: 'Mở rộng',
             tab_bang_cap_title: 'Bằng Cấp',
             tab_chuc_thanh_title: 'Chức Thánh',
             tab_thuyen_chuyen_title: 'Thuyên Chuyển',
