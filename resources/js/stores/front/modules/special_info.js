@@ -1,3 +1,4 @@
+import {config} from '@app/common/config';
 import {
     apiGetSettingByCode,
   } from '@app/api/front/setting';
@@ -96,7 +97,20 @@ import { relativeTimeRounding } from 'moment';
             if (Object.keys(res.data.moduleData).length) {
               commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.moduleData);
 
-              dispatch(ACTION_GET_SPECIAL_INFORMATION_LIST_TO_MODULE, res.data.moduleData.module_special_info_ids);
+              let infos = res.data.moduleData.module_special_info_ids;
+              var asorts = _.orderBy(infos, o => o.id, 'desc');
+              let values = [];
+              _.forEach(asorts, function(item, idx) {
+                  if (idx < config.carouselLimit) {
+                    values.push({
+                      id: item.id
+                    });
+                  } else {
+                  return;
+                  }
+              });
+
+              dispatch(ACTION_GET_SPECIAL_INFORMATION_LIST_TO_MODULE, values);
             } else {
               dispatch(ACTION_SET_LOADING, false);
             }

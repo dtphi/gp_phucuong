@@ -218,7 +218,7 @@ export default {
       var asorts = _.orderBy(infos, o => o.id, 'desc');
       let values = [];
       _.forEach(asorts, function(item, idx) {
-        if (idx < 5) {
+        if (idx < 20) {
           values.push(item);
         } else {
           return;
@@ -229,7 +229,7 @@ export default {
         keys: [
           {
             key: 'module_special_info_ids',
-            value: infos,
+            value: values,
             serialize: true
           }
         ]

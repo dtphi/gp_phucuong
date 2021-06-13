@@ -71,7 +71,17 @@
             ]),
             _getInfoCarousel() {
                 if (this.pageLists.length) {
-                    return this.pageLists;
+                    let infos = this.pageLists;
+                    var asorts = _.orderBy(infos, o => o.id, 'desc');
+                    let values = [];
+                    _.forEach(asorts, function(item, idx) {
+                        if (idx < 5) {
+                        values.push(item);
+                        } else {
+                        return;
+                        }
+                    });
+                    return values;
                 }
             },
             _getSettingFormat() {
