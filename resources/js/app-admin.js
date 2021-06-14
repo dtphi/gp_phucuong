@@ -52,14 +52,14 @@ router.beforeEach(async (to, from, next) => {
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
-import Echo from 'laravel-echo';
+/*import Echo from 'laravel-echo';
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: true,
     encrypted: true,
-    /*authorizer: (channel, options) => {
+    authorizer: (channel, options) => {
         return {
             authorize: (socketId, callback) => {
                 axios.post('/api/broadcasting/auth', {
@@ -74,8 +74,8 @@ window.Echo = new Echo({
                 });
             }
         };
-    },*/
-});
+    },
+});*/
 
 if (envBuild == 'development') {
     console.log('ENV:', envBuild);

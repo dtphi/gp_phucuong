@@ -55,6 +55,8 @@ class LinhMucController extends ApiController
             return $this->dropdownCoSoGiaoPhan($request);
         } elseif ($action == 'dropdown.dong') {
             return $this->dropdownDong($request);
+        } elseif ($action == 'dropdown.ban.chuyen.trach') {
+            return $this->dropdownBanChuyenTrach($request);
         }
 
         $data = $request->all();
@@ -341,6 +343,28 @@ class LinhMucController extends ApiController
         $data = $request->all();
 
         $results     = $this->linhMucSv->apiGetDongList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownBanChuyenTrach(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->linhMucSv->apiGetBanChuyenTrachList($data);
         $collections = [];
 
         foreach ($results as $key => $value) {

@@ -66,10 +66,7 @@
                 <tr>
                     <td class="text-left">Ban chuyên trách</td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.banchuyentrach_id">
-                            <option value="0" :selected="item.banchuyentrach_id == null">Ban chuyên trách</option>
-                        </select>
+                        <info-ban-chuyen-trach-autocomplete></info-ban-chuyen-trach-autocomplete>
                     </td>
                 </tr>
                 <tr>
@@ -149,6 +146,7 @@
     import InfoDucChaAutocomplete from '../Groups/InfoDucChaAutocomplete';
     import InfoCoSoGiaoPhanAutocomplete from '../Groups/InfoCoSoGiaoPhanAutocomplete';
     import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete';
+    import InfoBanChuyenTrachAutocomplete from '../Groups/InfoBanChuyenTrachAutocomplete';
 
     export default {
         name: 'TheInfoList',
@@ -158,7 +156,8 @@
             InfoChucVuAutocomplete,
             InfoDucChaAutocomplete,
             InfoCoSoGiaoPhanAutocomplete,
-            InfoDongAutocomplete
+            InfoDongAutocomplete,
+            InfoBanChuyenTrachAutocomplete
         },
         props: {
             lists: {

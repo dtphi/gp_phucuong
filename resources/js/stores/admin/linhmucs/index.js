@@ -70,6 +70,7 @@ const defaultState = () => {
     dropdownChucVus:[],
     dropdownDucChas:[],
     dropdownCoSoGiaoPhans:[],
+    dropdownBanChuyenTrachs:[],
     dropdownDongs:[],
     loading: false,
     updateSuccess: false,
@@ -96,6 +97,9 @@ export default {
   },
 
   mutations: {
+    SET_DROPDOWN_BAN_CHUYEN_TRACH_LIST(state, payload) {
+      state.dropdownBanChuyenTrachs = payload;
+    },
     SET_DROPDOWN_DONG_LIST(state, payload) {
       state.dropdownDongs = payload;
     },
@@ -179,6 +183,23 @@ export default {
   },
 
   actions: {
+    'ACTION_GET_DROPDOWN_BAN_CHUYEN_TRACH_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.ban.chuyen.trach'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_BAN_CHUYEN_TRACH_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
     'ACTION_GET_DROPDOWN_DONG_LIST'({
       commit
     }, filterName) {

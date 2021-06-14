@@ -199,4 +199,12 @@ final class LinhmucService implements BaseModel, LinhMucModel
 
         return $query->get();
     }
+
+    public function apiGetBanChuyenTrachList($data = []) {
+        $model = new BanChuyenTrach();
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
+    }
 }
