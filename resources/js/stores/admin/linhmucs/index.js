@@ -6,7 +6,8 @@ import {
   apiGetLinhMucInfos,
   apiDeleteInfo,
   apiSearchAll,
-  apiGetSlideSpecialInfos
+  apiGetSlideSpecialInfos,
+  apiGetDropdownCategories
 } from 'api@admin/linhmuc';
 import {
   apiGetSettingByCode,
@@ -28,6 +29,7 @@ import {
   INFOS_SET_ERROR,
   MODULE_UPDATE_SETTING_SUCCESS,
   MODULE_UPDATE_SETTING_FAILED,
+  NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST
 } from '../types/mutation-types';
 import {
   ACTION_GET_INFO_LIST,
@@ -36,7 +38,8 @@ import {
   ACTION_RELOAD_GET_INFO_LIST,
   ACTION_SET_LOADING,
   ACTION_SEARCH_ALL,
-  ACTION_RESET_NOTIFICATION_INFO
+  ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_GET_DROPDOWN_CATEGORY_LIST
 } from '../types/action-types';
 import {
   fn_redirect_url
@@ -62,6 +65,12 @@ const defaultState = () => {
         }
       ]
     },
+    dropdownGiaoXus:[],
+    dropdownThanhs:[],
+    dropdownChucVus:[],
+    dropdownDucChas:[],
+    dropdownCoSoGiaoPhans:[],
+    dropdownDongs:[],
     loading: false,
     updateSuccess: false,
     errors: []
@@ -87,6 +96,24 @@ export default {
   },
 
   mutations: {
+    SET_DROPDOWN_DONG_LIST(state, payload) {
+      state.dropdownDongs = payload;
+    },
+    SET_DROPDOWN_CO_SO_GIAO_PHAN_LIST(state, payload) {
+      state.dropdownCoSoGiaoPhans = payload;
+    },
+    SET_DROPDOWN_DUC_CHA_LIST(state, payload) {
+      state.dropdownDucChas = payload;
+    },
+    SET_DROPDOWN_CHUC_VU_LIST(state, payload) {
+      state.dropdownChucVus = payload;
+    },
+    SET_DROPDOWN_TEN_THANH_LIST(state, payload) {
+      state.dropdownThanhs = payload;
+    },
+    [NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST](state, payload) {
+      state.dropdownGiaoXus = payload;
+    },
     addSpecialInfoId(state, payload) {
       state.module_special_info_ids = payload;
     },
@@ -152,6 +179,108 @@ export default {
   },
 
   actions: {
+    'ACTION_GET_DROPDOWN_DONG_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.dong'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_DONG_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
+    'ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.co.so.giao.phan'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_CO_SO_GIAO_PHAN_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
+    'ACTION_GET_DROPDOWN_DUC_CHA_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.duc.cha'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_DUC_CHA_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
+    'ACTION_GET_DROPDOWN_CHUC_VU_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.chuc.vu'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_CHUC_VU_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
+    'ACTION_GET_DROPDOWN_TEN_THANH_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.ten.thanh'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_TEN_THANH_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
+    'ACTION_GET_DROPDOWN_GIAO_XU_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.giao.xu'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit(NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST, result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
     addSpecial({commit, state},data) {
       let infos = state.module_special_info_ids;
       let values = state.module_special_infos;

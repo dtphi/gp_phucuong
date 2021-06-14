@@ -7,6 +7,11 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
 use App\Http\Resources\Linhmucs\LinhmucCollection;
 use App\Http\Resources\Linhmucs\LinhmucResource;
 use App\Models\Linhmuc;
+use App\Models\GiaoXu;
+use App\Models\Thanh;
+use App\Models\ChucVu;
+use App\Models\CoSoGiaoPhan;
+use App\Models\Dong;
 use App\Http\Common\Tables;
 use DB;
 
@@ -141,5 +146,57 @@ final class LinhmucService implements BaseModel, LinhMucModel
         DB::commit();
 
         return $this->model;
+    }
+
+    public function apiGetGiaoXuList($data = []) {
+        $model = new GiaoXu();
+
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
+    }
+
+    public function apiGetThanhList($data = []) {
+        $model = new Thanh();
+
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
+    }
+
+    public function apiGetChucVuList($data = []) {
+        $model = new ChucVu();
+
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
+    }
+
+    public function apiGetDucChaList($data = []) {
+        $model = new Linhmuc();
+        $query = $model->select()
+        ->where('is_duc_cha' ,'=', 1)
+        ->orderBy('ten', 'DESC');
+
+        return $query->get();
+    }
+
+    public function apiGetCoSoGiaoPhanList($data = []) {
+        $model = new CoSoGiaoPhan();
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
+    }
+
+    public function apiGetDongList($data = []) {
+        $model = new Dong();
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
     }
 }

@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class CoSoGiaoPhan extends Model
+class CoSoGiaoPhan extends BaseModel
 {
-    use HasFactory;
+    /**
+     * @var string
+     */
+    protected $table = DB_PREFIX . 'co_so_giao_phans';
 }

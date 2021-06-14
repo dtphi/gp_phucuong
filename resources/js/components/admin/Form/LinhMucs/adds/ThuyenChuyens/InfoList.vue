@@ -40,13 +40,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-left">Chức vụ</td>
+                    <td class="text-left">Chức vụ đến</td>
                     <td>
                         <info-chuc-vu-autocomplete></info-chuc-vu-autocomplete>
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-left">Giáo xứ</td>
+                    <td class="text-left">Giáo xứ đến</td>
                     <td>
                         <info-giao-xu-autocomplete></info-giao-xu-autocomplete>
                     </td>
@@ -54,19 +54,13 @@
                 <tr>
                     <td class="text-left">Cơ sở giáo phận</td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.cosogp_id">
-                            <option value="0" :selected="item.cosogp_id == null">Cơ sở giáo phận</option>
-                        </select>
+                        <info-co-so-giao-phan-autocomplete></info-co-so-giao-phan-autocomplete>
                     </td>
                 </tr>
                 <tr>
                     <td class="text-left">Dòng</td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.dong_id">
-                            <option value="0" :selected="item.dong_id == null">Dòng</option>
-                        </select>
+                        <info-dong-autocomplete></info-dong-autocomplete>
                     </td>
                 </tr>
                 <tr>
@@ -153,6 +147,8 @@
     import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete';
     import InfoChucVuAutocomplete from '../Groups/InfoChucVuAutocomplete';
     import InfoDucChaAutocomplete from '../Groups/InfoDucChaAutocomplete';
+    import InfoCoSoGiaoPhanAutocomplete from '../Groups/InfoCoSoGiaoPhanAutocomplete';
+    import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete';
 
     export default {
         name: 'TheInfoList',
@@ -160,7 +156,9 @@
             BtnAdd,
             InfoGiaoXuAutocomplete,
             InfoChucVuAutocomplete,
-            InfoDucChaAutocomplete
+            InfoDucChaAutocomplete,
+            InfoCoSoGiaoPhanAutocomplete,
+            InfoDongAutocomplete
         },
         props: {
             lists: {

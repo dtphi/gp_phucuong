@@ -17,7 +17,7 @@
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:MistyRose">
                     <font-awesome-icon icon="circle" style="color:Tomato"/>
-                    <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
+                    <font-awesome-icon icon="search" class="fa-inverse" transform="shrink-4"/>
                 </font-awesome-layers>
             </span>
             <ul class="dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
@@ -35,7 +35,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_NEWS_CATEGORY
+        MODULE_MODULE_LINH_MUC
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -43,7 +43,7 @@
     import lodash from 'lodash';
 
     export default {
-        name: 'CategoryEditAutocomplete',
+        name: 'GiaoXuAutocomplete',
         props: {
             categoryId: {
                 default: null
@@ -56,23 +56,23 @@
             }
         },
         computed: {
-            ...mapState(MODULE_NEWS_CATEGORY, {
-                dropdowns: state => state.dropdownCategories
+            ...mapState(MODULE_MODULE_LINH_MUC, {
+                dropdowns: state => state.dropdownGiaoXus
             }),
         },
         methods: {
-        	...mapActions(MODULE_NEWS_CATEGORY, [
-        		ACTION_GET_DROPDOWN_CATEGORY_LIST
+        	...mapActions(MODULE_MODULE_LINH_MUC, [
+        		'ACTION_GET_DROPDOWN_GIAO_XU_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
+              	this.ACTION_GET_DROPDOWN_GIAO_XU_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.[ACTION_GET_DROPDOWN_CATEGORY_LIST]('');
+                this.ACTION_GET_DROPDOWN_GIAO_XU_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';

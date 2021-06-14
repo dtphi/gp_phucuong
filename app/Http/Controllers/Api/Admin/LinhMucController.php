@@ -42,6 +42,21 @@ class LinhMucController extends ApiController
      */
     public function index(Request $request)
     {
+        $action = $request->query('action');
+        if ($action == 'dropdown.giao.xu') {
+            return $this->dropdownGiaoXu($request);
+        } elseif ($action == 'dropdown.ten.thanh') {
+            return $this->dropdownThanh($request);
+        } elseif ($action == 'dropdown.chuc.vu') {
+            return $this->dropdownChucVu($request);
+        } elseif ($action == 'dropdown.duc.cha') {
+            return $this->dropdownDucCha($request);
+        } elseif ($action == 'dropdown.co.so.giao.phan') {
+            return $this->dropdownCoSoGiaoPhan($request);
+        } elseif ($action == 'dropdown.dong') {
+            return $this->dropdownDong($request);
+        }
+
         $data = $request->all();
         $page = 1;
         if ($request->query('page')) {
@@ -210,17 +225,128 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdown(Request $request)
+    public function dropdownGiaoXu(Request $request)
     {
         $data = $request->all();
 
-        $results     = $this->linhMucSv->apiGetList($data);
+        $results     = $this->linhMucSv->apiGetGiaoXuList($data);
         $collections = [];
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'information_id' => $value->information_id,
+                'id' => $value->id,
                 'name'           => $value->name,
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownThanh(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->linhMucSv->apiGetThanhList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name,
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownChucVu(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->linhMucSv->apiGetChucVuList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name,
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownDucCha(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->linhMucSv->apiGetDucChaList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->ten,
+                'is_duc_cha' => $value->is_duc_cha
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownCoSoGiaoPhan(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->linhMucSv->apiGetCoSoGiaoPhanList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownDong(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->linhMucSv->apiGetDongList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
             ];
         }
 

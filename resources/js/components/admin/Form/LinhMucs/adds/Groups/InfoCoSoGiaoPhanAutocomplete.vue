@@ -2,17 +2,17 @@
     <div class="form-group">
         <label 
         	class="col-sm-2 control-label" 
-        	for="input-parent-duc-cha-name">
+        	for="input-parent-co-so-giao-phan-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Đức cha</span>
+        			data-original-title="(Tự động hoàn toàn)">Cơ sở giáo phận</span>
         	</label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		:value="query" type="text" 
 	    		name="category" 
-	    		placeholder="Chọn đức cha" 
-	    		id="input-parent-duc-cha-name" 
+	    		placeholder="Chọn cơ sở giáo phận" 
+	    		id="input-parent-co-so-giao-phan-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:MistyRose">
@@ -43,7 +43,7 @@
     import lodash from 'lodash';
 
     export default {
-        name: 'InfoDucChaAutocomplete',
+        name: 'GiaoXuAutocomplete',
         props: {
             categoryId: {
                 default: null
@@ -57,22 +57,22 @@
         },
         computed: {
             ...mapState(MODULE_MODULE_LINH_MUC, {
-                dropdowns: state => state.dropdownDucChas
+                dropdowns: state => state.dropdownCoSoGiaoPhans
             }),
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
-        		'ACTION_GET_DROPDOWN_DUC_CHA_LIST'
+        		'ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.ACTION_GET_DROPDOWN_DUC_CHA_LIST(query);
+              	this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.ACTION_GET_DROPDOWN_DUC_CHA_LIST('');
+                this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';

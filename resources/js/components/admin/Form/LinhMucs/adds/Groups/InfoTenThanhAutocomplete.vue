@@ -34,7 +34,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_NEWS_CATEGORY
+        MODULE_MODULE_LINH_MUC
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -55,23 +55,23 @@
             }
         },
         computed: {
-            ...mapState(MODULE_NEWS_CATEGORY, {
-                dropdowns: state => state.dropdownCategories
+            ...mapState(MODULE_MODULE_LINH_MUC, {
+                dropdowns: state => state.dropdownThanhs
             }),
         },
         methods: {
-        	...mapActions(MODULE_NEWS_CATEGORY, [
-        		ACTION_GET_DROPDOWN_CATEGORY_LIST
+        	...mapActions(MODULE_MODULE_LINH_MUC, [
+        		'ACTION_GET_DROPDOWN_TEN_THANH_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
+              	this.ACTION_GET_DROPDOWN_TEN_THANH_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.[ACTION_GET_DROPDOWN_CATEGORY_LIST]('');
+                this.ACTION_GET_DROPDOWN_TEN_THANH_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';
