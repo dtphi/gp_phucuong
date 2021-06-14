@@ -5,9 +5,15 @@ import Login from 'v@admin/auth/Login';
 import DefaultLayout from 'v@admin/layouts/default';
 import LinhMucPage from 'v@admin/linhmucs';
 import GiaoPhanPage from 'v@admin/giaophans';
+import GiaoPhanAddPage from 'v@admin/giaophans/add';
+import GiaoPhanEditPage from 'v@admin/giaophans/edit';
 import GiaoHatPage from 'v@admin/giaohats';
 import GiaoXuPage from 'v@admin/giaoxus';
 import GiaoDiemPage from 'v@admin/giaodiems';
+import CoSoGiaoPhanPage from 'v@admin/cosogiaophans';
+import CongDoanTuSiPage from 'v@admin/congdoantusis';
+import DongPage from 'v@admin/dongs';
+import ThanhPage from 'v@admin/thanhs';
 import SystemPage from 'v@admin/systems';
 import DashboardPage from 'v@admin/dashboards';
 import CategoryListPage from 'v@admin/categorys';
@@ -427,6 +433,48 @@ export default [{
                     footer: true
                 }
             }
+        }, {
+            path: 'add',
+            component: GiaoPhanAddPage,
+            name: 'admin.giao_phan.add.list',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Giáo phận'
+                }],
+                header: 'Danh sách giáo phận',
+                role: 'admin',
+                title: 'Giao phận | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }, {
+            path: 'edit/:giaophanId',
+            component: GiaoPhanEditPage,
+            name: 'admin.giao_phan.add.list',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Giáo phận'
+                }],
+                header: 'Danh sách giáo phận',
+                role: 'admin',
+                title: 'Giao phận | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
         }]
     }, {
         path: 'giao-hats',
@@ -509,5 +557,113 @@ export default [{
                 }
             }
         }]
-    },]
+    }, {
+        path: 'co-so-giao-phans',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: CoSoGiaoPhanPage,
+            name: 'admin.co.so.giao.phan.list',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Cơ sở giáo phận'
+                }],
+                header: 'Danh sách cơ sở giáo phận',
+                role: 'admin',
+                title: 'Giao điểm | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'cong-doan-tu-sis',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: CongDoanTuSiPage,
+            name: 'admin.cong.doan.tu.si.list',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Công đoàn tu sĩ'
+                }],
+                header: 'Danh sách công đoàn tu sĩ',
+                role: 'admin',
+                title: 'Giao điểm | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'dongs',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: DongPage,
+            name: 'admin.dong.list',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Dòng'
+                }],
+                header: 'Danh sách dòng',
+                role: 'admin',
+                title: 'Giao điểm | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'thanhs',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: ThanhPage,
+            name: 'admin.thanh.list',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Thánh'
+                }],
+                header: 'Danh sách thánh',
+                role: 'admin',
+                title: 'Giao điểm | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    },] 
 }];

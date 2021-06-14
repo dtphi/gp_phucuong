@@ -46,6 +46,30 @@
                             <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.giaodiems_title}}</span></a>
                     </li>
+                    <li>
+                        <a
+                            :href="_getHref('co-so-giao-phans')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.co_so_giao_phans_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('cong-doan-tu-sis')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.cong_doan_tu_sis_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('dongs')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.dongs_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('thanhs')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.thanhs_title}}</span></a>
+                    </li>
                 </ul>
             </li>
             <li id="user">
@@ -190,7 +214,11 @@
             giaophans_title: 'Giáo phận',
             giaohats_title: 'Giáo hạt',
             giaoxus_title: 'Giáo xứ',
-            giaodiems_title: 'Giáo điểm'
+            giaodiems_title: 'Giáo điểm',
+            co_so_giao_phans_title: 'Cơ sở giáo phận',
+            cong_doan_tu_sis_title: 'Công đoàn tu sĩ',
+            dongs_title: 'Dòng',
+            thanhs_title: 'Thánh'
         }
     };
 </script>

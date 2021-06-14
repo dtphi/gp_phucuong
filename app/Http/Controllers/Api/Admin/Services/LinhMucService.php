@@ -12,6 +12,7 @@ use App\Models\Thanh;
 use App\Models\ChucVu;
 use App\Models\CoSoGiaoPhan;
 use App\Models\Dong;
+use App\Models\BanChuyenTrach;
 use App\Http\Common\Tables;
 use DB;
 

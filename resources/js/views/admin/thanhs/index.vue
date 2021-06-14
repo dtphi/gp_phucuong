@@ -1,6 +1,6 @@
 <template>
     <div id="content">
-        <the-header-page></the-header-page>
+        <!--<the-header-page></the-header-page>-->
         <div class="container-fluid">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -30,13 +30,13 @@
                                             <th style="width: 200px" class="text-left">Tên
                                             </th>
                                             <th style="width: 100px" class="text-left">
-                                               Khái quát
+                                                Địa chỉ
                                             </th>
-                                            <th style="width: 100px" class="text-center">
-                                               Sắp xếp
-                                            </th>
+                                            <th>Ghi chú</th>
                                             <th class="text-center">Trạng thái</th>
-                                            
+                                            <th style="width: 100px" class="text-center">
+                                                Ngày hoạt động
+                                            </th>
                                             <th style="width: 100px" class="text-right">Action
                                             </th>
                                         </tr>
@@ -67,11 +67,11 @@
         mapActions
     } from 'vuex';
     import Item from './components/TheItem';
-    import TheHeaderPage from './components/TheHeaderPage';
+    //import TheHeaderPage from './components/TheHeaderPage';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Paginate from 'com@admin/Pagination';
     import {
-        MODULE_MODULE_GIAO_PHAN,
+        MODULE_MODULE_GIAO_DIEM,
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -82,7 +82,7 @@
         name: 'InformationList',
         components: {
             Breadcrumb,
-            TheHeaderPage,
+            //TheHeaderPage,
             Item,
             Paginate
         },
@@ -104,7 +104,7 @@
                 perPage: state => state.cfApp.perPage
             }),
             ...mapGetters(['isNotEmptyList']),
-            ...mapState(MODULE_MODULE_GIAO_PHAN, [
+            ...mapState(MODULE_MODULE_GIAO_DIEM, [
                 'infos',
                 'loading',
                 'updateSuccess',
@@ -117,7 +117,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_GIAO_PHAN, [
+            ...mapActions(MODULE_MODULE_GIAO_DIEM, [
                 ACTION_GET_INFO_LIST,
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),
@@ -135,10 +135,10 @@
             const params = {
                 perPage: this.perPage
             };
-            this.[ACTION_GET_INFO_LIST](params);
+            //this.[ACTION_GET_INFO_LIST](params);
         },
         setting: {
-            list_title: 'Danh sách Giáo phận'
+            list_title: 'Danh sách Linh mục'
         }
     };
 </script>
