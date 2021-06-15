@@ -7,6 +7,9 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanModel;
 use App\Http\Resources\GiaoPhans\GiaoPhanCollection;
 use App\Http\Resources\GiaoPhans\GiaoPhanResource;
 use App\Models\GiaoPhan;
+use App\Models\GiaoHat;
+use App\Models\GiaoDiem;
+use App\Models\CongDoanTuSi;
 use App\Http\Common\Tables;
 use DB;
 
@@ -92,5 +95,29 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         ->orderBy('id', 'DESC');
 
         return $query;
+    }
+
+    public function apiGetGiaoHatList($data = []) {
+        $model = new GiaoHat();
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
+    }
+
+    public function apiGetGiaoDiemList($data = []) {
+        $model = new GiaoDiem();
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
+    }
+
+    public function apiGetCongDoanTuSiList($data = []) {
+        $model = new CongDoanTuSi();
+        $query = $model->select()
+        ->orderBy('name', 'DESC');
+
+        return $query->get();
     }
 }

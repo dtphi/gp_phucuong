@@ -39,8 +39,83 @@ class GiaoPhanController extends ApiController
      * @param Request $request
      * @return mixed
      */
+    public function dropdownGiaoHat(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->gphSv->apiGetGiaoHatList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownGiaoDiem(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->gphSv->apiGetGiaoDiemList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownCongDoanTuSi(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->gphSv->apiGetCongDoanTuSiList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
+        $action = $request->query('action');
+        if ($action == 'dropdown.giao.hat') {
+            return $this->dropdownGiaoHat($request);
+        } elseif ($action == 'dropdown.giao.diem') {
+            return $this->dropdownGiaoDiem($request);
+        } elseif ($action == 'dropdown.cong.doan.tu.si') {
+            return $this->dropdownCongDoanTuSi($request);
+        }
+
         $data = $request->all();
         $page = 1;
         if ($request->query('page')) {

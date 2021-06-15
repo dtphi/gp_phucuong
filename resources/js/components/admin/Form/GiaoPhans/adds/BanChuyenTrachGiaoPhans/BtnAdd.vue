@@ -3,7 +3,7 @@
 		type="button" 
 		data-toggle="tooltip"
 		@click="_addInfo()"
-        title="Thêm văn thư" class="btn btn-default cms-btn">
+        title="Thêm ban chuyên trách" class="btn btn-default cms-btn">
           <font-awesome-layers style="background:honeydew">
               <font-awesome-icon size="1x" icon="plus"/>
           </font-awesome-layers>
@@ -15,7 +15,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC_ADD
+        MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
 
     export default {
@@ -26,13 +26,13 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
-                'addVanThus'
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+                'addBanChuyenTrachGiaoPhan'
             ]),
 
             _addInfo() {
-                this.addVanThus({
-                    action: 'addVanThus'
+                this.addBanChuyenTrachGiaoPhan({
+                    action: 'addBanChuyenTrachGiaoPhan'
                 });
             }
         },

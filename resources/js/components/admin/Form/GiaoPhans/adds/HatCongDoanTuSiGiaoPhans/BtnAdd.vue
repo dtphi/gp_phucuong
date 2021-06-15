@@ -15,7 +15,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC_ADD
+        MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
 
     export default {
@@ -26,13 +26,13 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
-                'addThuyenChuyen'
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+                'addHatGiaoPhan'
             ]),
 
             _addInfo() {
-                this.addThuyenChuyen({
-                    action: 'addThuyenChuyen'
+                this.addHatGiaoPhan({
+                    action: 'addHatGiaoPhan'
                 });
             }
         },

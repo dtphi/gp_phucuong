@@ -1,46 +1,28 @@
 <template>
     <div class="table-responsive">
-        <table id="info-bang-cap-list" class="table table-striped table-bordered table-hover">
+        <table id="info-thuyen-chuyen-list" 
+            class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <td class="text-left">Tiêu đề</td>
-                    <td class="text-left">Loại</td>
-                    <td class="text-left">Ghi chú</td>
-                    <td class="text-left">Trạng thái</td>
-                    <td calss="text-right">{{$options.setting.info_action_title}}</td>
+                    <td class="text-left">Hạt</td>
+                    <td class="text-left">Trình trạng</td>
+                    <td>{{$options.setting.info_action_title}}</td>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(item, idx) in lists" :key="idx">
                     <td>
-                        <validation-provider
-                            :name="`item_name${item.id}`"
-                            rules="required|max:255"
-                            v-slot="{ errors }">
-                            <input v-model="item.title" class="form-control" type="text"/>
-
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                        </validation-provider>
+                        <info-giao-hat-autocomplete></info-giao-hat-autocomplete>
                     </td>
                     <td>
-                        <select class="form-control"
-                            v-model="item.type">
-                            <option value="0" :selected="item.type == 0">Dir</option>
-                            <option value="1" :selected="item.type == 1">File</option>
+                        <select
+                            id="input-info-active"
+                            class="form-control">
+                            <option value="1" selected="selected">Xảy ra</option>
+                            <option value="0">Ẩn</option>
                         </select>
                     </td>
-                    <td>
-                        <textarea class="form-control"
-                            v-model="item.ghichu"></textarea>
-                    </td>
-                    <td>
-                        <select class="form-control"
-                            v-model="item.active">
-                            <option value="1" :selected="item.active == 1">Xảy ra</option>
-                            <option value="0" :selected="item.active == 0">Ẩn</option>
-                        </select>
-                    </td>
-                    <td>
+                    <td class="text-right">
                         <button 
                             type="button" 
                             @click="_removeItem(item)"
@@ -57,7 +39,7 @@
 
             <tfoot>
                 <tr>
-                    <td colspan="4"></td>
+                    <td></td><td></td>
                     <td class="text-right">
                         <btn-add></btn-add>
                     </td>
@@ -73,13 +55,21 @@
     } from 'vuex';
     import BtnAdd from './BtnAdd';
     import {
-        MODULE_MODULE_LINH_MUC_ADD
+        MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
+    import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete';
+    import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete';
+    import InfoGiaoDiemAutocomplete from '../Groups/InfoGiaoDiemAutocomplete';
+    import InfoCongDoanTuSiAutocomplete from '../Groups/InfoCongDoanTuSiAutocomplete';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAdd,
+            InfoGiaoXuAutocomplete,
+            InfoGiaoHatAutocomplete,
+            InfoGiaoDiemAutocomplete,
+            InfoCongDoanTuSiAutocomplete
         },
         props: {
             lists: {
@@ -89,12 +79,12 @@
         computed: {
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
-                'removeVanThu'
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+                'removeHatGiaoPhan'
             ]),
             _removeItem(item) {
-                this.removeVanThu({
-                    action: 'removeVanThu',
+                this.removeHatGiaoPhan({
+                    action: 'removeHatGiaoPhan',
                     item: item
                 });
             }

@@ -2,17 +2,17 @@
     <div class="tab-content">
         <div class="form-group">
             <div class="col-sm-12">
-                <info-list :lists="groupData.van_thus"></info-list>
+                <info-list :lists="groupData.giao_phan_banchuyentrachs"></info-list>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import InfoList from './VanThus/InfoList';
+    import InfoList from './BanChuyenTrachGiaoPhans/InfoList';
 
     export default {
-        name: 'TabVanThuForm',
+        name: 'TabBanChuyenTrachForm',
         components: {
             InfoList
         },
@@ -23,7 +23,7 @@
         },
         data() {
             return {
-                van_thus: []
+                giao_phan_banchuyentrachs: []
             }
         },
     };

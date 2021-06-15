@@ -9,30 +9,47 @@
                     href="#tab-general"
                     data-toggle="tab">{{$options.setting.tab_general_title}}</a>
             </li>
+            
             <li>
                 <a
-                    href="#tab-mo-rong"
-                    data-toggle="tab">{{$options.setting.tab_mo_rong_title}}</a>
+                    href="#tab-giao-hat"
+                    data-toggle="tab">Hạt</a>
             </li>
+
             <li>
                 <a
-                    href="#tab-bang-cap"
-                    data-toggle="tab">{{$options.setting.tab_bang_cap_title}}</a>
+                    href="#tab-giao-hat-xu"
+                    data-toggle="tab">Giáo Xứ</a>
             </li>
+
             <li>
                 <a
-                    href="#tab-chuc-thanh"
-                    data-toggle="tab">{{$options.setting.tab_chuc_thanh_title}}</a>
+                    href="#tab-giao-hat-xu-diem"
+                    data-toggle="tab">Giáo Điểm</a>
             </li>
+
             <li>
                 <a
-                    href="#tab-van-thu"
-                    data-toggle="tab">{{$options.setting.tab_van_thu_title}}</a>
+                    href="#tab-giao-hat-congdoantusi"
+                    data-toggle="tab">Công đoàn tu sĩ</a>
             </li>
+
             <li>
                 <a
-                    href="#tab-thuyen-chuyen"
-                    data-toggle="tab">{{$options.setting.tab_thuyen_chuyen_title}}</a>
+                    href="#tab-dong-giao-phan"
+                    data-toggle="tab">Dòng</a>
+            </li>
+
+            <li>
+                <a
+                    href="#tab-co-so-giao-phan"
+                    data-toggle="tab">Cơ sở</a>
+            </li>
+
+            <li>
+                <a
+                    href="#tab-ban-chuyen-trach-giao-phan"
+                    data-toggle="tab">Ban chuyên trách</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -40,42 +57,56 @@
                 <tab-general
                     role="tabpanel"
                     class="tab-pane active"
-                    :general-data="info"></tab-general>
+                    :group-data="info"></tab-general>
             </div>
 
-            <div class="tab-pane" id="tab-mo-rong">
-                <tab-mo-rong
+            <div class="tab-pane" id="tab-giao-hat">
+                <tab-giao-hat
                     role="tabpanel"
                     class="tab-pane"
-                    :general-data="info"></tab-mo-rong>
+                    :group-data="info"></tab-giao-hat>
             </div>
 
-            <div class="tab-pane" id="tab-bang-cap">
-                <tab-bang-cap
+            <div class="tab-pane" id="tab-giao-hat-xu">
+                <tab-hat-xu
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-bang-cap>
+                    :group-data="info"></tab-hat-xu>
             </div>
 
-            <div class="tab-pane" id="tab-chuc-thanh">
-                <tab-chuc-thanh
+            <div class="tab-pane" id="tab-giao-hat-xu-diem">
+                <tab-hat-xu-diem
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-chuc-thanh>
+                    :group-data="info"></tab-hat-xu-diem>
             </div>
 
-            <div class="tab-pane" id="tab-van-thu">
-                <tab-van-thu
+            <div class="tab-pane" id="tab-giao-hat-congdoantusi">
+                <tab-hat-cong-doan-tu-si
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-van-thu>
+                    :group-data="info"></tab-hat-cong-doan-tu-si>
             </div>
 
-            <div class="tab-pane" id="tab-thuyen-chuyen">
-                <tab-thuyen-chuyen
+            <div class="tab-pane" id="tab-dong-giao-phan">
+                <tab-dong-giao-phan
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-thuyen-chuyen>
+                    :group-data="info"></tab-dong-giao-phan>
+            </div>
+
+            <div class="tab-pane" id="tab-co-so-giao-phan">
+                <tab-co-so-giao-phan
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"></tab-co-so-giao-phan>
+            </div>
+
+            <div class="tab-pane" id="tab-ban-chuyen-trach-giao-phan">
+                <tab-ban-chuyen-trach-giao-phan
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"></tab-ban-chuyen-trach-giao-phan>
             </div>
         </div>
     </form>
@@ -89,7 +120,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC_ADD,
+        MODULE_MODULE_GIAO_PHAN_ADD,
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_LOADING,
@@ -98,21 +129,25 @@
         ACTION_INSERT_INFO_BACK
     } from 'store@admin/types/action-types';
     import TabGeneral from './adds/TabGeneral';
-    import TabMoRong from './adds/TabMoRong';
-    import TabBangCap from './adds/TabBangCap';
-    import TabChucThanh from './adds/TabChucThanh';
-    import TabVanThu from './adds/TabVanThu';
-    import TabThuyenChuyen from './adds/TabThuyenChuyen';
+    import TabGiaoHat from './adds/TabHat';
+    import TabHatXu from './adds/TabHatXu';
+    import TabHatXuDiem from './adds/TabHatXuDiem';
+    import TabHatCongDoanTuSi from './adds/TabHatCongDoanTuSi';
+    import TabDongGiaoPhan from './adds/TabDongGiaoPhan';
+    import TabCoSoGiaoPhan from './adds/TabCoSoGiaoPhan';
+    import TabBanChuyenTrachGiaoPhan from './adds/TabBanChuyenTrachGiaoPhan';
 
     export default {
         name: 'FormAdd',
         components: {
             TabGeneral,
-            TabMoRong,
-            TabBangCap,
-            TabChucThanh,
-            TabVanThu,
-            TabThuyenChuyen
+            TabGiaoHat,
+            TabDongGiaoPhan,
+            TabCoSoGiaoPhan,
+            TabBanChuyenTrachGiaoPhan,
+            TabHatXu,
+            TabHatXuDiem,
+            TabHatCongDoanTuSi
         },
         data() {
             return {
@@ -121,10 +156,10 @@
             };
         },
         computed: {
-            ...mapState(MODULE_MODULE_LINH_MUC_ADD, {
+            ...mapState(MODULE_MODULE_GIAO_PHAN_ADD, {
                 loading: state => state.loading
             }),
-            ...mapGetters(MODULE_MODULE_LINH_MUC_ADD, [
+            ...mapGetters(MODULE_MODULE_GIAO_PHAN_ADD, [
                 'info',
             ])
         },
@@ -136,7 +171,7 @@
             });
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
                 ACTION_SET_LOADING,
                 ACTION_INSERT_INFO,
                 ACTION_INSERT_INFO_BACK,

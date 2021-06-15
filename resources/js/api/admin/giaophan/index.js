@@ -6,6 +6,24 @@ import {
   API_GIAO_PHANS_RESOURCE
 } from 'store@admin/types/api-paths';
 
+export const apiGetDropdownCategories = (resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_url(`/api/giao-phans`), {
+      params: params
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        resolve(response.data);
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test'
+        }]);
+      }
+    })
+    .catch(errors => errResole(errors))
+}
+
 
 /**
  * [description]

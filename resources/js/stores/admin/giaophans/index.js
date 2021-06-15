@@ -6,7 +6,8 @@ import {
   apiGetGiaoPhanInfos,
   apiDeleteInfo,
   apiSearchAll,
-  apiGetSlideSpecialInfos
+  apiGetSlideSpecialInfos,
+  apiGetDropdownCategories
 } from 'api@admin/giaophan';
 import {
   apiGetSettingByCode,
@@ -62,6 +63,9 @@ const defaultState = () => {
         }
       ]
     },
+    dropdownGiaoHats:[],
+    dropdownGiaoDiems:[],
+    dropdownCongDoanTuSis:[],
     loading: false,
     updateSuccess: false,
     errors: []
@@ -87,6 +91,15 @@ export default {
   },
 
   mutations: {
+    SET_DROPDOWN_CONG_DOAN_TU_SI_LIST(state, payload) {
+      state.dropdownCongDoanTuSis = payload;
+    },
+    SET_DROPDOWN_GIAO_DIEM_LIST(state, payload) {
+      state.dropdownGiaoDiems = payload;
+    },
+    SET_DROPDOWN_GIAO_HAT_LIST(state, payload) {
+      state.dropdownGiaoHats = payload;
+    },
     addSpecialInfoId(state, payload) {
       state.module_special_info_ids = payload;
     },
@@ -152,6 +165,57 @@ export default {
   },
 
   actions: {
+    'ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.cong.doan.tu.si'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_CONG_DOAN_TU_SI_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
+    'ACTION_GET_DROPDOWN_GIAO_DIEM_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.giao.diem'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_GIAO_DIEM_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
+    'ACTION_GET_DROPDOWN_GIAO_HAT_LIST'({
+      commit
+    }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.giao.hat'
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_GIAO_HAT_LIST', result);
+        },
+        (errors) => {
+          console.log(errors);
+        },
+        params
+      );
+    },
     addSpecial({commit, state},data) {
       let infos = state.module_special_info_ids;
       let values = state.module_special_infos;

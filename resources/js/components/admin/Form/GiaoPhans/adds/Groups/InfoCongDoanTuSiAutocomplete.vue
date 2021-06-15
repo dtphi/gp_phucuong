@@ -2,20 +2,21 @@
     <div class="form-group">
         <label 
         	class="col-sm-2 control-label" 
-        	for="input-parent-ten-thanh-name">
+        	for="input-parent-cong-doan-tu-si-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Tên thánh</span>
+        			data-original-title="(Tự động hoàn toàn)">Công đoàn tu sĩ</span>
         	</label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		:value="query" type="text" 
 	    		name="category" 
-	    		placeholder="Chọn tên thánh" 
-	    		id="input-parent-ten-thanh-name" 
+	    		placeholder="Chọn công đoàn tu sĩ" 
+	    		id="input-parent-cong-doan-tu-si-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:MistyRose">
+                    <font-awesome-icon icon="circle" style="color:Tomato"/>
                     <font-awesome-icon icon="search" class="fa-inverse" transform="shrink-4"/>
                 </font-awesome-layers>
             </span>
@@ -34,7 +35,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC
+        MODULE_MODULE_GIAO_PHAN
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -42,7 +43,7 @@
     import lodash from 'lodash';
 
     export default {
-        name: 'InfoTenThanhAutocomplete',
+        name: 'DongAutocomplete',
         props: {
             categoryId: {
                 default: null
@@ -55,23 +56,23 @@
             }
         },
         computed: {
-            ...mapState(MODULE_MODULE_LINH_MUC, {
-                dropdowns: state => state.dropdownThanhs
+            ...mapState(MODULE_MODULE_GIAO_PHAN, {
+                dropdowns: state => state.dropdownCongDoanTuSis
             }),
         },
         methods: {
-        	...mapActions(MODULE_MODULE_LINH_MUC, [
-        		'ACTION_GET_DROPDOWN_TEN_THANH_LIST'
+        	...mapActions(MODULE_MODULE_GIAO_PHAN, [
+        		'ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.ACTION_GET_DROPDOWN_TEN_THANH_LIST(query);
+              	this.ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.ACTION_GET_DROPDOWN_TEN_THANH_LIST('');
+                this.ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';

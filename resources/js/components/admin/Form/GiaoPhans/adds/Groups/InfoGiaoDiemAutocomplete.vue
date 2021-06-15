@@ -2,17 +2,17 @@
     <div class="form-group">
         <label 
         	class="col-sm-2 control-label" 
-        	for="input-parent-chuc-vu-name">
+        	for="input-parent-giao-diem-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Chức vụ</span>
+        			data-original-title="(Tự động hoàn toàn)">Giáo Điểm</span>
         	</label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		:value="query" type="text" 
 	    		name="category" 
-	    		placeholder="Chọn chức vụ" 
-	    		id="input-parent-chuc-vu-name" 
+	    		placeholder="Chọn giáo điểm" 
+	    		id="input-parent-giao-diem-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:MistyRose">
@@ -35,7 +35,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC
+        MODULE_MODULE_GIAO_PHAN
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -43,7 +43,7 @@
     import lodash from 'lodash';
 
     export default {
-        name: 'InfoChucVuAutocomplete',
+        name: 'DongAutocomplete',
         props: {
             categoryId: {
                 default: null
@@ -56,23 +56,23 @@
             }
         },
         computed: {
-            ...mapState(MODULE_MODULE_LINH_MUC, {
-                dropdowns: state => state.dropdownChucVus
+            ...mapState(MODULE_MODULE_GIAO_PHAN, {
+                dropdowns: state => state.dropdownGiaoDiems
             }),
         },
         methods: {
-        	...mapActions(MODULE_MODULE_LINH_MUC, [
-        		'ACTION_GET_DROPDOWN_CHUC_VU_LIST'
+        	...mapActions(MODULE_MODULE_GIAO_PHAN, [
+        		'ACTION_GET_DROPDOWN_GIAO_DIEM_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.ACTION_GET_DROPDOWN_CHUC_VU_LIST(query);
+              	this.ACTION_GET_DROPDOWN_GIAO_DIEM_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.ACTION_GET_DROPDOWN_CHUC_VU_LIST('');
+                this.ACTION_GET_DROPDOWN_GIAO_DIEM_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';

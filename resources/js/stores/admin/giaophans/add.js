@@ -1,4 +1,5 @@
 import AppConfig from 'api@admin/constants/app-config';
+import { v4 as uuidv4 } from 'uuid';
 import {
   apiInsertInfo,
   apiGetDropdownInfos
@@ -50,31 +51,18 @@ const defaultState = () => {
         timestamp: null,
         type: null
       },
-      date_available: null,
-      sort_order: 1,
-      status: 1,
       name: '',
-      meta_title: '',
-      sort_description: '',
-      information_type: 1,
-      description: '',
-      tag: '',
-      meta_description: '',
-      meta_keyword: '',
-      multi_images: [],
-      relateds: [],
-      categorys: [],
-      downloads: [],
-      special_carousels: [],
+      khaiquat: '',
+      sort_id: '',
+      active: 1,
+      updateuser: '',
+
+      giao_phan_hats: [],
+      giao_phan_dongs: [],
+      giao_phan_cosos: [],
+      giao_phan_banchuyentrachs: []
     },
     isImgChange: true,
-    listCategorysDisplay: [],
-    listRelatedsDisplay: [],
-    dropdownsRelateds: [],
-    infoRelated: {
-      information_id: 0,
-      name: ''
-    },
     infoId: 0,
     loading: false,
     insertSuccess: false,
@@ -161,6 +149,68 @@ export default {
   },
 
   actions: {
+    addHatGiaoPhan({state}, params) {
+      state.info.giao_phan_hats.push({
+        id: uuidv4(),
+        giao_hat_id: null,
+        active: 1,
+        giao_xus: [],
+        cong_doan_tu_sis: []
+      })
+    },
+    removeHatGiaoPhan({state}, params) {
+      let giaoPhanHats = state.info.giao_phan_hats;
+      const data = params.item;
+
+      state.info.giao_phan_hats = _.remove(giaoPhanHats, function(item) {
+        return !(item.id == data.id);
+      })
+    },
+    addDongGiaoPhan({state}, params) {
+      state.info.giao_phan_dongs.push({
+        id: uuidv4(),
+        dong_id: null,
+        active: 1
+      })
+    },
+    removeDongGiaoPhan({state}, params) {
+      let giaoPhanDongs = state.info.giao_phan_dongs;
+      const data = params.item;
+
+      state.info.giao_phan_dongs = _.remove(giaoPhanDongs, function(item) {
+        return !(item.id == data.id);
+      })
+    },
+    addCoSoGiaoPhan({state}, params) {
+      state.info.giao_phan_cosos.push({
+        id: uuidv4(),
+        co_so_giao_phan_id: null,
+        active: 1
+      })
+    },
+    removeCoSoGiaoPhan({state}, params) {
+      let giaoPhanCoSos = state.info.giao_phan_cosos;
+      const data = params.item;
+
+      state.info.giao_phan_cosos = _.remove(giaoPhanCoSos, function(item) {
+        return !(item.id == data.id);
+      })
+    },
+    addBanChuyenTrachGiaoPhan({state}, params) {
+      state.info.giao_phan_banchuyentrachs.push({
+        id: uuidv4(),
+        ban_chuyen_trach_id: null,
+        active: 1
+      })
+    },
+    removeBanChuyenTrachGiaoPhan({state}, params) {
+      let giaoPhanBanChuyenTrachs = state.info.giao_phan_banchuyentrachs;
+      const data = params.item;
+
+      state.info.giao_phan_banchuyentrachs = _.remove(giaoPhanBanChuyenTrachs, function(item) {
+        return !(item.id == data.id);
+      })
+    },
     update_special_carousel({state}, specialCarousel) {
       state.info.special_carousels = specialCarousel;
     },
