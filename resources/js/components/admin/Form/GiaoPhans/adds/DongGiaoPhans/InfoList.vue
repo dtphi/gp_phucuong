@@ -1,22 +1,19 @@
 <template>
     <div class="table-responsive">
-        <table id="info-thuyen-chuyen-list" 
+        <table id="info-dong-giao-phan-list" 
             class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <td class="text-left">Key</td>
-                    <td>Value</td>
+                    <td class="text-left">Dòng</td>
+                    <td class="text-left">Trình trạng</td>
+                     <td>Thực hiện</td>
                 </tr>
             </thead>
             <tbody v-for="(item, idx) in lists" :key="idx">
                 <tr>
-                    <td class="text-left">Dòng</td>
                     <td>
-                        <info-dong-autocomplete></info-dong-autocomplete>
+                        <info-dong-autocomplete :key="item.id"></info-dong-autocomplete>
                     </td>
-                </tr>
-                <tr>
-                    <td class="text-left">Trình trạng</td>
                     <td>
                         <select
                             id="input-info-active"
@@ -25,9 +22,6 @@
                             <option value="0">Ẩn</option>
                         </select>
                     </td>
-                </tr>
-                <tr>
-                    <td>{{$options.setting.info_action_title}}</td>
                     <td class="text-right">
                         <button 
                             type="button" 
@@ -45,7 +39,7 @@
 
             <tfoot>
                 <tr>
-                    <td></td>
+                    <td></td><td></td>
                     <td class="text-right">
                         <btn-add></btn-add>
                     </td>
