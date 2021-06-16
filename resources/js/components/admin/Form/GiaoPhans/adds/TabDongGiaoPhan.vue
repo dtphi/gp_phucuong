@@ -12,7 +12,7 @@
     import InfoList from './DongGiaoPhans/InfoList';
 
     export default {
-        name: 'TabDongGiaoPhanForm',
+        name: 'TabDongGiaoPhan',
         components: {
             InfoList
         },

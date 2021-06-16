@@ -12,7 +12,7 @@
     import InfoList from './HatGiaoPhans/InfoList';
 
     export default {
-        name: 'TabHatForm',
+        name: 'TabHatGiaoPhan',
         components: {
             InfoList
         },

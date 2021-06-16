@@ -32,6 +32,7 @@ import {
   ACTION_GET_DROPDOWN_RELATED_LIST,
   ACTION_SELECT_DROPDOWN_RELATED_INFO
 } from '../types/action-types';
+import _ from 'lodash';
 
 const defaultState = () => {
   return {
@@ -60,7 +61,8 @@ const defaultState = () => {
       giao_phan_hats: [],
       giao_phan_dongs: [],
       giao_phan_cosos: [],
-      giao_phan_banchuyentrachs: []
+      giao_phan_banchuyentrachs: [],
+      giao_phan_hat_xu_diems: []
     },
     isImgChange: true,
     infoId: 0,
@@ -79,6 +81,14 @@ export default {
     },
     info(state) {
       return state.info
+    },
+    giaoXus(state) {
+      let giaoXus = [];
+      _.forEach(state.info.giao_phan_hats, function(item){
+        giaoXus = _.concat(giaoXus, item.giao_xus);
+      });
+
+      return giaoXus;
     },
     loading(state) {
       return state.loading
@@ -149,10 +159,122 @@ export default {
   },
 
   actions: {
+    addHatXuDiemGiaoPhan({state}, params) {
+      const xuId = params.giaoXu.id;
+      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
+        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == hatId) {
+          let congDts = item.cong_doan_tu_sis;
+          congDts.push({
+            id: uuidv4(),
+            giao_hat_id: hatId,
+            cong_doan_tu_si_id: null,
+            active: 1
+          });
+          _.update(item, 'cong_doan_tu_sis', function(cong_doan_tu_sis) {
+            return cong_doan_tu_sis = congDts;
+          })
+        }
+      });
+    },
+    removeHatXuDiemGiaoPhan({state}, params) {
+      let congDts = params.giaoHat.cong_doan_tu_sis;
+      let congDtsRm = params.congDoanTuSi;
+
+      const congDtsRms = _.remove(congDts, function(item) {
+        return !((item.id == congDtsRm.id) && (item.giao_hat_id == congDtsRm.giao_hat_id));
+      });
+      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
+        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == congDtsRm.giao_hat_id) {
+          _.update(item, 'cong_doan_tu_sis', function(cong_doan_tu_sis) {
+            return cong_doan_tu_sis = congDtsRms;
+          })
+        }
+      });
+    },
+    ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({state}, params) {console.log(params)
+      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
+        if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
+            _.update(item, 'giao_hat_id', function(giao_hat_id) {
+                return giao_hat_id = params.hatInfo.id;
+            })
+            _.update(item, 'hatName', function(hatName) {
+                return hatName = params.hatInfo.name;
+            })
+        }
+      });
+    },
+    addHatCongDoanTuSiGiaoPhan({state}, params) {
+      const hatId = params.giaoHat.id;
+      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
+        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == hatId) {
+          let congDts = item.cong_doan_tu_sis;
+          congDts.push({
+            id: uuidv4(),
+            hatId: hatId,
+            giao_hat_id: null,
+            cong_doan_tu_si_id: null,
+            active: 1
+          });
+          _.update(item, 'cong_doan_tu_sis', function(cong_doan_tu_sis) {
+            return cong_doan_tu_sis = congDts;
+          })
+        }
+      });
+    },
+    removeHatCongDoanTuSiGiaoPhan({state}, params) {
+      let congDts = params.giaoHat.cong_doan_tu_sis;
+      let congDtsRm = params.congDoanTuSi;
+
+      const congDtsRms = _.remove(congDts, function(item) {
+        return !((item.id == congDtsRm.id) && (item.hatId == congDtsRm.hatId));
+      });
+      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
+        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == congDtsRm.hatId) {
+          _.update(item, 'cong_doan_tu_sis', function(cong_doan_tu_sis) {
+            return cong_doan_tu_sis = congDtsRms;
+          })
+        }
+      });
+    },
+    addHatXuGiaoPhan({state}, params) {
+      const hatId = params.giaoHat.id;
+      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
+        if (item.hasOwnProperty('id') && item.hasOwnProperty('giao_xus') && item.id == hatId) {
+          let giaoXus = item.giao_xus;
+          giaoXus.push({
+            id: uuidv4(),
+            hatId: hatId,
+            giao_hat_id: null,
+            giao_xu_id: null,
+            active: 1,
+            giao_xu_diems: []
+          });
+          _.update(item, 'giao_xus', function(giao_xus) {
+            return giao_xus = giaoXus;
+          })
+        }
+      });
+    },
+    removeHatXuGiaoPhan({state}, params) {
+      let giaoXus = params.giaoHat.giao_xus;
+      let giaoXuRm = params.giaoXu;
+
+      const giaoXuRms = _.remove(giaoXus, function(item) {
+        return !((item.id == giaoXuRm.id) && (item.hatId == giaoXuRm.hatId));
+      });
+      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
+        if (item.hasOwnProperty('id') && item.hasOwnProperty('giao_xus') && item.id == giaoXuRm.hatId) {
+          _.update(item, 'giao_xus', function(giao_xus) {
+            return giao_xus = giaoXuRms;
+          })
+        }
+      });
+    },
     addHatGiaoPhan({state}, params) {
       state.info.giao_phan_hats.push({
         id: uuidv4(),
         giao_hat_id: null,
+        hatName: '',
         active: 1,
         giao_xus: [],
         cong_doan_tu_sis: []

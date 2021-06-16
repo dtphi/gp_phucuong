@@ -24,12 +24,6 @@
 
             <li>
                 <a
-                    href="#tab-giao-hat-xu-diem"
-                    data-toggle="tab">Giáo Điểm</a>
-            </li>
-
-            <li>
-                <a
                     href="#tab-giao-hat-congdoantusi"
                     data-toggle="tab">Công đoàn tu sĩ</a>
             </li>
@@ -72,13 +66,6 @@
                     role="tabpanel"
                     class="tab-pane"
                     :group-data="info"></tab-hat-xu>
-            </div>
-
-            <div class="tab-pane" id="tab-giao-hat-xu-diem">
-                <tab-hat-xu-diem
-                    role="tabpanel"
-                    class="tab-pane"
-                    :group-data="info"></tab-hat-xu-diem>
             </div>
 
             <div class="tab-pane" id="tab-giao-hat-congdoantusi">
@@ -131,7 +118,6 @@
     import TabGeneral from './adds/TabGeneral';
     import TabGiaoHat from './adds/TabHat';
     import TabHatXu from './adds/TabHatXu';
-    import TabHatXuDiem from './adds/TabHatXuDiem';
     import TabHatCongDoanTuSi from './adds/TabHatCongDoanTuSi';
     import TabDongGiaoPhan from './adds/TabDongGiaoPhan';
     import TabCoSoGiaoPhan from './adds/TabCoSoGiaoPhan';
@@ -146,7 +132,6 @@
             TabCoSoGiaoPhan,
             TabBanChuyenTrachGiaoPhan,
             TabHatXu,
-            TabHatXuDiem,
             TabHatCongDoanTuSi
         },
         data() {

@@ -5,13 +5,14 @@
                 v-for="(item, idx) in lists" :key="idx">
             <thead>
                 <tr>
-                    <td colspan="2">
-                        {{item.giao_hat_id}}
+                    <td colspan="3" class="text-center">
+                        Giáo hạt : {{item.hatName}}
                     </td>
                 </tr>
                 <tr>
                     <td>Giáo xứ</td>
                     <td>Trình trạng</td>
+                    <td>Thực hiện</td>
                 </tr>
             </thead>
             <tbody v-for="(giaoXu, idx) in item.giao_xus" :key="idx">
@@ -27,14 +28,10 @@
                             <option value="0">Ẩn</option>
                         </select>
                     </td>
-                </tr>
-            
-                <tr>
-                    <td>{{$options.setting.info_action_title}}</td>
                     <td class="text-right">
                         <button 
                             type="button" 
-                            @click="_removeItem(item)"
+                            @click="_removeItem(item, giaoXu)"
                             data-toggle="tooltip"
                             class="btn btn-default cms-btn">
                                 <font-awesome-layers size="1x" style="background:MistyRose">
@@ -48,9 +45,9 @@
 
             <tfoot>
                 <tr>
-                    <td></td>
+                    <td></td><td></td>
                     <td class="text-right">
-                        <btn-add></btn-add>
+                        <btn-add :giao-hat="item"></btn-add>
                     </td>
                 </tr>
             </tfoot>
@@ -89,12 +86,13 @@
         },
         methods: {
             ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-                'removeHatGiaoPhan'
+                'removeHatXuGiaoPhan'
             ]),
-            _removeItem(item) {
-                this.removeHatGiaoPhan({
-                    action: 'removeHatGiaoPhan',
-                    item: item
+            _removeItem(item, giaoXu) {
+                this.removeHatXuGiaoPhan({
+                    action: 'removeHatXuGiaoPhan',
+                    giaoHat: item,
+                    giaoXu: giaoXu
                 });
             }
         },

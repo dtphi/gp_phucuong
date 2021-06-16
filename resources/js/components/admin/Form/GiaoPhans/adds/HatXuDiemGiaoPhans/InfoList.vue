@@ -5,31 +5,33 @@
                 v-for="(item, idx) in lists" :key="idx">
             <thead>
                 <tr>
-                    <td colspan="2">
-                        {{item.giao_hat_id}}
+                    <td colspan="3">
+                        {{item.id}}
                     </td>
                 </tr>
                 <tr>
                     <td>Giáo xứ</td>
                     <td>Trình trạng</td>
+                    <td>Thực hiện</td>
                 </tr>
             </thead>
-            <tbody v-for="(giaoXu, idx) in item.giao_xus" :key="idx">
+            <tbody v-for="(giaoDiem, idx) in item.giao_xu_diems" :key="idx">
                 <tr>
                     <td>
-                        <info-giao-xu-autocomplete></info-giao-xu-autocomplete>
+                        <info-giao-diem-autocomplete></info-giao-diem-autocomplete>
                     </td>
                     <td>
-                        <info-cong-doan-tu-si-autocomplete></info-cong-doan-tu-si-autocomplete>
+                        <select
+                            id="input-info-active"
+                            class="form-control">
+                            <option value="1" selected="selected">Xảy ra</option>
+                            <option value="0">Ẩn</option>
+                        </select>
                     </td>
-                </tr>
-            
-                <tr>
-                    <td>{{$options.setting.info_action_title}}</td>
                     <td class="text-right">
                         <button 
                             type="button" 
-                            @click="_removeItem(item)"
+                            @click="_removeItem(item, giaoDiem)"
                             data-toggle="tooltip"
                             class="btn btn-default cms-btn">
                                 <font-awesome-layers size="1x" style="background:MistyRose">
@@ -45,7 +47,7 @@
                 <tr>
                     <td></td>
                     <td class="text-right">
-                        <btn-add></btn-add>
+                        <btn-add :giao-xu="item"></btn-add>
                     </td>
                 </tr>
             </tfoot>
@@ -61,19 +63,13 @@
     import {
         MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
-    import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete';
-    import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete';
     import InfoGiaoDiemAutocomplete from '../Groups/InfoGiaoDiemAutocomplete';
-    import InfoCongDoanTuSiAutocomplete from '../Groups/InfoCongDoanTuSiAutocomplete';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAdd,
-            InfoGiaoXuAutocomplete,
-            InfoGiaoHatAutocomplete,
             InfoGiaoDiemAutocomplete,
-            InfoCongDoanTuSiAutocomplete
         },
         props: {
             lists: {
@@ -84,12 +80,13 @@
         },
         methods: {
             ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-                'removeHatGiaoPhan'
+                'removeHatXuDiemGiaoPhan'
             ]),
-            _removeItem(item) {
-                this.removeHatGiaoPhan({
-                    action: 'removeHatGiaoPhan',
-                    item: item
+            _removeItem(item, giaoDIem) {
+                this.removeHatXuDiemGiaoPhan({
+                    action: 'removeHatXuDiemGiaoPhan',
+                    giaoXu: item,
+                    giaoDiem: giaoDIem
                 });
             }
         },

@@ -12,7 +12,7 @@
     import InfoList from './HatXuGiaoPhans/InfoList';
 
     export default {
-        name: 'TabHatForm',
+        name: 'TabHatXuGiaoPhan',
         components: {
             InfoList
         },
@@ -23,7 +23,7 @@
         },
         data() {
             return {
-                giao_phan_hats: []
+                giao_phan_hat_xus: []
             }
         },
     };

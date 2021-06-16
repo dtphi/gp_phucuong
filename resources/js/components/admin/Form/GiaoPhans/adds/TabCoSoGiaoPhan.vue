@@ -12,7 +12,7 @@
     import InfoList from './CoSoGiaoPhans/InfoList';
 
     export default {
-        name: 'TabCoSoGiaoPhanForm',
+        name: 'TabCoSoGiaoPhan',
         components: {
             InfoList
         },

@@ -12,7 +12,7 @@
     import InfoList from './BanChuyenTrachGiaoPhans/InfoList';
 
     export default {
-        name: 'TabBanChuyenTrachForm',
+        name: 'TabBanChuyenTrach',
         components: {
             InfoList
         },

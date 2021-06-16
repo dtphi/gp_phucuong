@@ -15,8 +15,8 @@
 	    		id="input-parent-cong-doan-tu-si-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
-                <font-awesome-layers size="2x" style="background:MistyRose">
-                    <font-awesome-icon icon="circle" style="color:Tomato"/>
+                <font-awesome-layers size="2x" style="background:#ddd">
+                    <font-awesome-icon icon="circle" style="color:#ddd"/>
                     <font-awesome-icon icon="search" class="fa-inverse" transform="shrink-4"/>
                 </font-awesome-layers>
             </span>

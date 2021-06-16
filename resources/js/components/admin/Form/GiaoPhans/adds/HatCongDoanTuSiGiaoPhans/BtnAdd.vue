@@ -3,7 +3,7 @@
 		type="button" 
 		data-toggle="tooltip"
 		@click="_addInfo()"
-        title="Thêm bằng cấp" class="btn btn-default cms-btn">
+        title="Thêm công đoàn tu sĩ giáo phận" class="btn btn-default cms-btn">
           <font-awesome-layers style="background:honeydew">
               <font-awesome-icon size="1x" icon="plus"/>
           </font-awesome-layers>
@@ -21,18 +21,22 @@
     export default {
         name: 'TheButtonAdd',
         props: {
+            giaoHat: {
+                default: null
+            },
             moduleKey: {
                 default: ''
             }
         },
         methods: {
             ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-                'addHatGiaoPhan'
+                'addHatCongDoanTuSiGiaoPhan'
             ]),
 
             _addInfo() {
-                this.addHatGiaoPhan({
-                    action: 'addHatGiaoPhan'
+                this.addHatCongDoanTuSiGiaoPhan({
+                    action: 'addHatCongDoanTuSiGiaoPhan',
+                    giaoHat: this.giaoHat
                 });
             }
         },

@@ -3,7 +3,7 @@
 		type="button" 
 		data-toggle="tooltip"
 		@click="_addInfo()"
-        title="Thêm bằng cấp" class="btn btn-default cms-btn">
+        title="Thêm giáo hạt" class="btn btn-default cms-btn">
           <font-awesome-layers style="background:honeydew">
               <font-awesome-icon size="1x" icon="plus"/>
           </font-awesome-layers>

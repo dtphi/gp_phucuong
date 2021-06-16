@@ -21,18 +21,22 @@
     export default {
         name: 'TheButtonAdd',
         props: {
+            giaoXu: {
+                default: null
+            },
             moduleKey: {
                 default: ''
             }
         },
         methods: {
             ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-                'addHatGiaoPhan'
+                'addHatXuDiemGiaoPhan'
             ]),
 
             _addInfo() {
-                this.addHatGiaoPhan({
-                    action: 'addHatGiaoPhan'
+                this.addHatXuDiemGiaoPhan({
+                    action: 'addHatXuDiemGiaoPhan',
+                    giaoXu: this.giaoXu
                 });
             }
         },

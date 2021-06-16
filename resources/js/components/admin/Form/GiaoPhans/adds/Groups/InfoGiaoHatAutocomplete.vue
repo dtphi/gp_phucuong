@@ -9,7 +9,7 @@
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
-	    		:value="query" type="text" 
+	    		:value="hat.hatName" type="text" 
 	    		name="category" 
 	    		placeholder="Chọn giáo hạt" 
 	    		id="input-parent-giao-hat-name" 
@@ -35,7 +35,8 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_GIAO_PHAN
+        MODULE_MODULE_GIAO_PHAN,
+        MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -43,9 +44,9 @@
     import lodash from 'lodash';
 
     export default {
-        name: 'DongAutocomplete',
+        name: 'GiaoHatAutocomplete',
         props: {
-            categoryId: {
+            hat: {
                 default: null
             }
         },
@@ -59,10 +60,16 @@
             ...mapState(MODULE_MODULE_GIAO_PHAN, {
                 dropdowns: state => state.dropdownGiaoHats
             }),
+            ...mapState(MODULE_MODULE_GIAO_PHAN_ADD, [
+                'info'
+            ])
         },
         methods: {
         	...mapActions(MODULE_MODULE_GIAO_PHAN, [
-        		'ACTION_GET_DROPDOWN_GIAO_HAT_LIST'
+        		'ACTION_GET_DROPDOWN_GIAO_HAT_LIST',
+        	]),
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+        		'ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST',
         	]),
             _searchCategories() {
               const query = this.query;
@@ -82,8 +89,16 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.query = infoCategory.name;
-              this.$emit('on-select-giao-xu', infoCategory);
+              const _self = this;
+              const isExistHat = _.find(_self.info.giao_phan_hats, { 'giao_hat_id': infoCategory.id });
+             
+              if (isExistHat === undefined) {
+                  this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({
+                      hat: _self.hat,
+                      hatInfo: infoCategory
+                  });
+              }
+              
               this._closeDropdown();
           }
         },
