@@ -1,15 +1,15 @@
 <template>
     <div class="form-group">
         <label 
-        	class="col-sm-2 control-label" 
+        	class="col-sm-1 control-label" 
         	for="input-parent-giao-xu-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Giáo xứ</span>
+        			data-original-title="(Tự động hoàn toàn)"></span>
         	</label>
-        <div class="col-sm-10" id="cms-scroll-dropdown">
+        <div class="col-sm-11" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
-	    		:value="query" type="text" 
+	    		:value="hatXu.hatXuName" type="text" 
 	    		name="category" 
 	    		placeholder="Chọn giáo xứ" 
 	    		id="input-parent-giao-xu-name" 
@@ -35,7 +35,8 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC
+        MODULE_MODULE_LINH_MUC,
+        MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -45,7 +46,10 @@
     export default {
         name: 'GiaoXuAutocomplete',
         props: {
-            categoryId: {
+            hat: {
+                default: null
+            },
+            hatXu: {
                 default: null
             }
         },
@@ -59,10 +63,16 @@
             ...mapState(MODULE_MODULE_LINH_MUC, {
                 dropdowns: state => state.dropdownGiaoXus
             }),
+            ...mapState(MODULE_MODULE_GIAO_PHAN_ADD, [
+                'info'
+            ])
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
         		'ACTION_GET_DROPDOWN_GIAO_XU_LIST'
+        	]),
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+        		'ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST',
         	]),
             _searchCategories() {
               const query = this.query;
@@ -82,8 +92,19 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.query = infoCategory.name;
-              this.$emit('on-select-giao-xu', infoCategory);
+              const _self = this;
+              const isExistHatXu = _.find(_self.info.giao_phan_hats, { 
+                  'giao_xus': [{'giao_xu_id': infoCategory.id}]
+               });
+             
+              if (isExistHatXu === undefined) {
+                  this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({
+                      hat: _self.hat,
+                      hatXu: _self.hatXu,
+                      hatXuInfo: infoCategory
+                  });
+              }
+              
               this._closeDropdown();
           }
         },

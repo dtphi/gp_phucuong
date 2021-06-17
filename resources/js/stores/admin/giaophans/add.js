@@ -2,8 +2,7 @@ import AppConfig from 'api@admin/constants/app-config';
 import { v4 as uuidv4 } from 'uuid';
 import {
   apiInsertInfo,
-  apiGetDropdownInfos
-} from 'api@admin/information';
+} from 'api@admin/giaophan';
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -25,12 +24,8 @@ import {
   ACTION_RELOAD_GET_INFO_LIST,
   ACTION_ADD_INFO_TO_CATEGORY_LIST,
   ACTION_REMOVE_INFO_TO_CATEGORY_LIST,
-  ACTION_ADD_INFO_TO_RELATED_LIST,
-  ACTION_REMOVE_INFO_TO_RELATED_LIST,
   ACTION_INSERT_INFO_BACK,
   ACTION_SET_IMAGE,
-  ACTION_GET_DROPDOWN_RELATED_LIST,
-  ACTION_SELECT_DROPDOWN_RELATED_INFO
 } from '../types/action-types';
 import _ from 'lodash';
 
@@ -105,6 +100,87 @@ export default {
   },
 
   mutations: {
+    update_giao_xu_in_hat(state, payload) {
+      _.forEach(state.info.giao_phan_hats, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.id == payload.id) {
+          state.info.giao_phan_hats[idx].giao_xus = payload.giao_xus;
+        }
+      });
+    },
+    update_dropdown_giao_xu_in_hat(state, payload) {
+      _.forEach(state.info.giao_phan_hats, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.hasOwnProperty('giao_xus') && item.id == payload.hatId) {
+          _.forEach(item.giao_xus, function(gx, index) {
+            if (gx.hasOwnProperty('id') && gx.id == payload.id) {
+              state.info.giao_phan_hats[idx].giao_xus[index] = payload;
+            }
+          })
+        }
+      });
+    },
+    
+    update_congdts_in_hat(state, payload) {
+      _.forEach(state.info.giao_phan_hats, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.id == payload.id) {
+          state.info.giao_phan_hats[idx].cong_doan_tu_sis = payload.cong_doan_tu_sis;
+        }
+      });
+    },
+    update_dropdown_congdts_in_hat(state, payload) {
+      _.forEach(state.info.giao_phan_hats, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == payload.hatId) {
+          _.forEach(item.cong_doan_tu_sis, function(cdts, index) {
+            if (cdts.hasOwnProperty('id') && cdts.id == payload.id) {
+              state.info.giao_phan_hats[idx].cong_doan_tu_sis[index] = payload;
+            }
+          })
+        }
+      });
+    },
+
+    update_hat_in_giao_phan(state, payload) {
+      state.info.giao_phan_hats = payload;
+    },
+    update_dropdown_hat_in_giao_phan(state, payload) {
+      _.forEach(state.info.giao_phan_hats, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.id == payload.id) {
+          state.info.giao_phan_hats[idx] = payload;
+        }
+      });
+    },
+
+    update_dong_in_giao_phan(state, payload) {
+      state.info.giao_phan_dongs  = payload;
+    },
+    update_dropdown_dong_in_giao_phan(state, payload) {
+      _.forEach(state.info.giao_phan_dongs, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.id == payload.id) {
+          state.info.giao_phan_dongs[idx] = payload;
+        }
+      });
+    },
+
+    update_coso_in_giao_phan(state, payload) {
+      state.info.giao_phan_cosos  = payload;
+    },
+    update_dropdown_coso_in_giao_phan(state, payload) {
+      _.forEach(state.info.giao_phan_cosos, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.id == payload.id) {
+          state.info.giao_phan_cosos[idx] = payload;
+        }
+      });
+    },
+
+    update_banchuyentrach_in_giao_phan(state, payload) {
+      state.info.giao_phan_banchuyentrachs  = payload;
+    },
+    update_dropdown_banchuyentrach_in_giao_phan(state, payload) {
+      _.forEach(state.info.giao_phan_banchuyentrachs, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.id == payload.id) {
+          state.info.giao_phan_banchuyentrachs[idx] = payload;
+        }
+      });
+    },
     [INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED](state, payload) {
       state.infoRelated = payload;
     },
@@ -159,179 +235,236 @@ export default {
   },
 
   actions: {
-    addHatXuDiemGiaoPhan({state}, params) {
-      const xuId = params.giaoXu.id;
-      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
-        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == hatId) {
-          let congDts = item.cong_doan_tu_sis;
-          congDts.push({
-            id: uuidv4(),
-            giao_hat_id: hatId,
-            cong_doan_tu_si_id: null,
-            active: 1
-          });
-          _.update(item, 'cong_doan_tu_sis', function(cong_doan_tu_sis) {
-            return cong_doan_tu_sis = congDts;
-          })
-        }
+    addHatCongDoanTuSiGiaoPhan({commit}, params) {
+      let giaoHat = params.giaoHat;
+      giaoHat.cong_doan_tu_sis.push({
+        id: uuidv4(),
+        hatId: giaoHat.id,
+        giao_hat_id: giaoHat.giao_hat_id,
+        cong_doan_tu_si_id: null,
+        hatCongDtsName: '',
+        active: 1
       });
+      
+      commit('update_congdts_in_hat', giaoHat);
     },
-    removeHatXuDiemGiaoPhan({state}, params) {
+    removeHatCongDoanTuSiGiaoPhan({commit}, params) {
+      let giaoHat = params.giaoHat;
       let congDts = params.giaoHat.cong_doan_tu_sis;
       let congDtsRm = params.congDoanTuSi;
 
-      const congDtsRms = _.remove(congDts, function(item) {
-        return !((item.id == congDtsRm.id) && (item.giao_hat_id == congDtsRm.giao_hat_id));
-      });
-      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
-        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == congDtsRm.giao_hat_id) {
-          _.update(item, 'cong_doan_tu_sis', function(cong_doan_tu_sis) {
-            return cong_doan_tu_sis = congDtsRms;
-          })
-        }
-      });
-    },
-    ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({state}, params) {console.log(params)
-      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
-        if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
-            _.update(item, 'giao_hat_id', function(giao_hat_id) {
-                return giao_hat_id = params.hatInfo.id;
-            })
-            _.update(item, 'hatName', function(hatName) {
-                return hatName = params.hatInfo.name;
-            })
-        }
-      });
-    },
-    addHatCongDoanTuSiGiaoPhan({state}, params) {
-      const hatId = params.giaoHat.id;
-      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
-        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == hatId) {
-          let congDts = item.cong_doan_tu_sis;
-          congDts.push({
-            id: uuidv4(),
-            hatId: hatId,
-            giao_hat_id: null,
-            cong_doan_tu_si_id: null,
-            active: 1
-          });
-          _.update(item, 'cong_doan_tu_sis', function(cong_doan_tu_sis) {
-            return cong_doan_tu_sis = congDts;
-          })
-        }
-      });
-    },
-    removeHatCongDoanTuSiGiaoPhan({state}, params) {
-      let congDts = params.giaoHat.cong_doan_tu_sis;
-      let congDtsRm = params.congDoanTuSi;
-
-      const congDtsRms = _.remove(congDts, function(item) {
+      giaoHat.cong_doan_tu_sis = _.remove(congDts, function(item) {
         return !((item.id == congDtsRm.id) && (item.hatId == congDtsRm.hatId));
       });
-      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
-        if (item.hasOwnProperty('id') && item.hasOwnProperty('cong_doan_tu_sis') && item.id == congDtsRm.hatId) {
-          _.update(item, 'cong_doan_tu_sis', function(cong_doan_tu_sis) {
-            return cong_doan_tu_sis = congDtsRms;
-          })
-        }
-      });
+
+      commit('update_congdts_in_hat', giaoHat);
     },
-    addHatXuGiaoPhan({state}, params) {
-      const hatId = params.giaoHat.id;
-      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
-        if (item.hasOwnProperty('id') && item.hasOwnProperty('giao_xus') && item.id == hatId) {
-          let giaoXus = item.giao_xus;
-          giaoXus.push({
-            id: uuidv4(),
-            hatId: hatId,
-            giao_hat_id: null,
-            giao_xu_id: null,
-            active: 1,
-            giao_xu_diems: []
+    ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({commit}, params) {
+      let hatCongdtsUpdate = params.hatCongDts;
+
+      _.forEach(params.hat.cong_doan_tu_sis, function(item) {
+        if (item.hasOwnProperty('id') && (item.id == hatCongdtsUpdate.id) ) {
+          hatCongdtsUpdate = _.update(item, 'cong_doan_tu_si_id', function(cong_doan_tu_si_id) {
+              return cong_doan_tu_si_id = params.hatCongDtsInfo.id;
+          })
+          hatCongdtsUpdate =  _.update(item, 'hatCongDtsName', function(hatCongDtsName) {
+            return hatCongDtsName = params.hatCongDtsInfo.name;
           });
-          _.update(item, 'giao_xus', function(giao_xus) {
-            return giao_xus = giaoXus;
-          })
+
+          commit('update_dropdown_congdts_in_hat', hatCongdtsUpdate);
         }
       });
     },
-    removeHatXuGiaoPhan({state}, params) {
+    addHatXuGiaoPhan({commit}, params) {
+      let giaoHat = params.giaoHat;
+      giaoHat.giao_xus.push({
+        id: uuidv4(),
+        hatId: giaoHat.id,
+        giao_hat_id: giaoHat.giao_hat_id,
+        giao_xu_id: null,
+        hatXuName: '',
+        active: 1,
+        giao_xu_diems: []
+      });
+      
+      commit('update_giao_xu_in_hat', giaoHat);
+    },
+    removeHatXuGiaoPhan({commit}, params) {
+      let giaoHat = params.giaoHat;
       let giaoXus = params.giaoHat.giao_xus;
       let giaoXuRm = params.giaoXu;
 
-      const giaoXuRms = _.remove(giaoXus, function(item) {
+      giaoHat.giao_xus = _.remove(giaoXus, function(item) {
         return !((item.id == giaoXuRm.id) && (item.hatId == giaoXuRm.hatId));
       });
-      state.info.giao_phan_hats = _.forEach(state.info.giao_phan_hats, function(item) {
-        if (item.hasOwnProperty('id') && item.hasOwnProperty('giao_xus') && item.id == giaoXuRm.hatId) {
-          _.update(item, 'giao_xus', function(giao_xus) {
-            return giao_xus = giaoXuRms;
-          })
+
+      commit('update_giao_xu_in_hat', giaoHat);
+    },
+    ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({commit}, params) {
+      let hatXuUpdate = params.hatXu;
+
+      _.forEach(params.hat.giao_xus, function(item) {
+        if (item.hasOwnProperty('id') && (item.id == hatXuUpdate.id) ) {
+            hatXuUpdate = _.update(item, 'giao_xu_id', function(giao_xu_id) {
+                return giao_xu_id = params.hatXuInfo.id;
+            })
+            hatXuUpdate =  _.update(item, 'hatXuName', function(hatXuName) {
+              return hatXuName = params.hatXuInfo.name;
+            });
+
+            commit('update_dropdown_giao_xu_in_hat', hatXuUpdate);
         }
       });
     },
-    addHatGiaoPhan({state}, params) {
-      state.info.giao_phan_hats.push({
+    addHatGiaoPhan({commit, state}, params) {
+      let giaoHats = state.info.giao_phan_hats;
+      giaoHats.push({
         id: uuidv4(),
         giao_hat_id: null,
         hatName: '',
         active: 1,
         giao_xus: [],
         cong_doan_tu_sis: []
-      })
+      });
+      commit('update_hat_in_giao_phan', giaoHats)
     },
-    removeHatGiaoPhan({state}, params) {
+    removeHatGiaoPhan({commit, state}, params) {
       let giaoPhanHats = state.info.giao_phan_hats;
       const data = params.item;
 
-      state.info.giao_phan_hats = _.remove(giaoPhanHats, function(item) {
+      giaoPhanHats = _.remove(giaoPhanHats, function(item) {
         return !(item.id == data.id);
       })
+
+      commit('update_hat_in_giao_phan', giaoPhanHats)
     },
-    addDongGiaoPhan({state}, params) {
-      state.info.giao_phan_dongs.push({
+    ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({commit, state}, params) {
+      let hat = params.hat;
+      let giaoHats = state.info.giao_phan_hats;
+
+      _.forEach(giaoHats, function(item) {
+        if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
+            hat = _.update(item, 'giao_hat_id', function(giao_hat_id) {
+                return giao_hat_id = params.hatInfo.id;
+            });
+            hat = _.update(item, 'hatName', function(hatName) {
+                return hatName = params.hatInfo.name;
+            });
+
+            commit('update_dropdown_hat_in_giao_phan', hat);
+        }
+      });
+    },
+    addDongGiaoPhan({commit, state}, params) {
+      let dongs = state.info.giao_phan_dongs;
+      dongs.push({
         id: uuidv4(),
         dong_id: null,
+        dongName: '',
         active: 1
-      })
+      });
+      commit('update_dong_in_giao_phan', dongs);
     },
-    removeDongGiaoPhan({state}, params) {
+    removeDongGiaoPhan({commit, state}, params) {
       let giaoPhanDongs = state.info.giao_phan_dongs;
       const data = params.item;
 
-      state.info.giao_phan_dongs = _.remove(giaoPhanDongs, function(item) {
+      giaoPhanDongs = _.remove(giaoPhanDongs, function(item) {
         return !(item.id == data.id);
       })
+
+      commit('update_dong_in_giao_phan', giaoPhanDongs);
     },
-    addCoSoGiaoPhan({state}, params) {
-      state.info.giao_phan_cosos.push({
+    ACTION_UPDATE_DROPDOWN_DONG_LIST({commit, state}, params) {
+      let dong = params.dong;
+      let dongs = state.info.giao_phan_dongs;
+
+      _.forEach(dongs, function(item) {
+        if (item.hasOwnProperty('id') && (item.id == params.dong.id) ) {
+            dong = _.update(item, 'dong_id', function(dong_id) {
+                return dong_id = params.dongInfo.id;
+            });
+            dong = _.update(item, 'dongName', function(dongName) {
+                return dongName = params.dongInfo.name;
+            });
+
+            commit('update_dropdown_dong_in_giao_phan', dong);
+        }
+      });
+    },
+    addCoSoGiaoPhan({commit, state}, params) {
+      let cosos = state.info.giao_phan_cosos;
+      cosos.push({
         id: uuidv4(),
         co_so_giao_phan_id: null,
+        cosoName: '',
         active: 1
-      })
+      });
+      commit('update_coso_in_giao_phan', cosos);
     },
-    removeCoSoGiaoPhan({state}, params) {
-      let giaoPhanCoSos = state.info.giao_phan_cosos;
+    removeCoSoGiaoPhan({commit, state}, params) {
+      let giaoPhanCosos = state.info.giao_phan_cosos;
       const data = params.item;
 
-      state.info.giao_phan_cosos = _.remove(giaoPhanCoSos, function(item) {
+      giaoPhanCosos = _.remove(giaoPhanCosos, function(item) {
         return !(item.id == data.id);
       })
+
+      commit('update_coso_in_giao_phan', giaoPhanCosos);
     },
-    addBanChuyenTrachGiaoPhan({state}, params) {
-      state.info.giao_phan_banchuyentrachs.push({
+    ACTION_UPDATE_DROPDOWN_COSO_LIST({commit, state}, params) {
+      let coso = params.coso;
+      let cosos = state.info.giao_phan_cosos;
+
+      _.forEach(cosos, function(item) {
+        if (item.hasOwnProperty('id') && (item.id == params.coso.id) ) {
+            coso = _.update(item, 'co_so_giao_phan_id', function(co_so_giao_phan_id) {
+                return co_so_giao_phan_id = params.cosoInfo.id;
+            });
+            coso = _.update(item, 'cosoName', function(cosoName) {
+                return cosoName = params.cosoInfo.name;
+            });
+
+            commit('update_dropdown_coso_in_giao_phan', coso);
+        }
+      });
+    },
+    addBanChuyenTrachGiaoPhan({commit, state}, params) {
+      let banChuyenTrachs = state.info.giao_phan_banchuyentrachs;
+      banChuyenTrachs.push({
         id: uuidv4(),
         ban_chuyen_trach_id: null,
+        banChuyenTrachName: '',
         active: 1
-      })
+      });
+      commit('update_banchuyentrach_in_giao_phan', banChuyenTrachs);
     },
-    removeBanChuyenTrachGiaoPhan({state}, params) {
+    removeBanChuyenTrachGiaoPhan({commit, state}, params) {
       let giaoPhanBanChuyenTrachs = state.info.giao_phan_banchuyentrachs;
       const data = params.item;
 
-      state.info.giao_phan_banchuyentrachs = _.remove(giaoPhanBanChuyenTrachs, function(item) {
+      giaoPhanBanChuyenTrachs = _.remove(giaoPhanBanChuyenTrachs, function(item) {
         return !(item.id == data.id);
       })
+
+      commit('update_banchuyentrach_in_giao_phan', giaoPhanBanChuyenTrachs);
+    },
+    ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({commit, state}, params) {
+      let banChuyenTrach = params.banChuyenTrach;
+      let banChuyenTrachs = state.info.giao_phan_banchuyentrachs;
+
+      _.forEach(banChuyenTrachs, function(item) {
+        if (item.hasOwnProperty('id') && (item.id == params.banChuyenTrach.id) ) {
+          banChuyenTrach = _.update(item, 'ban_chuyen_trach_id', function(ban_chuyen_trach_id) {
+                return ban_chuyen_trach_id = params.banChuyenTrachInfo.id;
+            });
+            banChuyenTrach = _.update(item, 'banChuyenTrachName', function(banChuyenTrachName) {
+                return banChuyenTrachName = params.banChuyenTrachInfo.name;
+            });
+
+            commit('update_dropdown_banchuyentrach_in_giao_phan', banChuyenTrach);
+        }
+      });
     },
     update_special_carousel({state}, specialCarousel) {
       state.info.special_carousels = specialCarousel;
@@ -424,63 +557,5 @@ export default {
     }, imgFile) {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
     },
-
-    [ACTION_ADD_INFO_TO_RELATED_LIST]({
-      state,
-      commit
-    }, related) {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      if (typeof related === "object" && Object.keys(related).length) {
-        if ((relateds.indexOf(related.information_id) === -1) && (parseInt(related.information_id) > 0)) {
-          relateds.push(related.information_id);
-          listRelatedShow.push(related);
-        }
-      }
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, relateds);
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, listRelatedShow);
-    },
-
-    [ACTION_REMOVE_INFO_TO_RELATED_LIST]({
-      state,
-      commit
-    }, related) {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, _.remove(relateds, function(infoId) {
-        return (infoId - related.information_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, _.remove(listRelatedShow, function(item) {
-        return (item.information_id - related.information_id !== 0);
-      }));
-    },
-
-    [ACTION_GET_DROPDOWN_RELATED_LIST]({
-      commit
-    }, filterName) {
-      const params = {
-        filter_name: filterName
-      }
-      apiGetDropdownInfos(
-        (result) => {
-          commit(INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS, 'Success');
-
-          commit(INFOS_FORM_SET_DROPDOWN_RELATED_LIST, result);
-        },
-        (errors) => {
-          commit(INFOS_FORM_GET_DROPDOWN_RELATED_FAILED, 'Failed');
-        },
-        params
-      );
-    },
-
-    [ACTION_SELECT_DROPDOWN_RELATED_INFO]({
-      commit
-    }, information) {
-      commit(INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED, information);
-    }
   }
 }

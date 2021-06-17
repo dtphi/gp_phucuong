@@ -1,15 +1,15 @@
 <template>
     <div class="form-group">
         <label 
-        	class="col-sm-2 control-label" 
+        	class="col-sm-1 control-label" 
         	for="input-parent-dong-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Dong</span>
+        			data-original-title="(Tự động hoàn toàn)"></span>
         	</label>
-        <div class="col-sm-10" id="cms-scroll-dropdown">
+        <div class="col-sm-11" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
-	    		:value="query" type="text" 
+	    		:value="dong.dongName" type="text" 
 	    		name="category" 
 	    		placeholder="Chọn dòng" 
 	    		id="input-parent-dong-name" 
@@ -35,7 +35,8 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC
+        MODULE_MODULE_LINH_MUC,
+        MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -45,7 +46,7 @@
     export default {
         name: 'DongAutocomplete',
         props: {
-            categoryId: {
+            dong: {
                 default: null
             }
         },
@@ -59,10 +60,16 @@
             ...mapState(MODULE_MODULE_LINH_MUC, {
                 dropdowns: state => state.dropdownDongs
             }),
+            ...mapState(MODULE_MODULE_GIAO_PHAN_ADD, [
+                'info'
+            ])
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
         		'ACTION_GET_DROPDOWN_DONG_LIST'
+        	]),
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+        		'ACTION_UPDATE_DROPDOWN_DONG_LIST',
         	]),
             _searchCategories() {
               const query = this.query;
@@ -82,8 +89,16 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.query = infoCategory.name;
-              this.$emit('on-select-giao-xu', infoCategory);
+              const _self = this;
+              const isExistDong = _.find(_self.info.giao_phan_dongs, { 'dong_id': infoCategory.id });
+             
+              if (isExistDong === undefined) {
+                  this.ACTION_UPDATE_DROPDOWN_DONG_LIST({
+                      dong: _self.dong,
+                      dongInfo: infoCategory
+                  });
+              }
+              
               this._closeDropdown();
           }
         },

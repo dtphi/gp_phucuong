@@ -39,72 +39,6 @@ class GiaoPhanController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownGiaoHat(Request $request)
-    {
-        $data = $request->all();
-
-        $results     = $this->gphSv->apiGetGiaoHatList($data);
-        $collections = [];
-
-        foreach ($results as $key => $value) {
-            $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
-            ];
-        }
-
-        return $this->respondWithCollectionPagination($collections);
-    }
-
-    /**
-     * @author : dtphi .
-     * @param Request $request
-     * @return mixed
-     */
-    public function dropdownGiaoDiem(Request $request)
-    {
-        $data = $request->all();
-
-        $results     = $this->gphSv->apiGetGiaoDiemList($data);
-        $collections = [];
-
-        foreach ($results as $key => $value) {
-            $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
-            ];
-        }
-
-        return $this->respondWithCollectionPagination($collections);
-    }
-
-    /**
-     * @author : dtphi .
-     * @param Request $request
-     * @return mixed
-     */
-    public function dropdownCongDoanTuSi(Request $request)
-    {
-        $data = $request->all();
-
-        $results     = $this->gphSv->apiGetCongDoanTuSiList($data);
-        $collections = [];
-
-        foreach ($results as $key => $value) {
-            $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
-            ];
-        }
-
-        return $this->respondWithCollectionPagination($collections);
-    }
-
-    /**
-     * @author : dtphi .
-     * @param Request $request
-     * @return mixed
-     */
     public function index(Request $request)
     {
         $action = $request->query('action');
@@ -232,7 +166,7 @@ class GiaoPhanController extends ApiController
      */
     private function __handleStore(&$request)
     {
-        $formData = $request->all();
+        $formData = $request->all();dd($formData);
 
         if ($result = $this->gphSv->apiInsert($formData)) {
             return $this->respondUpdated($result);
@@ -270,5 +204,71 @@ class GiaoPhanController extends ApiController
         }
 
         return $this->respondBadRequest();
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownGiaoHat(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->gphSv->apiGetGiaoHatList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownGiaoDiem(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->gphSv->apiGetGiaoDiemList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function dropdownCongDoanTuSi(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->gphSv->apiGetCongDoanTuSiList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id' => $value->id,
+                'name'           => $value->name
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
     }
 }

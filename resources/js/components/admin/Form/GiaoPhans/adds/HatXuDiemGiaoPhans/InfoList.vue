@@ -10,9 +10,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Giáo xứ</td>
-                    <td>Trình trạng</td>
-                    <td>Thực hiện</td>
+                    <td class="text-left">Giáo xứ</td>
+                    <td class="text-left">Trình trạng</td>
+                    <td class="text-right">Thực hiện</td>
                 </tr>
             </thead>
             <tbody v-for="(giaoDiem, idx) in item.giao_xu_diems" :key="idx">

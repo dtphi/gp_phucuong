@@ -6,37 +6,10 @@
                 <tr>
                     <td class="text-left">Dòng</td>
                     <td class="text-left">Trình trạng</td>
-                     <td>Thực hiện</td>
+                    <td class="text-right">Thực hiện</td>
                 </tr>
             </thead>
-            <tbody v-for="(item, idx) in lists" :key="idx">
-                <tr>
-                    <td>
-                        <info-dong-autocomplete :key="item.id"></info-dong-autocomplete>
-                    </td>
-                    <td>
-                        <select
-                            id="input-info-active"
-                            class="form-control">
-                            <option value="1" selected="selected">Xảy ra</option>
-                            <option value="0">Ẩn</option>
-                        </select>
-                    </td>
-                    <td class="text-right">
-                        <button 
-                            type="button" 
-                            @click="_removeItem(item)"
-                            data-toggle="tooltip"
-                            class="btn btn-default cms-btn">
-                                <font-awesome-layers size="1x" style="background:MistyRose">
-                                    <font-awesome-icon icon="circle" style="color:Tomato"/>
-                                    <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
-                                </font-awesome-layers>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-
+            <info-item v-for="(item, idx) in lists" :key="idx" :item="item" ></info-item>
             <tfoot>
                 <tr>
                     <td></td><td></td>
@@ -50,37 +23,18 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
     import BtnAdd from './BtnAdd';
-    import {
-        MODULE_MODULE_GIAO_PHAN_ADD
-    } from 'store@admin/types/module-types';
-    import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete';
+    import InfoItem from './InfoItem';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAdd,
-            InfoDongAutocomplete,
+            InfoItem,
         },
         props: {
             lists: {
                 default: {}
-            }
-        },
-        computed: {
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-                'removeDongGiaoPhan'
-            ]),
-            _removeItem(item) {
-                this.removeDongGiaoPhan({
-                    action: 'removeDongGiaoPhan',
-                    item: item
-                });
             }
         },
         setting: {

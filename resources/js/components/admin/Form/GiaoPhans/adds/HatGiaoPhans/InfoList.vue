@@ -6,7 +6,7 @@
                 <tr>
                     <td class="text-left">Hạt</td>
                     <td class="text-left">Trình trạng</td>
-                    <td>{{$options.setting.info_action_title}}</td>
+                    <td class="text-right">{{$options.setting.info_action_title}}</td>
                 </tr>
             </thead>
             <tbody>

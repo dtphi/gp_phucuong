@@ -72,11 +72,11 @@
                     </li>
                 </ul>
             </li>
-            <li id="user">
+            <li id="linh-muc">
                 <a
                     class="parent">
                     <i class="fa fa-user fa-fw"></i>
-                    <span>{{$options.setting.users_title}}</span></a>
+                    <span>{{$options.setting.linhmucs_title}}</span></a>
                 <ul class="collapse">
                     <li>
                         <a
@@ -84,6 +84,14 @@
                             <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.linhmucs_title}}</span></a>
                     </li>
+                </ul>
+            </li>
+            <li id="user">
+                <a
+                    class="parent">
+                    <i class="fa fa-user fa-fw"></i>
+                    <span>{{$options.setting.users_title}}</span></a>
+                <ul class="collapse">
                     <li>
                         <a
                             :href="_getHref('users')">

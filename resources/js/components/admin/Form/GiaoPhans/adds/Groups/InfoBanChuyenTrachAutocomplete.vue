@@ -1,15 +1,15 @@
 <template>
     <div class="form-group">
         <label 
-        	class="col-sm-2 control-label" 
+        	class="col-sm-1 control-label" 
         	for="input-parent-ban-chuyen-trach-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Ban chuyên trách</span>
+        			data-original-title="(Tự động hoàn toàn)"></span>
         	</label>
-        <div class="col-sm-10" id="cms-scroll-dropdown">
+        <div class="col-sm-11" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
-	    		:value="query" type="text" 
+	    		:value="banChuyenTrach.banChuyenTrachName" type="text" 
 	    		name="category" 
 	    		placeholder="Chọn ban chuyên trách" 
 	    		id="input-parent-ban-chuyen-trach-name" 
@@ -35,7 +35,8 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC
+        MODULE_MODULE_LINH_MUC,
+        MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -45,7 +46,7 @@
     export default {
         name: 'InfoBanChuyenTrachAutocomplete',
         props: {
-            categoryId: {
+            banChuyenTrach: {
                 default: null
             }
         },
@@ -59,10 +60,16 @@
             ...mapState(MODULE_MODULE_LINH_MUC, {
                 dropdowns: state => state.dropdownBanChuyenTrachs
             }),
+            ...mapState(MODULE_MODULE_GIAO_PHAN_ADD, [
+                'info'
+            ])
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
         		'ACTION_GET_DROPDOWN_BAN_CHUYEN_TRACH_LIST'
+        	]),
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+        		'ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST',
         	]),
             _searchCategories() {
               const query = this.query;
@@ -82,8 +89,16 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.query = infoCategory.name;
-              this.$emit('on-select-giao-xu', infoCategory);
+              const _self = this;
+              const isExist = _.find(_self.info.giao_phan_banchuyentrachs, { 'ban_chuyen_trach_id': infoCategory.id });
+             
+              if (isExist === undefined) {
+                  this.ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({
+                      banChuyenTrach: _self.banChuyenTrach,
+                      banChuyenTrachInfo: infoCategory
+                  });
+              }
+              
               this._closeDropdown();
           }
         },

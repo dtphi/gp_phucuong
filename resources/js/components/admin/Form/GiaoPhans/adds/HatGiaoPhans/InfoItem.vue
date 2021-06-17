@@ -31,7 +31,6 @@
     import {
         mapActions
     } from 'vuex';
-    import BtnAdd from './BtnAdd';
     import {
         MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
@@ -40,7 +39,6 @@
     export default {
         name: 'TheInfoItem',
         components: {
-            BtnAdd,
             InfoGiaoHatAutocomplete,
         },
         props: {

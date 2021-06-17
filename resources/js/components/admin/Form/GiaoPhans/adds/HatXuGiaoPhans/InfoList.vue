@@ -6,43 +6,17 @@
             <thead>
                 <tr>
                     <td colspan="3" class="text-center">
-                        Giáo hạt : {{item.hatName}}
+                        Giáo Hạt : {{item.hatName}}
                     </td>
                 </tr>
                 <tr>
-                    <td>Giáo xứ</td>
-                    <td>Trình trạng</td>
-                    <td>Thực hiện</td>
+                    <td class="text-left">Giáo xứ</td>
+                    <td class="text-left">Trình trạng</td>
+                    <td class="text-right">Thực hiện</td>
                 </tr>
             </thead>
-            <tbody v-for="(giaoXu, idx) in item.giao_xus" :key="idx">
-                <tr>
-                    <td>
-                        <info-giao-xu-autocomplete></info-giao-xu-autocomplete>
-                    </td>
-                    <td>
-                        <select
-                            id="input-info-active"
-                            class="form-control">
-                            <option value="1" selected="selected">Xảy ra</option>
-                            <option value="0">Ẩn</option>
-                        </select>
-                    </td>
-                    <td class="text-right">
-                        <button 
-                            type="button" 
-                            @click="_removeItem(item, giaoXu)"
-                            data-toggle="tooltip"
-                            class="btn btn-default cms-btn">
-                                <font-awesome-layers size="1x" style="background:MistyRose">
-                                    <font-awesome-icon icon="circle" style="color:Tomato"/>
-                                    <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
-                                </font-awesome-layers>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-
+            <info-item v-for="(giaoXu, idx) in item.giao_xus" 
+                :hat="item" :item="giaoXu" :key="idx"></info-item>
             <tfoot>
                 <tr>
                     <td></td><td></td>
@@ -56,44 +30,18 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
     import BtnAdd from './BtnAdd';
-    import {
-        MODULE_MODULE_GIAO_PHAN_ADD
-    } from 'store@admin/types/module-types';
-    import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete';
-    import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete';
-    import InfoGiaoDiemAutocomplete from '../Groups/InfoGiaoDiemAutocomplete';
-    import InfoCongDoanTuSiAutocomplete from '../Groups/InfoCongDoanTuSiAutocomplete';
+    import InfoItem from './InfoItem';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAdd,
-            InfoGiaoXuAutocomplete,
-            InfoGiaoHatAutocomplete,
-            InfoGiaoDiemAutocomplete,
-            InfoCongDoanTuSiAutocomplete
+            InfoItem
         },
         props: {
             lists: {
                 default: {}
-            }
-        },
-        computed: {
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-                'removeHatXuGiaoPhan'
-            ]),
-            _removeItem(item, giaoXu) {
-                this.removeHatXuGiaoPhan({
-                    action: 'removeHatXuGiaoPhan',
-                    giaoHat: item,
-                    giaoXu: giaoXu
-                });
             }
         },
         setting: {
@@ -101,10 +49,6 @@
             info_url_title: 'Url tiêu đề',
             info_author_titile: 'Tác giả',
             info_sort_order_title: 'Sắp xếp',
-            
-            info_action_title: 'Thực hiện',
-            btn_image_sub_remove_txt: 'Xóa',
-            btn_image_sub_add_txt: 'Thêm hình ảnh'
         }
     };
 </script>

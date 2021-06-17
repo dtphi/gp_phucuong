@@ -1,12 +1,12 @@
 <template>
     <div class="form-group">
         <label 
-        	class="col-sm-2 control-label" 
+        	class="col-sm-1 control-label" 
         	for="input-parent-giao-diem-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Giáo Điểm</span>
+        			data-original-title="(Tự động hoàn toàn)"></span>
         	</label>
-        <div class="col-sm-10" id="cms-scroll-dropdown">
+        <div class="col-sm-11" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		:value="query" type="text" 

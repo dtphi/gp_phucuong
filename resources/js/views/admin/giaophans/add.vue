@@ -18,7 +18,7 @@
             <div class="page-header">
                 <div class="container-fluid">
                     <div class="pull-right">
-                        <!--<button
+                        <button
                             type="button"
                             @click="_submitInfo"
                             data-toggle="tooltip"
@@ -30,7 +30,7 @@
                                 data-toggle="tooltip"
                                 title="Lưu"
                                 class="btn btn-primary">{{$options.setting.btn_save_back_txt}}
-                        </button>-->
+                        </button>
                         <the-btn-back-list-page></the-btn-back-list-page>
                     </div>
                     <h1>{{$options.setting.panel_title}}</h1>
@@ -45,7 +45,7 @@
 
                     <div class="panel-body">
                         <info-add-form
-                            ref="formAddLinhMuc"></info-add-form>
+                            ref="formAddGiaoPhan"></info-add-form>
                     </div>
                 </div>
             </div>
@@ -122,11 +122,9 @@
             },
             _submitInfo() {
                 const _self = this;
-
-                this.update_special_carousel(this.specialInfoCarousel);
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
-                        _self.$refs.formAddLinhMuc._submitInfo();
+                        _self.$refs.formAddGiaoPhan._submitInfo();
                     }
                 });
             },
@@ -135,7 +133,7 @@
 
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
-                        _self.$refs.formAddLinhMuc._submitInfoBack();
+                        _self.$refs.formAddGiaoPhan._submitInfoBack();
                     }
                 });
             },
@@ -145,8 +143,8 @@
             }
         },
         setting: {
-            panel_title: 'Linh Mục',
-            frm_title: 'Thêm Linh Mục',
+            panel_title: 'Giáo Phận',
+            frm_title: 'Thêm Giáo Phận',
             btn_save_txt: 'Lưu',
             btn_save_back_txt: 'Lưu trở về danh sách'
         }
