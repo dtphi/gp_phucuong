@@ -8,7 +8,7 @@
         </td>
         <td class="text-left">{{info.name}}</td>
         <td class="text-center" style="width:7%">
-            {{info.khaiquat}}
+            <div v-html="info.khaiquat"></div>
         </td>
         <td class="text-center">{{info.sort_id}}</td>
         <td class="text-center">{{info.active}}</td>

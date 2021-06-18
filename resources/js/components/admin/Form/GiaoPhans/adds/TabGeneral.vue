@@ -22,14 +22,14 @@
             </div>
         </div>
         
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-khai-quat"
                 class="col-sm-2 control-label">Khái quát</label>
             <div class="col-sm-10">
                 <validation-provider
                     name="info_khai_quat"
-                    rules="required"
+                    rules="max:500"
                     v-slot="{ errors }">
                     <tinymce 
                         id="input-info-khai-quat"

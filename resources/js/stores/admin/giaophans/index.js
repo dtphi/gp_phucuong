@@ -383,7 +383,7 @@ export default {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/informations');
+          return fn_redirect_url('admin/giao-phans');
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

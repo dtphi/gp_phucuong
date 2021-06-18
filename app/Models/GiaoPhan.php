@@ -15,4 +15,28 @@ class GiaoPhan extends BaseModel
      * @var string
      */
     protected $table = DB_PREFIX . 'giaophans';
+
+    /**
+     * @author : dtphi .
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'khaiquat',
+        'active',
+        'sort_id',
+        'updateuser',
+        'meta_title',
+        'meta_description',
+        'meta_keyword',
+        'tag'
+    ];
+
+    public function getKhaiquatAttribute($value)
+    {
+        return htmlspecialchars_decode($value);
+    }
+
 }

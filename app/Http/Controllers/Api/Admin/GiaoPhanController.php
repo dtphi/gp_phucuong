@@ -166,7 +166,7 @@ class GiaoPhanController extends ApiController
      */
     private function __handleStore(&$request)
     {
-        $formData = $request->all();dd($formData);
+        $formData = $request->all();
 
         if ($result = $this->gphSv->apiInsert($formData)) {
             return $this->respondUpdated($result);
