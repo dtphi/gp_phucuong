@@ -56,23 +56,21 @@
 <script>
     import {
         mapState,
-        mapActions,
-        mapGetters
+        mapActions
     } from 'vuex';
 
     import InfoAddForm from 'com@admin/Form/GiaoPhans/AddForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import {
-        MODULE_MODULE_LINH_MUC_ADD,
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
+        MODULE_MODULE_GIAO_PHAN_ADD
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'InformationAdd',
+        name: 'GiaoPhanAdd',
         components: {
             Breadcrumb,
             InfoAddForm,
@@ -84,10 +82,7 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'specialInfoCarousel'
-            ]),
-            ...mapState(MODULE_MODULE_LINH_MUC_ADD, {
+            ...mapState(MODULE_MODULE_GIAO_PHAN_ADD, {
                 loading: state => state.loading,
                 errors: state => state.errors,
                 insertSuccess: state => state.insertSuccess
@@ -104,9 +99,8 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
-                ACTION_RESET_NOTIFICATION_INFO,
-                'update_special_carousel'
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+                ACTION_RESET_NOTIFICATION_INFO
             ]),
             _errorToArrs() {
                 let errs = [];

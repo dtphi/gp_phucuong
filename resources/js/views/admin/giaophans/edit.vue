@@ -45,7 +45,7 @@
 
                     <div class="panel-body">
                         <info-add-form
-                            ref="formAddGiaoPhan"></info-add-form>
+                            ref="formEditGiaoPhan"></info-add-form>
                     </div>
                 </div>
             </div>
@@ -56,23 +56,31 @@
 <script>
     import {
         mapState,
-        mapActions,
-        mapGetters
+        mapActions
     } from 'vuex';
 
-    import InfoAddForm from 'com@admin/Form/GiaoPhans/AddForm';
+    import InfoAddForm from 'com@admin/Form/GiaoPhans/EditForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import {
-        MODULE_MODULE_LINH_MUC_ADD,
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
+        MODULE_MODULE_GIAO_PHAN_EDIT
     } from 'store@admin/types/module-types';
     import {
-        ACTION_RESET_NOTIFICATION_INFO
+        ACTION_RESET_NOTIFICATION_INFO,
+        ACTION_GET_INFO_BY_ID
     } from 'store@admin/types/action-types';
+    import {
+        fn_redirect_url
+    } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'InformationAdd',
+        name: 'GiaoPhanEdit',
+        beforeCreate() {
+            const giaoPhanId = parseInt(this.$route.params.giaoPhanId);
+            if (!giaoPhanId) {
+                return fn_redirect_url('admin/giao-phans');
+            }
+        },
         components: {
             Breadcrumb,
             InfoAddForm,
@@ -84,29 +92,26 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'specialInfoCarousel'
-            ]),
-            ...mapState(MODULE_MODULE_LINH_MUC_ADD, {
+            ...mapState(MODULE_MODULE_GIAO_PHAN_EDIT, {
                 loading: state => state.loading,
                 errors: state => state.errors,
-                insertSuccess: state => state.insertSuccess
+                updateSuccess: state => state.updateSuccess
             }),
             _errors() {
                 return this.errors.length;
             }
         },
         watch: {
-            'insertSuccess'(newValue, oldValue) {
+            'updateSuccess'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
                 ACTION_RESET_NOTIFICATION_INFO,
-                'update_special_carousel'
+                ACTION_GET_INFO_BY_ID
             ]),
             _errorToArrs() {
                 let errs = [];
@@ -124,7 +129,7 @@
                 const _self = this;
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
-                        _self.$refs.formAddGiaoPhan._submitInfo();
+                        _self.$refs.formEditGiaoPhan._submitInfo();
                     }
                 });
             },
@@ -133,7 +138,7 @@
 
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
-                        _self.$refs.formAddGiaoPhan._submitInfoBack();
+                        _self.$refs.formEditGiaoPhan._submitInfoBack();
                     }
                 });
             },
@@ -144,9 +149,15 @@
         },
         setting: {
             panel_title: 'Giáo Phận',
-            frm_title: 'Thêm Giáo Phận',
+            frm_title: 'Sửa Giáo Phận',
             btn_save_txt: 'Lưu',
             btn_save_back_txt: 'Lưu trở về danh sách'
-        }
+        },
+        mounted() {
+            const giaoPhanId = parseInt(this.$route.params.giaoPhanId);
+            if (giaoPhanId) {
+                this.[ACTION_GET_INFO_BY_ID](giaoPhanId);
+            }
+        },
     };
 </script>

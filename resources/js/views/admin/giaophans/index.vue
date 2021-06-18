@@ -79,7 +79,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'InformationList',
+        name: 'GiaoPhanList',
         components: {
             Breadcrumb,
             TheHeaderPage,

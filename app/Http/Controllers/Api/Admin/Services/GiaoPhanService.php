@@ -151,6 +151,68 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return $this->model;
     }
 
+    public function apiUpdate($model, $data = [])
+    {
+        /**
+         * Save user with transaction to make sure all data stored correctly
+         */
+        DB::beginTransaction();
+
+        $model->fill($data);
+
+        if ($model->save()) {
+            $giaoPhanId = $model->id;
+
+            GiaoPhanHat::fcDeleteByGiaoPhanId($giaoPhanId);
+            GiaoPhanHatXu::fcDeleteByGiaoPhanId($giaoPhanId);
+            GiaoPhanHatCongDoanTuSi::fcDeleteByGiaoPhanId($giaoPhanId);
+            if (isset($data['hats']) && !empty($data['hats'])) {
+                foreach ($data['hats'] as $hat) {
+                    GiaoPhanHat::insertByGiaoPhanId($giaoPhanId, $hat['giao_hat_id'],$hat['active']);
+                    if (isset($hat['giao_xus']) && !empty($hat['giao_xus'])) {
+                        foreach ($hat['giao_xus'] as $giaoXu) {
+                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $giaoXu['giao_xu_id'], $giaoXu['active']);
+                        }
+                    }
+                    if (isset($hat['cong_doan_tu_sis'])) {
+                        foreach ($hat['cong_doan_tu_sis'] as $congDts) {
+                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $congDts['cong_doan_tu_si_id'], $congDts['active']);
+                        }
+                    }
+                }
+            }
+
+            GiaoPhanDong::fcDeleteByGiaoPhanId($giaoPhanId);
+            if (isset($data['dongs']) && !empty($data['dongs'])) {
+                foreach ($data['dongs'] as $dong) {
+                    GiaoPhanDong::insertByGiaoPhanId($giaoPhanId, $dong['dong_id'], $dong['active']);
+                }
+            }
+
+            GiaoPhanCoSo::fcDeleteByGiaoPhanId($giaoPhanId);
+            if (isset($data['cosos']) && !empty($data['cosos'])) {
+                foreach ($data['cosos'] as $coso) {
+                    GiaoPhanCoSo::insertByGiaoPhanId($giaoPhanId, $coso['co_so_giao_phan_id'], $coso['active']);
+                }
+            }
+
+            GiaoPhanBanChuyenTrach::fcDeleteByGiaoPhanId($giaoPhanId);
+            if (isset($data['banchuyentrachs']) && !empty($data['banchuyentrachs'])) {
+                foreach ($data['banchuyentrachs'] as $banCt) {
+                    GiaoPhanBanChuyenTrach::insertByGiaoPhanId($giaoPhanId, $banCt['ban_chuyen_trach_id'], $banCt['active']);
+                }
+            }
+        } else {
+            DB::rollBack();
+
+            return false;
+        }
+
+        DB::commit();
+
+        return $model;
+    }
+
     public function apiGetGiaoPhans($data = array(), $limit = 5)
     {
         $query = $this->model->select()

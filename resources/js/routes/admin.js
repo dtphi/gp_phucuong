@@ -415,7 +415,7 @@ export default [{
         children: [{
             path: '',
             component: GiaoPhanPage,
-            name: 'admin.giao_phan.list',
+            name: 'admin.giao.phan.list',
             meta: {
                 layout: DefaultLayout,
                 auth: true,
@@ -436,7 +436,7 @@ export default [{
         }, {
             path: 'add',
             component: GiaoPhanAddPage,
-            name: 'admin.giao_phan.add.list',
+            name: 'admin.giao.phan.add',
             meta: {
                 layout: DefaultLayout,
                 auth: true,
@@ -455,9 +455,9 @@ export default [{
                 }
             }
         }, {
-            path: 'edit/:giaophanId',
+            path: 'edit/:giaoPhanId',
             component: GiaoPhanEditPage,
-            name: 'admin.giao_phan.add.list',
+            name: 'admin.giao.phan.edit',
             meta: {
                 layout: DefaultLayout,
                 auth: true,

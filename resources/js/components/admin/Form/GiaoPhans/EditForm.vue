@@ -1,33 +1,49 @@
 <template>
     <form class="form-horizontal">
-        <loading-over-lay
+        <!--<loading-over-lay
             :active.sync="loading"
-            :is-full-page="fullPage"></loading-over-lay>
+            :is-full-page="fullPage"></loading-over-lay>-->
         <ul class="nav nav-tabs">
             <li class="active">
                 <a
                     href="#tab-general"
                     data-toggle="tab">{{$options.setting.tab_general_title}}</a>
             </li>
+            
             <li>
                 <a
-                    href="#tab-bang-cap"
-                    data-toggle="tab">{{$options.setting.tab_bang_cap_title}}</a>
+                    href="#tab-giao-hat"
+                    data-toggle="tab">Hạt</a>
             </li>
+
             <li>
                 <a
-                    href="#tab-chuc-thanh"
-                    data-toggle="tab">{{$options.setting.tab_chuc_thanh_title}}</a>
+                    href="#tab-giao-hat-xu"
+                    data-toggle="tab">Giáo Xứ</a>
             </li>
+
             <li>
                 <a
-                    href="#tab-van-thu"
-                    data-toggle="tab">{{$options.setting.tab_van_thu_title}}</a>
+                    href="#tab-giao-hat-congdoantusi"
+                    data-toggle="tab">Công đoàn tu sĩ</a>
             </li>
+
             <li>
                 <a
-                    href="#tab-thuyen-chuyen"
-                    data-toggle="tab">{{$options.setting.tab_thuyen_chuyen_title}}</a>
+                    href="#tab-dong-giao-phan"
+                    data-toggle="tab">Dòng</a>
+            </li>
+
+            <li>
+                <a
+                    href="#tab-co-so-giao-phan"
+                    data-toggle="tab">Cơ sở</a>
+            </li>
+
+            <li>
+                <a
+                    href="#tab-ban-chuyen-trach-giao-phan"
+                    data-toggle="tab">Ban chuyên trách</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -35,35 +51,49 @@
                 <tab-general
                     role="tabpanel"
                     class="tab-pane active"
-                    :general-data="info"></tab-general>
+                    :group-data="info"></tab-general>
             </div>
 
-            <div class="tab-pane" id="tab-bang-cap">
-                <tab-bang-cap
+            <div class="tab-pane" id="tab-giao-hat">
+                <tab-giao-hat
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-bang-cap>
+                    :group-data="info"></tab-giao-hat>
             </div>
 
-            <div class="tab-pane" id="tab-chuc-thanh">
-                <tab-chuc-thanh
+            <div class="tab-pane" id="tab-giao-hat-xu">
+                <tab-hat-xu
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-chuc-thanh>
+                    :group-data="info"></tab-hat-xu>
             </div>
 
-            <div class="tab-pane" id="tab-van-thu">
-                <tab-van-thu
+            <div class="tab-pane" id="tab-giao-hat-congdoantusi">
+                <tab-hat-cong-doan-tu-si
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-van-thu>
+                    :group-data="info"></tab-hat-cong-doan-tu-si>
             </div>
 
-            <div class="tab-pane" id="tab-thuyen-chuyen">
-                <tab-thuyen-chuyen
+            <div class="tab-pane" id="tab-dong-giao-phan">
+                <tab-dong-giao-phan
                     role="tabpanel"
                     class="tab-pane"
-                    :group-data="info"></tab-thuyen-chuyen>
+                    :group-data="info"></tab-dong-giao-phan>
+            </div>
+
+            <div class="tab-pane" id="tab-co-so-giao-phan">
+                <tab-co-so-giao-phan
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"></tab-co-so-giao-phan>
+            </div>
+
+            <div class="tab-pane" id="tab-ban-chuyen-trach-giao-phan">
+                <tab-ban-chuyen-trach-giao-phan
+                    role="tabpanel"
+                    class="tab-pane"
+                    :group-data="info"></tab-ban-chuyen-trach-giao-phan>
             </div>
         </div>
     </form>
@@ -77,7 +107,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC_EDIT,
+        MODULE_MODULE_GIAO_PHAN_EDIT,
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_LOADING,
@@ -86,19 +116,23 @@
         ACTION_INSERT_INFO_BACK
     } from 'store@admin/types/action-types';
     import TabGeneral from './edits/TabGeneral';
-    import TabBangCap from './edits/TabBangCap';
-    import TabChucThanh from './edits/TabChucThanh';
-    import TabVanThu from './edits/TabVanThu';
-    import TabThuyenChuyen from './edits/TabThuyenChuyen';
+    import TabGiaoHat from './edits/TabHat';
+    import TabHatXu from './edits/TabHatXu';
+    import TabHatCongDoanTuSi from './edits/TabHatCongDoanTuSi';
+    import TabDongGiaoPhan from './edits/TabDongGiaoPhan';
+    import TabCoSoGiaoPhan from './edits/TabCoSoGiaoPhan';
+    import TabBanChuyenTrachGiaoPhan from './edits/TabBanChuyenTrachGiaoPhan';
 
     export default {
-        name: 'FormEdit',
+        name: 'FormGiaoPhanEdit',
         components: {
             TabGeneral,
-            TabBangCap,
-            TabChucThanh,
-            TabVanThu,
-            TabThuyenChuyen
+            TabGiaoHat,
+            TabDongGiaoPhan,
+            TabCoSoGiaoPhan,
+            TabBanChuyenTrachGiaoPhan,
+            TabHatXu,
+            TabHatCongDoanTuSi
         },
         data() {
             return {
@@ -107,10 +141,10 @@
             };
         },
         computed: {
-            ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
+            ...mapState(MODULE_MODULE_GIAO_PHAN_EDIT, {
                 loading: state => state.loading
             }),
-            ...mapGetters(MODULE_MODULE_LINH_MUC_EDIT, [
+            ...mapGetters(MODULE_MODULE_GIAO_PHAN_EDIT, [
                 'info',
             ])
         },
@@ -122,7 +156,7 @@
             });
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
                 ACTION_SET_LOADING,
                 ACTION_INSERT_INFO,
                 ACTION_INSERT_INFO_BACK,
@@ -159,13 +193,14 @@
         },
         setting: {
             tab_general_title: 'Tổng quan',
+            tab_mo_rong_title: 'Mở rộng',
             tab_bang_cap_title: 'Bằng Cấp',
             tab_chuc_thanh_title: 'Chức Thánh',
             tab_thuyen_chuyen_title: 'Thuyên Chuyển',
             tab_van_thu_title: 'Văn Thư',
             tab_special_info_title: 'Slide tin tức tiêu điểm',
             error_msg_system: 'Lỗi hệ thống !',
-            isForm: 'edit'
+            isForm: 'add'
         }
     };
 </script>

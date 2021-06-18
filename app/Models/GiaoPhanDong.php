@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Common\Tables;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Dong;
 
 class GiaoPhanDong extends BaseModel
 {
@@ -15,6 +16,15 @@ class GiaoPhanDong extends BaseModel
      * @var string
      */
     protected $table = DB_PREFIX . 'giaophan_dongs';
+
+    public function dong()
+    {
+        return $this->hasOne(Dong::class, $this->primaryKey, 'dong_id');
+    }
+
+    public function getNameAttribute($value) {
+        return $this->dong->name;
+    }
 
     public static function insertByGiaoPhanId(
         $giaoPhanId = null,
@@ -28,6 +38,15 @@ class GiaoPhanDong extends BaseModel
         if ($gpId && $dongId) {
             DB::insert('insert into ' . Tables::$giaophan_dongs . ' (giao_phan_id, dong_id, active) values (?, ?, ?)',
                 [$gpId, $dongId, $active]);
+        }
+    }
+
+    public static function fcDeleteByGiaoPhanId($giaoPhanId = null)
+    {
+        $giaoPhanId = (int)$giaoPhanId;
+
+        if ($giaoPhanId) {
+            return DB::delete("delete from " . Tables::$giaophan_dongs . " where giao_phan_id = '" . $giaoPhanId . "'");
         }
     }
 }

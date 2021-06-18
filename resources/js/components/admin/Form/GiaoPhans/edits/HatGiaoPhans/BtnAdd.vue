@@ -3,7 +3,7 @@
 		type="button" 
 		data-toggle="tooltip"
 		@click="_addInfo()"
-        title="Thêm chức thánh" class="btn btn-default cms-btn">
+        title="Thêm giáo hạt" class="btn btn-default cms-btn">
           <font-awesome-layers style="background:honeydew">
               <font-awesome-icon size="1x" icon="plus"/>
           </font-awesome-layers>
@@ -15,7 +15,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC_EDIT
+        MODULE_MODULE_GIAO_PHAN_EDIT
     } from 'store@admin/types/module-types';
 
     export default {
@@ -26,13 +26,13 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-                'addChucThanhs'
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
+                'addHatGiaoPhan'
             ]),
 
             _addInfo() {
-                this.addChucThanhs({
-                    action: 'addChucThanhs'
+                this.addHatGiaoPhan({
+                    action: 'addHatGiaoPhan'
                 });
             }
         },

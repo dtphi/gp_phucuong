@@ -7,6 +7,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class GiaoPhanResource extends JsonResource
 {
     /**
+     * @var string
+     */
+    public static $wrap = 'giaophan';
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -14,6 +19,23 @@ class GiaoPhanResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $json = [];
+
+        $this->with = [
+            'fields' => 'ok',
+        ];
+
+        $res  = $this->resource;
+        $json = parent::toArray($request);
+        $json = array_merge($json, [
+            'giao_phan_hats'=> $res->arr_hat_list,
+            'giao_phan_dongs'=> $res->arr_dong_list,
+            'giao_phan_cosos'=> $res->arr_coso_list,
+            'giao_phan_banchuyentrachs'=> $res->arr_ban_chuyen_trach_list,
+            'giao_phan_hat_xu_diems'=> []
+            //'sort_description'      => html_entity_decode($res->sort_description),
+        ]);
+
+        return $json;
     }
 }

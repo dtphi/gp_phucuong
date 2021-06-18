@@ -15,24 +15,28 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC_EDIT
+        MODULE_MODULE_GIAO_PHAN_EDIT
     } from 'store@admin/types/module-types';
 
     export default {
         name: 'TheButtonAdd',
         props: {
+            giaoXu: {
+                default: null
+            },
             moduleKey: {
                 default: ''
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-                'addThuyenChuyen'
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
+                'addHatXuDiemGiaoPhan'
             ]),
 
             _addInfo() {
-                this.addThuyenChuyen({
-                    action: 'addThuyenChuyen'
+                this.addHatXuDiemGiaoPhan({
+                    action: 'addHatXuDiemGiaoPhan',
+                    giaoXu: this.giaoXu
                 });
             }
         },

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Common\Tables;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\BanChuyenTrach;
 
 class GiaoPhanBanChuyenTrach extends BaseModel
 {
@@ -15,6 +16,15 @@ class GiaoPhanBanChuyenTrach extends BaseModel
      * @var string
      */
     protected $table = DB_PREFIX . 'giaophan_banchuyentrachs';
+
+    public function banChuyenTrach()
+    {
+        return $this->hasOne(BanChuyenTrach::class, $this->primaryKey, 'ban_chuyen_trach_id');
+    }
+
+    public function getNameAttribute($value) {
+        return $this->banChuyenTrach->name;
+    }
 
     public static function insertByGiaoPhanId(
         $giaoPhanId = null,
@@ -28,6 +38,15 @@ class GiaoPhanBanChuyenTrach extends BaseModel
         if ($gpId && $banChuyenTrachId) {
             DB::insert('insert into ' . Tables::$giaophan_banchuyentrachs . ' (giao_phan_id, ban_chuyen_trach_id, active) values (?, ?, ?)',
                 [$gpId, $banChuyenTrachId, $active]);
+        }
+    }
+
+    public static function fcDeleteByGiaoPhanId($giaoPhanId = null)
+    {
+        $giaoPhanId = (int)$giaoPhanId;
+
+        if ($giaoPhanId) {
+            return DB::delete("delete from " . Tables::$giaophan_banchuyentrachs . " where giao_phan_id = '" . $giaoPhanId . "'");
         }
     }
 }

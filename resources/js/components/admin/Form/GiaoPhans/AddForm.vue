@@ -1,8 +1,8 @@
 <template>
     <form class="form-horizontal">
-        <loading-over-lay
+        <!--<loading-over-lay
             :active.sync="loading"
-            :is-full-page="fullPage"></loading-over-lay>
+            :is-full-page="fullPage"></loading-over-lay>-->
         <ul class="nav nav-tabs">
             <li class="active">
                 <a
@@ -124,7 +124,7 @@
     import TabBanChuyenTrachGiaoPhan from './adds/TabBanChuyenTrachGiaoPhan';
 
     export default {
-        name: 'FormAdd',
+        name: 'FormGiaoPhanAdd',
         components: {
             TabGeneral,
             TabGiaoHat,

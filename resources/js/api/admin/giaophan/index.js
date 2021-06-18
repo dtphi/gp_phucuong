@@ -33,12 +33,12 @@ export const apiGetDropdownCategories = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiGetInfoById = (infoId, resolve, errResole) => {
-  return axios.get(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, infoId))
+  return axios.get(fn_get_base_api_detail_url(API_GIAO_PHANS_RESOURCE, infoId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = response.data.information;
+        json['data'] = response.data;
         json['status'] = 1000;
         resolve(json);
       } else {
@@ -131,7 +131,7 @@ export const apiGetGiaoPhanInfos = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiUpdateInfo = (info, resolve, errResole) => {
-  return axios.put(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, info.information_id), info)
+  return axios.put(fn_get_base_api_detail_url(API_GIAO_PHANS_RESOURCE, info.id), info)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
