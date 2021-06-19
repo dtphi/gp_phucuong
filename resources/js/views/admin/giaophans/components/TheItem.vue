@@ -7,7 +7,7 @@
                    :value="info.id">
         </td>
         <td class="text-left">{{info.name}}</td>
-        <td class="text-center" style="width:7%">
+        <td>
             <div v-html="info.khaiquat"></div>
         </td>
         <td class="text-center">{{info.sort_id}}</td>

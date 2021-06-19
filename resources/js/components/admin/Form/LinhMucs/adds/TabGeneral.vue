@@ -1,7 +1,7 @@
 <template>
     <div class="tab-content">
         <div>
-            <info-ten-thanh-autocomplete></info-ten-thanh-autocomplete>
+            <info-ten-thanh-autocomplete :key="ten_thanh_linh_muc"></info-ten-thanh-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -30,7 +30,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_thang_nam_sinh"
-                    rules="required|max:500"
+                    rules="required"
                     v-slot="{ errors }">
                     <cms-date-picker v-model="generalData.ngay_thang_nam_sinh" type="datetime"></cms-date-picker>
                     <span class="cms-text-red">{{ errors[0] }}</span>
@@ -50,14 +50,14 @@
                             id="input-info-noi-sinh"
                             v-model="generalData.noi_sinh"
                             class="form-control"
-                            :placeholder="$options.setting.info_sort_description_txt"></textarea>
+                            placeholder="Nơi sinh"></textarea>
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
         </div>
         <div>
-            <info-giao-xu-autocomplete @on-select-giao-xu="_selectGiaoXu"></info-giao-xu-autocomplete>
+            <info-giao-xu-autocomplete @on-select-giao-xu="_selectGiaoXu" :key="giao_xu_linh_muc"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -73,7 +73,7 @@
                         type="text"
                         id="input-info-ho-ten-cha"
                         class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        placeholder="Họ tên cha">
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -93,7 +93,7 @@
                         type="text"
                         id="input-info-ho-ten-me"
                         class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        placeholder="Họ tên mẹ">
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -106,14 +106,14 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_noi_rua_toi"
-                    rules="required|max:200"
+                    rules="required|max:500"
                     v-slot="{ errors }">
                     <input
                         v-model="generalData.noi_rua_toi"
                         type="text"
                         id="input-info-noi-rua-toi"
                         class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        placeholder="Nơi rửa tội">
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -126,9 +126,11 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_rua_toi"
-                    rules="required|max:500"
+                    rules="required"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_rua_toi" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        v-model="generalData.ngay_rua_toi" type="datetime"></cms-date-picker>
+
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -140,14 +142,14 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_noi_them_suc"
-                    rules="required|max:200"
+                    rules="required|max:500"
                     v-slot="{ errors }">
                     <input
                         v-model="generalData.noi_them_suc"
                         type="text"
                         id="input-info-noi-them-suc"
                         class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        placeholder="Nơi thêm sức">
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -162,7 +164,9 @@
                     name="info_ngay_them_suc"
                     rules="required|max:500"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_them_suc" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        v-model="generalData.ngay_them_suc" type="datetime"></cms-date-picker>
+
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -181,7 +185,7 @@
                         type="text"
                         id="input-info-tieu-chung-vien"
                         class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        placeholder="Tiểu chủng viện">
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -196,7 +200,9 @@
                     name="info_ngay_tieu_chung_vien"
                     rules="required|max:500"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_tieu_chung_vien" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        v-model="generalData.ngay_tieu_chung_vien" type="datetime"></cms-date-picker>
+
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -215,7 +221,7 @@
                         type="text"
                         id="input-info-dai-chung-vien"
                         class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        placeholder="Đại chủng viện">
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -230,7 +236,9 @@
                     name="info_ngay_dai_chung_vien"
                     rules="required|max:500"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_dai_chung_vien" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        v-model="generalData.ngay_dai_chung_vien" type="datetime"></cms-date-picker>
+
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -242,7 +250,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_trieu_dong"
-                    rules="required|max:200"
+                    rules="required"
                     v-slot="{ errors }">
                     <select class="form-control" 
                         id="input-info-trieu-dong"
@@ -258,24 +266,7 @@
             </div>
         </div>
          <div class="form-group required">
-            <label
-                for="input-info-ten-dong-id"
-                class="col-sm-2 control-label">Tên dòng:</label>
-            <div class="col-sm-10">
-                <validation-provider
-                    name="info_ten_dong_id"
-                    rules="required|max:200"
-                    v-slot="{ errors }">
-                    <input
-                        v-model="generalData.ten_dong_id"
-                        type="text"
-                        id="input-info-ten-dong-id"
-                        class="form-control"
-                        :placeholder="$options.setting.name_txt">
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
-            </div>
+                <info-dong-autocomplete :key="ten_dong_linh_muc"></info-dong-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -284,9 +275,11 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_trieu_dong"
-                    rules="required|max:500"
+                    rules="required"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_cap_cmnd" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        v-model="generalData.ngay_cap_cmnd" type="datetime"></cms-date-picker>
+
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -298,9 +291,11 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_khan"
-                    rules="required|max:500"
+                    rules="required"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_khan" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        v-model="generalData.ngay_khan" type="datetime"></cms-date-picker>
+
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -312,15 +307,17 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_rip"
-                    rules="required|max:500"
+                    rules="required"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_rip" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        v-model="generalData.ngay_rip" type="datetime"></cms-date-picker>
+
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
         </div>
         <div>
-            <info-giao-xu-autocomplete></info-giao-xu-autocomplete>
+            <info-giao-xu-autocomplete :key="giao_xu_rip"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -353,13 +350,15 @@
     } from '@app/api/utils/fn-helper';
     import InfoGiaoXuAutocomplete from './Groups/InfoGiaoXuAutocomplete';
     import InfoTenThanhAutocomplete from './Groups/InfoTenThanhAutocomplete';
+    import InfoDongAutocomplete from './Groups/InfoDongAutocomplete';
 
     export default {
         name: 'TabGeneralForm',
         components: {
             tinymce,
             InfoGiaoXuAutocomplete,
-            InfoTenThanhAutocomplete
+            InfoTenThanhAutocomplete,
+            InfoDongAutocomplete
         },
         props: {
             generalData: {
@@ -392,22 +391,8 @@
                 options: {
                     language_url: fn_get_tinymce_langs_url('vi_VN'),
                     height: "200",
-                    //toolbar_mode: 'sliding',
-                    //image_caption: true,
-                    //image_list: [],
-                    //image_advtab: false,
                     image_prepend_url: window.origin + '/',
-                    //images_upload_url: window.origin + '/api/mmedia/upload',
-                    /*images_upload_handler: function(editor) {
-                        console.log(editor.filename());
-                    },*/
                     referrer_policy: 'strict-origin-when-cross-origin',
-
-                    /*init_instance_callback: function(editor) {
-                        _self.editor = editor;
-                    },*/
-                    //importcss_append: true,
-                    /* Show button select image */
                     file_picker_callback: function (callback, value, meta) {
                         if (meta.filetype === 'file') {
                             _self.fn = callback;
@@ -421,7 +406,7 @@
                                     api: {
                                         baseUrl: window.origin + '/api/mmedia',
                                         listUrl: 'list',
-                                        uploadUrl: 'upload',      // optional
+                                        uploadUrl: 'upload',
                                     },
                                     onSelect : function(fi) {
                                         if (typeof fi === "object") {
@@ -450,6 +435,10 @@
                     toolbar2: "undo redo | styleselect | fontsizeselect | fontselect | image ",
                     font_formats: "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
                 },
+                ten_thanh_linh_muc: 'ten_thanh_linh_muc',
+                giao_xu_linh_muc: 'giao_xu_linh_muc',
+                giao_xu_rip: 'giao_xu_rip',
+                ten_dong_linh_muc: 'ten_dong_linh_muc'
             };
         },
         watch: {
@@ -458,7 +447,7 @@
                 deep: true,
                 handler(newValue, oldValue) {
                     if (Object.keys(newValue).length) {
-                        return newValue.context = (newValue.context === null) ? "" : newValue.context;
+                        return newValue.rip_ghi_chu = (newValue.rip_ghi_chu === null) ? "" : newValue.rip_ghi_chu;
                     }
                 }
             }

@@ -9,6 +9,7 @@ use App\Http\Resources\GiaoPhans\GiaoPhanResource;
 use App\Models\GiaoPhan;
 use App\Models\GiaoPhanHat;
 use App\Models\GiaoPhanHatXu;
+use App\Models\GiaoPhanHatXuDiem;
 use App\Models\GiaoPhanHatCongDoanTuSi;
 use App\Models\GiaoPhanDong;
 use App\Models\GiaoPhanCoSo;
@@ -166,11 +167,16 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
             GiaoPhanHat::fcDeleteByGiaoPhanId($giaoPhanId);
             GiaoPhanHatXu::fcDeleteByGiaoPhanId($giaoPhanId);
             GiaoPhanHatCongDoanTuSi::fcDeleteByGiaoPhanId($giaoPhanId);
+            $giaoXuDiems = [];
             if (isset($data['hats']) && !empty($data['hats'])) {
                 foreach ($data['hats'] as $hat) {
                     GiaoPhanHat::insertByGiaoPhanId($giaoPhanId, $hat['giao_hat_id'],$hat['active']);
                     if (isset($hat['giao_xus']) && !empty($hat['giao_xus'])) {
                         foreach ($hat['giao_xus'] as $giaoXu) {
+                            $giaoDiem =  [];
+                            $giaoDiem['giao_hat_id'] = $hat['giao_hat_id'];
+                            $giaoDiem['giao_xu_id'] = $giaoXu['giao_xu_id'];
+                            $giaoXuDiems[] = $giaoDiem;
                             GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $giaoXu['giao_xu_id'], $giaoXu['active']);
                         }
                     }
@@ -178,6 +184,27 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
                         foreach ($hat['cong_doan_tu_sis'] as $congDts) {
                             GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $congDts['cong_doan_tu_si_id'], $congDts['active']);
                         }
+                    }
+                }
+
+                // Giao diem.
+                $giaoDiems = [];
+                foreach ($giaoXuDiems as $giaoDiem) {
+                    $gDiems = DB::table(Tables::$giaophan_hat_xu_diems)
+                    ->where('giao_phan_id', $giaoPhanId)
+                    ->where('giao_hat_id', $giaoDiem['giao_hat_id'])
+                    ->where('giao_xu_id', $giaoDiem['giao_xu_id'])
+                    ->get();
+
+                    if ($gDiems->count()) {
+                        $giaoDiems[] = $gDiems;
+                    }
+                }
+
+                GiaoPhanHatXuDiem::fcDeleteByGiaoPhanId($giaoPhanId);
+                foreach ($giaoDiems as $gdiems) {
+                    foreach($gdiems as $gdiem) {
+                        GiaoPhanHatXuDiem::insertByGiaoPhanId($giaoPhanId, $gdiem->giao_hat_id, $gdiem->giao_xu_id, $gdiem->giao_diem_id, $gdiem->active);
                     }
                 }
             }

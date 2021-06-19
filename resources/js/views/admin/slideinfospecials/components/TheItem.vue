@@ -18,9 +18,6 @@
                 @change="_infoSpecialChange"
                 :checked="_module_special_info_ids">
         </td>
-        <td class="text-right">
-            
-        </td>
     </tr>
 </template>
 
