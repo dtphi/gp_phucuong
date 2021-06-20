@@ -10,7 +10,6 @@ use App\Models\Linhmuc;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucVanthu;
-use App\Models\LinhmucChucthanh;
 use App\Models\GiaoXu;
 use App\Models\Thanh;
 use App\Models\ChucVu;
