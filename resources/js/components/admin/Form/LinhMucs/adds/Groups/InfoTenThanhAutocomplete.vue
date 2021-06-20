@@ -9,8 +9,8 @@
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
-	    		:value="query" type="text" 
-	    		name="category" 
+	    		:value="info.ten_thanh_name" type="text" 
+	    		name="ten_thanh_name" 
 	    		placeholder="Chọn tên thánh" 
 	    		id="input-parent-ten-thanh-name" 
 	    		class="form-control" />
@@ -34,7 +34,8 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC
+        MODULE_MODULE_LINH_MUC,
+        MODULE_MODULE_LINH_MUC_ADD
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
@@ -58,10 +59,16 @@
             ...mapState(MODULE_MODULE_LINH_MUC, {
                 dropdowns: state => state.dropdownThanhs
             }),
+            ...mapState(MODULE_MODULE_LINH_MUC_ADD, [
+                'info'
+            ])
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
         		'ACTION_GET_DROPDOWN_TEN_THANH_LIST'
+        	]),
+            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
+        		'ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST',
         	]),
             _searchCategories() {
               const query = this.query;
@@ -81,8 +88,10 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.query = infoCategory.name;
-              this.$emit('on-select-giao-xu', infoCategory);
+              this.ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST({
+                tenThanh: infoCategory
+              });
+              
               this._closeDropdown();
           }
         },

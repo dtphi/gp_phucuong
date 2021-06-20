@@ -18,7 +18,7 @@
             <div class="page-header">
                 <div class="container-fluid">
                     <div class="pull-right">
-                        <!--<button
+                        <button
                             type="button"
                             @click="_submitInfo"
                             data-toggle="tooltip"
@@ -30,7 +30,7 @@
                                 data-toggle="tooltip"
                                 title="Lưu"
                                 class="btn btn-primary">{{$options.setting.btn_save_back_txt}}
-                        </button>-->
+                        </button>
                         <the-btn-back-list-page></the-btn-back-list-page>
                     </div>
                     <h1>{{$options.setting.panel_title}}</h1>

@@ -7,6 +7,10 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
 use App\Http\Resources\Linhmucs\LinhmucCollection;
 use App\Http\Resources\Linhmucs\LinhmucResource;
 use App\Models\Linhmuc;
+use App\Models\LinhmucBangcap;
+use App\Models\LinhmucChucthanh;
+use App\Models\LinhmucVanthu;
+use App\Models\LinhmucChucthanh;
 use App\Models\GiaoXu;
 use App\Models\Thanh;
 use App\Models\ChucVu;
@@ -107,13 +111,14 @@ final class LinhmucService implements BaseModel, LinhMucModel
          */
         DB::beginTransaction();
 
-        $linhmucId = Linhmuc::insertForce($data);
+        $this->model->fill($data);
 
-        if ($linhmucId > 0) {
+        if ($this->model->save()) {
+            $linhmucId = $this->model->id;
 
             if (isset($data['bang_caps']) && !empty($data['bang_caps'])) {
                 foreach ($data['bang_caps'] as $bangcap) {
-                    LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'],$bangcap['type'],$bangcap['active'], htmlentities($data['ghi_chu']));
+                    LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'], $bangcap['type'], $data['ghi_chu'], $bangcap['active']);
                 }
             }
 
@@ -121,7 +126,7 @@ final class LinhmucService implements BaseModel, LinhMucModel
                 foreach ($data['chuc_thanhs'] as $chucThanh) {
                     LinhmucChucthanh::insertByLinhmucId($linhmucId, $chucThanh['chuc_thanh_id'], 
                     $chucThanh['ngay_thang_nam_chuc_thanh'], $chucThanh['noi_thu_phong'], $chucThanh['nguoi_thu_phong'],
-                $chucThanh['active'], htmlentities($data['ghi_chu']));
+                $chucThanh['active'], $data['ghichu']);
                 }
             }
 
@@ -129,13 +134,13 @@ final class LinhmucService implements BaseModel, LinhMucModel
                 foreach ($data['thuyen_chuyens'] as $thCh) {
                     LinhmucThuyenchuyen::insertByLinhmucId($linhmucId, $thCh['fromgiaoxu_id'], 
                     $thCh['fromchucvu_id'], $thCh['from_date'], $thCh['duccha_id'], $thCh['to_date'], 
-                    $thCh['chucvu_id'], $thCh['giaoxu_id'], $thCh['active'], htmlentities($data['ghi_chu']));
+                    $thCh['chucvu_id'], $thCh['giaoxu_id'], $thCh['cosogp_id'], $thCh['dong_id'], $thCh['banchuyentrach_id'], $thCh['duhoc'], $thCh['quocgia'], $thCh['active'], $data['ghichu']);
                 }
             }
 
             if (isset($data['van_thus']) && !empty($data['van_thus'])) {
                 foreach ($data['van_thus'] as $vanThu) {
-                    LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'], htmlentities($data['ghi_chu']));
+                    LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'], $data['ghi_chu']);
                 }
             }
         } else {

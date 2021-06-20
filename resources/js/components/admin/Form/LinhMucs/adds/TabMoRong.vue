@@ -7,6 +7,7 @@
             <div class="col-sm-10">
                 <label>Là đức cha</label>
                 <input
+                    v-model="generalData.is_duc_cha"
                     type="checkbox"
                     id="input-info-duc-cha"
                     class="form-control">
@@ -26,7 +27,7 @@
                         type="text"
                         id="input-info-so-cmnd"
                         class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        placeholder="Số Cmnd">
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -39,14 +40,14 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_noicap_cmnd"
-                    rules="required|max:200"
+                    rules="required|max:500"
                     v-slot="{ errors }">
                     <input
                         v-model="generalData.noicap_cmnd"
                         type="text"
                         id="input-info-noicap-cmnd"
                         class="form-control"
-                        :placeholder="$options.setting.name_txt">
+                        placeholder="Nơi cấp Cmnd">
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -59,9 +60,11 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_cap_cmnd"
-                    rules="required|max:500"
+                    rules="required"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_cap_cmnd" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        v-model="generalData.ngay_cap_cmnd" type="datetime"></cms-date-picker>
+
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -71,17 +74,10 @@
                 for="input-info-ghi-chu"
                 class="col-sm-2 control-label">Ghi chú</label>
             <div class="col-sm-10">
-                <validation-provider
-                    name="info_ghi_chu"
-                    rules="required"
-                    v-slot="{ errors }">
-                    <tinymce 
-                        id="input-ghi-chu"
-                        :other_options="options"
-                        v-model="generalData.ghi_chu"></tinymce>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
+                <tinymce 
+                    id="input-ghi-chu"
+                    :other_options="options"
+                    v-model="generalData.ghichu"></tinymce>
             </div>
         </div>
         <div class="form-group">
@@ -92,8 +88,8 @@
                     v-model="generalData.active"
                     id="input-info-active"
                     class="form-control">
-                    <option value="1" selected="selected">Xảy ra</option>
-                    <option value="0">Ẩn</option>
+                    <option value="1" :selected="generalData.active == 1">Xảy ra</option>
+                    <option value="0" :selected="generalData.active == 0">Ẩn</option>
                 </select>
             </div>
         </div>
@@ -108,15 +104,11 @@
     import {
         fn_get_tinymce_langs_url
     } from '@app/api/utils/fn-helper';
-    import InfoGiaoXuAutocomplete from './Groups/InfoGiaoXuAutocomplete';
-    import InfoTenThanhAutocomplete from './Groups/InfoTenThanhAutocomplete';
 
     export default {
-        name: 'TabGeneralForm',
+        name: 'TabMoRongForm',
         components: {
-            tinymce,
-            InfoGiaoXuAutocomplete,
-            InfoTenThanhAutocomplete
+            tinymce
         },
         props: {
             generalData: {
@@ -133,7 +125,7 @@
                     api: {
                         baseUrl: window.origin + '/api/mmedia',
                         listUrl: 'list',
-                        uploadUrl: 'upload',      // optional
+                        uploadUrl: 'upload',
                     },
                     onSelect : function(fi) {
                         if (typeof fi === "object") {
@@ -149,22 +141,8 @@
                 options: {
                     language_url: fn_get_tinymce_langs_url('vi_VN'),
                     height: "200",
-                    //toolbar_mode: 'sliding',
-                    //image_caption: true,
-                    //image_list: [],
-                    //image_advtab: false,
                     image_prepend_url: window.origin + '/',
-                    //images_upload_url: window.origin + '/api/mmedia/upload',
-                    /*images_upload_handler: function(editor) {
-                        console.log(editor.filename());
-                    },*/
                     referrer_policy: 'strict-origin-when-cross-origin',
-
-                    /*init_instance_callback: function(editor) {
-                        _self.editor = editor;
-                    },*/
-                    //importcss_append: true,
-                    /* Show button select image */
                     file_picker_callback: function (callback, value, meta) {
                         if (meta.filetype === 'file') {
                             _self.fn = callback;
@@ -215,7 +193,7 @@
                 deep: true,
                 handler(newValue, oldValue) {
                     if (Object.keys(newValue).length) {
-                        return newValue.context = (newValue.context === null) ? "" : newValue.context;
+                        return newValue.ghi_chu = (newValue.ghi_chu === null) ? "" : newValue.ghi_chu;
                     }
                 }
             }

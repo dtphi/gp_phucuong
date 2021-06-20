@@ -9,7 +9,7 @@
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
-	    		:value="query" type="text" 
+	    		:value="name" type="text" 
 	    		name="category" 
 	    		placeholder="Chọn cơ sở giáo phận" 
 	    		id="input-parent-co-so-giao-phan-name" 
@@ -44,7 +44,7 @@
     export default {
         name: 'GiaoXuAutocomplete',
         props: {
-            categoryId: {
+            name: {
                 default: null
             }
         },
@@ -81,8 +81,7 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.query = infoCategory.name;
-              this.$emit('on-select-giao-xu', infoCategory);
+              this.$emit('on-select-co-so-giao-phan', infoCategory);
               this._closeDropdown();
           }
         },

@@ -1,6 +1,6 @@
 <template>
     <div class="table-responsive">
-        <table id="info-bang-cap-list" class="table table-striped table-bordered table-hover">
+        <table id="info-chuc-thanh-list" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <td class="text-left">Chức thánh</td>
@@ -24,14 +24,17 @@
                         </select>
                     </td>
                     <td>
-                        <cms-date-picker v-model="item.ngay_thang_nam_chuc_thanh" type="datetime"></cms-date-picker>
+                        <cms-date-picker 
+                            v-model="item.ngay_thang_nam_chuc_thanh" type="datetime"></cms-date-picker>
                     </td>
                     <td>
                         <input type="text" class="form-control"
+                            placeholder="Nơi thụ phong"
                             v-model="item.noi_thu_phong"/>
                     </td>
                     <td>
                         <input type="text" class="form-control"
+                            placeholder="Người thụ phong"
                             v-model="item.nguoi_thu_phong"/>
                     </td>
                     <td>

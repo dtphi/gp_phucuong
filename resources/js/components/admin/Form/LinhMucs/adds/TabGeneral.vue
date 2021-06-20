@@ -1,7 +1,8 @@
 <template>
     <div class="tab-content">
         <div>
-            <info-ten-thanh-autocomplete :key="ten_thanh_linh_muc"></info-ten-thanh-autocomplete>
+            <info-ten-thanh-autocomplete 
+                :key="ten_thanh_linh_muc"></info-ten-thanh-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -57,7 +58,10 @@
             </div>
         </div>
         <div>
-            <info-giao-xu-autocomplete @on-select-giao-xu="_selectGiaoXu" :key="giao_xu_linh_muc"></info-giao-xu-autocomplete>
+            <info-giao-xu-autocomplete 
+                @on-select-giao-xu="_selectGiaoXu" 
+                :name="generalData.giao_xu_name" 
+                :key="giao_xu_linh_muc"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -266,7 +270,10 @@
             </div>
         </div>
          <div class="form-group required">
-                <info-dong-autocomplete :key="ten_dong_linh_muc"></info-dong-autocomplete>
+            <info-dong-autocomplete 
+                @on-select-dong="_selectDong" 
+                :name="generalData.ten_dong_name" 
+                :key="ten_dong_linh_muc"></info-dong-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -278,7 +285,7 @@
                     rules="required"
                     v-slot="{ errors }">
                     <cms-date-picker 
-                        v-model="generalData.ngay_cap_cmnd" type="datetime"></cms-date-picker>
+                        v-model="generalData.ngay_trieu_dong" type="datetime"></cms-date-picker>
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -317,7 +324,10 @@
             </div>
         </div>
         <div>
-            <info-giao-xu-autocomplete :key="giao_xu_rip"></info-giao-xu-autocomplete>
+            <info-giao-xu-autocomplete 
+                @on-select-giao-xu="_selectRipGiaoXu" 
+                :name="generalData.rip_giaoxu_name" 
+                :key="giao_xu_rip"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -341,6 +351,12 @@
 </template>
 
 <script>
+    import {
+        mapActions
+    } from 'vuex';
+    import {
+        MODULE_MODULE_LINH_MUC_ADD
+    } from 'store@admin/types/module-types';
     import {
         config
     } from '@app/common/config';
@@ -453,8 +469,25 @@
             }
         },
         methods: {
+            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
+        		'ACTION_UPDATE_DROPDOWN_GIAO_XU',
+                'ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU',
+                'ACTION_UPDATE_DROPDOWN_DONG'
+        	]),
             _selectGiaoXu(giaoxu) {
-                console.log('giao xu', giaoxu)
+                this.ACTION_UPDATE_DROPDOWN_GIAO_XU({
+                    giaoXu: giaoxu
+                });
+            },
+            _selectRipGiaoXu(giaoxu) {
+                this.ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU({
+                    giaoXu: giaoxu
+                });
+            },
+            _selectDong(dong) {
+                this.ACTION_UPDATE_DROPDOWN_DONG({
+                    dong: dong
+                });
             }
         },
         setting: {

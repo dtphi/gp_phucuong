@@ -9,8 +9,8 @@
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
-	    		:value="query" type="text" 
-	    		name="category" 
+	    		:value="name" type="text" 
+	    		name="dong-name" 
 	    		placeholder="Chọn dòng" 
 	    		id="input-parent-dong-name" 
 	    		class="form-control" />
@@ -44,7 +44,7 @@
     export default {
         name: 'DongAutocomplete',
         props: {
-            categoryId: {
+            name: {
                 default: null
             }
         },
@@ -81,8 +81,7 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.query = infoCategory.name;
-              this.$emit('on-select-giao-xu', infoCategory);
+              this.$emit('on-select-dong', infoCategory);
               this._closeDropdown();
           }
         },

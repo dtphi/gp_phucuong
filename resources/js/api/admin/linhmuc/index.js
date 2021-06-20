@@ -156,7 +156,7 @@ export const apiUpdateInfo = (info, resolve, errResole) => {
  * @return {[type]}           [description]
  */
 export const apiInsertInfo = (info, resolve, errResole) => {
-  return axios.post(fn_get_base_api_url(API_INFOMATIONS_RESOURCE), info)
+  return axios.post(fn_get_base_api_url(API_LINH_MUCS_RESOURCE), info)
     .then((response) => {
       console.log(response)
       if (response.status === 201) {
