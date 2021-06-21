@@ -13,8 +13,8 @@
                     <td class="text-left">Từ giáo xứ</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.fromgiaoxu_id">
-                            <option value="0" :selected="item.fromgiaoxu_id == null">Từ giáo xứ</option>
+                            v-model="item.from_giao_xu_id">
+                            <option value="0" :selected="item.from_giao_xu_id == null">Từ giáo xứ</option>
                         </select>
                     </td>
                 </tr>
@@ -22,8 +22,8 @@
                     <td class="text-left">Chức vụ</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.fromchucvu_id">
-                            <option value="0" :selected="item.fromchucvu_id == null">Từ chức vụ</option>
+                            v-model="item.from_chuc_vu_id">
+                            <option value="0" :selected="item.from_chuc_vu_id == null">Từ chức vụ</option>
                         </select>
                     </td>
                 </tr>
@@ -37,8 +37,8 @@
                     <td class="text-left">Đức cha</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.duccha_id">
-                            <option value="0" :selected="item.duccha_id == null">Đức cha</option>
+                            v-model="item.duc_cha_id">
+                            <option value="0" :selected="item.duc_cha_id == null">Đức cha</option>
                         </select>
                     </td>
                 </tr>
@@ -52,8 +52,8 @@
                     <td class="text-left">Chức vụ</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.chucvu_id">
-                            <option value="0" :selected="item.chucvu_id == null">Chức vụ</option>
+                            v-model="item.chuc_vu_id">
+                            <option value="0" :selected="item.chuc_vu_id == null">Chức vụ</option>
                         </select>
                     </td>
                 </tr>
@@ -61,8 +61,8 @@
                     <td class="text-left">Giáo xứ</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.giaoxu_id">
-                            <option value="0" :selected="item.giaoxu_id == null">Giáo xứ</option>
+                            v-model="item.giao_xu_id">
+                            <option value="0" :selected="item.giao_xu_id == null">Giáo xứ</option>
                         </select>
                     </td>
                 </tr>
@@ -70,8 +70,8 @@
                     <td class="text-left">Cơ sở giáo phận</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.cosogp_id">
-                            <option value="0" :selected="item.cosogp_id == null">Cơ sở giáo phận</option>
+                            v-model="item.co_so_gp_id">
+                            <option value="0" :selected="item.co_so_gp_id == null">Cơ sở giáo phận</option>
                         </select>
                     </td>
                 </tr>
@@ -88,8 +88,8 @@
                     <td class="text-left">Ban chuyên trách</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.banchuyentrach_id">
-                            <option value="0" :selected="item.banchuyentrach_id == null">Ban chuyên trách</option>
+                            v-model="item.ban_chuyen_trach_id">
+                            <option value="0" :selected="item.ban_chuyen_trach_id == null">Ban chuyên trách</option>
                         </select>
                     </td>
                 </tr>
@@ -97,8 +97,8 @@
                     <td class="text-left">Du học</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.duhoc">
-                            <option value="0" :selected="item.duhoc == null">Du học</option>
+                            v-model="item.du_hoc">
+                            <option value="0" :selected="item.du_hoc == null">Du học</option>
                         </select>
                     </td>
                 </tr>
@@ -106,8 +106,8 @@
                     <td class="text-left">Quốc gia</td>
                     <td>
                         <select class="form-control"
-                            v-model="item.quocgia">
-                            <option value="0" :selected="item.quocgia == null">Quốc gia</option>
+                            v-model="item.quoc_gia">
+                            <option value="0" :selected="item.quoc_gia == null">Quốc gia</option>
                         </select>
                     </td>
                 </tr>
@@ -115,7 +115,7 @@
                     <td class="text-left">Ghi chú</td>
                     <td>
                         <textarea class="form-control"
-                            v-model="item.ghichu"></textarea>
+                            v-model="item.ghi_chu"></textarea>
                     </td>
                 </tr>
                 <tr>

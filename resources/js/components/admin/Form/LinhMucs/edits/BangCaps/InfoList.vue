@@ -28,7 +28,7 @@
                             rules="max:500"
                             v-slot="{ errors }">
                             <textarea class="form-control"
-                                v-model="item.ghichu"></textarea>
+                                v-model="item.ghi_chu"></textarea>
 
                             <span class="cms-text-red">{{ errors[0] }}</span>
                         </validation-provider>

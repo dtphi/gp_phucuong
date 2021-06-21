@@ -96,7 +96,7 @@
                 <tinymce 
                     id="input-ghi-chu"
                     :other_options="options"
-                    v-model="generalData.ghichu"></tinymce>
+                    v-model="generalData.ghi_chu"></tinymce>
             </div>
         </div>
         <div class="form-group">

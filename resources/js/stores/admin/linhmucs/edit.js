@@ -77,7 +77,7 @@ const defaultState = () => {
       ngay_rip:null,
       rip_giaoxu_id:null,
       rip_ghi_chu:'',
-      ghichu: '',
+      ghi_chu: '',
       active: 1,
 
       bang_caps: [],
@@ -185,7 +185,7 @@ export default {
         id: uuidv4(),
         name: '',
         type: 0,
-        ghichu: '',
+        ghi_chu: '',
         active: 1
       })
     },
@@ -204,7 +204,7 @@ export default {
         ngay_thang_nam_chuc_thanh: null,
         noi_thu_phong:'',
         nguoi_thu_phong:'',
-        ghichu: '',
+        ghi_chu: '',
         active: 1
       })
     },
@@ -222,7 +222,7 @@ export default {
         parent_id: 0,
         title: null,
         type:'',
-        ghichu: '',
+        ghi_chu: '',
         active: 1
       })
     },
@@ -237,19 +237,19 @@ export default {
     addThuyenChuyen({state}, params) {
       state.info.thuyen_chuyens.push({
         id: uuidv4(),
-        fromgiaoxu_id: null,
-        fromchucvu_id: null,
+        from_giao_xu_id: null,
+        from_chuc_vu_id: null,
         from_date: null,
-        duccha_id: null,
+        duc_cha_id: null,
         to_date: null,
-        chucvu_id: null,
-        giaoxu_id: null,
-        cosogp_id: null,
+        chuc_vu_id: null,
+        giao_xu_id: null,
+        co_so_gp_id: null,
         dong_id: null,
-        banchuyentrach_id: null,
-        duhoc: null,
-        quocgia: null,
-        ghichu: '',
+        ban_chuyen_trach_id: null,
+        du_hoc: null,
+        quoc_gia: null,
+        ghi_chu: '',
         active: 1
       })
     },

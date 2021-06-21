@@ -39,7 +39,7 @@
                     </td>
                     <td>
                         <textarea class="form-control"
-                            v-model="item.ghichu"></textarea>
+                            v-model="item.ghi_chu"></textarea>
                     </td>
                     
                     <td>

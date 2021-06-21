@@ -88,10 +88,10 @@
             <td class="text-left">Du học</td>
             <td>
                 <select class="form-control"
-                    v-model="item.duhoc">
-                    <option value="0" :selected="item.duhoc == 0">Du học 1</option>
-                    <option value="1" :selected="item.duhoc == 1">Du học 2</option>
-                    <option value="2" :selected="item.duhoc == 2">Du học 3</option>
+                    v-model="item.du_hoc">
+                    <option value="0" :selected="item.du_hoc == 0">Du học 1</option>
+                    <option value="1" :selected="item.du_hoc == 1">Du học 2</option>
+                    <option value="2" :selected="item.du_hoc == 2">Du học 3</option>
                 </select>
             </td>
         </tr>
@@ -99,8 +99,8 @@
             <td class="text-left">Quốc gia</td>
             <td>
                 <select class="form-control"
-                    v-model="item.quocgia">
-                    <option value="0" :selected="item.quocgia == null">Quốc gia</option>
+                    v-model="item.quoc_gia">
+                    <option value="0" :selected="item.quoc_gia == null">Quốc gia</option>
                 </select>
             </td>
         </tr>
@@ -108,7 +108,7 @@
             <td class="text-left">Ghi chú</td>
             <td>
                 <textarea class="form-control"
-                    v-model="item.ghichu"></textarea>
+                    v-model="item.ghi_chu"></textarea>
             </td>
         </tr>
         <tr>

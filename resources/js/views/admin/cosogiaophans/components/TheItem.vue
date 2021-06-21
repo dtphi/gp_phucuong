@@ -10,7 +10,7 @@
         <td class="text-left" style="width:50%">
             {{info.dia_chi}}
         </td>
-        <td>{{info.ghichu}}</td>
+        <td>{{info.ghi_chu}}</td>
          <td class="text-center">{{info.active}}</td>
         <td class="text-center">{{_formatDate(info.updatetime)}}</td>
         <td class="text-right">

@@ -387,7 +387,7 @@
                 class="col-sm-2 control-label">Triệu dòng:</label>
             <div class="col-sm-10">
                 <validation-provider
-                    name="info_rip_giaoxu_id"
+                    name="info_rip_giao_xu_id"
                     rules="required|max:200"
                     v-slot="{ errors }">
                     <input
