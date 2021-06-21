@@ -66,7 +66,7 @@ class GiaoPhanController extends ApiController
                 $results[] = [
                     'id' => (int)$info->id,
                     'name'       => $info->name,
-                    'khaiquat'   => $info->khaiquat,
+                    'khai_quat'   => $info->khai_quat,
                     'active'     => $info->active,
                     'sort_id' => $info->sort_id
                 ];

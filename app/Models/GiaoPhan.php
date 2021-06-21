@@ -28,10 +28,10 @@ class GiaoPhan extends BaseModel
      */
     protected $fillable = [
         'name',
-        'khaiquat',
+        'khai_quat',
         'active',
         'sort_id',
-        'updateuser',
+        'update_user',
         'meta_title',
         'meta_description',
         'meta_keyword',
@@ -58,9 +58,9 @@ class GiaoPhan extends BaseModel
         return $this->hasMany(GiaoPhanBanChuyenTrach::class, 'giao_phan_id');
     }
 
-    public function getKhaiquatAttribute($value)
+    public function getKhaiQuatAttribute($value)
     {
-        return htmlspecialchars_decode($value);
+        return html_entity_decode(htmlspecialchars_decode($value));
     }
 
     public function getArrHatListAttribute($value)

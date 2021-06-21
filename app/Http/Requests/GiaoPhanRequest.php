@@ -28,7 +28,7 @@ class GiaoPhanRequest extends FormRequest
         $formData = $this->all();
 
         $formData['name'] = isset($formData['name']) ? $formData['name']: null;
-        $formData['khaiquat'] = isset($formData['khaiquat'])?htmlentities($formData['khaiquat']): null;
+        $formData['khai_quat'] = isset($formData['khai_quat'])?htmlentities($formData['khai_quat']): null;
         $formData['active'] = isset($formData['active'])?$formData['active']: null;
         $formData['sort_id'] = isset($formData['sort_id'])?$formData['sort_id']:null;
         $formData['tag'] = isset($formData['tag'])?$formData['tag']:null;
