@@ -10,7 +10,7 @@
         <td class="text-center" style="width:7%">
             <img :src="info.imgThum" class="img-thumbnail"/>
         </td>
-        <td class="text-center">{{_formatDate(info.updatetime)}}</td>
+        <td class="text-center">{{_formatDate(info.update_time)}}</td>
         <td class="text-center">{{info.active}}</td>
         
         <td class="text-right">
