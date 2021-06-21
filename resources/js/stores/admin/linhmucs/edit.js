@@ -40,17 +40,7 @@ const defaultState = () => {
     styleCss: '',
     isExistInfo: config.existStatus.checking,
     info: {
-      image: {
-        basename: "",
-        dirname: "",
-        extension: "",
-        filename: "",
-        path: "",
-        size: 0,
-        thumb: "",
-        timestamp: null,
-        type: null
-      },
+      image: '',
       ten: '',
       ten_thanh_id: null,
       ngay_thang_nam_sinh: null,
@@ -75,7 +65,7 @@ const defaultState = () => {
       ngay_trieu_dong:null,
       ngay_khan:null,
       ngay_rip:null,
-      rip_giaoxu_id:null,
+      rip_giao_xu_id:null,
       rip_ghi_chu:'',
       ghi_chu: '',
       active: 1,

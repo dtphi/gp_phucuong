@@ -25,7 +25,7 @@ class LinhmucBangcap extends BaseModel
         $linhmucId = (int)$linhmucId;
 
         if ($linhmucId) {
-            DB::insert('insert into ' . Tables::$linhmuc_bangcaps . ' (linhmuc_id, name, type, ghichu, active) values (?, ?, ?, ?, ?)',
+            DB::insert('insert into ' . Tables::$linhmuc_bangcaps . ' (linh_muc_id, name, type, ghi_chu, active) values (?, ?, ?, ?, ?)',
                 [$linhmucId, $name, $type, $ghichu, $active]);
         }
     }

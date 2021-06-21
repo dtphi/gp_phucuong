@@ -391,7 +391,7 @@
                     rules="required|max:200"
                     v-slot="{ errors }">
                     <input
-                        v-model="generalData.rip_giaoxu_id"
+                        v-model="generalData.rip_giao_xu_id"
                         type="text"
                         id="input-info-rip-giaoxu-id"
                         class="form-control"

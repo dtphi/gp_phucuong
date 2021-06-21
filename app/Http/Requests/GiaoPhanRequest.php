@@ -35,7 +35,7 @@ class GiaoPhanRequest extends FormRequest
         $formData['meta_title'] = isset($formData['meta_title'])?$formData['meta_title']:null;
         $formData['meta_description'] = isset($formData['meta_description'])?$formData['meta_description']:null;
         $formData['meta_keyword'] = isset($formData['meta_keyword'])?$formData['meta_keyword']:null;
-        $formData['updateuser'] = isset(Auth::user()->id) ? Auth::user()->id : 0;
+        $formData['update_user'] = isset(Auth::user()->id) ? Auth::user()->id : 0;
 
         $formData['banchuyentrachs'] = isset($formData['giao_phan_banchuyentrachs'])?$formData['giao_phan_banchuyentrachs']:[];
         $formData['cosos'] = isset($formData['giao_phan_cosos'])?$formData['giao_phan_cosos']:[];

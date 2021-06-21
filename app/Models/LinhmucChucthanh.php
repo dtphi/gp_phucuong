@@ -26,7 +26,7 @@ class LinhmucChucthanh extends BaseModel
         $linhmucId = (int)$linhmucId;
 
         if ($linhmucId) {
-            DB::insert('insert into ' . Tables::$linhmuc_chucthanhs . ' (linhmuc_id, chuc_thanh_id, ngay_thang_nam_chuc_thanh, noi_thu_phong, nguoi_thu_phong, active, ghichu) values (?, ?, ?, ?, ?, ?, ?)',
+            DB::insert('insert into ' . Tables::$linhmuc_chucthanhs . ' (linh_muc_id, chuc_thanh_id, ngay_thang_nam_chuc_thanh, noi_thu_phong, nguoi_thu_phong, active, ghi_chu) values (?, ?, ?, ?, ?, ?, ?)',
                 [$linhmucId, $chucThanhId, $ngayChucThanh, $noiThuPhong, $nguoiThuPhong, $active, $ghichu]);
         }
     }

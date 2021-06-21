@@ -40,17 +40,17 @@ class Linhmuc extends BaseModel
         'ngay_dai_chung_vien',
         'image',
         'so_cmnd',
-        'noicap_cmnd',
+        'noi_cap_cmnd',
         'ngay_cap_cmnd',
         'trieu_dong',
         'ten_dong_id',
         'ngay_trieu_dong',
         'ngay_khan',
         'ngay_rip',
-        'rip_giaoxu_id',
+        'rip_giao_xu_id',
         'rip_ghi_chu',
-        'ghichu',
-        'updateuser',
+        'ghi_chu',
+        'update_user',
         'sort_id'
     ];
 

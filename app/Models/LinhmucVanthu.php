@@ -24,7 +24,7 @@ class LinhmucVanthu extends BaseModel
         $linhmucId = (int)$linhmucId;
 
         if ($linhmucId) {
-            DB::insert('insert into ' . Tables::$linhmuc_vanthus . ' (linhmuc_id, title, type, active, ghichu) values (?, ?, ?, ?, ?)',
+            DB::insert('insert into ' . Tables::$linhmuc_vanthus . ' (linh_muc_id, title, type, active, ghi_chu) values (?, ?, ?, ?, ?)',
                 [$linhmucId, $title, $type, $active, $ghichu]);
         }
     }

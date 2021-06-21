@@ -35,7 +35,7 @@ class LinhmucThuyenchuyen extends BaseModel
         $linhmucId = (int)$linhmucId;
 
         if ($linhmucId) {
-            DB::insert('insert into ' . Tables::$linhmuc_thuyenchuyens . ' (linhmuc_id, fromgiaoxu_id, fromchucvu_id, from_date, duccha_id, to_date, chucvu_id, giaoxu_id, cosogp_id, dong_id, banchuyentrach_id, duhoc, quocgia, active, ghichu) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            DB::insert('insert into ' . Tables::$linhmuc_thuyenchuyens . ' (linh_muc_id, from_giao_xu_id, from_chuc_vu_id, from_date, duc_cha_id, to_date, chuc_vu_id, giao_xu_id, co_so_gp_id, dong_id, ban_chuyen_trach_id, du_hoc, quoc_gia, active, ghi_chu) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [$linhmucId, $fromGiaoXuId, $fromChucVuId, $fromDate, $ducChaId, $toDate, $toChucVuId, $toGiaoXuId, $cosogpId, $dongId, $banChuyenTrachId, $duhoc, $quocGia, $active, $ghichu]);
         }
     }

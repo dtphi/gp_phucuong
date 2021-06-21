@@ -60,7 +60,7 @@ const defaultState = () => {
       ngay_trieu_dong:null,
       ngay_khan:null,
       ngay_rip:null,
-      rip_giaoxu_id:null,
+      rip_giao_xu_id:null,
       rip_giaoxu_name: '',
       rip_ghi_chu:'',
       ghi_chu: '',
@@ -160,7 +160,7 @@ export default {
       state.info.ten_dong_name = params.dong.name;
     },
     ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU({state}, params) {
-      state.info.rip_giaoxu_id = params.giaoXu.id;
+      state.info.rip_giao_xu_id = params.giaoXu.id;
       state.info.rip_giaoxu_name = params.giaoXu.name;
     },
     ACTION_UPDATE_DROPDOWN_GIAO_XU({state}, params) {
