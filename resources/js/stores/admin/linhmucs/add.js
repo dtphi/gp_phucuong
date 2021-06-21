@@ -35,17 +35,7 @@ const defaultState = () => {
     classShow: 'modal fade',
     styleCss: '',
     info: {
-      image: {
-        basename: "",
-        dirname: "",
-        extension: "",
-        filename: "",
-        path: "",
-        size: 0,
-        thumb: "",
-        timestamp: null,
-        type: null
-      },
+      image: '',
       is_duc_cha: false,
       ten_thanh_id: null,
       ten_thanh_name: '',
@@ -64,7 +54,6 @@ const defaultState = () => {
       ngay_tieu_chung_vien:null,
       dai_chung_vien:null,
       ngay_dai_chung_vien:null,
-      chucthanh_id:null,
       so_cmnd:null,
       noicap_cmnd:'',
       ngay_cap_cmnd:null,

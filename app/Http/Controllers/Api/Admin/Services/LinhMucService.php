@@ -10,6 +10,7 @@ use App\Models\Linhmuc;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucVanthu;
+use App\Models\LinhmucThuyenchuyen;
 use App\Models\GiaoXu;
 use App\Models\Thanh;
 use App\Models\ChucVu;
@@ -117,7 +118,7 @@ final class LinhmucService implements BaseModel, LinhMucModel
 
             if (isset($data['bang_caps']) && !empty($data['bang_caps'])) {
                 foreach ($data['bang_caps'] as $bangcap) {
-                    LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'], $bangcap['type'], $data['ghi_chu'], $bangcap['active']);
+                    LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'], $bangcap['type'], $data['ghichu'], $bangcap['active']);
                 }
             }
 
@@ -139,7 +140,7 @@ final class LinhmucService implements BaseModel, LinhMucModel
 
             if (isset($data['van_thus']) && !empty($data['van_thus'])) {
                 foreach ($data['van_thus'] as $vanThu) {
-                    LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'], $data['ghi_chu']);
+                    LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'], $data['ghichu']);
                 }
             }
         } else {

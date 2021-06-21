@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Auth;
 
 class LinhmucRequest extends FormRequest
 {
@@ -53,6 +54,7 @@ class LinhmucRequest extends FormRequest
         $formData['ngay_rip'] = isset($formData['ngay_rip'])?$formData['ngay_rip']:null;
         $formData['rip_giaoxu_id'] = isset($formData['rip_giaoxu_id'])?$formData['rip_giaoxu_id']:null;
         $formData['rip_ghi_chu'] = isset($formData['rip_ghi_chu'])?$formData['rip_ghi_chu']:null;
+        $formData['updateuser'] = isset(Auth::user()->id) ? Auth::user()->id : 0;
 
         $formData['bang_caps'] = isset($formData['bang_caps'])?$formData['bang_caps']:'';
         $formData['chuc_thanhs'] = isset($formData['chuc_thanhs'])?$formData['chuc_thanhs']:'';

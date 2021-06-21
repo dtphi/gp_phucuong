@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel as LinhMucSv;
-use App\Http\Requests\InformationRequest;
+use App\Http\Requests\LinhmucRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
@@ -121,10 +121,10 @@ class LinhMucController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param InformationRequest $request
+     * @param LinhmucRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(InformationRequest $request)
+    public function store(LinhmucRequest $request)
     {
         $storeResponse = $this->__handleStore($request);
 
@@ -139,11 +139,11 @@ class LinhMucController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param InformationRequest $request
+     * @param LinhmucRequest $request
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(InformationRequest $request, $id = null)
+    public function update(LinhmucRequest $request, $id = null)
     {
         try {
             $model = $this->linhMucSv->apiGetDetail($id);

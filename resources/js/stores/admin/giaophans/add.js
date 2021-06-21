@@ -27,17 +27,7 @@ const defaultState = () => {
     classShow: 'modal fade',
     styleCss: '',
     info: {
-      image: {
-        basename: "",
-        dirname: "",
-        extension: "",
-        filename: "",
-        path: "",
-        size: 0,
-        thumb: "", //url thumb
-        timestamp: null,
-        type: null
-      },
+      image: '',
       name: '',
       khaiquat: '',
       sort_id: '',
@@ -186,7 +176,7 @@ export default {
     [INFOS_MODAL_SET_ERROR](state, payload) {
       state.errors = payload
     },
-    [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
+    [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {console.log('payload',payload)
       state.info.image = payload;
       state.isImgChange = true;
     }
