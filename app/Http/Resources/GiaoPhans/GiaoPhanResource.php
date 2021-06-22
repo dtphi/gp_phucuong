@@ -26,15 +26,17 @@ class GiaoPhanResource extends JsonResource
         ];
 
         $res  = $this->resource;
-        $json = parent::toArray($request);
-        $json = array_merge($json, [
-            'giao_phan_hats'=> $res->arr_hat_list,
-            'giao_phan_dongs'=> $res->arr_dong_list,
-            'giao_phan_cosos'=> $res->arr_coso_list,
-            'giao_phan_banchuyentrachs'=> $res->arr_ban_chuyen_trach_list,
-            'giao_phan_hat_xu_diems'=> []
-            //'sort_description'      => html_entity_decode($res->sort_description),
-        ]);
+        if ($res) {
+            $json = parent::toArray($request);
+            $json = array_merge($json, [
+                'giao_phan_hats'=> $res->arr_hat_list,
+                'giao_phan_dongs'=> $res->arr_dong_list,
+                'giao_phan_cosos'=> $res->arr_coso_list,
+                'giao_phan_banchuyentrachs'=> $res->arr_ban_chuyen_trach_list,
+                'giao_phan_hat_xu_diems'=> []
+                //'sort_description'      => html_entity_decode($res->sort_description),
+            ]);
+        }
 
         return $json;
     }

@@ -20,7 +20,11 @@ class NewsGroupResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->__getJsonResource();
+        if ($this->resource) {
+            return $this->__getJsonResource();
+        }
+        
+        return [];
     }
 
     /**

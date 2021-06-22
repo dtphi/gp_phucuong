@@ -9,10 +9,19 @@ import info from './infos';
 import news_category from './categories';
 import app_module from './modules';
 import linh_muc from './linhmucs';
+import bang_cap from './linhmucbangcaps';
+import chuc_thanh from './linhmucchucthanhs';
+import van_thu from './linhmucvanthus';
+import thuyen_chuyen from './linhmucthuyenchuyens';
 import giao_phan from './giaophans';
 import giao_hat from './giaohats';
 import giao_xu from './giaoxus';
 import giao_diem from './giaodiems';
+import cong_doan_tu_si from './congdoantusis';
+import dong from './dongs';
+import co_so from './cosos';
+import ban_chuyen_trach from './banchuyentrachs';
+import thanh from './thanhs';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -147,10 +156,19 @@ export default new Vuex.Store({
     news_category,
     app_module,
     linh_muc,
+    bang_cap,
+    chuc_thanh,
+    van_thu,
+    thuyen_chuyen,
     giao_phan,
     giao_hat,
     giao_xu,
-    giao_diem
+    giao_diem,
+    cong_doan_tu_si,
+    dong,
+    co_so,
+    ban_chuyen_trach,
+    thanh
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

@@ -7,17 +7,16 @@
                    :value="info.id">
         </td>
         <td class="text-left">{{info.name}}</td>
-        <td class="text-left" style="width:50%">
-            {{info.khuvuc}}
+        <td>
+            <div v-html="info.khai_quat"></div>
         </td>
-        <td>{{info.sort_id}}</td>
-        
+        <td class="text-center">{{info.sort_id}}</td>
         <td class="text-center">{{info.active}}</td>
-        <td class="text-center">{{_formatDate(info.updatetime)}}</td>
+        
         <td class="text-right">
-            <!--<btn-edit
+            <btn-edit
                 :info-id="info.id"></btn-edit>
-            <btn-delete
+            <!--<btn-delete
                 :info-id="info.id"></btn-delete>-->
         </td>
     </tr>

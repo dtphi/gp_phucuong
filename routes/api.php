@@ -52,11 +52,21 @@ Route::namespace('App\Http\Controllers\Api\Admin')
         Route::apiResource('news', 'InformationController');
         Route::get('/informations/dropdowns','InformationController@dropdown');
         Route::apiResource('settings', 'SettingController');
+
         Route::apiResource('linh-mucs', 'LinhMucController');
+        Route::apiResource('linh-muc-bang-caps', 'LinhMucBangCapController');
+        Route::apiResource('linh-muc-chuc-thanhs', 'LinhMucChucThanhController');
+        Route::apiResource('linh-muc-van-thus', 'LinhMucVanThuController');
+        Route::apiResource('linh-muc-thuyen-chuyens', 'LinhMucThuyenChuyenController');
+
         Route::apiResource('giao-phans', 'GiaoPhanController');
         Route::apiResource('giao-hats', 'GiaoHatController');
         Route::apiResource('giao-xus', 'GiaoXuController');
         Route::apiResource('giao-diems', 'GiaoDiemController');
+        Route::apiResource('cong-doan-tu-sis', 'CongDoanTuSiController');
+        Route::apiResource('co-sos', 'CoSoController');
+        Route::apiResource('dongs', 'DongController');
+        Route::apiResource('thanhs', 'ThanhController');
 
         Route::any('/mmedia/{any}', function () {});
     });

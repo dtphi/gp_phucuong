@@ -64,12 +64,6 @@
                             <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.dongs_title}}</span></a>
                     </li>
-                    <li>
-                        <a
-                            :href="_getHref('thanhs')">
-                            <i class="fa fa-user fa-fw"></i>
-                            <span>{{$options.setting.thanhs_title}}</span></a>
-                    </li>
                 </ul>
             </li>
             <li id="linh-muc">
@@ -83,6 +77,36 @@
                             :href="_getHref('linh-mucs')">
                             <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.linhmucs_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('bang-caps')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.linhmuc_bangcaps_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('chuc-thanhs')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.linhmuc_chucthanhs_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('van-thus')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.linhmuc_vanthus_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('thuyen-chuyens')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.linhmuc_thuyenchuyens_title}}</span></a>
+                    </li>
+                    <li>
+                        <a
+                            :href="_getHref('thanhs')">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span>{{$options.setting.thanhs_title}}</span></a>
                     </li>
                 </ul>
             </li>
@@ -218,6 +242,10 @@
             system_root_title: 'Hệ thống',
             sytem_title: 'Cài đặt',
             linhmucs_title: 'Linh mục',
+            linhmuc_bangcaps_title: 'Bằng cấp',
+            linhmuc_chucthanhs_title: 'Chức thánh',
+            linhmuc_vanthus_title: 'Văn thư',
+            linhmuc_thuyenchuyens_title: 'Thuyên chuyển',
             slide_info_special_title: 'Slide tiêu điểm',
             giaophans_title: 'Giáo phận',
             giaohats_title: 'Giáo hạt',

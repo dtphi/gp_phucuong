@@ -82,7 +82,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     public function apiGetDetail($id = null)
     {
         // TODO: Implement apiGetDetail() method.
-        $query = DB::table(Tables::$categorys . ' AS c')->select('*', DB::raw("(
+        $query = DB::table(Tables::$categorys . ' AS c')->select('*', 'c.category_id AS category_id', DB::raw("(
                     SELECT
                         GROUP_CONCAT(
                             cd1.`name`
