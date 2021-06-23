@@ -1,6 +1,5 @@
 <template>
     <div class="tab-content">
-
         <div class="form-group required">
             <label
                 for="input-info-name"
@@ -21,7 +20,25 @@
                 </validation-provider>
             </div>
         </div>
-        
+        <div class="form-group">
+            <label
+                for="input-info-duc-cha"
+                class="col-sm-2 control-label">Hình ảnh</label>
+            <div class="col-sm-2">
+                <input
+                    @click="_selectImage"
+                    type="button" value="Image"
+                    id="input-info-image"
+                    class="form-control">
+            </div>
+            <div class="col-sm-3">
+                <div class="file animated fadeIn" style="height: 61px">
+                    <div class="file-preview">
+                        <img :src="_getImageAvatar" class="thumb"/>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <label
                 for="input-info-khai-quat"
@@ -34,13 +51,12 @@
                     <tinymce 
                         id="input-info-khai-quat"
                         :other_options="options"
-                        v-model="groupData.khaiquat"></tinymce>
+                        v-model="groupData.khai_quat"></tinymce>
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
         </div>
-
         <div class="form-group">
             <label class="col-sm-2 control-label"
                    for="input-info-sort-order">Thứ tự</label>
@@ -60,7 +76,6 @@
                 </validation-provider>
             </div>
         </div>
-
         <div class="form-group">
             <label class="col-sm-2 control-label"
                    for="input-info-status">Trạng thái</label>
@@ -74,7 +89,6 @@
                 </select>
             </div>
         </div>
-
         <div class="form-group required">
             <label
                 for="input-info-meta-title"
@@ -158,12 +172,21 @@
 
 <script>
     import {
+        mapActions
+    } from 'vuex';
+    import {
         config
     } from '@app/common/config';
     import tinymce from 'vue-tinymce-editor';
     import {
         fn_get_tinymce_langs_url
     } from '@app/api/utils/fn-helper';
+    import {
+        MODULE_MODULE_GIAO_PHAN_ADD
+    } from 'store@admin/types/module-types';
+    import {
+        ACTION_SET_IMAGE
+    } from 'store@admin/types/action-types';
 
     export default {
         name: 'TabGeneralForm',
@@ -191,7 +214,9 @@
                         if (typeof fi === "object") {
                             if (fi.hasOwnProperty('selected') && fi.selected) {
                                 if (fi.selected.hasOwnProperty('path')) {
-                                    _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected);
+                                    if (_self.fn) {
+                                        _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected);
+                                    }
                                     document.getElementById('media-file-manager-content').style="display:none";
                                 }
                             }
@@ -222,7 +247,9 @@
                                         if (typeof fi === "object") {
                                             if (fi.hasOwnProperty('selected') && fi.selected) {
                                                 if (fi.selected.hasOwnProperty('path')) {
-                                                    _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected);
+                                                    if (_self.fn) {
+                                                        _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected);
+                                                    }
                                                     document.getElementById('media-file-manager-content').style="display:none";
                                                 }
                                             }
@@ -258,9 +285,24 @@
                 }
             }
         },
+        computed: {
+            _getImageAvatar() {
+                if (this.groupData.image != '' && this.groupData.image) {
+                    return `/${this.groupData.image}`;
+                } 
+                return '/images/no-photo.jpg';
+            }
+        },
         methods: {
-            _selectGiaoXu(giaoxu) {
-                console.log('giao xu', giaoxu)
+            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+                ACTION_SET_IMAGE
+            ]),
+            _selectImage() {
+                this.fn = function(file) {
+                    const _self = this;
+                    _self.setImage(file);
+                };
+                document.getElementById('media-file-manager-content').style="display:block";
             }
         },
         setting: {

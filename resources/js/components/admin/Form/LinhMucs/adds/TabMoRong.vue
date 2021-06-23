@@ -191,7 +191,9 @@
                                         if (typeof fi === "object") {
                                             if (fi.hasOwnProperty('selected') && fi.selected) {
                                                 if (fi.selected.hasOwnProperty('path')) {
-                                                    _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected);
+                                                    if (_self.fn) {
+                                                        _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected);
+                                                    }
                                                     document.getElementById('media-file-manager-content').style="display:none";
                                                 }
                                             }

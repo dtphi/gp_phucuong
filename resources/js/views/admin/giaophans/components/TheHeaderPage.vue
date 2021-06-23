@@ -78,7 +78,7 @@
             }
         },
         setting: {
-            title: 'Linh mục',
+            title: 'Giáo phận',
             refresh_txt: 'Tải lại danh sách'
         }
     };

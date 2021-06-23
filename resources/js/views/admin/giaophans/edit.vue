@@ -42,7 +42,6 @@
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
                     </div>
-
                     <div class="panel-body">
                         <info-add-form
                             ref="formEditGiaoPhan"></info-add-form>
@@ -118,11 +117,9 @@
                 if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
                     errs = Object.values(this.errors[0].messages);
                 }
-
                 if (Object.entries(errs).length === 0 && this.errors.length) {
                     errs.push(this.$options.setting.error_msg_system);
                 }
-
                 return errs;
             },
             _submitInfo() {
@@ -135,7 +132,6 @@
             },
             _submitInfoBack() {
                 const _self = this;
-
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
                         _self.$refs.formEditGiaoPhan._submitInfoBack();
