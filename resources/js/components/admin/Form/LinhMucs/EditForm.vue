@@ -1,13 +1,18 @@
 <template>
     <form class="form-horizontal">
-        <loading-over-lay
+        <!--<loading-over-lay
             :active.sync="loading"
-            :is-full-page="fullPage"></loading-over-lay>
+            :is-full-page="fullPage"></loading-over-lay>-->
         <ul class="nav nav-tabs">
             <li class="active">
                 <a
                     href="#tab-general"
                     data-toggle="tab">{{$options.setting.tab_general_title}}</a>
+            </li>
+            <li>
+                <a
+                    href="#tab-mo-rong"
+                    data-toggle="tab">{{$options.setting.tab_mo_rong_title}}</a>
             </li>
             <li>
                 <a
@@ -36,6 +41,13 @@
                     role="tabpanel"
                     class="tab-pane active"
                     :general-data="info"></tab-general>
+            </div>
+
+            <div class="tab-pane" id="tab-mo-rong">
+                <tab-mo-rong
+                    role="tabpanel"
+                    class="tab-pane"
+                    :general-data="info"></tab-mo-rong>
             </div>
 
             <div class="tab-pane" id="tab-bang-cap">
@@ -73,7 +85,6 @@
     import {EventBus} from '@app/api/utils/event-bus';
     import {
         mapState,
-        mapGetters,
         mapActions
     } from 'vuex';
     import {
@@ -86,6 +97,7 @@
         ACTION_INSERT_INFO_BACK
     } from 'store@admin/types/action-types';
     import TabGeneral from './edits/TabGeneral';
+    import TabMoRong from './edits/TabMoRong';
     import TabBangCap from './edits/TabBangCap';
     import TabChucThanh from './edits/TabChucThanh';
     import TabVanThu from './edits/TabVanThu';
@@ -95,6 +107,7 @@
         name: 'FormEdit',
         components: {
             TabGeneral,
+            TabMoRong,
             TabBangCap,
             TabChucThanh,
             TabVanThu,
@@ -108,11 +121,9 @@
         },
         computed: {
             ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
-                loading: state => state.loading
-            }),
-            ...mapGetters(MODULE_MODULE_LINH_MUC_EDIT, [
-                'info',
-            ])
+                loading: state => state.loading,
+                info: state => state.info
+            })
         },
         mounted() {
             const _self = this;
@@ -133,39 +144,18 @@
             },
             _submitInfoBack() {
                 this.[ACTION_INSERT_INFO_BACK](this.info);
-            },
-            _selectMainImg(file) {
-                const image = {
-                    basename: "",
-                    dirname: "",
-                    extension: "",
-                    filename: "",
-                    path: "",
-                    size: 0,
-                    thumb: "",
-                    timestamp: '',
-                    type: ""
-                };
-                if (typeof file === "object") {
-                    let selected = image;
-
-                    if (file.hasOwnProperty('selected') && file.selected) {
-                        selected = file.selected;
-                    }
-
-                    this.[ACTION_SET_IMAGE](selected);
-                }
             }
         },
         setting: {
             tab_general_title: 'Tổng quan',
+            tab_mo_rong_title: 'Mở rộng',
             tab_bang_cap_title: 'Bằng Cấp',
             tab_chuc_thanh_title: 'Chức Thánh',
             tab_thuyen_chuyen_title: 'Thuyên Chuyển',
             tab_van_thu_title: 'Văn Thư',
             tab_special_info_title: 'Slide tin tức tiêu điểm',
             error_msg_system: 'Lỗi hệ thống !',
-            isForm: 'edit'
+            isForm: 'add'
         }
     };
 </script>

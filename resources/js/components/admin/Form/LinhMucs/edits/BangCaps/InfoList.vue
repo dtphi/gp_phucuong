@@ -3,11 +3,11 @@
         <table id="info-bang-cap-list" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <td class="text-left">Tên bằng</td>
-                    <td class="text-left">Ghi chú</td>
-                    <td class="text-left">Loại</td>
-                    <td class="text-left">Tình trạng</td>
-                    <td calss="text-right">{{$options.setting.info_action_title}}</td>
+                    <td style="width:40%" class="text-left">Tên bằng</td>
+                    <td style="width:30%" class="text-left">Ghi chú</td>
+                    <td style="width:10%" class="text-left">Loại</td>
+                    <td style="width:10%" class="text-left">Tình trạng</td>
+                    <td style="width:10%" class="text-right">{{$options.setting.info_action_title}}</td>
                 </tr>
             </thead>
             <tbody>
@@ -17,7 +17,9 @@
                             :name="`item_name${item.id}`"
                             rules="required|max:255"
                             v-slot="{ errors }">
-                            <input v-model="item.name" class="form-control" type="text"/>
+                            <input 
+                                placeholder="Tên bằng cấp"
+                                v-model="item.name" class="form-control" type="text"/>
 
                             <span class="cms-text-red">{{ errors[0] }}</span>
                         </validation-provider>
@@ -47,7 +49,7 @@
                             <option value="0" :selected="item.active == 0">Ẩn</option>
                         </select>
                     </td>
-                    <td>
+                    <td class="text-right">
                         <button 
                             type="button" 
                             @click="_removeItem(item)"
@@ -92,8 +94,6 @@
             lists: {
                 default: {}
             }
-        },
-        computed: {
         },
         methods: {
             ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [

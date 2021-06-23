@@ -18,7 +18,7 @@
             <div class="page-header">
                 <div class="container-fluid">
                     <div class="pull-right">
-                        <!--<button
+                        <button
                             type="button"
                             @click="_submitInfo"
                             data-toggle="tooltip"
@@ -30,7 +30,7 @@
                                 data-toggle="tooltip"
                                 title="Lưu"
                                 class="btn btn-primary">{{$options.setting.btn_save_back_txt}}
-                        </button>-->
+                        </button>
                         <the-btn-back-list-page></the-btn-back-list-page>
                     </div>
                     <h1>{{$options.setting.panel_title}}</h1>
@@ -42,10 +42,9 @@
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
                     </div>
-
                     <div class="panel-body">
-                        <info-add-form
-                            ref="formAddLinhMuc"></info-add-form>
+                        <info-edit-form
+                            ref="formLinhMuc"></info-edit-form>
                     </div>
                 </div>
             </div>
@@ -56,113 +55,58 @@
 <script>
     import {
         mapState,
-        mapActions,
-        mapGetters
+        mapActions
     } from 'vuex';
-
-    import InfoAddForm from 'com@admin/Form/LinhMucs/EditForm';
-    import Breadcrumb from 'com@admin/Breadcrumb';
-    import TheBtnBackListPage from './components/TheBtnBackListPage';
+    import InfoEditForm from 'com@admin/Form/LinhMucs/EditForm';
+    
     import {
         MODULE_MODULE_LINH_MUC_EDIT,
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO,
-        ACTION_SHOW_MODAL_EDIT
+        ACTION_GET_INFO_BY_ID
     } from 'store@admin/types/action-types';
+    import linhMucMix from '@app/mixins/admin/linhmuc';
 
     export default {
-        name: 'InformationAdd',
-        components: {
-            Breadcrumb,
-            InfoAddForm,
-            TheBtnBackListPage
-        },
+        name: 'LinhMucEdit',
+        mixins:[linhMucMix.form],
         beforeCreate() {
             const linhmucId = parseInt(this.$route.params.linhmucId);
             if (!linhmucId) {
                 return fn_redirect_url('admin/linh-mucs');
             }
         },
+        components: {
+            InfoEditForm
+        },
         data() {
-            return {
-                fullPage: true
-            }
+            return {}
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'specialInfoCarousel'
-            ]),
             ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
                 loading: state => state.loading,
                 errors: state => state.errors,
                 insertSuccess: state => state.insertSuccess
-            }),
-            _errors() {
-                return this.errors.length;
-            }
-        },
-        watch: {
-            'insertSuccess'(newValue, oldValue) {
-                if (newValue) {
-                    this._notificationUpdate(newValue);
-                }
-            }
+            })
         },
         methods: {
             ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
                 ACTION_RESET_NOTIFICATION_INFO,
-                ACTION_SHOW_MODAL_EDIT,
-                'update_special_carousel'
-            ]),
-            _errorToArrs() {
-                let errs = [];
-                if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
-                    errs = Object.values(this.errors[0].messages);
-                }
-
-                if (Object.entries(errs).length === 0 && this.errors.length) {
-                    errs.push(this.$options.setting.error_msg_system);
-                }
-
-                return errs;
-            },
-            _submitInfo() {
-                const _self = this;
-
-                this.update_special_carousel(this.specialInfoCarousel);
-                _self.$refs.observerInfo.validate().then((isValid) => {
-                    if (isValid) {
-                        _self.$refs.formAddLinhMuc._submitInfo();
-                    }
-                });
-            },
-            _submitInfoBack() {
-                const _self = this;
-
-                _self.$refs.observerInfo.validate().then((isValid) => {
-                    if (isValid) {
-                        _self.$refs.formAddLinhMuc._submitInfoBack();
-                    }
-                });
-            },
-            _notificationUpdate(notification) {
-                this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
-            }
-        },
-        setting: {
-            panel_title: 'Linh Mục',
-            frm_title: 'Thêm Linh Mục',
-            btn_save_txt: 'Lưu',
-            btn_save_back_txt: 'Lưu trở về danh sách'
+                ACTION_GET_INFO_BY_ID
+            ])
         },
         mounted() {
             const linhmucId = parseInt(this.$route.params.linhmucId);
             if (linhmucId) {
-                this.[ACTION_SHOW_MODAL_EDIT](linhmucId);
+                this.[ACTION_GET_INFO_BY_ID](linhmucId);
             }
         },
+        setting: {
+            panel_title: 'Linh Mục',
+            btn_save_txt: 'Lưu',
+            btn_save_back_txt: 'Lưu trở về danh sách',
+            frm_title: 'Sửa Linh Mục'
+        }
     };
 </script>

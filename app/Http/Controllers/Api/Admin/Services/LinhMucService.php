@@ -126,7 +126,7 @@ final class LinhmucService implements BaseModel, LinhMucModel
                 foreach ($data['chuc_thanhs'] as $chucThanh) {
                     LinhmucChucthanh::insertByLinhmucId($linhmucId, $chucThanh['chuc_thanh_id'], 
                     $chucThanh['ngay_thang_nam_chuc_thanh'], $chucThanh['noi_thu_phong'], $chucThanh['nguoi_thu_phong'],
-                $chucThanh['active'], $data['ghi_chu']);
+                $chucThanh['active'], $chucThanh['ghi_chu']);
                 }
             }
 
@@ -134,13 +134,13 @@ final class LinhmucService implements BaseModel, LinhMucModel
                 foreach ($data['thuyen_chuyens'] as $thCh) {
                     LinhmucThuyenchuyen::insertByLinhmucId($linhmucId, $thCh['from_giao_xu_id'], 
                     $thCh['from_chuc_vu_id'], $thCh['from_date'], $thCh['duc_cha_id'], $thCh['to_date'], 
-                    $thCh['chuc_vu_id'], $thCh['giao_xu_id'], $thCh['co_so_gp_id'], $thCh['dong_id'], $thCh['ban_chuyen_trach_id'], $thCh['du_hoc'], $thCh['quoc_gia'], $thCh['active'], $data['ghi_chu']);
+                    $thCh['chuc_vu_id'], $thCh['giao_xu_id'], $thCh['co_so_gp_id'], $thCh['dong_id'], $thCh['ban_chuyen_trach_id'], $thCh['du_hoc'], $thCh['quoc_gia'], $thCh['active'], $thCh['ghi_chu']);
                 }
             }
 
             if (isset($data['van_thus']) && !empty($data['van_thus'])) {
                 foreach ($data['van_thus'] as $vanThu) {
-                    LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'], $data['ghi_chu']);
+                    LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'], $vanThu['ghi_chu']);
                 }
             }
         } else {

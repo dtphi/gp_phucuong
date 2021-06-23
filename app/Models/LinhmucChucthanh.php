@@ -17,13 +17,20 @@ class LinhmucChucthanh extends BaseModel
     public static function insertByLinhmucId(
         $linhmucId = null,
         $chucThanhId = null,
-        $ngayChucThanh = null,
+        $ngayChucThanh = '',
         $noiThuPhong = '',
         $nguoiThuPhong = '',
         $active = 1,
         $ghichu = ''
     ) {
         $linhmucId = (int)$linhmucId;
+        if (!empty($ngayChucThanh)) {
+            $date = date_create($ngayChucThanh);
+            $dateAvailable = date_format($date,"Y-m-d H:i:s");
+            $ngayChucThanh = $dateAvailable;
+        } else {
+            $ngayChucThanh = now();
+        }
 
         if ($linhmucId) {
             DB::insert('insert into ' . Tables::$linhmuc_chucthanhs . ' (linh_muc_id, chuc_thanh_id, ngay_thang_nam_chuc_thanh, noi_thu_phong, nguoi_thu_phong, active, ghi_chu) values (?, ?, ?, ?, ?, ?, ?)',

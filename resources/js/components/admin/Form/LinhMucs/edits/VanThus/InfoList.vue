@@ -17,7 +17,9 @@
                             :name="`item_name${item.id}`"
                             rules="required|max:255"
                             v-slot="{ errors }">
-                            <input v-model="item.title" class="form-control" type="text"/>
+                            <input 
+                                placeholder="Tiêu đề"
+                                v-model="item.title" class="form-control" type="text"/>
 
                             <span class="cms-text-red">{{ errors[0] }}</span>
                         </validation-provider>

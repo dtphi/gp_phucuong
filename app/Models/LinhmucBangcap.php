@@ -19,8 +19,8 @@ class LinhmucBangcap extends BaseModel
         $linhmucId = null,
         $name = null,
         $type = 0,
-        $active = 1,
-        $ghichu = ''
+        $ghichu = '',
+        $active = 1
     ) {
         $linhmucId = (int)$linhmucId;
 

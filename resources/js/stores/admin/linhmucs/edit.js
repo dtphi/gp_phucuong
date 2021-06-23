@@ -1,51 +1,37 @@
 import AppConfig from 'api@admin/constants/app-config';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  apiGetInfoById,
-  apiUpdateInfo
-} from 'api@admin/information';
+  apiInsertInfo,
+  apiGetInfoById
+} from 'api@admin/linhmuc';
 import {
-  INFOS_MODAL_SET_INFO_ID,
-  INFOS_MODAL_SET_INFO_ID_SUCCESS,
-  INFOS_MODAL_SET_INFO_ID_FAILED,
-  INFOS_MODAL_SET_INFO,
   INFOS_MODAL_SET_LOADING,
-  INFOS_MODAL_UPDATE_INFO_SUCCESS,
-  INFOS_MODAL_UPDATE_INFO_FAILED,
+  INFOS_MODAL_INSERT_INFO_SUCCESS,
+  INFOS_MODAL_INSERT_INFO_FAILED,
   INFOS_MODAL_SET_ERROR,
-  INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
-  INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST,
-  INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
-  INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
-  INFOS_FORM_SET_MAIN_IMAGE
+  INFOS_FORM_SET_MAIN_IMAGE,
 } from '../types/mutation-types';
 import {
-  ACTION_GET_INFO_BY_ID,
   ACTION_SET_LOADING,
-  ACTION_SHOW_MODAL_EDIT,
-  ACTION_UPDATE_INFO,
-  ACTION_RESET_NOTIFICATION_INFO,
-  ACTION_ADD_INFO_TO_CATEGORY_LIST,
-  ACTION_REMOVE_INFO_TO_CATEGORY_LIST,
+  ACTION_INSERT_INFO,
+  ACTION_INSERT_INFO_BACK,
   ACTION_SET_IMAGE,
-  ACTION_ADD_INFO_TO_RELATED_LIST,
-  ACTION_REMOVE_INFO_TO_RELATED_LIST,
+  ACTION_GET_INFO_BY_ID,
+  ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
-import {
-  config
-} from '@app/api/admin/config';
 
 const defaultState = () => {
   return {
-    styleCss: '',
-    isExistInfo: config.existStatus.checking,
     info: {
       image: '',
-      ten: '',
+      is_duc_cha: false,
       ten_thanh_id: null,
+      ten_thanh_name: '',
+      ten: '',
       ngay_thang_nam_sinh: null,
       noi_sinh: '',
       giao_xu_id: null,
+      giao_xu_name: '',
       ho_ten_cha: '',
       ho_ten_me: '',
       noi_rua_toi: '',
@@ -56,18 +42,24 @@ const defaultState = () => {
       ngay_tieu_chung_vien:null,
       dai_chung_vien:null,
       ngay_dai_chung_vien:null,
-      chucthanh_id:null,
       so_cmnd:null,
-      noicap_cmnd:'',
+      noi_cap_cmnd:'',
       ngay_cap_cmnd:null,
       trieu_dong:null,
       ten_dong_id:'',
+      ten_dong_name: '',
       ngay_trieu_dong:null,
       ngay_khan:null,
       ngay_rip:null,
       rip_giao_xu_id:null,
+      rip_giaoxu_name: '',
       rip_ghi_chu:'',
       ghi_chu: '',
+      code: '',
+      phone:'',
+      email:'',
+      password:'',
+      sort_id:0,
       active: 1,
 
       bang_caps: [],
@@ -75,12 +67,9 @@ const defaultState = () => {
       thuyen_chuyens: [],
       van_thus: [],
     },
-    isImgChange: false,
-    listCategorysDisplay: [],
-    listRelatedsDisplay: [],
-    infoId: 0,
+    isImgChange: true,
     loading: false,
-    updateSuccess: false,
+    insertSuccess: false,
     errors: []
   }
 }
@@ -95,100 +84,96 @@ export default {
     loading(state) {
       return state.loading
     },
-    updateSuccess(state) {
-      return state.updateSuccess
+    insertSuccess(state) {
+      return state.insertSuccess
     },
     errors(state) {
       return state.errors
     },
     isError(state) {
       return state.errors.length
-    },
-    isNotExistValidate(state) {
-      if (state.isExistInfo !== config.existStatus.checking ||
-        state.isExistInfo !== config.existStatus.exist) {
-        return false;
-      }
-
-      return true;
     }
   },
 
   mutations: {
-
-    [INFOS_MODAL_SET_INFO_ID](state, payload) {
-      if (payload) {
-        state.infoId = payload;
-        state.isExistInfo = config.existStatus.exist;
-      }
+    update_dropdown_thuyen_chuyen(state, payload) {
+      _.forEach(state.info.thuyen_chuyens, function(item, idx) {
+        if (item.hasOwnProperty('id') && item.id == payload.id) {
+          state.info.thuyen_chuyens[idx] = payload;
+        }
+      });
     },
-
-    [INFOS_MODAL_SET_INFO_ID_FAILED](state, payload) {
-      state.errors = payload
+    update_thuyen_chuyen(state, payload) {
+      state.info.thuyen_chuyens = payload;
     },
-
-    [INFOS_MODAL_SET_INFO](state, payload) {
-      state.info = payload
+    update_van_thu(state, payload) {
+      state.info.van_thus = payload;
     },
-
+    update_chuc_thanh(state, payload) {
+      state.info.chuc_thanhs = payload;
+    },
+    update_bang_cap(state, payload) {
+      state.info.bang_caps = payload;
+    },
     [INFOS_MODAL_SET_LOADING](state, payload) {
       state.loading = payload
     },
-
-    [INFOS_MODAL_UPDATE_INFO_SUCCESS](state, payload) {
-      state.updateSuccess = payload
+    [INFOS_MODAL_INSERT_INFO_SUCCESS](state, payload) {
+      state.insertSuccess = payload
     },
-
-    [INFOS_MODAL_UPDATE_INFO_FAILED](state, payload) {
-      state.updateSuccess = payload
+    [INFOS_MODAL_INSERT_INFO_FAILED](state, payload) {
+      state.insertSuccess = payload
     },
-
     [INFOS_MODAL_SET_ERROR](state, payload) {
       state.errors = payload
     },
-
-    [INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST](state, payload) {
-      state.info.categorys = payload
-    },
-
-    [INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST](state, payload) {
-      state.listCategorysDisplay = payload
-    },
-
-    [INFOS_FORM_ADD_INFO_TO_RELATED_LIST](state, payload) {
-      state.info.relateds = payload
-    },
-
-    [INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST](state, payload) {
-      state.listRelatedsDisplay = payload
-    },
-
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload;
       state.isImgChange = true;
+    },
+    LINH_MUCS_SET_INFO(state, payload) {
+      state.info = payload
     }
   },
 
   actions: {
-    addBangCaps({state}, params) {
-      state.info.bang_caps.push({
+    ACTION_UPDATE_DROPDOWN_DONG({state}, params) {
+      state.info.ten_dong_id = params.dong.id;
+      state.info.ten_dong_name = params.dong.name;
+    },
+    ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU({state}, params) {
+      state.info.rip_giao_xu_id = params.giaoXu.id;
+      state.info.rip_giaoxu_name = params.giaoXu.name;
+    },
+    ACTION_UPDATE_DROPDOWN_GIAO_XU({state}, params) {
+      state.info.giao_xu_id = params.giaoXu.id;
+      state.info.giao_xu_name = params.giaoXu.name;
+    },
+    ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST({state}, params) {
+      state.info.ten_thanh_id = params.tenThanh.id;
+      state.info.ten_thanh_name = params.tenThanh.name;
+    },
+    addBangCaps({state, commit}, params) {
+      let bangCaps = state.info.bang_caps;
+      bangCaps.push({
         id: uuidv4(),
         name: '',
         type: 0,
         ghi_chu: '',
         active: 1
-      })
+      });
+      commit('update_bang_cap', bangCaps);
     },
-    removeBangCap({state}, params) {
+    removeBangCap({commit, state}, params) {
       let bangCaps = state.info.bang_caps;
       const data = params.item;
-
-      state.info.bang_caps = _.remove(bangCaps, function(item) {
+      commit('update_bang_cap', _.remove(bangCaps, function(item) {
         return !(item.id == data.id);
-      })
+      }))
     },
-    addChucThanhs({state}, params) {
-      state.info.chuc_thanhs.push({
+    addChucThanhs({commit, state}, params) {
+      let chucThanhs = state.info.chuc_thanhs;
+      chucThanhs.push({
         id: uuidv4(),
         chuc_thanh_id: 1,
         ngay_thang_nam_chuc_thanh: null,
@@ -196,71 +181,167 @@ export default {
         nguoi_thu_phong:'',
         ghi_chu: '',
         active: 1
-      })
+      });
+      commit('update_chuc_thanh', chucThanhs);
     },
-    removeChucThanh({state}, params) {
-      let chuc_thanhs = state.info.chuc_thanhs;
+    removeChucThanh({commit, state}, params) {
+      let chucThanhs = state.info.chuc_thanhs;
       const data = params.item;
-
-      state.info.chuc_thanhs = _.remove(chuc_thanhs, function(item) {
+      commit('update_chuc_thanh', _.remove(chucThanhs, function(item) {
         return !(item.id == data.id);
-      })
+      }));
     },
-    addVanThus({state}, params) {
-      state.info.van_thus.push({
+    addVanThus({commit, state}, params) {
+      let vanThus = state.info.van_thus;
+      vanThus.push({
         id: uuidv4(),
         parent_id: 0,
         title: null,
         type:'',
         ghi_chu: '',
         active: 1
-      })
+      });
+      commit('update_van_thu', vanThus);
     },
-    removeVanThu({state}, params) {
-      let van_thus = state.info.van_thus;
+    removeVanThu({commit, state}, params) {
+      let vanThus = state.info.van_thus;
       const data = params.item;
 
-      state.info.van_thus = _.remove(van_thus, function(item) {
+      commit('update_van_thu', _.remove(vanThus, function(item) {
         return !(item.id == data.id);
-      })
+      }));
     },
-    addThuyenChuyen({state}, params) {
-      state.info.thuyen_chuyens.push({
+    ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH({commit, state}, params) {
+      let thuyenChuyen = params.thuyenChuyen;
+      thuyenChuyen.banchuyentrachName = params.banChuyenTrach.name;
+      thuyenChuyen.ban_chuyen_trach_id = params.banChuyenTrach.id;
+      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
+    },
+    ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG({commit, state}, params) {
+      let thuyenChuyen = params.thuyenChuyen;
+      thuyenChuyen.dongName = params.dong.name;
+      thuyenChuyen.dong_id = params.dong.id;
+      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
+    },
+    ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN({commit, state}, params) {
+      let thuyenChuyen = params.thuyenChuyen;
+      thuyenChuyen.cosogpName = params.coso.name;
+      thuyenChuyen.co_so_gp_id = params.coso.id;
+      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
+    },
+    ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU({commit, state}, params) {
+      let thuyenChuyen = params.thuyenChuyen;
+      thuyenChuyen.fromgiaoxuName = params.giaoXu.name;
+      thuyenChuyen.from_giao_xu_id = params.giaoXu.id;
+      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
+    },
+    ACTION_UPDATE_DROPDOWN_TO_GIAO_XU({commit, state}, params) {
+      let thuyenChuyen = params.thuyenChuyen;
+      thuyenChuyen.giaoxuName = params.giaoXu.name;
+      thuyenChuyen.giao_xu_id = params.giaoXu.id;
+      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
+    },
+    ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU({commit, state}, params) {
+      let thuyenChuyen = params.thuyenChuyen;
+      thuyenChuyen.fromchucvuName = params.chucVu.name;
+      thuyenChuyen.from_chuc_vu_id = params.chucVu.id;
+      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
+    },
+    ACTION_UPDATE_DROPDOWN_TO_CHUC_VU({commit, state}, params) {
+      let thuyenChuyen = params.thuyenChuyen;
+      thuyenChuyen.chucvuName = params.chucVu.name;
+      thuyenChuyen.chuc_vu_id = params.chucVu.id;
+      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
+    },
+    ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA({commit, state}, params) {
+      let thuyenChuyen = params.thuyenChuyen;
+      thuyenChuyen.ducchaName = params.ducCha.name;
+      thuyenChuyen.duc_cha_id = params.ducCha.id;
+      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
+    },
+    addThuyenChuyen({commit, state}, params) {
+      let thuyenChuyens = state.info.thuyen_chuyens;
+      thuyenChuyens.push({
         id: uuidv4(),
         from_giao_xu_id: null,
+        fromgiaoxuName: '',
         from_chuc_vu_id: null,
+        fromchucvuName: '',
         from_date: null,
         duc_cha_id: null,
+        ducchaName: '',
         to_date: null,
         chuc_vu_id: null,
+        chucvuName: '',
         giao_xu_id: null,
+        giaoxuName: '',
         co_so_gp_id: null,
+        cosogpName: '',
         dong_id: null,
+        dongName: '',
         ban_chuyen_trach_id: null,
+        banchuyentrachName: '',
         du_hoc: null,
         quoc_gia: null,
         ghi_chu: '',
         active: 1
-      })
+      });
+      commit('update_thuyen_chuyen', thuyenChuyens);
     },
-    removeThuyenChuyen({state}, params) {
-      let thuyen_chuyens = state.info.thuyen_chuyens;
+    removeThuyenChuyen({commit, state}, params) {
+      let thuyenChuyens = state.info.thuyen_chuyens;
       const data = params.item;
-
-      state.info.thuyen_chuyens = _.remove(thuyen_chuyens, function(item) {
+      commit('update_thuyen_chuyen', _.remove(thuyenChuyens, function(item) {
         return !(item.id == data.id);
-      })
+      }));
     },
-    update_special_carousel({state}, specialCarousel) {
-      state.info.special_carousels = specialCarousel;
+    [ACTION_SET_LOADING]({
+      commit
+    }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading);
     },
-
-    [ACTION_SHOW_MODAL_EDIT]({
+    [ACTION_INSERT_INFO]({
       dispatch,
-    }, infoId) {
-      dispatch(ACTION_GET_INFO_BY_ID, infoId);
+      commit
+    }, info) {
+      apiInsertInfo(
+        info,
+        (result) => {
+          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          commit(INFOS_MODAL_SET_ERROR, []);
+          dispatch(ACTION_SET_LOADING, false);
+        },
+        (errors) => {
+          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+          commit(INFOS_MODAL_SET_ERROR, errors);
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
     },
-
+    [ACTION_INSERT_INFO_BACK]({
+      dispatch,
+      commit
+    }, info) {
+      apiInsertInfo(
+        info,
+        (result) => {
+          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          dispatch('ACTION_RELOAD_INFO_LIST', 'page', {
+            root: true
+          });
+        },
+        (errors) => {
+          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+          commit(INFOS_MODAL_SET_ERROR, errors);
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
+    [ACTION_SET_IMAGE]({
+      commit
+    }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    },
     [ACTION_GET_INFO_BY_ID]({
       dispatch,
       commit
@@ -269,115 +350,19 @@ export default {
       apiGetInfoById(
         infoId,
         (result) => {
-          commit(INFOS_MODAL_SET_INFO_ID, infoId);
-          commit(INFOS_MODAL_SET_INFO, result.data);
-          commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, result.data.category_display_list);
-
+          commit('LINH_MUCS_SET_INFO', result.data.linhmuc);
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
-          commit(INFOS_MODAL_SET_INFO_ID_FAILED, Object.values(errors))
-
+          commit(INFOS_MODAL_SET_ERROR, Object.values(errors))
           dispatch(ACTION_SET_LOADING, false);
         }
       );
     },
-
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
-    },
-
-    [ACTION_UPDATE_INFO]({
-      dispatch,
-      commit
-    }, info) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
-      apiUpdateInfo(info,
-        (result) => {
-          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-
-          dispatch(ACTION_SET_LOADING, false);
-        },
-        (errors) => {
-          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
-
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      )
-    },
-
     [ACTION_RESET_NOTIFICATION_INFO]({
       commit
     }, values) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
-    },
-
-    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({
-      commit,
-      state
-    }, category) {
-      const categorys = state.info.categorys;
-      const listCateShow = state.listCategorysDisplay;
-
-      if (typeof category === "object" && Object.keys(category).length) {
-        if ((categorys.indexOf(category.category_id) === -1) && (parseInt(category.category_id) > 0)) {
-          categorys.push(category.category_id);
-          listCateShow.push(category);
-        }
-      }
-
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, categorys);
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow);
-    },
-
-    [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({
-      state,
-      commit
-    }, category) {
-      const categorys = state.info.categorys;
-      const listCateShow = state.listCategorysDisplay;
-
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, _.remove(categorys, function(cateId) {
-        return (cateId - category.category_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, _.remove(listCateShow, function(item) {
-        return (item.category_id - category.category_id !== 0);
-      }));
-    },
-
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
-    },
-
-    [ACTION_ADD_INFO_TO_RELATED_LIST]() {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      if (typeof related === "object" && Object.keys(related).length) {
-        if ((relateds.indexOf(related.information_id) === -1) && (parseInt(related.information_id) > 0)) {
-          relateds.push(related.information_id);
-          listRelatedShow.push(related);
-        }
-      }
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, relateds);
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, listRelatedShow);
-    },
-
-    [ACTION_REMOVE_INFO_TO_RELATED_LIST]() {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, _.remove(relateds, function(infoId) {
-        return (infoId - related.information_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, _.remove(listRelatedShow, function(item) {
-        return (item.information_id - related.information_id !== 0);
-      }));
+      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values);
     },
   }
 }

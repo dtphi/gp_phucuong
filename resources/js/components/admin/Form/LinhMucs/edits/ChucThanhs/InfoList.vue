@@ -1,6 +1,6 @@
 <template>
     <div class="table-responsive">
-        <table id="info-bang-cap-list" class="table table-striped table-bordered table-hover">
+        <table id="info-chuc-thanh-list" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <td class="text-left">Chức thánh</td>
@@ -17,20 +17,27 @@
                     <td>
                         <select class="form-control"
                             v-model="item.chuc_thanh_id">
-                            <option value="1" :selected="item.chuc_thanh_id == 1">Phó Tế</option>
-                            <option value="2" :selected="item.chuc_thanh_id == 2">Linh Mục</option>
-                            <option value="3" :selected="item.chuc_thanh_id == 3">Giám Mục</option>
+                            <option 
+                                :selected="item.chuc_thanh_id==idx" 
+                                :value="idx" v-for="(item, idx) in $options.setting.cf.chucThanhs" 
+                                :key="idx">{{item}}</option>
                         </select>
                     </td>
-                    <td>
-                        <cms-date-picker v-model="item.ngay_thang_nam_chuc_thanh" type="datetime"></cms-date-picker>
+                    <td class="text-right">
+                        <p>
+                            <label class="control-label">{{item.label_ngay_thang_nam_chuc_thanh}}</label>
+                        </p>
+                        <cms-date-picker 
+                            v-model="item.ngay_thang_nam_chuc_thanh" type="datetime"></cms-date-picker>
                     </td>
                     <td>
                         <input type="text" class="form-control"
+                            placeholder="Nơi thụ phong"
                             v-model="item.noi_thu_phong"/>
                     </td>
                     <td>
                         <input type="text" class="form-control"
+                            placeholder="Người thụ phong"
                             v-model="item.nguoi_thu_phong"/>
                     </td>
                     <td>
@@ -74,6 +81,9 @@
 
 <script>
     import {
+        config
+    } from '@app/common/config';
+    import {
         mapActions
     } from 'vuex';
     import BtnAdd from './BtnAdd';
@@ -105,6 +115,7 @@
             }
         },
         setting: {
+            cf: config,
             info_title: 'Tiêu đề',
             info_url_title: 'Url tiêu đề',
             info_author_titile: 'Tác giả',

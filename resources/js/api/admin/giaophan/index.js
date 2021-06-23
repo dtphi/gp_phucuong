@@ -57,7 +57,7 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
 }
 
 export const apiGetSlideSpecialInfos = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(API_INFOMATIONS_RESOURCE), {
+  return axios.get(fn_get_base_api_url(API_GIAO_PHANS_RESOURCE), {
       params: params
     })
     .then((response) => {
@@ -183,7 +183,7 @@ export const apiInsertInfo = (info, resolve, errResole) => {
  * @return {[type]}           [description]
  */
 export const apiDeleteInfo = (infoId, resolve, errResole) => {
-  return axios.delete(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, infoId))
+  return axios.delete(fn_get_base_api_detail_url(API_GIAO_PHANS_RESOURCE, infoId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {

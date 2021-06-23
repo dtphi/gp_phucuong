@@ -2,17 +2,17 @@
     <div class="form-group">
         <label 
         	class="col-sm-2 control-label" 
-        	for="input-parent-dong-name">
+        	for="input-parent-co-so-giao-phan-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Dong</span>
+        			data-original-title="(Tự động hoàn toàn)">Cơ sở giáo phận</span>
         	</label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		:value="name" type="text" 
-	    		name="dong-name" 
-	    		placeholder="Chọn dòng" 
-	    		id="input-parent-dong-name" 
+	    		name="category" 
+	    		placeholder="Chọn cơ sở giáo phận" 
+	    		id="input-parent-co-so-giao-phan-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:#ddd">
@@ -36,13 +36,9 @@
     import {
         MODULE_MODULE_LINH_MUC
     } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_DROPDOWN_CATEGORY_LIST,
-    } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
 
     export default {
-        name: 'DongAutocomplete',
+        name: 'GiaoXuAutocomplete',
         props: {
             name: {
                 default: null
@@ -56,22 +52,22 @@
         },
         computed: {
             ...mapState(MODULE_MODULE_LINH_MUC, {
-                dropdowns: state => state.dropdownDongs
+                dropdowns: state => state.dropdownCoSoGiaoPhans
             }),
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
-        		'ACTION_GET_DROPDOWN_DONG_LIST'
+        		'ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.ACTION_GET_DROPDOWN_DONG_LIST(query);
+              	this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.ACTION_GET_DROPDOWN_DONG_LIST('');
+                this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';
@@ -81,7 +77,7 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.$emit('on-select-dong', infoCategory);
+              this.$emit('on-select-co-so-giao-phan', infoCategory);
               this._closeDropdown();
           }
         },

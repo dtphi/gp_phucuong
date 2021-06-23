@@ -32,12 +32,12 @@ export const apiGetDropdownCategories = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiGetInfoById = (infoId, resolve, errResole) => {
-  return axios.get(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, infoId))
+  return axios.get(fn_get_base_api_detail_url(API_LINH_MUCS_RESOURCE, infoId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = response.data.information;
+        json['data'] = response.data;
         json['status'] = 1000;
         resolve(json);
       } else {
@@ -56,7 +56,7 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
 }
 
 export const apiGetSlideSpecialInfos = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(API_INFOMATIONS_RESOURCE), {
+  return axios.get(fn_get_base_api_url(API_LINH_MUCS_RESOURCE), {
       params: params
     })
     .then((response) => {
@@ -130,7 +130,7 @@ export const apiGetLinhMucInfos = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiUpdateInfo = (info, resolve, errResole) => {
-  return axios.put(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, info.information_id), info)
+  return axios.put(fn_get_base_api_detail_url(API_LINH_MUCS_RESOURCE, info.information_id), info)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -182,7 +182,7 @@ export const apiInsertInfo = (info, resolve, errResole) => {
  * @return {[type]}           [description]
  */
 export const apiDeleteInfo = (infoId, resolve, errResole) => {
-  return axios.delete(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, infoId))
+  return axios.delete(fn_get_base_api_detail_url(API_LINH_MUCS_RESOURCE, infoId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {

@@ -20,7 +20,10 @@
         </tr>
         <tr>
             <td class="text-left">Từ ngày</td>
-            <td>
+            <td class="text-right">
+                <div class="col-sm-2">
+                    <label class="control-label">{{item.label_from_date}}</label>
+                </div>
                 <cms-date-picker v-model="item.from_date" type="datetime"></cms-date-picker>
             </td>
         </tr>
@@ -35,7 +38,10 @@
         </tr>
         <tr>
             <td class="text-left">Ngày đến</td>
-            <td>
+            <td class="text-right">
+                <div class="col-sm-2">
+                    <label class="control-label">{{item.label_to_date}}</label>
+                </div>
                 <cms-date-picker v-model="item.to_date" type="datetime"></cms-date-picker>
             </td>
         </tr>
@@ -146,7 +152,7 @@
     import BtnAdd from './BtnAdd';
     import linhMucMix from '@app/mixins/admin/linhmuc';
     import {
-        MODULE_MODULE_LINH_MUC_ADD
+        MODULE_MODULE_LINH_MUC_EDIT
     } from 'store@admin/types/module-types';
     import InfoGiaoXuAutocomplete from '../../Groups/InfoGiaoXuAutocomplete';
     import InfoChucVuAutocomplete from '../../Groups/InfoChucVuAutocomplete';
@@ -173,7 +179,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
+            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
                 'removeThuyenChuyen',
                 'ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU',
                 'ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU',

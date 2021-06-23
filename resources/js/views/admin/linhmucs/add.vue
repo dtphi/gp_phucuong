@@ -42,10 +42,9 @@
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-pencil"></i>{{$options.setting.frm_title}}</h3>
                     </div>
-
                     <div class="panel-body">
                         <info-add-form
-                            ref="formAddLinhMuc"></info-add-form>
+                            ref="formLinhMuc"></info-add-form>
                     </div>
                 </div>
             </div>
@@ -56,93 +55,44 @@
 <script>
     import {
         mapState,
-        mapActions,
-        mapGetters
+        mapActions
     } from 'vuex';
-
     import InfoAddForm from 'com@admin/Form/LinhMucs/AddForm';
-    import Breadcrumb from 'com@admin/Breadcrumb';
-    import TheBtnBackListPage from './components/TheBtnBackListPage';
+    
     import {
         MODULE_MODULE_LINH_MUC_ADD,
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
+    import linhMucMix from '@app/mixins/admin/linhmuc';
 
     export default {
-        name: 'InformationAdd',
+        name: 'LinhMucAdd',
+        mixins:[linhMucMix.form],
         components: {
-            Breadcrumb,
-            InfoAddForm,
-            TheBtnBackListPage
+            InfoAddForm
         },
         data() {
-            return {
-                fullPage: true
-            }
+            return {}
         },
         computed: {
             ...mapState(MODULE_MODULE_LINH_MUC_ADD, {
                 loading: state => state.loading,
                 errors: state => state.errors,
                 insertSuccess: state => state.insertSuccess
-            }),
-            _errors() {
-                return this.errors.length;
-            }
-        },
-        watch: {
-            'insertSuccess'(newValue, oldValue) {
-                if (newValue) {
-                    this._notificationUpdate(newValue);
-                }
-            }
+            })
         },
         methods: {
             ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
                 ACTION_RESET_NOTIFICATION_INFO,
-            ]),
-            _errorToArrs() {
-                let errs = [];
-                if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
-                    errs = Object.values(this.errors[0].messages);
-                }
-
-                if (Object.entries(errs).length === 0 && this.errors.length) {
-                    errs.push(this.$options.setting.error_msg_system);
-                }
-
-                return errs;
-            },
-            _submitInfo() {
-                const _self = this;
-
-                _self.$refs.observerInfo.validate().then((isValid) => {
-                    if (isValid) {
-                        _self.$refs.formAddLinhMuc._submitInfo();
-                    }
-                });
-            },
-            _submitInfoBack() {
-                const _self = this;
-
-                _self.$refs.observerInfo.validate().then((isValid) => {
-                    if (isValid) {
-                        _self.$refs.formAddLinhMuc._submitInfoBack();
-                    }
-                });
-            },
-            _notificationUpdate(notification) {
-                this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
-            }
+            ])
         },
         setting: {
             panel_title: 'Linh Mục',
-            frm_title: 'Thêm Linh Mục',
             btn_save_txt: 'Lưu',
-            btn_save_back_txt: 'Lưu trở về danh sách'
+            btn_save_back_txt: 'Lưu trở về danh sách',
+            frm_title: 'Thêm Linh Mục'
         }
     };
 </script>

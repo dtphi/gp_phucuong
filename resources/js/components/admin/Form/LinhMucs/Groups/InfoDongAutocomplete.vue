@@ -2,17 +2,17 @@
     <div class="form-group">
         <label 
         	class="col-sm-2 control-label" 
-        	for="input-parent-duc-cha-name">
+        	for="input-parent-dong-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Đức cha</span>
+        			data-original-title="(Tự động hoàn toàn)">Dong</span>
         	</label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		:value="name" type="text" 
-	    		name="category" 
-	    		placeholder="Chọn đức cha" 
-	    		id="input-parent-duc-cha-name" 
+	    		name="dong-name" 
+	    		placeholder="Chọn dòng" 
+	    		id="input-parent-dong-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:#ddd">
@@ -36,13 +36,9 @@
     import {
         MODULE_MODULE_LINH_MUC
     } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_DROPDOWN_CATEGORY_LIST,
-    } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
 
     export default {
-        name: 'InfoDucChaAutocomplete',
+        name: 'DongAutocomplete',
         props: {
             name: {
                 default: null
@@ -56,22 +52,22 @@
         },
         computed: {
             ...mapState(MODULE_MODULE_LINH_MUC, {
-                dropdowns: state => state.dropdownDucChas
+                dropdowns: state => state.dropdownDongs
             }),
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
-        		'ACTION_GET_DROPDOWN_DUC_CHA_LIST'
+        		'ACTION_GET_DROPDOWN_DONG_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.ACTION_GET_DROPDOWN_DUC_CHA_LIST(query);
+              	this.ACTION_GET_DROPDOWN_DONG_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.ACTION_GET_DROPDOWN_DUC_CHA_LIST('');
+                this.ACTION_GET_DROPDOWN_DONG_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';
@@ -81,7 +77,7 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.$emit('on-select-chuc-cha', infoCategory);
+              this.$emit('on-select-dong', infoCategory);
               this._closeDropdown();
           }
         },

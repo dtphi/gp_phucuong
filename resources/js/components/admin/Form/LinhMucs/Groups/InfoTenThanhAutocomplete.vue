@@ -2,17 +2,16 @@
     <div class="form-group">
         <label 
         	class="col-sm-2 control-label" 
-        	for="input-parent-giao-xu-name">
+        	for="input-parent-ten-thanh-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Giáo xứ</span>
+        			data-original-title="(Tự động hoàn toàn)">Tên thánh</span>
         	</label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
-	    		:value="name" type="text" 
-	    		name="category" 
-	    		placeholder="Chọn giáo xứ" 
-	    		id="input-parent-giao-xu-name" 
+	    		:value="tenThanh" type="text"
+	    		placeholder="Chọn tên thánh" 
+	    		id="input-parent-ten-thanh-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:#ddd">
@@ -36,42 +35,37 @@
     import {
         MODULE_MODULE_LINH_MUC
     } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_DROPDOWN_CATEGORY_LIST,
-    } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
 
     export default {
-        name: 'GiaoXuAutocomplete',
+        name: 'InfoTenThanhAutocomplete',
         props: {
-            name: {
-                default: null
+            tenThanh: {
+                default: ''
             }
         },
         data() {
             return {
-                dropdownStyle: 'display: none;',
-                query: '',           
+                dropdownStyle: 'display: none;',        
             }
         },
         computed: {
             ...mapState(MODULE_MODULE_LINH_MUC, {
-                dropdowns: state => state.dropdownGiaoXus
-            }),
+                dropdowns: state => state.dropdownThanhs
+            })
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
-        		'ACTION_GET_DROPDOWN_GIAO_XU_LIST'
+        		'ACTION_GET_DROPDOWN_TEN_THANH_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.ACTION_GET_DROPDOWN_GIAO_XU_LIST(query);
+              	this.ACTION_GET_DROPDOWN_TEN_THANH_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.ACTION_GET_DROPDOWN_GIAO_XU_LIST('');
+                this.ACTION_GET_DROPDOWN_TEN_THANH_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';
@@ -81,7 +75,7 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.$emit('on-select-giao-xu', infoCategory);
+              this.$emit('on-select-ten-thanh', infoCategory);
               this._closeDropdown();
           }
         },

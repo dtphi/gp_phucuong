@@ -201,7 +201,7 @@
 <script>
     import { mapActions } from 'vuex';
     import {
-        MODULE_MODULE_LINH_MUC_ADD,
+        MODULE_MODULE_LINH_MUC_EDIT,
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_IMAGE
@@ -216,7 +216,7 @@
             };
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
+            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
                 ACTION_SET_IMAGE
             ])
         }

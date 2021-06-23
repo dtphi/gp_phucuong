@@ -147,28 +147,6 @@
             },
             _submitInfoBack() {
                 this.[ACTION_INSERT_INFO_BACK](this.info);
-            },
-            _selectMainImg(file) {
-                const image = {
-                    basename: "",
-                    dirname: "",
-                    extension: "",
-                    filename: "",
-                    path: "",
-                    size: 0,
-                    thumb: "",
-                    timestamp: '',
-                    type: ""
-                };
-                if (typeof file === "object") {
-                    let selected = image;
-
-                    if (file.hasOwnProperty('selected') && file.selected) {
-                        selected = file.selected;
-                    }
-
-                    this.[ACTION_SET_IMAGE](selected);
-                }
             }
         },
         setting: {

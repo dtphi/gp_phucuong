@@ -95,8 +95,6 @@
                 default: {}
             }
         },
-        computed: {
-        },
         methods: {
             ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
                 'removeBangCap'

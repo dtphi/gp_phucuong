@@ -36,10 +36,6 @@
     import {
         MODULE_MODULE_LINH_MUC
     } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_DROPDOWN_CATEGORY_LIST,
-    } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
 
     export default {
         name: 'InfoBanChuyenTrachAutocomplete',

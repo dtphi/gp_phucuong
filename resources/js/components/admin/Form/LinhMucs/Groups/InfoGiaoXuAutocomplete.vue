@@ -2,17 +2,17 @@
     <div class="form-group">
         <label 
         	class="col-sm-2 control-label" 
-        	for="input-parent-chuc-vu-name">
+        	for="input-parent-giao-xu-name">
         		<span data-toggle="tooltip" 
-        			data-original-title="(Tự động hoàn toàn)">Chức vụ</span>
+        			data-original-title="(Tự động hoàn toàn)">Giáo xứ</span>
         	</label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
     	   <input autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		:value="name" type="text" 
-	    		name="category" 
-	    		placeholder="Chọn chức vụ" 
-	    		id="input-parent-chuc-vu-name" 
+	    		name="giao_xu_name" 
+	    		placeholder="Chọn giáo xứ" 
+	    		id="input-parent-giao-xu-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:#ddd">
@@ -36,13 +36,9 @@
     import {
         MODULE_MODULE_LINH_MUC
     } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_DROPDOWN_CATEGORY_LIST,
-    } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
 
     export default {
-        name: 'InfoChucVuAutocomplete',
+        name: 'GiaoXuAutocomplete',
         props: {
             name: {
                 default: null
@@ -50,28 +46,27 @@
         },
         data() {
             return {
-                dropdownStyle: 'display: none;',
-                query: '',           
+                dropdownStyle: 'display: none;',        
             }
         },
         computed: {
             ...mapState(MODULE_MODULE_LINH_MUC, {
-                dropdowns: state => state.dropdownChucVus
+                dropdowns: state => state.dropdownGiaoXus
             }),
         },
         methods: {
         	...mapActions(MODULE_MODULE_LINH_MUC, [
-        		'ACTION_GET_DROPDOWN_CHUC_VU_LIST'
+        		'ACTION_GET_DROPDOWN_GIAO_XU_LIST'
         	]),
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.ACTION_GET_DROPDOWN_CHUC_VU_LIST(query);
+              	this.ACTION_GET_DROPDOWN_GIAO_XU_LIST(query);
               }
           },
           _focusParentCategory() {
             if (this.dropdowns.length == 0) {
-                this.ACTION_GET_DROPDOWN_CHUC_VU_LIST('');
+                this.ACTION_GET_DROPDOWN_GIAO_XU_LIST('');
                 this.$data.dropdownStyle = 'display:block';
             } else {
                 this.$data.dropdownStyle = 'display:block';
@@ -81,7 +76,7 @@
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-              this.$emit('on-select-chuc-vu', infoCategory);
+              this.$emit('on-select-giao-xu', infoCategory);
               this._closeDropdown();
           }
         },
