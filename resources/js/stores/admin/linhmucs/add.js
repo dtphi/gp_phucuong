@@ -305,6 +305,7 @@ export default {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
           commit(INFOS_MODAL_SET_ERROR, []);
           dispatch(ACTION_SET_LOADING, false);
+          window.location.reload();
         },
         (errors) => {
           commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);

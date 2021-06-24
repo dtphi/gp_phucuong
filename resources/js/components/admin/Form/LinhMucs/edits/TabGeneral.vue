@@ -167,20 +167,13 @@
                 </validation-provider>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ngay-them-suc"
                 class="col-sm-2 control-label">Ngày thêm sức:</label>
             <div class="col-sm-3">
-                <validation-provider
-                    name="info_ngay_them_suc"
-                    rules="required|max:500"
-                    v-slot="{ errors }">
                     <cms-date-picker 
                         v-model="generalData.ngay_them_suc" type="datetime"></cms-date-picker>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_them_suc}}</label>
@@ -206,20 +199,13 @@
                 </validation-provider>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ngay-tieu-chung-vien"
                 class="col-sm-2 control-label">Ngày tiểu chủng viện:</label>
             <div class="col-sm-3">
-                <validation-provider
-                    name="info_ngay_tieu_chung_vien"
-                    rules="required|max:500"
-                    v-slot="{ errors }">
                     <cms-date-picker 
                         v-model="generalData.ngay_tieu_chung_vien" type="datetime"></cms-date-picker>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_tieu_chung_vien}}</label>
@@ -245,20 +231,13 @@
                 </validation-provider>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ngay-dai-chung-vien"
                 class="col-sm-2 control-label">Ngày đại chủng viện:</label>
             <div class="col-sm-3">
-                <validation-provider
-                    name="info_ngay_dai_chung_vien"
-                    rules="required|max:500"
-                    v-slot="{ errors }">
                     <cms-date-picker 
                         v-model="generalData.ngay_dai_chung_vien" type="datetime"></cms-date-picker>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_dai_chung_vien}}</label>
@@ -286,64 +265,43 @@
                 </validation-provider>
             </div>
         </div>
-         <div class="form-group required">
+         <div class="form-group">
             <info-dong-autocomplete 
                 @on-select-dong="_selectDong" 
                 :name="generalData.ten_dong_name" 
                 :key="ten_dong_linh_muc"></info-dong-autocomplete>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ngay-trieu-dong"
                 class="col-sm-2 control-label">Ngày triệu dòng:</label>
             <div class="col-sm-3">
-                <validation-provider
-                    name="info_ngay_trieu_dong"
-                    rules="required"
-                    v-slot="{ errors }">
                     <cms-date-picker 
                         v-model="generalData.ngay_trieu_dong" type="datetime"></cms-date-picker>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_trieu_dong}}</label>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ngay-khan"
                 class="col-sm-2 control-label">Ngày khấn:</label>
             <div class="col-sm-3">
-                <validation-provider
-                    name="info_ngay_khan"
-                    rules="required"
-                    v-slot="{ errors }">
                     <cms-date-picker 
                         v-model="generalData.ngay_khan" type="datetime"></cms-date-picker>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_khan}}</label>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ngay-rip"
                 class="col-sm-2 control-label">Ngày Rip:</label>
             <div class="col-sm-3">
-                <validation-provider
-                    name="info_ngay_rip"
-                    rules="required"
-                    v-slot="{ errors }">
                     <cms-date-picker 
                         v-model="generalData.ngay_rip" type="datetime"></cms-date-picker>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_rip}}</label>

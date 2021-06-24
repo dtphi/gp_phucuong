@@ -1,6 +1,6 @@
 <template>
     <div class="tab-content">
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-duc-cha"
                 class="col-sm-2 control-label">Chức Vụ</label>
@@ -13,7 +13,7 @@
                     class="form-control">
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-duc-cha"
                 class="col-sm-2 control-label">Hình ảnh</label>
@@ -39,7 +39,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_so_dien_thoai"
-                    rules="max:200"
+                    rules="max:20"
                     v-slot="{ errors }">
                     <input
                         v-model="generalData.phone"
@@ -79,7 +79,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_pass"
-                    rules="max:200"
+                    rules="max:20"
                     v-slot="{ errors }">
                     <input autocomplete="off"
                         v-model="generalData.password"
@@ -92,14 +92,14 @@
                 </validation-provider>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-so-cmnd"
                 class="col-sm-2 control-label">Số CMND</label>
             <div class="col-sm-10">
                 <validation-provider
                     name="info_so_cmnd"
-                    rules="required|max:200"
+                    rules="max:200"
                     v-slot="{ errors }">
                     <input
                         v-model="generalData.so_cmnd"
@@ -112,14 +112,14 @@
                 </validation-provider>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-noicap-cmnd"
                 class="col-sm-2 control-label">Nơi cấp CMND:</label>
             <div class="col-sm-10">
                 <validation-provider
                     name="info_noicap_cmnd"
-                    rules="required|max:500"
+                    rules="max:500"
                     v-slot="{ errors }">
                     <input
                         v-model="generalData.noi_cap_cmnd"
@@ -132,20 +132,13 @@
                 </validation-provider>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ngay-cap-cmnd"
                 class="col-sm-2 control-label">Ngày cấp CMND:</label>
             <div class="col-sm-10">
-                <validation-provider
-                    name="info_ngay_cap_cmnd"
-                    rules="required"
-                    v-slot="{ errors }">
                     <cms-date-picker 
                         v-model="generalData.ngay_cap_cmnd" type="datetime"></cms-date-picker>
-
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
             </div>
         </div>
         <div class="form-group">

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Admin\Services;
 
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
-use App\Http\Resources\Linhmucs\LinhmucCollection;
-use App\Http\Resources\Linhmucs\LinhmucResource;
+use App\Http\Resources\LinhMucs\LinhmucCollection;
+use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Models\Linhmuc;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucChucthanh;
