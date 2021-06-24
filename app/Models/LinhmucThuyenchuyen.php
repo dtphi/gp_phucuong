@@ -45,6 +45,30 @@ class LinhmucThuyenchuyen extends BaseModel
         return $this->hasOne(CoSoGiaoPhan::class,  $this->primaryKey, 'co_so_gp_id');
     }
 
+    public function dong()
+    {
+        return $this->hasOne(Dong::class, $this->primaryKey, 'dong_id');
+    }
+
+    public function banChuyenTrach()
+    {
+        return $this->hasOne(BanChuyenTrach::class, $this->primaryKey, 'ban_chuyen_trach_id');
+    }
+
+    public function getTenBanChuyenTrachAttribute($value)
+    {
+        $value = ($this->banChuyenTrach) ? $this->banChuyenTrach->name : '';
+
+        return $value;
+    }
+
+    public function getTenDongAttribute($value)
+    {
+        $value = ($this->dong) ? $this->dong->name : '';
+
+        return $value;
+    }
+
     public function getTenCoSoAttribute($value)
     {
         $value = ($this->coSo) ? $this->coSo->name : '';
@@ -125,6 +149,15 @@ class LinhmucThuyenchuyen extends BaseModel
         if ($linhmucId) {
             DB::insert('insert into ' . Tables::$linhmuc_thuyenchuyens . ' (linh_muc_id, from_giao_xu_id, from_chuc_vu_id, from_date, duc_cha_id, to_date, chuc_vu_id, giao_xu_id, co_so_gp_id, dong_id, ban_chuyen_trach_id, du_hoc, quoc_gia, active, ghi_chu) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [$linhmucId, $fromGiaoXuId, $fromChucVuId, $fromDate, $ducChaId, $toDate, $toChucVuId, $toGiaoXuId, $cosogpId, $dongId, $banChuyenTrachId, $duhoc, $quocGia, $active, $ghichu]);
+        }
+    }
+
+    public static function fcDeleteByLinhmucId($linhmucId = null)
+    {
+        $linhmucId = (int)$linhmucId;
+
+        if ($linhmucId) {
+            return DB::delete("delete from " . Tables::$linhmuc_thuyenchuyens . " where linh_muc_id = '" . $linhmucId . "'");
         }
     }
 }

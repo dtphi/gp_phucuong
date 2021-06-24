@@ -63,8 +63,8 @@
         MODULE_MODULE_LINH_MUC_EDIT,
     } from 'store@admin/types/module-types';
     import {
-        ACTION_RESET_NOTIFICATION_INFO,
-        ACTION_GET_INFO_BY_ID
+        ACTION_GET_INFO_BY_ID,
+        ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
     import linhMucMix from '@app/mixins/admin/linhmuc';
 
@@ -92,8 +92,8 @@
         },
         methods: {
             ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-                ACTION_RESET_NOTIFICATION_INFO,
-                ACTION_GET_INFO_BY_ID
+                ACTION_GET_INFO_BY_ID,
+                ACTION_RESET_NOTIFICATION_INFO
             ])
         },
         mounted() {

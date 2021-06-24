@@ -118,7 +118,7 @@ final class LinhmucService implements BaseModel, LinhMucModel
 
             if (isset($data['bang_caps']) && !empty($data['bang_caps'])) {
                 foreach ($data['bang_caps'] as $bangcap) {
-                    LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'], $bangcap['type'], $data['ghi_chu'], $bangcap['active']);
+                    LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'], $bangcap['type'], $bangcap['ghi_chu'], $bangcap['active']);
                 }
             }
 
@@ -152,6 +152,60 @@ final class LinhmucService implements BaseModel, LinhMucModel
         DB::commit();
 
         return $this->model;
+    }
+
+    public function apiUpdate($model, $data = [])
+    {
+        /**
+         * Save user with transaction to make sure all data stored correctly
+         */
+        DB::beginTransaction();
+
+        $model->fill($data);
+
+        if ($model->save()) {
+            $linhmucId = $model->id;
+
+            LinhmucBangcap::fcDeleteByLinhmucId($linhmucId);
+            if (isset($data['bang_caps']) && !empty($data['bang_caps'])) {
+                foreach ($data['bang_caps'] as $bangcap) {
+                    LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'], $bangcap['type'], $bangcap['ghi_chu'], $bangcap['active']);
+                }
+            }
+
+            LinhmucChucthanh::fcDeleteByLinhmucId($linhmucId);
+            if (isset($data['chuc_thanhs']) && !empty($data['chuc_thanhs'])) {
+                foreach ($data['chuc_thanhs'] as $chucThanh) {
+                    LinhmucChucthanh::insertByLinhmucId($linhmucId, $chucThanh['chuc_thanh_id'], 
+                    $chucThanh['ngay_thang_nam_chuc_thanh'], $chucThanh['noi_thu_phong'], $chucThanh['nguoi_thu_phong'],
+                $chucThanh['active'], $chucThanh['ghi_chu']);
+                }
+            }
+
+            LinhmucThuyenchuyen::fcDeleteByLinhmucId($linhmucId);
+            if (isset($data['thuyen_chuyens']) && !empty($data['thuyen_chuyens'])) {
+                foreach ($data['thuyen_chuyens'] as $thCh) {
+                    LinhmucThuyenchuyen::insertByLinhmucId($linhmucId, $thCh['from_giao_xu_id'], 
+                    $thCh['from_chuc_vu_id'], $thCh['from_date'], $thCh['duc_cha_id'], $thCh['to_date'], 
+                    $thCh['chuc_vu_id'], $thCh['giao_xu_id'], $thCh['co_so_gp_id'], $thCh['dong_id'], $thCh['ban_chuyen_trach_id'], $thCh['du_hoc'], $thCh['quoc_gia'], $thCh['active'], $thCh['ghi_chu']);
+                }
+            }
+
+            LinhmucVanthu::fcDeleteByLinhmucId($linhmucId);
+            if (isset($data['van_thus']) && !empty($data['van_thus'])) {
+                foreach ($data['van_thus'] as $vanThu) {
+                    LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'], $vanThu['ghi_chu']);
+                }
+            }
+        } else {
+            DB::rollBack();
+
+            return false;
+        }
+
+        DB::commit();
+
+        return $model;
     }
 
     public function apiGetGiaoXuList($data = []) {

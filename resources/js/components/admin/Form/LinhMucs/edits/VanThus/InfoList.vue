@@ -1,66 +1,28 @@
 <template>
     <div class="table-responsive">
-        <table id="info-bang-cap-list" class="table table-striped table-bordered table-hover">
+        <table id="info-van-thu-list" class="table table-striped table-bordered table-hover">
             <thead>
+                 <tr>
+                    <td colspan="5" class="text-right">
+                        <btn-add></btn-add>
+                    </td>
+                </tr>
                 <tr>
                     <td class="text-left">Tiêu đề</td>
                     <td class="text-left">Loại</td>
                     <td class="text-left">Ghi chú</td>
                     <td class="text-left">Trạng thái</td>
-                    <td calss="text-right">{{$options.setting.info_action_title}}</td>
+                    <td class="text-right">{{$options.setting.info_action_title}}</td>
                 </tr>
             </thead>
-            <tbody>
-                <tr v-for="(item, idx) in lists" :key="idx">
-                    <td>
-                        <validation-provider
-                            :name="`item_name${item.id}`"
-                            rules="required|max:255"
-                            v-slot="{ errors }">
-                            <input 
-                                placeholder="Tiêu đề"
-                                v-model="item.title" class="form-control" type="text"/>
-
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                        </validation-provider>
-                    </td>
-                    <td>
-                        <select class="form-control"
-                            v-model="item.type">
-                            <option value="0" :selected="item.type == 0">Dir</option>
-                            <option value="1" :selected="item.type == 1">File</option>
-                        </select>
-                    </td>
-                    <td>
-                        <textarea class="form-control"
-                            v-model="item.ghi_chu"></textarea>
-                    </td>
-                    <td>
-                        <select class="form-control"
-                            v-model="item.active">
-                            <option value="1" :selected="item.active == 1">Xảy ra</option>
-                            <option value="0" :selected="item.active == 0">Ẩn</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button 
-                            type="button" 
-                            @click="_removeItem(item)"
-                            data-toggle="tooltip"
-                            class="btn btn-default cms-btn">
-                                <font-awesome-layers size="1x" style="background:MistyRose">
-                                    <font-awesome-icon icon="circle" style="color:Tomato"/>
-                                    <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
-                                </font-awesome-layers>
-                        </button>
-                    </td>
-                </tr>
+            <tbody v-for="(item, idx) in lists" :key="idx">
+                <info-item v-if="item.isEdit" :item="item"></info-item>
+                <info-new-item v-else :item="item"></info-new-item>
             </tbody>
 
             <tfoot>
                 <tr>
-                    <td colspan="4"></td>
-                    <td class="text-right">
+                    <td colspan="5" class="text-right">
                         <btn-add></btn-add>
                     </td>
                 </tr>
@@ -70,35 +32,20 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
     import BtnAdd from './BtnAdd';
-    import {
-        MODULE_MODULE_LINH_MUC_EDIT
-    } from 'store@admin/types/module-types';
+    import InfoItem from './InfoItem';
+    import InfoNewItem from './InfoNewItem';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAdd,
+            InfoItem,
+            InfoNewItem
         },
         props: {
             lists: {
                 default: {}
-            }
-        },
-        computed: {
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-                'removeVanThu'
-            ]),
-            _removeItem(item) {
-                this.removeVanThu({
-                    action: 'removeVanThu',
-                    item: item
-                });
             }
         },
         setting: {

@@ -85,7 +85,7 @@
         },
         methods: {
             ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
-                ACTION_RESET_NOTIFICATION_INFO,
+                ACTION_RESET_NOTIFICATION_INFO
             ])
         },
         setting: {

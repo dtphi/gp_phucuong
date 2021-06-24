@@ -29,4 +29,13 @@ class LinhmucBangcap extends BaseModel
                 [$linhmucId, $name, $type, $ghichu, $active]);
         }
     }
+
+    public static function fcDeleteByLinhmucId($linhmucId = null)
+    {
+        $linhmucId = (int)$linhmucId;
+
+        if ($linhmucId) {
+            return DB::delete("delete from " . Tables::$linhmuc_bangcaps . " where linh_muc_id = '" . $linhmucId . "'");
+        }
+    }
 }

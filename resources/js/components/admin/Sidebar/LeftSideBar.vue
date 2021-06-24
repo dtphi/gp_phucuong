@@ -25,43 +25,36 @@
                     <li>
                         <a
                             :href="_getHref('giao-phans')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.giaophans_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('giao-hats')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.giaohats_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('giao-xus')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.giaoxus_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('giao-diems')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.giaodiems_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('co-so-giao-phans')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.co_so_giao_phans_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('cong-doan-tu-sis')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.cong_doan_tu_sis_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('dongs')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.dongs_title}}</span></a>
                     </li>
                 </ul>
@@ -75,37 +68,31 @@
                     <li>
                         <a
                             :href="_getHref('linh-mucs')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.linhmucs_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('bang-caps')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.linhmuc_bangcaps_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('chuc-thanhs')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.linhmuc_chucthanhs_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('van-thus')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.linhmuc_vanthus_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('thuyen-chuyens')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.linhmuc_thuyenchuyens_title}}</span></a>
                     </li>
                     <li>
                         <a
                             :href="_getHref('thanhs')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.thanhs_title}}</span></a>
                     </li>
                 </ul>
@@ -119,12 +106,11 @@
                     <li>
                         <a
                             :href="_getHref('users')">
-                            <i class="fa fa-user fa-fw"></i>
                             <span>{{$options.setting.users_title}}</span></a>
                     </li>
                 </ul>
             </li>
-            <li id="catalog" class="">
+            <li id="catalog">
                 <a class="parent">
                     <i class="fa fa-tags fa-fw"></i>
                     <span>{{$options.setting.category_root_title}}</span></a>
@@ -193,8 +179,7 @@
                     </li>
                 </ul>
             </li>
-
-            <li id="system" class="">
+            <li id="system">
                 <a class="parent">
                     <i class="fa fa-cog fw"></i>
                     <span>{{$options.setting.system_root_title}}</span></a>

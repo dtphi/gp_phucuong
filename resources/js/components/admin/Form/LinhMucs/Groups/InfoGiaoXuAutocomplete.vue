@@ -1,8 +1,7 @@
 <template>
     <div class="form-group">
         <label 
-        	class="col-sm-2 control-label" 
-        	for="input-parent-giao-xu-name">
+        	class="col-sm-2 control-label">
         		<span data-toggle="tooltip" 
         			data-original-title="(Tự động hoàn toàn)">Giáo xứ</span>
         	</label>
@@ -11,8 +10,7 @@
                 v-on:focus="_focusParentCategory"
 	    		:value="name" type="text" 
 	    		name="giao_xu_name" 
-	    		placeholder="Chọn giáo xứ" 
-	    		id="input-parent-giao-xu-name" 
+	    		placeholder="Chọn giáo xứ"
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:#ddd">

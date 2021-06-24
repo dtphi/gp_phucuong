@@ -1,10 +1,16 @@
 <template>
     <div class="tab-content">
-         <div>
+         <div class="required">
             <info-ten-thanh-autocomplete 
                 @on-select-ten-thanh="_selectGeneralTenThanh" 
                 :ten-thanh="generalData.ten_thanh_name" 
                 :key="ten_thanh_linh_muc"></info-ten-thanh-autocomplete>
+        </div>
+        <div class="required">
+            <info-giao-xu-autocomplete 
+                @on-select-giao-xu="_selectGiaoXu" 
+                :name="generalData.giao_xu_name" 
+                :key="giao_xu_linh_muc"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -61,12 +67,6 @@
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
-        </div>
-        <div>
-            <info-giao-xu-autocomplete 
-                @on-select-giao-xu="_selectGiaoXu" 
-                :name="generalData.giao_xu_name" 
-                :key="giao_xu_linh_muc"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -355,7 +355,7 @@
                 :name="generalData.rip_giaoxu_name" 
                 :key="giao_xu_rip"></info-giao-xu-autocomplete>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-rip-ghi-chu"
                 class="col-sm-2 control-label">Rip ghi chú</label>

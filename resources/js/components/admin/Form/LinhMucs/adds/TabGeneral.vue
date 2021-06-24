@@ -1,10 +1,16 @@
 <template>
     <div class="tab-content">
-        <div>
+        <div class="required">
             <info-ten-thanh-autocomplete 
                 @on-select-ten-thanh="_selectGeneralTenThanh" 
                 :ten-thanh="generalData.ten_thanh_name" 
                 :key="ten_thanh_linh_muc"></info-ten-thanh-autocomplete>
+        </div>
+        <div class="required">
+            <info-giao-xu-autocomplete 
+                @on-select-giao-xu="_selectGiaoXu" 
+                :name="generalData.giao_xu_name" 
+                :key="giao_xu_linh_muc"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -30,7 +36,7 @@
             <label
                 for="input-info-ngay-thang-nam-sinh"
                 class="col-sm-2 control-label">Ngày sinh:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_thang_nam_sinh"
                     rules="required"
@@ -38,9 +44,6 @@
                     <cms-date-picker v-model="generalData.ngay_thang_nam_sinh" type="datetime"></cms-date-picker>
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
-            </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_thang_nam_sinh}}</label>
             </div>
         </div>
         <div class="form-group required">
@@ -61,12 +64,6 @@
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
-        </div>
-        <div>
-            <info-giao-xu-autocomplete 
-                @on-select-giao-xu="_selectGiaoXu" 
-                :name="generalData.giao_xu_name" 
-                :key="giao_xu_linh_muc"></info-giao-xu-autocomplete>
         </div>
         <div class="form-group required">
             <label
@@ -132,7 +129,7 @@
             <label
                 for="input-info-ngay-rua-toi"
                 class="col-sm-2 control-label">Ngày rửa tội:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_rua_toi"
                     rules="required"
@@ -142,9 +139,6 @@
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
-            </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_rua_toi}}</label>
             </div>
         </div>
         <div class="form-group required">
@@ -171,7 +165,7 @@
             <label
                 for="input-info-ngay-them-suc"
                 class="col-sm-2 control-label">Ngày thêm sức:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_them_suc"
                     rules="required|max:500"
@@ -181,9 +175,6 @@
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
-            </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_them_suc}}</label>
             </div>
         </div>
         <div class="form-group required">
@@ -210,7 +201,7 @@
             <label
                 for="input-info-ngay-tieu-chung-vien"
                 class="col-sm-2 control-label">Ngày tiểu chủng viện:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_tieu_chung_vien"
                     rules="required|max:500"
@@ -220,9 +211,6 @@
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
-            </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_tieu_chung_vien}}</label>
             </div>
         </div>
         <div class="form-group required">
@@ -249,7 +237,7 @@
             <label
                 for="input-info-ngay-dai-chung-vien"
                 class="col-sm-2 control-label">Ngày đại chủng viện:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_dai_chung_vien"
                     rules="required|max:500"
@@ -259,9 +247,6 @@
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
-            </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_dai_chung_vien}}</label>
             </div>
         </div>
         <div class="form-group required">
@@ -296,7 +281,7 @@
             <label
                 for="input-info-ngay-trieu-dong"
                 class="col-sm-2 control-label">Ngày triệu dòng:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_trieu_dong"
                     rules="required"
@@ -307,15 +292,12 @@
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_trieu_dong}}</label>
-            </div>
         </div>
         <div class="form-group required">
             <label
                 for="input-info-ngay-khan"
                 class="col-sm-2 control-label">Ngày khấn:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_khan"
                     rules="required"
@@ -326,15 +308,12 @@
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_khan}}</label>
-            </div>
         </div>
         <div class="form-group required">
             <label
                 for="input-info-ngay-rip"
                 class="col-sm-2 control-label">Ngày Rip:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_rip"
                     rules="required"
@@ -345,9 +324,6 @@
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_rip}}</label>
-            </div>
         </div>
         <div>
             <info-giao-xu-autocomplete 
@@ -355,7 +331,7 @@
                 :name="generalData.rip_giaoxu_name" 
                 :key="giao_xu_rip"></info-giao-xu-autocomplete>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-rip-ghi-chu"
                 class="col-sm-2 control-label">Rip ghi chú</label>

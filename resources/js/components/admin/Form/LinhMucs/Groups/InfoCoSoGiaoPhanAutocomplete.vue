@@ -1,8 +1,7 @@
 <template>
     <div class="form-group">
         <label 
-        	class="col-sm-2 control-label" 
-        	for="input-parent-co-so-giao-phan-name">
+        	class="col-sm-2 control-label">
         		<span data-toggle="tooltip" 
         			data-original-title="(Tự động hoàn toàn)">Cơ sở giáo phận</span>
         	</label>

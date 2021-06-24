@@ -37,4 +37,13 @@ class LinhmucChucthanh extends BaseModel
                 [$linhmucId, $chucThanhId, $ngayChucThanh, $noiThuPhong, $nguoiThuPhong, $active, $ghichu]);
         }
     }
+
+    public static function fcDeleteByLinhmucId($linhmucId = null)
+    {
+        $linhmucId = (int)$linhmucId;
+
+        if ($linhmucId) {
+            return DB::delete("delete from " . Tables::$linhmuc_chucthanhs . " where linh_muc_id = '" . $linhmucId . "'");
+        }
+    }
 }

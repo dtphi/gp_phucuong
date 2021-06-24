@@ -59,9 +59,9 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_email"
-                    rules="max:200"
+                    rules="email|max:200"
                     v-slot="{ errors }">
-                    <input
+                    <input autocomplete="off"
                         v-model="generalData.email"
                         type="text"
                         id="input-info-email"
@@ -81,7 +81,7 @@
                     name="info_pass"
                     rules="max:200"
                     v-slot="{ errors }">
-                    <input
+                    <input autocomplete="off"
                         v-model="generalData.password"
                         type="password"
                         id="input-info-pass"
@@ -136,7 +136,7 @@
             <label
                 for="input-info-ngay-cap-cmnd"
                 class="col-sm-2 control-label">Ngày cấp CMND:</label>
-            <div class="col-sm-3">
+            <div class="col-sm-10">
                 <validation-provider
                     name="info_ngay_cap_cmnd"
                     rules="required"
@@ -147,11 +147,8 @@
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
-            <div class="col-sm-5">
-                <label class="control-label">{{generalData.lable_ngay_cap_cmnd}}</label>
-            </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ghi-chu"
                 class="col-sm-2 control-label">Ghi chú</label>

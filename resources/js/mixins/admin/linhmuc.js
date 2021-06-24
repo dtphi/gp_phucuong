@@ -9,7 +9,8 @@ import {
     fn_get_tinymce_langs_url
 } from '@app/api/utils/fn-helper';
 import {
-    ACTION_SET_IMAGE
+    ACTION_SET_IMAGE,
+    ACTION_RESET_NOTIFICATION_INFO
 } from 'store@admin/types/action-types';
 
 export default {

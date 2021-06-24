@@ -4,15 +4,21 @@
             class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <td class="text-left">Key</td>
-                    <td>Value</td>
+                    <td colspan="5" class="text-right">
+                        <btn-add></btn-add>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Giáo xứ đến</td>
+                    <td>Ban chuyên trách</td>
+                    <td>Ngày đến</td>
+                    <td>Chức vụ đến</td><td></td>
                 </tr>
             </thead>
             <info-item v-for="(item, idx) in lists" :item="item" :key="idx"></info-item>
             <tfoot>
                 <tr>
-                    <td></td>
-                    <td class="text-right">
+                    <td colspan="5" class="text-right">
                         <btn-add></btn-add>
                     </td>
                 </tr>

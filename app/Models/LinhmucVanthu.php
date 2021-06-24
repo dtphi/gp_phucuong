@@ -28,4 +28,13 @@ class LinhmucVanthu extends BaseModel
                 [$linhmucId, $title, $type, $active, $ghichu]);
         }
     }
+
+    public static function fcDeleteByLinhmucId($linhmucId = null)
+    {
+        $linhmucId = (int)$linhmucId;
+
+        if ($linhmucId) {
+            return DB::delete("delete from " . Tables::$linhmuc_vanthus . " where linh_muc_id = '" . $linhmucId . "'");
+        }
+    }
 }

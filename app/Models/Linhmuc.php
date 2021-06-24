@@ -136,6 +136,8 @@ class Linhmuc extends BaseModel
         if ($this->bangCaps) {
             foreach ($this->bangCaps as $bangCap) {
                 $value[] = [
+                    'id' => (int)$bangCap->id,
+                    'isEdit' => 1,
                     'name' => $bangCap->name,
                     'type' => $bangCap->type,
                     'ghi_chu' =>  $bangCap->ghi_chu,
@@ -153,6 +155,8 @@ class Linhmuc extends BaseModel
         if ($this->chucThanhs) {
             foreach ($this->chucThanhs as $chucThanh) {
                 $value[] = [
+                    'id' => (int)$chucThanh->id,
+                    'isEdit' => 1,
                     'chuc_thanh_id'      => $chucThanh->chuc_thanh_id,
                     'ngay_thang_nam_chuc_thanh' => $chucThanh->ngay_thang_nam_chuc_thanh,
                     'label_ngay_thang_nam_chuc_thanh' => date_format(date_create($chucThanh->ngay_thang_nam_chuc_thanh),"d-m-Y"),
@@ -173,6 +177,8 @@ class Linhmuc extends BaseModel
         if ($this->vanThus) {
             foreach ($this->vanThus as $vanThu) {
                 $value[] = [
+                    'id' => (int)$vanThu->id,
+                    'isEdit' => 1,
                     'title'      => $vanThu->title,
                     'ghi_chu' => $vanThu->ghi_chu,
                     'type' => $vanThu->type,
@@ -190,6 +196,8 @@ class Linhmuc extends BaseModel
         if ($this->thuyenChuyens) {
             foreach ($this->thuyenChuyens as $thuyenChuyen) {
                 $value[] = [
+                    'id' => (int)$thuyenChuyen->id,
+                    'isEdit' => 1,
                     'from_giao_xu_id'      => (int)$thuyenChuyen->from_giao_xu_id,
                     'fromgiaoxuName'      => $thuyenChuyen->ten_from_giao_xu,
                     'from_chuc_vu_id' => (int)$thuyenChuyen->from_chuc_vu_id,
@@ -207,9 +215,9 @@ class Linhmuc extends BaseModel
                     'co_so_gp_id' => $thuyenChuyen->co_so_gp_id,
                     'cosogpName' => $thuyenChuyen->ten_co_so,
                     'dong_id' => $thuyenChuyen->dong_id,
-                    'dongName' => $thuyenChuyen->dong_id,
+                    'dongName' => $thuyenChuyen->ten_dong,
                     'ban_chuyen_trach_id' => $thuyenChuyen->ban_chuyen_trach_id,
-                    'banchuyentrachName' => $thuyenChuyen->ban_chuyen_trach_id,
+                    'banchuyentrachName' => $thuyenChuyen->ten_ban_chuyen_trach,
                     'du_hoc' => $thuyenChuyen->du_hoc,
                     'quoc_gia' => $thuyenChuyen->quoc_gia,
                     'ghi_chu' => $thuyenChuyen->ghi_chu,

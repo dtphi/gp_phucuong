@@ -81,7 +81,7 @@
                     name="info_pass"
                     rules="max:200"
                     v-slot="{ errors }">
-                    <input
+                    <input autocomplete="off"
                         v-model="generalData.password"
                         type="password"
                         id="input-info-pass"
@@ -151,7 +151,7 @@
                 <label class="control-label">{{generalData.lable_ngay_cap_cmnd}}</label>
             </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
             <label
                 for="input-info-ghi-chu"
                 class="col-sm-2 control-label">Ghi chú</label>

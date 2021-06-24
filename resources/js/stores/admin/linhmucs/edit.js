@@ -1,7 +1,7 @@
 import AppConfig from 'api@admin/constants/app-config';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  apiInsertInfo,
+  apiUpdateInfo,
   apiGetInfoById
 } from 'api@admin/linhmuc';
 import {
@@ -157,6 +157,7 @@ export default {
       let bangCaps = state.info.bang_caps;
       bangCaps.push({
         id: uuidv4(),
+        isEdit: 0,
         name: '',
         type: 0,
         ghi_chu: '',
@@ -175,6 +176,7 @@ export default {
       let chucThanhs = state.info.chuc_thanhs;
       chucThanhs.push({
         id: uuidv4(),
+        isEdit: 0,
         chuc_thanh_id: 1,
         ngay_thang_nam_chuc_thanh: null,
         noi_thu_phong:'',
@@ -195,6 +197,7 @@ export default {
       let vanThus = state.info.van_thus;
       vanThus.push({
         id: uuidv4(),
+        isEdit: 0,
         parent_id: 0,
         title: null,
         type:'',
@@ -263,6 +266,7 @@ export default {
       let thuyenChuyens = state.info.thuyen_chuyens;
       thuyenChuyens.push({
         id: uuidv4(),
+        isEdit: 0,
         from_giao_xu_id: null,
         fromgiaoxuName: '',
         from_chuc_vu_id: null,
@@ -304,12 +308,13 @@ export default {
       dispatch,
       commit
     }, info) {
-      apiInsertInfo(
+      dispatch(ACTION_SET_LOADING, true);
+      apiUpdateInfo(
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
           commit(INFOS_MODAL_SET_ERROR, []);
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_GET_INFO_BY_ID, info.id);
         },
         (errors) => {
           commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
@@ -322,7 +327,7 @@ export default {
       dispatch,
       commit
     }, info) {
-      apiInsertInfo(
+      apiUpdateInfo(
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);

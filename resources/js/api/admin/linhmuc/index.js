@@ -130,7 +130,7 @@ export const apiGetLinhMucInfos = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiUpdateInfo = (info, resolve, errResole) => {
-  return axios.put(fn_get_base_api_detail_url(API_LINH_MUCS_RESOURCE, info.information_id), info)
+  return axios.put(fn_get_base_api_detail_url(API_LINH_MUCS_RESOURCE, info.id), info)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
