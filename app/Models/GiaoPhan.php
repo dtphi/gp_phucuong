@@ -69,6 +69,8 @@ class GiaoPhan extends BaseModel
         if ($this->hats) {
             foreach ($this->hats as $hat) {
                 $value[] = [
+                    'id' => $hat->id,
+                    'isEdit' => 1,
                     'active'=> $hat->active,
                     'cong_doan_tu_sis'=> $hat->arr_cong_doan_tu_si_list,
                     'giao_hat_id'=> $hat->giao_hat_id,
@@ -88,6 +90,8 @@ class GiaoPhan extends BaseModel
         if ($this->dongs) {
             foreach ($this->dongs as $dong) {
                 $value[] = [
+                    'id' => $dong->id,
+                    'isEdit' => 1,
                     'active'=> $dong->active,
                     'dong_id'=> $dong->dong_id,
                     'dongName' => $dong->name,
@@ -105,6 +109,8 @@ class GiaoPhan extends BaseModel
         if ($this->cosos) {
             foreach ($this->cosos as $coso) {
                 $value[] = [
+                    'id' => $coso->id,
+                    'isEdit' => 1,
                     'active'=> $coso->active,
                     'co_so_giao_phan_id'=> $coso->co_so_giao_phan_id,
                     'cosoName' => $coso->name,
@@ -122,6 +128,8 @@ class GiaoPhan extends BaseModel
         if ($this->banChuyenTrachs) {
             foreach ($this->banChuyenTrachs as $banChuyenTrach) {
                 $value[] = [
+                    'id' => $banChuyenTrach->id,
+                    'isEdit' => 1,
                     'active'=> $banChuyenTrach->active,
                     'ban_chuyen_trach_id'=> $banChuyenTrach->ban_chuyen_trach_id,
                     'banChuyenTrachName' => $banChuyenTrach->name,

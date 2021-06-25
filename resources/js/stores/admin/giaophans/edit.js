@@ -177,6 +177,7 @@ export default {
       let giaoHat = params.giaoHat;
       giaoHat.cong_doan_tu_sis.push({
         id: uuidv4(),
+        isEdit: 0,
         hatId: giaoHat.id,
         giao_hat_id: giaoHat.giao_hat_id,
         cong_doan_tu_si_id: null,
@@ -212,6 +213,7 @@ export default {
       let giaoHat = params.giaoHat;
       giaoHat.giao_xus.push({
         id: uuidv4(),
+        isEdit: 0,
         hatId: giaoHat.id,
         giao_hat_id: giaoHat.giao_hat_id,
         giao_xu_id: null,
@@ -248,6 +250,7 @@ export default {
       let giaoHats = state.info.giao_phan_hats;
       giaoHats.push({
         id: uuidv4(),
+        isEdit: 0,
         giao_hat_id: null,
         hatName: '',
         active: 1,
@@ -283,6 +286,7 @@ export default {
       let dongs = state.info.giao_phan_dongs;
       dongs.push({
         id: uuidv4(),
+        isEdit: 0,
         dong_id: null,
         dongName: '',
         active: 1
@@ -316,6 +320,7 @@ export default {
       let cosos = state.info.giao_phan_cosos;
       cosos.push({
         id: uuidv4(),
+        isEdit: 0,
         co_so_giao_phan_id: null,
         cosoName: '',
         active: 1
@@ -349,6 +354,7 @@ export default {
       let banChuyenTrachs = state.info.giao_phan_banchuyentrachs;
       banChuyenTrachs.push({
         id: uuidv4(),
+        isEdit: 0,
         ban_chuyen_trach_id: null,
         banChuyenTrachName: '',
         active: 1

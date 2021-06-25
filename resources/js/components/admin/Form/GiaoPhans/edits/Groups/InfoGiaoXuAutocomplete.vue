@@ -15,12 +15,9 @@
 	    		id="input-parent-giao-xu-name" 
 	    		class="form-control" />
             <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
-                <font-awesome-layers size="2x" style="background:#ddd">
-                    <font-awesome-icon icon="circle" style="color:#ddd"/>
-                    <font-awesome-icon icon="search" class="fa-inverse" transform="shrink-4"/>
-                </font-awesome-layers>
+                <i class="fa " :class="(isSearch)?'fa-search':'fa-close'"></i>
             </span>
-            <ul class="dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
+            <ul v-show="!isSearch" class="dropdown-menu cms-ul-cate-dropdown">
                 <li v-for="(item,idx) in dropdowns" :key="idx" @click="_addInfoToCategory(item)" >
                     <a href="javascript:void(0);">{{item.name}}</a>
                 </li>     
@@ -38,10 +35,6 @@
         MODULE_MODULE_LINH_MUC,
         MODULE_MODULE_GIAO_PHAN_EDIT
     } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_DROPDOWN_CATEGORY_LIST,
-    } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
 
     export default {
         name: 'GiaoXuAutocomplete',
@@ -56,7 +49,7 @@
         data() {
             return {
                 dropdownStyle: 'display: none;',
-                query: '',           
+                isSearch: true,           
             }
         },
         computed: {
@@ -89,6 +82,8 @@
             }
           },
           _closeDropdown() {
+              this.isSearch = !this.isSearch;
+              this._focusParentCategory();
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {

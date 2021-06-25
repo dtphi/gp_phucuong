@@ -10,17 +10,23 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-left">Giáo xứ</td>
-                    <td class="text-left">Trình trạng</td>
-                    <td class="text-right">Thực hiện</td>
+                    <td style="width:50%" class="text-left">Giáo xứ</td>
+                    <td style="width:20%" class="text-left">Trình trạng</td>
+                    <td style="width:30%" class="text-right">Thực hiện</td>
                 </tr>
             </thead>
-            <info-item v-for="(giaoXu, idx) in item.giao_xus" 
-                :hat="item" :item="giaoXu" :key="idx"></info-item>
+            <tbody v-for="(giaoXu, idx) in item.giao_xus" :key="idx">
+                <info-item  
+                    v-if="giaoXu.isEdit"
+                    :hat="item" :item="giaoXu" ></info-item>
+                <info-new-item  
+                    v-else
+                    :hat="item" :item="giaoXu" ></info-new-item>
+            </tbody>
+            
             <tfoot>
                 <tr>
-                    <td></td><td></td>
-                    <td class="text-right">
+                    <td colspan="3" class="text-right">
                         <btn-add :giao-hat="item"></btn-add>
                     </td>
                 </tr>
@@ -32,12 +38,14 @@
 <script>
     import BtnAdd from './BtnAdd';
     import InfoItem from './InfoItem';
+    import InfoNewItem from './InfoNewItem';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAdd,
-            InfoItem
+            InfoItem,
+            InfoNewItem
         },
         props: {
             lists: {

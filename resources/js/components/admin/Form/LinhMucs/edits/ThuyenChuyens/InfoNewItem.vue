@@ -162,7 +162,7 @@
     import InfoBanChuyenTrachAutocomplete from '../../Groups/InfoBanChuyenTrachAutocomplete';
 
     export default {
-        name: 'TheInfoItem',
+        name: 'TheInfoNewItem',
         mixins: [linhMucMix.tabData],
         components: {
             BtnAdd,

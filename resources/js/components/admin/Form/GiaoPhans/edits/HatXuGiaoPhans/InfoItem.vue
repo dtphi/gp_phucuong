@@ -1,32 +1,49 @@
 <template>
-    <tbody>
-        <tr>
-            <td>
-                <info-giao-xu-autocomplete :hat="hat" :hat-xu="item" :key="item.id"></info-giao-xu-autocomplete>
-            </td>
-            <td>
-                <select
-                    v-model="item.active"
-                    id="input-info-active"
-                    class="form-control">
-                    <option value="1" selected="selected">Xảy ra</option>
-                    <option value="0">Ẩn</option>
-                </select>
-            </td>
-            <td class="text-right">
-                <button 
+    <tr>
+        <td>
+            <span v-show="!isEdit">{{item.hatXuName}}</span>
+            <info-giao-xu-autocomplete 
+                v-show="isEdit"
+                :hat="hat" 
+                :hat-xu="item" 
+                :key="item.id"></info-giao-xu-autocomplete>
+        </td>
+        <td>
+            <span v-show="!isEdit">{{_getStatus()}}</span>
+            <select
+                v-show="isEdit"
+                v-model="item.active"
+                id="input-info-active"
+                class="form-control">
+                <option value="1" selected="selected">Xảy ra</option>
+                <option value="0">Ẩn</option>
+            </select>
+        </td>
+        <td class="text-right">
+            <button v-show="isEdit" @click="_updateXuForm()"
+                type="button" 
+                data-toggle="tooltip"
+                title="Cập nhật giáo xứ" class="btn btn-primary cms-btn">
+                <i class="fa fa-save"></i>
+            </button>
+            <button @click="_openEditForm"
                     type="button" 
-                    @click="_removeItem()"
                     data-toggle="tooltip"
-                    class="btn btn-default cms-btn">
-                        <font-awesome-layers size="1x" style="background:MistyRose">
-                            <font-awesome-icon icon="circle" style="color:Tomato"/>
-                            <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
-                        </font-awesome-layers>
-                </button>
-            </td>
-        </tr>
-    </tbody>
+                    title="Sửa giáo xứ" class="btn btn-default cms-btn">
+                    <i class="fa " :class="(isEdit)?'fa-angle-double-up':'fa-angle-double-down'"></i>
+            </button>
+            <button 
+                type="button" 
+                @click="_removeItem()"
+                data-toggle="tooltip"
+                class="btn btn-default cms-btn">
+                    <font-awesome-layers size="1x" style="background:MistyRose">
+                        <font-awesome-icon icon="circle" style="color:Tomato"/>
+                        <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
+                    </font-awesome-layers>
+            </button>
+        </td>
+    </tr>
 </template>
 
 <script>
@@ -53,7 +70,10 @@
                 default: {}
             }
         },
-        computed: {
+        data() {
+            return {
+                isEdit: false
+            }
         },
         methods: {
             ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
@@ -65,6 +85,15 @@
                     giaoHat: this.hat,
                     giaoXu: this.item
                 });
+            },
+            _openEditForm() {
+                this.isEdit = !this.isEdit;
+            },
+            _updateXuForm() {
+                console.log('update xứ', this.item)
+            },
+            _getStatus() {
+                return (this.item.active == 1)?'Xảy ra':'Ẩn';
             }
         },
         setting: {

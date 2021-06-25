@@ -45,6 +45,8 @@ class GiaoPhanHat extends BaseModel
             foreach ($this->giaoXus as $giaoXu) {
                 if ((int)$giaoXu->giao_phan_id === (int)$this->giao_phan_id) {
                     $value[] = [
+                        'id' => $giaoXu->id,
+                        'isEdit' => 1,
                         'active'=> $giaoXu->active,
                         'giao_xu_diems'=> [],
                         'giao_hat_id'=> $giaoXu->giao_hat_id,
@@ -67,12 +69,13 @@ class GiaoPhanHat extends BaseModel
             foreach ($this->congDoanTuSis as $congDoanTuSi) {
                 if ((int)$congDoanTuSi->giao_phan_id === (int)$this->giao_phan_id) {
                     $value[] = [
+                        'id' => $congDoanTuSi->id,
+                        'isEdit' => 1,
                         'active'=> $congDoanTuSi->active,
                         'giao_hat_id'=> $congDoanTuSi->giao_hat_id,
                         'cong_doan_tu_si_id' => $congDoanTuSi->cong_doan_tu_si_id,
                         'hatId' => $this->id,
-                        'hatCongDtsName' => $congDoanTuSi->name,
-                        'id'=> $congDoanTuSi->id
+                        'hatCongDtsName' => $congDoanTuSi->name
                     ];
                 }
             }

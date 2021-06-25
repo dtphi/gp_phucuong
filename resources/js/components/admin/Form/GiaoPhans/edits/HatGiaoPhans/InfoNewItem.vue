@@ -1,12 +1,10 @@
 <template>
     <tr>
         <td>
-            <span v-show="!isEdit">{{item.hatName}}</span>
-            <info-giao-hat-autocomplete v-show="isEdit" :hat="item" :key="item.id"></info-giao-hat-autocomplete>
+            <info-giao-hat-autocomplete :hat="item" :key="item.id"></info-giao-hat-autocomplete>
         </td>
         <td>
-            <span v-show="!isEdit">{{_getStatus()}}</span>
-            <select v-show="isEdit"
+            <select
                 id="input-info-active"
                 v-model="item.active"
                 class="form-control">
@@ -15,17 +13,11 @@
             </select>
         </td>
         <td class="text-right">
-            <button v-show="isEdit" @click="_updateHatForm()"
+            <button @click="_addHatForm()"
                     type="button" 
                     data-toggle="tooltip"
                     title="Cập nhật giáo hạt" class="btn btn-primary cms-btn">
                     <i class="fa fa-save"></i>
-            </button>
-            <button @click="_openEditForm"
-                    type="button" 
-                    data-toggle="tooltip"
-                    title="Sửa giáo hạt" class="btn btn-default cms-btn">
-                    <i class="fa " :class="(isEdit)?'fa-angle-double-up':'fa-angle-double-down'"></i>
             </button>
             <button 
                 type="button" 
@@ -51,18 +43,13 @@
     import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete';
 
     export default {
-        name: 'TheInfoItem',
+        name: 'TheInfoNewItem',
         components: {
             InfoGiaoHatAutocomplete,
         },
         props: {
             item: {
                 default: {}
-            }
-        },
-        data() {
-            return {
-                isEdit: false
             }
         },
         methods: {
@@ -75,14 +62,8 @@
                     item: this.item
                 });
             },
-            _openEditForm() {
-                this.isEdit = !this.isEdit;
-            },
-            _updateHatForm() {
-                console.log('update hat', this.item)
-            },
-            _getStatus() {
-                return (this.item.active == 1)?'Xảy ra':'Ẩn';
+            _addHatForm() {
+                console.log('add hat', this.item)
             }
         },
         setting: {

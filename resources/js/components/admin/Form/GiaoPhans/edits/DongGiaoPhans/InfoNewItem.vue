@@ -1,15 +1,10 @@
 <template>
     <tr>
         <td>
-            <span v-show="!isEdit">{{item.dongName}}</span>
-            <info-dong-autocomplete 
-                v-show="isEdit"
-                :dong="item" 
-                :key="item.id"></info-dong-autocomplete>
+            <info-dong-autocomplete :dong="item" :key="item.id"></info-dong-autocomplete>
         </td>
         <td>
-            <span v-show="!isEdit">{{_getStatus()}}</span>
-            <select v-show="isEdit"
+            <select
                 v-model="item.active"
                 id="input-info-active"
                 class="form-control">
@@ -18,17 +13,11 @@
             </select>
         </td>
         <td class="text-right">
-            <button v-show="isEdit" @click="_updateDongForm()"
+            <button v-show="isEdit" @click="_addDongForm()"
                 type="button" 
                 data-toggle="tooltip"
                 title="Cập nhật dòng" class="btn btn-primary cms-btn">
                 <i class="fa fa-save"></i>
-            </button>
-            <button @click="_openEditForm"
-                    type="button" 
-                    data-toggle="tooltip"
-                    title="Sửa dòng" class="btn btn-default cms-btn">
-                    <i class="fa " :class="(isEdit)?'fa-angle-double-up':'fa-angle-double-down'"></i>
             </button>
             <button 
                 type="button" 
@@ -55,7 +44,7 @@
     import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete';
 
     export default {
-        name: 'TheInfoList',
+        name: 'TheInfoNewItem',
         components: {
             BtnAdd,
             InfoDongAutocomplete,
@@ -63,11 +52,6 @@
         props: {
             item: {
                 default: {}
-            }
-        },
-        data() {
-            return {
-                isEdit: false
             }
         },
         methods: {
@@ -80,14 +64,8 @@
                     item: this.item
                 });
             },
-            _openEditForm() {
-                this.isEdit = !this.isEdit;
-            },
-            _updateDongForm() {
-                console.log('update dong', this.item)
-            },
-            _getStatus() {
-                return (this.item.active == 1)?'Xảy ra':'Ẩn';
+            _addDongForm() {
+                console.log('add dong', this.item)
             }
         },
         setting: {

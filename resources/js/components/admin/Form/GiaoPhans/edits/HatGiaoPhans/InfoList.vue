@@ -4,19 +4,18 @@
             class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <td class="text-left">Hạt</td>
-                    <td class="text-left">Trình trạng</td>
-                    <td class="text-right">{{$options.setting.info_action_title}}</td>
+                    <td style="width:50%" class="text-left">Hạt</td>
+                    <td style="width:20%" class="text-left">Trình trạng</td>
+                    <td style="width:30%" class="text-right">{{$options.setting.info_action_title}}</td>
                 </tr>
             </thead>
-            <tbody>
-                <info-item v-for="(item, idx) in lists" :key="idx" :item="item" ></info-item>
+            <tbody v-for="(item, idx) in lists" :key="idx">
+                <info-item v-if="item.isEdit"  :item="item" ></info-item>
+                <info-new-item v-else  :item="item" ></info-new-item>
             </tbody>
-
             <tfoot>
                 <tr>
-                    <td></td><td></td>
-                    <td class="text-right">
+                    <td colspan="3" class="text-right">
                         <btn-add></btn-add>
                     </td>
                 </tr>
@@ -34,12 +33,14 @@
         MODULE_MODULE_GIAO_PHAN_EDIT
     } from 'store@admin/types/module-types';
     import InfoItem from './InfoItem';
+    import InfoNewItem from './InfoNewItem';
 
     export default {
         name: 'TheInfoList',
         components: {
             BtnAdd,
-            InfoItem
+            InfoItem,
+            InfoNewItem
         },
         props: {
             lists: {

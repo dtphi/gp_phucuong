@@ -1,15 +1,12 @@
 <template>
     <tr>
         <td>
-            <span v-show="!isEdit">{{item.dongName}}</span>
-            <info-dong-autocomplete 
-                v-show="isEdit"
-                :dong="item" 
-                :key="item.id"></info-dong-autocomplete>
+            <info-co-so-giao-phan-autocomplete 
+                :coso="item" 
+                :key="item.id"></info-co-so-giao-phan-autocomplete>
         </td>
         <td>
-            <span v-show="!isEdit">{{_getStatus()}}</span>
-            <select v-show="isEdit"
+            <select
                 v-model="item.active"
                 id="input-info-active"
                 class="form-control">
@@ -18,17 +15,11 @@
             </select>
         </td>
         <td class="text-right">
-            <button v-show="isEdit" @click="_updateDongForm()"
+            <button @click="_addCoSoForm()"
                 type="button" 
                 data-toggle="tooltip"
-                title="Cập nhật dòng" class="btn btn-primary cms-btn">
+                title="Cập nhật cơ sở" class="btn btn-primary cms-btn">
                 <i class="fa fa-save"></i>
-            </button>
-            <button @click="_openEditForm"
-                    type="button" 
-                    data-toggle="tooltip"
-                    title="Sửa dòng" class="btn btn-default cms-btn">
-                    <i class="fa " :class="(isEdit)?'fa-angle-double-up':'fa-angle-double-down'"></i>
             </button>
             <button 
                 type="button" 
@@ -48,46 +39,33 @@
     import {
         mapActions
     } from 'vuex';
-    import BtnAdd from './BtnAdd';
     import {
         MODULE_MODULE_GIAO_PHAN_EDIT
     } from 'store@admin/types/module-types';
-    import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete';
+    import InfoCoSoGiaoPhanAutocomplete from '../Groups/InfoCoSoGiaoPhanAutocomplete';
 
     export default {
-        name: 'TheInfoList',
+        name: 'TheInfoNewItem',
         components: {
-            BtnAdd,
-            InfoDongAutocomplete,
+            InfoCoSoGiaoPhanAutocomplete,
         },
         props: {
             item: {
                 default: {}
             }
         },
-        data() {
-            return {
-                isEdit: false
-            }
-        },
         methods: {
             ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-                'removeDongGiaoPhan'
+                'removeCoSoGiaoPhan'
             ]),
             _removeItem() {
-                this.removeDongGiaoPhan({
-                    action: 'removeDongGiaoPhan',
+                this.removeCoSoGiaoPhan({
+                    action: 'removeCoSoGiaoPhan',
                     item: this.item
                 });
             },
-            _openEditForm() {
-                this.isEdit = !this.isEdit;
-            },
-            _updateDongForm() {
-                console.log('update dong', this.item)
-            },
-            _getStatus() {
-                return (this.item.active == 1)?'Xảy ra':'Ẩn';
+            _addCoSoForm() {
+                console.log('add co so', this.item)
             }
         },
         setting: {
