@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Api\Admin\Base;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\File;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\File;
-use Storage;
 use Image;
+use Storage;
 
 class ApiController extends Controller
 {
@@ -81,7 +81,8 @@ class ApiController extends Controller
         parent::__construct($middleware);
     }
 
-    public function getThumbnail($imgOrigin, $thumbSize = 0, $thumbHeight= 0, $force = false) {
+    public function getThumbnail($imgOrigin, $thumbSize = 0, $thumbHeight = 0, $force = false)
+    {
         $imgThumUrl = '';
         if ($thumbSize <= 0) {
             $thumbSize = self::$thumSize;
@@ -91,7 +92,7 @@ class ApiController extends Controller
         if (!file_exists(public_path('/' . $staticThumImg))) {
             $staticThumImg = trim(self::$thumImgNo, '/');
         }
-       
+
         if ($force) {
             return $this->forceThumbnail($staticThumImg, $thumbSize, $thumbHeight);
         }
@@ -113,13 +114,14 @@ class ApiController extends Controller
         }
     }
 
-    public function forceThumbnail($staticThumImg, $thumbSize = 200, $thumbHeight= 0) {
+    public function forceThumbnail($staticThumImg, $thumbSize = 200, $thumbHeight = 0)
+    {
         $fileResize = new File(public_path($staticThumImg));
-        $extension = $fileResize->extension();
-        $thumbDir = self::$tmbThumbDir . '/' . $staticThumImg;
+        $extension  = $fileResize->extension();
+        $thumbDir   = self::$tmbThumbDir . '/' . $staticThumImg;
         if ((int)$thumbHeight > 0) {
             $thumbDir = self::$tmbThumbDir . '/thumb_' . $thumbSize . 'x' . $thumbHeight . '/' . $staticThumImg;
-            $resize = Image::make($fileResize)->resize($thumbSize, $thumbHeight)->encode($extension);
+            $resize   = Image::make($fileResize)->resize($thumbSize, $thumbHeight)->encode($extension);
         } else {
             $resize = Image::make($fileResize)->resize($thumbSize, null, function ($constraint) {
                 $constraint->aspectRatio();

@@ -14,7 +14,7 @@ class GiaoPhanResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -25,15 +25,15 @@ class GiaoPhanResource extends JsonResource
             'fields' => 'ok',
         ];
 
-        $res  = $this->resource;
+        $res = $this->resource;
         if ($res) {
             $json = parent::toArray($request);
             $json = array_merge($json, [
-                'giao_phan_hats'=> $res->arr_hat_list,
-                'giao_phan_dongs'=> $res->arr_dong_list,
-                'giao_phan_cosos'=> $res->arr_coso_list,
-                'giao_phan_banchuyentrachs'=> $res->arr_ban_chuyen_trach_list,
-                'giao_phan_hat_xu_diems'=> []
+                'giao_phan_hats'            => $res->arr_hat_list,
+                'giao_phan_dongs'           => $res->arr_dong_list,
+                'giao_phan_cosos'           => $res->arr_coso_list,
+                'giao_phan_banchuyentrachs' => $res->arr_ban_chuyen_trach_list,
+                'giao_phan_hat_xu_diems'    => []
                 //'sort_description'      => html_entity_decode($res->sort_description),
             ]);
         }

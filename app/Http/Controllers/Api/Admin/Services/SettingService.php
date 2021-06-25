@@ -62,11 +62,11 @@ final class SettingService implements BaseModel, SettingModel
         DB::beginTransaction();
         try {
             if (isset($data['action']) && $data['action'] == 'update') {
-                foreach($data['settings'] as $setting) {
+                foreach ($data['settings'] as $setting) {
                     Setting::updateOrCreate(
                         ['code' => $data['code'], 'key_data' => $setting['key']],
                         [
-                            'value' => $setting['value'], 
+                            'value'      => $setting['value'],
                             'serialized' => (int)$setting['serialized']
                         ]
                     );

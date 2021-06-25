@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class GiaoPhanRequest extends FormRequest
 {
@@ -27,20 +27,20 @@ class GiaoPhanRequest extends FormRequest
     {
         $formData = $this->all();
 
-        $formData['name'] = isset($formData['name']) ? $formData['name']: null;
-        $formData['khai_quat'] = isset($formData['khai_quat'])?htmlentities($formData['khai_quat']): null;
-        $formData['active'] = isset($formData['active'])?$formData['active']: null;
-        $formData['sort_id'] = isset($formData['sort_id'])?$formData['sort_id']:null;
-        $formData['tag'] = isset($formData['tag'])?$formData['tag']:null;
-        $formData['meta_title'] = isset($formData['meta_title'])?$formData['meta_title']:null;
-        $formData['meta_description'] = isset($formData['meta_description'])?$formData['meta_description']:null;
-        $formData['meta_keyword'] = isset($formData['meta_keyword'])?$formData['meta_keyword']:null;
-        $formData['update_user'] = isset(Auth::user()->id) ? Auth::user()->id : 0;
+        $formData['name']             = isset($formData['name']) ? $formData['name'] : null;
+        $formData['khai_quat']        = isset($formData['khai_quat']) ? htmlentities($formData['khai_quat']) : null;
+        $formData['active']           = isset($formData['active']) ? $formData['active'] : null;
+        $formData['sort_id']          = isset($formData['sort_id']) ? $formData['sort_id'] : null;
+        $formData['tag']              = isset($formData['tag']) ? $formData['tag'] : null;
+        $formData['meta_title']       = isset($formData['meta_title']) ? $formData['meta_title'] : null;
+        $formData['meta_description'] = isset($formData['meta_description']) ? $formData['meta_description'] : null;
+        $formData['meta_keyword']     = isset($formData['meta_keyword']) ? $formData['meta_keyword'] : null;
+        $formData['update_user']      = isset(Auth::user()->id) ? Auth::user()->id : 0;
 
-        $formData['banchuyentrachs'] = isset($formData['giao_phan_banchuyentrachs'])?$formData['giao_phan_banchuyentrachs']:[];
-        $formData['cosos'] = isset($formData['giao_phan_cosos'])?$formData['giao_phan_cosos']:[];
-        $formData['dongs'] = isset($formData['giao_phan_dongs'])?$formData['giao_phan_dongs']:[];
-        $formData['hats'] = isset($formData['giao_phan_hats'])?$formData['giao_phan_hats']:[];
+        $formData['banchuyentrachs'] = isset($formData['giao_phan_banchuyentrachs']) ? $formData['giao_phan_banchuyentrachs'] : [];
+        $formData['cosos']           = isset($formData['giao_phan_cosos']) ? $formData['giao_phan_cosos'] : [];
+        $formData['dongs']           = isset($formData['giao_phan_dongs']) ? $formData['giao_phan_dongs'] : [];
+        $formData['hats']            = isset($formData['giao_phan_hats']) ? $formData['giao_phan_hats'] : [];
 
         $this->merge($formData);
 

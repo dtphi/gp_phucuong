@@ -59,16 +59,16 @@ class GiaoPhanController extends ApiController
             $limit       = $this->_getPerPage();
             $collections = $this->gphSv->apiGetList($data, $limit);
             $pagination  = $this->_getTextPagination($collections);
-            $results = [];
-            
+            $results     = [];
+
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
                 $results[] = [
-                    'id' => (int)$info->id,
-                    'name'       => $info->name,
-                    'khai_quat'   => $info->khai_quat,
-                    'active'     => $info->active,
-                    'sort_id' => $info->sort_id
+                    'id'        => (int)$info->id,
+                    'name'      => $info->name,
+                    'khai_quat' => $info->khai_quat,
+                    'active'    => $info->active,
+                    'sort_id'   => $info->sort_id
                 ];
             }
 
@@ -220,8 +220,8 @@ class GiaoPhanController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 
@@ -242,8 +242,8 @@ class GiaoPhanController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 
@@ -264,8 +264,8 @@ class GiaoPhanController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 

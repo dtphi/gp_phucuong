@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Api\Admin\Services;
 
+use App\Http\Common\Tables;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanModel;
-use App\Http\Resources\GiaoPhans\GiaoPhanCollection;
 use App\Http\Resources\GiaoPhans\GiaoPhanResource;
+use App\Models\CongDoanTuSi;
+use App\Models\GiaoDiem;
+use App\Models\GiaoHat;
 use App\Models\GiaoPhan;
+use App\Models\GiaoPhanBanChuyenTrach;
+use App\Models\GiaoPhanCoSo;
+use App\Models\GiaoPhanDong;
 use App\Models\GiaoPhanHat;
+use App\Models\GiaoPhanHatCongDoanTuSi;
 use App\Models\GiaoPhanHatXu;
 use App\Models\GiaoPhanHatXuDiem;
-use App\Models\GiaoPhanHatCongDoanTuSi;
-use App\Models\GiaoPhanDong;
-use App\Models\GiaoPhanCoSo;
-use App\Models\GiaoPhanBanChuyenTrach;
-use App\Models\GiaoHat;
-use App\Models\GiaoDiem;
-use App\Models\CongDoanTuSi;
-use App\Http\Common\Tables;
 use DB;
 
 final class GiaoPhanService implements BaseModel, GiaoPhanModel
@@ -33,7 +32,7 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
      */
     public function __construct()
     {
-        $this->model    = new GiaoPhan();
+        $this->model = new GiaoPhan();
     }
 
     public function apiGetList(array $options = [], $limit = 5)
@@ -44,7 +43,7 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return $query->paginate($limit);
     }
 
-    
+
     public function apiGetResourceCollection(array $options = [], $limit = 5)
     {
         // TODO: Implement apiGetResourceCollection() method.
@@ -110,15 +109,17 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
 
             if (isset($data['hats']) && !empty($data['hats'])) {
                 foreach ($data['hats'] as $hat) {
-                    GiaoPhanHat::insertByGiaoPhanId($giaoPhanId, $hat['giao_hat_id'],$hat['active']);
+                    GiaoPhanHat::insertByGiaoPhanId($giaoPhanId, $hat['giao_hat_id'], $hat['active']);
                     if (isset($hat['giao_xus'])) {
                         foreach ($hat['giao_xus'] as $giaoXu) {
-                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $giaoXu['giao_xu_id'], $giaoXu['active']);
+                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $giaoXu['giao_xu_id'],
+                                $giaoXu['active']);
                         }
                     }
                     if (isset($hat['cong_doan_tu_sis'])) {
                         foreach ($hat['cong_doan_tu_sis'] as $congDts) {
-                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $congDts['cong_doan_tu_si_id'], $congDts['active']);
+                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'],
+                                $congDts['cong_doan_tu_si_id'], $congDts['active']);
                         }
                     }
                 }
@@ -138,7 +139,8 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
 
             if (isset($data['banchuyentrachs']) && !empty($data['banchuyentrachs'])) {
                 foreach ($data['banchuyentrachs'] as $banCt) {
-                    GiaoPhanBanChuyenTrach::insertByGiaoPhanId($giaoPhanId, $banCt['ban_chuyen_trach_id'], $banCt['active']);
+                    GiaoPhanBanChuyenTrach::insertByGiaoPhanId($giaoPhanId, $banCt['ban_chuyen_trach_id'],
+                        $banCt['active']);
                 }
             }
         } else {
@@ -170,19 +172,21 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
             $giaoXuDiems = [];
             if (isset($data['hats']) && !empty($data['hats'])) {
                 foreach ($data['hats'] as $hat) {
-                    GiaoPhanHat::insertByGiaoPhanId($giaoPhanId, $hat['giao_hat_id'],$hat['active']);
+                    GiaoPhanHat::insertByGiaoPhanId($giaoPhanId, $hat['giao_hat_id'], $hat['active']);
                     if (isset($hat['giao_xus']) && !empty($hat['giao_xus'])) {
                         foreach ($hat['giao_xus'] as $giaoXu) {
-                            $giaoDiem =  [];
+                            $giaoDiem                = [];
                             $giaoDiem['giao_hat_id'] = $hat['giao_hat_id'];
-                            $giaoDiem['giao_xu_id'] = $giaoXu['giao_xu_id'];
-                            $giaoXuDiems[] = $giaoDiem;
-                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $giaoXu['giao_xu_id'], $giaoXu['active']);
+                            $giaoDiem['giao_xu_id']  = $giaoXu['giao_xu_id'];
+                            $giaoXuDiems[]           = $giaoDiem;
+                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $giaoXu['giao_xu_id'],
+                                $giaoXu['active']);
                         }
                     }
                     if (isset($hat['cong_doan_tu_sis'])) {
                         foreach ($hat['cong_doan_tu_sis'] as $congDts) {
-                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $congDts['cong_doan_tu_si_id'], $congDts['active']);
+                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'],
+                                $congDts['cong_doan_tu_si_id'], $congDts['active']);
                         }
                     }
                 }
@@ -191,10 +195,10 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
                 $giaoDiems = [];
                 foreach ($giaoXuDiems as $giaoDiem) {
                     $gDiems = DB::table(Tables::$giaophan_hat_xu_diems)
-                    ->where('giao_phan_id', $giaoPhanId)
-                    ->where('giao_hat_id', $giaoDiem['giao_hat_id'])
-                    ->where('giao_xu_id', $giaoDiem['giao_xu_id'])
-                    ->get();
+                        ->where('giao_phan_id', $giaoPhanId)
+                        ->where('giao_hat_id', $giaoDiem['giao_hat_id'])
+                        ->where('giao_xu_id', $giaoDiem['giao_xu_id'])
+                        ->get();
 
                     if ($gDiems->count()) {
                         $giaoDiems[] = $gDiems;
@@ -203,8 +207,9 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
 
                 GiaoPhanHatXuDiem::fcDeleteByGiaoPhanId($giaoPhanId);
                 foreach ($giaoDiems as $gdiems) {
-                    foreach($gdiems as $gdiem) {
-                        GiaoPhanHatXuDiem::insertByGiaoPhanId($giaoPhanId, $gdiem->giao_hat_id, $gdiem->giao_xu_id, $gdiem->giao_diem_id, $gdiem->active);
+                    foreach ($gdiems as $gdiem) {
+                        GiaoPhanHatXuDiem::insertByGiaoPhanId($giaoPhanId, $gdiem->giao_hat_id, $gdiem->giao_xu_id,
+                            $gdiem->giao_diem_id, $gdiem->active);
                     }
                 }
             }
@@ -226,7 +231,8 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
             GiaoPhanBanChuyenTrach::fcDeleteByGiaoPhanId($giaoPhanId);
             if (isset($data['banchuyentrachs']) && !empty($data['banchuyentrachs'])) {
                 foreach ($data['banchuyentrachs'] as $banCt) {
-                    GiaoPhanBanChuyenTrach::insertByGiaoPhanId($giaoPhanId, $banCt['ban_chuyen_trach_id'], $banCt['active']);
+                    GiaoPhanBanChuyenTrach::insertByGiaoPhanId($giaoPhanId, $banCt['ban_chuyen_trach_id'],
+                        $banCt['active']);
                 }
             }
         } else {
@@ -243,31 +249,34 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
     public function apiGetGiaoPhans($data = array(), $limit = 5)
     {
         $query = $this->model->select()
-        ->orderBy('id', 'DESC');
+            ->orderBy('id', 'DESC');
 
         return $query;
     }
 
-    public function apiGetGiaoHatList($data = []) {
+    public function apiGetGiaoHatList($data = [])
+    {
         $model = new GiaoHat();
         $query = $model->select()
-        ->orderBy('name', 'DESC');
+            ->orderBy('name', 'DESC');
 
         return $query->get();
     }
 
-    public function apiGetGiaoDiemList($data = []) {
+    public function apiGetGiaoDiemList($data = [])
+    {
         $model = new GiaoDiem();
         $query = $model->select()
-        ->orderBy('name', 'DESC');
+            ->orderBy('name', 'DESC');
 
         return $query->get();
     }
 
-    public function apiGetCongDoanTuSiList($data = []) {
+    public function apiGetCongDoanTuSiList($data = [])
+    {
         $model = new CongDoanTuSi();
         $query = $model->select()
-        ->orderBy('name', 'DESC');
+            ->orderBy('name', 'DESC');
 
         return $query->get();
     }

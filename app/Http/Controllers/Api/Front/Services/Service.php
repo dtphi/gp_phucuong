@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Front\Services;
 
+use App\Http\Common\Tables;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
 use App\Models\Category;
 use App\Models\Information;
-use App\Http\Common\Tables;
 use DB;
 
 class Service implements BaseModel
@@ -22,7 +22,7 @@ class Service implements BaseModel
      */
     public function __construct()
     {
-        $this->modelInfo = new Information();
+        $this->modelInfo     = new Information();
         $this->modelNewGroup = new Category();
     }
 

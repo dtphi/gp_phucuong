@@ -50,7 +50,7 @@ class AdapterLocal extends Local
         }
 
         $iterator = $recursive ? $this->getRecursiveDirectoryIterator($location) : $this->getDirectoryIterator($location);
-        
+
         foreach ($iterator as $file) {
             $path = $this->getFilePath($file);
 

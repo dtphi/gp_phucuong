@@ -68,19 +68,19 @@ class LinhMucController extends ApiController
             $limit       = $this->_getPerPage();
             $collections = $this->linhMucSv->apiGetList($data, $limit);
             $pagination  = $this->_getTextPagination($collections);
-            $results = [];
-            
+            $results     = [];
+
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
                 if (file_exists(public_path($info->image))) {
                     $staticImgThum = $info->image;
                 }
                 $results[] = [
-                    'id' => (int)$info->id,
-                    'ten'           => $info->ten,
-                    'ten_thanh'         => $info->ten_thanh_id,
-                    'image'          => $info->image,
-                    'imgThum'        => url($this->getThumbnail($staticImgThum, 0, 40)),
+                    'id'         => (int)$info->id,
+                    'ten'        => $info->ten,
+                    'ten_thanh'  => $info->ten_thanh_id,
+                    'image'      => $info->image,
+                    'imgThum'    => url($this->getThumbnail($staticImgThum, 0, 40)),
                     //'status_text'    => $info->status_text,
                     'active'     => $info->active,
                     'updatetime' => $info->updatetime,
@@ -236,8 +236,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name,
+                'id'   => $value->id,
+                'name' => $value->name,
             ];
         }
 
@@ -258,8 +258,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name,
+                'id'   => $value->id,
+                'name' => $value->name,
             ];
         }
 
@@ -280,8 +280,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name,
+                'id'   => $value->id,
+                'name' => $value->name,
             ];
         }
 
@@ -302,8 +302,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->ten,
+                'id'         => $value->id,
+                'name'       => $value->ten,
                 'is_duc_cha' => $value->is_duc_cha
             ];
         }
@@ -325,8 +325,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 
@@ -347,8 +347,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 
@@ -369,8 +369,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 

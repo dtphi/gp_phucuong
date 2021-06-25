@@ -79,35 +79,39 @@ final class Tables
     public static $module_both_page_banner_list = 'page-banner-list';
 
     public static $moduleContent = [
-        'module_left_info_left_side_bar'=> 'info-left-side-bar',
-        'module_left_category_left_side_bar'=> 'category-left-side-bar',
-        'module_left_newsletter_register'=>'newsletter-register',
-        'module_left_summary_contact'=> 'summary-contact',
-        'module_left_category_sub_left_side_bar'=> 'category-sub-left-side-bar',
-    
-        'middle_module_info_carousel'=> 'info-carousel',
-        'middle_module_special_banner'=> 'special-banner',
-        'module_middle_loi_chua'=> 'loi-chua',
-        'module_middle_van_kien'=> 'van-kien',
-        'module_middle_tin_giao_phan'=> 'tin-giao-phan',
-        'module_middle_tin_giao_hoi'=> 'tin-giao-hoi',
-    
-        'module_right_info_fanpage'=> 'info-fanpage',
-        'module_right_youtube_hanh_cac_thanh'=> 'youtube-hanh-cac-thanh',
-        'module_right_lich_cong_giao'=> 'lich-cong-giao',
-        'module_right_thong_bao'=> 'thong-bao',
-        'module_right_category_icon_side_bar'=> 'category-icon-side-bar',
-        'module_right_sach_noi_iframe'=> 'sach-noi-iframe',
-    
-        'module_both_noi_bat'=> 'noi-bat',
-        'module_both_page_banner_list'=> 'page-banner-list'
+        'module_left_info_left_side_bar'         => 'info-left-side-bar',
+        'module_left_category_left_side_bar'     => 'category-left-side-bar',
+        'module_left_newsletter_register'        => 'newsletter-register',
+        'module_left_summary_contact'            => 'summary-contact',
+        'module_left_category_sub_left_side_bar' => 'category-sub-left-side-bar',
+
+        'middle_module_info_carousel'  => 'info-carousel',
+        'middle_module_special_banner' => 'special-banner',
+        'module_middle_loi_chua'       => 'loi-chua',
+        'module_middle_van_kien'       => 'van-kien',
+        'module_middle_tin_giao_phan'  => 'tin-giao-phan',
+        'module_middle_tin_giao_hoi'   => 'tin-giao-hoi',
+
+        'module_right_info_fanpage'           => 'info-fanpage',
+        'module_right_youtube_hanh_cac_thanh' => 'youtube-hanh-cac-thanh',
+        'module_right_lich_cong_giao'         => 'lich-cong-giao',
+        'module_right_thong_bao'              => 'thong-bao',
+        'module_right_category_icon_side_bar' => 'category-icon-side-bar',
+        'module_right_sach_noi_iframe'        => 'sach-noi-iframe',
+
+        'module_both_noi_bat'          => 'noi-bat',
+        'module_both_page_banner_list' => 'page-banner-list'
     ];
 
     public static $chucThanhs = [
-        '','Phó Tế', 'Linh Mục', 'Giám Mục'
+        '',
+        'Phó Tế',
+        'Linh Mục',
+        'Giám Mục'
     ];
 
     public static $trieuDongs = [
-        'Tu Triều', 'Tu Dòng'
+        'Tu Triều',
+        'Tu Dòng'
     ];
 }
