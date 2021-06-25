@@ -138,7 +138,9 @@
                 class="col-sm-2 control-label">Ngày cấp CMND:</label>
             <div class="col-sm-10">
                     <cms-date-picker 
-                        v-model="generalData.ngay_cap_cmnd" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_cap_cmnd" type="date"></cms-date-picker>
             </div>
         </div>
         <div class="form-group">

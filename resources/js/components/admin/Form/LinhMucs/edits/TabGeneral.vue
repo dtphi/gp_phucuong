@@ -41,7 +41,11 @@
                     name="info_ngay_thang_nam_sinh"
                     rules="required"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_thang_nam_sinh" type="datetime"></cms-date-picker>
+                    <cms-date-picker
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_thang_nam_sinh" 
+                        type="date"></cms-date-picker>
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -138,7 +142,9 @@
                     rules="required"
                     v-slot="{ errors }">
                     <cms-date-picker 
-                        v-model="generalData.ngay_rua_toi" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_rua_toi" type="date"></cms-date-picker>
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -173,7 +179,9 @@
                 class="col-sm-2 control-label">Ngày thêm sức:</label>
             <div class="col-sm-3">
                     <cms-date-picker 
-                        v-model="generalData.ngay_them_suc" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_them_suc" type="date"></cms-date-picker>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_them_suc}}</label>
@@ -205,7 +213,9 @@
                 class="col-sm-2 control-label">Ngày tiểu chủng viện:</label>
             <div class="col-sm-3">
                     <cms-date-picker 
-                        v-model="generalData.ngay_tieu_chung_vien" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_tieu_chung_vien" type="date"></cms-date-picker>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_tieu_chung_vien}}</label>
@@ -237,7 +247,9 @@
                 class="col-sm-2 control-label">Ngày đại chủng viện:</label>
             <div class="col-sm-3">
                     <cms-date-picker 
-                        v-model="generalData.ngay_dai_chung_vien" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_dai_chung_vien" type="date"></cms-date-picker>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_dai_chung_vien}}</label>
@@ -276,8 +288,10 @@
                 for="input-info-ngay-trieu-dong"
                 class="col-sm-2 control-label">Ngày triệu dòng:</label>
             <div class="col-sm-3">
-                    <cms-date-picker 
-                        v-model="generalData.ngay_trieu_dong" type="datetime"></cms-date-picker>
+                    <cms-date-picker
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_trieu_dong" type="date"></cms-date-picker>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_trieu_dong}}</label>
@@ -289,7 +303,9 @@
                 class="col-sm-2 control-label">Ngày khấn:</label>
             <div class="col-sm-3">
                     <cms-date-picker 
-                        v-model="generalData.ngay_khan" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_khan" type="date"></cms-date-picker>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_khan}}</label>
@@ -300,8 +316,10 @@
                 for="input-info-ngay-rip"
                 class="col-sm-2 control-label">Ngày Rip:</label>
             <div class="col-sm-3">
-                    <cms-date-picker 
-                        v-model="generalData.ngay_rip" type="datetime"></cms-date-picker>
+                    <cms-date-picker
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_rip" type="date"></cms-date-picker>
             </div>
             <div class="col-sm-5">
                 <label class="control-label">{{generalData.lable_ngay_rip}}</label>
@@ -346,6 +364,29 @@
             InfoGiaoXuAutocomplete,
             InfoTenThanhAutocomplete,
             InfoDongAutocomplete
+        },
+        data() {
+            console.log('moment', moment(this.generalData.ngay_thang_nam_sinh))
+            return {
+                // Use moment.js instead of the default
+                momentFormat: {
+                //[optional] Date to String
+                stringify: (date) => {
+                    console.log('stringify:',date, moment(date).format('DD-MM-YYYY HH:mm:ss'));
+                    return date ? moment('2000-01-26 00:00:00').format('YYYY-MM-DD'): '';
+                    //return date ? moment(date).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') : ''
+                },
+                //[optional]  String to Date
+                parse: (value) => {
+                    console.log('parse:',value, moment(value, 'LL').toDate())
+                    return value ? moment(value, 'LL').toDate() : null
+                },
+                //[optional] getWeekNumber
+                getWeek: (date) => {
+                    return // a number
+                }
+                }
+            }
         },
         methods: {
             ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [

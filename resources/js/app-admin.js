@@ -6,7 +6,7 @@ window.axios.interceptors.response.use(function (response) {
     }, function (error) {
         // Do something with response error
         if (error.response) {
-            if((error.response.status === 401) 
+            if((_.includes([401,419], error.response.status)) 
                 && (window.location.pathname !== "/admin/login")) {
                 window.location.reload();
             };

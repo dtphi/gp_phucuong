@@ -52,7 +52,10 @@
                                 <div class="col-sm-2">
                                     <label class="control-label">{{item.label_from_date}}</label>
                                 </div>
-                                <cms-date-picker v-model="item.from_date" type="datetime"></cms-date-picker>
+                                <cms-date-picker 
+                                    value-type="format"
+                                    format="YYYY-MM-DD"
+                                    v-model="item.from_date" type="date"></cms-date-picker>
                             </td>
                         </tr>
                         <tr>
@@ -70,7 +73,10 @@
                                 <div class="col-sm-2">
                                     <label class="control-label">{{item.label_to_date}}</label>
                                 </div>
-                                <cms-date-picker v-model="item.to_date" type="datetime"></cms-date-picker>
+                                <cms-date-picker 
+                                    value-type="format"
+                                    format="YYYY-MM-DD"
+                                    v-model="item.to_date" type="date"></cms-date-picker>
                             </td>
                         </tr>
                         <tr>

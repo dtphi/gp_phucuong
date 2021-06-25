@@ -25,7 +25,9 @@
                     </td>
                     <td>
                         <cms-date-picker 
-                            v-model="item.ngay_thang_nam_chuc_thanh" type="datetime"></cms-date-picker>
+                            value-type="format"
+                            format="YYYY-MM-DD"
+                            v-model="item.ngay_thang_nam_chuc_thanh" type="date"></cms-date-picker>
                     </td>
                     <td>
                         <input type="text" class="form-control"

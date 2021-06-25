@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class InformationRequest extends FormRequest
 {
@@ -49,9 +50,7 @@ class InformationRequest extends FormRequest
 
         $formData['date_available']   = isset($formData['date_available']) ? $formData['date_available'] : '';
         if (!empty($formData['date_available'])) {
-            $date = date_create($formData['date_available']);
-            $dateAvailable = date_format($date,"Y-m-d H:i:s");
-            $formData['date_available'] = $dateAvailable;
+            $formData['date_available'] = new Carbon($formData['date_available']);
         } else {
             $formData['date_available'] = now();
         }

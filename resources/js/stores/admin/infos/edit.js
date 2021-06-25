@@ -210,6 +210,7 @@ export default {
           commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
 
           dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_GET_INFO_BY_ID, info.information_id);
         },
         (errors) => {
           commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)

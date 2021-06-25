@@ -19,7 +19,9 @@
         <td class="text-center">
             <span v-show="!isEdit">{{item.label_ngay_thang_nam_chuc_thanh}}</span>
             <cms-date-picker  v-show="isEdit"
-                v-model="item.ngay_thang_nam_chuc_thanh" type="datetime"></cms-date-picker>
+                value-type="format"
+                format="YYYY-MM-DD"
+                v-model="item.ngay_thang_nam_chuc_thanh" type="date"></cms-date-picker>
         </td>
         <td>
             <span v-show="!isEdit">{{item.noi_thu_phong}}</span>

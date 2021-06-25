@@ -21,7 +21,10 @@
         <tr>
             <td class="text-left">Từ ngày</td>
             <td>
-                <cms-date-picker v-model="item.from_date" type="datetime"></cms-date-picker>
+                <cms-date-picker 
+                    value-type="format"
+                    format="YYYY-MM-DD"
+                    v-model="item.from_date" type="date"></cms-date-picker>
             </td>
         </tr>
         <tr>
@@ -36,7 +39,10 @@
         <tr>
             <td class="text-left">Ngày đến</td>
             <td>
-                <cms-date-picker v-model="item.to_date" type="datetime"></cms-date-picker>
+                <cms-date-picker 
+                    value-type="format"
+                    format="YYYY-MM-DD"
+                    v-model="item.to_date" type="date"></cms-date-picker>
             </td>
         </tr>
         <tr>

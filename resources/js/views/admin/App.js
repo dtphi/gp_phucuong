@@ -1,5 +1,7 @@
 import Vue from 'vue';
-
+import moment from 'moment';
+window.moment = moment;
+window.moment.locale('vi');
 /*Add fontawesome free*/
 import {
   library

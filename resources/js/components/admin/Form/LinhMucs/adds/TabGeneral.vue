@@ -41,7 +41,10 @@
                     name="info_ngay_thang_nam_sinh"
                     rules="required"
                     v-slot="{ errors }">
-                    <cms-date-picker v-model="generalData.ngay_thang_nam_sinh" type="datetime"></cms-date-picker>
+                    <cms-date-picker 
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_thang_nam_sinh" type="date"></cms-date-picker>
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
@@ -135,7 +138,9 @@
                     rules="required"
                     v-slot="{ errors }">
                     <cms-date-picker 
-                        v-model="generalData.ngay_rua_toi" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_rua_toi" type="date"></cms-date-picker>
 
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
@@ -167,7 +172,9 @@
                 class="col-sm-2 control-label">Ngày thêm sức:</label>
             <div class="col-sm-10">
                     <cms-date-picker 
-                        v-model="generalData.ngay_them_suc" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_them_suc" type="date"></cms-date-picker>
             </div>
         </div>
         <div class="form-group required">
@@ -196,7 +203,9 @@
                 class="col-sm-2 control-label">Ngày tiểu chủng viện:</label>
             <div class="col-sm-10">
                     <cms-date-picker 
-                        v-model="generalData.ngay_tieu_chung_vien" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_tieu_chung_vien" type="date"></cms-date-picker>
             </div>
         </div>
         <div class="form-group required">
@@ -225,7 +234,9 @@
                 class="col-sm-2 control-label">Ngày đại chủng viện:</label>
             <div class="col-sm-10">
                     <cms-date-picker 
-                        v-model="generalData.ngay_dai_chung_vien" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_dai_chung_vien" type="date"></cms-date-picker>
             </div>
         </div>
         <div class="form-group required">
@@ -261,8 +272,10 @@
                 for="input-info-ngay-trieu-dong"
                 class="col-sm-2 control-label">Ngày triệu dòng:</label>
             <div class="col-sm-10">
-                    <cms-date-picker 
-                        v-model="generalData.ngay_trieu_dong" type="datetime"></cms-date-picker>
+                    <cms-date-picker
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_trieu_dong" type="date"></cms-date-picker>
             </div>
         </div>
         <div class="form-group">
@@ -280,7 +293,9 @@
                 class="col-sm-2 control-label">Ngày Rip:</label>
             <div class="col-sm-10">
                     <cms-date-picker 
-                        v-model="generalData.ngay_rip" type="datetime"></cms-date-picker>
+                        value-type="format"
+                        format="YYYY-MM-DD"
+                        v-model="generalData.ngay_rip" type="date"></cms-date-picker>
             </div>
         </div>
         <div>
