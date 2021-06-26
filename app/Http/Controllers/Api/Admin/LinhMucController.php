@@ -10,6 +10,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Log;
+use App\Http\Common\Tables;
 
 class LinhMucController extends ApiController
 {
@@ -72,19 +73,20 @@ class LinhMucController extends ApiController
 
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
-                if (file_exists(public_path($info->image))) {
+                if (!empty($info->image) && file_exists(public_path($info->image))) {
                     $staticImgThum = $info->image;
                 }
                 $results[] = [
                     'id'         => (int)$info->id,
                     'ten'        => $info->ten,
-                    'ten_thanh'  => $info->ten_thanh_id,
+                    'ten_thanh'  => $info->ten_thanh,
                     'image'      => $info->image,
+                    'phone' => $info->phone,
+                    'email' => $info->email,
                     'imgThum'    => url($this->getThumbnail($staticImgThum, 0, 40)),
-                    //'status_text'    => $info->status_text,
-                    'active'     => $info->active,
-                    'updatetime' => $info->updatetime,
-                    //'created_at'     => $info->created_at
+                    'active'     => Tables::$linhMucStatus[(int)$info->active],
+                    'trieu_dong' => Tables::$trieuDongs[(int)$info->trieu_dong],
+                    'ngay_sinh' => $info->ngay_thang_nam_sinh,
                 ];
             }
 

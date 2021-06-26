@@ -26,9 +26,12 @@
                                                 <input type="checkbox"
                                                        onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                             </th>
-                                            <th style="width: 50%" class="text-left">Tên</th>
+                                            <th style="width: 20%" class="text-left">Tên</th>
                                             <th style="width: 10%" class="text-left">Hình ảnh</th>
-                                            <th style="width: 10%" class="text-center">Ngày hoạt động</th>
+                                            <th style="width: 10%" class="text-left">Phone</th>
+                                            <th style="width: 10%" class="text-left">Email</th>
+                                            <th style="width: 10%" class="text-center">Sinh ngày</th>
+                                            <th style="width: 10%" class="text-center">Triệu dòng</th>
                                             <th style="width: 10%" class="text-center">Trạng thái</th>                               
                                             <th style="width: 10%" class="text-right">Action</th>
                                         </tr>
