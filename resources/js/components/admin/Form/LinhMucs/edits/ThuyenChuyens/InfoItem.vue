@@ -1,10 +1,14 @@
 <template>
   <tbody>
     <tr v-if="item.isEdit">
+      <td>{{ item.fromgiaoxuName }}</td>
+      <td>{{ item.label_from_date }}</td>
+      <td>{{ item.fromchucvuName }}</td>
       <td>{{ item.giaoxuName }}</td>
-      <td>{{ item.banchuyentrachName }}</td>
       <td>{{ item.label_to_date }}</td>
       <td>{{ item.chucvuName }}</td>
+      <td>{{ item.ducchaName }}</td>
+      
       <td class="text-right">
         <button
           @click="_openEditForm"
@@ -36,7 +40,7 @@
       </td>
     </tr>
     <tr v-if="item.isEdit">
-      <td colspan="5" v-show="isEdit">
+      <td colspan="8" v-show="isEdit">
         <table class="table table-striped table-bordered table-hover">
           <tbody>
             <tr>
@@ -238,7 +242,7 @@
       </td>
     </tr>
     <tr v-else>
-      <td colspan="5">
+      <td colspan="8">
         <table class="table table-striped table-bordered table-hover">
           <info-new-item :item="item"></info-new-item>
         </table>

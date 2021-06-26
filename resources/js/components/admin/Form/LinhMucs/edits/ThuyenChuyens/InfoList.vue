@@ -6,15 +6,18 @@
     >
       <thead>
         <tr>
-          <td colspan="5" class="text-right">
+          <td colspan="8" class="text-right">
             <btn-add></btn-add>
           </td>
         </tr>
         <tr>
-          <td>Giáo xứ đến</td>
-          <td>Ban chuyên trách</td>
-          <td>Ngày đến</td>
-          <td>Chức vụ đến</td>
+          <td>Từ giáo xứ</td>
+          <td>Từ ngày</td>
+          <td>Chức vụ</td>
+          <td>Đến giáo xứ</td>
+          <td>Ngày</td>
+          <td>Chức vụ</td>
+          <td>Đức Cha</td>
           <td></td>
         </tr>
       </thead>
@@ -25,7 +28,7 @@
       ></info-item>
       <tfoot>
         <tr>
-          <td colspan="5" class="text-right">
+          <td colspan="8" class="text-right">
             <btn-add></btn-add>
           </td>
         </tr>

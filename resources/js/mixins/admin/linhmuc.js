@@ -6,7 +6,8 @@ import {
 } from '@app/common/config';
 import tinymce from 'vue-tinymce-editor';
 import {
-    fn_get_tinymce_langs_url
+    fn_get_tinymce_langs_url,
+    fn_get_href_base_url
 } from '@app/api/utils/fn-helper';
 import {
     ACTION_SET_IMAGE,
@@ -165,7 +166,7 @@ export default {
     computed: {
         _getImageAvatar() {
             if (this.generalData.image != '') {
-                return `/${this.generalData.image}`;
+                return fn_get_href_base_url(this.generalData.image);
             } 
 
             return '/images/no-photo.jpg';
