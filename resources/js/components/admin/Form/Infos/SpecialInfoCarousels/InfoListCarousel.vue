@@ -1,10 +1,8 @@
 <template>
     <div>
         <div class="form-group">
-            <div class="col-sm-12">
-                <div id="media-info-special-carousel-manager"></div>
-                <input type="hidden" class="form-control" id="file-special-carousel-input" disabled>
-            </div>
+            <info-media-manage :selected-image="_changeCarouselImage"></info-media-manage>
+            
             <div class="col-sm-12">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover">
@@ -33,23 +31,17 @@
     import {
         mapGetters,
     } from 'vuex';
-    require('@app/tools/mm/dist/style.css');
-    import {MM} from '@app/tools/mm/dist/mm.min';
     import {
         MODULE_MODULE_SPECIAL_INFO_CAROUSEL,
     } from 'store@admin/types/module-types';
-    import lodash from 'lodash';
     import ItemCarousel from './ItemCarousel';
+    import InfoMediaManage from '../Images/InfoImage';
 
     export default {
         name: 'TheInfoListCarousel',
         components: {
-            ItemCarousel
-        },
-        data() {
-            return {
-                mediaMM: null
-            }
+            ItemCarousel,
+            InfoMediaManage,
         },
         computed: {
             ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
@@ -59,34 +51,13 @@
                 return this.specialInfoCarousel.value;
             }
         },
-        mounted() {
-            const self = this;
-
-            this.mediaMM = new MM({
-                el: '#media-info-special-carousel-manager',
-                api: {
-                    baseUrl: window.origin + '/api/mmedia',
-                    listUrl: 'list',
-                    downloadUrl: 'download', 
-                    uploadUrl: 'upload',      
-                    deleteUrl: 'delete' 
-                },
-                input: {
-                    el: '#file-special-carousel-input',
-                    multiple: false
-                },
-                onSelect: function (event) {
-                    self._changeImage(event);
-                }
-            });
-        },
         methods: {
-            _changeImage(fi) {
+            _changeCarouselImage(fi) {
+                const _self = this;
                 if (typeof fi === "object") {
                     if (fi.hasOwnProperty('selected') && fi.selected) {
                         if (fi.selected.hasOwnProperty('path')) {
-                            console.log(fi.selected)
-                            this.$emit('select-multiple-banner-img', {
+                            _self.$emit('select-multiple-banner-img', {
                                 filePath: fi.selected.path
                             }); 
                         }

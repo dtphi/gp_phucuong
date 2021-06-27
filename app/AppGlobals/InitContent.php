@@ -25,9 +25,6 @@ class InitContent
             'layout_content' => [
                 'content_top'           => true,
                 'content_top_column'    => [
-                    'right_column'   => true,
-                    'middle_column'  => true,
-                    'left_column'    => false,
                     'colClass'       => '8 notication',
                     'left_modules'   => [],
                     'middle_modules' => [
@@ -50,9 +47,6 @@ class InitContent
                 ],
                 'content_bottom'        => true,
                 'content_bottom_column' => [
-                    'right_column'   => true,
-                    'middle_column'  => true,
-                    'left_column'    => false,
                     'left_modules'   => [],
                     'middle_modules' => [
                         [
@@ -92,9 +86,6 @@ class InitContent
                 ],
                 'content_main'          => true,
                 'content_main_column'   => [
-                    'right_column'   => true,
-                    'middle_column'  => true,
-                    'left_column'    => false,
                     'left_modules'   => [],
                     'middle_modules' => [
                         [
@@ -132,9 +123,6 @@ class InitContent
             'layout_content' => [
                 'content_top'           => true,
                 'content_top_column'    => [
-                    'right_column'   => true,
-                    'middle_column'  => true,
-                    'left_column'    => true,
                     'colClass'       => '5',
                     'left_modules'   => [
                         [
@@ -199,9 +187,6 @@ class InitContent
                 ],
                 'content_bottom'        => true,
                 'content_bottom_column' => [
-                    'right_column'   => true,
-                    'middle_column'  => true,
-                    'left_column'    => false,
                     'colClass'       => '',
                     'left_modules'   => [],
                     'middle_modules' => [],
@@ -216,9 +201,6 @@ class InitContent
                 ],
                 'content_main'          => false,
                 'content_main_column'   => [
-                    'right_column'   => false,
-                    'middle_column'  => false,
-                    'left_column'    => false,
                     'colClass'       => '',
                     'left_modules'   => [],
                     'middle_modules' => [],
@@ -239,9 +221,6 @@ class InitContent
             'layout_content' => [
                 'content_top'           => true,
                 'content_top_column'    => [
-                    'right_column'   => false,
-                    'middle_column'  => true,
-                    'left_column'    => true,
                     'colClass'       => '',
                     'left_modules'   => [
                         [
@@ -280,9 +259,6 @@ class InitContent
                 ],
                 'content_bottom'        => false,
                 'content_bottom_column' => [
-                    'right_column'   => false,
-                    'middle_column'  => false,
-                    'left_column'    => false,
                     'colClass'       => '',
                     'left_modules'   => [],
                     'middle_modules' => [],
@@ -296,9 +272,6 @@ class InitContent
                 ],
                 'content_main'          => false,
                 'content_main_column'   => [
-                    'right_column'   => false,
-                    'middle_column'  => false,
-                    'left_column'    => false,
                     'colClass'       => '',
                     'left_modules'   => [],
                     'middle_modules' => [],
@@ -318,9 +291,6 @@ class InitContent
             'layout_content' => [
                 'content_top'           => true,
                 'content_top_column'    => [
-                    'right_column'   => false,
-                    'middle_column'  => true,
-                    'left_column'    => true,
                     'colClass'       => '',
                     'left_modules'   => [
                         [
@@ -359,9 +329,6 @@ class InitContent
                 ],
                 'content_bottom'        => false,
                 'content_bottom_column' => [
-                    'right_column'   => false,
-                    'middle_column'  => false,
-                    'left_column'    => false,
                     'colClass'       => '',
                     'left_modules'   => [],
                     'middle_modules' => [],
@@ -375,9 +342,6 @@ class InitContent
                 ],
                 'content_main'          => false,
                 'content_main_column'   => [
-                    'right_column'   => false,
-                    'middle_column'  => false,
-                    'left_column'    => false,
                     'colClass'       => '',
                     'left_modules'   => [],
                     'middle_modules' => [],
@@ -397,9 +361,6 @@ class InitContent
             'layout_content' => [
                 'content_top'           => true,
                 'content_top_column'    => [
-                    'right_column'   => true,
-                    'middle_column'  => true,
-                    'left_column'    => false,
                     'colClass'       => '8 notication',
                     'left_modules'   => [],
                     'middle_modules' => [],
@@ -434,9 +395,6 @@ class InitContent
                 ],
                 'content_bottom'        => false,
                 'content_bottom_column' => [
-                    'right_column'   => false,
-                    'middle_column'  => false,
-                    'left_column'    => false,
                     'colClass'       => '',
                     'left_modules'   => [],
                     'middle_modules' => [],
@@ -450,9 +408,6 @@ class InitContent
                 ],
                 'content_main'          => false,
                 'content_main_column'   => [
-                    'right_column'   => true,
-                    'middle_column'  => true,
-                    'left_column'    => false,
                     'colClass'       => '8',
                     'left_modules'   => [],
                     'middle_modules' => [],
