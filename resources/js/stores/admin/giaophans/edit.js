@@ -198,15 +198,11 @@ export default {
     ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({commit}, params) {
       let hatCongdtsUpdate = params.hatCongDts;
       if (params.hasOwnProperty('action') && params.action === 'add.hat.congdts.db') {
-        console.log("add hat congdts", params.item);
+        //implement 
+        console.log('api', params)
         _.forEach(params.hat.cong_doan_tu_sis, function(item) {
           if (item.hasOwnProperty('id') && (item.id == hatCongdtsUpdate.id) ) {
-            hatCongdtsUpdate = _.update(item, 'cong_doan_tu_si_id', function(cong_doan_tu_si_id) {
-                return cong_doan_tu_si_id = params.hatCongDtsInfo.id;
-            })
-            hatCongdtsUpdate =  _.update(item, 'hatCongDtsName', function(hatCongDtsName) {
-              return hatCongDtsName = params.hatCongDtsInfo.name;
-            });
+            hatCongdtsUpdate.isEdit = 1;
             commit('update_dropdown_congdts_in_hat', hatCongdtsUpdate);
           }
         });
@@ -249,17 +245,28 @@ export default {
     },
     ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({commit}, params) {
       let hatXuUpdate = params.hatXu;
-      _.forEach(params.hat.giao_xus, function(item) {
-        if (item.hasOwnProperty('id') && (item.id == hatXuUpdate.id) ) {
-            hatXuUpdate = _.update(item, 'giao_xu_id', function(giao_xu_id) {
-                return giao_xu_id = params.hatXuInfo.id;
-            })
-            hatXuUpdate =  _.update(item, 'hatXuName', function(hatXuName) {
-              return hatXuName = params.hatXuInfo.name;
-            });
+      if (params.hasOwnProperty('action') && params.action === 'create.update.hat.xu.db') {
+        //implement 
+        console.log('api', params)
+        _.forEach(params.hat.giao_xus, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == hatXuUpdate.id) ) {
+            hatXuUpdate.isEdit = 1;
             commit('update_dropdown_giao_xu_in_hat', hatXuUpdate);
-        }
-      });
+          }
+        });
+      } else {
+        _.forEach(params.hat.giao_xus, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == hatXuUpdate.id) ) {
+              hatXuUpdate = _.update(item, 'giao_xu_id', function(giao_xu_id) {
+                  return giao_xu_id = params.hatXuInfo.id;
+              })
+              hatXuUpdate =  _.update(item, 'hatXuName', function(hatXuName) {
+                return hatXuName = params.hatXuInfo.name;
+              });
+              commit('update_dropdown_giao_xu_in_hat', hatXuUpdate);
+          }
+        });
+      }
     },
     addHatGiaoPhan({commit, state}, params) {
       let giaoHats = state.info.giao_phan_hats;
@@ -290,9 +297,8 @@ export default {
         console.log('api', params)
         _.forEach(giaoHats, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
-              item.isEdit = 1;
-              hat = item;
-              commit('update_dropdown_hat_in_giao_phan', hat);
+            hat.isEdit = 1;
+            commit('update_dropdown_hat_in_giao_phan', hat);
           }
         });
       } else {
@@ -331,17 +337,28 @@ export default {
     ACTION_UPDATE_DROPDOWN_DONG_LIST({commit, state}, params) {
       let dong = params.dong;
       let dongs = state.info.giao_phan_dongs;
-      _.forEach(dongs, function(item) {
-        if (item.hasOwnProperty('id') && (item.id == params.dong.id) ) {
-            dong = _.update(item, 'dong_id', function(dong_id) {
-                return dong_id = params.dongInfo.id;
-            });
-            dong = _.update(item, 'dongName', function(dongName) {
-                return dongName = params.dongInfo.name;
-            });
-            commit('update_dropdown_dong_in_giao_phan', dong);
-        }
-      });
+      if (params.hasOwnProperty('action') && params.action === 'create.update.dong.db') {
+        //implement
+        console.log('api', params)
+        _.forEach(dongs, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == params.dong.id) ) {
+              dong.isEdit = 1;
+              commit('update_dropdown_dong_in_giao_phan', dong);
+          }
+        });
+      } else {
+        _.forEach(dongs, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == params.dong.id) ) {
+              dong = _.update(item, 'dong_id', function(dong_id) {
+                  return dong_id = params.dongInfo.id;
+              });
+              dong = _.update(item, 'dongName', function(dongName) {
+                  return dongName = params.dongInfo.name;
+              });
+              commit('update_dropdown_dong_in_giao_phan', dong);
+          }
+        });
+      }
     },
     addCoSoGiaoPhan({commit, state}, params) {
       let cosos = state.info.giao_phan_cosos;
@@ -365,17 +382,28 @@ export default {
     ACTION_UPDATE_DROPDOWN_COSO_LIST({commit, state}, params) {
       let coso = params.coso;
       let cosos = state.info.giao_phan_cosos;
-      _.forEach(cosos, function(item) {
-        if (item.hasOwnProperty('id') && (item.id == params.coso.id) ) {
-            coso = _.update(item, 'co_so_giao_phan_id', function(co_so_giao_phan_id) {
-                return co_so_giao_phan_id = params.cosoInfo.id;
-            });
-            coso = _.update(item, 'cosoName', function(cosoName) {
-                return cosoName = params.cosoInfo.name;
-            });
-            commit('update_dropdown_coso_in_giao_phan', coso);
-        }
-      });
+      if (params.hasOwnProperty('action') && params.action === 'create.update.co.so.db') {
+        //implement
+        console.log('api', params)
+        _.forEach(cosos, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == params.coso.id) ) {
+              coso.isEdit = 1;
+              commit('update_dropdown_coso_in_giao_phan', coso);
+          }
+        });
+      } else {
+        _.forEach(cosos, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == params.coso.id) ) {
+              coso = _.update(item, 'co_so_giao_phan_id', function(co_so_giao_phan_id) {
+                  return co_so_giao_phan_id = params.cosoInfo.id;
+              });
+              coso = _.update(item, 'cosoName', function(cosoName) {
+                  return cosoName = params.cosoInfo.name;
+              });
+              commit('update_dropdown_coso_in_giao_phan', coso);
+          }
+        });
+      }
     },
     addBanChuyenTrachGiaoPhan({commit, state}, params) {
       let banChuyenTrachs = state.info.giao_phan_banchuyentrachs;
@@ -399,17 +427,28 @@ export default {
     ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({commit, state}, params) {
       let banChuyenTrach = params.banChuyenTrach;
       let banChuyenTrachs = state.info.giao_phan_banchuyentrachs;
-      _.forEach(banChuyenTrachs, function(item) {
-        if (item.hasOwnProperty('id') && (item.id == params.banChuyenTrach.id) ) {
-          banChuyenTrach = _.update(item, 'ban_chuyen_trach_id', function(ban_chuyen_trach_id) {
-                return ban_chuyen_trach_id = params.banChuyenTrachInfo.id;
-            });
-            banChuyenTrach = _.update(item, 'banChuyenTrachName', function(banChuyenTrachName) {
-                return banChuyenTrachName = params.banChuyenTrachInfo.name;
-            });
+      if (params.hasOwnProperty('action') && params.action === 'create.update.ban.chuyen.trach.db') {
+        //implement
+        console.log('api', params)
+        _.forEach(banChuyenTrachs, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == params.banChuyenTrach.id) ) {
+            banChuyenTrach.isEdit = 1;
             commit('update_dropdown_banchuyentrach_in_giao_phan', banChuyenTrach);
-        }
-      });
+          }
+        });
+      } else {
+        _.forEach(banChuyenTrachs, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == params.banChuyenTrach.id) ) {
+            banChuyenTrach = _.update(item, 'ban_chuyen_trach_id', function(ban_chuyen_trach_id) {
+                  return ban_chuyen_trach_id = params.banChuyenTrachInfo.id;
+              });
+              banChuyenTrach = _.update(item, 'banChuyenTrachName', function(banChuyenTrachName) {
+                  return banChuyenTrachName = params.banChuyenTrachInfo.name;
+              });
+              commit('update_dropdown_banchuyentrach_in_giao_phan', banChuyenTrach);
+          }
+        });
+      }
     },
     [ACTION_SET_LOADING]({
       commit

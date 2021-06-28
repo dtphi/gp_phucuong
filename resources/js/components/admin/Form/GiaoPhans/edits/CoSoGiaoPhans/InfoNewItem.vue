@@ -5,6 +5,7 @@
         :coso="item"
         :key="item.id"
       ></info-co-so-giao-phan-autocomplete>
+      <span class="cms-text-red">{{ _getErrorCoSoSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">
@@ -56,8 +57,17 @@ export default {
       default: {},
     },
   },
+  computed: {
+    _getErrorCoSoSelect() {
+      if (this.item.co_so_giao_phan_id) {
+        return null
+      }
+
+      return 'Chọn cơ sở';
+    }
+  },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeCoSoGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeCoSoGiaoPhan", "ACTION_UPDATE_DROPDOWN_COSO_LIST"]),
     _removeItem() {
       this.removeCoSoGiaoPhan({
         action: "removeCoSoGiaoPhan",
@@ -65,7 +75,12 @@ export default {
       });
     },
     _addCoSoForm() {
-      console.log("add co so", this.item);
+      if (this.item.co_so_giao_phan_id) {
+        this.ACTION_UPDATE_DROPDOWN_COSO_LIST({
+          action: 'create.update.co.so.db',
+          coso: this.item
+        });
+      }
     },
   },
   setting: {

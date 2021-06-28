@@ -6,6 +6,7 @@
         :hat-cong-dts="item"
         :key="item.id"
       ></info-cong-doan-tu-si-autocomplete>
+      <span class="cms-text-red">{{ _getErrorCongdtsSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">
@@ -62,10 +63,18 @@ export default {
       default: {},
     },
   },
-  computed: {},
+  computed: {
+    _getErrorCongdtsSelect() {
+      if (this.item.cong_doan_tu_si_id) {
+        return null
+      }
+
+      return 'Chọn công đoàn tu sĩ';
+    }
+  },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "removeHatCongDoanTuSiGiaoPhan",
+      "removeHatCongDoanTuSiGiaoPhan","ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST"
     ]),
     _removeItem() {
       this.removeHatCongDoanTuSiGiaoPhan({
@@ -75,7 +84,13 @@ export default {
       });
     },
     _addCongdtsForm() {
-      console.log("add cong dts", this.item);
+      if (this.item.cong_doan_tu_sis && this.hat.giao_hat_id) {
+        this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
+          action: 'create.update.hat.congdts.db',
+          hat: this.hat,
+          hatCongDts: this.item
+        });
+      }
     },
   },
   setting: {

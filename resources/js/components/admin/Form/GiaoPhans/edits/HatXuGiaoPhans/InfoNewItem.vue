@@ -6,6 +6,7 @@
         :hat-xu="item"
         :key="item.id"
       ></info-giao-xu-autocomplete>
+      <span class="cms-text-red">{{ _getErrorGiaoXuSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">
@@ -62,8 +63,17 @@ export default {
       default: {},
     },
   },
+  computed: {
+    _getErrorGiaoXuSelect() {
+      if (this.item.giao_xu_id) {
+        return null
+      }
+
+      return 'Chọn giáo xứ';
+    }
+  },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatXuGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatXuGiaoPhan", "ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST"]),
     _removeItem() {
       this.removeHatXuGiaoPhan({
         action: "removeHatXuGiaoPhan",
@@ -72,7 +82,13 @@ export default {
       });
     },
     _addXuForm() {
-      console.log("add giao xu", this.item);
+      if (this.item.giao_xu_id && this.hat.giao_hat_id) {
+        this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({
+          action: 'create.update.hat.xu.db',
+          hat: this.hat,
+          hatXu: this.item
+        });
+      }
     },
   },
   setting: {

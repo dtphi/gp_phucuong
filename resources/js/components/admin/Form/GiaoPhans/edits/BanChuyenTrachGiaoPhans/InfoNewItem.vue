@@ -5,6 +5,7 @@
         :ban-chuyen-trach="item"
         :key="item.id"
       ></info-ban-chuyen-trach-autocomplete>
+      <span class="cms-text-red">{{ _getErrorBanChuyenTrachSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">
@@ -56,9 +57,18 @@ export default {
       default: {},
     },
   },
+  computed: {
+    _getErrorBanChuyenTrachSelect() {
+      if (this.item.ban_chuyen_trach_id) {
+        return null
+      }
+
+      return 'Chọn ban chuyên trách';
+    }
+  },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "removeBanChuyenTrachGiaoPhan",
+      "removeBanChuyenTrachGiaoPhan","ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST"
     ]),
     _removeItem() {
       this.removeBanChuyenTrachGiaoPhan({
@@ -67,7 +77,12 @@ export default {
       });
     },
     _addBanChuyenTrachForm() {
-      console.log("add ban chuyen trach");
+      if (this.item.ban_chuyen_trach_id) {
+        this.ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({
+          action: 'create.update.ban.chuyen.trach.db',
+          banChuyenTrach: this.item
+        });
+      }
     },
   },
   setting: {
