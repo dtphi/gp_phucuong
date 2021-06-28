@@ -3,7 +3,6 @@
     <td>
       <info-dong-autocomplete
         :dong="item"
-        :key="item.id"
       ></info-dong-autocomplete>
       <span class="cms-text-red">{{ _getErrorDongSelect }}</span>
     </td>
@@ -15,7 +14,6 @@
     </td>
     <td class="text-right">
       <button
-        v-show="isEdit"
         @click="_addDongForm()"
         type="button"
         data-toggle="tooltip"

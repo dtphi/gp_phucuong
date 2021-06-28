@@ -84,7 +84,7 @@ export default {
       });
     },
     _addCongdtsForm() {
-      if (this.item.cong_doan_tu_sis && this.hat.giao_hat_id) {
+      if (this.item.cong_doan_tu_si_id && this.hat.giao_hat_id) {
         this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
           action: 'create.update.hat.congdts.db',
           hat: this.hat,
