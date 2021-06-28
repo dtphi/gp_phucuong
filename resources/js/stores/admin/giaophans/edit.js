@@ -24,6 +24,7 @@ import _ from 'lodash';
 const defaultState = () => {
   return {
     info: {
+      id: null,
       image: '',
       name: '',
       khai_quat: '',
@@ -195,10 +196,25 @@ export default {
       });
       commit('update_congdts_in_hat', giaoHat);
     },
-    ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({commit}, params) {
+    ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({commit, state}, params) {
       let hatCongdtsUpdate = params.hatCongDts;
-      if (params.hasOwnProperty('action') && params.action === 'add.hat.congdts.db') {
+      if (params.hasOwnProperty('action') 
+        && params.action === 'create.update.hat.congdts.db') {
         //implement 
+        hatCongdtsUpdate['giao_phan_id'] = state.info.id;
+        hatCongdtsUpdate['action'] = params.action;
+        apiUpdateInfo(
+          hatCongdtsUpdate,
+          (result) => {
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
         console.log('api', params)
         _.forEach(params.hat.cong_doan_tu_sis, function(item) {
           if (item.hasOwnProperty('id') && (item.id == hatCongdtsUpdate.id) ) {
@@ -243,10 +259,24 @@ export default {
       });
       commit('update_giao_xu_in_hat', giaoHat);
     },
-    ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({commit}, params) {
+    ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({commit, state}, params) {
       let hatXuUpdate = params.hatXu;
       if (params.hasOwnProperty('action') && params.action === 'create.update.hat.xu.db') {
         //implement 
+        hatXuUpdate['giao_phan_id'] = state.info.id;
+        hatXuUpdate['action'] = params.action;
+        apiUpdateInfo(
+          hatXuUpdate,
+          (result) => {
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
         console.log('api', params)
         _.forEach(params.hat.giao_xus, function(item) {
           if (item.hasOwnProperty('id') && (item.id == hatXuUpdate.id) ) {
@@ -294,6 +324,20 @@ export default {
       let giaoHats = state.info.giao_phan_hats;
       if (params.hasOwnProperty('action') && params.action === 'create.update.hat.db') {
         //implement
+        hat['giao_phan_id'] = state.info.id;
+        hat['action'] = params.action;
+        apiUpdateInfo(
+          hat,
+          (result) => {
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
         console.log('api', params)
         _.forEach(giaoHats, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
@@ -339,6 +383,20 @@ export default {
       let dongs = state.info.giao_phan_dongs;
       if (params.hasOwnProperty('action') && params.action === 'create.update.dong.db') {
         //implement
+        dong['giao_phan_id'] = state.info.id;
+        dong['action'] = params.action;
+        apiUpdateInfo(
+          dong,
+          (result) => {
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
         console.log('api', params)
         _.forEach(dongs, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.dong.id) ) {
@@ -384,6 +442,20 @@ export default {
       let cosos = state.info.giao_phan_cosos;
       if (params.hasOwnProperty('action') && params.action === 'create.update.co.so.db') {
         //implement
+        coso['giao_phan_id'] = state.info.id;
+        coso['action'] = params.action;
+        apiUpdateInfo(
+          coso,
+          (result) => {
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
         console.log('api', params)
         _.forEach(cosos, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.coso.id) ) {
@@ -429,6 +501,20 @@ export default {
       let banChuyenTrachs = state.info.giao_phan_banchuyentrachs;
       if (params.hasOwnProperty('action') && params.action === 'create.update.ban.chuyen.trach.db') {
         //implement
+        banChuyenTrach['giao_phan_id'] = state.info.id;
+        banChuyenTrach['action'] = params.action;
+        apiUpdateInfo(
+          banChuyenTrach,
+          (result) => {
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
         console.log('api', params)
         _.forEach(banChuyenTrachs, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.banChuyenTrach.id) ) {

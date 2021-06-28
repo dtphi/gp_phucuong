@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>
+    <td class="text-center">
       <info-cong-doan-tu-si-autocomplete
         :hat="hat"
         :hat-cong-dts="item"
@@ -84,12 +84,13 @@ export default {
       });
     },
     _addCongdtsForm() {
-      if (this.item.cong_doan_tu_si_id && this.hat.giao_hat_id) {
-        this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
-          action: 'create.update.hat.congdts.db',
-          hat: this.hat,
-          hatCongDts: this.item
-        });
+      if (this.item.cong_doan_tu_si_id 
+        && this.hat.giao_hat_id) {
+          this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
+            action: 'create.update.hat.congdts.db',
+            hat: this.hat,
+            hatCongDts: this.item
+          });
       }
     },
   },

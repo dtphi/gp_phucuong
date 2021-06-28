@@ -263,6 +263,18 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return $query->get();
     }
 
+    public function apiUpdateGiaoHat($data = []) {
+        $hat = GiaoPhanHat::updateOrCreate(
+            [
+                'giao_phan_id' => $data['giao_phan_id'], 
+                'giao_hat_id' => $data['giao_hat_id']
+            ],
+            [
+                'active' => $data['active']
+            ]
+        );
+    }
+
     public function apiGetGiaoDiemList($data = [])
     {
         $model = new GiaoDiem();

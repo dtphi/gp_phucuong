@@ -129,6 +129,25 @@ class GiaoPhanController extends ApiController
      */
     public function update(GiaoPhanRequest $request, $id = null)
     {
+        $action = $request->get('action');
+
+        if ($action == 'create.update.hat.congdts.db') {
+
+            echo $action;die;
+        } elseif ($action == 'create.update.hat.xu.db') {
+            echo $action;die;
+        } elseif ($action == 'create.update.hat.db') {
+            $data = $request->all();
+            $this->gphSv->apiUpdateGiaoHat($data);
+            echo $action;die;
+        } elseif ($action == 'create.update.dong.db') {
+            echo $action;die;
+        } elseif ($action == 'create.update.co.so.db') {
+            echo $action;die;
+        } elseif ($action == 'create.update.ban.chuyen.trach.db') {
+            echo $action;die;
+        }
+        
         try {
             $model = $this->gphSv->apiGetDetail($id);
 

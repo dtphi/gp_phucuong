@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>
+    <td class="text-center">
       <info-ban-chuyen-trach-autocomplete
         :ban-chuyen-trach="item"
         :key="item.id"

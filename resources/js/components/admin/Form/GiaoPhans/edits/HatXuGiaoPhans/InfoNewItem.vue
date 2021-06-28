@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>
+    <td class="text-center">
       <info-giao-xu-autocomplete
         :hat="hat"
         :hat-xu="item"

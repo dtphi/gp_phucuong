@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>
+    <td class="text-center">
       <info-co-so-giao-phan-autocomplete
         :coso="item"
         :key="item.id"

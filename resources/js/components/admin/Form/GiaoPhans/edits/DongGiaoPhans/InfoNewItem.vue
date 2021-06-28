@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>
+    <td class="text-center">
       <info-dong-autocomplete
         :dong="item"
       ></info-dong-autocomplete>
