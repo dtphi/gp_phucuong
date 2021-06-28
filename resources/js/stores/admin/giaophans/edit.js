@@ -197,17 +197,32 @@ export default {
     },
     ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({commit}, params) {
       let hatCongdtsUpdate = params.hatCongDts;
-      _.forEach(params.hat.cong_doan_tu_sis, function(item) {
-        if (item.hasOwnProperty('id') && (item.id == hatCongdtsUpdate.id) ) {
-          hatCongdtsUpdate = _.update(item, 'cong_doan_tu_si_id', function(cong_doan_tu_si_id) {
-              return cong_doan_tu_si_id = params.hatCongDtsInfo.id;
-          })
-          hatCongdtsUpdate =  _.update(item, 'hatCongDtsName', function(hatCongDtsName) {
-            return hatCongDtsName = params.hatCongDtsInfo.name;
-          });
-          commit('update_dropdown_congdts_in_hat', hatCongdtsUpdate);
-        }
-      });
+      if (params.hasOwnProperty('action') && params.action === 'add.hat.congdts.db') {
+        console.log("add hat congdts", params.item);
+        _.forEach(params.hat.cong_doan_tu_sis, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == hatCongdtsUpdate.id) ) {
+            hatCongdtsUpdate = _.update(item, 'cong_doan_tu_si_id', function(cong_doan_tu_si_id) {
+                return cong_doan_tu_si_id = params.hatCongDtsInfo.id;
+            })
+            hatCongdtsUpdate =  _.update(item, 'hatCongDtsName', function(hatCongDtsName) {
+              return hatCongDtsName = params.hatCongDtsInfo.name;
+            });
+            commit('update_dropdown_congdts_in_hat', hatCongdtsUpdate);
+          }
+        });
+      } else {
+        _.forEach(params.hat.cong_doan_tu_sis, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == hatCongdtsUpdate.id) ) {
+            hatCongdtsUpdate = _.update(item, 'cong_doan_tu_si_id', function(cong_doan_tu_si_id) {
+                return cong_doan_tu_si_id = params.hatCongDtsInfo.id;
+            })
+            hatCongdtsUpdate =  _.update(item, 'hatCongDtsName', function(hatCongDtsName) {
+              return hatCongDtsName = params.hatCongDtsInfo.name;
+            });
+            commit('update_dropdown_congdts_in_hat', hatCongdtsUpdate);
+          }
+        });
+      }
     },
     addHatXuGiaoPhan({commit}, params) {
       let giaoHat = params.giaoHat;
@@ -270,17 +285,29 @@ export default {
     ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({commit, state}, params) {
       let hat = params.hat;
       let giaoHats = state.info.giao_phan_hats;
-      _.forEach(giaoHats, function(item) {
-        if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
-            hat = _.update(item, 'giao_hat_id', function(giao_hat_id) {
-                return giao_hat_id = params.hatInfo.id;
-            });
-            hat = _.update(item, 'hatName', function(hatName) {
-                return hatName = params.hatInfo.name;
-            });
-            commit('update_dropdown_hat_in_giao_phan', hat);
-        }
-      });
+      if (params.hasOwnProperty('action') && params.action === 'create.update.hat.db') {
+        //implement
+        console.log('api', params)
+        _.forEach(giaoHats, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
+              item.isEdit = 1;
+              hat = item;
+              commit('update_dropdown_hat_in_giao_phan', hat);
+          }
+        });
+      } else {
+        _.forEach(giaoHats, function(item) {
+          if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
+              hat = _.update(item, 'giao_hat_id', function(giao_hat_id) {
+                  return giao_hat_id = params.hatInfo.id;
+              });
+              hat = _.update(item, 'hatName', function(hatName) {
+                  return hatName = params.hatInfo.name;
+              });
+              commit('update_dropdown_hat_in_giao_phan', hat);
+          }
+        });
+      }
     },
     addDongGiaoPhan({commit, state}, params) {
       let dongs = state.info.giao_phan_dongs;

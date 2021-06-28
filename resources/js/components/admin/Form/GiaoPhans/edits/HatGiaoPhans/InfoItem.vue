@@ -83,7 +83,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan", "ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST"]),
     _removeItem() {
       this.removeHatGiaoPhan({
         action: "removeHatGiaoPhan",
@@ -94,7 +94,12 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateHatForm() {
-      console.log("update hat", this.item);
+      if (this.item.giao_hat_id) {
+        this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({
+          action: 'create.update.hat.db',
+          hat: this.item
+        });
+      }
     },
     _getStatus() {
       return this.item.active == 1 ? "Xảy ra" : "Ẩn";

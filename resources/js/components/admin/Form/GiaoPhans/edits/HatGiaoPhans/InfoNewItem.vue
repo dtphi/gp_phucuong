@@ -1,10 +1,11 @@
 <template>
   <tr>
-    <td>
+    <td class="text-center">
       <info-giao-hat-autocomplete
         :hat="item"
         :key="item.id"
       ></info-giao-hat-autocomplete>
+      <span class="cms-text-red">{{ _getErrorGiaoHatSelect }}</span>
     </td>
     <td>
       <select id="input-info-active" v-model="item.active" class="form-control">
@@ -56,8 +57,22 @@ export default {
       default: {},
     },
   },
+  data () {
+    return {
+      error_giao_hat_select: null
+    }
+  },
+  computed: {
+    _getErrorGiaoHatSelect() {
+      if (this.item.giao_hat_id) {
+        return null
+      }
+
+      return 'Chọn giáo hạt';
+    }
+  },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan", "ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST"]),
     _removeItem() {
       this.removeHatGiaoPhan({
         action: "removeHatGiaoPhan",
@@ -65,7 +80,12 @@ export default {
       });
     },
     _addHatForm() {
-      console.log("add hat", this.item);
+      if (this.item.giao_hat_id) {
+        this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({
+          action: 'create.update.hat.db',
+          hat: this.item
+        });
+      }
     },
   }
 };
