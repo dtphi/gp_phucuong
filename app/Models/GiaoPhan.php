@@ -70,13 +70,13 @@ class GiaoPhan extends BaseModel
             foreach ($this->hats as $hat) {
                 $value[] = [
                     'id' => $hat->id,
+                    'giaoHatOldId' => $hat->id,
                     'isEdit' => 1,
                     'active'=> $hat->active,
                     'cong_doan_tu_sis'=> $hat->arr_cong_doan_tu_si_list,
                     'giao_hat_id'=> $hat->giao_hat_id,
                     'giao_xus' => $hat->arr_giao_xu_list,
-                    'hatName' => $hat->name,
-                    'id'=> $hat->id
+                    'hatName' => $hat->name
                 ];
             }
         }
@@ -91,11 +91,11 @@ class GiaoPhan extends BaseModel
             foreach ($this->dongs as $dong) {
                 $value[] = [
                     'id' => $dong->id,
+                    'dongOldId' => $dong->id,
                     'isEdit' => 1,
                     'active'=> $dong->active,
                     'dong_id'=> $dong->dong_id,
-                    'dongName' => $dong->name,
-                    'id'=> $dong->id
+                    'dongName' => $dong->name
                 ];
             }
         }
@@ -110,6 +110,7 @@ class GiaoPhan extends BaseModel
             foreach ($this->cosos as $coso) {
                 $value[] = [
                     'id' => $coso->id,
+                    'coSoOldId' => $coso->id,
                     'isEdit' => 1,
                     'active'=> $coso->active,
                     'co_so_giao_phan_id'=> $coso->co_so_giao_phan_id,
@@ -129,6 +130,7 @@ class GiaoPhan extends BaseModel
             foreach ($this->banChuyenTrachs as $banChuyenTrach) {
                 $value[] = [
                     'id' => $banChuyenTrach->id,
+                    'banChuyenTrachOldId' => $banChuyenTrach->id,
                     'isEdit' => 1,
                     'active'=> $banChuyenTrach->active,
                     'ban_chuyen_trach_id'=> $banChuyenTrach->ban_chuyen_trach_id,

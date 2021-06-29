@@ -23,7 +23,8 @@
       <tfoot>
         <tr>
           <td colspan="3" class="text-right">
-            <btn-add :giao-hat="item"></btn-add>
+            <btn-add-all :giao-hat="item"  v-show="lists.lenght"></btn-add-all>
+            <btn-add v-show="item.giao_hat_id" :giao-hat="item"></btn-add>
           </td>
         </tr>
       </tfoot>
@@ -33,6 +34,7 @@
 
 <script>
 import BtnAdd from "./BtnAdd";
+import BtnAddAll from "./BtnAddAll";
 import InfoItem from "./InfoItem";
 import InfoNewItem from "./InfoNewItem";
 
@@ -40,6 +42,7 @@ export default {
   name: "TheInfoList",
   components: {
     BtnAdd,
+    BtnAddAll,
     InfoItem,
     InfoNewItem,
   },

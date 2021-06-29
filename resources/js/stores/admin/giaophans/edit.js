@@ -206,6 +206,10 @@ export default {
         apiUpdateInfo(
           hatCongdtsUpdate,
           (result) => {
+            commit('update_congdts_in_hat', {
+              id: hatCongdtsUpdate.hatId,
+              cong_doan_tu_sis: result.data.data.results
+            })
             commit(INFOS_MODAL_SET_ERROR, []);
             commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
           },
@@ -215,13 +219,6 @@ export default {
             dispatch(ACTION_SET_LOADING, false);
           }
         )
-        console.log('api', params)
-        _.forEach(params.hat.cong_doan_tu_sis, function(item) {
-          if (item.hasOwnProperty('id') && (item.id == hatCongdtsUpdate.id) ) {
-            hatCongdtsUpdate.isEdit = 1;
-            commit('update_dropdown_congdts_in_hat', hatCongdtsUpdate);
-          }
-        });
       } else {
         _.forEach(params.hat.cong_doan_tu_sis, function(item) {
           if (item.hasOwnProperty('id') && (item.id == hatCongdtsUpdate.id) ) {
@@ -259,17 +256,23 @@ export default {
       });
       commit('update_giao_xu_in_hat', giaoHat);
     },
-    ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({commit, state}, params) {
+    ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({dispatch, commit, state}, params) {
       let hatXuUpdate = params.hatXu;
       if (params.hasOwnProperty('action') && params.action === 'create.update.hat.xu.db') {
+        dispatch(ACTION_SET_LOADING, true);
         //implement 
         hatXuUpdate['giao_phan_id'] = state.info.id;
         hatXuUpdate['action'] = params.action;
         apiUpdateInfo(
           hatXuUpdate,
           (result) => {
+            commit('update_giao_xu_in_hat', {
+              id: hatXuUpdate.hatId,
+              giao_xus: result.data.data.results
+            })
             commit(INFOS_MODAL_SET_ERROR, []);
             commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
           },
           (errors) => {
             commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
@@ -277,13 +280,6 @@ export default {
             dispatch(ACTION_SET_LOADING, false);
           }
         )
-        console.log('api', params)
-        _.forEach(params.hat.giao_xus, function(item) {
-          if (item.hasOwnProperty('id') && (item.id == hatXuUpdate.id) ) {
-            hatXuUpdate.isEdit = 1;
-            commit('update_dropdown_giao_xu_in_hat', hatXuUpdate);
-          }
-        });
       } else {
         _.forEach(params.hat.giao_xus, function(item) {
           if (item.hasOwnProperty('id') && (item.id == hatXuUpdate.id) ) {
@@ -319,18 +315,21 @@ export default {
       })
       commit('update_hat_in_giao_phan', giaoPhanHats)
     },
-    ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({commit, state}, params) {
+    ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({dispatch, commit, state}, params) {
       let hat = params.hat;
       let giaoHats = state.info.giao_phan_hats;
       if (params.hasOwnProperty('action') && params.action === 'create.update.hat.db') {
+        dispatch(ACTION_SET_LOADING, true);
         //implement
         hat['giao_phan_id'] = state.info.id;
         hat['action'] = params.action;
         apiUpdateInfo(
           hat,
           (result) => {
+            commit('update_hat_in_giao_phan', result.data.data.results);
             commit(INFOS_MODAL_SET_ERROR, []);
             commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
           },
           (errors) => {
             commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
@@ -338,13 +337,6 @@ export default {
             dispatch(ACTION_SET_LOADING, false);
           }
         )
-        console.log('api', params)
-        _.forEach(giaoHats, function(item) {
-          if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {
-            hat.isEdit = 1;
-            commit('update_dropdown_hat_in_giao_phan', hat);
-          }
-        });
       } else {
         _.forEach(giaoHats, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.hat.id) ) {

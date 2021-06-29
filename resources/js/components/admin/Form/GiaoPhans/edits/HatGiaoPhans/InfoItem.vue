@@ -29,7 +29,7 @@
         title="Cập nhật giáo hạt"
         class="btn btn-primary cms-btn"
       >
-        <i class="fa fa-save"></i>
+        <i class="fa fa-edit"></i>
       </button>
       <button
         @click="_openEditForm"

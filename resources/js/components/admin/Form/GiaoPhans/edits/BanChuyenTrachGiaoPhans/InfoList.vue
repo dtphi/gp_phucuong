@@ -18,6 +18,7 @@
       <tfoot>
         <tr>
           <td colspan="3" class="text-right">
+            <btn-add-all v-show="lists.lenght"></btn-add-all>
             <btn-add></btn-add>
           </td>
         </tr>
@@ -28,6 +29,7 @@
 
 <script>
 import BtnAdd from "./BtnAdd";
+import BtnAddAll from "./BtnAddAll";
 import InfoItem from "./InfoItem";
 import InfoNewItem from "./InfoNewItem";
 
@@ -35,6 +37,7 @@ export default {
   name: "TheInfoList",
   components: {
     BtnAdd,
+    BtnAddAll,
     InfoItem,
     InfoNewItem,
   },

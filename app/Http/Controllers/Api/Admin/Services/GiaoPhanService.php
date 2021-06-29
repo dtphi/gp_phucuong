@@ -6,6 +6,10 @@ use App\Http\Common\Tables;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanModel;
 use App\Http\Resources\GiaoPhans\GiaoPhanResource;
+use App\Http\Resources\GiaoPhanHats\GiaoPhanHatResource;
+use App\Http\Resources\GiaoPhanHats\GiaoPhanHatCollection;
+use App\Http\Resources\GiaoPhanHatXus\GiaoPhanHatXuCollection;
+use App\Http\Resources\GiaoPhanHatCongDoanTuSis\GiaoPhanHatCongDoanTuSiCollection;
 use App\Models\CongDoanTuSi;
 use App\Models\GiaoDiem;
 use App\Models\GiaoHat;
@@ -110,15 +114,16 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
             if (isset($data['hats']) && !empty($data['hats'])) {
                 foreach ($data['hats'] as $hat) {
                     GiaoPhanHat::insertByGiaoPhanId($giaoPhanId, $hat['giao_hat_id'], $hat['active']);
+                    $giaoPhanHat = GiaoPhanHat::latest('id')->first();
                     if (isset($hat['giao_xus'])) {
                         foreach ($hat['giao_xus'] as $giaoXu) {
-                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $giaoXu['giao_xu_id'],
+                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $giaoPhanHat->id, $hat['giao_hat_id'], $giaoXu['giao_xu_id'],
                                 $giaoXu['active']);
                         }
                     }
                     if (isset($hat['cong_doan_tu_sis'])) {
                         foreach ($hat['cong_doan_tu_sis'] as $congDts) {
-                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'],
+                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $giaoPhanHat->id, $hat['giao_hat_id'],
                                 $congDts['cong_doan_tu_si_id'], $congDts['active']);
                         }
                     }
@@ -173,19 +178,20 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
             if (isset($data['hats']) && !empty($data['hats'])) {
                 foreach ($data['hats'] as $hat) {
                     GiaoPhanHat::insertByGiaoPhanId($giaoPhanId, $hat['giao_hat_id'], $hat['active']);
+                    $giaoPhanHat = GiaoPhanHat::latest('id')->first();
                     if (isset($hat['giao_xus']) && !empty($hat['giao_xus'])) {
                         foreach ($hat['giao_xus'] as $giaoXu) {
                             $giaoDiem                = [];
                             $giaoDiem['giao_hat_id'] = $hat['giao_hat_id'];
                             $giaoDiem['giao_xu_id']  = $giaoXu['giao_xu_id'];
                             $giaoXuDiems[]           = $giaoDiem;
-                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'], $giaoXu['giao_xu_id'],
+                            GiaoPhanHatXu::insertByGiaoHatId($giaoPhanId, $giaoPhanHat->id, $hat['giao_hat_id'], $giaoXu['giao_xu_id'],
                                 $giaoXu['active']);
                         }
                     }
                     if (isset($hat['cong_doan_tu_sis'])) {
                         foreach ($hat['cong_doan_tu_sis'] as $congDts) {
-                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $hat['giao_hat_id'],
+                            GiaoPhanHatCongDoanTuSi::insertByGiaoHatId($giaoPhanId, $giaoPhanHat->id, $hat['giao_hat_id'],
                                 $congDts['cong_doan_tu_si_id'], $congDts['active']);
                         }
                     }
@@ -264,6 +270,11 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
     }
 
     public function apiUpdateGiaoHat($data = []) {
+        if ($data['isEdit']) {
+            if ((int)$data['id'] != (int)$data['giaoHatOldId']) {
+                GiaoPhanHat::fcDeleteById($data['giaoHatOldId']);
+            }
+        }
         $hat = GiaoPhanHat::updateOrCreate(
             [
                 'giao_phan_id' => $data['giao_phan_id'], 
@@ -273,6 +284,33 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
                 'active' => $data['active']
             ]
         );
+
+        return new GiaoPhanHatCollection(GiaoPhanHat::where('giao_phan_id', $data['giao_phan_id'])->get());
+    }
+
+    public function apiUpdateGiaoXu($data = []) {
+        if ($data['isEdit']) {
+            if ((int)$data['id'] != (int)$data['giaoXuOldId']) {
+                GiaoPhanHatXu::fcDeleteById($data['giaoXuOldId']);
+            }
+        }
+        $hat = GiaoPhanHatXu::updateOrCreate(
+            [
+                'giao_phan_hat_id' => $data['hatId'],
+                'giao_phan_id' => $data['giao_phan_id'], 
+                'giao_hat_id' => $data['giao_hat_id'],
+                'giao_xu_id' => $data['giao_xu_id']
+            ],
+            [
+                'active' => $data['active']
+            ]
+        );
+
+        $giaoXus = GiaoPhanHatXu::where('giao_phan_hat_id', $data['hatId'])
+        ->where('giao_phan_id', $data['giao_phan_id'])
+        ->where('giao_hat_id', $data['giao_hat_id'])->get();
+
+        return new GiaoPhanHatXuCollection($giaoXus);
     }
 
     public function apiGetGiaoDiemList($data = [])
@@ -291,5 +329,31 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
             ->orderBy('name', 'DESC');
 
         return $query->get();
+    }
+
+    public function apiUpdateCongDoanTuSi($data = []) 
+    {
+        if ($data['isEdit']) {
+            if ((int)$data['id'] != (int)$data['congDoanTuSiOldId']) {
+                GiaoPhanHatCongDoanTuSi::fcDeleteById($data['congDoanTuSiOldId']);
+            }
+        }
+        $hat = GiaoPhanHatCongDoanTuSi::updateOrCreate(
+            [
+                'giao_phan_hat_id' => $data['hatId'],
+                'giao_phan_id' => $data['giao_phan_id'], 
+                'giao_hat_id' => $data['giao_hat_id'],
+                'cong_doan_tu_si_id' => $data['cong_doan_tu_si_id']
+            ],
+            [
+                'active' => $data['active']
+            ]
+        );
+
+        $congdts = GiaoPhanHatCongDoanTuSi::where('giao_phan_hat_id', $data['hatId'])
+        ->where('giao_phan_id', $data['giao_phan_id'])
+        ->where('giao_hat_id', $data['giao_hat_id'])->get();
+
+        return new GiaoPhanHatCongDoanTuSiCollection($congdts);
     }
 }

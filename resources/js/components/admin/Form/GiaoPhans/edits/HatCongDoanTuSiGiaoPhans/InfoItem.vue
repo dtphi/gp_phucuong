@@ -30,7 +30,7 @@
         title="Cập nhật công đoàn tu sĩ"
         class="btn btn-primary cms-btn"
       >
-        <i class="fa fa-save"></i>
+        <i class="fa fa-edit"></i>
       </button>
       <button
         @click="_openEditForm"
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "removeHatCongDoanTuSiGiaoPhan",
+      "removeHatCongDoanTuSiGiaoPhan","ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST"
     ]),
     _removeItem() {
       this.removeHatCongDoanTuSiGiaoPhan({
@@ -103,7 +103,11 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateCongdtsForm() {
-      console.log("update cong đoàn", this.item);
+      this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
+        action: 'create.update.hat.congdts.db',
+        hat: this.hat,
+        hatCongDts: this.item
+      });
     },
     _getStatus() {
       return this.item.active == 1 ? "Xảy ra" : "Ẩn";

@@ -30,7 +30,7 @@
         title="Cập nhật giáo xứ"
         class="btn btn-primary cms-btn"
       >
-        <i class="fa fa-save"></i>
+        <i class="fa fa-edit"></i>
       </button>
       <button
         @click="_openEditForm"
@@ -89,7 +89,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatXuGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatXuGiaoPhan", "ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST"]),
     _removeItem() {
       this.removeHatXuGiaoPhan({
         action: "removeHatXuGiaoPhan",
@@ -101,7 +101,11 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateXuForm() {
-      console.log("update xứ", this.item);
+      this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({
+        action: 'create.update.hat.xu.db',
+        hat: this.hat,
+        hatXu: this.item
+      });
     },
     _getStatus() {
       return this.item.active == 1 ? "Xảy ra" : "Ẩn";

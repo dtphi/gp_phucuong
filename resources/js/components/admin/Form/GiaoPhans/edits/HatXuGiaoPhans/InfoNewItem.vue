@@ -15,7 +15,7 @@
       </select>
     </td>
     <td class="text-right">
-      <button
+      <button v-show="hat.giao_hat_id && hat.isEdit"
         @click="_addXuForm()"
         type="button"
         data-toggle="tooltip"

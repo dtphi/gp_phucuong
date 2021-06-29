@@ -19,6 +19,18 @@ class GiaoPhanHat extends BaseModel
      */
     protected $table = DB_PREFIX . 'giaophan_hats';
 
+    /**
+     * @author : dtphi .
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'giao_phan_id',
+        'giao_hat_id',
+        'active'
+    ];
+
     public function giaoHat()
     {
         return $this->hasOne(GiaoHat::class, $this->primaryKey, 'giao_hat_id');
@@ -26,12 +38,12 @@ class GiaoPhanHat extends BaseModel
 
     public function giaoXus()
     {
-        return $this->hasMany(GiaoPhanHatXu::class, 'giao_hat_id', 'giao_hat_id');
+        return $this->hasMany(GiaoPhanHatXu::class, 'giao_phan_hat_id');
     }
 
     public function congDoanTuSis()
     {
-        return $this->hasMany(GiaoPhanHatCongDoanTuSi::class, 'giao_hat_id', 'giao_hat_id');
+        return $this->hasMany(GiaoPhanHatCongDoanTuSi::class, 'giao_phan_hat_id');
     }
 
     public function getNameAttribute($value) {
@@ -46,9 +58,11 @@ class GiaoPhanHat extends BaseModel
                 if ((int)$giaoXu->giao_phan_id === (int)$this->giao_phan_id) {
                     $value[] = [
                         'id' => $giaoXu->id,
+                        'giaoXuOldId' => $giaoXu->id,
                         'isEdit' => 1,
                         'active'=> $giaoXu->active,
                         'giao_xu_diems'=> [],
+                        'giao_phan_hat_id'=> $giaoXu->giao_phan_hat_id,
                         'giao_hat_id'=> $giaoXu->giao_hat_id,
                         'giao_xu_id' => $giaoXu->giao_xu_id,
                         'hatId' => $this->id,
@@ -70,8 +84,10 @@ class GiaoPhanHat extends BaseModel
                 if ((int)$congDoanTuSi->giao_phan_id === (int)$this->giao_phan_id) {
                     $value[] = [
                         'id' => $congDoanTuSi->id,
+                        'congDoanTuSiOldId' =>  $congDoanTuSi->id,
                         'isEdit' => 1,
                         'active'=> $congDoanTuSi->active,
+                        'giao_phan_hat_id'=> $congDoanTuSi->giao_phan_hat_id,
                         'giao_hat_id'=> $congDoanTuSi->giao_hat_id,
                         'cong_doan_tu_si_id' => $congDoanTuSi->cong_doan_tu_si_id,
                         'hatId' => $this->id,
@@ -105,6 +121,19 @@ class GiaoPhanHat extends BaseModel
 
         if ($giaoPhanId) {
             return DB::delete("delete from " . Tables::$giaophan_hats . " where giao_phan_id = '" . $giaoPhanId . "'");
+        }
+    }
+
+    public static function fcDeleteById($id = null)
+    {
+        $id = (int)$id;
+
+        if ($id) {
+            DB::delete("delete from " . Tables::$giaophan_hat_xus . " where giao_phan_hat_id = '" . $id . "'");
+            DB::delete("delete from " . Tables::$giaophan_hat_xu_diems . " where giao_phan_hat_id = '" . $id . "'");
+            DB::delete("delete from " . Tables::$giaophan_hat_congdoantusis . " where giao_phan_hat_id = '" . $id . "'");
+
+            return DB::delete("delete from " . Tables::$giaophan_hats . " where id = '" . $id . "'");
         }
     }
 }
