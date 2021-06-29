@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "removeBanChuyenTrachGiaoPhan",
+      "removeBanChuyenTrachGiaoPhan","ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST"
     ]),
     _removeItem() {
       this.removeBanChuyenTrachGiaoPhan({
@@ -96,7 +96,12 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateBanChuyenTrachForm() {
-      console.log("update ban chuyen trach", this.item);
+      if (this.item.ban_chuyen_trach_id) {
+        this.ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({
+          action: 'create.update.ban.chuyen.trach.db',
+          banChuyenTrach: this.item
+        });
+      }
     },
     _getStatus() {
       return this.item.active == 1 ? "Xảy ra" : "Ẩn";

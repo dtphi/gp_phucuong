@@ -17,6 +17,18 @@ class GiaoPhanBanChuyenTrach extends BaseModel
      */
     protected $table = DB_PREFIX . 'giaophan_banchuyentrachs';
 
+    /**
+     * @author : dtphi .
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'giao_phan_id',
+        'ban_chuyen_trach_id',
+        'active'
+    ];
+
     public function banChuyenTrach()
     {
         return $this->hasOne(BanChuyenTrach::class, $this->primaryKey, 'ban_chuyen_trach_id');
@@ -47,6 +59,15 @@ class GiaoPhanBanChuyenTrach extends BaseModel
 
         if ($giaoPhanId) {
             return DB::delete("delete from " . Tables::$giaophan_banchuyentrachs . " where giao_phan_id = '" . $giaoPhanId . "'");
+        }
+    }
+
+    public static function fcDeleteById($id = null)
+    {
+        $id = (int)$id;
+
+        if ($id) {
+            return DB::delete("delete from " . Tables::$giaophan_banchuyentrachs . " where id = '" . $id . "'");
         }
     }
 }

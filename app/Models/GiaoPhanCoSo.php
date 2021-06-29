@@ -17,6 +17,18 @@ class GiaoPhanCoSo extends BaseModel
      */
     protected $table = DB_PREFIX . 'giaophan_cosos';
 
+    /**
+     * @author : dtphi .
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'giao_phan_id',
+        'co_so_giao_phan_id',
+        'active'
+    ];
+
     public function coso()
     {
         return $this->hasOne(CoSoGiaoPhan::class, $this->primaryKey, 'co_so_giao_phan_id');
@@ -48,6 +60,15 @@ class GiaoPhanCoSo extends BaseModel
 
         if ($giaoPhanId) {
             return DB::delete("delete from " . Tables::$giaophan_cosos . " where giao_phan_id = '" . $giaoPhanId . "'");
+        }
+    }
+
+    public static function fcDeleteById($id = null)
+    {
+        $id = (int)$id;
+
+        if ($id) {
+            return DB::delete("delete from " . Tables::$giaophan_cosos . " where id = '" . $id . "'");
         }
     }
 }

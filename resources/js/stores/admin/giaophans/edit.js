@@ -370,18 +370,21 @@ export default {
       })
       commit('update_dong_in_giao_phan', giaoPhanDongs);
     },
-    ACTION_UPDATE_DROPDOWN_DONG_LIST({commit, state}, params) {
+    ACTION_UPDATE_DROPDOWN_DONG_LIST({dispatch, commit, state}, params) {
       let dong = params.dong;
       let dongs = state.info.giao_phan_dongs;
       if (params.hasOwnProperty('action') && params.action === 'create.update.dong.db') {
+        dispatch(ACTION_SET_LOADING, true);
         //implement
         dong['giao_phan_id'] = state.info.id;
         dong['action'] = params.action;
         apiUpdateInfo(
           dong,
           (result) => {
+            commit('update_dong_in_giao_phan', result.data.data.results)
             commit(INFOS_MODAL_SET_ERROR, []);
             commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
           },
           (errors) => {
             commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
@@ -389,13 +392,6 @@ export default {
             dispatch(ACTION_SET_LOADING, false);
           }
         )
-        console.log('api', params)
-        _.forEach(dongs, function(item) {
-          if (item.hasOwnProperty('id') && (item.id == params.dong.id) ) {
-              dong.isEdit = 1;
-              commit('update_dropdown_dong_in_giao_phan', dong);
-          }
-        });
       } else {
         _.forEach(dongs, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.dong.id) ) {
@@ -429,18 +425,21 @@ export default {
       })
       commit('update_coso_in_giao_phan', giaoPhanCosos);
     },
-    ACTION_UPDATE_DROPDOWN_COSO_LIST({commit, state}, params) {
+    ACTION_UPDATE_DROPDOWN_COSO_LIST({dispatch, commit, state}, params) {
       let coso = params.coso;
       let cosos = state.info.giao_phan_cosos;
       if (params.hasOwnProperty('action') && params.action === 'create.update.co.so.db') {
+        dispatch(ACTION_SET_LOADING, true);
         //implement
         coso['giao_phan_id'] = state.info.id;
         coso['action'] = params.action;
         apiUpdateInfo(
           coso,
           (result) => {
+            commit('update_coso_in_giao_phan', result.data.data.results)
             commit(INFOS_MODAL_SET_ERROR, []);
             commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
           },
           (errors) => {
             commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
@@ -448,13 +447,6 @@ export default {
             dispatch(ACTION_SET_LOADING, false);
           }
         )
-        console.log('api', params)
-        _.forEach(cosos, function(item) {
-          if (item.hasOwnProperty('id') && (item.id == params.coso.id) ) {
-              coso.isEdit = 1;
-              commit('update_dropdown_coso_in_giao_phan', coso);
-          }
-        });
       } else {
         _.forEach(cosos, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.coso.id) ) {
@@ -488,18 +480,21 @@ export default {
       })
       commit('update_banchuyentrach_in_giao_phan', giaoPhanBanChuyenTrachs);
     },
-    ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({commit, state}, params) {
+    ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({dispatch, commit, state}, params) {
       let banChuyenTrach = params.banChuyenTrach;
       let banChuyenTrachs = state.info.giao_phan_banchuyentrachs;
       if (params.hasOwnProperty('action') && params.action === 'create.update.ban.chuyen.trach.db') {
+        dispatch(ACTION_SET_LOADING, true);
         //implement
         banChuyenTrach['giao_phan_id'] = state.info.id;
         banChuyenTrach['action'] = params.action;
         apiUpdateInfo(
           banChuyenTrach,
           (result) => {
+            commit('update_banchuyentrach_in_giao_phan', result.data.data.results)
             commit(INFOS_MODAL_SET_ERROR, []);
             commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
           },
           (errors) => {
             commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
@@ -507,13 +502,6 @@ export default {
             dispatch(ACTION_SET_LOADING, false);
           }
         )
-        console.log('api', params)
-        _.forEach(banChuyenTrachs, function(item) {
-          if (item.hasOwnProperty('id') && (item.id == params.banChuyenTrach.id) ) {
-            banChuyenTrach.isEdit = 1;
-            commit('update_dropdown_banchuyentrach_in_giao_phan', banChuyenTrach);
-          }
-        });
       } else {
         _.forEach(banChuyenTrachs, function(item) {
           if (item.hasOwnProperty('id') && (item.id == params.banChuyenTrach.id) ) {

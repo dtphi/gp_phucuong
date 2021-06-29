@@ -83,7 +83,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeCoSoGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeCoSoGiaoPhan","ACTION_UPDATE_DROPDOWN_COSO_LIST"]),
     _removeItem() {
       this.removeCoSoGiaoPhan({
         action: "removeCoSoGiaoPhan",
@@ -94,7 +94,12 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateCoSoForm() {
-      console.log("update co so", this.item);
+      if (this.item.co_so_giao_phan_id) {
+        this.ACTION_UPDATE_DROPDOWN_COSO_LIST({
+          action: 'create.update.co.so.db',
+          coso: this.item
+        });
+      }
     },
     _getStatus() {
       return this.item.active == 1 ? "Xảy ra" : "Ẩn";

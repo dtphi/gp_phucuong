@@ -85,7 +85,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeDongGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeDongGiaoPhan","ACTION_UPDATE_DROPDOWN_DONG_LIST"]),
     _removeItem() {
       this.removeDongGiaoPhan({
         action: "removeDongGiaoPhan",
@@ -96,7 +96,12 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateDongForm() {
-      console.log("update dong", this.item);
+      if (this.item.dong_id) {
+        this.ACTION_UPDATE_DROPDOWN_DONG_LIST({
+          action: 'create.update.dong.db',
+          dong: this.item
+        });
+      }
     },
     _getStatus() {
       return this.item.active == 1 ? "Xảy ra" : "Ẩn";

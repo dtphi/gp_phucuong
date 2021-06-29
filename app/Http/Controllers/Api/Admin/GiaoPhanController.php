@@ -157,11 +157,29 @@ class GiaoPhanController extends ApiController
     
             return $json;
         } elseif ($action == 'create.update.dong.db') {
-            echo $action;die;
+            try {
+                $json = $this->gphSv->apiUpdateDong($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
         } elseif ($action == 'create.update.co.so.db') {
-            echo $action;die;
+            try {
+                $json = $this->gphSv->apiUpdateCoSo($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
         } elseif ($action == 'create.update.ban.chuyen.trach.db') {
-            echo $action;die;
+            try {
+                $json = $this->gphSv->apiUpdateBanChuyenTrach($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
         }
         
         try {

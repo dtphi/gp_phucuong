@@ -17,6 +17,18 @@ class GiaoPhanDong extends BaseModel
      */
     protected $table = DB_PREFIX . 'giaophan_dongs';
 
+    /**
+     * @author : dtphi .
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'giao_phan_id',
+        'dong_id',
+        'active'
+    ];
+
     public function dong()
     {
         return $this->hasOne(Dong::class, $this->primaryKey, 'dong_id');
@@ -47,6 +59,15 @@ class GiaoPhanDong extends BaseModel
 
         if ($giaoPhanId) {
             return DB::delete("delete from " . Tables::$giaophan_dongs . " where giao_phan_id = '" . $giaoPhanId . "'");
+        }
+    }
+
+    public static function fcDeleteById($id = null)
+    {
+        $id = (int)$id;
+
+        if ($id) {
+            return DB::delete("delete from " . Tables::$giaophan_dongs . " where id = '" . $id . "'");
         }
     }
 }

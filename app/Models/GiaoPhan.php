@@ -114,8 +114,7 @@ class GiaoPhan extends BaseModel
                     'isEdit' => 1,
                     'active'=> $coso->active,
                     'co_so_giao_phan_id'=> $coso->co_so_giao_phan_id,
-                    'cosoName' => $coso->name,
-                    'id'=> $coso->id
+                    'cosoName' => $coso->name
                 ];
             }
         }
@@ -134,8 +133,7 @@ class GiaoPhan extends BaseModel
                     'isEdit' => 1,
                     'active'=> $banChuyenTrach->active,
                     'ban_chuyen_trach_id'=> $banChuyenTrach->ban_chuyen_trach_id,
-                    'banChuyenTrachName' => $banChuyenTrach->name,
-                    'id'=> $banChuyenTrach->id
+                    'banChuyenTrachName' => $banChuyenTrach->name
                 ];
             }
         }

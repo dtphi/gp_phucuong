@@ -10,6 +10,9 @@ use App\Http\Resources\GiaoPhanHats\GiaoPhanHatResource;
 use App\Http\Resources\GiaoPhanHats\GiaoPhanHatCollection;
 use App\Http\Resources\GiaoPhanHatXus\GiaoPhanHatXuCollection;
 use App\Http\Resources\GiaoPhanHatCongDoanTuSis\GiaoPhanHatCongDoanTuSiCollection;
+use App\Http\Resources\GiaoPhanDongs\GiaoPhanDongCollection;
+use App\Http\Resources\GiaoPhanCoSos\GiaoPhanCoSoCollection;
+use App\Http\Resources\GiaoPhanBanChuyenTrachs\GiaoPhanBanChuyenTrachCollection;
 use App\Models\CongDoanTuSi;
 use App\Models\GiaoDiem;
 use App\Models\GiaoHat;
@@ -355,5 +358,62 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         ->where('giao_hat_id', $data['giao_hat_id'])->get();
 
         return new GiaoPhanHatCongDoanTuSiCollection($congdts);
+    }
+
+    public function apiUpdateDong($data = []) {
+        if ($data['isEdit']) {
+            if ((int)$data['id'] != (int)$data['dongOldId']) {
+                GiaoPhanDong::fcDeleteById($data['dongOldId']);
+            }
+        }
+        $hat = GiaoPhanDong::updateOrCreate(
+            [
+                'giao_phan_id' => $data['giao_phan_id'], 
+                'dong_id' => $data['dong_id']
+            ],
+            [
+                'active' => $data['active']
+            ]
+        );
+
+        return new GiaoPhanDongCollection(GiaoPhanDong::where('giao_phan_id', $data['giao_phan_id'])->get());
+    }
+
+    public function apiUpdateCoSo($data = []) {
+        if ($data['isEdit']) {
+            if ((int)$data['id'] != (int)$data['coSoOldId']) {
+                GiaoPhanCoSo::fcDeleteById($data['coSoOldId']);
+            }
+        }
+        $hat = GiaoPhanCoSo::updateOrCreate(
+            [
+                'giao_phan_id' => $data['giao_phan_id'], 
+                'co_so_giao_phan_id' => $data['co_so_giao_phan_id']
+            ],
+            [
+                'active' => $data['active']
+            ]
+        );
+
+        return new GiaoPhanCoSoCollection(GiaoPhanCoSo::where('giao_phan_id', $data['giao_phan_id'])->get());
+    }
+
+    public function apiUpdateBanChuyenTrach($data = []) {
+        if ($data['isEdit']) {
+            if ((int)$data['id'] != (int)$data['banChuyenTrachOldId']) {
+                GiaoPhanBanChuyenTrach::fcDeleteById($data['banChuyenTrachOldId']);
+            }
+        }
+        $hat = GiaoPhanBanChuyenTrach::updateOrCreate(
+            [
+                'giao_phan_id' => $data['giao_phan_id'], 
+                'ban_chuyen_trach_id' => $data['ban_chuyen_trach_id']
+            ],
+            [
+                'active' => $data['active']
+            ]
+        );
+
+        return new GiaoPhanBanChuyenTrachCollection(GiaoPhanBanChuyenTrach::where('giao_phan_id', $data['giao_phan_id'])->get());
     }
 }
