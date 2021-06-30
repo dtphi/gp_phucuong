@@ -1,6 +1,11 @@
 <template>
   <tr>
     <td class="text-center">
+        <input type="checkbox" name="selected[]"
+                :id="`info_select_id_${item.id}`"
+                :value="item.id">
+    </td>
+    <td class="text-center">
       <info-giao-xu-autocomplete
         :hat="hat"
         :hat-xu="item"
