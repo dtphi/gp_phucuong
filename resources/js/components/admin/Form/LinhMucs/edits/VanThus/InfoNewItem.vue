@@ -1,5 +1,10 @@
 <template>
   <tr>
+    <td class="text-center">
+        <input type="checkbox" name="selected[]"
+                :id="`info_select_id_${item.id}`"
+                :value="item.id">
+    </td>
     <td>
       <validation-provider
         :name="`item_name${item.id}`"
@@ -80,7 +85,12 @@ export default {
       });
     },
     _addVanThuForm() {
-      console.log("add văn thư", this.item);
+      if (this.item.id) {
+        this.addVanThus({
+          action: 'create.update.van.thu.db',
+          info: this.item
+        });
+      }
     },
   }
 };

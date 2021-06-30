@@ -153,17 +153,41 @@ export default {
       state.info.ten_thanh_id = params.tenThanh.id;
       state.info.ten_thanh_name = params.tenThanh.name;
     },
-    addBangCaps({state, commit}, params) {
+    addBangCaps({dispatch, state, commit}, params) {
       let bangCaps = state.info.bang_caps;
-      bangCaps.push({
-        id: uuidv4(),
-        isEdit: 0,
-        name: '',
-        type: 0,
-        ghi_chu: '',
-        active: 1
-      });
-      commit('update_bang_cap', bangCaps);
+      if (params.hasOwnProperty('action') 
+        && params.hasOwnProperty('info') 
+        && params.action === 'create.update.bang.cap.db') {
+        let bangCap = params.info;
+        dispatch(ACTION_SET_LOADING, true);
+        //implement
+        bangCap['linhMucId'] = state.info.id;
+        bangCap['action'] = params.action;
+        apiUpdateInfo(
+          bangCap,
+          (result) => {
+            commit('update_bang_cap', result.data.data.results)
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
+      } else {
+        bangCaps.push({
+          id: uuidv4(),
+          isEdit: 0,
+          name: '',
+          type: 0,
+          ghi_chu: '',
+          active: 1
+        });
+        commit('update_bang_cap', bangCaps);
+      }
     },
     removeBangCap({commit, state}, params) {
       let bangCaps = state.info.bang_caps;
@@ -172,19 +196,43 @@ export default {
         return !(item.id == data.id);
       }))
     },
-    addChucThanhs({commit, state}, params) {
+    addChucThanhs({dispatch, commit, state}, params) {
       let chucThanhs = state.info.chuc_thanhs;
-      chucThanhs.push({
-        id: uuidv4(),
-        isEdit: 0,
-        chuc_thanh_id: 1,
-        ngay_thang_nam_chuc_thanh: null,
-        noi_thu_phong:'',
-        nguoi_thu_phong:'',
-        ghi_chu: '',
-        active: 1
-      });
-      commit('update_chuc_thanh', chucThanhs);
+      if (params.hasOwnProperty('action') 
+        && params.hasOwnProperty('info') 
+        && params.action === 'create.update.chuc.thanh.db') {
+        let chucThanh = params.info;
+        dispatch(ACTION_SET_LOADING, true);
+        //implement
+        chucThanh['linhMucId'] = state.info.id;
+        chucThanh['action'] = params.action;
+        apiUpdateInfo(
+          chucThanh,
+          (result) => {
+            commit('update_chuc_thanh', result.data.data.results)
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
+      } else {
+        chucThanhs.push({
+          id: uuidv4(),
+          isEdit: 0,
+          chuc_thanh_id: 1,
+          ngay_thang_nam_chuc_thanh: null,
+          noi_thu_phong:'',
+          nguoi_thu_phong:'',
+          ghi_chu: '',
+          active: 1
+        });
+        commit('update_chuc_thanh', chucThanhs);
+      }
     },
     removeChucThanh({commit, state}, params) {
       let chucThanhs = state.info.chuc_thanhs;
@@ -193,18 +241,42 @@ export default {
         return !(item.id == data.id);
       }));
     },
-    addVanThus({commit, state}, params) {
+    addVanThus({dispatch, commit, state}, params) {
       let vanThus = state.info.van_thus;
-      vanThus.push({
-        id: uuidv4(),
-        isEdit: 0,
-        parent_id: 0,
-        title: null,
-        type:'',
-        ghi_chu: '',
-        active: 1
-      });
-      commit('update_van_thu', vanThus);
+      if (params.hasOwnProperty('action') 
+        && params.hasOwnProperty('info') 
+        && params.action === 'create.update.van.thu.db') {
+        let vanThu = params.info;
+        dispatch(ACTION_SET_LOADING, true);
+        //implement
+        vanThu['linhMucId'] = state.info.id;
+        vanThu['action'] = params.action;
+        apiUpdateInfo(
+          vanThu,
+          (result) => {
+            commit('update_van_thu', result.data.data.results)
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
+      } else {
+        vanThus.push({
+          id: uuidv4(),
+          isEdit: 0,
+          parent_id: 0,
+          title: null,
+          type:'',
+          ghi_chu: '',
+          active: 1
+        });
+        commit('update_van_thu', vanThus);
+      }
     },
     removeVanThu({commit, state}, params) {
       let vanThus = state.info.van_thus;
@@ -262,35 +334,59 @@ export default {
       thuyenChuyen.duc_cha_id = params.ducCha.id;
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
-    addThuyenChuyen({commit, state}, params) {
+    addThuyenChuyen({dispatch, commit, state}, params) {
       let thuyenChuyens = state.info.thuyen_chuyens;
-      thuyenChuyens.push({
-        id: uuidv4(),
-        isEdit: 0,
-        from_giao_xu_id: null,
-        fromgiaoxuName: '',
-        from_chuc_vu_id: null,
-        fromchucvuName: '',
-        from_date: null,
-        duc_cha_id: null,
-        ducchaName: '',
-        to_date: null,
-        chuc_vu_id: null,
-        chucvuName: '',
-        giao_xu_id: null,
-        giaoxuName: '',
-        co_so_gp_id: null,
-        cosogpName: '',
-        dong_id: null,
-        dongName: '',
-        ban_chuyen_trach_id: null,
-        banchuyentrachName: '',
-        du_hoc: null,
-        quoc_gia: null,
-        ghi_chu: '',
-        active: 1
-      });
-      commit('update_thuyen_chuyen', thuyenChuyens);
+      if (params.hasOwnProperty('action') 
+        && params.hasOwnProperty('info') 
+        && params.action === 'create.update.thuyen.chuyen.db') {
+        let thuyenChuyen = params.info;
+        dispatch(ACTION_SET_LOADING, true);
+        //implement
+        thuyenChuyen['linhMucId'] = state.info.id;
+        thuyenChuyen['action'] = params.action;
+        apiUpdateInfo(
+          thuyenChuyen,
+          (result) => {
+            commit('update_thuyen_chuyen', result.data.data.results)
+            commit(INFOS_MODAL_SET_ERROR, []);
+            commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+            dispatch(ACTION_SET_LOADING, false);
+          },
+          (errors) => {
+            commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
+            commit(INFOS_MODAL_SET_ERROR, errors);
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
+      } else {
+        thuyenChuyens.push({
+          id: uuidv4(),
+          isEdit: 0,
+          from_giao_xu_id: null,
+          fromgiaoxuName: '',
+          from_chuc_vu_id: null,
+          fromchucvuName: '',
+          from_date: null,
+          duc_cha_id: null,
+          ducchaName: '',
+          to_date: null,
+          chuc_vu_id: null,
+          chucvuName: '',
+          giao_xu_id: null,
+          giaoxuName: '',
+          co_so_gp_id: null,
+          cosogpName: '',
+          dong_id: null,
+          dongName: '',
+          ban_chuyen_trach_id: null,
+          banchuyentrachName: '',
+          du_hoc: null,
+          quoc_gia: null,
+          ghi_chu: '',
+          active: 1
+        });
+        commit('update_thuyen_chuyen', thuyenChuyens);
+      }
     },
     removeThuyenChuyen({commit, state}, params) {
       let thuyenChuyens = state.info.thuyen_chuyens;

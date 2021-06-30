@@ -15,6 +15,30 @@ class LinhmucThuyenchuyen extends BaseModel
      */
     protected $table = DB_PREFIX . 'linhmuc_thuyenchuyens';
 
+        /**
+     * @author : dtphi .
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'linh_muc_id',
+        'from_giao_xu_id',
+        'from_chuc_vu_id',
+        'from_date',
+        'duc_cha_id',
+        'to_date',
+        'chuc_vu_id',
+        'giao_xu_id',
+        'co_so_gp_id',
+        'dong_id',
+        'ban_chuyen_trach_id',
+        'du_hoc',
+        'quoc_gia',
+        'ghi_chu',
+        'active'
+    ];
+
     public function fromGiaoXu()
     {
         return $this->hasOne(GiaoXu::class,  $this->primaryKey, 'from_giao_xu_id');

@@ -15,6 +15,20 @@ class LinhmucBangcap extends BaseModel
      */
     protected $table = DB_PREFIX . 'linhmuc_bangcaps';
 
+        /**
+     * @author : dtphi .
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'linh_muc_id',
+        'name',
+        'type',
+        'ghi_chu',
+        'active'
+    ];
+
     public static function insertByLinhmucId(
         $linhmucId = null,
         $name = null,

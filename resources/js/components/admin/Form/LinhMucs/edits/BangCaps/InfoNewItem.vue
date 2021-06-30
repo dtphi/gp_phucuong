@@ -1,5 +1,10 @@
 <template>
   <tr>
+    <td class="text-center">
+        <input type="checkbox" name="selected[]"
+                :id="`info_select_id_${item.id}`"
+                :value="item.id">
+    </td>
     <td>
       <validation-provider
         :name="`item_name${item.id}`"
@@ -80,7 +85,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeBangCap"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeBangCap","addBangCaps"]),
     _removeItem() {
       this.removeBangCap({
         action: "",
@@ -88,7 +93,12 @@ export default {
       });
     },
     _addBangCapForm() {
-      console.log("add bang cap", this.item);
+      if (this.item.id) {
+        this.addBangCaps({
+          action: 'create.update.bang.cap.db',
+          info: this.item
+        });
+      }
     },
   },
   setting: {

@@ -1,5 +1,10 @@
 <template>
   <tr>
+    <td class="text-center">
+        <input type="checkbox" name="selected[]"
+                :id="`info_select_id_${item.id}`"
+                :value="item.id">
+    </td>
     <td>
       <span v-show="!isEdit">{{ item.name }}</span>
       <validation-provider
@@ -54,7 +59,7 @@
         title="Cập nhật bằng cấp"
         class="btn btn-primary cms-btn"
       >
-        <i class="fa fa-save"></i>
+        <i class="fa fa-edit"></i>
       </button>
       <button
         @click="_openEditForm"
@@ -104,7 +109,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeBangCap"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeBangCap", "addBangCaps"]),
     _removeItem() {
       this.removeBangCap({
         action: "",
@@ -115,7 +120,12 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateBangCapForm() {
-      console.log("update bang cap", this.item);
+      if (this.item.id) {
+        this.addBangCaps({
+          action: 'create.update.bang.cap.db',
+          info: this.item
+        });
+      }
     },
     _getLoaiText(item) {
       let loaiBang = "Loại 1";

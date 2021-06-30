@@ -182,12 +182,16 @@ class LinhmucRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [
-            'ten'                 => 'required|max:50',
-            'ten_thanh_id'        => 'required',
-            'ngay_thang_nam_sinh' => 'required',
-            'ngay_rua_toi'        => 'required'
-        ];
+    { 
+        if(empty($this->get('action'))) {
+            return [
+                'ten'                 => 'required|max:50',
+                'ten_thanh_id'        => 'required',
+                'ngay_thang_nam_sinh' => 'required',
+                'ngay_rua_toi'        => 'required'
+            ];
+        }
+
+        return [];
     }
 }

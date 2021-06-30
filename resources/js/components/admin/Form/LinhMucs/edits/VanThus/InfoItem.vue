@@ -1,5 +1,10 @@
 <template>
   <tr :key="`show-info-${item.id}`">
+    <td class="text-center">
+        <input type="checkbox" name="selected[]"
+                :id="`info_select_id_${item.id}`"
+                :value="item.id">
+    </td>
     <td>
       <span v-show="!isEdit">{{ item.title }}</span>
       <validation-provider
@@ -49,7 +54,7 @@
         title="Cập nhật văn thư"
         class="btn btn-primary cms-btn"
       >
-        <i class="fa fa-save"></i>
+        <i class="fa fa-edit"></i>
       </button>
       <button
         @click="_openEditForm"
@@ -99,7 +104,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeVanThu"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeVanThu", "addVanThus"]),
     _removeItem() {
       this.removeVanThu({
         action: "removeVanThu",
@@ -110,7 +115,12 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateVanThuForm() {
-      console.log("update văn thư", this.item);
+      if (this.item.id) {
+        this.addVanThus({
+          action: 'create.update.van.thu.db',
+          info: this.item
+        });
+      }
     },
     _getTypeText() {
       return this.item.type == 0 ? "Dir" : "File";

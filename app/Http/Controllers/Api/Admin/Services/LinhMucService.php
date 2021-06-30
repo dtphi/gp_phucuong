@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api\Admin\Services;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
 use App\Http\Resources\LinhMucs\LinhmucResource;
+use App\Http\Resources\LinhMucBangCaps\LinhMucBangCapCollection;
+use App\Http\Resources\LinhMucChucThanhs\LinhMucChucThanhCollection;
+use App\Http\Resources\LinhMucVanThus\LinhMucVanThuCollection;
+use App\Http\Resources\LinhMucThuyenChuyens\LinhMucThuyenChuyenCollection;
 use App\Models\BanChuyenTrach;
 use App\Models\ChucVu;
 use App\Models\CoSoGiaoPhan;
@@ -281,5 +285,85 @@ final class LinhmucService implements BaseModel, LinhMucModel
             ->orderBy('name', 'DESC');
 
         return $query->get();
+    }
+
+    public function apiUpdateBangCap($data = []) {
+        $hat = LinhMucBangCap::updateOrCreate(
+            [
+                'id' => $data['id'], 
+                'linh_muc_id' => $data['linhMucId']
+            ],
+            [
+                'name' => $data['name'],
+                'type' => $data['type'],
+                'active' => $data['active'],
+                'ghi_chu' => $data['ghi_chu']
+            ]
+        );
+
+        return new LinhMucBangCapCollection(LinhMucBangCap::where('linh_muc_id', $data['linhMucId'])->get());
+    }
+
+    public function apiUpdateChucThanh($data = []) {
+        $hat = LinhMucChucThanh::updateOrCreate(
+            [
+                'id' => $data['id'], 
+                'linh_muc_id' => $data['linhMucId']
+            ],
+            [
+                'chuc_thanh_id' => $data['chuc_thanh_id'],
+                'ngay_thang_nam_chuc_thanh' => $data['ngay_thang_nam_chuc_thanh'],
+                'noi_thu_phong' => $data['noi_thu_phong'],
+                'nguoi_thu_phong' => $data['nguoi_thu_phong'],
+                'active' => $data['active'],
+                'ghi_chu' => $data['ghi_chu']
+            ]
+        );
+
+        return new LinhMucChucThanhCollection(LinhMucChucThanh::where('linh_muc_id', $data['linhMucId'])->get());
+    }
+
+    public function apiUpdateVanThu($data = []) {
+        $hat = LinhMucVanThu::updateOrCreate(
+            [
+                'id' => $data['id'], 
+                'linh_muc_id' => $data['linhMucId']
+            ],
+            [
+                'title' => $data['title'],
+                'type' => $data['type'],
+                'active' => $data['active'],
+                'ghi_chu' => $data['ghi_chu']
+            ]
+        );
+
+        return new LinhMucVanThuCollection(LinhMucVanThu::where('linh_muc_id', $data['linhMucId'])->get());
+    }
+
+    public function apiUpdateThuyenChuyen($data = []) {
+        $hat = LinhMucThuyenChuyen::updateOrCreate(
+            [
+                'id' => $data['id'], 
+                'linh_muc_id' => $data['linhMucId']
+            ],
+            [
+                'from_giao_xu_id' => $data['from_giao_xu_id'],
+                'from_chuc_vu_id' => $data['from_chuc_vu_id'],
+                'from_date' => $data['from_date'],
+                'duc_cha_id' => $data['duc_cha_id'],
+                'to_date' => $data['to_date'],
+                'chuc_vu_id' => $data['chuc_vu_id'],
+                'giao_xu_id' => $data['giao_xu_id'],
+                'co_so_gp_id' => $data['co_so_gp_id'],
+                'dong_id' => $data['dong_id'],
+                'ban_chuyen_trach_id' => $data['ban_chuyen_trach_id'],
+                'du_hoc' => $data['du_hoc'],
+                'quoc_gia' => $data['quoc_gia'],
+                'active' => $data['active'],
+                'ghi_chu' => $data['ghi_chu']
+            ]
+        );
+
+        return new LinhMucThuyenChuyenCollection(LinhMucThuyenChuyen::where('linh_muc_id', $data['linhMucId'])->get());
     }
 }

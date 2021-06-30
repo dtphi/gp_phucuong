@@ -1,6 +1,11 @@
 <template>
   <tbody>
     <tr v-if="item.isEdit">
+      <td class="text-center">
+        <input type="checkbox" name="selected[]"
+                :id="`info_select_id_${item.id}`"
+                :value="item.id">
+      </td>
       <td>{{ item.fromgiaoxuName }}</td>
       <td>{{ item.label_from_date }}</td>
       <td>{{ item.fromchucvuName }}</td>
@@ -209,7 +214,7 @@
                   title="Cập nhật thuyên chuyển"
                   class="btn btn-primary cms-btn"
                 >
-                  <i class="fa fa-save"></i>
+                  <i class="fa fa-edit"></i>
                 </button>
                 <button
                   @click="_openEditForm"
@@ -298,12 +303,18 @@ export default {
       "ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN",
       "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG",
       "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH",
+      "addThuyenChuyen"
     ]),
     _openEditForm() {
       this.isEdit = !this.isEdit;
     },
     _updateThuyenChuyenForm(item) {
-      console.log("update thuyen chuyển", item);
+      if (this.item.id) {
+        this.addThuyenChuyen({
+          action: 'create.update.thuyen.chuyen.db',
+          info: this.item
+        });
+      }
     },
   },
   setting: {

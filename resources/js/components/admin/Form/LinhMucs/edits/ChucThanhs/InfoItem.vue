@@ -1,5 +1,10 @@
 <template>
   <tr>
+    <td class="text-center">
+        <input type="checkbox" name="selected[]"
+                :id="`info_select_id_${item.id}`"
+                :value="item.id">
+    </td>
     <td>
       <span v-show="!isEdit">{{ _getChucThanhText() }}</span>
       <validation-provider
@@ -75,7 +80,7 @@
         title="Cập nhật chức thánh"
         class="btn btn-primary cms-btn"
       >
-        <i class="fa fa-save"></i>
+        <i class="fa fa-edit"></i>
       </button>
       <button
         @click="_openEditForm"
@@ -126,7 +131,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeChucThanh"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeChucThanh", "addChucThanhs"]),
     _removeItem() {
       this.removeChucThanh({
         action: "removeChucThanh",
@@ -137,7 +142,12 @@ export default {
       this.isEdit = !this.isEdit;
     },
     _updateChucThanhForm() {
-      console.log("update chuc thanh", this.item);
+      if (this.item.id) {
+        this.addChucThanhs({
+          action: 'create.update.chuc.thanh.db',
+          info: this.item
+        });
+      }
     },
     _getChucThanhText() {
       let chucThanh = "Pho tế";

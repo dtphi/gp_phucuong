@@ -1,5 +1,10 @@
 <template>
   <tr>
+    <td class="text-center">
+        <input type="checkbox" name="selected[]"
+                :id="`info_select_id_${item.id}`"
+                :value="item.id">
+    </td>
     <td>
       <validation-provider
         :name="`item_name${item.id}`"
@@ -94,7 +99,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeChucThanh"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeChucThanh", "addChucThanhs"]),
     _removeItem() {
       this.removeChucThanh({
         action: "removeChucThanh",
@@ -102,7 +107,12 @@ export default {
       });
     },
     _addChucThanhForm() {
-      console.log("add chuc thanh", this.item);
+      if (this.item.id) {
+        this.addChucThanhs({
+          action: 'create.update.chuc.thanh.db',
+          info: this.item
+        });
+      }
     },
   },
   setting: {

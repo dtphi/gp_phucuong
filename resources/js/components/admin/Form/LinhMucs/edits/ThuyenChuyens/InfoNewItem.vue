@@ -207,9 +207,15 @@ export default {
       "ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN",
       "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG",
       "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH",
+      "addThuyenChuyen"
     ]),
     _addThuyenChuyenForm(item) {
-      console.log("add thuyen chuyen", item);
+      if (this.item.id) {
+        this.addThuyenChuyen({
+          action: 'create.update.thuyen.chuyen.db',
+          info: this.item
+        });
+      }
     },
   },
   setting: {

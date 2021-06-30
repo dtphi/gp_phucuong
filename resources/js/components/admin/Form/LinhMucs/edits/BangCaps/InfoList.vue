@@ -6,7 +6,18 @@
     >
       <thead>
         <tr>
-          <td style="width: 40%" class="text-left">Tên bằng</td>
+          <td colspan="6" class="text-right">
+            <btn-remove-select></btn-remove-select>
+            <btn-add-select></btn-add-select>
+            <btn-add></btn-add>
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 5%;" class="text-center">
+              <input type="checkbox"
+                      onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+          </th>
+          <td style="width: 35%" class="text-left">Tên bằng</td>
           <td style="width: 30%" class="text-left">Ghi chú</td>
           <td style="width: 10%" class="text-left">Loại</td>
           <td style="width: 10%" class="text-left">Tình trạng</td>
@@ -22,7 +33,9 @@
 
       <tfoot>
         <tr>
-          <td colspan="5" class="text-right">
+          <td colspan="6" class="text-right">
+            <btn-remove-select></btn-remove-select>
+            <btn-add-select></btn-add-select>
             <btn-add></btn-add>
           </td>
         </tr>
@@ -33,6 +46,8 @@
 
 <script>
 import BtnAdd from "./BtnAdd";
+import BtnAddSelect from "./BtnAddSelect";
+import BtnRemoveSelect from "./BtnRemoveSelect";
 import InfoItem from "./InfoItem";
 import InfoNewItem from "./InfoNewItem";
 
@@ -40,6 +55,8 @@ export default {
   name: "TheInfoList",
   components: {
     BtnAdd,
+    BtnAddSelect,
+    BtnRemoveSelect,
     InfoItem,
     InfoNewItem,
   },

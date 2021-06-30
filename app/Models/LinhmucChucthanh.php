@@ -14,6 +14,22 @@ class LinhmucChucthanh extends BaseModel
      */
     protected $table = DB_PREFIX . 'linhmuc_chucthanhs';
 
+        /**
+     * @author : dtphi .
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'linh_muc_id',
+        'chuc_thanh_id',
+        'ngay_thang_nam_chuc_thanh',
+        'noi_thu_phong',
+        'nguoi_thu_phong',
+        'ghi_chu',
+        'active'
+    ];
+
     public static function insertByLinhmucId(
         $linhmucId = null,
         $chucThanhId = null,

@@ -147,6 +147,43 @@ class LinhMucController extends ApiController
      */
     public function update(LinhmucRequest $request, $id = null)
     {
+        $data = $request->all();
+        $action = $request->get('action');
+
+        if ($action == 'create.update.bang.cap.db') {
+            try {
+                $json = $this->linhMucSv->apiUpdateBangCap($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.chuc.thanh.db') {
+            try {
+                $json = $this->linhMucSv->apiUpdateChucThanh($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.van.thu.db') {
+            try {
+                $json = $this->linhMucSv->apiUpdateVanThu($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.thuyen.chuyen.db') {
+            try {
+                $json = $this->linhMucSv->apiUpdateThuyenChuyen($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        }
+
         try {
             $model = $this->linhMucSv->apiGetDetail($id);
 
