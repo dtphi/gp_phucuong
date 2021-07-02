@@ -15,7 +15,7 @@
         <tr>
           <td class="text-center">
               <input type="checkbox"
-                      onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                      @click="_checkAllThuyenChuyen">
           </td>
           <td>Từ giáo xứ</td>
           <td>Từ ngày</td>
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
 import BtnAdd from "./BtnAdd";
 import BtnAddSelect from "./BtnAddSelect";
 import BtnRemoveSelect from "./BtnRemoveSelect";
@@ -63,6 +65,12 @@ export default {
     lists: {
       default: {},
     },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["checkAllThuyenChuyen"]),
+    _checkAllThuyenChuyen (event) {
+      this.checkAllThuyenChuyen(event.target.checked)
+    }
   },
   setting: {
     info_action_title: "Thực hiện"

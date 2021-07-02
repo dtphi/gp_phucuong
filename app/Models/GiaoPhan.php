@@ -70,6 +70,7 @@ class GiaoPhan extends BaseModel
             foreach ($this->hats as $hat) {
                 $value[] = [
                     'id' => $hat->id,
+                    'isCheck'=> false,
                     'giaoHatOldId' => $hat->id,
                     'isEdit' => 1,
                     'active'=> $hat->active,
@@ -91,6 +92,7 @@ class GiaoPhan extends BaseModel
             foreach ($this->dongs as $dong) {
                 $value[] = [
                     'id' => $dong->id,
+                    'isCheck'=>false,
                     'dongOldId' => $dong->id,
                     'isEdit' => 1,
                     'active'=> $dong->active,
@@ -110,6 +112,7 @@ class GiaoPhan extends BaseModel
             foreach ($this->cosos as $coso) {
                 $value[] = [
                     'id' => $coso->id,
+                    'isCheck'=> false,
                     'coSoOldId' => $coso->id,
                     'isEdit' => 1,
                     'active'=> $coso->active,
@@ -129,6 +132,7 @@ class GiaoPhan extends BaseModel
             foreach ($this->banChuyenTrachs as $banChuyenTrach) {
                 $value[] = [
                     'id' => $banChuyenTrach->id,
+                    'isCheck'=> false,
                     'banChuyenTrachOldId' => $banChuyenTrach->id,
                     'isEdit' => 1,
                     'active'=> $banChuyenTrach->active,

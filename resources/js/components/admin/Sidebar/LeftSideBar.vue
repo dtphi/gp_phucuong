@@ -18,7 +18,7 @@
       </li>
       <li id="giao-phan">
         <a class="parent">
-          <i class="fa fa-user fa-fw"></i>
+          <i class="fa fa-home fa-fw"></i>
           <span>{{ $options.setting.giaophans_title }}</span></a
         >
         <ul class="collapse">
@@ -131,11 +131,13 @@
               $options.setting.slide_info_special_title
             }}</a>
           </li>
-          <li>
-            <a :href="_getHref('filemanagers')">{{
-              $options.setting.category_sub_image_title
-            }}</a>
-          </li>
+        </ul>
+      </li>
+      <li id="files">
+        <a class="parent" :href="_getHref('filemanagers')"><i class="fa fa-file fw"></i><span>{{
+          $options.setting.category_sub_image_title
+        }}</span></a>
+        <ul class="collapse">
         </ul>
       </li>
       <li id="module">

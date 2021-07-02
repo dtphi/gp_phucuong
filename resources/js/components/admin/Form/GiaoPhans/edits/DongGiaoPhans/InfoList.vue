@@ -8,7 +8,7 @@
         <tr>
           <td style="width: 5%;" class="text-center">
             <input type="checkbox"
-                    onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                    @click="_checkAllDong">
           </td>
           <td style="width: 50%" class="text-left">Dòng</td>
           <td style="width: 20%" class="text-left">Trình trạng</td>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
 import BtnAdd from "./BtnAdd";
 import BtnAddAll from "./BtnAddAll";
 import InfoItem from "./InfoItem";
@@ -49,6 +51,12 @@ export default {
     lists: {
       default: {},
     },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["checkAllDong"]),
+    _checkAllDong (event) {
+      this.checkAllDong(event.target.checked)
+    }
   },
   setting: {
     info_action_title: "Thực hiện",

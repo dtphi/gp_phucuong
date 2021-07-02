@@ -85,11 +85,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /*$scheme = config('app.force_scheme') ?? 'https';
-        if (empty($scheme)) {
-            $scheme = 'https';
-        }
-        URL::forceScheme($scheme);*/
+        $scheme = (config('app.force_https')=='http')?'http':'https';
+        URL::forceScheme($scheme);
 
         /*use when auth bear token, create client_access_tokens table*/
         //Sanctum::usePersonalAccessTokenModel(ClientAccessToken::class);

@@ -137,6 +137,7 @@ class Linhmuc extends BaseModel
             foreach ($this->bangCaps as $bangCap) {
                 $value[] = [
                     'id' => (int)$bangCap->id,
+                    'isCheck' => false,
                     'isEdit' => 1,
                     'name' => $bangCap->name,
                     'type' => $bangCap->type,
@@ -156,6 +157,7 @@ class Linhmuc extends BaseModel
             foreach ($this->chucThanhs as $chucThanh) {
                 $value[] = [
                     'id' => (int)$chucThanh->id,
+                    'isCheck' => false,
                     'isEdit' => 1,
                     'chuc_thanh_id'      => $chucThanh->chuc_thanh_id,
                     'ngay_thang_nam_chuc_thanh' => $chucThanh->ngay_thang_nam_chuc_thanh,
@@ -178,6 +180,7 @@ class Linhmuc extends BaseModel
             foreach ($this->vanThus as $vanThu) {
                 $value[] = [
                     'id' => (int)$vanThu->id,
+                    'isCheck' => false,
                     'isEdit' => 1,
                     'title'      => $vanThu->title,
                     'ghi_chu' => $vanThu->ghi_chu,
@@ -197,6 +200,7 @@ class Linhmuc extends BaseModel
             foreach ($this->thuyenChuyens as $thuyenChuyen) {
                 $value[] = [
                     'id' => (int)$thuyenChuyen->id,
+                    'isCheck' => false,
                     'isEdit' => 1,
                     'from_giao_xu_id'      => (int)$thuyenChuyen->from_giao_xu_id,
                     'fromgiaoxuName'      => $thuyenChuyen->ten_from_giao_xu,

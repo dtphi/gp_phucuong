@@ -178,6 +178,7 @@ export default {
       let giaoHat = params.giaoHat;
       giaoHat.cong_doan_tu_sis.push({
         id: uuidv4(),
+        isCheck: false,
         isEdit: 0,
         hatId: giaoHat.id,
         giao_hat_id: giaoHat.giao_hat_id,
@@ -195,6 +196,13 @@ export default {
         return !((item.id == congDtsRm.id) && (item.hatId == congDtsRm.hatId));
       });
       commit('update_congdts_in_hat', giaoHat);
+    },
+    checkAllCongDoanTuSi({state}, check) {
+      _.forEach(state.info.van_thus, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({commit, state}, params) {
       let hatCongdtsUpdate = params.hatCongDts;
@@ -237,6 +245,7 @@ export default {
       let giaoHat = params.giaoHat;
       giaoHat.giao_xus.push({
         id: uuidv4(),
+        isCheck: false,
         isEdit: 0,
         hatId: giaoHat.id,
         giao_hat_id: giaoHat.giao_hat_id,
@@ -298,6 +307,7 @@ export default {
       let giaoHats = state.info.giao_phan_hats;
       giaoHats.push({
         id: uuidv4(),
+        isCheck: false,
         isEdit: 0,
         giao_hat_id: null,
         hatName: '',
@@ -314,6 +324,13 @@ export default {
         return !(item.id == data.id);
       })
       commit('update_hat_in_giao_phan', giaoPhanHats)
+    },
+    checkAllHat({state}, check) {
+      _.forEach(state.info.giao_phan_hats, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({dispatch, commit, state}, params) {
       let hat = params.hat;
@@ -355,6 +372,7 @@ export default {
       let dongs = state.info.giao_phan_dongs;
       dongs.push({
         id: uuidv4(),
+        isCheck: false,
         isEdit: 0,
         dong_id: null,
         dongName: '',
@@ -369,6 +387,13 @@ export default {
         return !(item.id == data.id);
       })
       commit('update_dong_in_giao_phan', giaoPhanDongs);
+    },
+    checkAllDong({state}, check) {
+      _.forEach(state.info.giao_phan_dongs, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     ACTION_UPDATE_DROPDOWN_DONG_LIST({dispatch, commit, state}, params) {
       let dong = params.dong;
@@ -410,6 +435,7 @@ export default {
       let cosos = state.info.giao_phan_cosos;
       cosos.push({
         id: uuidv4(),
+        isCheck: false,
         isEdit: 0,
         co_so_giao_phan_id: null,
         cosoName: '',
@@ -424,6 +450,13 @@ export default {
         return !(item.id == data.id);
       })
       commit('update_coso_in_giao_phan', giaoPhanCosos);
+    },
+    checkAllCoSo({state}, check) {
+      _.forEach(state.info.giao_phan_cosos, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     ACTION_UPDATE_DROPDOWN_COSO_LIST({dispatch, commit, state}, params) {
       let coso = params.coso;
@@ -465,6 +498,7 @@ export default {
       let banChuyenTrachs = state.info.giao_phan_banchuyentrachs;
       banChuyenTrachs.push({
         id: uuidv4(),
+        isCheck: false,
         isEdit: 0,
         ban_chuyen_trach_id: null,
         banChuyenTrachName: '',
@@ -479,6 +513,13 @@ export default {
         return !(item.id == data.id);
       })
       commit('update_banchuyentrach_in_giao_phan', giaoPhanBanChuyenTrachs);
+    },
+    checkAllBanChuyenTrach({state}, check) {
+      _.forEach(state.info.giao_phan_banchuyentrachs, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({dispatch, commit, state}, params) {
       let banChuyenTrach = params.banChuyenTrach;

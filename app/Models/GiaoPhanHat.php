@@ -58,6 +58,7 @@ class GiaoPhanHat extends BaseModel
                 if ((int)$giaoXu->giao_phan_id === (int)$this->giao_phan_id) {
                     $value[] = [
                         'id' => $giaoXu->id,
+                        'isCheck'=> false,
                         'giaoXuOldId' => $giaoXu->id,
                         'isEdit' => 1,
                         'active'=> $giaoXu->active,
@@ -84,6 +85,7 @@ class GiaoPhanHat extends BaseModel
                 if ((int)$congDoanTuSi->giao_phan_id === (int)$this->giao_phan_id) {
                     $value[] = [
                         'id' => $congDoanTuSi->id,
+                        'isCheck' => false,
                         'congDoanTuSiOldId' =>  $congDoanTuSi->id,
                         'isEdit' => 1,
                         'active'=> $congDoanTuSi->active,

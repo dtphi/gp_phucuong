@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-6">
                     <div class="tile">
-                        <div class="tile-heading">Total <span class="pull-right">
+                        <div class="tile-heading">Tổng Thành viên <span class="pull-right">
 						        {{userTotal}}</span></div>
                         <div class="tile-body">
                             <i class="fa fa-user"></i>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6">
                     <div class="tile">
-                        <div class="tile-heading">Total <span class="pull-right">
+                        <div class="tile-heading">Tổng Nhóm Tin<span class="pull-right">
 						        {{categoryTotal}} </span></div>
                         <div class="tile-body"><i class="fa fa-credit-card"></i>
                             <h2 class="pull-right">{{categoryTotal}}</h2>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6">
                     <div class="tile">
-                        <div class="tile-heading">Total <span class="pull-right">
+                        <div class="tile-heading">Tổng Tin<span class="pull-right">
 						        {{infoTotal}}</span></div>
                         <div class="tile-body">
                             <i class="fa fa-info"></i>
@@ -39,6 +39,32 @@
 
                         <div class="tile-footer">
                             <a href="/admin/informations">Xem Tin...</a></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="tile">
+                        <div class="tile-heading">Tổng Giáo Phận<span class="pull-right">
+						        {{giaoPhanTotal}}</span></div>
+                        <div class="tile-body">
+                            <i class="fa fa-info"></i>
+                            <h2 class="pull-right">{{giaoPhanTotal}}</h2>
+                        </div>
+
+                        <div class="tile-footer">
+                            <a href="/admin/giao-phans">Xem Giáo Phận...</a></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="tile">
+                        <div class="tile-heading">Tổng Linh Mục<span class="pull-right">
+						        {{linhMucTotal}}</span></div>
+                        <div class="tile-body">
+                            <i class="fa fa-info"></i>
+                            <h2 class="pull-right">{{linhMucTotal}}</h2>
+                        </div>
+
+                        <div class="tile-footer">
+                            <a href="/admin/linh-mucs">Xem Linh Mục...</a></div>
                     </div>
                 </div>
             </div>
@@ -85,7 +111,6 @@
 <script>
     import {
         mapState,
-        mapGetters,
         mapActions
     } from 'vuex';
     import Breadcrumb from 'com@admin/Breadcrumb';
@@ -116,6 +141,8 @@
                 'loading',
                 'infoTotal',
                 'categoryTotal',
+                'giaoPhanTotal',
+                'linhMucTotal',
                 'userTotal',
             ]),
             _isNotEmptyList() {
@@ -129,12 +156,16 @@
             this.[ACTION_GET_INFO_LIST](params);
             this.[ACTION_GET_NEWS_GROUP_LIST](params);
             this.[ACTION_GET_USER_LIST](params);
+            this.ACTION_GET_INFO_LINH_MUC_LIST(params);
+            this.ACTION_GET_INFO_GIAO_PHAN_LIST(params);
         },
         methods: {
             ...mapActions(MODULE_DASHBOARD, [
                 ACTION_GET_INFO_LIST,
                 ACTION_GET_NEWS_GROUP_LIST,
-                ACTION_GET_USER_LIST
+                ACTION_GET_USER_LIST,
+                'ACTION_GET_INFO_GIAO_PHAN_LIST',
+                'ACTION_GET_INFO_LINH_MUC_LIST'
             ]),
         },
         setting: {

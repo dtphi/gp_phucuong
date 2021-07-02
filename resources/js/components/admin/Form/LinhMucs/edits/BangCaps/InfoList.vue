@@ -15,7 +15,7 @@
         <tr>
           <th style="width: 5%;" class="text-center">
               <input type="checkbox"
-                      onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                      @click="_checkAllBangCap">
           </th>
           <td style="width: 35%" class="text-left">Tên bằng</td>
           <td style="width: 30%" class="text-left">Ghi chú</td>
@@ -45,11 +45,13 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import BtnAdd from "./BtnAdd";
 import BtnAddSelect from "./BtnAddSelect";
 import BtnRemoveSelect from "./BtnRemoveSelect";
 import InfoItem from "./InfoItem";
 import InfoNewItem from "./InfoNewItem";
+import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
 
 export default {
   name: "TheInfoList",
@@ -64,6 +66,12 @@ export default {
     lists: {
       default: {},
     },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["checkAllBangCap"]),
+    _checkAllBangCap (event) {
+      this.checkAllBangCap(event.target.checked)
+    }
   },
   setting: {
     info_action_title: "Thực hiện"

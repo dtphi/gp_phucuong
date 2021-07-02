@@ -8,7 +8,7 @@
         <tr>
           <td style="width: 5%;" class="text-center">
             <input type="checkbox"
-                    onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                    @click="_checkAllHat">
           </td>
           <td style="width: 50%" class="text-left">Hạt</td>
           <td style="width: 20%" class="text-left">Trình trạng</td>
@@ -35,9 +35,9 @@
 
 <script>
 import { mapActions } from "vuex";
+import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
 import BtnAdd from "./BtnAdd";
 import BtnAddAll from "./BtnAllSave";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
 import InfoItem from "./InfoItem";
 import InfoNewItem from "./InfoNewItem";
 
@@ -55,13 +55,16 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan","checkAllHat"]),
     _removeItem(item) {
       this.removeHatGiaoPhan({
         action: "removeHatGiaoPhan",
         item: item,
       });
     },
+    _checkAllHat (event) {
+      this.checkAllHat(event.target.checked)
+    }
   },
   setting: {
     info_action_title: "Thực hiện"

@@ -5,7 +5,6 @@ import {
   apiGetLinhMucInfos,
   apiDeleteInfo,
   apiSearchAll,
-  apiGetSlideSpecialInfos,
   apiGetDropdownCategories
 } from 'api@admin/linhmuc';
 import {
@@ -284,13 +283,14 @@ export default {
           dispatch('setConfigApp', configs, {
             root: true
           });
+          dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_GET_INFO_LIST_FAILED, errors)
+          dispatch(ACTION_SET_LOADING, false);
         },
         params
       );
-      dispatch(ACTION_SET_LOADING, false);
     },
     async [ACTION_DELETE_INFO_BY_ID]({
       state,

@@ -180,6 +180,7 @@ export default {
       } else {
         bangCaps.push({
           id: uuidv4(),
+          isCheck: false,
           isEdit: 0,
           name: '',
           type: 0,
@@ -195,6 +196,13 @@ export default {
       commit('update_bang_cap', _.remove(bangCaps, function(item) {
         return !(item.id == data.id);
       }))
+    },
+    checkAllBangCap({state}, check) {
+      _.forEach(state.info.bang_caps, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     addChucThanhs({dispatch, commit, state}, params) {
       let chucThanhs = state.info.chuc_thanhs;
@@ -223,6 +231,7 @@ export default {
       } else {
         chucThanhs.push({
           id: uuidv4(),
+          isCheck: false,
           isEdit: 0,
           chuc_thanh_id: 1,
           ngay_thang_nam_chuc_thanh: null,
@@ -240,6 +249,13 @@ export default {
       commit('update_chuc_thanh', _.remove(chucThanhs, function(item) {
         return !(item.id == data.id);
       }));
+    },
+    checkAllChucThanh({state}, check) {
+      _.forEach(state.info.chuc_thanhs, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     addVanThus({dispatch, commit, state}, params) {
       let vanThus = state.info.van_thus;
@@ -268,6 +284,7 @@ export default {
       } else {
         vanThus.push({
           id: uuidv4(),
+          isCheck: false,
           isEdit: 0,
           parent_id: 0,
           title: null,
@@ -285,6 +302,13 @@ export default {
       commit('update_van_thu', _.remove(vanThus, function(item) {
         return !(item.id == data.id);
       }));
+    },
+    checkAllVanThu({state}, check) {
+      _.forEach(state.info.van_thus, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH({commit, state}, params) {
       let thuyenChuyen = params.thuyenChuyen;
@@ -361,6 +385,7 @@ export default {
       } else {
         thuyenChuyens.push({
           id: uuidv4(),
+          isCheck: false,
           isEdit: 0,
           from_giao_xu_id: null,
           fromgiaoxuName: '',
@@ -394,6 +419,13 @@ export default {
       commit('update_thuyen_chuyen', _.remove(thuyenChuyens, function(item) {
         return !(item.id == data.id);
       }));
+    },
+    checkAllThuyenChuyen({state}, check) {
+      _.forEach(state.info.thuyen_chuyens, function(item) {
+          _.update(item, 'isCheck', function(isCheck) {
+            return isCheck = check;
+          })
+      });
     },
     [ACTION_SET_LOADING]({
       commit

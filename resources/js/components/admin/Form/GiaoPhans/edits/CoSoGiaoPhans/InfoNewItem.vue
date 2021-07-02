@@ -1,9 +1,9 @@
 <template>
   <tr>
     <td class="text-center">
-        <input type="checkbox" name="selected[]"
+        <input type="checkbox"
                 :id="`info_select_id_${item.id}`"
-                :value="item.id">
+                v-model="item.isCheck">
     </td>
     <td class="text-center">
       <info-co-so-giao-phan-autocomplete

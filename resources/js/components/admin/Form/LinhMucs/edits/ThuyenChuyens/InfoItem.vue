@@ -2,9 +2,9 @@
   <tbody>
     <tr v-if="item.isEdit">
       <td class="text-center">
-        <input type="checkbox" name="selected[]"
+        <input type="checkbox"
                 :id="`info_select_id_${item.id}`"
-                :value="item.id">
+                v-model="item.isCheck">
       </td>
       <td>{{ item.fromgiaoxuName }}</td>
       <td>{{ item.label_from_date }}</td>
@@ -45,7 +45,8 @@
       </td>
     </tr>
     <tr v-if="item.isEdit">
-      <td colspan="8" v-show="isEdit">
+      <td rowspan="15"></td>
+      <td colspan="7" v-show="isEdit">
         <table class="table table-striped table-bordered table-hover">
           <tbody>
             <tr>
@@ -247,7 +248,12 @@
       </td>
     </tr>
     <tr v-else>
-      <td colspan="8">
+      <td rowspan="15">
+        <input type="checkbox"
+                :id="`info_select_id_${item.id}`"
+                v-model="item.isCheck">
+      </td>
+      <td colspan="7">
         <table class="table table-striped table-bordered table-hover">
           <info-new-item :item="item"></info-new-item>
         </table>
