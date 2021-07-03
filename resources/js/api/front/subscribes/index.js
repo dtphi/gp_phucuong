@@ -14,8 +14,29 @@ import {
  * @param  {[type]} errResole   [description]
  * @return {[type]}             [description]
  */
-export const apiEmailSubscribe = (resolve, errResole, params) => {
-  resolve(params);
+ export const apiEmailSubscribe = (newEmailSub, resolve, errResole) => {
+  return axios.post(window.location.origin + "/api/email_sub/create", newEmailSub)
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        var json = {};
+        json['data'] = response.data;
+        resolve(json);
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test'
+        }]);
+      }
+    })
+    .catch(errors => errResole([{
+      status: errors.response.status,
+      messageCommon: errors.response.data.message,
+      messages: errors.response.data.errors
+    }]))
+}
+/* export const apiEmailSubscribe = (resolve, errResole, params) => {
+  resolve(params); */
   /*axios.get(fn_get_base_api_url('/api/app/get-data-module'), {
       params: params
     })
@@ -36,4 +57,4 @@ export const apiEmailSubscribe = (resolve, errResole, params) => {
     .catch(errors => {
       console.log(errors)
     })*/
-}
+/* } */

@@ -14,49 +14,50 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 Route::post('/test', function (Request $request) {
-            return ['test' => 'ok'];die;
-        });
+			return ['test' => 'ok'];die;
+		});
 
 Route::namespace('App\Http\Controllers\Api\Front')
-    ->middleware('web')
-    ->group(function () {
-        Route::any('/app/get-setting', 'Base\ApiController@getSetting');
-        Route::apiResource('/homes/get-list', 'HomeController');
-        Route::get('/app/info/get-information-list','NewsController@list');
-        Route::get('/app/info/get-information','NewsController@detail');
-        Route::get('/app/info/get-latest-information', 'NewsController@showLastedList');
-        Route::get('/app/info/get-popular-information', 'NewsController@showPopularList');
-        Route::get('/app/info/get-related-information', 'NewsController@showRelatedList');
-        Route::get('/app/info/get-special-information', 'NewsController@showSpecialModuleList');
-        Route::get('/app/get-data-module', 'ModuleController@showDataList');
-    });
-
-Route::namespace('App\Http\Controllers\Api\Admin')
-    ->middleware('web')
-    ->group(function () {
-        Route::post('login', 'AuthController@login');
-        Route::post('logout', 'AuthController@logout');
+	->middleware('web')
+	->group(function () {
+		Route::any('/app/get-setting', 'Base\ApiController@getSetting');
+		Route::apiResource('/homes/get-list', 'HomeController');
+		Route::get('/app/info/get-information-list','NewsController@list');
+		Route::get('/app/info/get-information','NewsController@detail');
+		Route::get('/app/info/get-latest-information', 'NewsController@showLastedList');
+		Route::get('/app/info/get-popular-information', 'NewsController@showPopularList');
+		Route::get('/app/info/get-related-information', 'NewsController@showRelatedList');
+		Route::get('/app/info/get-special-information', 'NewsController@showSpecialModuleList');
+		Route::get('/app/get-data-module', 'ModuleController@showDataList');
+		Route::post('/email_sub/create', 'EmailController@store');
 	});
 
 Route::namespace('App\Http\Controllers\Api\Admin')
-    ->middleware('auth:sanctum')
-    ->group(function () {
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
+	->middleware('web')
+	->group(function () {
+		Route::post('login', 'AuthController@login');
+		Route::post('logout', 'AuthController@logout');
+	});
 
-        Route::apiResource('users', 'AdminController');
-        Route::get('/search-user','AdminController@search');
-        Route::apiResource('news-groups', 'NewsGroupController');
-        Route::get('/news-categories/dropdowns','NewsGroupController@dropdown');
-        Route::apiResource('news', 'InformationController');
-        Route::get('/informations/dropdowns','InformationController@dropdown');
-        Route::apiResource('settings', 'SettingController');
-        Route::apiResource('linh-mucs', 'LinhMucController');
-        Route::apiResource('giao-phans', 'GiaoPhanController');
-        Route::apiResource('giao-hats', 'GiaoHatController');
-        Route::apiResource('giao-xus', 'GiaoXuController');
-        Route::apiResource('giao-diems', 'GiaoDiemController');
+Route::namespace('App\Http\Controllers\Api\Admin')
+	->middleware('auth:sanctum')
+	->group(function () {
+		Route::get('/user', function (Request $request) {
+			return $request->user();
+		});
 
-        Route::any('/mmedia/{any}', function () {});
-    });
+		Route::apiResource('users', 'AdminController');
+		Route::get('/search-user','AdminController@search');
+		Route::apiResource('news-groups', 'NewsGroupController');
+		Route::get('/news-categories/dropdowns','NewsGroupController@dropdown');
+		Route::apiResource('news', 'InformationController');
+		Route::get('/informations/dropdowns','InformationController@dropdown');
+		Route::apiResource('settings', 'SettingController');
+		Route::apiResource('linh-mucs', 'LinhMucController');
+		Route::apiResource('giao-phans', 'GiaoPhanController');
+		Route::apiResource('giao-hats', 'GiaoHatController');
+		Route::apiResource('giao-xus', 'GiaoXuController');
+		Route::apiResource('giao-diems', 'GiaoDiemController');
+
+		Route::any('/mmedia/{any}', function () {});
+	});
