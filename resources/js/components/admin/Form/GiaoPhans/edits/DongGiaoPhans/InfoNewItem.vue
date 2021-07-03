@@ -9,7 +9,6 @@
       <info-dong-autocomplete
         :dong="item"
       ></info-dong-autocomplete>
-      <span class="cms-text-red">{{ _getErrorDongSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">

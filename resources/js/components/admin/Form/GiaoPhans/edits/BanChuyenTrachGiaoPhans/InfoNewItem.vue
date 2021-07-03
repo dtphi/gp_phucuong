@@ -10,7 +10,6 @@
         :ban-chuyen-trach="item"
         :key="item.id"
       ></info-ban-chuyen-trach-autocomplete>
-      <span class="cms-text-red">{{ _getErrorBanChuyenTrachSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">

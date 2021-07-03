@@ -11,7 +11,6 @@
         :hat-xu="item"
         :key="item.id"
       ></info-giao-xu-autocomplete>
-      <span class="cms-text-red">{{ _getErrorGiaoXuSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">

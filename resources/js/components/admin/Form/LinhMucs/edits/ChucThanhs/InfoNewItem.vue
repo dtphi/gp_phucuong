@@ -6,11 +6,6 @@
                 v-model="item.isCheck">
     </td>
     <td>
-      <validation-provider
-        :name="`item_name${item.id}`"
-        rules="required"
-        v-slot="{ errors }"
-      >
         <select class="form-control" v-model="item.chuc_thanh_id">
           <option
             :selected="item.chuc_thanh_id == idx"
@@ -21,8 +16,6 @@
             {{ item }}
           </option>
         </select>
-        <span class="cms-text-red">{{ errors[0] }}</span>
-      </validation-provider>
     </td>
     <td class="text-center">
       <cms-date-picker

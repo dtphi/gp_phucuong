@@ -7,7 +7,7 @@
       <div class="col-sm-10">
         <validation-provider
           name="info_name"
-          rules="required|max:255"
+          rules="required|max:50"
           v-slot="{ errors }"
         >
           <input
@@ -101,14 +101,14 @@
         </select>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-meta-title" class="col-sm-2 control-label">{{
         $options.setting.info_meta_title_txt
       }}</label>
       <div class="col-sm-10">
         <validation-provider
           name="info_meta_title"
-          rules="required|max:255"
+          rules="max:255"
           v-slot="{ errors }"
         >
           <input

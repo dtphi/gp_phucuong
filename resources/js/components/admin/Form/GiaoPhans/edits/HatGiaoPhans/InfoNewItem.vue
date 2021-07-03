@@ -10,7 +10,6 @@
         :hat="item"
         :key="item.id"
       ></info-giao-hat-autocomplete>
-      <span class="cms-text-red">{{ _getErrorGiaoHatSelect }}</span>
     </td>
     <td>
       <select id="input-info-active" v-model="item.active" class="form-control">

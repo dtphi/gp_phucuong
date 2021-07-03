@@ -10,7 +10,7 @@
       <validation-provider
         v-show="isEdit"
         :name="`item_name${item.id}`"
-        rules="required|max:255"
+        rules="max:255"
         v-slot="{ errors }"
       >
         <input

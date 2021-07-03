@@ -185,10 +185,7 @@ class LinhmucRequest extends FormRequest
     { 
         if(empty($this->get('action'))) {
             return [
-                'ten'                 => 'required|max:50',
-                'ten_thanh_id'        => 'required',
-                'ngay_thang_nam_sinh' => 'required',
-                'ngay_rua_toi'        => 'required'
+                'ten'                 => 'max:50'
             ];
         }
 

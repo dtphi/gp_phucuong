@@ -10,7 +10,6 @@
         :coso="item"
         :key="item.id"
       ></info-co-so-giao-phan-autocomplete>
-      <span class="cms-text-red">{{ _getErrorCoSoSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">

@@ -7,12 +7,6 @@
     </td>
     <td>
       <span v-show="!isEdit">{{ _getChucThanhText() }}</span>
-      <validation-provider
-        v-show="isEdit"
-        :name="`item_name${item.id}`"
-        rules="required"
-        v-slot="{ errors }"
-      >
         <select class="form-control" v-model="item.chuc_thanh_id">
           <option
             :selected="item.chuc_thanh_id == idx"
@@ -23,8 +17,6 @@
             {{ item }}
           </option>
         </select>
-        <span class="cms-text-red">{{ errors[0] }}</span>
-      </validation-provider>
     </td>
     <td class="text-center">
       <span v-show="!isEdit">{{ item.label_ngay_thang_nam_chuc_thanh }}</span>

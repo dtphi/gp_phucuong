@@ -11,7 +11,6 @@
         :hat-cong-dts="item"
         :key="item.id"
       ></info-cong-doan-tu-si-autocomplete>
-      <span class="cms-text-red">{{ _getErrorCongdtsSelect }}</span>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">

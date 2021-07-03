@@ -1,27 +1,27 @@
 <template>
   <div class="tab-content">
-    <div class="required">
+    <div>
       <info-ten-thanh-autocomplete
         @on-select-ten-thanh="_selectGeneralTenThanh"
         :ten-thanh="generalData.ten_thanh_name"
         :key="ten_thanh_linh_muc"
       ></info-ten-thanh-autocomplete>
     </div>
-    <div class="required">
+    <div>
       <info-giao-xu-autocomplete
         @on-select-giao-xu="_selectGiaoXu"
         :name="generalData.giao_xu_name"
         :key="giao_xu_linh_muc"
       ></info-giao-xu-autocomplete>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-name" class="col-sm-2 control-label">{{
         $options.setting.name_txt
       }}</label>
       <div class="col-sm-10">
         <validation-provider
           name="info_name"
-          rules="required|max:200"
+          rules="max:200"
           v-slot="{ errors }"
         >
           <input
@@ -36,34 +36,27 @@
         </validation-provider>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-ngay-thang-nam-sinh" class="col-sm-2 control-label"
         >Ngày sinh:</label
       >
       <div class="col-sm-10">
-        <validation-provider
-          name="info_ngay_thang_nam_sinh"
-          rules="required"
-          v-slot="{ errors }"
-        >
           <cms-date-picker
             value-type="format"
             format="YYYY-MM-DD"
             v-model="generalData.ngay_thang_nam_sinh"
             type="date"
           ></cms-date-picker>
-          <span class="cms-text-red">{{ errors[0] }}</span>
-        </validation-provider>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-noi-sinh" class="col-sm-2 control-label"
         >Nơi sinh</label
       >
       <div class="col-sm-10">
         <validation-provider
           name="info_noi_sinh"
-          rules="required|max:500"
+          rules="max:500"
           v-slot="{ errors }"
         >
           <textarea
@@ -77,14 +70,14 @@
         </validation-provider>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-ho-ten-cha" class="col-sm-2 control-label"
         >Họ tên cha</label
       >
       <div class="col-sm-10">
         <validation-provider
           name="info_ho_ten_cha"
-          rules="required|max:200"
+          rules="max:200"
           v-slot="{ errors }"
         >
           <input
@@ -99,14 +92,14 @@
         </validation-provider>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-ho-ten-me" class="col-sm-2 control-label"
         >Họ tên mẹ</label
       >
       <div class="col-sm-10">
         <validation-provider
           name="info_ho_ten_me"
-          rules="required|max:200"
+          rules="max:200"
           v-slot="{ errors }"
         >
           <input
@@ -121,14 +114,14 @@
         </validation-provider>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-noi-rua-toi" class="col-sm-2 control-label"
         >Nơi rửa tội</label
       >
       <div class="col-sm-10">
         <validation-provider
           name="info_noi_rua_toi"
-          rules="required|max:500"
+          rules="max:500"
           v-slot="{ errors }"
         >
           <input
@@ -143,35 +136,27 @@
         </validation-provider>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-ngay-rua-toi" class="col-sm-2 control-label"
         >Ngày rửa tội:</label
       >
       <div class="col-sm-10">
-        <validation-provider
-          name="info_ngay_rua_toi"
-          rules="required"
-          v-slot="{ errors }"
-        >
           <cms-date-picker
             value-type="format"
             format="YYYY-MM-DD"
             v-model="generalData.ngay_rua_toi"
             type="date"
           ></cms-date-picker>
-
-          <span class="cms-text-red">{{ errors[0] }}</span>
-        </validation-provider>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-noi-them-suc" class="col-sm-2 control-label"
         >Nơi thêm sức</label
       >
       <div class="col-sm-10">
         <validation-provider
           name="info_noi_them_suc"
-          rules="required|max:500"
+          rules="max:500"
           v-slot="{ errors }"
         >
           <input
@@ -199,14 +184,14 @@
         ></cms-date-picker>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-tieu-chung-vien" class="col-sm-2 control-label"
         >Tiểu chủng viện</label
       >
       <div class="col-sm-10">
         <validation-provider
           name="info_tieu_chung_vien"
-          rules="required|max:200"
+          rules="max:200"
           v-slot="{ errors }"
         >
           <input
@@ -236,14 +221,14 @@
         ></cms-date-picker>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-dai-chung-vien" class="col-sm-2 control-label"
         >Đại chủng viện</label
       >
       <div class="col-sm-10">
         <validation-provider
           name="info_dai_chung_vien"
-          rules="required|max:200"
+          rules="max:200"
           v-slot="{ errors }"
         >
           <input
@@ -271,16 +256,11 @@
         ></cms-date-picker>
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label for="input-info-trieu-dong" class="col-sm-2 control-label"
         >Triệu dòng:</label
       >
       <div class="col-sm-10">
-        <validation-provider
-          name="info_trieu_dong"
-          rules="required"
-          v-slot="{ errors }"
-        >
           <select
             class="form-control"
             id="input-info-trieu-dong"
@@ -295,9 +275,6 @@
               {{ item }}
             </option>
           </select>
-
-          <span class="cms-text-red">{{ errors[0] }}</span>
-        </validation-provider>
       </div>
     </div>
     <div class="form-group">
