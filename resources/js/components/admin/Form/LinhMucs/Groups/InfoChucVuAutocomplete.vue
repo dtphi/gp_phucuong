@@ -13,7 +13,6 @@
         type="text"
         name="category"
         placeholder="Chọn chức vụ"
-        id="input-parent-chuc-vu-name"
         class="form-control"
       />
       <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">

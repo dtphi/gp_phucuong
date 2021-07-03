@@ -86,7 +86,6 @@
 import { mapState, mapActions } from "vuex";
 import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
 import {
-  ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
   ACTION_INSERT_INFO_BACK,
 } from "store@admin/types/action-types";
@@ -120,7 +119,6 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-      ACTION_SET_LOADING,
       ACTION_INSERT_INFO,
       ACTION_INSERT_INFO_BACK
     ]),

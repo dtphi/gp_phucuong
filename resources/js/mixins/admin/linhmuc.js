@@ -15,7 +15,7 @@ import {
 } from 'store@admin/types/action-types';
 
 export default {
-    form: {
+  form: {
         data: () => {
             return {
                 fullPage: true
@@ -87,28 +87,8 @@ export default {
     data() {
         const _self = this;
         return {
-            editor: null,
             fn: null,
-            mm: new MM({
-                el: '#modal-general-info-manager',
-                api: {
-                    baseUrl: window.origin + '/api/mmedia',
-                    listUrl: 'list',
-                    uploadUrl: 'upload',      // optional
-                },
-                onSelect : function(fi) {
-                    if (typeof fi === "object") {
-                        if (fi.hasOwnProperty('selected') && fi.selected) {
-                            if (fi.selected.hasOwnProperty('path')) {
-                                if (_self.fn) {
-                                    _self.fn('Image/NewPicture/' + fi.selected.path);
-                                }
-                                document.getElementById('media-file-manager-content').style="display:none";
-                            }
-                        }
-                    }
-                }
-            }),
+            mm: null,
             options: {
                 language_url: fn_get_tinymce_langs_url('vi_VN'),
                 height: "200",
@@ -119,36 +99,10 @@ export default {
                         _self.fn = callback;
                         document.getElementById('media-file-manager-content').style="display:block";
                     }
-                    if (meta.filetype === 'image') {
-                        if (_self.mm == null) {
-                            _self.mm = new MM({
-                                el: '#modal-general-info-manager',
-                                api: {
-                                    baseUrl: window.origin + '/api/mmedia',
-                                    listUrl: 'list',
-                                    uploadUrl: 'upload',
-                                },
-                                onSelect : function(fi) {
-                                    if (typeof fi === "object") {
-                                        if (fi.hasOwnProperty('selected') && fi.selected) {
-                                            if (fi.selected.hasOwnProperty('path')) {
-                                                if (_self.fn) {
-                                                    _self.fn('Image/NewPicture/' + fi.selected.path);
-                                                }
-                                                document.getElementById('media-file-manager-content').style="display:none";
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-
-                            document.getElementById('media-file-manager-content').style="display:block";
-                        } else {
-                            _self.fn = callback;
-                            document.getElementById('media-file-manager-content').style="display:block";
-                        }
+                    if (meta.filetype === 'image') {                        
+                        _self.fn = callback;
+                        document.getElementById('media-file-manager-content').style="display:block";
                     }
-
                     if (meta.filetype === 'media') {
                         _self.fn = callback;
                         document.getElementById('media-file-manager-content').style="display:block";
@@ -202,15 +156,6 @@ export default {
             });
         },
         _selectImage() {
-            const _self = this;
-            if (this.fn == null) {
-                this.fn = function(file) {
-                    if (typeof _self.[ACTION_SET_IMAGE] === "function") { 
-                        _self.[ACTION_SET_IMAGE](file);
-                    }
-                }
-            }
-            
             document.getElementById('media-file-manager-content').style="display:block";
         },
         _selectGeneralTenThanh(thanh) {

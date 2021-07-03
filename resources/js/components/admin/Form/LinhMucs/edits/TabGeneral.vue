@@ -397,26 +397,6 @@ export default {
     InfoTenThanhAutocomplete,
     InfoDongAutocomplete,
   },
-  data() {
-    return {
-      // Use moment.js instead of the default
-      momentFormat: {
-        //[optional] Date to String
-        stringify: (date) => {
-          return date ? moment("2000-01-26 00:00:00").format("YYYY-MM-DD") : "";
-        },
-        //[optional]  String to Date
-        parse: (value) => {
-          console.log("parse:", value, moment(value, "LL").toDate());
-          return value ? moment(value, "LL").toDate() : null;
-        },
-        //[optional] getWeekNumber
-        getWeek: (date) => {
-          return; // a number
-        },
-      },
-    };
-  },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
       "ACTION_UPDATE_DROPDOWN_GIAO_XU",
@@ -424,6 +404,6 @@ export default {
       "ACTION_UPDATE_DROPDOWN_DONG",
       "ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST",
     ]),
-  },
+  }
 };
 </script>

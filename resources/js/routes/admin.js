@@ -927,7 +927,7 @@ export default [{
         }, {
             path: 'edit/:giaoxuId',
             component: () => import ('v@admin/giaoxus/edit'),
-            name: 'admin.giao.xu.add',
+            name: 'admin.giao.xu.edit',
             meta: {
                 layout: DefaultLayout,
                 auth: true,
@@ -1312,7 +1312,7 @@ export default [{
         }, {
             path: 'edit/:thanhId',
             component: () => import ('v@admin/thanhs/edit'),
-            name: 'admin.thanh.add',
+            name: 'admin.thanh.edit',
             meta: {
                 layout: DefaultLayout,
                 auth: true,
