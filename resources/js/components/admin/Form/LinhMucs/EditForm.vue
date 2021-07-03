@@ -88,7 +88,6 @@ import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
-  ACTION_SET_IMAGE,
   ACTION_INSERT_INFO_BACK,
 } from "store@admin/types/action-types";
 import TabGeneral from "./edits/TabGeneral";
@@ -123,8 +122,7 @@ export default {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
       ACTION_SET_LOADING,
       ACTION_INSERT_INFO,
-      ACTION_INSERT_INFO_BACK,
-      ACTION_SET_IMAGE,
+      ACTION_INSERT_INFO_BACK
     ]),
     _submitInfo() {
       this[ACTION_INSERT_INFO](this.info);

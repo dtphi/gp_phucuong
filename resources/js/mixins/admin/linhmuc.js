@@ -101,7 +101,7 @@ export default {
                         if (fi.hasOwnProperty('selected') && fi.selected) {
                             if (fi.selected.hasOwnProperty('path')) {
                                 if (_self.fn) {
-                                    _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected);
+                                    _self.fn('Image/NewPicture/' + fi.selected.path);
                                 }
                                 document.getElementById('media-file-manager-content').style="display:none";
                             }
@@ -133,7 +133,7 @@ export default {
                                         if (fi.hasOwnProperty('selected') && fi.selected) {
                                             if (fi.selected.hasOwnProperty('path')) {
                                                 if (_self.fn) {
-                                                    _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected);
+                                                    _self.fn('Image/NewPicture/' + fi.selected.path);
                                                 }
                                                 document.getElementById('media-file-manager-content').style="display:none";
                                             }
@@ -202,10 +202,15 @@ export default {
             });
         },
         _selectImage() {
-            this.fn = function(file) {
-                const _self = this;
-                _self.[ACTION_SET_IMAGE](file);
-            };
+            const _self = this;
+            if (this.fn == null) {
+                this.fn = function(file) {
+                    if (typeof _self.[ACTION_SET_IMAGE] === "function") { 
+                        _self.[ACTION_SET_IMAGE](file);
+                    }
+                }
+            }
+            
             document.getElementById('media-file-manager-content').style="display:block";
         },
         _selectGeneralTenThanh(thanh) {

@@ -25,6 +25,7 @@ class LinhmucResource extends JsonResource
         if ($res) {
             $json = parent::toArray($request);
             $json = array_merge($json, [
+                'image'                      => trim($res->image, '/'),
                 'password'                   => '',
                 'lable_ngay_thang_nam_sinh'  => ($res->ngay_thang_nam_sinh)?date_format(date_create($res->ngay_thang_nam_sinh), "d-m-Y"):'',
                 'lable_ngay_rua_toi'         => ($res->ngay_rua_toi)?date_format(date_create($res->ngay_rua_toi), "d-m-Y"):'',

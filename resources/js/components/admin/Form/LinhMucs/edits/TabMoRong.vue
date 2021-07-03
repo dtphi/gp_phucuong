@@ -218,7 +218,7 @@ export default {
   name: "TabMoRongForm",
   mixins: [linhMucMix.tabData],
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [ACTION_SET_IMAGE]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [ACTION_SET_IMAGE])
   },
 };
 </script>

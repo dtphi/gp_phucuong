@@ -14,8 +14,8 @@
         <td class="text-center">{{info.active}}</td>
         
         <td class="text-right">
-            <btn-edit
-                :info-id="info.id"></btn-edit>
+            <!--<btn-edit
+                :info-id="info.id"></btn-edit>-->
             <!--<btn-delete
                 :info-id="info.id"></btn-delete>-->
         </td>

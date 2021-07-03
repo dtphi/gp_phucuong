@@ -7,16 +7,16 @@
     </td>
     <td>
       <span v-show="!isEdit">{{ _getChucThanhText() }}</span>
-        <select class="form-control" v-model="item.chuc_thanh_id">
-          <option
-            :selected="item.chuc_thanh_id == idx"
-            :value="idx ? idx : ''"
-            v-for="(item, idx) in $options.setting.cf.chucThanhs"
-            :key="idx"
-          >
-            {{ item }}
-          </option>
-        </select>
+      <select v-show="isEdit" class="form-control" v-model="item.chuc_thanh_id">
+        <option
+          :selected="item.chuc_thanh_id == idx"
+          :value="idx ? idx : ''"
+          v-for="(item, idx) in $options.setting.cf.chucThanhs"
+          :key="idx"
+        >
+          {{ item }}
+        </option>
+      </select>
     </td>
     <td class="text-center">
       <span v-show="!isEdit">{{ item.label_ngay_thang_nam_chuc_thanh }}</span>

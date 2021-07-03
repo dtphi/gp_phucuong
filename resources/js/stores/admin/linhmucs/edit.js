@@ -470,11 +470,6 @@ export default {
         }
       )
     },
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
-    },
     [ACTION_GET_INFO_BY_ID]({
       dispatch,
       commit
@@ -497,5 +492,10 @@ export default {
     }, values) {
       commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values);
     },
+    [ACTION_SET_IMAGE]({
+      commit
+    }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    }
   }
 }
