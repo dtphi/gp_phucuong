@@ -220,30 +220,6 @@ export default {
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [ACTION_SET_IMAGE]),
   },
-  mounted() {
-    const _self = this;
-    this.fn = function(filePath) {
-      console.log(filePath)
-    };
-    this.mm = new MM({
-        el: '#modal-general-info-manager',
-        api: {
-            baseUrl: window.origin + '/api/mmedia',
-            listUrl: 'list',
-            uploadUrl: 'upload',
-        },
-        onSelect : function(fi) {
-            if (typeof fi === "object") {
-                if (fi.hasOwnProperty('selected') && fi.selected) {
-                    if (fi.selected.hasOwnProperty('path')) {
-                        this._selfCom.[ACTION_SET_IMAGE]('Image/NewPicture/' + fi.selected.path);
-                        document.getElementById('media-file-manager-content').style="display:none";
-                    }
-                }
-            }
-        },
-        _selfCom: _self
-    })
-  }
+  
 };
 </script>

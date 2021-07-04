@@ -41,6 +41,7 @@
           role="tabpanel"
           class="tab-pane active"
           :general-data="info"
+          :media="mm"
         ></tab-general>
       </div>
       <div class="tab-pane" id="tab-mo-rong">
@@ -48,6 +49,7 @@
           role="tabpanel"
           class="tab-pane"
           :general-data="info"
+          :media="mm"
         ></tab-mo-rong>
       </div>
       <div class="tab-pane" id="tab-bang-cap">
@@ -88,6 +90,7 @@ import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
 import {
   ACTION_INSERT_INFO,
   ACTION_INSERT_INFO_BACK,
+  ACTION_SET_IMAGE
 } from "store@admin/types/action-types";
 import TabGeneral from "./edits/TabGeneral";
 import TabMoRong from "./edits/TabMoRong";
@@ -107,8 +110,38 @@ export default {
     TabThuyenChuyen,
   },
   data() {
+    const mm = new MM({
+        el: '#modal-general-info-manager',
+        api: {
+            baseUrl: window.origin + '/api/mmedia',
+            listUrl: 'list',
+            uploadUrl: 'upload',
+        },
+        onSelect: function (fi) {
+            if (typeof fi === "object") {
+                if (fi.hasOwnProperty('selected') && fi.selected) {
+                    const pathImg = 'Image/NewPicture/';
+
+                    if (fi.selected.hasOwnProperty('path')) {
+                        if (this._selfCom.fn) {
+                            this._selfCom.fn(pathImg + fi.selected.path, fi.selected);
+                        } else {
+                          if (typeof this._selfCom.[ACTION_SET_IMAGE] == "function"){
+                            this._selfCom.[ACTION_SET_IMAGE](pathImg + fi.selected.path);
+                          }
+                        }
+
+                        document.getElementById('media-file-manager-content').style = "display:none";
+                    }
+                }
+            }
+        },
+        _selfCom: null
+    })
+    
     return {
       fullPage: false,
+      mm: mm
     };
   },
   computed: {
@@ -139,6 +172,6 @@ export default {
     tab_special_info_title: "Slide tin tức tiêu điểm",
     error_msg_system: "Lỗi hệ thống !",
     isForm: "add",
-  },
+  }
 };
 </script>
