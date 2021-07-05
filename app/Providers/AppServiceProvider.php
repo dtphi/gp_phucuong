@@ -76,8 +76,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Front\Services\Contracts\SettingModel::class,
             \App\Http\Controllers\Api\Front\Services\SettingService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Front\Services\Contracts\EmailSubscribeModel::class,
+            \App\Http\Controllers\Api\Front\Services\EmailSubscribeService::class,
+        );
     }
-
     /**
      * Bootstrap any application services.
      *

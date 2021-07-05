@@ -2,31 +2,40 @@
 
 namespace App\Http\Controllers\Api\Front;
 
-use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
-use App\Http\Resources\EmailSubscribe\EmailCollection;
-use App\Models\EmailSubscribe;
-use Dotenv\Exception\ValidationException;
-use Error;
-use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException as ValidationValidationException;
-use PhpParser\Node\Stmt\TryCatch;
+use App\Http\Requests\EmailSubscribeRequest;
+use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
+use App\Http\Controllers\Api\Front\Services\Contracts\EmailSubscribeModel as newEmailSub;
+use Illuminate\Http\Response as HttpResponse;
 
 class EmailController extends Controller
 {
-  public function store(Request $request)
-  {
-    // validation request 
-    $request->validate([
-      'email' => 'required|email|max:255|unique:email_subscribes',
-    ]);
+  private $newEmailSub = null;
 
-    $email_sub = new EmailSubscribe([
-      'email' => $request->get('email'),
-    ]);
-    
-    $email_sub->save();
+  public function __construct(newEmailSub $newEmailSub)
+  {
+      $this->newEmailSub = $newEmailSub;
+  }
+
+  public function store(EmailSubscribeRequest $request)
+  {
+    $storeResponse = $this->__handleStore($request);
+
+    if ($storeResponse->getStatusCode() === HttpResponse::HTTP_BAD_REQUEST) {
+      return $storeResponse;
+    }
 
     return response()->json('success');
+  }
+
+  private function __handleStore(&$request)
+  {
+    $requestParams = $request->all();
+
+    if ($this->newEmailSub->apiInsert($requestParams)) {
+      return response()->json('OK!!');
+    }
+
+    return response()->json('failed!!');
   }
 }
