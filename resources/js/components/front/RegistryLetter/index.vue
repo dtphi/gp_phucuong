@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- Thong bao -->
+    <notifications
+            group="common-update"></notifications>
     <!-- Show errors -->
     <template v-if="_errors">
       <div class="alert alert-danger">
@@ -50,6 +53,9 @@
 import { mapState, mapGetters, mapActions } from "vuex";
 import { MODULE_SUBSCRIBE } from "store@front/types/module-types";
 import { fn_get_tinymce_langs_url } from "@app/api/utils/fn-helper";
+import { setInteractionMode } from 'vee-validate'
+setInteractionMode('passive')
+
 export default {
   name: "RegistryLetter",
   components: {},
@@ -77,7 +83,8 @@ export default {
       console.log(newValue);
       if(newValue){
         this.$refs.observerNewEmail.reset();
-        // this._notificationUpdate("Insert successful !!!");
+        this._notificationUpdate("Insert successful !!!");
+        alert('Insert email success !!')
       }
     },
   },
@@ -107,7 +114,6 @@ export default {
       });
     },
     _notificationUpdate(notification) {
-      alert(notification);
       this.$notify(notification);
     },
   },
