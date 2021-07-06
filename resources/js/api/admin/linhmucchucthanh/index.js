@@ -6,24 +6,6 @@ import {
   API_LINH_MUCS_RESOURCE
 } from 'store@admin/types/api-paths';
 
-export const apiGetDropdownCategories = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(`/api/linh-mucs`), {
-      params: params
-    })
-    .then((response) => {
-      console.log(response)
-      if (response.status === 200) {
-        resolve(response.data);
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test'
-        }]);
-      }
-    })
-    .catch(errors => errResole(errors))
-}
-
 /**
  * [description]
  * @param  {[type]} infoId    [description]
@@ -52,36 +34,6 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
       if (errors.response) {
         errResole(errors);
       }
-    })
-}
-
-export const apiGetSlideSpecialInfos = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(API_INFOMATIONS_RESOURCE), {
-      params: params
-    })
-    .then((response) => {
-      console.log(response)
-      if (response.status === 200) {
-        resolve({
-          data: response.data.data
-        });
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test'
-        }]);
-      }
-    })
-    .catch(errors => {
-      console.log(errors);
-      if (errors.response) {
-        errResole([{
-          status: errors.response.status,
-          messageCommon: errors.response.data.message,
-          messages: errors.response.data.errors
-        }])
-      }
-
     })
 }
 
@@ -190,52 +142,6 @@ export const apiDeleteInfo = (infoId, resolve, errResole) => {
         json['data'] = response.data;
         json['status'] = 1000;
         resolve(json);
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test'
-        }]);
-      }
-    })
-    .catch(errors => errResole(errors))
-}
-
-/**
- * [description]
- * @param  {[type]} resolve   [description]
- * @param  {[type]} errResole [description]
- * @param  {[type]} params    [description]
- * @return {[type]}           [description]
- */
-export const apiSearchAll = (query, resolve, errResole) => {
-  let params = {
-    query
-  };
-  return axios.get(fn_get_base_api_url(`/api/search-info`), {
-      params
-    })
-    .then((response) => {
-      console.log(response)
-      if (response.status === 200) {
-        resolve(response.data);
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test'
-        }]);
-      }
-    })
-    .catch(errors => errResole(errors))
-}
-
-export const apiGetDropdownInfos = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(`/api/informations/dropdowns`), {
-      params: params
-    })
-    .then((response) => {
-      console.log(response)
-      if (response.status === 200) {
-        resolve(response.data);
       } else {
         errResole([{
           status: response.status,

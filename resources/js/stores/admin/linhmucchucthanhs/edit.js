@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   apiGetInfoById,
   apiUpdateInfo
-} from 'api@admin/information';
+} from 'api@admin/linhmucchucthanh';
 import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_SUCCESS,
@@ -14,7 +14,6 @@ import {
   INFOS_MODAL_UPDATE_INFO_FAILED,
   INFOS_MODAL_SET_ERROR,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
-  INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
   INFOS_FORM_SET_MAIN_IMAGE
@@ -25,11 +24,7 @@ import {
   ACTION_SHOW_MODAL_EDIT,
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
-  ACTION_ADD_INFO_TO_CATEGORY_LIST,
-  ACTION_REMOVE_INFO_TO_CATEGORY_LIST,
   ACTION_SET_IMAGE,
-  ACTION_ADD_INFO_TO_RELATED_LIST,
-  ACTION_REMOVE_INFO_TO_RELATED_LIST,
 } from '../types/action-types';
 import {
   config
@@ -151,10 +146,6 @@ export default {
       state.info.categorys = payload
     },
 
-    [INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST](state, payload) {
-      state.listCategorysDisplay = payload
-    },
-
     [INFOS_FORM_ADD_INFO_TO_RELATED_LIST](state, payload) {
       state.info.relateds = payload
     },
@@ -170,91 +161,6 @@ export default {
   },
 
   actions: {
-    addBangCaps({state}, params) {
-      state.info.bang_caps.push({
-        id: uuidv4(),
-        name: '',
-        type: 0,
-        ghi_chu: '',
-        active: 1
-      })
-    },
-    removeBangCap({state}, params) {
-      let bangCaps = state.info.bang_caps;
-      const data = params.item;
-
-      state.info.bang_caps = _.remove(bangCaps, function(item) {
-        return !(item.id == data.id);
-      })
-    },
-    addChucThanhs({state}, params) {
-      state.info.chuc_thanhs.push({
-        id: uuidv4(),
-        chuc_thanh_id: 1,
-        ngay_thang_nam_chuc_thanh: null,
-        noi_thu_phong:'',
-        nguoi_thu_phong:'',
-        ghi_chu: '',
-        active: 1
-      })
-    },
-    removeChucThanh({state}, params) {
-      let chuc_thanhs = state.info.chuc_thanhs;
-      const data = params.item;
-
-      state.info.chuc_thanhs = _.remove(chuc_thanhs, function(item) {
-        return !(item.id == data.id);
-      })
-    },
-    addVanThus({state}, params) {
-      state.info.van_thus.push({
-        id: uuidv4(),
-        parent_id: 0,
-        title: null,
-        type:'',
-        ghi_chu: '',
-        active: 1
-      })
-    },
-    removeVanThu({state}, params) {
-      let van_thus = state.info.van_thus;
-      const data = params.item;
-
-      state.info.van_thus = _.remove(van_thus, function(item) {
-        return !(item.id == data.id);
-      })
-    },
-    addThuyenChuyen({state}, params) {
-      state.info.thuyen_chuyens.push({
-        id: uuidv4(),
-        from_giao_xu_id: null,
-        from_chuc_vu_id: null,
-        from_date: null,
-        duc_cha_id: null,
-        to_date: null,
-        chuc_vu_id: null,
-        giao_xu_id: null,
-        co_so_gp_id: null,
-        dong_id: null,
-        ban_chuyen_trach_id: null,
-        du_hoc: null,
-        quoc_gia: null,
-        ghi_chu: '',
-        active: 1
-      })
-    },
-    removeThuyenChuyen({state}, params) {
-      let thuyen_chuyens = state.info.thuyen_chuyens;
-      const data = params.item;
-
-      state.info.thuyen_chuyens = _.remove(thuyen_chuyens, function(item) {
-        return !(item.id == data.id);
-      })
-    },
-    update_special_carousel({state}, specialCarousel) {
-      state.info.special_carousels = specialCarousel;
-    },
-
     [ACTION_SHOW_MODAL_EDIT]({
       dispatch,
     }, infoId) {
@@ -271,7 +177,6 @@ export default {
         (result) => {
           commit(INFOS_MODAL_SET_INFO_ID, infoId);
           commit(INFOS_MODAL_SET_INFO, result.data);
-          commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, result.data.category_display_list);
 
           dispatch(ACTION_SET_LOADING, false);
         },
@@ -314,70 +219,10 @@ export default {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
     },
 
-    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({
-      commit,
-      state
-    }, category) {
-      const categorys = state.info.categorys;
-      const listCateShow = state.listCategorysDisplay;
-
-      if (typeof category === "object" && Object.keys(category).length) {
-        if ((categorys.indexOf(category.category_id) === -1) && (parseInt(category.category_id) > 0)) {
-          categorys.push(category.category_id);
-          listCateShow.push(category);
-        }
-      }
-
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, categorys);
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow);
-    },
-
-    [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({
-      state,
-      commit
-    }, category) {
-      const categorys = state.info.categorys;
-      const listCateShow = state.listCategorysDisplay;
-
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, _.remove(categorys, function(cateId) {
-        return (cateId - category.category_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, _.remove(listCateShow, function(item) {
-        return (item.category_id - category.category_id !== 0);
-      }));
-    },
-
     [ACTION_SET_IMAGE]({
       commit
     }, imgFile) {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
-    },
-
-    [ACTION_ADD_INFO_TO_RELATED_LIST]() {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      if (typeof related === "object" && Object.keys(related).length) {
-        if ((relateds.indexOf(related.information_id) === -1) && (parseInt(related.information_id) > 0)) {
-          relateds.push(related.information_id);
-          listRelatedShow.push(related);
-        }
-      }
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, relateds);
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, listRelatedShow);
-    },
-
-    [ACTION_REMOVE_INFO_TO_RELATED_LIST]() {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, _.remove(relateds, function(infoId) {
-        return (infoId - related.information_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, _.remove(listRelatedShow, function(item) {
-        return (item.information_id - related.information_id !== 0);
-      }));
     },
   }
 }

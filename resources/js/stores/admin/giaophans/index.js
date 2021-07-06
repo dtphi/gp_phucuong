@@ -4,7 +4,6 @@ import {
   apiGetInfoById,
   apiGetGiaoPhanInfos,
   apiDeleteInfo,
-  apiSearchAll,
   apiGetDropdownCategories
 } from 'api@admin/giaophan';
 import {
@@ -258,22 +257,6 @@ export default {
       commit
     }, isLoading) {
       commit(INFOS_SET_LOADING, isLoading);
-    },
-    [ACTION_SEARCH_ALL]({
-      dispatch,
-      commit
-    }, query) {
-      dispatch(ACTION_SET_LOADING, true);
-      apiSearchAll(query,
-        (result) => {
-          commit(INFOS_GET_INFO_LIST_SUCCESS, true);
-          dispatch(ACTION_SET_LOADING, false);
-        },
-        (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, false);
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      )
     },
     [ACTION_RESET_NOTIFICATION_INFO]({
       commit
