@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- Thong bao -->
-    <notifications
-            group="common-update"></notifications>
     <!-- Show errors -->
     <template v-if="_errors">
       <div class="alert alert-danger">
@@ -30,7 +27,7 @@
             v-slot="{ errors }"
           >
             <input
-              class="d-block mb-3"
+              class="d-block mb-3 form-input"
               type="text"
               name="email"
               id="input-subscribe-email"
@@ -46,6 +43,7 @@
         </div>
       </validation-observer>
     </template>
+    <notifications group="add_email" />
   </div>
 </template>
 
@@ -61,6 +59,7 @@ export default {
   components: {},
   data() {
     return {
+      text_notification: '',
       fullPage: false,
       options: {
         language_url: fn_get_tinymce_langs_url("vi_VN"),
@@ -83,8 +82,7 @@ export default {
       console.log(newValue);
       if(newValue){
         this.$refs.observerNewEmail.reset();
-        this._notificationUpdate("Insert successful !!!");
-        alert('Insert email success !!')
+        this._notificationUpdate();
       }
     },
   },
@@ -110,12 +108,18 @@ export default {
       await _self.$refs.observerNewEmail.validate().then((isValid) => {
         if (isValid) {
           _self.ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER(_self.subscribe);
+          this.text_notification = _self.subscribe.email;
         }
       });
     },
-    _notificationUpdate(notification) {
-      this.$notify(notification);
-    },
+    _notificationUpdate() {
+      this.$notify({
+        group: 'add_email',
+        type: 'success',
+        title: 'Insert successfully!',
+        text: this.text_notification,
+      })
+    }
   },
   setting: {
     error_msg_system: "Lỗi hệ thống !",
@@ -126,6 +130,13 @@ export default {
 .cms-text-red {
   display: block;
   color: red;
+}
+.form-input {
+  width: 100%;
+  border-radius: 4px;
+  outline:0;
+  background-color: #CCCCCC;
+  padding: 5px;
 }
 </style>
 
