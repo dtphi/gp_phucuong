@@ -62,6 +62,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\DongModel::class,
             \App\Http\Controllers\Api\Admin\Services\DongService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\CoSoModel::class,
+            \App\Http\Controllers\Api\Admin\Services\CoSoService::class
+        );
 
         /*=====================Front end======================== .*/
         $this->app->bind(

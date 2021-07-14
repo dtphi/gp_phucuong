@@ -3,7 +3,7 @@ import {
   fn_get_base_api_detail_url
 } from '@app/api/utils/fn-helper';
 import {
-  API_GIAO_HATS_RESOURCE
+  API_CO_SOS_RESOURCE
 } from 'store@admin/types/api-paths';
 
 
@@ -45,8 +45,8 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
  * @param  {[type]} params    [description]
  * @return {[type]}           [description]
  */
-export const apiGetGiaoHatInfos = (resolve, errResole, params) => {
-  return axios.get(fn_get_base_api_url(API_GIAO_HATS_RESOURCE), {
+export const apiGetInfos = (resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_url(API_CO_SOS_RESOURCE), {
       params: params
     })
     .then((response) => {
