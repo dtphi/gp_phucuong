@@ -3,7 +3,7 @@ import adds from './add';
 import edits from './edit';
 import {
   apiGetInfoById,
-  apiGetGiaoHatInfos,
+  apiGetInfos,
   apiDeleteInfo,
 } from 'api@admin/dong';
 import {
@@ -122,7 +122,7 @@ export default {
       commit
     }, params) {
       dispatch(ACTION_SET_LOADING, true);
-      await apiGetGiaoHatInfos(
+      await apiGetInfos(
         (infos) => {
           console.log(infos)
           commit(INFOS_SET_INFO_LIST, infos.data.results);
