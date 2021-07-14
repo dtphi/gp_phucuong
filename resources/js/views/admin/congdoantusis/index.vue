@@ -71,7 +71,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Paginate from 'com@admin/Pagination';
     import {
-        MODULE_MODULE_GIAO_DIEM,
+        MODULE_MODULE_CONG_DOAN_TU_SI,
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -104,7 +104,7 @@
                 perPage: state => state.cfApp.perPage
             }),
             ...mapGetters(['isNotEmptyList']),
-            ...mapState(MODULE_MODULE_GIAO_DIEM, [
+            ...mapState(MODULE_MODULE_CONG_DOAN_TU_SI, [
                 'infos',
                 'loading',
                 'updateSuccess',
@@ -117,7 +117,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_GIAO_DIEM, [
+            ...mapActions(MODULE_MODULE_CONG_DOAN_TU_SI, [
                 ACTION_GET_INFO_LIST,
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),
@@ -135,7 +135,7 @@
             const params = {
                 perPage: this.perPage
             };
-            //this.[ACTION_GET_INFO_LIST](params);
+            this.[ACTION_GET_INFO_LIST](params);
         },
         setting: {
             list_title: 'Danh sách Linh mục'

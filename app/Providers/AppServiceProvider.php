@@ -54,6 +54,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\GiaoDiemModel::class,
             \App\Http\Controllers\Api\Admin\Services\GiaoDiemService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\CongDoanTuSiModel::class,
+            \App\Http\Controllers\Api\Admin\Services\CongDoanTuSiService::class
+        );
 
         /*=====================Front end======================== .*/
         $this->app->bind(

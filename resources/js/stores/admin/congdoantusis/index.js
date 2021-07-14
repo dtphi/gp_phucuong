@@ -4,6 +4,7 @@ import edits from './edit';
 import {
   apiGetInfoById,
   apiDeleteInfo,
+  apiGetInfos
 } from 'api@admin/congdoantusi';
 import {
   MODULE_MODULE_GIAO_DIEM,
@@ -121,7 +122,7 @@ export default {
       commit
     }, params) {
       dispatch(ACTION_SET_LOADING, true);
-      await apiGetGiaoDiemInfos(
+      await apiGetInfos(
         (infos) => {
           console.log(infos)
           commit(INFOS_SET_INFO_LIST, infos.data.results);
