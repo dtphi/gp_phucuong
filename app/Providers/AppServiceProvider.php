@@ -66,6 +66,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\CoSoModel::class,
             \App\Http\Controllers\Api\Admin\Services\CoSoService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\ThanhModel::class,
+            \App\Http\Controllers\Api\Admin\Services\ThanhService::class
+        );
 
         /*=====================Front end======================== .*/
         $this->app->bind(

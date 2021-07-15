@@ -7,7 +7,7 @@ import {
   apiGetInfos
 } from 'api@admin/congdoantusi';
 import {
-  MODULE_MODULE_GIAO_DIEM,
+  MODULE_MODULE_CONG_DOAN_TU_SI,
 } from '../types/module-types';
 import {
   INFOS_SET_LOADING,
@@ -137,7 +137,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_MODULE_GIAO_DIEM,
+              name: MODULE_MODULE_CONG_DOAN_TU_SI,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination

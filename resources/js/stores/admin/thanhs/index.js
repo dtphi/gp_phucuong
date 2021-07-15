@@ -3,15 +3,11 @@ import adds from './add';
 import edits from './edit';
 import {
   apiGetInfoById,
-  apiGetGiaoHatInfos,
+  apiGetInfos,
   apiDeleteInfo
 } from 'api@admin/thanh';
 import {
-  apiGetSettingByCode,
-  apiInsertSetting
-} from 'api@admin/setting';
-import {
-  MODULE_MODULE_GIAO_HAT,
+  MODULE_MODULE_THANH,
 } from '../types/module-types';
 import {
   INFOS_SET_LOADING,
@@ -126,7 +122,7 @@ export default {
       commit
     }, params) {
       dispatch(ACTION_SET_LOADING, true);
-      await apiGetGiaoHatInfos(
+      await apiGetInfos(
         (infos) => {
           console.log(infos)
           commit(INFOS_SET_INFO_LIST, infos.data.results);
@@ -141,7 +137,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_MODULE_GIAO_HAT,
+              name: MODULE_MODULE_THANH,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination
