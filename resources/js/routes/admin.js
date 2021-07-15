@@ -18,6 +18,7 @@ import CoSoGiaoPhanPage from 'v@admin/cosogiaophans';
 import CongDoanTuSiPage from 'v@admin/congdoantusis';
 import DongPage from 'v@admin/dongs';
 import ThanhPage from 'v@admin/thanhs';
+import ChucVuPage from 'v@admin/chucvus';
 import SystemPage from 'v@admin/systems';
 import DashboardPage from 'v@admin/dashboards';
 import CategoryListPage from 'v@admin/categorys';
@@ -1330,6 +1331,83 @@ export default [{
                 header: 'Thêm thánh',
                 role: 'admin',
                 title: 'Thánh | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'chuc-vus',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: ChucVuPage,
+            name: 'admin.chuc.vu.list',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Chức vụ'
+                }],
+                header: 'Danh sách chức vụ',
+                role: 'admin',
+                title: 'Chức vụ | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }, {
+            path: 'add',
+            component: () => import ('v@admin/chucvus/add'),
+            name: 'admin.chuc.vu.add',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                },{
+                    name: 'Danh sách chức vụ',
+                    linkName: 'admin.chuc.vu.list',
+                    linkPath: '/chuc-vus'
+                }, {
+                    name: 'Chức vụ'
+                }],
+                header: 'Thêm chức vụ',
+                role: 'admin',
+                title: 'Chức vụ | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }, {
+            path: 'edit/:chucvuId',
+            component: () => import ('v@admin/chucvus/edit'),
+            name: 'admin.chuc.vu.edit',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                },{
+                    name: 'Danh sách chức vụ',
+                    linkName: 'admin.chuc.vu.list',
+                    linkPath: '/chuc-vus'
+                }, {
+                    name: 'Chức vụ'
+                }],
+                header: 'Thêm chức vụ',
+                role: 'admin',
+                title: 'Chức vụ | ' + config.site_name,
                 show: {
                     footer: true
                 }

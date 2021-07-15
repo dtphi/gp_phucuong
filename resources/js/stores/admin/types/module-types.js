@@ -67,3 +67,6 @@ export const MODULE_MODULE_BAN_CHUYEN_TRACH_EDIT = 'ban_chuyen_trach/edit';
 export const MODULE_MODULE_THANH = 'thanh';
 export const MODULE_MODULE_THANH_ADD = 'thanh/add';
 export const MODULE_MODULE_THANH_EDIT = 'thanh/edit';
+export const MODULE_MODULE_CHUC_VU = 'chuc_vu';
+export const MODULE_MODULE_CHUC_VU_ADD = 'chuc_vu/add';
+export const MODULE_MODULE_CHUC_VU_EDIT = 'chuc_vu/edit';

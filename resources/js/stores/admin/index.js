@@ -22,6 +22,7 @@ import dong from './dongs';
 import co_so from './cosos';
 import ban_chuyen_trach from './banchuyentrachs';
 import thanh from './thanhs';
+import chuc_vu from './chucvus';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -168,7 +169,8 @@ export default new Vuex.Store({
     dong,
     co_so,
     ban_chuyen_trach,
-    thanh
+    thanh,
+    chuc_vu
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

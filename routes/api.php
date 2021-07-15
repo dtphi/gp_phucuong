@@ -67,6 +67,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
         Route::apiResource('co-sos', 'CoSoController');
         Route::apiResource('dongs', 'DongController');
         Route::apiResource('thanhs', 'ThanhController');
+        Route::apiResource('chuc-vus', 'ChucVuController');
 
         Route::any('/mmedia/{any}', function () {});
     });

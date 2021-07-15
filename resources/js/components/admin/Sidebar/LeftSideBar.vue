@@ -91,6 +91,11 @@
             >
           </li>
           <li>
+            <a :href="_getHref('chuc-vus')">
+              <span>{{ $options.setting.chuc_vus_title }}</span></a
+            >
+          </li>
+          <li>
             <a :href="_getHref('thanhs')">
               <span>{{ $options.setting.thanhs_title }}</span></a
             >
@@ -257,6 +262,7 @@ export default {
     cong_doan_tu_sis_title: "Công đoàn tu sĩ",
     dongs_title: "Dòng",
     thanhs_title: "Thánh",
+    chuc_vus_title: "Chức Vụ",
   },
 };
 </script>
