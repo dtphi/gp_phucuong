@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Common\Tables;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\CoSoGiaoPhan;
+use App\Models\Linhmuc;
 
 class LinhmucBangcap extends BaseModel
 {
@@ -15,7 +15,12 @@ class LinhmucBangcap extends BaseModel
      */
     protected $table = DB_PREFIX . 'linhmuc_bangcaps';
 
-        /**
+    public function linhMuc()
+    {
+        return $this->belongsTo(Linhmuc::class);
+    }
+
+    /**
      * @author : dtphi .
      * The attributes that are mass assignable.
      *
@@ -28,6 +33,13 @@ class LinhmucBangcap extends BaseModel
         'ghi_chu',
         'active'
     ];
+
+    public function getTenLinhMucAttribute($value)
+    {
+        $value = ($this->linhMuc) ? $this->linhMuc->ten : '';
+
+        return $value;
+    }
 
     public static function insertByLinhmucId(
         $linhmucId = null,

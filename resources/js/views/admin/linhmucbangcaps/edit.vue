@@ -64,7 +64,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import {
-        MODULE_MODULE_LINH_MUC_EDIT,
+        MODULE_MODULE_BANG_CAP_EDIT,
         MODULE_MODULE_SPECIAL_INFO_CAROUSEL
     } from 'store@admin/types/module-types';
     import {
@@ -94,7 +94,7 @@
             ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
                 'specialInfoCarousel'
             ]),
-            ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
+            ...mapState(MODULE_MODULE_BANG_CAP_EDIT, {
                 loading: state => state.loading,
                 errors: state => state.errors,
                 insertSuccess: state => state.insertSuccess
@@ -111,7 +111,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
+            ...mapActions(MODULE_MODULE_BANG_CAP_EDIT, [
                 ACTION_RESET_NOTIFICATION_INFO,
                 ACTION_SHOW_MODAL_EDIT,
                 'update_special_carousel'

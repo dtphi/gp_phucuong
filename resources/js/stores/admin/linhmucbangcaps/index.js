@@ -3,11 +3,11 @@ import adds from './add';
 import edits from './edit';
 import {
   apiGetInfoById,
-  apiGetLinhMucInfos,
+  apiGetInfos,
   apiDeleteInfo,
 } from 'api@admin/linhmucbangcap';
 import {
-  MODULE_MODULE_LINH_MUC,
+  MODULE_MODULE_BANG_CAP,
 } from '../types/module-types';
 import {
   INFOS_SET_LOADING,
@@ -122,7 +122,7 @@ export default {
       commit
     }, params) {
       dispatch(ACTION_SET_LOADING, true);
-      await apiGetLinhMucInfos(
+      await apiGetInfos(
         (infos) => {
           console.log(infos)
           commit(INFOS_SET_INFO_LIST, infos.data.results);
@@ -137,7 +137,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_MODULE_LINH_MUC,
+              name: MODULE_MODULE_BANG_CAP,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination
