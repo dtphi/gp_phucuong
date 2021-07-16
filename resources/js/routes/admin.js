@@ -9,8 +9,6 @@ import LinhMucChucThanhPage from 'v@admin/linhmucchucthanhs';
 import LinhMucVanThuPage from 'v@admin/linhmucvanthus';
 import LinhMucThuyenChuyenPage from 'v@admin/linhmucthuyenchuyens';
 import GiaoPhanPage from 'v@admin/giaophans';
-import GiaoPhanAddPage from 'v@admin/giaophans/add';
-import GiaoPhanEditPage from 'v@admin/giaophans/edit';
 import GiaoHatPage from 'v@admin/giaohats';
 import GiaoXuPage from 'v@admin/giaoxus';
 import GiaoDiemPage from 'v@admin/giaodiems';
@@ -19,6 +17,7 @@ import CongDoanTuSiPage from 'v@admin/congdoantusis';
 import DongPage from 'v@admin/dongs';
 import ThanhPage from 'v@admin/thanhs';
 import ChucVuPage from 'v@admin/chucvus';
+import LeChinhPage from 'v@admin/lechinhs';
 import SystemPage from 'v@admin/systems';
 import DashboardPage from 'v@admin/dashboards';
 import CategoryListPage from 'v@admin/categorys';
@@ -1408,6 +1407,83 @@ export default [{
                 header: 'Thêm chức vụ',
                 role: 'admin',
                 title: 'Chức vụ | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }]
+    }, {
+        path: 'le-chinhs',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: LeChinhPage,
+            name: 'admin.le.chinh.list',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                }, {
+                    name: 'Lễ Chính'
+                }],
+                header: 'Danh sách lễ chính',
+                role: 'admin',
+                title: 'Lễ Chính | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }, {
+            path: 'add',
+            component: () => import ('v@admin/lechinhs/add'),
+            name: 'admin.le.chinh.add',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                },{
+                    name: 'Danh sách lễ chính',
+                    linkName: 'admin.le.chinh.list',
+                    linkPath: '/lechinhs'
+                }, {
+                    name: 'Lễ Chính'
+                }],
+                header: 'Thêm lễ chính',
+                role: 'admin',
+                title: 'Lễ Chính | ' + config.site_name,
+                show: {
+                    footer: true
+                }
+            }
+        }, {
+            path: 'edit/:leChinhId',
+            component: () => import ('v@admin/lechinhs/edit'),
+            name: 'admin.le.chinh.edit',
+            meta: {
+                layout: DefaultLayout,
+                auth: true,
+                breadcrumbs: [{
+                    name: 'Quản trị',
+                    linkName: 'admin.dashboards',
+                    linkPath: '/dashboards'
+                },{
+                    name: 'Danh sách lễ chính',
+                    linkName: 'admin.le.chinh.list',
+                    linkPath: '/lechinhs'
+                }, {
+                    name: 'Lễ Chính'
+                }],
+                header: 'Thêm lễ chính',
+                role: 'admin',
+                title: 'Lễ Chính | ' + config.site_name,
                 show: {
                     footer: true
                 }

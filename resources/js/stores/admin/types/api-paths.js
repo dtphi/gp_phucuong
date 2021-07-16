@@ -24,3 +24,4 @@ export const API_CO_SOS_RESOURCE = '/api/co-sos';
 export const API_DONGS_RESOURCE = '/api/dongs';
 export const API_THANHS_RESOURCE = '/api/thanhs';
 export const API_CHUCVUS_RESOURCE = '/api/chuc-vus';
+export const API_LECHINHS_RESOURCE = '/api/le-chinhs';

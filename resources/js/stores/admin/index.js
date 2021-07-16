@@ -23,6 +23,7 @@ import co_so from './cosos';
 import ban_chuyen_trach from './banchuyentrachs';
 import thanh from './thanhs';
 import chuc_vu from './chucvus';
+import le_chinh from './lechinhs';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -170,7 +171,8 @@ export default new Vuex.Store({
     co_so,
     ban_chuyen_trach,
     thanh,
-    chuc_vu
+    chuc_vu,
+    le_chinh
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

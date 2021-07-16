@@ -74,6 +74,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\ChucVuModel::class,
             \App\Http\Controllers\Api\Admin\Services\ChucVuService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\LeChinhModel::class,
+            \App\Http\Controllers\Api\Admin\Services\LeChinhService::class
+        );
 
         /*=====================Front end======================== .*/
         $this->app->bind(

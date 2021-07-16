@@ -70,3 +70,6 @@ export const MODULE_MODULE_THANH_EDIT = 'thanh/edit';
 export const MODULE_MODULE_CHUC_VU = 'chuc_vu';
 export const MODULE_MODULE_CHUC_VU_ADD = 'chuc_vu/add';
 export const MODULE_MODULE_CHUC_VU_EDIT = 'chuc_vu/edit';
+export const MODULE_MODULE_LE_CHINH = 'le_chinh';
+export const MODULE_MODULE_LE_CHINH_ADD = 'le_chinh/add';
+export const MODULE_MODULE_LE_CHINH_EDIT = 'le_chinh/edit';
