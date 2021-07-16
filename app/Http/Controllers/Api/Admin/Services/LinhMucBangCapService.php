@@ -6,14 +6,14 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucBangCapModel;
 use App\Http\Resources\LinhMucBangCaps\LinhMucBangCapCollection;
 use App\Http\Resources\LinhMucBangCaps\LinhMucBangCapResource;
-use App\Models\LinhMucBangCap;
+use App\Models\LinhmucBangcap;
 use App\Http\Common\Tables;
 use DB;
 
 final class LinhMucBangCapService implements BaseModel, LinhMucBangCapModel
 {
     /**
-     * @var LinhMucBangCap|null
+     * @var LinhmucBangcap|null
      */
     private $model = null;
 
@@ -23,7 +23,7 @@ final class LinhMucBangCapService implements BaseModel, LinhMucBangCapModel
      */
     public function __construct()
     {
-        $this->model    = new LinhMucBangCap();
+        $this->model    = new LinhmucBangcap();
     }
 
     public function apiGetList(array $options = [], $limit = 5)
