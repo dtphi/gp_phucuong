@@ -1,6 +1,6 @@
 <template>
     <div id="content">
-        <the-header-page></the-header-page>
+        <!--<the-header-page></the-header-page>-->
         <div class="container-fluid">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -8,7 +8,7 @@
                         <i class="fa fa-list"></i> {{$options.setting.list_title}}</h3>
                 </div>
                 <div class="panel-body">
-                    <!--<div id="form-category">
+                    <div id="form-category">
                         <div class="table-responsive">
                             <template v-if="loading">
                                 <loading-over-lay
@@ -21,31 +21,38 @@
                                         class="table table-bordered table-hover">
                                         <thead>
                                         <tr role="row">
-                                            <th style="width: 5%;" class="text-left">No
+                                            <th style="width: 1px;" class="text-left">No
                                             </th>
-                                            <th style="width: 5%;" class="text-center">
+                                            <th style="width: 1px;" class="text-center">
                                                 <input type="checkbox"
-                                                       onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                                        onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                             </th>
-                                            <th style="width: 50%" class="text-left">Tên
+                                            <th style="width: 200px" class="text-left">Tên người thụ phong
                                             </th>
-                                            <th style="width: 10%" class="text-left">
-                                                Hình ảnh
+                                            <th style="width: 100px" class="text-left">
+                                                Linh mục
                                             </th>
-                                            <th style="width: 10%" class="text-center">
-                                                Ngày hoạt động
+                                            <th style="width: 100px" class="text-left">
+                                                Chức thánh
                                             </th>
-                                            <th style="width: 10%" class="text-center">Trạng thái</th>
+                                            <th style="width: 100px" class="text-left">
+                                                Nơi thụ phong
+                                            </th>
+                                            <th style="width: 100px" class="text-left">
+                                                Ngày tháng
+                                            </th>
+                                            <th>Ghi chú</th>
+                                            <th class="text-center">Trạng thái</th>
                                             
-                                            <th style="width: 10%" class="text-right">Action
+                                            <th style="width: 100px" class="text-right">Action
                                             </th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <item v-for="(item,index) in _infoList"
-                                              :info="item"
-                                              :no="index"
-                                              :key="item.id"></item>
+                                                :info="item"
+                                                :no="index"
+                                                :key="item.id"></item>
                                         </tbody>
                                     </table>
                                 </div>
@@ -53,7 +60,7 @@
                         </div>
 
                         <paginate :is-resource="isResource"></paginate>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,7 +78,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Paginate from 'com@admin/Pagination';
     import {
-        MODULE_MODULE_LINH_MUC,
+        MODULE_MODULE_CHUC_THANH,
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -104,7 +111,7 @@
                 perPage: state => state.cfApp.perPage
             }),
             ...mapGetters(['isNotEmptyList']),
-            ...mapState(MODULE_MODULE_LINH_MUC, [
+            ...mapState(MODULE_MODULE_CHUC_THANH, [
                 'infos',
                 'loading',
                 'updateSuccess',
@@ -117,7 +124,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC, [
+            ...mapActions(MODULE_MODULE_CHUC_THANH, [
                 ACTION_GET_INFO_LIST,
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),

@@ -6,18 +6,21 @@
                    :id="`info_select_id_${info.id}`"
                    :value="info.id">
         </td>
-        <td class="text-left">{{info.ten}}</td>
-        <td class="text-center" style="width:7%">
-            <img :src="info.imgThum" class="img-thumbnail"/>
+        <td class="text-left">{{info.nguoi_thu_phong}}</td>
+        <td class="text-left">{{info.ten_linh_muc}}</td>
+        <td class="text-left">{{info.ten_chuc_thanh}}</td>
+        <td class="text-left">{{info.noi_thu_phong}}</td>
+        <td class="text-center">{{_formatDate(info.ngay_thang)}}</td>
+        <td>
+            <div v-html="info.ghi_chu"></div>
         </td>
-        <td class="text-center">{{_formatDate(info.update_time)}}</td>
         <td class="text-center">{{info.active}}</td>
         
         <td class="text-right">
-            <btn-edit
-                :info-id="info.id"></btn-edit>
-            <btn-delete
-                :info-id="info.id"></btn-delete>
+            <!--<btn-edit
+                :info-id="info.id"></btn-edit>-->
+            <!--<btn-delete
+                :info-id="info.id"></btn-delete>-->
         </td>
     </tr>
 </template>
@@ -45,7 +48,7 @@
                 type: Object,
                 validator: function (value) {
                     var id = (value.id && Number.isInteger(value.id));
-                    var name = (value.ten && value.ten.length);
+                    var name = (value.name && value.name.length);
 
                     return (id && name)
                 }
