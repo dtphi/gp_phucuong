@@ -12,6 +12,7 @@ export const MODULE_NEWS_CATEGORY = 'news_category';
 export const MODULE_NEWS_CATEGORY_ADD = 'news_category/add';
 export const MODULE_NEWS_CATEGORY_EDIT = 'news_category/edit';
 
+export const MODULE_MODULE_APP = 'app_module';
 export const MODULE_MODULE_CATEGORY_ICON_SIDE_BAR = 'app_module/category_icon_side_bar';
 export const MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR = 'app_module/category_left_side_bar';
 export const MODULE_MODULE_HOME_BANNER = 'app_module/home_banner';
