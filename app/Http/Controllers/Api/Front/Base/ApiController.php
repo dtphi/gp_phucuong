@@ -248,8 +248,19 @@ class ApiController extends Controller
                 ],
             ];
 
+            $banners['image'] = 'Image/NewPicture/home_banners/banner_image.png';
+            $settings = $this->settingSv->apiGetSettingByCodes('module_system');
+            if ($settings) {
+                $banners = $settings->reduce(function ($carry, $item) {
+                    if ($item->key_data == 'module_system_banners')
+                        $carry = $item->value;
+    
+                    return ($item->serialized) ? unserialize($carry) : $carry;
+                });
+            }
+
             $data['logo']    = '/front/img/logo.png';
-            $data['banner']  = url('Image/NewPicture/home_banners/banner_image.png');
+            $data['banner']  = isset($banners['image']) ? url($banners['image']) : url('Image/NewPicture/home_banners/banner_image.png');
             $data['menus']   = $menus;
             $data['menus_1'] = $menuLayout_1;
 

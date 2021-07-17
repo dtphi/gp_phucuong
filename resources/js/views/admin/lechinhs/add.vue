@@ -44,8 +44,6 @@
                     </div>
 
                     <div class="panel-body">
-                        <info-add-form
-                            ref="formAddGiaoPhan"></info-add-form>
                     </div>
                 </div>
             </div>

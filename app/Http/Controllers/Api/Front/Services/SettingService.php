@@ -59,4 +59,11 @@ final class SettingService implements SettingModel
 
         return $this->model;
     }
+
+    public function apiGetSettingByCodes($code = '')
+    {
+        $query = $this->model->filterCode($code);
+
+        return $query->get();
+    }
 }

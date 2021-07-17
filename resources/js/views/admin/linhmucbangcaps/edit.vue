@@ -44,8 +44,6 @@
                     </div>
 
                     <div class="panel-body">
-                        <!--<info-add-form
-                            ref="formAddLinhMuc"></info-add-form>-->
                     </div>
                 </div>
             </div>
@@ -60,7 +58,6 @@
         mapGetters
     } from 'vuex';
 
-    import InfoAddForm from 'com@admin/Form/LinhMucs/EditForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import {
@@ -75,7 +72,6 @@
         name: 'InformationAdd',
         components: {
             Breadcrumb,
-            InfoAddForm,
             TheBtnBackListPage
         },
         beforeCreate() {

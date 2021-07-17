@@ -44,8 +44,6 @@
                     </div>
 
                     <div class="panel-body">
-                        <info-add-form
-                            ref="formEditGiaoPhan"></info-add-form>
                     </div>
                 </div>
             </div>
@@ -59,7 +57,6 @@
         mapActions
     } from 'vuex';
 
-    import InfoAddForm from 'com@admin/Form/GiaoPhans/EditForm';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import {
@@ -83,7 +80,6 @@
         },
         components: {
             Breadcrumb,
-            InfoAddForm,
             TheBtnBackListPage
         },
         data() {
