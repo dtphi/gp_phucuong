@@ -9,6 +9,7 @@ use App\Http\Requests\CoSoGiaoPhanRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use Log;
 
 class CoSoController extends ApiController
 {

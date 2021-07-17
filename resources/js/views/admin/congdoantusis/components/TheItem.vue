@@ -43,12 +43,6 @@
         props: {
             info: {
                 type: Object,
-                validator: function (value) {
-                    var id = (value.id && Number.isInteger(value.id));
-                    var name = (value.name && value.name.length);
-
-                    return (id && name)
-                }
             },
             no: {
                 default: 1

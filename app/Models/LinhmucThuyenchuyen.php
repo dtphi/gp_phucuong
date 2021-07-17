@@ -15,6 +15,18 @@ class LinhmucThuyenchuyen extends BaseModel
      */
     protected $table = DB_PREFIX . 'linhmuc_thuyenchuyens';
 
+    public function linhMuc()
+    {
+        return $this->belongsTo(Linhmuc::class);
+    }
+
+    public function getTenLinhMucAttribute($value)
+    {
+        $value = ($this->linhMuc) ? $this->linhMuc->ten : '';
+
+        return $value;
+    }
+
         /**
      * @author : dtphi .
      * The attributes that are mass assignable.

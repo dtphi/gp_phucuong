@@ -4,34 +4,35 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
-use App\Http\Controllers\Api\Admin\Services\Contracts\LeChinhModel as LeChinhSv;
-use App\Http\Requests\LeChinhRequest;
+use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucVanThuModel as LinhMucVanThuSv;
+use App\Http\Requests\LinhMucVanThuRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use App\Http\Common\Tables;
 use Log;
 
-class LeChinhController extends ApiController
+class LinhMucVanThuController extends ApiController
 {
     /**
      * @var string
      */
-    protected $resourceName = 'leChinh';
+    protected $resourceName = 'linh_muc_van_thu';
 
     /**
      * @var null
      */
-    private $leChinhSv = null;
+    private $vanThuSv = null;
 
     /**
      * @author: dtphi .
-     * LeChinhController constructor.
-     * @param LeChinhSv $leChinhSv
+     * LinhMucVanThuController constructor.
+     * @param LinhMucVanThuSv $vanThuSv
      * @param array $middleware
      */
-    public function __construct(LeChinhSv $leChinhSv, array $middleware = [])
+    public function __construct(LinhMucVanThuSv $vanThuSv, array $middleware = [])
     {
-        $this->leChinhSv = $leChinhSv;
+        $this->vanThuSv = $vanThuSv;
         parent::__construct($middleware);
     }
 
@@ -49,19 +50,17 @@ class LeChinhController extends ApiController
         }
         try {
             $limit       = $this->_getPerPage();
-            $collections = $this->leChinhSv->apiGetList($data, $limit);
+            $collections = $this->vanThuSv->apiGetList($data, $limit);
             $pagination  = $this->_getTextPagination($collections);
             $results = [];
             
             foreach ($collections as $key => $info) {
                 $results[] = [
                     'id' => (int)$info->id,
-                    'name'           => $info->name,
-                    'dia_chi'         => $info->dia_chi,
-                    'dien_thoai'          => $info->dien_thoai,
-                    'email'    => $info->email,
-                    'viet'    => $info->viet,
-                    'latin'    => $info->latin,
+                    'name' => $info->title,
+                    'ten_linh_muc' => $info->ten_linh_muc,
+                    'type' => $info->type,
+                    'ghi_chu'          => $info->ghi_chu,
                     'active'     => $info->active
                 ];
             }
@@ -89,7 +88,7 @@ class LeChinhController extends ApiController
     public function show($id = null)
     {
         try {
-            $json = $this->leChinhSv->apiGetResourceDetail($id);
+            $json = $this->vanThuSv->apiGetResourceDetail($id);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -99,10 +98,10 @@ class LeChinhController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param LeChinhRequest $request
+     * @param LinhMucVanThuRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(LeChinhRequest $request)
+    public function store(LinhMucVanThuRequest $request)
     {
         $storeResponse = $this->__handleStore($request);
 
@@ -117,14 +116,14 @@ class LeChinhController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param LeChinhRequest $request
+     * @param LinhMucVanThuRequest $request
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(LeChinhRequest $request, $id = null)
+    public function update(LinhMucVanThuRequest $request, $id = null)
     {
         try {
-            $model = $this->leChinhSv->apiGetDetail($id);
+            $model = $this->vanThuSv->apiGetDetail($id);
 
         } catch (HandlerMsgCommon $e) {
             Log::debug('Giao phan not found, Request ID = ' . $id);
@@ -143,7 +142,7 @@ class LeChinhController extends ApiController
     public function destroy($id = null)
     {
         try {
-            $model = $this->leChinhSv->apiGetDetail($id);
+            $model = $this->vanThuSv->apiGetDetail($id);
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -162,7 +161,7 @@ class LeChinhController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->leChinhSv->apiInsert($formData)) {
+        if ($result = $this->vanThuSv->apiInsert($formData)) {
             return $this->respondUpdated($result);
         }
 
@@ -179,7 +178,7 @@ class LeChinhController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->leChinhSv->apiUpdate($model, $formData)) {
+        if ($result = $this->vanThuSv->apiUpdate($model, $formData)) {
             return $this->respondUpdated($result);
         }
 

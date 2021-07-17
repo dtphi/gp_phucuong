@@ -64,8 +64,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import {
-        MODULE_MODULE_LINH_MUC_EDIT,
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
+        MODULE_MODULE_THUYEN_CHUYEN_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO,
@@ -91,10 +90,7 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'specialInfoCarousel'
-            ]),
-            ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
+            ...mapState(MODULE_MODULE_THUYEN_CHUYEN_EDIT, {
                 loading: state => state.loading,
                 errors: state => state.errors,
                 insertSuccess: state => state.insertSuccess
@@ -111,10 +107,9 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
+            ...mapActions(MODULE_MODULE_THUYEN_CHUYEN_EDIT, [
                 ACTION_RESET_NOTIFICATION_INFO,
-                ACTION_SHOW_MODAL_EDIT,
-                'update_special_carousel'
+                ACTION_SHOW_MODAL_EDIT
             ]),
             _errorToArrs() {
                 let errs = [];
@@ -130,8 +125,6 @@
             },
             _submitInfo() {
                 const _self = this;
-
-                this.update_special_carousel(this.specialInfoCarousel);
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
                         _self.$refs.formAddLinhMuc._submitInfo();

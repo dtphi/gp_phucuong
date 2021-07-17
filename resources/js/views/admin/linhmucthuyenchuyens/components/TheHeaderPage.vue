@@ -78,7 +78,7 @@
             }
         },
         setting: {
-            title: 'Linh mục',
+            title: 'Thuyên chuyển',
             refresh_txt: 'Tải lại danh sách'
         }
     };

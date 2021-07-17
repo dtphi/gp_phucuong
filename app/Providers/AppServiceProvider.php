@@ -86,6 +86,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucChucThanhModel::class,
             \App\Http\Controllers\Api\Admin\Services\LinhMucChucThanhService::class
         );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucThuyenChuyenModel::class,
+            \App\Http\Controllers\Api\Admin\Services\LinhMucThuyenChuyenService::class
+        );
+        $this->app->bind(
+            \App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucVanThuModel::class,
+            \App\Http\Controllers\Api\Admin\Services\LinhMucVanThuService::class
+        );
 
         /*=====================Front end======================== .*/
         $this->app->bind(

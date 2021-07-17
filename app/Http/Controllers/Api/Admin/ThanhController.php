@@ -9,6 +9,7 @@ use App\Http\Requests\ThanhRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use Log;
 
 class ThanhController extends ApiController
 {

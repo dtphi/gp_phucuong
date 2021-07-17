@@ -78,7 +78,7 @@
             }
         },
         setting: {
-            title: 'Linh mục',
+            title: 'Văn thư',
             refresh_txt: 'Tải lại danh sách'
         }
     };

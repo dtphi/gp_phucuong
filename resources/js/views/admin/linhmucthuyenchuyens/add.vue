@@ -64,7 +64,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import {
-        MODULE_MODULE_LINH_MUC_ADD,
+        MODULE_MODULE_THUYEN_CHUYEN_ADD,
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO
@@ -83,7 +83,7 @@
             }
         },
         computed: {
-            ...mapState(MODULE_MODULE_LINH_MUC_ADD, {
+            ...mapState(MODULE_MODULE_THUYEN_CHUYEN_ADD, {
                 loading: state => state.loading,
                 errors: state => state.errors,
                 insertSuccess: state => state.insertSuccess
@@ -100,7 +100,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
+            ...mapActions(MODULE_MODULE_THUYEN_CHUYEN_ADD, [
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),
             _errorToArrs() {

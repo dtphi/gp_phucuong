@@ -9,6 +9,7 @@ use App\Http\Requests\GiaoHatRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use Log;
 
 class GiaoHatController extends ApiController
 {

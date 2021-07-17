@@ -64,8 +64,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import TheBtnBackListPage from './components/TheBtnBackListPage';
     import {
-        MODULE_MODULE_CHUC_THANH_EDIT,
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
+        MODULE_MODULE_CHUC_THANH_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_RESET_NOTIFICATION_INFO,
@@ -91,9 +90,6 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'specialInfoCarousel'
-            ]),
             ...mapState(MODULE_MODULE_CHUC_THANH_EDIT, {
                 loading: state => state.loading,
                 errors: state => state.errors,
@@ -114,7 +110,6 @@
             ...mapActions(MODULE_MODULE_CHUC_THANH_EDIT, [
                 ACTION_RESET_NOTIFICATION_INFO,
                 ACTION_SHOW_MODAL_EDIT,
-                'update_special_carousel'
             ]),
             _errorToArrs() {
                 let errs = [];
@@ -131,7 +126,6 @@
             _submitInfo() {
                 const _self = this;
 
-                this.update_special_carousel(this.specialInfoCarousel);
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
                         _self.$refs.formAddLinhMuc._submitInfo();
