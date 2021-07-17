@@ -100,7 +100,7 @@ export default {
     }, imgFile) {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
     },
-    ACTION_UPDATE_BANNER({ state, dispatch }) {
+    ACTION_UPDATE_BANNER({ commit, state, dispatch }) {
       dispatch(ACTION_SET_LOADING, true);
       const data = {
         action: 'update',
