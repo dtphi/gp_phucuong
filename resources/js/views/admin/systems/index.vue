@@ -42,7 +42,7 @@
                                     <div class="tab-pane active" id="tab-general">
                                         <div class="tab-content">
                                             <div class="form-group required">
-                                                <label class="col-sm-2 control-label"
+                                                <label class="col-sm-1 control-label"
                                                        for="input-name">Logo</label>
                                                 <div class="col-sm-10">
                                                     <!--<input type="text"
@@ -53,33 +53,31 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="input-info-duc-cha" class="col-sm-2 control-label"
+                                                <label for="input-info-duc-cha" class="col-sm-1 control-label"
                                                     >Banner</label
                                                 >
-                                                <div class="col-sm-2">
-                                                    <input
-                                                    @click="_selectImage"
-                                                    type="button"
-                                                    value="Image"
-                                                    id="input-info-image"
-                                                    class="form-control"
-                                                    />
+                                                <div class="col-sm-1">
+                                                    <span class="btn btn-default" @click="_selectImage">
+                                                        <i class="fa fa-image fa-fw"/>
+                                                    </span>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <div class="file animated fadeIn" style="height: 61px">
                                                     <div class="file-preview">
                                                         <img :src="_getImageAvatar" class="thumb" />
                                                     </div>
                                                     </div>
                                                 </div>
-                                                <div class="pull-right">
-                                                    <button type="button"
-                                                            @click="_submitInfo"
-                                                            data-toggle="tooltip"
-                                                            title="Cập nhật"
-                                                            class="btn btn-primary">
-                                                        <i class="fa fa-save"></i>
-                                                    </button>
+                                                <div class="col-sm-8">
+                                                    <div class="pull-right">
+                                                        <button type="button"
+                                                                @click="_submitInfo"
+                                                                data-toggle="tooltip"
+                                                                title="Cập nhật"
+                                                                class="btn btn-primary">
+                                                            <i class="fa fa-save"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -110,7 +108,6 @@
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_IMAGE,
-        ACTION_GET_NEWS_GROUP_BY_ID,
         ACTION_RESET_NOTIFICATION_INFO,
         ACTION_GET_SETTING
     } from 'store@admin/types/action-types';
@@ -189,7 +186,6 @@
         methods: {
             ...mapActions(MODULE_MODULE_APP, [
                 ACTION_SET_IMAGE,
-                ACTION_GET_NEWS_GROUP_BY_ID,
                 ACTION_RESET_NOTIFICATION_INFO,
                 ACTION_GET_SETTING,
                 "ACTION_UPDATE_BANNER",
