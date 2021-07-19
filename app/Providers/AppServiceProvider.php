@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\URL;
+use App\Models\PersonalAccessToken;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,28 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         /*======================Admin============================.*/
-        Sanctum::ignoreMigrations();
+        $this->__bindAdminService();
+
+        /*=====================Front end======================== .*/
+        $this->__bindFrontService();
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $scheme = (config('app.force_https')=='http')?'http':'https';
+        URL::forceScheme($scheme);
+
+        /*use when auth bear token, create client_access_tokens table*/
+        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
+    }
+
+    private function __bindAdminService() 
+    {
         $this->app->bind(
             \App\Http\Controllers\Api\Admin\Services\Contracts\AdminModel::class,
             \App\Http\Controllers\Api\Admin\Services\AdminService::class
@@ -94,8 +116,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucVanThuModel::class,
             \App\Http\Controllers\Api\Admin\Services\LinhMucVanThuService::class
         );
+    }
 
-        /*=====================Front end======================== .*/
+    private function __bindFrontService()
+    {
         $this->app->bind(
             \App\Http\Controllers\Api\Front\Services\Contracts\BaseModel::class,
             \App\Http\Controllers\Api\Front\Services\Service::class
@@ -116,19 +140,5 @@ class AppServiceProvider extends ServiceProvider
             \App\Http\Controllers\Api\Front\Services\Contracts\SettingModel::class,
             \App\Http\Controllers\Api\Front\Services\SettingService::class
         );
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $scheme = (config('app.force_https')=='http')?'http':'https';
-        URL::forceScheme($scheme);
-
-        /*use when auth bear token, create client_access_tokens table*/
-        //Sanctum::usePersonalAccessTokenModel(ClientAccessToken::class);
     }
 }

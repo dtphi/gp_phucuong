@@ -89,7 +89,29 @@ final class AdminService implements BaseModel, AdminModel
          * Save user with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
-
+        /*$actions = ['list', 'add', 'edit', 'delete'];
+        $rules = [
+            'setting' => $actions,
+            'thanh' => $actions,
+            'news.group' => $actions,
+            'linh.muc.van.thu' => $actions,
+            'linh.muc.thuyen.chuyen' => $actions,
+            'linh.muc.bang.cap' => $actions,
+            'linh.muc.chuc.thanh' => $actions,
+            'linh.muc' => $actions,
+            'le.chinh' => $actions,
+            'chuc.vu' => $actions,
+            'giao.phan' => $actions,
+            'giao.hat' => $actions,
+            'giao.xu' => $actions,
+            'giao.diem' => $actions,
+            'giao.phan.co.so' => $actions,
+            'cong.doan.tu.si' => $actions,
+            'dong' => $actions,
+            'tin.tuc' => $actions,
+        ];
+        */
+        
         if (!$this->model->save()) {
             DB::rollBack();
 
@@ -99,5 +121,33 @@ final class AdminService implements BaseModel, AdminModel
         DB::commit();
 
         return $this->model;
+    }
+
+    /**
+     * update permission.
+     */
+    public function apiPermissionUpdate(array $allows = [])
+    {
+        // TODO: Implement apiInsertOrUpdate() method.
+
+        DB::beginTransaction();
+        try {
+            foreach ($allows as $key => $allow) {
+                $abilities = [];
+                foreach($allow as $action) {
+                    $abilities[] = $key . ':' . $action;
+                }
+                $this->model->createToken('allow.' . $key, $abilities);
+            }
+        } catch (\Exceptions $e) {
+
+            DB::rollBack();
+
+            return false;
+        }
+
+        DB::commit();
+
+        return true;
     }
 }

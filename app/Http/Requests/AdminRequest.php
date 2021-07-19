@@ -7,6 +7,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class AdminRequest extends FormRequest
 {
+    private $listPermission = '';
+    
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,6 +17,26 @@ class AdminRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    /**
+     * @author : dtphi .
+     * Get data to be validated from the request.
+     *
+     * @return array
+     */
+    public function validationData()
+    {
+        $formData = $this->all();
+
+        $formData['userAbilities'] = [];
+        if ($this->get('action') == 'permission' && !empty($this->get('abilities'))) {
+            $formData['userAbilities'] = $this->get('abilities');
+        }
+        
+        $this->merge($formData);
+
+        return $this->all();
     }
 
     /**

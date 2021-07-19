@@ -131,4 +131,8 @@ final class Tables
         'module_banner_thong_baos',
         'module_banner_phung_vus'
     ];
+
+    const PREFIX_ACCESS_NAME = 'allow.';
+    public static $settingAccessName = self::PREFIX_ACCESS_NAME . 'setting';
+
 }

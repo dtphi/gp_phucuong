@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Auth;
+use App\Http\Common\Tables;
 
 class SettingRequest extends FormRequest
 {
@@ -12,8 +14,20 @@ class SettingRequest extends FormRequest
      * @return bool
      */
     public function authorize()
-    {
-        return true;
+    {   
+        if ($this->isMethod('post')) {
+            return Auth::user()->actionCan(Tables::$settingAccessName, 'setting:add');
+        } elseif ($this->isMethod('put')) {
+            return Auth::user()->actionCan(Tables::$settingAccessName, 'setting:edit');
+        } elseif ($this->isMethod('delete')) {
+            return Auth::user()->actionCan(Tables::$settingAccessName, 'setting:delete');
+        } elseif ($this->isMethod('get')) {
+            return Auth::user()->actionCan(Tables::$settingAccessName, 'setting:list');
+        } elseif ($this->isMethod('option')) {
+            return true;
+        }
+        
+        return false;
     }
 
     /**
@@ -55,6 +69,10 @@ class SettingRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->isMethod('get')) {
+            return [];
+        }
+
         return [
             'code'     => 'required|min:5|max:128',
             'settings' => 'required'
