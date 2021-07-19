@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api\Front;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use App\Http\Controllers\Api\Front\Services\Contracts\HomeModel as HomeSv;
+use App\Http\Controllers\Api\Front\Services\Contracts\SettingModel as SettingSv;
 use Illuminate\Http\Request;
+use App\Http\Common\Tables;
+use Str;
 
 class HomeController extends Controller
 {
@@ -20,14 +23,20 @@ class HomeController extends Controller
     private $homeSv = null;
 
     /**
+     * 
+     */
+    private $settingSv = null;
+
+    /**
      * @author : dtphi .
      * HomeController constructor.
      * @param HomeSv $homeSv
      * @param array $middleware
      */
-    public function __construct(HomeSv $homeSv, array $middleware = [])
+    public function __construct(HomeSv $homeSv, SettingSv $settingSv, array $middleware = [])
     {
         $this->homeSv = $homeSv;
+        $this->settingSv = $settingSv;
         parent::__construct($middleware);
     }
 
@@ -42,71 +51,22 @@ class HomeController extends Controller
 
     public function index()
     {
-        $bannerPath = '/Image/NewPicture/home_banners';
-
         try {
-            $pageLists = [
-                [
-                    'sort'  => 0,
-                    'img'   => $bannerPath . '/news_banner.jpeg',
-                    'url'  => url('/danh-muc-tin/on-goi-linh-muc-241'),
-                    'title' => 'ƠN GỌI'
-                ],
-                [
-                    'sort'  => 1,
-                    'img'   => $bannerPath . '/loi_chua_banner.jpeg',
-                    'url'  => url('/danh-muc-tin/loi-chua-210'),
-                    'title' => 'LỜI CHÚA'
-                ],
-                [
-                    'sort'  => 2,
-                    'img'   => $bannerPath . '/video_banner.jpg',
-                    'url'  => url('/video'),
-                    'title' => 'VIDEO'
-                ],
-                [
-                    'sort'  => 3,
-                    'img'   => $bannerPath . '/audio_podcast_banner.jpeg',
-                    'url'  => 'http://www.sachnoiconggiao.com/',
-                    'title' => 'AUDIO/PODCAST'
-                ],
-                [
-                    'sort'  => 4,
-                    'img'   => $bannerPath . '/linh_muc_banner.jpeg',
-                    'url'  => url('/danh-muc-tin/giam-muc-18'),
-                    'title' => 'DANH SÁCH LINH MỤC'
-                ],
-                [
-                    'sort'  => 5,
-                    'img'   => $bannerPath . '/gx_chanh_toa_banner.jpeg',
-                    'url'  => url('/danh-muc-tin/giao-phan-207'),
-                    'title' => 'GIÁO XỨ TRONG GIÁO PHẬN'
-                ],
-                [
-                    'sort'  => 6,
-                    'img'   => $bannerPath . '/thong_bao_banner.jpeg',
-                    'url'  => url('/danh-muc-tin/thong-bao-209'),
-                    'title' => 'THÔNG BÁO'
-                ],
-                [
-                    'sort'  => 7,
-                    'img'   => $bannerPath . '/phung_vu_banner.jpg',
-                    'url'  => url('/danh-muc-tin/phung-vu-213'),
-                    'title' => 'PHỤNG VỤ'
-                ]
-            ];
             $data = [];
-          
-            foreach($pageLists as $pageList) {
-                $imgThumUrl = $this->getThumbnail($pageList['img'], 273, 170);
+            $settings = $this->settingSv->apiGetSettingByCodes(Tables::$moduleBannerCode);
+            if ($settings) {
+                foreach ($settings as $key => $setting) {
+                    $values = ($setting->serialized) ? unserialize($setting->value) : $setting->value;
+                    $imgThumUrl = $this->getThumbnail(!empty($values['image']) ? $values['image']: self::$thumImgNo, 273, 170);
 
-                $data[] = [
-                    'sort' => $pageList['sort'],
-                    'img' => $pageList['img'],
-                    'imgThumbUrl' => url($imgThumUrl),
-                    'url' => $pageList['url'],
-                    'title' => $pageList['title']
-                ];
+                    $data[] = [
+                        'sort' => isset($values['sort']) ? (int)$values['sort']: $key,
+                        'img' => $values['image'],
+                        'imgThumbUrl' => url($imgThumUrl),
+                        'url' => $values['url'],
+                        'title' => Str::upper($values['title'])
+                    ];
+                }
             }
         } catch (HandlerMsgCommon $e) {
             throw $e->render();

@@ -118,4 +118,17 @@ final class Tables
         'Tu Triều',
         'Tu Dòng'
     ];
+
+    public static $moduleSystemCode = 'module_system';
+    public static $moduleBannerCode = 'module_banner';
+    public static $moduleBannerKeys = [
+        'module_banner_on_gois',
+        'module_banner_loi_chuas',
+        'module_banner_videos',
+        'module_banner_audio_podcasts',
+        'module_banner_linh_mucs',
+        'module_banner_giao_xus',
+        'module_banner_thong_baos',
+        'module_banner_phung_vus'
+    ];
 }

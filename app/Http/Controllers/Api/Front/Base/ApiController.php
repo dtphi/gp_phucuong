@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Http\Common\Tables;
 use Image;
 use Storage;
 
@@ -249,7 +250,7 @@ class ApiController extends Controller
             ];
 
             $banners['image'] = 'Image/NewPicture/home_banners/banner_image.png';
-            $settings = $this->settingSv->apiGetSettingByCodes('module_system');
+            $settings = $this->settingSv->apiGetSettingByCodes(Tables::$moduleSystemCode);
             if ($settings) {
                 $banners = $settings->reduce(function ($carry, $item) {
                     if ($item->key_data == 'module_system_banners')
