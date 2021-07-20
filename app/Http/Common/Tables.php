@@ -43,6 +43,7 @@ final class Tables
     public static $giao_hats = DB_PREFIX . 'giao_hats';
     public static $giao_xus = DB_PREFIX . 'giao_xus';
     public static $giao_diems = DB_PREFIX . 'giao_diems';
+    public static $personal_access_tokens = DB_PREFIX . 'personal_access_tokens';
 
     public static $infoStatus = [
         'Ẩn',

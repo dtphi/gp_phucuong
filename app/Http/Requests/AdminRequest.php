@@ -30,8 +30,9 @@ class AdminRequest extends BaseRequest
         $formData = $this->all();
 
         $formData['userAbilities'] = [];
-        if ($this->get('action') == 'permission' && !empty($this->get('abilities'))) {
+        if ($this->get('action') == 'permission' && $this->get('userId') && !empty($this->get('abilities'))) {
             $formData['userAbilities'] = $this->get('abilities');
+            $formData['userId'] = $this->get('userId');
         }
 
         $this->merge($formData);
@@ -46,6 +47,9 @@ class AdminRequest extends BaseRequest
      */
     public function rules()
     {
+        if ($this->get('action') == 'permission') 
+            return [];
+
         if ($this->isMethod('post')) {
             return [
                 'name'     => 'required|max:255',

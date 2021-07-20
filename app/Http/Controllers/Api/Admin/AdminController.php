@@ -138,7 +138,7 @@ class AdminController extends ApiController
         $requestParams = $request->all();
 
         if (($request->get('action') == 'permission') && !empty($requestParams['userAbilities'])) {
-            $result = $this->adSv->apiPermissionUpdate($requestParams['userAbilities']);
+            $result = $this->adSv->apiPermissionUpdate($requestParams['userAbilities'], $requestParams['id']);
             return $this->respondUpdated($result);
         }
         

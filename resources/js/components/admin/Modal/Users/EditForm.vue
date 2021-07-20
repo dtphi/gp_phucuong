@@ -101,6 +101,47 @@
                             </button>
                         </div>
                     </validation-observer>
+
+                    <validation-observer ref="observerUserPermission" @submit.prevent="_submitUserPermission">
+                        <div class="modal-body">
+                            <template v-if="user">
+                                <form class="form-horizontal">
+                                    <div class="form-group" v-for="(item,idx) in user.ruleSelect" :key="idx">
+                                        <label
+                                            for="input-user-password-"
+                                            class="col-sm-3 control-label">{{$options.setting.permisstionGroupTexts[idx]}}</label>
+                                        <div class="col-sm-9">
+                                                <input 
+                                                    v-on:change="ruleChange(idx,item)"
+                                                    v-model="item.all"
+                                                    type="checkbox"
+                                                    class="form-control">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2" v-for="(rule, id) in item.abilities" :key="id">
+                                                <label
+                                                for="input-user-password-"
+                                                class="control-label">{{$options.setting.permissionActionTexts[id]}}</label>
+                                                    <input 
+                                                        v-model="item.abilities[id]"
+                                                        type="checkbox"
+                                                        class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </template>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    @click="_close">{{$options.setting.btnCancelTxt}}
+                            </button>
+                            <button type="button" class="btn btn-success"
+                                    @click="_submitUserPermission">{{$options.setting.btnSubmitTxt}}
+                            </button>
+                        </div>
+                    </validation-observer>
                 </div>
             </div>
         </div>
@@ -182,6 +223,28 @@
                       _self._resetModal();
                     }
                 })
+            },
+
+            _submitUserPermission() {
+                const _self = this;
+                _self.[ACTION_UPDATE_USER]({
+                    action: 'permission',
+                    abilities: _self.user.ruleSelect,
+                    userId: _self.user.id,
+                    id: _self.user.id
+                });
+                _self._resetModal();
+            },
+
+            ruleChange(idx, rule){
+                const _self = this;
+                let abilities = rule.abilities;
+                abilities.list = rule.all;
+                abilities.add = rule.all;
+                abilities.edit = rule.all;
+                abilities.delete = rule.all;
+
+                _self.user.ruleSelect[idx].abilities = abilities;
             }
         },
         setting: {
@@ -192,7 +255,33 @@
             actionName: 'edit',
             isAddFrom: false,
             modal_title: 'Cập nhật người dùng',
-            btnSubmitTxt: 'Cập nhật'
+            btnSubmitTxt: 'Cập nhật',
+            permisstionGroupTexts: {
+                setting: 'Hệ thống/Cài đặt',
+                thanh: 'Linh mục/Thánh',
+                news_group: 'Tin tức/Danh mục',
+                linh_muc_van_thu: 'Linh mục/Văn thư',
+                linh_muc_thuyen_chuyen: 'Linh mục/Thuyên chuyển',
+                linh_muc_bang_cap: 'Linh mục/Bằng cấp',
+                linh_muc_chuc_thanh: 'Linh mục/Chức thánh',
+                linh_muc: 'Linh mục/Linh mục',
+                le_chinh: 'Giáo phận/Lễ chính',
+                chuc_vu: 'Linh mục/Chức vụ',
+                giao_phan: 'Giáo phận/Giáo phận',
+                giao_hat: 'Giáo phận/Hạt',
+                giao_xu: 'Giáo phận/Giáo xứ',
+                giao_diem: 'Giáo phận/Giáo điểm',
+                giao_phan_co_so: 'Giáo phận/Cơ sở',
+                cong_doan_tu_si: 'Giáo phận/Công đoàn tu sĩ',
+                dong: 'Giáo phận/ Dòng',
+                tin_tuc: 'Tin tức/Tin tức'
+            },
+            permissionActionTexts: {
+                list: 'Xem danh sách',
+                add: 'Thêm',
+                edit: 'Cập nhật',
+                delete: 'Xóa'
+            }
         }
     };
 </script>

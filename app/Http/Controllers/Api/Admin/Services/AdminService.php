@@ -8,6 +8,8 @@ use App\Http\Resources\Admins\AdminCollection;
 use App\Http\Resources\Admins\AdminResource;
 use App\Models\Admin;
 use DB;
+use App\Models\PersonalAccessToken;
+use Str;
 
 final class AdminService implements BaseModel, AdminModel
 {
@@ -126,18 +128,29 @@ final class AdminService implements BaseModel, AdminModel
     /**
      * update permission.
      */
-    public function apiPermissionUpdate(array $allows = [])
+    public function apiPermissionUpdate(array $allows = [], $tokenablId = null)
     {
         // TODO: Implement apiInsertOrUpdate() method.
 
         DB::beginTransaction();
         try {
+            PersonalAccessToken::fcDeleteByTokenableId($tokenablId);
             foreach ($allows as $key => $allow) {
                 $abilities = [];
-                foreach($allow as $action) {
-                    $abilities[] = $key . ':' . $action;
+                $keyName = Str::replace('_', '.', $key);
+
+                if ($allow['all']) {
+                    $abilities[] = $keyName . ':*';
+                } else {
+                    foreach ($allow['abilities'] as $action => $abilitie) {
+                        if ($abilitie) {
+                            $abilities[] = $keyName . ':' . $action;
+                        }
+                    }
                 }
-                $this->model->createToken('allow.' . $key, $abilities);
+
+                if (!empty($abilities))
+                    $this->model->createToken('allow.' . $keyName, $abilities); 
             }
         } catch (\Exceptions $e) {
 
