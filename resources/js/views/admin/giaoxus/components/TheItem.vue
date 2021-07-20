@@ -7,15 +7,16 @@
                    :value="info.id">
         </td>
         <td class="text-left">{{info.name}}</td>
-        <td class="text-left" style="width:50%">
-            {{info.dia_chi}}
+        <td>
+            <div v-html="info.khai_quat"></div>
         </td>
+        <td class="text-center">{{info.sort_id}}</td>
         <td class="text-center">{{info.active}}</td>
-        <td class="text-center">{{_formatDate(info.updatetime)}}</td>
+        
         <td class="text-right">
             <!--<btn-edit
-                :info-id="info.id"></btn-edit>
-            <btn-delete
+                :info-id="info.id"></btn-edit>-->
+            <!--<btn-delete
                 :info-id="info.id"></btn-delete>-->
         </td>
     </tr>
@@ -42,12 +43,6 @@
         props: {
             info: {
                 type: Object,
-                validator: function (value) {
-                    var id = (value.id && Number.isInteger(value.id));
-                    var name = (value.name && value.name.length);
-
-                    return (id && name)
-                }
             },
             no: {
                 default: 1

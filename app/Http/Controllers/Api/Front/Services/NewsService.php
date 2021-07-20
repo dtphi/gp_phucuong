@@ -31,13 +31,13 @@ final class NewsService extends Service implements NewsModel
             return [
                 'information_id'   => $result->information_id,
                 'name'             => $result->name,
-                'date_available'   => date_format(date_create($result->date_available),"d-m-Y"),
+                'date_available'   => date_format(date_create($result->date_available), "d-m-Y"),
                 'sort_description' => html_entity_decode($result->sort_description),
                 'description'      => $result->description,
                 'image'            => $result->image,
                 'viewed'           => $result->viewed,
                 'vote'             => $result->vote,
-                'related_category' => !empty($result->arr_category_list)? $result->arr_category_list[0]: null
+                'related_category' => !empty($result->arr_category_list) ? $result->arr_category_list[0] : null
             ];
         } else {
             return false;
@@ -120,7 +120,7 @@ final class NewsService extends Service implements NewsModel
         if (isset($data['all_category_children']) && !empty($data['all_category_children'])) {
             $query->whereIn('category_id', $data['all_category_children']);
         } else {
-            if (isset($data['category_id']) && $data['category_id']) { 
+            if (isset($data['category_id']) && $data['category_id']) {
                 $query->where('category_id', '=', $data['category_id']);
             } else {
                 $query->where('information_type', '=', $infoType);

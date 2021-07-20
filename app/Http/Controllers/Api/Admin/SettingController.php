@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\SettingModel as SettingSv;
 use App\Http\Requests\SettingRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use Log;
 
 class SettingController extends ApiController
 {

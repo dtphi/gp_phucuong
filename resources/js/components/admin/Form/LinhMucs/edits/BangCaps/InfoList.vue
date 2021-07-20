@@ -1,120 +1,80 @@
 <template>
-    <div class="table-responsive">
-        <table id="info-bang-cap-list" class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <td class="text-left">Tên bằng</td>
-                    <td class="text-left">Ghi chú</td>
-                    <td class="text-left">Loại</td>
-                    <td class="text-left">Tình trạng</td>
-                    <td calss="text-right">{{$options.setting.info_action_title}}</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, idx) in lists" :key="idx">
-                    <td>
-                        <validation-provider
-                            :name="`item_name${item.id}`"
-                            rules="required|max:255"
-                            v-slot="{ errors }">
-                            <input v-model="item.name" class="form-control" type="text"/>
+  <div class="table-responsive">
+    <table
+      id="info-bang-cap-list"
+      class="table table-striped table-bordered table-hover"
+    >
+      <thead>
+        <tr>
+          <td colspan="6" class="text-right">
+            <btn-remove-select></btn-remove-select>
+            <btn-add-select></btn-add-select>
+            <btn-add></btn-add>
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 5%;" class="text-center">
+              <input type="checkbox"
+                      @click="_checkAllBangCap">
+          </th>
+          <td style="width: 35%" class="text-left">Tên bằng</td>
+          <td style="width: 30%" class="text-left">Ghi chú</td>
+          <td style="width: 10%" class="text-left">Loại</td>
+          <td style="width: 10%" class="text-left">Tình trạng</td>
+          <td style="width: 10%" class="text-right">
+            {{ $options.setting.info_action_title }}
+          </td>
+        </tr>
+      </thead>
+      <tbody v-for="(item, idx) in lists" :key="idx">
+        <info-item v-if="item.isEdit" :item="item"></info-item>
+        <info-new-item v-else :item="item"></info-new-item>
+      </tbody>
 
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                        </validation-provider>
-                    </td>
-                    <td>
-                        <validation-provider
-                            :name="`item_name${item.id}`"
-                            rules="max:500"
-                            v-slot="{ errors }">
-                            <textarea class="form-control"
-                                v-model="item.ghichu"></textarea>
-
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                        </validation-provider>
-                    </td>
-                    <td>
-                        <select class="form-control"
-                            v-model="item.type">
-                            <option value="0" :selected="item.type == 0">Loại 1</option>
-                            <option value="1" :selected="item.type == 1">Loại 2</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control"
-                            v-model="item.active">
-                            <option value="1" :selected="item.active == 1">Xảy ra</option>
-                            <option value="0" :selected="item.active == 0">Ẩn</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button 
-                            type="button" 
-                            @click="_removeItem(item)"
-                            data-toggle="tooltip"
-                            class="btn btn-default cms-btn">
-                                <font-awesome-layers size="1x" style="background:MistyRose">
-                                    <font-awesome-icon icon="circle" style="color:Tomato"/>
-                                    <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
-                                </font-awesome-layers>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-
-            <tfoot>
-                <tr>
-                    <td colspan="4"></td>
-                    <td class="text-right">
-                        <btn-add></btn-add>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>    
+      <tfoot>
+        <tr>
+          <td colspan="6" class="text-right">
+            <btn-remove-select></btn-remove-select>
+            <btn-add-select></btn-add-select>
+            <btn-add></btn-add>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
-    import BtnAdd from './BtnAdd';
-    import {
-        MODULE_MODULE_LINH_MUC_EDIT
-    } from 'store@admin/types/module-types';
+import { mapActions } from "vuex";
+import BtnAdd from "./BtnAdd";
+import BtnAddSelect from "./BtnAddSelect";
+import BtnRemoveSelect from "./BtnRemoveSelect";
+import InfoItem from "./InfoItem";
+import InfoNewItem from "./InfoNewItem";
+import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
 
-    export default {
-        name: 'TheInfoList',
-        components: {
-            BtnAdd,
-        },
-        props: {
-            lists: {
-                default: {}
-            }
-        },
-        computed: {
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-                'removeBangCap'
-            ]),
-            _removeItem(item) {
-                this.removeBangCap({
-                    action: '',
-                    item: item
-                });
-            }
-        },
-        setting: {
-            info_title: 'Tiêu đề',
-            info_url_title: 'Url tiêu đề',
-            info_author_titile: 'Tác giả',
-            info_sort_order_title: 'Sắp xếp',
-            
-            info_action_title: 'Thực hiện',
-            btn_image_sub_remove_txt: 'Xóa',
-            btn_image_sub_add_txt: 'Thêm hình ảnh'
-        }
-    };
+export default {
+  name: "TheInfoList",
+  components: {
+    BtnAdd,
+    BtnAddSelect,
+    BtnRemoveSelect,
+    InfoItem,
+    InfoNewItem,
+  },
+  props: {
+    lists: {
+      default: {},
+    },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["checkAllBangCap"]),
+    _checkAllBangCap (event) {
+      this.checkAllBangCap(event.target.checked)
+    }
+  },
+  setting: {
+    info_action_title: "Thực hiện"
+  },
+};
 </script>

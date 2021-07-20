@@ -126,12 +126,12 @@ final class InformationService implements BaseModel, InformationModel
      */
     public function apiInsert($data = [])
     {
-        $this->model->fill($data);
-
         /**
          * Save user with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
+
+        $this->model->fill($data);
 
         if ($this->model->save()) {
             $infoId = $this->model->information_id;
@@ -222,12 +222,12 @@ final class InformationService implements BaseModel, InformationModel
      */
     public function apiUpdate($model, $data = [])
     {
-        $model->fill($data);
-
         /**
          * Save user with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
+
+        $model->fill($data);
 
         if ($model->save()) {
             $infoId = $model->information_id;

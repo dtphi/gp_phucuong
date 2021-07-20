@@ -1,8 +1,8 @@
 <template>
-    <button @click="_showModal()"
+    <button @click="_redirectUrl()"
             data-toggle="tooltip" title=""
             class="btn btn-primary"
-            data-original-title="Thêm Tin Tức">
+            data-original-title="Thêm Giáo Phận">
         <i class="fa fa-plus"></i>
     </button>
 </template>
@@ -24,17 +24,9 @@
             }
         },
         methods: {
-            _showModal() {
-                if (this.isRedirect) {
-                    return this._redirectUrl();
-                } 
-            },
             _redirectUrl() {
-                return fn_redirect_url('admin/linh-mucs/add');
+                return fn_redirect_url('admin/giao-phans/add');
             },
-            _pushAddPage() {
-                this.$router.push(`/admin/linh-mucs/add`);
-            }
         }
     };
 </script>

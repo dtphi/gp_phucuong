@@ -1,5 +1,18 @@
 require('./bootstrap');
 
+window.axios.interceptors.response.use(function (response) {
+    // Do something with response data
+    return response;
+    }, function (error) {
+        // Do something with response error
+        if (error.response) {
+            if((_.includes([401,419], error.response.status)) 
+                && !(_.includes(["/admin", "/admin/", "/admin/login", "/admin/login/"], window.location.pathname))) {
+                window.location.reload();
+            };
+        }
+});
+
 import Vue from 'vue';
 import store from 'store@admin';
 import Router from 'vue-router';

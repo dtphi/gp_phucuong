@@ -215,7 +215,6 @@
                 </div>
 
             </validation-observer>
-
         </template>
     </div>
 </template>
@@ -246,8 +245,8 @@
         name: 'CategoryEditPage',
         beforeCreate() {
             const cateId = this.$route.params.categoryId;
-            if (cateId) {
-                this.$store.dispatch(MODULE_NEWS_CATEGORY_EDIT + '/' + ACTION_GET_NEWS_GROUP_BY_ID, cateId);
+            if (!cateId) {
+                window.location = window.origin + '/admin/news-categories';
             }
         },
         components: {
@@ -314,6 +313,10 @@
                 this.$notify(notification);
                 this.[ACTION_RESET_NOTIFICATION_INFO]('');
             }
+        },
+        mounted() {
+            const cateId = this.$route.params.categoryId;
+            this.[ACTION_GET_NEWS_GROUP_BY_ID](cateId);
         },
         setting: {
             title: 'Cập nhật nhóm tin',

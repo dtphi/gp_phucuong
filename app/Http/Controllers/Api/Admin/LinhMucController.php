@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel as LinhMucSv;
-use App\Http\Requests\InformationRequest;
+use App\Http\Requests\LinhmucRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Log;
+use App\Http\Common\Tables;
 
 class LinhMucController extends ApiController
 {
@@ -68,23 +69,24 @@ class LinhMucController extends ApiController
             $limit       = $this->_getPerPage();
             $collections = $this->linhMucSv->apiGetList($data, $limit);
             $pagination  = $this->_getTextPagination($collections);
-            $results = [];
-            
+            $results     = [];
+
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
-                if (file_exists(public_path($info->image))) {
+                if (!empty($info->image) && file_exists(public_path($info->image))) {
                     $staticImgThum = $info->image;
                 }
                 $results[] = [
-                    'id' => (int)$info->id,
-                    'ten'           => $info->ten,
-                    'ten_thanh'         => $info->ten_thanh_id,
-                    'image'          => $info->image,
-                    'imgThum'        => url($this->getThumbnail($staticImgThum, 0, 40)),
-                    //'status_text'    => $info->status_text,
-                    'active'     => $info->active,
-                    'updatetime' => $info->updatetime,
-                    //'created_at'     => $info->created_at
+                    'id'         => (int)$info->id,
+                    'ten'        => $info->ten,
+                    'ten_thanh'  => $info->ten_thanh,
+                    'image'      => $info->image,
+                    'phone' => $info->phone,
+                    'email' => $info->email,
+                    'imgThum'    => url($this->getThumbnail($staticImgThum, 0, 40)),
+                    'active'     => Tables::$linhMucStatus[(int)$info->active],
+                    'trieu_dong' => Tables::$trieuDongs[(int)$info->trieu_dong],
+                    'ngay_sinh' => $info->ngay_thang_nam_sinh,
                 ];
             }
 
@@ -121,10 +123,10 @@ class LinhMucController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param InformationRequest $request
+     * @param LinhmucRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(InformationRequest $request)
+    public function store(LinhmucRequest $request)
     {
         $storeResponse = $this->__handleStore($request);
 
@@ -139,12 +141,49 @@ class LinhMucController extends ApiController
 
     /**
      * @author : dtphi .
-     * @param InformationRequest $request
+     * @param LinhmucRequest $request
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(InformationRequest $request, $id = null)
+    public function update(LinhmucRequest $request, $id = null)
     {
+        $data = $request->all();
+        $action = $request->get('action');
+
+        if ($action == 'create.update.bang.cap.db') {
+            try {
+                $json = $this->linhMucSv->apiUpdateBangCap($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.chuc.thanh.db') {
+            try {
+                $json = $this->linhMucSv->apiUpdateChucThanh($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.van.thu.db') {
+            try {
+                $json = $this->linhMucSv->apiUpdateVanThu($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.thuyen.chuyen.db') {
+            try {
+                $json = $this->linhMucSv->apiUpdateThuyenChuyen($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        }
+
         try {
             $model = $this->linhMucSv->apiGetDetail($id);
 
@@ -236,8 +275,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name,
+                'id'   => $value->id,
+                'name' => $value->name,
             ];
         }
 
@@ -258,8 +297,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name,
+                'id'   => $value->id,
+                'name' => $value->name,
             ];
         }
 
@@ -280,8 +319,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name,
+                'id'   => $value->id,
+                'name' => $value->name,
             ];
         }
 
@@ -302,8 +341,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->ten,
+                'id'         => $value->id,
+                'name'       => $value->ten,
                 'is_duc_cha' => $value->is_duc_cha
             ];
         }
@@ -325,8 +364,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 
@@ -347,8 +386,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 
@@ -369,8 +408,8 @@ class LinhMucController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 

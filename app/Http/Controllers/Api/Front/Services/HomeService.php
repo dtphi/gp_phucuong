@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api\Front\Services;
 
 use App\Http\Controllers\Api\Front\Services\Contracts\HomeModel;
-use App\Models\Information;
 use App\Models\Category;
-use App\Http\Common\Tables;
+use App\Models\Information;
 use DB;
 
 final class HomeService implements HomeModel
@@ -28,7 +27,7 @@ final class HomeService implements HomeModel
      */
     public function __construct()
     {
-        $this->model = new Information();
+        $this->model         = new Information();
         $this->modelNewGroup = new Category();
     }
 

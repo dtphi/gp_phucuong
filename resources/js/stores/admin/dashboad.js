@@ -7,6 +7,12 @@ import {
 import {
   apiGetUsers
 } from 'api@admin/user';
+import {
+  apiGetGiaoPhanInfos
+} from 'api@admin/giaophan';
+import {
+  apiGetLinhMucInfos
+} from 'api@admin/linhmuc';
 
 import {
   INFOS_SET_INFO_LIST,
@@ -35,6 +41,8 @@ const defaultState = () => {
     categoryTotal: 0,
     userTotal: 0,
     isGetUserList: null,
+    giaoPhanTotal: 0,
+    linhMucTotal: 0,
     loading: false,
     errors: []
   }
@@ -88,9 +96,51 @@ export default {
 
     setUserTotal(state, payload) {
       state.userTotal = payload
+    },
+
+    setGiaoPhanTotal(state, payload) {
+      state.giaoPhanTotal = payload
+    },
+
+    setLinhMucTotal(state, payload) {
+      state.linhMucTotal = payload
     }
   },
   actions: {
+    ACTION_GET_INFO_GIAO_PHAN_LIST({
+      commit
+    }, params) {
+      apiGetGiaoPhanInfos(
+        (infos) => {
+          if (infos.data.hasOwnProperty('pagination')) {
+            if (parseInt(infos.data.pagination.total)) {
+              commit('setGiaoPhanTotal', infos.data.pagination.total);
+            }
+          }
+        },
+        (errors) => {
+        },
+        params
+      );
+    },
+
+    ACTION_GET_INFO_LINH_MUC_LIST({
+      commit
+    }, params) {
+      apiGetLinhMucInfos(
+        (infos) => {
+          if (infos.data.hasOwnProperty('pagination')) {
+            if (parseInt(infos.data.pagination.total)) {
+              commit('setLinhMucTotal', infos.data.pagination.total);
+            }
+          }
+        },
+        (errors) => {
+        },
+        params
+      );
+    },
+
     [ACTION_GET_USER_LIST]({
       commit
     }, params) {

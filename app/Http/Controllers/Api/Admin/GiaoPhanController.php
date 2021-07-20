@@ -9,6 +9,7 @@ use App\Http\Requests\GiaoPhanRequest;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use Log;
 
 class GiaoPhanController extends ApiController
 {
@@ -59,16 +60,16 @@ class GiaoPhanController extends ApiController
             $limit       = $this->_getPerPage();
             $collections = $this->gphSv->apiGetList($data, $limit);
             $pagination  = $this->_getTextPagination($collections);
-            $results = [];
-            
+            $results     = [];
+
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
                 $results[] = [
-                    'id' => (int)$info->id,
-                    'name'       => $info->name,
-                    'khaiquat'   => $info->khaiquat,
-                    'active'     => $info->active,
-                    'sort_id' => $info->sort_id
+                    'id'        => (int)$info->id,
+                    'name'      => $info->name,
+                    'khai_quat' => $info->khai_quat,
+                    'active'    => $info->active,
+                    'sort_id'   => $info->sort_id
                 ];
             }
 
@@ -129,6 +130,59 @@ class GiaoPhanController extends ApiController
      */
     public function update(GiaoPhanRequest $request, $id = null)
     {
+        $data = $request->all();
+        $action = $request->get('action');
+
+        if ($action == 'create.update.hat.congdts.db') {
+            try {
+                $json = $this->gphSv->apiUpdateCongDoanTuSi($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.hat.xu.db') {
+            try {
+                $json = $this->gphSv->apiUpdateGiaoXu($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.hat.db') {
+            try {
+                $json = $this->gphSv->apiUpdateGiaoHat($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.dong.db') {
+            try {
+                $json = $this->gphSv->apiUpdateDong($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.co.so.db') {
+            try {
+                $json = $this->gphSv->apiUpdateCoSo($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        } elseif ($action == 'create.update.ban.chuyen.trach.db') {
+            try {
+                $json = $this->gphSv->apiUpdateBanChuyenTrach($data);
+            } catch (HandlerMsgCommon $e) {
+                throw $e->render();
+            }
+    
+            return $json;
+        }
+        
         try {
             $model = $this->gphSv->apiGetDetail($id);
 
@@ -166,7 +220,7 @@ class GiaoPhanController extends ApiController
      */
     private function __handleStore(&$request)
     {
-        $formData = $request->all();dd($formData);
+        $formData = $request->all();
 
         if ($result = $this->gphSv->apiInsert($formData)) {
             return $this->respondUpdated($result);
@@ -220,8 +274,8 @@ class GiaoPhanController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 
@@ -242,8 +296,8 @@ class GiaoPhanController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 
@@ -264,8 +318,8 @@ class GiaoPhanController extends ApiController
 
         foreach ($results as $key => $value) {
             $collections[] = [
-                'id' => $value->id,
-                'name'           => $value->name
+                'id'   => $value->id,
+                'name' => $value->name
             ];
         }
 

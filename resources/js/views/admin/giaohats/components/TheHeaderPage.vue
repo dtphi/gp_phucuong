@@ -43,7 +43,7 @@
     import ListSearch from 'com@admin/Search';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
-        MODULE_MODULE_GIAO_HAT,
+        MODULE_MODULE_GIAO_PHAN,
     } from 'store@admin/types/module-types';
 
     import {
@@ -64,7 +64,7 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_GIAO_HAT, [
+            ...mapActions(MODULE_MODULE_GIAO_PHAN, [
                 ACTION_GET_INFO_LIST
             ]),
             _pushAddPage() {

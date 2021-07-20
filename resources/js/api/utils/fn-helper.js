@@ -64,7 +64,7 @@ export function fn_get_tinymce_langs_url(langName) {
 }
 
 export function fn_redirect_url(path) {
-	return window.location = config.baseUrl + '/' + path.replace(/^\//, "");
+	window.location = config.baseUrl + '/' + path.replace(/^\//, "");
 }
 
 export function fn_format_dd_mm_yyyy(date) {

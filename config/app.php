@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'GiaoPhanPhuCuong'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Ho_Chi_Minh',
 
     /*
     |--------------------------------------------------------------------------
@@ -231,5 +231,6 @@ return [
     ],
 
     'api_name_key' => env('APP_API_NAME_KEY'),
+    'force_https' => env('APP_FORCE_HTTPS', 'https')
 
 ];

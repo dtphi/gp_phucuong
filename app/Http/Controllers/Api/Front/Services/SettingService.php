@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api\Front\Services;
 
 use App\Http\Controllers\Api\Front\Services\Contracts\SettingModel;
-use App\Models\Setting;
 use App\Models\Category;
-use App\Http\Common\Tables;
+use App\Models\Setting;
 use DB;
 
 final class SettingService implements SettingModel
@@ -27,7 +26,7 @@ final class SettingService implements SettingModel
      */
     public function __construct()
     {
-        $this->model = new Setting();
+        $this->model         = new Setting();
         $this->modelNewGroup = new Category();
     }
 
@@ -59,5 +58,12 @@ final class SettingService implements SettingModel
         $this->model = $this->model->filterKey($id)->get();
 
         return $this->model;
+    }
+
+    public function apiGetSettingByCodes($code = '')
+    {
+        $query = $this->model->filterCode($code);
+
+        return $query->get();
     }
 }

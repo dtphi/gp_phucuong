@@ -13,7 +13,7 @@
 <script>
     import {mapActions} from 'vuex';
     import {
-        MODULE_MODULE_GIAO_HAT,
+        MODULE_MODULE_GIAO_PHAN,
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_INFO_DELETE_BY_ID,
@@ -35,7 +35,7 @@
             return {};
         },
         methods: {
-            ...mapActions(MODULE_MODULE_GIAO_HAT, [
+            ...mapActions(MODULE_MODULE_GIAO_PHAN, [
                 ACTION_SET_INFO_DELETE_BY_ID,
                 ACTION_DELETE_INFO_BY_ID
             ]),

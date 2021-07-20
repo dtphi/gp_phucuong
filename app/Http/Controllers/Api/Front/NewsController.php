@@ -110,8 +110,8 @@ class NewsController extends Controller
     public function list(Request $request)
     {
         $responseParams = [];
-        $params = $request->all();
-        $page   = 1;
+        $params         = $request->all();
+        $page           = 1;
         if ($request->query('page')) {
             $page = $request->query('page');
         }
@@ -121,16 +121,16 @@ class NewsController extends Controller
         if ($request->query('limit')) {
             $limit = $request->query('limit');
         }
-        $params['limit'] = $limit;
+        $params['limit']      = $limit;
         $params['renderType'] = 0;
         if ($request->query('renderType')) {
             $params['renderType'] = $request->query('renderType');
         }
 
-        $widthThumbInfoList = 184; 
+        $widthThumbInfoList  = 184;
         $heightThumbInfoList = 120;
-        $width = 550;
-        $height = 450;
+        $width               = 550;
+        $height              = 450;
 
         $params['slug'] = isset($params['slug']) ? $params['slug'] : '';
         if (!empty($params['slug'])) {
@@ -138,27 +138,27 @@ class NewsController extends Controller
             $params['category_id'] = (int)end($slugs);
             if (isset($slugs[1]) && $slugs[1] == 'related') {
                 $params['is_category_related'] = true;
-                $width = 350;
-                $height = 230;
+                $width                         = 350;
+                $height                        = 230;
             }
         }
         $params['isRootCateId'] = '';
-        
+
         if (isset($params['slug'])) {
             $params['isRootCateId'] = $params['slug'];
-        } 
+        }
         if (isset($params['slug_1'])) {
             $params['isRootCateId'] = $params['slug_1'];
-        } 
+        }
         if (isset($params['slug_2'])) {
             $params['isRootCateId'] = $params['slug_2'];
-        } 
+        }
         if (isset($params['slug_3'])) {
             $params['isRootCateId'] = $params['slug_3'];
-        } 
+        }
         if (isset($params['slug_4'])) {
             $params['isRootCateId'] = $params['slug_4'];
-        } 
+        }
         if (isset($params['slug_5'])) {
             $params['isRootCateId'] = $params['slug_5'];
         }
@@ -169,11 +169,11 @@ class NewsController extends Controller
             if (!empty($subCategory)) {
                 $params['all_category_children'] = array_reduce($subCategory, function ($carry, $item) {
                     $carry[] = $item->category_id;
-    
+
                     return $carry;
                 });
             }
-            
+
             $params['all_category_children'][] = $params['category_id'];
         }
 
@@ -182,19 +182,19 @@ class NewsController extends Controller
 
         $rootCategory = [];
         if ($params['renderType'] == 1) {
-            $cateIdToSub = !empty($params['isRootCateId'])? $params['isRootCateId']: 0;
+            $cateIdToSub = !empty($params['isRootCateId']) ? $params['isRootCateId'] : 0;
             if (!empty($cateIdToSub)) {
-                $cateIdToSubSlugs                 = explode('-', $cateIdToSub);
-                $cateIdToSub = (int)end($cateIdToSubSlugs);
-                $rootCategory = $this->sv->apiGetCategoryById($cateIdToSub);
-                $rootCategory = array(
+                $cateIdToSubSlugs = explode('-', $cateIdToSub);
+                $cateIdToSub      = (int)end($cateIdToSubSlugs);
+                $rootCategory     = $this->sv->apiGetCategoryById($cateIdToSub);
+                $rootCategory     = array(
                     'name'     => $rootCategory->name,
                     'children' => [],
                     'link'     => $rootCategory->name_slug
                 );
-                $subCategories = $this->sv->getMenuCategories($cateIdToSub);
+                $subCategories    = $this->sv->getMenuCategories($cateIdToSub);
 
-                $link1 = $rootCategory['link'];
+                $link1           = $rootCategory['link'];
                 $subCategoryMenu = [];
                 foreach ($subCategories as $cate) {
                     // Level 2
@@ -295,43 +295,45 @@ class NewsController extends Controller
 
         $staticImg     = self::$thumImgNo;
         $staticThumImg = self::$thumImgNo;
-        $infos = [];
+        $infos         = [];
         foreach ($results as $key => $info) {
             if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
-                $staticImg     = rawurldecode($info->image);
+                $staticImg = rawurldecode($info->image);
             }
 
-            if (in_array($request->query('moduleName'), ['module_tin_giao_hoi','module_tin_giao_hoi_viet_nam'])){
-                    $width = 350;
-                    $height = 230;
+            if (in_array($request->query('moduleName'), ['module_tin_giao_hoi', 'module_tin_giao_hoi_viet_nam'])) {
+                $width  = 350;
+                $height = 230;
             }
             if ($request->query('moduleName') == 'module_loi_chua') {
-                    $width = 287;
-                    $height = 191;
+                $width  = 287;
+                $height = 191;
             }
             if ($request->query('moduleName') == 'module_tin_giao_phan') {
-                    $width = 413;
-                    $height = 275;
+                $width  = 413;
+                $height = 275;
 
-                    $width1 = 287;
-                    $height1 = 195;
-                    $staticThumMediumImg1 = (!empty($info->image))?$this->getThumbnail($info->image, $width1, $height1):$this->getThumbnail($staticImg, $width1, $height1);
+                $width1               = 287;
+                $height1              = 195;
+                $staticThumMediumImg1 = (!empty($info->image)) ? $this->getThumbnail($info->image, $width1,
+                    $height1) : $this->getThumbnail($staticImg, $width1, $height1);
             }
             if ($request->query('moduleName') == 'module_van_kien') {
-                    $width = 223;
-                    $height = 152;
+                $width  = 223;
+                $height = 152;
             }
 
-            if($params['renderType'] == 1) {
-                $widthThumbInfoList = 605;
+            if ($params['renderType'] == 1) {
+                $widthThumbInfoList  = 605;
                 $heightThumbInfoList = 411;
 
-                $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
-                $sortDes = html_entity_decode($info->sort_description);
-                $isImgRender = ($key == 0);
-                $infos[] = [
+                $staticThumImg = (!empty($info->image)) ? $this->getThumbnail($info->image, $widthThumbInfoList,
+                    $heightThumbInfoList) : $this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
+                $sortDes       = html_entity_decode($info->sort_description);
+                $isImgRender   = ($key == 0);
+                $infos[]       = [
                     'category_id'      => $info->category_id,
-                    'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                    'date_available'   => date_format(date_create($info->date_available), "d-m-Y"),
                     'description'      => html_entity_decode($info->sort_description),
                     'sort_description' => Str::substr($sortDes, 0, 100),
                     'isImgRender'      => $isImgRender,
@@ -346,27 +348,29 @@ class NewsController extends Controller
                     'vote'             => $info->vote
                 ];
             } else {
-                $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
-                $staticThumMediumImg = (!empty($info->image))?$this->getThumbnail($info->image, $width, $height):$this->getThumbnail($staticImg, $width, $height);
-    
+                $staticThumImg       = (!empty($info->image)) ? $this->getThumbnail($info->image, $widthThumbInfoList,
+                    $heightThumbInfoList) : $this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
+                $staticThumMediumImg = (!empty($info->image)) ? $this->getThumbnail($info->image, $width,
+                    $height) : $this->getThumbnail($staticImg, $width, $height);
+
                 $sortDes = html_entity_decode($info->sort_description);
                 $infos[] = [
-                    'category_id'      => $info->category_id,
-                    'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
-                    'description'      => html_entity_decode($info->sort_description),
-                    'sort_description' => Str::substr($sortDes, 0, 100),
-                    'image'            => $staticImg,
-                    'imgUrl'           => url($staticImg),
-                    'imgThumUrl'       => url($staticThumImg),
-                    'imgThumMediumImg' => url($staticThumMediumImg),
-                    'imgThumMediumImg1'=> isset($staticThumMediumImg1)?url($staticThumMediumImg1):'',
-                    'information_id'   => $info->information_id,
-                    'information_type' => $info->information_type,
-                    'name'             => $info->name,
-                    'name_slug'        => $info->name_slug,
-                    'sort_name'        => Str::substr($info->name, 0, 50),
-                    'viewed'           => $info->viewed,
-                    'vote'             => $info->vote
+                    'category_id'       => $info->category_id,
+                    'date_available'    => date_format(date_create($info->date_available), "d-m-Y"),
+                    'description'       => html_entity_decode($info->sort_description),
+                    'sort_description'  => Str::substr($sortDes, 0, 100),
+                    'image'             => $staticImg,
+                    'imgUrl'            => url($staticImg),
+                    'imgThumUrl'        => url($staticThumImg),
+                    'imgThumMediumImg'  => url($staticThumMediumImg),
+                    'imgThumMediumImg1' => isset($staticThumMediumImg1) ? url($staticThumMediumImg1) : '',
+                    'information_id'    => $info->information_id,
+                    'information_type'  => $info->information_type,
+                    'name'              => $info->name,
+                    'name_slug'         => $info->name_slug,
+                    'sort_name'         => Str::substr($info->name, 0, 50),
+                    'viewed'            => $info->viewed,
+                    'vote'              => $info->vote
                 ];
             }
         }
@@ -374,11 +378,11 @@ class NewsController extends Controller
         $responseParams['renderType'] = $params['renderType'];
 
         return Helper::successResponse([
-            'results'    => $infos,
+            'results'         => $infos,
             'subCategoryMenu' => $rootCategory,
-            'pagination' => $pagination,
-            'page'       => $page,
-            'params' => $responseParams
+            'pagination'      => $pagination,
+            'page'            => $page,
+            'params'          => $responseParams
         ]);
     }
 
@@ -413,20 +417,20 @@ class NewsController extends Controller
         if (isset($params['information_id'])) {
             $this->newsSv->apiUpdateViewed($params['information_id']);
 
-            $json['results'] = $this->newsSv->apiGetInfo($params['information_id']);
+            $json['results']                  = $this->newsSv->apiGetInfo($params['information_id']);
             $json['result_category_relateds'] = $json['results']['related_category'];
         }
 
         return Helper::successResponse([
-            'results' => $json['results'],
+            'results'                  => $json['results'],
             'result_category_relateds' => $json['result_category_relateds']
         ]);
     }
 
     public function showLastedList(Request $request)
     {
-        $json = [];
-        $widthThumbInfoList = 184; 
+        $json                = [];
+        $widthThumbInfoList  = 184;
         $heightThumbInfoList = 120;
 
         $list = $this->newsSv->apiGetLatestInfos(20)->toArray();
@@ -450,16 +454,19 @@ class NewsController extends Controller
                     $staticThumImg = self::$thumImgNo;
 
                     if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
-                        $staticImg     = $info->image;
+                        $staticImg = $info->image;
                     }
-                    
-                    $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
-                    $imgCarouselThumUrl = (!empty($info->image))?$this->getThumbnail($info->image, 750, 550):$this->getThumbnail($staticImg, 750, 550);
+
+                    $staticThumImg      = (!empty($info->image)) ? $this->getThumbnail($info->image,
+                        $widthThumbInfoList, $heightThumbInfoList) : $this->getThumbnail($staticImg,
+                        $widthThumbInfoList, $heightThumbInfoList);
+                    $imgCarouselThumUrl = (!empty($info->image)) ? $this->getThumbnail($info->image, 750,
+                        550) : $this->getThumbnail($staticImg, 750, 550);
 
                     $sortDes = html_entity_decode($info->sort_description);
 
                     $json[] = [
-                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                        'date_available'   => date_format(date_create($info->date_available), "d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr($sortDes, 0, 100),
                         'image'            => $staticImg,
@@ -484,8 +491,8 @@ class NewsController extends Controller
 
     public function showPopularList(Request $request)
     {
-        $json = [];
-        $widthThumbInfoList = 184; 
+        $json                = [];
+        $widthThumbInfoList  = 184;
         $heightThumbInfoList = 120;
 
         if (!empty($request->query('slug'))) {
@@ -509,20 +516,22 @@ class NewsController extends Controller
 
                 $staticImg     = self::$thumImgNo;
                 $staticThumImg = self::$thumImgNo;
-                $json = [];
+                $json          = [];
                 foreach ($results as $key => $info) {
                     $isImgRender = false;
-                    if($params['renderType'] == 1) {
+                    if ($params['renderType'] == 1) {
                         $isImgRender = ($key == 0);
                     }
                     if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
-                        $staticImg     = $info->image;
+                        $staticImg = $info->image;
                     }
-                    $staticThumImg = (!empty($info->image))?$this->getThumbnail($info->image, $widthThumbInfoList, $heightThumbInfoList):$this->getThumbnail($staticImg, $widthThumbInfoList, $heightThumbInfoList);
-                    $sortDes = html_entity_decode($info->sort_description);
+                    $staticThumImg = (!empty($info->image)) ? $this->getThumbnail($info->image, $widthThumbInfoList,
+                        $heightThumbInfoList) : $this->getThumbnail($staticImg, $widthThumbInfoList,
+                        $heightThumbInfoList);
+                    $sortDes       = html_entity_decode($info->sort_description);
 
                     $json[] = [
-                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                        'date_available'   => date_format(date_create($info->date_available), "d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr($sortDes, 0, 100),
                         'isImgRender'      => $isImgRender,
@@ -563,12 +572,13 @@ class NewsController extends Controller
         return $json;
     }
 
-    private function _getInforCarousel(&$context, &$info, $staticImg) {
+    private function _getInforCarousel(&$context, &$info, $staticImg)
+    {
         $imgCarouselThumUrl = $this->getThumbnail($staticImg, 730, 410);
-        $sortDes = html_entity_decode($info->sort_description);
+        $sortDes            = html_entity_decode($info->sort_description);
 
         $context[] = [
-            'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+            'date_available'   => date_format(date_create($info->date_available), "d-m-Y"),
             'sort_description' => Str::substr($sortDes, 0, 100),
             'imgUrl'           => url($staticImg),
             'imgCarThumUrl'    => url($imgCarouselThumUrl),
@@ -582,14 +592,14 @@ class NewsController extends Controller
 
     public function showSpecialModuleList(Request $request)
     {
-        $json = [];
+        $json                      = [];
         $params                    = $request->all();
         $params['information_ids'] = [];
         if (!empty($request->query('specialInfoIds'))) {
             $params['information_ids'] = array_reduce($request->query('specialInfoIds'), function ($carry, $item) {
-                $info = json_decode($item);
+                $info    = json_decode($item);
                 $carry[] = $info->id;
-    
+
                 return $carry;
             });
         }
@@ -597,20 +607,20 @@ class NewsController extends Controller
         if (!empty($params['information_ids'])) {
             $infoCarousels = $this->newsSv->apiGetInfoCarouselListByIds($params);
             foreach ($infoCarousels as $info) {
-                $images = unserialize($info->image);
-                $staticImg     = self::$thumImgNo;
+                $images    = unserialize($info->image);
+                $staticImg = self::$thumImgNo;
                 if (empty($info->image_origin) && empty($images)) {
                     continue;
                 }
 
                 if (isset($images[0]['image']) && file_exists(public_path(rawurldecode('/Image/NewPicture/' . $images[0]['image'])))) {
-                    $staticImg     = '/Image/NewPicture/' . $images[0]['image'];
+                    $staticImg = '/Image/NewPicture/' . $images[0]['image'];
                 } else {
                     $staticImg = $info->image_origin;
                 }
 
                 $this->_getInforCarousel($json['results'], $info, $staticImg);
-                
+
                 if (($key = array_search($info->information_id, $params['information_ids'])) !== false) {
                     unset($params['information_ids'][$key]);
                 }
@@ -620,10 +630,10 @@ class NewsController extends Controller
                 $results = $this->newsSv->apiGetInfoListByIds($params);
 
                 foreach ($results as $info) {
-                    $staticImg     = self::$thumImgNo;
-    
+                    $staticImg = self::$thumImgNo;
+
                     if ($info->image && file_exists(public_path(rawurldecode($info->image)))) {
-                        $staticImg     = $info->image;
+                        $staticImg = $info->image;
                     }
 
                     $this->_getInforCarousel($json['results'], $info, $staticImg);

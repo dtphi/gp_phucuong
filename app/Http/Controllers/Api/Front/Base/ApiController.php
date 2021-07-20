@@ -6,12 +6,12 @@ use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Front\Services\Service;
 use App\Http\Controllers\Api\Front\Services\SettingService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Common\Tables;
-use Storage;
 use Image;
+use Storage;
 
 class ApiController extends Controller
 {
@@ -19,7 +19,7 @@ class ApiController extends Controller
 
     public static $thumSize = 200;
 
-    public static $menuFullInfos = [63,205,207,208,209,210,211,213,214,216,220,241,248,273];
+    public static $menuFullInfos = [63, 205, 207, 208, 209, 210, 211, 213, 214, 216, 220, 241, 248, 273];
 
     public static $tmbThumbDir = '.tmb';
 
@@ -50,11 +50,12 @@ class ApiController extends Controller
     public function __construct(array $middleware = [])
     {
         parent::__construct($middleware);
-        $this->sv = new Service();
+        $this->sv        = new Service();
         $this->settingSv = new SettingService();
     }
 
-    public function getThumbnail($imgOrigin, $thumbSize = 0, $thumbHeight= 0, $force = false) {
+    public function getThumbnail($imgOrigin, $thumbSize = 0, $thumbHeight = 0, $force = false)
+    {
         $imgThumUrl = '';
         if ($thumbSize <= 0) {
             $thumbSize = self::$thumSize;
@@ -64,7 +65,7 @@ class ApiController extends Controller
         if (!file_exists(public_path('/' . $staticThumImg))) {
             $staticThumImg = trim(self::$thumImgNo, '/');
         }
-       
+
         if ($force) {
             return $this->forceThumbnail($staticThumImg, $thumbSize, $thumbHeight);
         }
@@ -86,13 +87,14 @@ class ApiController extends Controller
         }
     }
 
-    public function forceThumbnail($staticThumImg, $thumbSize = 200, $thumbHeight= 0) {
+    public function forceThumbnail($staticThumImg, $thumbSize = 200, $thumbHeight = 0)
+    {
         $fileResize = new File(public_path($staticThumImg));
-        $extension = $fileResize->extension();
-        $thumbDir = self::$tmbThumbDir . '/' . $staticThumImg;
+        $extension  = $fileResize->extension();
+        $thumbDir   = self::$tmbThumbDir . '/' . $staticThumImg;
         if ((int)$thumbHeight > 0) {
             $thumbDir = self::$tmbThumbDir . '/thumb_' . $thumbSize . 'x' . $thumbHeight . '/' . $staticThumImg;
-            $resize = Image::make($fileResize)->resize($thumbSize, $thumbHeight)->encode($extension);
+            $resize   = Image::make($fileResize)->resize($thumbSize, $thumbHeight)->encode($extension);
         } else {
             $resize = Image::make($fileResize)->resize($thumbSize, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -247,14 +249,25 @@ class ApiController extends Controller
                 ],
             ];
 
+            $banners['image'] = 'Image/NewPicture/home_banners/banner_image.png';
+            $settings = $this->settingSv->apiGetSettingByCodes(Tables::$moduleSystemCode);
+            if ($settings) {
+                $banners = $settings->reduce(function ($carry, $item) {
+                    if ($item->key_data == 'module_system_banners')
+                        $carry = $item->value;
+    
+                    return ($item->serialized) ? unserialize($carry) : $carry;
+                });
+            }
+
             $data['logo']    = '/front/img/logo.png';
-            $data['banner']  = url('Image/NewPicture/home_banners/banner_image.png');
+            $data['banner']  = isset($banners['image']) ? url($banners['image']) : url('Image/NewPicture/home_banners/banner_image.png');
             $data['menus']   = $menus;
             $data['menus_1'] = $menuLayout_1;
 
             $data['modules'] = $this->_getModules($request);
 
-            $data['pages']   = [
+            $data['pages'] = [
                 'home'  => [
                     'title' => 'Trang chủ',
                     'id'    => 1,
@@ -269,9 +282,9 @@ class ApiController extends Controller
                 ]
             ];
 
-            $data['infoLasteds'] = $this->getLastedInfoList($request); 
+            $data['infoLasteds']  = $this->getLastedInfoList($request);
             $data['infoPopulars'] = $this->getPopularList($request);
-            
+
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -279,13 +292,14 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
-    protected function _getModules(&$request) {
-        $layout = json_decode($request->get('layout'));
-        $page = isset($layout->page)?$layout->page:'home';
+    protected function _getModules(&$request)
+    {
+        $layout  = json_decode($request->get('layout'));
+        $page    = isset($layout->page) ? $layout->page : 'home';
         $modules = [
-            'module_noi_bat', 
-            'module_thong_bao', 
-            'module_category_left_side_bar', 
+            'module_noi_bat',
+            'module_thong_bao',
+            'module_category_left_side_bar',
             'module_special_info',
             'module_tin_giao_hoi_viet_nam',
             'module_tin_giao_hoi',
@@ -295,10 +309,10 @@ class ApiController extends Controller
             'module_category_icon_side_bar'
         ];
 
-        $results    = [];
+        $results = [];
 
-        foreach($modules as $module) {
-            $moduleData = $this->settingSv->apiGetList(['code' => $module]);
+        foreach ($modules as $module) {
+            $moduleData       = $this->settingSv->apiGetList(['code' => $module]);
             $results[$module] = [];
 
             foreach ($moduleData as $setting) {
@@ -326,7 +340,7 @@ class ApiController extends Controller
         return $results;
     }
 
-    public function getLastedInfoList(Request $request) 
+    public function getLastedInfoList(Request $request)
     {
         $json = [];
 
@@ -350,7 +364,7 @@ class ApiController extends Controller
                     $sortDes = html_entity_decode($info->sort_description);
 
                     $json[] = [
-                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                        'date_available'   => date_format(date_create($info->date_available), "d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr($sortDes, 0, 100),
                         'information_id'   => $info->information_id,
@@ -395,7 +409,7 @@ class ApiController extends Controller
                     $sortDes = html_entity_decode($info->sort_description);
 
                     $json[] = [
-                        'date_available'   => date_format(date_create($info->date_available),"d-m-Y"),
+                        'date_available'   => date_format(date_create($info->date_available), "d-m-Y"),
                         'description'      => html_entity_decode($info->sort_description),
                         'sort_description' => Str::substr($sortDes, 0, 100),
                         'information_id'   => $info->information_id,
