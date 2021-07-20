@@ -2,12 +2,22 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Auth;
 use App\Http\Common\Tables;
+use App\Http\Common\BaseRequest;
 
-class SettingRequest extends FormRequest
+class SettingRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_SETTING . ':*';
+
+    private $allowAdd = Tables::PREFIX_SETTING . ':add';
+
+    private $allowEdit = Tables::PREFIX_SETTING . ':edit';
+
+    private $allowDelete = Tables::PREFIX_SETTING . ':delete';
+
+    private $allowList = Tables::PREFIX_SETTING . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,16 +25,20 @@ class SettingRequest extends FormRequest
      */
     public function authorize()
     {   
-        if ($this->isMethod('post')) {
-            return Auth::user()->actionCan(Tables::$settingAccessName, 'setting:add');
-        } elseif ($this->isMethod('put')) {
-            return Auth::user()->actionCan(Tables::$settingAccessName, 'setting:edit');
-        } elseif ($this->isMethod('delete')) {
-            return Auth::user()->actionCan(Tables::$settingAccessName, 'setting:delete');
-        } elseif ($this->isMethod('get')) {
-            return Auth::user()->actionCan(Tables::$settingAccessName, 'setting:list');
-        } elseif ($this->isMethod('option')) {
+        $user = Auth::user();
+        if ($this->isAllowAll())
             return true;
+
+        if ($this->isMethod('option') || $user->actionCan(Tables::$settingAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$settingAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$settingAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$settingAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$settingAccessName, $this->allowList);
         }
         
         return false;

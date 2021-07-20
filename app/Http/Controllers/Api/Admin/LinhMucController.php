@@ -41,7 +41,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(LinhmucRequest $request)
     {
         $action = $request->query('action');
         if ($action == 'dropdown.giao.xu') {
@@ -110,7 +110,7 @@ class LinhMucController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null)
+    public function show($id = null, LinhmucRequest $request)
     {
         try {
             $json = $this->linhMucSv->apiGetResourceDetail($id);
@@ -201,7 +201,7 @@ class LinhMucController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null)
+    public function destroy($id = null, LinhmucRequest $request)
     {
         try {
             $model = $this->linhMucSv->apiGetDetail($id);
@@ -252,7 +252,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(LinhmucRequest $request)
     {
         if ($request->is('options')) {
             return;
@@ -266,7 +266,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownGiaoXu(Request $request)
+    public function dropdownGiaoXu(LinhmucRequest $request)
     {
         $data = $request->all();
 
@@ -288,7 +288,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownThanh(Request $request)
+    public function dropdownThanh(LinhmucRequest $request)
     {
         $data = $request->all();
 
@@ -310,7 +310,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownChucVu(Request $request)
+    public function dropdownChucVu(LinhmucRequest $request)
     {
         $data = $request->all();
 
@@ -332,7 +332,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownDucCha(Request $request)
+    public function dropdownDucCha(LinhmucRequest $request)
     {
         $data = $request->all();
 
@@ -355,7 +355,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownCoSoGiaoPhan(Request $request)
+    public function dropdownCoSoGiaoPhan(LinhmucRequest $request)
     {
         $data = $request->all();
 
@@ -377,7 +377,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownDong(Request $request)
+    public function dropdownDong(LinhmucRequest $request)
     {
         $data = $request->all();
 
@@ -399,7 +399,7 @@ class LinhMucController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownBanChuyenTrach(Request $request)
+    public function dropdownBanChuyenTrach(LinhmucRequest $request)
     {
         $data = $request->all();
 

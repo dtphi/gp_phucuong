@@ -3,18 +3,45 @@
 namespace App\Http\Requests;
 
 use Auth;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\Tables;
+use App\Http\Common\BaseRequest;
 
-class GiaoPhanRequest extends FormRequest
+class GiaoPhanRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_ALLOW_GIAO_PHAN . ':*';
+
+    private $allowAdd = Tables::PREFIX_ALLOW_GIAO_PHAN . ':add';
+
+    private $allowEdit = Tables::PREFIX_ALLOW_GIAO_PHAN . ':edit';
+
+    private $allowDelete = Tables::PREFIX_ALLOW_GIAO_PHAN . ':delete';
+
+    private $allowList = Tables::PREFIX_ALLOW_GIAO_PHAN . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
-        return true;
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('option') || $user->actionCan(Tables::$giaoPhanAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$giaoPhanAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$giaoPhanAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$giaoPhanAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$giaoPhanAccessName, $this->allowList);
+        }
+        
+        return false;
     }
 
     /**

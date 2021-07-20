@@ -40,7 +40,7 @@ class GiaoPhanController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(GiaoPhanRequest $request)
     {
         $action = $request->query('action');
         if ($action == 'dropdown.giao.hat') {
@@ -93,7 +93,7 @@ class GiaoPhanController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null)
+    public function show($id = null, GiaoPhanRequest $request)
     {
         try {
             $json = $this->gphSv->apiGetResourceDetail($id);
@@ -200,7 +200,7 @@ class GiaoPhanController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null)
+    public function destroy($id = null, GiaoPhanRequest $request)
     {
         try {
             $model = $this->gphSv->apiGetDetail($id);
@@ -251,7 +251,7 @@ class GiaoPhanController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(GiaoPhanRequest $request)
     {
         if ($request->is('options')) {
             return;
@@ -265,7 +265,7 @@ class GiaoPhanController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownGiaoHat(Request $request)
+    public function dropdownGiaoHat(GiaoPhanRequest $request)
     {
         $data = $request->all();
 
@@ -287,7 +287,7 @@ class GiaoPhanController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownGiaoDiem(Request $request)
+    public function dropdownGiaoDiem(GiaoPhanRequest $request)
     {
         $data = $request->all();
 
@@ -309,7 +309,7 @@ class GiaoPhanController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdownCongDoanTuSi(Request $request)
+    public function dropdownCongDoanTuSi(GiaoPhanRequest $request)
     {
         $data = $request->all();
 

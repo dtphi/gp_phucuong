@@ -3,11 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Rules\ExistUserMail;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\BaseRequest;
+use Auth;
 
-class AdminRequest extends FormRequest
+class AdminRequest extends BaseRequest
 {
-    private $listPermission = '';
     
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,7 @@ class AdminRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->isAllowAll();
     }
 
     /**
@@ -33,7 +33,7 @@ class AdminRequest extends FormRequest
         if ($this->get('action') == 'permission' && !empty($this->get('abilities'))) {
             $formData['userAbilities'] = $this->get('abilities');
         }
-        
+
         $this->merge($formData);
 
         return $this->all();

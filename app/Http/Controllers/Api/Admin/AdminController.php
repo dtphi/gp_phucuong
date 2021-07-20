@@ -42,7 +42,7 @@ class AdminController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(AdminRequest $request)
     {
         try {
             $limit       = $this->_getPerPage();
@@ -59,7 +59,7 @@ class AdminController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null)
+    public function show($id = null, AdminRequest $request)
     {
         try {
             $json = $this->adSv->apiGetResourceDetail($id);
@@ -114,7 +114,7 @@ class AdminController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null)
+    public function destroy($id = null, AdminRequest $request)
     {
         try {
             $user = $this->adSv->apiGetDetail($id);
@@ -153,7 +153,7 @@ class AdminController extends ApiController
      * @author : dtphi .
      * @return \Illuminate\Http\JsonResponse
      */
-    public function search()
+    public function search(AdminRequest $request)
     {
         $collections = $this->adSv->apiGetResourceCollection(['email'], 0);
 

@@ -3,20 +3,47 @@
 namespace App\Http\Requests;
 
 use Auth;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Common\Tables;
+use App\Http\Common\BaseRequest;
 
-class LinhmucRequest extends FormRequest
+class LinhmucRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_ACCESS_LINH_MUC . ':*';
+
+    private $allowAdd = Tables::PREFIX_ACCESS_LINH_MUC . ':add';
+
+    private $allowEdit = Tables::PREFIX_ACCESS_LINH_MUC . ':edit';
+
+    private $allowDelete = Tables::PREFIX_ACCESS_LINH_MUC . ':delete';
+
+    private $allowList = Tables::PREFIX_ACCESS_LINH_MUC . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
-        return true;
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('option') || $user->actionCan(Tables::$linhMucAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$linhMucAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$linhMucAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$linhMucAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$linhMucAccessName, $this->allowList);
+        }
+        
+        return false;
     }
 
     /**
@@ -183,6 +210,8 @@ class LinhmucRequest extends FormRequest
      */
     public function rules()
     { 
+        if ($this->isMethod('get'))
+            return [];
         if(empty($this->get('action'))) {
             return [
                 'ten'                 => 'max:50'

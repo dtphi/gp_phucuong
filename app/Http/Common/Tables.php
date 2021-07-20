@@ -133,6 +133,11 @@ final class Tables
     ];
 
     const PREFIX_ACCESS_NAME = 'allow.';
-    public static $settingAccessName = self::PREFIX_ACCESS_NAME . 'setting';
+    const PREFIX_SETTING = 'setting';
+    public static $settingAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_SETTING;
+    const PREFIX_ACCESS_LINH_MUC = 'linh.muc';
+    public static $linhMucAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ACCESS_LINH_MUC;
+    const PREFIX_ALLOW_GIAO_PHAN = 'giao.phan';
+    public static $giaoPhanAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_PHAN;
 
 }

@@ -39,7 +39,7 @@ class SettingController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($code = null)
+    public function show($code = null, SettingRequest $request)
     {
         try {
             $json = $this->settingSv->apiGetResourceCollection(['code' => $code]);
