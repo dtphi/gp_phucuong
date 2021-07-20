@@ -61,6 +61,8 @@ class AdminRequest extends BaseRequest
                 'password' => 'required|min:8'
             ];
         }
+
+        return [];
     }
 
     /**
