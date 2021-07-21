@@ -1,15 +1,23 @@
 require('./bootstrap');
 
 window.axios.interceptors.response.use(function (response) {
-    // Do something with response data
+    if(_.includes([403], response.data.code) && !(_.includes(["/admin/dashboards"], window.location.pathname))) {
+        window.location = '/admin/dashboards';
+        alert('Tính năng đang phát triển');
+        return Promise.reject(response.data.message);
+    }
     return response;
     }, function (error) {
-        // Do something with response error
         if (error.response) {
             if((_.includes([401,419], error.response.status)) 
                 && !(_.includes(["/admin", "/admin/", "/admin/login", "/admin/login/"], window.location.pathname))) {
                 window.location.reload();
             };
+            if(_.includes([403, 500], error.response.status)) {
+                window.location = '/admin/dashboards';
+                alert('Tính năng đang phát triển');
+                return Promise.reject(response.data.message);
+            }
         }
 });
 
