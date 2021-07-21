@@ -46,7 +46,7 @@ class NewsGroupController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index(NewsGroupRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -126,7 +126,7 @@ class NewsGroupController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null)
+    public function show($id = null, NewsGroupRequest $request)
     {
         $json = [];
 
@@ -187,7 +187,7 @@ class NewsGroupController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null)
+    public function destroy($id = null, NewsGroupRequest $request)
     {
         try {
             $model = $this->newsGpSv->getCateogryById($id);

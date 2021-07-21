@@ -140,6 +140,10 @@ final class Tables
     public static $linhMucAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ACCESS_LINH_MUC;
     const PREFIX_ALLOW_GIAO_PHAN = 'giao.phan';
     public static $giaoPhanAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_PHAN;
+    const PREFIX_ALLOW_NEWS_GROUP = 'news.group';
+    public static $categoryAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_NEWS_GROUP;
+    const PREFIX_ALLOW_TIN_TUC = 'tin.tuc';
+    public static $tinTucAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_TIN_TUC;
 
     const RULE_SETTING_CODE = 'system_rule';
     const RULE_SETTING_KEY_DATA = 'system_rule_allow';

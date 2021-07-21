@@ -42,6 +42,8 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('/user', function (Request $request) {
+            $user = $request->user();
+            $user->isAdmin = fn_is_admin_permission();
             return $request->user();
         });
 

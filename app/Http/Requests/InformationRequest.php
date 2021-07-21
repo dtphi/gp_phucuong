@@ -3,20 +3,47 @@
 namespace App\Http\Requests;
 
 use Auth;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\Tables;
+use App\Http\Common\BaseRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 
-class InformationRequest extends FormRequest
+class InformationRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_SETTING . ':*';
+
+    private $allowAdd = Tables::PREFIX_SETTING . ':add';
+
+    private $allowEdit = Tables::PREFIX_SETTING . ':edit';
+
+    private $allowDelete = Tables::PREFIX_SETTING . ':delete';
+
+    private $allowList = Tables::PREFIX_SETTING . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
-        return true;
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('option') || $user->actionCan(Tables::$tinTucAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$tinTucAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$tinTucAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$tinTucAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$tinTucAccessName, $this->allowList);
+        }
+        
+        return false;
     }
 
     /**
@@ -110,6 +137,9 @@ class InformationRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->isMethod('get') || $this->isMethod('option')) 
+            return [];
+
         return [
             'name'       => 'required|max:200',
             'meta_title' => 'required|max:255'

@@ -3,20 +3,46 @@
 namespace App\Http\Requests;
 
 use Auth;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\Tables;
+use App\Http\Common\BaseRequest;
 use Illuminate\Support\Str;
 
-class NewsGroupRequest extends FormRequest
+class NewsGroupRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_SETTING . ':*';
+
+    private $allowAdd = Tables::PREFIX_SETTING . ':add';
+
+    private $allowEdit = Tables::PREFIX_SETTING . ':edit';
+
+    private $allowDelete = Tables::PREFIX_SETTING . ':delete';
+
+    private $allowList = Tables::PREFIX_SETTING . ':list';
+
     /**
-     * @author : dtphi .
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
-        return true;
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('option') || $user->actionCan(Tables::$categoryAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$categoryAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$categoryAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$categoryAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$categoryAccessName, $this->allowList);
+        }
+        
+        return false;
     }
 
     /**
@@ -59,6 +85,8 @@ class NewsGroupRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->isMethod('get') || $this->isMethod('option')) 
+            return [];
 
         if ($this->isMethod('put')) {
             return [

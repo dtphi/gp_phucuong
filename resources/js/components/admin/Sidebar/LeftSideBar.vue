@@ -6,7 +6,7 @@
       </div>
       <div>
         <h4>Logo</h4>
-        <small>Administrator</small>
+        <small>{{user.name}}</small>
       </div>
     </div>
     <ul id="menu">
@@ -143,7 +143,7 @@
           </li>
         </ul>
       </li>
-      <li id="files">
+      <li id="files" v-if="user.isAdmin">
         <a class="parent" :href="_getHref('filemanagers')"><i class="fa fa-file fw"></i><span>{{
           $options.setting.category_sub_image_title
         }}</span></a>
@@ -224,10 +224,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { MODULE_AUTH } from "store@admin/types/module-types";
 import { fn_get_admin_base_url } from "@app/api/utils/fn-helper";
 
 export default {
   name: "LeftSideBar",
+  computed: {
+    ...mapState(MODULE_AUTH, {
+        user: (state) => state.user,
+    })
+  },
   methods: {
     _getHref(path) {
       return fn_get_admin_base_url() + "/" + path;

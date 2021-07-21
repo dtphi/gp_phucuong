@@ -40,7 +40,7 @@ class InformationController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(InformationRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -96,7 +96,7 @@ class InformationController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null)
+    public function show($id = null, InformationRequest $request)
     {
         try {
             $json = $this->infoSv->apiGetResourceDetail($id);
@@ -150,7 +150,7 @@ class InformationController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null)
+    public function destroy($id = null, InformationRequest $request)
     {
         try {
             $model = $this->infoSv->apiGetDetail($id);

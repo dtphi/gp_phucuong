@@ -21,6 +21,8 @@
 </template>
 
 <script>
+    import { mapState } from "vuex";
+    import { MODULE_AUTH } from "store@admin/types/module-types";
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
         fn_get_news_file_connector_url,
@@ -32,6 +34,11 @@
         components: {
             Breadcrumb
         },
+        computed: {
+            ...mapState(MODULE_AUTH, {
+                user: (state) => state.user,
+            })
+        },
         data() {
             return {
                 fullPage: false,
@@ -41,16 +48,18 @@
         mounted() {
             const self = this;
 
-            $().ready(function () {
-                $('#elfinder').elfinder({
-                    lang: 'vi',
-                    customData: {
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: fn_get_news_file_connector_url(),
-                    soundPath: fn_get_news_file_sound_url()
+            if (this.user && this.user.isAdmin) {
+                $().ready(function () {
+                    $('#elfinder').elfinder({
+                        lang: 'vi',
+                        customData: {
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: fn_get_news_file_connector_url(),
+                        soundPath: fn_get_news_file_sound_url()
+                    });
                 });
-            });
+            }
         }
     };
 </script>
