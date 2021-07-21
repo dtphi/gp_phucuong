@@ -5,6 +5,9 @@ define('APP_TOOL_MM_FILE_MANAGER_PATH', 'Image/NewPicture');
 define('APP_TOOL_MM_FILE_MANAGER_THUMB_DIR', '.tmb');
 define('APP_TOOL_MM_FILE_MANAGER_THUMB_SIZE', 'thumb');
 
+use Illuminate\Support\Str;
+use App\Http\Common\Tables;
+
 if (!function_exists('fn_mysql_escape')) {
     function fn_mysql_escape($inp)
     {
@@ -66,5 +69,33 @@ if (!function_exists('fn_is_admin_token_permission')) {
         }
         
         return $adminToken;
+    }
+}
+
+if (!function_exists('fn_is_user_rule_permission')) {
+    function fn_is_user_rule_permission(&$ruleSelects, $permission)
+    {
+        $keyNameIgnore = trim(Str::replace(Tables::PREFIX_ACCESS_NAME, ' ', $permission->name));
+        $keyName = Str::replace('.', '_', $keyNameIgnore);
+        $abilities = $permission->abilities;
+        foreach ($abilities as $abilitie) {
+            $action = trim(Str::replace($keyNameIgnore . ':', ' ', $abilitie));
+
+            if ($action == '*') {
+                if (array_key_exists($keyName, $ruleSelects)) {
+                    $ruleSelects[$keyName]['all'] = true;
+                    $ruleSelects[$keyName]['abilities']['list'] = true;
+                    $ruleSelects[$keyName]['abilities']['add'] = true;
+                    $ruleSelects[$keyName]['abilities']['edit'] = true;
+                    $ruleSelects[$keyName]['abilities']['delete'] = true;
+                }
+            } else {
+                if (array_key_exists($action, $ruleSelects[$keyName]['abilities'])) {
+                    $ruleSelects[$keyName]['abilities'][$action] = true;
+                }
+            }
+        }
+
+        return $ruleSelects;
     }
 }

@@ -64,7 +64,7 @@ class Setting extends BaseModel
 
     public function scopeFilterKey($query, $key = '')
     {
-        $query->where($this->table . '.key', $key);
+        $query->where($this->table . '.key_data', $key);
 
         return $query;
     }

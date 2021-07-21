@@ -27,7 +27,7 @@ import {
   ACTION_RELOAD_GET_USER_LIST,
   ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
-
+import {serialize, unserialize} from 'php-serialize';
 
 const defaultState = () => {
   return {
@@ -103,6 +103,9 @@ export default {
     },
 
     [USERS_MODAL_SET_USER](state, payload) {
+      if (Object.keys(payload.ruleSelect).length) {
+        payload.ruleSelect = unserialize(payload.ruleSelect);
+      }
       state.user = payload
     },
 

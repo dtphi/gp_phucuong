@@ -41,6 +41,7 @@
         "linkifyjs": "^2.1.9",
         "lodash": "^4.17.20",
         "moment": "^2.29.1",
+        "php-serialize": "^4.0.2",
         "popper.js": "^1.16.1",
         "pusher-js": "^7.0.3",
         "unorm": "^1.6.0",
