@@ -137,7 +137,7 @@
                                         @click="_close">{{$options.setting.btnCancelTxt}}
                                 </button>
                                 <button type="button" class="btn btn-success"
-                                        @click="_submitUserPermission">{{$options.setting.btnSubmitTxt}}
+                                        @click="_submitUserPermission">{{$options.setting.btnSubmitRuleTxt}}
                                 </button>
                             </div>
                         </validation-observer>
@@ -264,6 +264,7 @@
             isAddFrom: false,
             modal_title: 'Cập nhật người dùng',
             btnSubmitTxt: 'Cập nhật',
+            btnSubmitRuleTxt: 'Cập nhật quyền truy cập',
             permisstionGroupTexts: {
                 setting: 'Hệ thống/Cài đặt',
                 thanh: 'Linh mục/Thánh',
@@ -276,7 +277,7 @@
                 le_chinh: 'Giáo phận/Lễ chính',
                 chuc_vu: 'Linh mục/Chức vụ',
                 giao_phan: 'Giáo phận/Giáo phận',
-                giao_hat: 'Giáo phận/Hạt',
+                giao_hat: 'Giáo phận/Giáo hạt',
                 giao_xu: 'Giáo phận/Giáo xứ',
                 giao_diem: 'Giáo phận/Giáo điểm',
                 giao_phan_co_so: 'Giáo phận/Cơ sở',

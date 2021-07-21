@@ -9,6 +9,7 @@
         </td>
         <td>{{user.name}}</td>
         <td class="text-center">{{user.email}}</td>
+        <td class="text-center">{{user.last_logged_in_at}}</td>
         <td class="text-center">{{_formatDate(user.created_at)}}</td>
         <td class="text-right">
             <div>

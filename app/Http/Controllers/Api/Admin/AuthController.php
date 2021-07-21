@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -25,6 +26,9 @@ class AuthController extends Controller
         $guard = Auth::guard('admin');
 
         if ($guard->attempt($credentials)) {
+            $user = Auth::user();
+            $user->last_logged_in_at = Carbon::now();
+            $user->save();
             $request->session()->regenerate();
             $json['code'] = 200;
         }

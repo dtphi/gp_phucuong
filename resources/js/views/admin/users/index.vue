@@ -20,6 +20,7 @@
                                     </th>
                                     <th>{{$options.setting.user_name_txt}}</th>
                                     <th class="text-center">{{$options.setting.email_txt}}</th>
+                                    <th class="text-center">Đăng nhập gần nhất</th>
                                     <th style="width: 100px" class="text-center">{{$options.setting.created_at_txt}}
                                     </th>
                                     <th style="width: 100px" class="text-right">{{$options.setting.action_txt}}</th>
