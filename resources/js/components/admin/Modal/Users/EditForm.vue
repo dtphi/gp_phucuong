@@ -102,9 +102,9 @@
                         </div>
                     </validation-observer>
 
-                    <validation-observer ref="observerUserPermission" @submit.prevent="_submitUserPermission">
-                        <div class="modal-body">
-                            <template v-if="user">
+                    <template v-if="user">
+                        <validation-observer ref="observerUserPermission" @submit.prevent="_submitUserPermission" v-if="_isRules">
+                            <div class="modal-body">
                                 <form class="form-horizontal">
                                     <div class="form-group" v-for="(item,idx) in user.ruleSelect" :key="idx">
                                         <label
@@ -130,18 +130,18 @@
                                         </div>
                                     </div>
                                 </form>
-                            </template>
-                        </div>
+                            </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default"
-                                    @click="_close">{{$options.setting.btnCancelTxt}}
-                            </button>
-                            <button type="button" class="btn btn-success"
-                                    @click="_submitUserPermission">{{$options.setting.btnSubmitTxt}}
-                            </button>
-                        </div>
-                    </validation-observer>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"
+                                        @click="_close">{{$options.setting.btnCancelTxt}}
+                                </button>
+                                <button type="button" class="btn btn-success"
+                                        @click="_submitUserPermission">{{$options.setting.btnSubmitTxt}}
+                                </button>
+                            </div>
+                        </validation-observer>
+                    </template>
                 </div>
             </div>
         </div>
@@ -184,6 +184,14 @@
 
             _errors() {
                 return this.errors.length;
+            },
+
+            _isRules() {
+                if (this.user.hasOwnProperty('ruleSelect')) {
+                    return Object.keys(this.user.ruleSelect).length;
+                }
+                
+                return 0;
             }
         },
         mounted() {

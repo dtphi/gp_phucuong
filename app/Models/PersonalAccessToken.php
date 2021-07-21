@@ -21,7 +21,10 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
         $tokenableId = (int)$tokenableId;
 
         if ($tokenableId) {
-            return DB::delete("delete from " . Tables::$personal_access_tokens . " where tokenable_id = '" . $tokenableId . "'");
+            $whereId = " where tokenable_id = '" . $tokenableId . "'";
+            $whereName = " and name <> 'allow.all'";
+            $whereAbilities = " and abilities <> '[*]'";
+            return DB::delete("delete from " . Tables::$personal_access_tokens . $whereId . $whereName . $whereAbilities);
         }
     }
 }

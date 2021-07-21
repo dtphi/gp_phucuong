@@ -3,6 +3,8 @@
 namespace App\Http\Resources\Admins;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Str;
+use App\Http\Common\Tables;
 
 class AdminResource extends JsonResource
 {
@@ -16,28 +18,6 @@ class AdminResource extends JsonResource
      */
     public function toArray($request)
     {
-        $actions = ['list', 'add', 'edit', 'delete'];
-        $rules = [
-            'setting' => $actions,
-            'thanh' => $actions,
-            'news_group' => $actions,
-            'linh_muc_van_thu' => $actions,
-            'linh_muc_thuyen_chuyen' => $actions,
-            'linh_muc_bang_cap' => $actions,
-            'linh_muc_chuc_thanh' => $actions,
-            'linh_muc' => $actions,
-            'le_chinh' => $actions,
-            'chuc_vu' => $actions,
-            'giao_phan' => $actions,
-            'giao_hat' => $actions,
-            'giao_xu' => $actions,
-            'giao_diem' => $actions,
-            'giao_phan_co_so' => $actions,
-            'cong_doan_tu_si' => $actions,
-            'dong' => $actions,
-            'tin_tuc' => $actions,
-        ];
-
         $actionSelects = ['list' => false, 'add' => false, 'edit' => false, 'delete' => false];
         $ruleSelects = [
             'setting' => ['abilities' => $actionSelects, 'all' => false],
@@ -68,9 +48,32 @@ class AdminResource extends JsonResource
 
         $res = $this->resource;
         if ($res) {
-            $json = parent::toArray($request);
+            foreach ($res->tokens()->getResults() as $permission) {
+                $keyName = trim(Str::replace(Tables::PREFIX_ACCESS_NAME, ' ', $permission->name));
+                $keyName = Str::replace('.', '_', $keyName);
+                $abilities = $permission->abilities;
+                foreach ($abilities as $abilitie) {
+                    $action = trim(Str::replace($keyName . ':', ' ', $abilitie));
+    
+                    if ($action == '*') {
+                        if (array_key_exists($keyName, $ruleSelects)) {
+                            $ruleSelects[$keyName]['all'] = true;
+                            $ruleSelects[$keyName]['abilities']['list'] = true;
+                            $ruleSelects[$keyName]['abilities']['add'] = true;
+                            $ruleSelects[$keyName]['abilities']['edit'] = true;
+                            $ruleSelects[$keyName]['abilities']['delete'] = true;
+                        }
+                    } else {
+                        if (array_key_exists($action, $ruleSelects[$keyName]['abilities'])) {
+                            $ruleSelects[$keyName]['abilities'][$action] = true;
+                        }
+                    }
+                }
+            }
+
+            $json = parent::toArray($request);//dd($res);
             $json = array_merge($json, [
-                'ruleSelect'       => $ruleSelects
+                'ruleSelect'   => fn_is_update_permission($res->id) ? $ruleSelects: []
             ]);
         }
 

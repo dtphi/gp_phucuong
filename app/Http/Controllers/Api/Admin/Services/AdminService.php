@@ -10,6 +10,8 @@ use App\Models\Admin;
 use DB;
 use App\Models\PersonalAccessToken;
 use Str;
+use Auth;
+use App\Http\Common\Tables;
 
 final class AdminService implements BaseModel, AdminModel
 {
@@ -134,23 +136,25 @@ final class AdminService implements BaseModel, AdminModel
 
         DB::beginTransaction();
         try {
-            PersonalAccessToken::fcDeleteByTokenableId($tokenablId);
-            foreach ($allows as $key => $allow) {
-                $abilities = [];
-                $keyName = Str::replace('_', '.', $key);
+            if (fn_is_admin_permission() && fn_is_update_permission($tokenablId)) {
+                PersonalAccessToken::fcDeleteByTokenableId($tokenablId);
+                foreach ($allows as $key => $allow) {
+                    $abilities = [];
+                    $keyName = Str::replace('_', '.', $key);
 
-                if ($allow['all']) {
-                    $abilities[] = $keyName . ':*';
-                } else {
-                    foreach ($allow['abilities'] as $action => $abilitie) {
-                        if ($abilitie) {
-                            $abilities[] = $keyName . ':' . $action;
+                    if ($allow['all']) {
+                        $abilities[] = $keyName . ':*';
+                    } else {
+                        foreach ($allow['abilities'] as $action => $abilitie) {
+                            if ($abilitie) {
+                                $abilities[] = $keyName . ':' . $action;
+                            }
                         }
                     }
-                }
 
-                if (!empty($abilities))
-                    $this->model->createToken('allow.' . $keyName, $abilities); 
+                    if (!empty($abilities))
+                        $this->model->createToken(Tables::PREFIX_ACCESS_NAME . $keyName, $abilities); 
+                }
             }
         } catch (\Exceptions $e) {
 
