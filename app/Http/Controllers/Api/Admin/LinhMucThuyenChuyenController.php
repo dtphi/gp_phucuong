@@ -57,6 +57,7 @@ class LinhMucThuyenChuyenController extends ApiController
             foreach ($collections as $key => $info) {
                 $results[] = [
                     'id' => (int)$info->id,
+                    'linh_muc_url' => url('admin/linh-mucs/edit/' . $info->linh_muc_id),
                     'ten_linh_muc' => $info->ten_linh_muc,
                     'fromgiaoxuName'      => $info->ten_from_giao_xu,
                     'fromchucvuName' => $info->ten_from_chuc_vu,

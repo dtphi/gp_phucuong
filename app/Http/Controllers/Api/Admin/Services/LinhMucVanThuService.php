@@ -89,7 +89,7 @@ final class LinhMucVanThuService implements BaseModel, LinhMucVanThuModel
     public function apiGetLinhMucVanThus($data = array(), $limit = 5)
     {
         $query = $this->model->select()
-        ->orderBy('id', 'DESC');
+        ->orderBy('linh_muc_id', 'DESC');
 
         return $query;
     }

@@ -89,7 +89,7 @@ final class LinhMucBangCapService implements BaseModel, LinhMucBangCapModel
     public function apiGetLinhMucBangCaps($data = array(), $limit = 5)
     {
         $query = $this->model->select()
-        ->orderBy('id', 'DESC');
+        ->orderBy('linh_muc_id', 'DESC');
 
         return $query;
     }

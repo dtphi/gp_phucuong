@@ -58,6 +58,7 @@ class LinhMucVanThuController extends ApiController
                 $results[] = [
                     'id' => (int)$info->id,
                     'name' => $info->title,
+                    'linh_muc_url' => url('admin/linh-mucs/edit/' . $info->linh_muc_id),
                     'ten_linh_muc' => $info->ten_linh_muc,
                     'type' => $info->type,
                     'ghi_chu'          => $info->ghi_chu,

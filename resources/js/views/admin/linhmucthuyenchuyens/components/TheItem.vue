@@ -6,7 +6,9 @@
                    :id="`info_select_id_${info.id}`"
                    :value="info.id">
         </td>
-        <td class="text-left">{{info.ten_linh_muc}}</td>
+        <td class="text-left">
+            <a :href="info.linh_muc_url">{{info.ten_linh_muc}}</a>
+        </td>
         <td class="text-left">{{info.fromgiaoxuName}}</td>
         <td class="text-left">{{info.fromchucvuName}}</td>
         <td class="text-left">{{info.label_from_date}}</td>

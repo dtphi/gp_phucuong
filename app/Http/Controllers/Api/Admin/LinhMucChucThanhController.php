@@ -59,6 +59,7 @@ class LinhMucChucThanhController extends ApiController
                     'id' => (int)$info->id,
                     'nguoi_thu_phong'           => $info->nguoi_thu_phong,
                     'noi_thu_phong'         => $info->noi_thu_phong,
+                    'linh_muc_url' => url('admin/linh-mucs/edit/' . $info->linh_muc_id),
                     'ten_linh_muc' => $info->ten_linh_muc,
                     'ten_chuc_thanh' => Tables::$chucThanhs[$info->chuc_thanh_id],
                     'ngay_thang' => $info->ngay_thang_nam_chuc_thanh,

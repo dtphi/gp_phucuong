@@ -7,7 +7,9 @@
                    :value="info.id">
         </td>
         <td class="text-left">{{info.nguoi_thu_phong}}</td>
-        <td class="text-left">{{info.ten_linh_muc}}</td>
+        <td class="text-left">
+            <a :href="info.linh_muc_url">{{info.ten_linh_muc}}</a>
+        </td>
         <td class="text-left">{{info.ten_chuc_thanh}}</td>
         <td class="text-left">{{info.noi_thu_phong}}</td>
         <td class="text-center">{{_formatDate(info.ngay_thang)}}</td>
