@@ -9,15 +9,15 @@ use Illuminate\Support\Str;
 
 class NewsGroupRequest extends BaseRequest
 {
-    private $allow = Tables::PREFIX_SETTING . ':*';
+    private $allow = Tables::PREFIX_ALLOW_NEWS_GROUP . ':*';
 
-    private $allowAdd = Tables::PREFIX_SETTING . ':add';
+    private $allowAdd = Tables::PREFIX_ALLOW_NEWS_GROUP . ':add';
 
-    private $allowEdit = Tables::PREFIX_SETTING . ':edit';
+    private $allowEdit = Tables::PREFIX_ALLOW_NEWS_GROUP . ':edit';
 
-    private $allowDelete = Tables::PREFIX_SETTING . ':delete';
+    private $allowDelete = Tables::PREFIX_ALLOW_NEWS_GROUP . ':delete';
 
-    private $allowList = Tables::PREFIX_SETTING . ':list';
+    private $allowList = Tables::PREFIX_ALLOW_NEWS_GROUP . ':list';
 
     /**
      * Determine if the user is authorized to make this request.

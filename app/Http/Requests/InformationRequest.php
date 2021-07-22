@@ -10,15 +10,15 @@ use Illuminate\Support\Carbon;
 
 class InformationRequest extends BaseRequest
 {
-    private $allow = Tables::PREFIX_SETTING . ':*';
+    private $allow = Tables::PREFIX_ALLOW_TIN_TUC . ':*';
 
-    private $allowAdd = Tables::PREFIX_SETTING . ':add';
+    private $allowAdd = Tables::PREFIX_ALLOW_TIN_TUC . ':add';
 
-    private $allowEdit = Tables::PREFIX_SETTING . ':edit';
+    private $allowEdit = Tables::PREFIX_ALLOW_TIN_TUC . ':edit';
 
-    private $allowDelete = Tables::PREFIX_SETTING . ':delete';
+    private $allowDelete = Tables::PREFIX_ALLOW_TIN_TUC . ':delete';
 
-    private $allowList = Tables::PREFIX_SETTING . ':list';
+    private $allowList = Tables::PREFIX_ALLOW_TIN_TUC . ':list';
 
     /**
      * Determine if the user is authorized to make this request.

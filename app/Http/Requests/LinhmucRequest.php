@@ -10,15 +10,15 @@ use App\Http\Common\BaseRequest;
 
 class LinhmucRequest extends BaseRequest
 {
-    private $allow = Tables::PREFIX_ACCESS_LINH_MUC . ':*';
+    private $allow = Tables::PREFIX_ALLOW_LINH_MUC . ':*';
 
-    private $allowAdd = Tables::PREFIX_ACCESS_LINH_MUC . ':add';
+    private $allowAdd = Tables::PREFIX_ALLOW_LINH_MUC . ':add';
 
-    private $allowEdit = Tables::PREFIX_ACCESS_LINH_MUC . ':edit';
+    private $allowEdit = Tables::PREFIX_ALLOW_LINH_MUC . ':edit';
 
-    private $allowDelete = Tables::PREFIX_ACCESS_LINH_MUC . ':delete';
+    private $allowDelete = Tables::PREFIX_ALLOW_LINH_MUC . ':delete';
 
-    private $allowList = Tables::PREFIX_ACCESS_LINH_MUC . ':list';
+    private $allowList = Tables::PREFIX_ALLOW_LINH_MUC . ':list';
 
     /**
      * Determine if the user is authorized to make this request.
