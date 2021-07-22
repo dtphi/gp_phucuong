@@ -123,6 +123,7 @@
                                                 for="input-user-password-"
                                                 class="control-label">{{$options.setting.permissionActionTexts[id]}}</label>
                                                     <input 
+                                                        v-on:change="ruleActionChange(idx,item)"
                                                         v-model="item.abilities[id]"
                                                         type="checkbox"
                                                         class="form-control">
@@ -253,6 +254,17 @@
                 abilities.delete = rule.all;
 
                 _self.user.ruleSelect[idx].abilities = abilities;
+            },
+
+            ruleActionChange(idx,rule) {
+                if (rule.abilities.list 
+                    && rule.abilities.add 
+                    && rule.abilities.edit 
+                    && rule.abilities.delete) {
+                        this.user.ruleSelect[idx].all = true;
+                } else {
+                    this.user.ruleSelect[idx].all = false;
+                }
             }
         },
         setting: {

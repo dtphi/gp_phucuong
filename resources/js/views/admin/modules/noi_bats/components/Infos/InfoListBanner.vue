@@ -30,16 +30,14 @@
                             <td style="width:25%">Color(tên hoặc mã màu: ffffff)</td>
                             <td>Font-weight</td>
                             <td>Font-size (px)</td>
-                            <td>
+                            <td class="text-right">
                                 <button 
                                     type="button"
                                     @click="_updateBanner"
                                     data-toggle="tooltip"
-                                    class="btn btn-default cms-btn"
+                                    class="btn btn-primary"
                                         data-original-title="Sửa Tin">
-                                            <font-awesome-layers size="1x" style="background:honeydew">
-                                                <font-awesome-icon icon="edit"/>
-                                            </font-awesome-layers>
+                                        <i class="fa fa-edit fa-fw"/>
                                 </button>
                             </td>
                         </tr>
