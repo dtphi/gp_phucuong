@@ -6,7 +6,6 @@ use App\Http\Common\Tables;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanModel;
 use App\Http\Resources\GiaoPhans\GiaoPhanResource;
-use App\Http\Resources\GiaoPhanHats\GiaoPhanHatResource;
 use App\Http\Resources\GiaoPhanHats\GiaoPhanHatCollection;
 use App\Http\Resources\GiaoPhanHatXus\GiaoPhanHatXuCollection;
 use App\Http\Resources\GiaoPhanHatCongDoanTuSis\GiaoPhanHatCongDoanTuSiCollection;
@@ -42,7 +41,7 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         $this->model = new GiaoPhan();
     }
 
-    public function apiGetList(array $options = [], $limit = 5)
+    public function apiGetList(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetList() method.
         $query = $this->apiGetGiaoPhans($options);
@@ -50,8 +49,7 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return $query->paginate($limit);
     }
 
-
-    public function apiGetResourceCollection(array $options = [], $limit = 5)
+    public function apiGetResourceCollection(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetResourceCollection() method.
         return null;
@@ -255,7 +253,7 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return $model;
     }
 
-    public function apiGetGiaoPhans($data = array(), $limit = 5)
+    public function apiGetGiaoPhans($data = array(), $limit = 15)
     {
         $query = $this->model->select()
             ->orderBy('id', 'DESC');
@@ -272,7 +270,8 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return $query->get();
     }
 
-    public function apiUpdateGiaoHat($data = []) {
+    public function apiUpdateGiaoHat($data = []) 
+    {
         if ($data['isEdit']) {
             if ((int)$data['id'] != (int)$data['giaoHatOldId']) {
                 GiaoPhanHat::fcDeleteById($data['giaoHatOldId']);
@@ -291,7 +290,8 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return new GiaoPhanHatCollection(GiaoPhanHat::where('giao_phan_id', $data['giao_phan_id'])->get());
     }
 
-    public function apiUpdateGiaoXu($data = []) {
+    public function apiUpdateGiaoXu($data = []) 
+    {
         if ($data['isEdit']) {
             if ((int)$data['id'] != (int)$data['giaoXuOldId']) {
                 GiaoPhanHatXu::fcDeleteById($data['giaoXuOldId']);
@@ -360,7 +360,8 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return new GiaoPhanHatCongDoanTuSiCollection($congdts);
     }
 
-    public function apiUpdateDong($data = []) {
+    public function apiUpdateDong($data = []) 
+    {
         if ($data['isEdit']) {
             if ((int)$data['id'] != (int)$data['dongOldId']) {
                 GiaoPhanDong::fcDeleteById($data['dongOldId']);
@@ -379,7 +380,8 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return new GiaoPhanDongCollection(GiaoPhanDong::where('giao_phan_id', $data['giao_phan_id'])->get());
     }
 
-    public function apiUpdateCoSo($data = []) {
+    public function apiUpdateCoSo($data = []) 
+    {
         if ($data['isEdit']) {
             if ((int)$data['id'] != (int)$data['coSoOldId']) {
                 GiaoPhanCoSo::fcDeleteById($data['coSoOldId']);
@@ -398,7 +400,8 @@ final class GiaoPhanService implements BaseModel, GiaoPhanModel
         return new GiaoPhanCoSoCollection(GiaoPhanCoSo::where('giao_phan_id', $data['giao_phan_id'])->get());
     }
 
-    public function apiUpdateBanChuyenTrach($data = []) {
+    public function apiUpdateBanChuyenTrach($data = []) 
+    {
         if ($data['isEdit']) {
             if ((int)$data['id'] != (int)$data['banChuyenTrachOldId']) {
                 GiaoPhanBanChuyenTrach::fcDeleteById($data['banChuyenTrachOldId']);

@@ -93,28 +93,6 @@ final class AdminService implements BaseModel, AdminModel
          * Save user with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
-        /*$actions = ['list', 'add', 'edit', 'delete'];
-        $rules = [
-            'setting' => $actions,
-            'thanh' => $actions,
-            'news.group' => $actions,
-            'linh.muc.van.thu' => $actions,
-            'linh.muc.thuyen.chuyen' => $actions,
-            'linh.muc.bang.cap' => $actions,
-            'linh.muc.chuc.thanh' => $actions,
-            'linh.muc' => $actions,
-            'le.chinh' => $actions,
-            'chuc.vu' => $actions,
-            'giao.phan' => $actions,
-            'giao.hat' => $actions,
-            'giao.xu' => $actions,
-            'giao.diem' => $actions,
-            'giao.phan.co.so' => $actions,
-            'cong.doan.tu.si' => $actions,
-            'dong' => $actions,
-            'tin.tuc' => $actions,
-        ];
-        */
         
         if (!$this->model->save()) {
             DB::rollBack();

@@ -428,7 +428,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         DB::commit();
     }
 
-    public function apiGetCategories($data = array(), $limit = 5)
+    public function apiGetCategories($data = array(), $limit = 15)
     {
         $cate1 = 'cate1';
         $cate2 = 'cate2';

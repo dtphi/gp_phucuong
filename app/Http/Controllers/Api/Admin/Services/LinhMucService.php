@@ -38,7 +38,7 @@ final class LinhmucService implements BaseModel, LinhMucModel
         $this->model = new Linhmuc();
     }
 
-    public function apiGetList(array $options = [], $limit = 5)
+    public function apiGetList(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetList() method.
         $query = $this->apiGetLinhmucs($options);
@@ -46,8 +46,7 @@ final class LinhmucService implements BaseModel, LinhMucModel
         return $query->paginate($limit);
     }
 
-
-    public function apiGetResourceCollection(array $options = [], $limit = 5)
+    public function apiGetResourceCollection(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetResourceCollection() method.
         return null;
@@ -98,7 +97,7 @@ final class LinhmucService implements BaseModel, LinhMucModel
         return $this->model;
     }
 
-    public function apiGetLinhmucs($data = array(), $limit = 5)
+    public function apiGetLinhmucs($data = array(), $limit = 15)
     {
         $query = $this->model->select()
             ->orderBy('id', 'DESC');
@@ -287,7 +286,8 @@ final class LinhmucService implements BaseModel, LinhMucModel
         return $query->get();
     }
 
-    public function apiUpdateBangCap($data = []) {
+    public function apiUpdateBangCap($data = []) 
+    {
         $hat = LinhMucBangCap::updateOrCreate(
             [
                 'id' => $data['id'], 
@@ -304,7 +304,8 @@ final class LinhmucService implements BaseModel, LinhMucModel
         return new LinhMucBangCapCollection(LinhMucBangCap::where('linh_muc_id', $data['linhMucId'])->get());
     }
 
-    public function apiUpdateChucThanh($data = []) {
+    public function apiUpdateChucThanh($data = []) 
+    {
         $hat = LinhMucChucThanh::updateOrCreate(
             [
                 'id' => $data['id'], 
@@ -323,7 +324,8 @@ final class LinhmucService implements BaseModel, LinhMucModel
         return new LinhMucChucThanhCollection(LinhMucChucThanh::where('linh_muc_id', $data['linhMucId'])->get());
     }
 
-    public function apiUpdateVanThu($data = []) {
+    public function apiUpdateVanThu($data = []) 
+    {
         $hat = LinhMucVanThu::updateOrCreate(
             [
                 'id' => $data['id'], 
@@ -340,7 +342,8 @@ final class LinhmucService implements BaseModel, LinhMucModel
         return new LinhMucVanThuCollection(LinhMucVanThu::where('linh_muc_id', $data['linhMucId'])->get());
     }
 
-    public function apiUpdateThuyenChuyen($data = []) {
+    public function apiUpdateThuyenChuyen($data = []) 
+    {
         $hat = LinhMucThuyenChuyen::updateOrCreate(
             [
                 'id' => $data['id'], 
