@@ -57,6 +57,9 @@ class Setting extends BaseModel
 
     public function scopeFilterCode($query, $code = '')
     {
+        if (is_array($code)) {
+           return $query->whereIn($this->table . '.code', $code);    
+        }
         $query->where($this->table . '.code', $code);
 
         return $query;

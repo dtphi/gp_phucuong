@@ -249,19 +249,24 @@ class ApiController extends Controller
                 ],
             ];
 
-            $banners['image'] = 'Image/NewPicture/home_banners/banner_image.png';
-            $settings = $this->settingSv->apiGetSettingByCodes(Tables::$moduleSystemCode);
+            $settings = $this->settingSv->apiGetSettingByCodes([
+                Tables::$moduleSystemCode
+            ]);
+            $systems = [];
             if ($settings) {
-                $banners = $settings->reduce(function ($carry, $item) {
+                $systems = $settings->reduce(function ($carry, $item) {
                     if ($item->key_data == 'module_system_banners')
-                        $carry = $item->value;
+                        $carry['banner_image'] = ($item->serialized) ? unserialize($item->value) : $item->value;
+                    if ($item->key_data == 'module_system_logos')
+                        $carry['logo_image'] = ($item->serialized) ? unserialize($item->value) : $item->value;
     
-                    return ($item->serialized) ? unserialize($carry) : $carry;
+                    return $carry;
                 });
             }
 
-            $data['logo']    = '/front/img/logo.png';
-            $data['banner']  = isset($banners['image']) ? url($banners['image']) : url('Image/NewPicture/home_banners/banner_image.png');
+            $data['banner']  = isset($systems['banner_image']) ? url($systems['banner_image']['image']) : url('Image/NewPicture/home_banners/banner_image.png');
+            $data['logo'] = isset($systems['logo_image']) ? url($systems['logo_image']): url('/front/img/logo.png');
+
             $data['menus']   = $menus;
             $data['menus_1'] = $menuLayout_1;
 

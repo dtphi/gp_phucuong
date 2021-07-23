@@ -32,6 +32,7 @@ import {
 
 const defaultState = () => {
   return {
+    logo_image: '',    
     banner_image: '',
     loading: false,
     updateSuccess: false,
@@ -51,6 +52,9 @@ export default {
     }
   },
   mutations: {
+    SYSTEMS_SET_LOGO_IMAGE(state, payload) {
+      state.logo_image = payload;
+    },
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.banner_image = payload;
     },
@@ -60,6 +64,9 @@ export default {
     [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
       if (payload.hasOwnProperty('module_system_banners')) {
         state.banner_image = payload.module_system_banners.value.image;
+      } 
+      if (payload.hasOwnProperty('module_system_logos')) {
+        state.logo_image = payload.module_system_logos.value;
       }
     },
     [MODULE_UPDATE_SETTING_SUCCESS](state, payload) {
@@ -99,6 +106,40 @@ export default {
       commit
     }, imgFile) {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    },
+    ACTION_UPDATE_LOGO({ commit, state, dispatch }, logo) {
+      if (logo) {
+        commit("SYSTEMS_SET_LOGO_IMAGE", logo);
+      } else {
+        dispatch(ACTION_SET_LOADING, true);
+        const data = {
+          action: 'update',
+          code: 'module_system',
+          keys: [
+            {
+              key: 'module_system_logos',
+              value:  state.logo_image,
+              serialize: false
+            }
+          ]
+        }
+
+        apiInsertSetting(
+          data,
+          (result) => {
+            commit(MODULE_UPDATE_SETTING_SUCCESS, AppConfig.comInsertNoSuccess);
+            commit(MODULE_UPDATE_SET_ERROR, []);
+
+            dispatch(ACTION_SET_LOADING, false);
+          },
+          (errors) => {
+            commit(MODULE_UPDATE_SETTING_FAILED, AppConfig.comInsertNoFail);
+            commit(MODULE_UPDATE_SET_ERROR, errors);
+
+            dispatch(ACTION_SET_LOADING, false);
+          }
+        )
+      }
     },
     ACTION_UPDATE_BANNER({ commit, state, dispatch }) {
       dispatch(ACTION_SET_LOADING, true);

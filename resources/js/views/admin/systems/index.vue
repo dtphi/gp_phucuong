@@ -13,9 +13,7 @@
                 :is-full-page="fullPage"></loading-over-lay>
         </template>
         <template>
-            <validation-observer
-                ref="observerNewsGroup"
-                @submit.prevent="_submitInfo">
+            
                 <div class="page-header">
                     <div class="container-fluid">
                         <h1>Cài đặt</h1>
@@ -40,55 +38,74 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab-general">
-                                        <div class="tab-content">
-                                            <div class="form-group required">
-                                                <label class="col-sm-1 control-label"
-                                                       for="input-name">Logo</label>
-                                                <div class="col-sm-10">
-                                                    <!--<input type="text"
-                                                           v-model="newsGroup.category_name"
-                                                           placeholder="Tên nhóm tin" id="input-name"
-                                                           class="form-control">-->
+                                            <validation-observer
+                                                ref="observerLogo"
+                                                @submit.prevent="_submitInfo">
+                                                <div class="form-group required">
+                                                    <label class="col-sm-1 control-label">Logo</label>
+                                                    <div class="col-sm-1">
+                                                        <span class="btn btn-default" @click="_selectLogoImage">
+                                                            <i class="fa fa-image fa-fw"/>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="file animated fadeIn" style="height: 61px">
+                                                        <div class="file-preview">
+                                                            <img :src="_getImageAvatar('logo')" class="thumb" />
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <div class="pull-right">
+                                                            <button type="button"
+                                                                    @click="_submitLogoInfo"
+                                                                    data-toggle="tooltip"
+                                                                    title="Cập nhật"
+                                                                    class="btn btn-primary">
+                                                                <i class="fa fa-save"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </validation-observer>
 
-                                            <div class="form-group">
-                                                <label for="input-info-duc-cha" class="col-sm-1 control-label"
-                                                    >Banner</label
-                                                >
-                                                <div class="col-sm-1">
-                                                    <span class="btn btn-default" @click="_selectImage">
-                                                        <i class="fa fa-image fa-fw"/>
-                                                    </span>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <div class="file animated fadeIn" style="height: 61px">
-                                                    <div class="file-preview">
-                                                        <img :src="_getImageAvatar" class="thumb" />
+                                            <validation-observer
+                                                ref="observerBanner"
+                                                @submit.prevent="_submitInfo">
+                                                <div class="form-group">
+                                                    <label class="col-sm-1 control-label">Banner</label>
+                                                    <div class="col-sm-1">
+                                                        <span class="btn btn-default" @click="_selectImage">
+                                                            <i class="fa fa-image fa-fw"/>
+                                                        </span>
                                                     </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="file animated fadeIn" style="height: 61px">
+                                                        <div class="file-preview">
+                                                            <img :src="_getImageAvatar('banner')" class="thumb" />
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <div class="pull-right">
+                                                            <button type="button"
+                                                                    @click="_submitInfo"
+                                                                    data-toggle="tooltip"
+                                                                    title="Cập nhật"
+                                                                    class="btn btn-primary">
+                                                                <i class="fa fa-save"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-8">
-                                                    <div class="pull-right">
-                                                        <button type="button"
-                                                                @click="_submitInfo"
-                                                                data-toggle="tooltip"
-                                                                title="Cập nhật"
-                                                                class="btn btn-primary">
-                                                            <i class="fa fa-save"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            </validation-observer>
+                                        
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            </validation-observer>
-
         </template>
     </div>
 </template>
@@ -136,9 +153,9 @@
                                 if (this._selfCom.fn) {
                                     this._selfCom.fn(pathImg + fi.selected.path, fi.selected);
                                 } else {
-                                if (typeof this._selfCom.[ACTION_SET_IMAGE] == "function"){
-                                    this._selfCom.[ACTION_SET_IMAGE](pathImg + fi.selected.path);
-                                }
+                                    if (typeof this._selfCom.[ACTION_SET_IMAGE] == "function"){
+                                        this._selfCom.[ACTION_SET_IMAGE](pathImg + fi.selected.path);
+                                    }
                                 }
 
                                 document.getElementById('media-file-manager-content').style = "display:none";
@@ -175,9 +192,11 @@
             _errors() {
                 return this.errors.length;
             },
-            _getImageAvatar() {
-                if (this.system.banner_image != '') {
-                    return fn_get_href_base_url(this.system.banner_image);
+            _getImageAvatar: (app) => (key) => {
+                if (app.system.banner_image != '' && key == 'banner') {
+                    return fn_get_href_base_url(app.system.banner_image);
+                } else if (app.system.logo_image != '' && key == 'logo') {
+                    return fn_get_href_base_url(app.system.logo_image);
                 }
 
                 return '/images/no-photo.jpg';
@@ -189,6 +208,7 @@
                 ACTION_RESET_NOTIFICATION_INFO,
                 ACTION_GET_SETTING,
                 "ACTION_UPDATE_BANNER",
+                "ACTION_UPDATE_LOGO",
             ]),
             _errorToArrs() {
                 let errs = [];
@@ -204,9 +224,17 @@
             },
             _submitInfo() {
                 const _self = this;
-                _self.$refs.observerNewsGroup.validate().then((isValid) => {
+                _self.$refs.observerBanner.validate().then((isValid) => {
                     if (isValid) {
                         _self.ACTION_UPDATE_BANNER();
+                    }
+                });
+            },
+            _submitLogoInfo() {
+                const _self = this;
+                _self.$refs.observerLogo.validate().then((isValid) => {
+                    if (isValid) {
+                        _self.ACTION_UPDATE_LOGO();
                     }
                 });
             },
@@ -218,6 +246,10 @@
                 this.fn = null;
                 document.getElementById('media-file-manager-content').style = "display:block";
             },
+            _selectLogoImage() {
+                this.fn = this.ACTION_UPDATE_LOGO;
+                document.getElementById('media-file-manager-content').style = "display:block";
+            }
         },
         setting: {
             title: 'Cập nhật hệ thống',
