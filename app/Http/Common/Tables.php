@@ -169,4 +169,5 @@ final class Tables
             'tin_tuc' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
         ];
 
+    const NETWORK_TARGET = ['facebook', 'twitter', 'linkedin', 'reddit'];
 }

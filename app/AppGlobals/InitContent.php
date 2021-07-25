@@ -4,6 +4,7 @@ namespace App\AppGlobals;
 
 use App\Http\Common\Tables;
 use Request;
+use DB;
 
 class InitContent
 {
@@ -17,413 +18,8 @@ class InitContent
     public function __construct()
     {
         $this->pathInfo = trim(request()->getPathInfo(), '/');
-
-        $networkTarget = ['facebook', 'twitter', 'linkedin', 'reddit'];
-
-        $homeLayout = [
-            'page'           => 'home',
-            'layout_content' => [
-                'content_top'           => true,
-                'content_top_column'    => [
-                    'colClass'       => '8 notication',
-                    'left_modules'   => [],
-                    'middle_modules' => [
-                        [
-                            'moduleName' => Tables::$middle_module_info_carousel,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$middle_module_special_banner,
-                            'sortOrder'  => 0
-                        ],
-                    ],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 0,
-                    'middle_column'  => 8,
-                    'right_column'   => 4
-                ],
-                'content_bottom'        => true,
-                'content_bottom_column' => [
-                    'left_modules'   => [],
-                    'middle_modules' => [
-                        [
-                            'moduleName' => Tables::$module_middle_tin_giao_hoi,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_middle_tin_giao_phan,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_middle_van_kien,
-                            'sortOrder'  => 0
-                        ]
-                    ],
-                    'right_modules'  => [
-                        [
-                            'moduleName' => Tables::$module_right_lich_cong_giao,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_sach_noi_iframe,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_info_fanpage,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_youtube_hanh_cac_thanh,
-                            'sortOrder'  => 0
-                        ]
-                    ],
-                    'left_column'    => 0,
-                    'middle_column'  => 8,
-                    'right_column'   => 4
-                ],
-                'content_main'          => true,
-                'content_main_column'   => [
-                    'left_modules'   => [],
-                    'middle_modules' => [
-                        [
-                            'moduleName' => Tables::$module_middle_loi_chua,
-                            'sortOrder'  => 0
-                        ]
-                    ],
-                    'right_modules'  => [
-                        [
-                            'moduleName' => Tables::$module_right_category_icon_side_bar,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_thong_bao,
-                            'sortOrder'  => 0
-                        ]
-                    ],
-                    'both_column'    => true,
-                    'both_modules'   => [
-                        [
-                            'moduleName' => Tables::$module_both_noi_bat,
-                            'sortOrder'  => 0
-                        ]
-                    ],
-                    'column_number'  => 2,
-                    'left_column'    => 0,
-                    'middle_column'  => 8,
-                    'right_column'   => 4
-                ]
-            ]
-        ];
-
-        $categoryLayout = [
-            'page'           => 'category',
-            'layout_content' => [
-                'content_top'           => true,
-                'content_top_column'    => [
-                    'colClass'       => '5',
-                    'left_modules'   => [
-                        [
-                            'moduleName'   => Tables::$module_left_category_sub_left_side_bar,
-                            'sortOrder'    => 0,
-                            'isShowMobile' => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_info_left_side_bar,
-                            'sortOrder'      => 0,
-                            'componentClass' => '',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_category_left_side_bar,
-                            'sortOrder'      => 0,
-                            'componentClass' => '',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_newsletter_register,
-                            'sortOrder'      => 0,
-                            'componentClass' => 'form test',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_summary_contact,
-                            'sortOrder'      => 0,
-                            'componentClass' => 'logo test',
-                            'isShowMobile'   => false
-                        ]
-                    ],
-                    'middle_modules' => [],
-                    'right_modules'  => [
-                        [
-                            'moduleName' => Tables::$module_right_thong_bao,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_lich_cong_giao,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_sach_noi_iframe,
-                            'sortOrder'  => 0
-                        ],
-                        /*[
-                            'moduleName'=> Tables::$module_right_info_fanpage,
-                            'sortOrder'=> 0
-                        ],*/
-                        [
-                            'moduleName' => Tables::$module_right_youtube_hanh_cac_thanh,
-                            'sortOrder'  => 0
-                        ]
-                    ],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 2,
-                    'middle_column'  => 7,
-                    'right_column'   => 3,
-                ],
-                'content_bottom'        => true,
-                'content_bottom_column' => [
-                    'colClass'       => '',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [
-                    ],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 0,
-                    'middle_column'  => 8,
-                    'right_column'   => 4
-                ],
-                'content_main'          => false,
-                'content_main_column'   => [
-                    'colClass'       => '',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 2,
-                    'middle_column'  => 6,
-                    'right_column'   => 4
-                ],
-            ],
-            'network'        => $networkTarget
-        ];
-
-        $videoLayout = [
-            'page'           => 'video',
-            'layout_content' => [
-                'content_top'           => true,
-                'content_top_column'    => [
-                    'colClass'       => '',
-                    'left_modules'   => [
-                        [
-                            'moduleName'     => Tables::$module_left_info_left_side_bar,
-                            'sortOrder'      => 0,
-                            'componentClass' => '',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_category_left_side_bar,
-                            'sortOrder'      => 0,
-                            'componentClass' => '',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_newsletter_register,
-                            'sortOrder'      => 0,
-                            'componentClass' => 'form test',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_summary_contact,
-                            'sortOrder'      => 0,
-                            'componentClass' => 'logo test',
-                            'isShowMobile'   => false
-                        ]
-                    ],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 3,
-                    'middle_column'  => 9,
-                    'right_column'   => 0
-                ],
-                'content_bottom'        => false,
-                'content_bottom_column' => [
-                    'colClass'       => '',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 3,
-                    'middle_column'  => 9,
-                    'right_column'   => 0
-                ],
-                'content_main'          => false,
-                'content_main_column'   => [
-                    'colClass'       => '',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 3,
-                    'middle_column'  => 9,
-                    'right_column'   => 0
-                ]
-            ]
-        ];
-
-        $popularLayout = [
-            'page'           => 'popular',
-            'layout_content' => [
-                'content_top'           => true,
-                'content_top_column'    => [
-                    'colClass'       => '',
-                    'left_modules'   => [
-                        [
-                            'moduleName'     => Tables::$module_left_info_left_side_bar,
-                            'sortOrder'      => 0,
-                            'componentClass' => '',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_category_left_side_bar,
-                            'sortOrder'      => 0,
-                            'componentClass' => '',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_newsletter_register,
-                            'sortOrder'      => 0,
-                            'componentClass' => 'form test',
-                            'isShowMobile'   => false
-                        ],
-                        [
-                            'moduleName'     => Tables::$module_left_summary_contact,
-                            'sortOrder'      => 0,
-                            'componentClass' => 'logo test',
-                            'isShowMobile'   => false
-                        ]
-                    ],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 3,
-                    'middle_column'  => 9,
-                    'right_column'   => 0
-                ],
-                'content_bottom'        => false,
-                'content_bottom_column' => [
-                    'colClass'       => '',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 3,
-                    'middle_column'  => 9,
-                    'right_column'   => 0
-                ],
-                'content_main'          => false,
-                'content_main_column'   => [
-                    'colClass'       => '',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 3,
-                    'middle_column'  => 9,
-                    'right_column'   => 0
-                ]
-            ]
-        ];
-
-        $detail = [
-            'page'           => 'detail',
-            'layout_content' => [
-                'content_top'           => true,
-                'content_top_column'    => [
-                    'colClass'       => '8 notication',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [
-                        [
-                            'moduleName' => Tables::$module_right_thong_bao,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_lich_cong_giao,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_sach_noi_iframe,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_info_fanpage,
-                            'sortOrder'  => 0
-                        ],
-                        [
-                            'moduleName' => Tables::$module_right_youtube_hanh_cac_thanh,
-                            'sortOrder'  => 0
-                        ]
-                    ],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 0,
-                    'middle_column'  => 8,
-                    'right_column'   => 4
-                ],
-                'content_bottom'        => false,
-                'content_bottom_column' => [
-                    'colClass'       => '',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 0,
-                    'middle_column'  => 8,
-                    'right_column'   => 4
-                ],
-                'content_main'          => false,
-                'content_main_column'   => [
-                    'colClass'       => '8',
-                    'left_modules'   => [],
-                    'middle_modules' => [],
-                    'right_modules'  => [],
-                    'both_column'    => false,
-                    'both_modules'   => [],
-                    'column_number'  => 2,
-                    'left_column'    => 0,
-                    'middle_column'  => 8,
-                    'right_column'   => 4
-                ]
-            ],
-            'network'        => $networkTarget
-        ];
-
-        $layout = $homeLayout;
+        
+        $layout = [];
 
         $this->settings = [
             'og_url'           => request()->fullUrl(),
@@ -437,7 +33,8 @@ class InitContent
 
         $segments = request()->segments();
         if (isset($segments[0]) && Request::is('danh-muc-tin*')) {
-            $layout                       = $categoryLayout;
+            $layout = $this->__getLayoutContent('danh-muc-tin/*');
+            
             $this->settings['meta_title'] = 'Danh mục Giáo Phận Phú Cường';
             $model                        = new \App\Models\CategoryDescription();
 
@@ -458,11 +55,12 @@ class InitContent
         if (isset($segments[0]) && Request::is('tin-tuc*')) {
             if (isset($segments[1]) && Request::is('tin-tuc/xem-nhieu*')) {
                 $this->settings['meta_title'] = 'Tin tức xem nhiều';
-                $layout                       = $popularLayout;
+
+                $layout                       = $this->__getLayoutContent('tin-tuc/xem-nhieu');
             }
 
             if (isset($segments[1]) && Request::is('tin-tuc/chi-tiet*')) {
-                $layout = $detail;
+                $layout = $this->__getLayoutContent('tin-tuc/chi-tiet/*');
                 $model  = new \App\Models\Information();
 
                 $endSegment  = end($segments);
@@ -482,11 +80,10 @@ class InitContent
         }
 
         if (isset($segments[0]) && Request::is('video*')) {
-            $layout                       = $videoLayout;
             $this->settings['meta_title'] = 'Video';
 
             if (isset($segments[1]) && Request::is('video/chi-tiet*')) {
-                $layout = $detail;
+                $layout = $this->__getLayoutContent('video/chi-tiet/*');
                 $model  = new \App\Models\Information();
 
                 $endSegment  = end($segments);
@@ -502,10 +99,35 @@ class InitContent
                         $this->settings['og_image']         = url($result->image['path']);
                     }
                 }
+            } else {
+                $layout = $this->__getLayoutContent('video');
             }
         }
 
+        if (empty($layout)) {
+            $layout = $this->__getLayoutContent();
+        }
+
         $this->settings['page'] = $layout;
+    }
+
+    private function __getLayoutContent($route = '') 
+    {
+        $layout = [];
+
+        $route = DB::table('pc_layout_routes')->where('route', $route)->first();
+        $settings = DB::table('pc_layout_settings')->where('layout_id', $route->layout_id)->get();
+        foreach ($settings as $setting) {
+            $value = $setting->value;
+            if ($setting->serialized == 1) {
+                $value = unserialize($setting->value);
+            } elseif ($setting->serialized == 2) {
+                $value = json_decode($setting->value);
+            }
+            $layout[$setting->code] = $value;
+        }
+
+        return $layout;
     }
 
     public function getDistJsScript($src)
@@ -563,24 +185,5 @@ class InitContent
             }
         }
         echo $output;
-    }
-
-    public function init()
-    {
-        if (Request::is('admin/filemanagers*')) {
-            $cssStype = $this->mapCss();
-            $scripts  = $this->mapScriptFileManager();
-            $scripts  .= "<script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
-            $scripts  .= "<script src='/administrator/javascript/bootstrap/js/bootstrap.min.js'></script>\n";
-
-            return [
-                '',
-                $scripts,
-                ''
-            ];
-        }
-
-        return [
-        ];
     }
 }
