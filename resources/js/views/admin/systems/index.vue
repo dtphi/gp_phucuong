@@ -109,7 +109,7 @@
                                             <validation-observer
                                                 ref="observerBanner"
                                                 @submit.prevent="_submitInfo">
-                                                <div class="form-group">
+                                                <div class="form-group" :style="{ backgroundColor: system.content_backgd_logo }">
                                                     <label class="col-sm-1 control-label">Banner</label>
                                                     <div class="col-sm-1">
                                                         <span class="btn btn-default" @click="_selectImage">
@@ -131,13 +131,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" :style="{ backgroundColor: system.content_background_color }">
                                                     <label class="col-sm-1 control-label">Màu nền nội dung</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" v-model="system.content_background_color" class="form-control" />
                                                     </div>
                                                 </div> 
-                                                <div class="form-group">
+                                                <div class="form-group" :style="{ backgroundColor: system.content_backgd_logo }">
                                                     <label class="col-sm-1 control-label">Màu nền tiêu đề</label>
                                                     <div class="col-sm-3">
                                                         <input type="text" v-model="system.content_backgd_header_title" class="form-control" />
@@ -145,15 +145,17 @@
                                                     <label class="col-sm-7 control-label" style="color:#fff;text-align:center;line-height:3" 
                                                         :style="{ backgroundColor: system.content_backgd_header_title }">{{system.header_title}}</label>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-1 control-label">Màu nền Phone</label>
-                                                    <div class="col-sm-3">
-                                                        <input type="text" v-model="system.content_backgd_phone" class="form-control" />
+                                                <div class="form-group" :style="{ backgroundColor: system.content_backgd_logo }">
+                                                    <div :style="{ backgroundColor: system.content_backgd_header_title }">
+                                                        <label class="col-sm-1 control-label">Màu nền Phone</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="text" v-model="system.content_backgd_phone" class="form-control" />
+                                                        </div>
+                                                        <label class="col-sm-7 control-label" style="color:#fff;text-align:center;line-height:3"
+                                                            :style="{ backgroundColor: system.content_backgd_phone }">{{system.phone}}</label>
                                                     </div>
-                                                    <label class="col-sm-7 control-label" style="color:#fff;text-align:center;line-height:3"
-                                                        :style="{ backgroundColor: system.content_backgd_phone }">{{system.phone}}</label>
                                                 </div> 
-                                                <div class="form-group">
+                                                <div class="form-group" :style="{ backgroundColor: system.content_backgd_logo }">
                                                     <label class="col-sm-1 control-label">Màu nền Logo</label>
                                                     <div class="col-sm-3">
                                                         <input type="text" v-model="system.content_backgd_logo" class="form-control" />
