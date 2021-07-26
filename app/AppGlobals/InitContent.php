@@ -104,6 +104,73 @@ class InitContent
             }
         }
 
+        if (isset($segments[0]) && Request::is('linh-muc*')) {
+            $this->settings['meta_title'] = 'Linh Mục';
+
+            $layout = [
+                'page'           => 'linh_muc',
+                'layout_content' => [
+                    'content_top'           => true,
+                    'content_top_column'    => [
+                        'colClass'       => '8 notication',
+                        'left_modules'   => [],
+                        'middle_modules' => [
+                            [
+                                'moduleName' => Tables::$middle_module_info_carousel,
+                                'sortOrder'  => 0
+                            ],
+                            [
+                                'moduleName' => Tables::$middle_module_special_banner,
+                                'sortOrder'  => 0
+                            ],
+                        ],
+                        'right_modules'  => [],
+                        'both_column'    => false,
+                        'both_modules'   => [],
+                        'column_number'  => 2,
+                        'left_column'    => 0,
+                        'middle_column'  => 8,
+                        'right_column'   => 4
+                    ],
+                    'content_bottom'        => true,
+                    'content_bottom_column' => [
+                        'left_modules'   => [],
+                        'middle_modules' => [],
+                        'right_modules'  => [],
+                        'left_column'    => 0,
+                        'middle_column'  => 8,
+                        'right_column'   => 4
+                    ],
+                    'content_main'          => true,
+                    'content_main_column'   => [
+                        'left_modules'   => [],
+                        'middle_modules' => [],
+                        'right_modules'  => [],
+                        'both_column'    => true,
+                        'both_modules'   => [],
+                        'column_number'  => 2,
+                        'left_column'    => 0,
+                        'middle_column'  => 8,
+                        'right_column'   => 4
+                    ]
+                ]
+            ];
+
+            if (isset($segments[1]) && Request::is('linh-muc/chi-tiet*')) {
+                $layout = $layout;
+                
+                $endSegment  = end($segments);
+                $arrSegments = explode('-', $endSegment);
+                $idSegment   = (int)end($arrSegments);
+
+                if ($idSegment) {
+                    //
+                }
+            } else {
+                $layout = $layout;
+            }
+        }
+
         if (empty($layout)) {
             $layout = $this->__getLayoutContent();
         }

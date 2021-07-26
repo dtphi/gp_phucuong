@@ -1,0 +1,159 @@
+#news {
+    .info-post {
+        img {
+            width: 26px;
+            border-radius: 50%;
+        }
+
+        .name {
+            color: #1bd7f0;
+        }
+    }
+
+    .name-post {
+        color: #cdcdcd;
+    }
+
+    .box-social {
+        .list-icon {
+            font-size: 0;
+
+            a {
+                display: inline-block;
+                width: calc(100% / 5);
+            }
+
+            .nav-tabs {
+                 .nav-link {
+                    color: #000;
+                }
+            }
+        }
+    }
+
+    .box-care {
+        #email {
+            background-color: #CCCCCC;
+            padding: 6px;
+            border-radius: 4px;
+            width: 100%;
+            outline: 0;
+        }
+
+        .btn {
+            background-color: #ED1C24;
+            color: #ffffff;
+            padding: 4px 14px;
+            font-weight: bold;
+        }
+
+        .text-download {
+            color: #ff0000;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+
+    .highlights {
+        .say-gods {
+            .col-7 {
+                .tit-bg-common {
+                    span {
+                        width: 14%;
+                        i {
+                            padding: 2px 12px;
+                        }
+                    }
+
+                    a {
+                        width: 86%;
+                    }
+                }
+
+                .row-item-3 {
+                    color: #000000;
+                    border-bottom-style: dashed;
+
+                    span {
+                        font-size: 14px;
+
+                        &:first-child {
+                            width: 18%;
+                        }
+
+                        &:nth-child(2n) {
+                            width: 60%;
+                        }
+
+                        &:last-child {
+                            width: 22%;
+                        }
+                    }
+                }
+            }
+        }
+
+        .new {
+            .tit-bg-common {
+                span {
+                    width: 12%;
+                }
+
+                a {
+                    width: 88%;
+                    font-size: 14px;
+                }
+            }
+
+            .row-item-3 {
+                color: #000000;
+                border-bottom-style: dashed;
+            }
+        }
+
+        .new-diocese {
+            .tit-bg-common {
+                a {
+                    width: 100%;
+                    padding-left: 0;
+                }
+            }
+
+            .col-r {
+                .tit-bg-common {
+                    a {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .new-document {
+            .tit-bg-common {
+                a {
+                    width: 100%;
+                    padding-left: 0;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #news {
+        .notication {
+            .description {
+                h4 {
+                    font-size: 18px;
+                }
+            }
+
+            .box-social {
+                margin-top: 14px;
+            }
+        }
+    }
+}
