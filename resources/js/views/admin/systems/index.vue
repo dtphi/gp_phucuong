@@ -50,11 +50,12 @@
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <div class="file animated fadeIn" style="height: 61px">
-                                                        <div class="file-preview">
-                                                            <img :src="_getImageAvatar('logo')" class="thumb" />
-                                                        </div>
+                                                            <div class="file-preview">
+                                                                <img :src="_getImageAvatar('logo')" class="thumb" />
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    
                                                     <div class="col-sm-8">
                                                         <div class="pull-right">
                                                             <button type="button"
@@ -67,6 +68,42 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-1 control-label">Logo Tiêu đề</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" v-model="system.logo_title" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-1 control-label">Logo Tiêu đề 1</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" v-model="system.logo_title_1" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-1 control-label">Số điện thoại</label>
+                                                <div class="col-sm-3">
+                                                    <input type="number" v-model="system.phone" min="0" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-1 control-label">Email</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" v-model="system.email" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <!--header_title-->
+                                            <div class="form-group">
+                                                <label class="col-sm-1 control-label">Tiêu đề</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" v-model="system.header_title" class="form-control" />
+                                                </div>
+                                            </div> 
                                             </validation-observer>
 
                                             <validation-observer
@@ -79,14 +116,10 @@
                                                             <i class="fa fa-image fa-fw"/>
                                                         </span>
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="file animated fadeIn" style="height: 61px">
-                                                        <div class="file-preview">
-                                                            <img :src="_getImageAvatar('banner')" class="thumb" />
-                                                        </div>
-                                                        </div>
-                                                    </div>
                                                     <div class="col-sm-8">
+                                                            <img :src="_getImageAvatar('banner')" class="img" style="width:666px; height: 80px;object-fit: cover;"/>
+                                                    </div>
+                                                    <div class="col-sm-2">
                                                         <div class="pull-right">
                                                             <button type="button"
                                                                     @click="_submitInfo"
@@ -98,6 +131,40 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-1 control-label">Màu nền nội dung</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" v-model="system.content_background_color" class="form-control" />
+                                                    </div>
+                                                </div> 
+                                                <div class="form-group">
+                                                    <label class="col-sm-1 control-label">Màu nền tiêu đề</label>
+                                                    <div class="col-sm-3">
+                                                        <input type="text" v-model="system.content_backgd_header_title" class="form-control" />
+                                                    </div>
+                                                    <label class="col-sm-7 control-label" style="color:#fff;text-align:center;line-height:3" 
+                                                        :style="{ backgroundColor: system.content_backgd_header_title }">{{system.header_title}}</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-1 control-label">Màu nền Phone</label>
+                                                    <div class="col-sm-3">
+                                                        <input type="text" v-model="system.content_backgd_phone" class="form-control" />
+                                                    </div>
+                                                    <label class="col-sm-7 control-label" style="color:#fff;text-align:center;line-height:3"
+                                                        :style="{ backgroundColor: system.content_backgd_phone }">{{system.phone}}</label>
+                                                </div> 
+                                                <div class="form-group">
+                                                    <label class="col-sm-1 control-label">Màu nền Logo</label>
+                                                    <div class="col-sm-3">
+                                                        <input type="text" v-model="system.content_backgd_logo" class="form-control" />
+                                                    </div>
+                                                    <label class="col-sm-7 control-label" style="color:#fff;text-align:center;line-height:3"
+                                                        :style="{ backgroundColor: system.content_backgd_logo }"><div class="file animated fadeIn" style="height: 104px; border:none">
+                                                            <div class="file-preview">
+                                                                <img :src="_getImageAvatar('logo')" class="thumb" />
+                                                            </div>
+                                                        </div></label>
+                                                </div> 
                                             </validation-observer>
                                         
                                     </div>

@@ -34,6 +34,13 @@ const defaultState = () => {
   return {
     logo_image: '',    
     banner_image: '',
+    phone: '',
+    header_title: '',
+    email: '',
+    content_background_color: '',
+    content_backgd_header_title: '',
+    content_backgd_phone: '',
+    content_backgd_logo: '',
     loading: false,
     updateSuccess: false,
     errors: []
@@ -65,8 +72,35 @@ export default {
       if (payload.hasOwnProperty('module_system_banners')) {
         state.banner_image = payload.module_system_banners.value.image;
       } 
+      if (payload.hasOwnProperty('module_system_con_background_colors')) {
+        state.content_background_color = payload.module_system_con_background_colors.value;
+      } 
       if (payload.hasOwnProperty('module_system_logos')) {
         state.logo_image = payload.module_system_logos.value;
+      }
+      if (payload.hasOwnProperty('module_system_logo_titles')) {
+        state.logo_title = payload.module_system_logo_titles.value;
+      }
+      if (payload.hasOwnProperty('module_system_logo_title_1s')) {
+        state.logo_title_1 = payload.module_system_logo_title_1s.value;
+      }
+      if (payload.hasOwnProperty('module_system_phones')) {
+        state.phone = payload.module_system_phones.value;
+      }
+      if (payload.hasOwnProperty('module_system_emails')) {
+        state.email = payload.module_system_emails.value;
+      }
+      if (payload.hasOwnProperty('module_system_header_titles')) {
+        state.header_title = payload.module_system_header_titles.value;
+      }
+      if (payload.hasOwnProperty('module_system_content_backgd_header_titles')) {
+        state.content_backgd_header_title = payload.module_system_content_backgd_header_titles.value;
+      }
+      if (payload.hasOwnProperty('module_system_content_backgd_phones')) {
+        state.content_backgd_phone = payload.module_system_content_backgd_phones.value;
+      }
+      if (payload.hasOwnProperty('module_system_content_backgd_logos')) {
+        state.content_backgd_logo = payload.module_system_content_backgd_logos.value;
       }
     },
     [MODULE_UPDATE_SETTING_SUCCESS](state, payload) {
@@ -120,6 +154,31 @@ export default {
               key: 'module_system_logos',
               value:  state.logo_image,
               serialize: false
+            },
+            {
+              key: 'module_system_logo_titles',
+              value:  state.logo_title,
+              serialize: false
+            },
+            {
+              key: 'module_system_logo_title_1s',
+              value:  state.logo_title_1,
+              serialize: false
+            },
+            {
+              key: 'module_system_phones',
+              value: state.phone,
+              serialize: false
+            },
+            {
+              key: 'module_system_emails',
+              value: state.email,
+              serialize: false
+            },
+            {
+              key: 'module_system_header_titles',
+              value: state.header_title,
+              serialize: false
             }
           ]
         }
@@ -153,7 +212,27 @@ export default {
               image: state.banner_image
             },
             serialize: true
-          }
+          },
+          {
+            key: 'module_system_con_background_colors',
+            value: state.content_background_color,
+            serialize: false
+          },
+          {
+            key: 'module_system_content_backgd_header_titles',
+            value: state.content_backgd_header_title,
+            serialize: false
+          },
+          {
+            key: 'module_system_content_backgd_logos',
+            value: state.content_backgd_logo,
+            serialize: false
+          },
+          {
+            key: 'module_system_content_backgd_phones',
+            value: state.content_backgd_phone,
+            serialize: false
+          },
         ]
       }
 
