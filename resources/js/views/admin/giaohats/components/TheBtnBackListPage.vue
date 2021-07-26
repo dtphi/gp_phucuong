@@ -18,7 +18,7 @@
         props: {},
         methods: {
             _getHref() {
-                return fn_get_base_url() + `/admin/giao-phans`;
+                return fn_get_base_url() + `/admin/giao-hats`;
             }
         }
     };
