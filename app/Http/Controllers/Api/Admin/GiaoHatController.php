@@ -127,7 +127,7 @@ class GiaoHatController extends ApiController
             $model = $this->ghSv->apiGetDetail($id);
 
         } catch (HandlerMsgCommon $e) {
-            Log::debug('Giao phan not found, Request ID = ' . $id);
+            Log::debug('Giao hat not found, Request ID = ' . $id);
 
             throw $e->render();
         }
@@ -165,7 +165,6 @@ class GiaoHatController extends ApiController
         if ($result = $this->ghSv->apiInsert($formData)) {
             return $this->respondUpdated($result);
         }
-
         return $this->respondBadRequest();
     }
 
@@ -178,8 +177,7 @@ class GiaoHatController extends ApiController
     private function __handleStoreUpdate(&$model, &$request)
     {
         $formData = $request->all();
-
-        if ($result = $this->ghSv->apiUpdate($model, $formData)) {
+        if ($result = $this->ghSv->apiUpdate($model, $formData["data"])) {
             return $this->respondUpdated($result);
         }
 

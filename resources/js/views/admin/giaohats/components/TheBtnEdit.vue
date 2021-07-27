@@ -42,7 +42,7 @@
                 }
             },
             _redirectUrl() {
-                return fn_redirect_url(`admin/giao-phans/edit/${this.infoId}`);
+                return fn_redirect_url(`admin/giao-hats/edit/${this.infoId}`);
             }
         }
     };

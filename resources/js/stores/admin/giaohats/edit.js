@@ -20,33 +20,27 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_SET_IMAGE,
+  ACTION_UPDATE_INFO_BACK
 } from '../types/action-types';
 import {
   config
 } from '@app/api/admin/config';
+import { result } from 'lodash';
 
 const defaultState = () => {
   return {
     styleCss: '',
     isExistInfo: config.existStatus.checking,
     info: {
-      image:"",
+      id: null,
       date_available: null,
-      sort_order: 0,
-      status: 1,
+      sort_id: 1,
+      active: 1,
+      nguoiquanhat: null,
+      updateUser: 1,
       name: '',
-      meta_title: '',
-      sort_description: '',
-      information_type: 1,
-      description: '',
-      tag: '',
-      meta_description: '',
-      meta_keyword: '',
-      multi_images: [],
-      relateds: [],
-      categorys: [],
-      downloads: [],
-      special_carousels: [],
+      khuvuc: '',
+      phanloai: 0,
     },
     isImgChange: false,
     listCategorysDisplay: [],
@@ -123,6 +117,9 @@ export default {
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload;
       state.isImgChange = true;
+    },
+    GIAO_HATS_SET_INFO(state, payload) {
+      state.info = payload;
     }
   },
 
@@ -132,7 +129,15 @@ export default {
     }, infoId) {
       dispatch(ACTION_GET_INFO_BY_ID, infoId);
     },
+    // ACTION_GET_GIAO_HAT_BY_ID
+    /* ACTION_GET_GIAO_HAT_BY_ID({ dispatch, commit}, giaohatId) {
+      dispatch(ACTION_SET_LOADING), true;
+      apiGetGiaoHatById(giaohatId, (result) => {
+        commit
+      })
+    }, */
 
+    // GET ID
     [ACTION_GET_INFO_BY_ID]({
       dispatch,
       commit
@@ -142,17 +147,16 @@ export default {
         infoId,
         (result) => {
           commit(INFOS_MODAL_SET_INFO_ID, infoId);
-          commit(INFOS_MODAL_SET_INFO, result.data);
-
+          commit('GIAO_HATS_SET_INFO', result.data);
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_MODAL_SET_INFO_ID_FAILED, Object.values(errors))
-
           dispatch(ACTION_SET_LOADING, false);
         }
       );
     },
+
 
     [ACTION_SET_LOADING]({
       commit
@@ -160,6 +164,7 @@ export default {
       commit(INFOS_MODAL_SET_LOADING, isLoading);
     },
 
+    // UPDATE GIAO HAT
     [ACTION_UPDATE_INFO]({
       dispatch,
       commit
@@ -167,13 +172,32 @@ export default {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
       apiUpdateInfo(info,
         (result) => {
+          commit(INFOS_MODAL_SET_ERROR, [])
           commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-
-          dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
-          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
-
+          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail);
+          commit(INFOS_MODAL_SET_ERROR, errors);
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
+    [ACTION_UPDATE_INFO_BACK]({
+      dispatch,
+      commit
+    }, info) {
+      apiUpdateInfo(
+        info,
+        (result) => {
+          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+          dispatch(ACTION_GET_INFO_BY_ID, info.id);
+           dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAOHAT', 'page', {
+             root: true
+           });
+        },
+        (errors) => {
+          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail);
+          commit(INFOS_MODAL_SET_ERROR, errors);
           dispatch(ACTION_SET_LOADING, false);
         }
       )

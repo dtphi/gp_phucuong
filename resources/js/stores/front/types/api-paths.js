@@ -20,3 +20,6 @@ export const API_INFO_GET_RELATED_LIST = '/api/app/info/get-related-information'
 export const API_INFO_GET_LASTED_LIST = '/api/app/info/get-latest-information';
 
 export const API_INFO_GET_SPECIAL_MODULE_LIST = '/api/app/info/get-special-information';
+
+// EMAIL SUBSCRIBES
+export const API_EMAIL_SUBSCRIBE = '/api/email_sub/create';

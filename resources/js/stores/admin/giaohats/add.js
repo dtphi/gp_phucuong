@@ -1,7 +1,12 @@
 import AppConfig from 'api@admin/constants/app-config';
+
 import {
   apiInsertInfo,
 } from 'api@admin/giaohat';
+import {
+  apiGetLinhMucInfos,
+} from 'api@admin/linhmuc';
+
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -12,9 +17,8 @@ import {
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
-  ACTION_RELOAD_GET_INFO_LIST,
   ACTION_INSERT_INFO_BACK,
-  ACTION_SET_IMAGE,
+  ACTION_RESET_NOTIFICATION_INFO,
 } from '../types/action-types';
 
 const defaultState = () => {
@@ -24,24 +28,16 @@ const defaultState = () => {
     classShow: 'modal fade',
     styleCss: '',
     info: {
-      image: "",
       date_available: null,
-      sort_order: 1,
-      status: 1,
+      sort_id: 1,
+      active: 1,
+      nguoiquanhat: null,
+      updateUser: 1,
       name: '',
-      meta_title: '',
-      sort_description: '',
-      information_type: 1,
-      description: '',
-      tag: '',
-      meta_description: '',
-      meta_keyword: '',
-      multi_images: [],
-      relateds: [],
-      categorys: [],
-      downloads: [],
-      special_carousels: [],
+      khuvuc: '',
+      phanloai: 0,
     },
+    linhMuc: [],
     isImgChange: true,
     listCategorysDisplay: [],
     listRelatedsDisplay: [],
@@ -70,6 +66,9 @@ export default {
     loading(state) {
       return state.loading
     },
+    insertSuccess(state) {
+      return state.insertSuccess
+    },
     updateSuccess(state) {
       return state.updateSuccess
     },
@@ -78,6 +77,9 @@ export default {
     },
     isError(state) {
       return state.errors.length
+    },
+    isLinhMuc(state) {
+      return state.linhMuc;
     }
   },
 
@@ -87,11 +89,11 @@ export default {
     },
 
     [INFOS_MODAL_INSERT_INFO_SUCCESS](state, payload) {
-      state.updateSuccess = payload
+      state.insertSuccess = payload
     },
 
     [INFOS_MODAL_INSERT_INFO_FAILED](state, payload) {
-      state.updateSuccess = payload
+      state.insertSuccess = payload
     },
 
     [INFOS_MODAL_SET_ERROR](state, payload) {
@@ -101,10 +103,36 @@ export default {
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload;
       state.isImgChange = true;
+    },
+    INFO_LINH_MUC(state, payload) {
+      state.linhMuc = payload;
     }
   },
 
   actions: {
+    /* GET LIST LINH MUC */
+    action_get_list_linh_muc({
+      commit
+    }, params) {
+      apiGetLinhMucInfos(
+        (infos) => {
+          console.log(infos.data.results, ' action_get_list_linh_muc test')
+          commit('INFO_LINH_MUC', infos.data.results);
+          var pagination = {
+            current_page: 1,
+            total: 0
+          };
+          if (infos.data.hasOwnProperty('pagination')) {
+            pagination = infos.data.pagination;
+          }
+        },
+        (errors) => {
+          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+        },
+        params
+      );
+    },
+
     [ACTION_SET_LOADING]({
       commit
     }, isLoading) {
@@ -120,13 +148,11 @@ export default {
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
           commit(INFOS_MODAL_SET_ERROR, []);
-
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
           commit(INFOS_MODAL_SET_ERROR, errors);
-
           dispatch(ACTION_SET_LOADING, false);
         }
       )
@@ -140,24 +166,19 @@ export default {
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-
-          dispatch(ACTION_RELOAD_GET_INFO_LIST, 'page', {
+          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAOHAT', 'page', {
             root: true
           });
         },
         (errors) => {
           commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
           commit(INFOS_MODAL_SET_ERROR, errors);
-
           dispatch(ACTION_SET_LOADING, false);
         }
       )
     },
-
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit }, values) {
+      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values);
     }
   }
 }

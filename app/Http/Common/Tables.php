@@ -60,6 +60,7 @@ final class Tables
         '_self'
     ];
 
+    public static $email_subscribes = 'email_subscribes';
     public static $module_left_info_left_side_bar = 'info-left-side-bar';
     public static $module_left_category_left_side_bar = 'category-left-side-bar';
     public static $module_left_newsletter_register = 'newsletter-register';

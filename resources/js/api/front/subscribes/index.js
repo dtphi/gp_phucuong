@@ -1,10 +1,9 @@
 import {
   fn_get_base_api_url,
-  fn_get_base_api_detail_url
 } from '@app/api/utils/fn-helper';
 import {
-  API_SETTING_RESOURCE
-} from 'store@admin/types/api-paths';
+  API_EMAIL_SUBSCRIBE
+} from 'store@front/types/api-paths';
 
 
 /**
@@ -14,17 +13,13 @@ import {
  * @param  {[type]} errResole   [description]
  * @return {[type]}             [description]
  */
-export const apiEmailSubscribe = (resolve, errResole, params) => {
-  resolve(params);
-  /*axios.get(fn_get_base_api_url('/api/app/get-data-module'), {
-      params: params
-    })
+ export const apiEmailSubscribe = (newEmailSub, resolve, errResole) => {
+  return axios.post( fn_get_base_api_url(API_EMAIL_SUBSCRIBE), newEmailSub)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
         json['data'] = response.data;
-        json['status'] = 1000;
         resolve(json);
       } else {
         errResole([{
@@ -33,7 +28,9 @@ export const apiEmailSubscribe = (resolve, errResole, params) => {
         }]);
       }
     })
-    .catch(errors => {
-      console.log(errors)
-    })*/
+    .catch(errors => errResole([{
+      status: errors.response.status,
+      messageCommon: errors.response.data.message,
+      messages: errors.response.data.errors
+    }]))
 }

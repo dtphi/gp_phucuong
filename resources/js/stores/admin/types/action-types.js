@@ -14,6 +14,7 @@ export const ACTION_RELOAD_GET_INFO_LIST = 'reloadGetInfoList';
 export const ACTION_INSERT_INFO = 'insertInfo';
 export const ACTION_INSERT_INFO_BACK = 'insertInfoBack';
 export const ACTION_UPDATE_INFO = 'updateInfo';
+export const ACTION_UPDATE_INFO_BACK = 'updateInfoBack';
 export const ACTION_RESET_UPDATE_INFO = 'resetUpdateInfo';
 export const ACTION_GET_DROPDOWN_RELATED_LIST = 'getDropdownRelatedList';
 export const ACTION_SELECT_DROPDOWN_RELATED_INFO = 'selectDropdownRelatedInfo';
