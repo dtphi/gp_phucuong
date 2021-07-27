@@ -9,6 +9,14 @@ class EmailSubscribe extends Model
 {
     use HasFactory;
 
+    protected $table = DB_PREFIX . 'subscribes';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'subscribe_id';
+
+
     protected $fillable = [
         'email'
     ];

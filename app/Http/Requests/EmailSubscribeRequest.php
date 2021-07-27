@@ -31,11 +31,11 @@ class EmailSubscribeRequest extends FormRequest
   {
     if ($this->isMethod('put')) {
       return [
-        'email' => 'required|email|max:255|unique:email_subscribes',
+        'email' => 'required|email|max:255|unique:pc_subscribes',
       ];
     }
     return [
-      'email' => 'required|email|max:255|unique:email_subscribes',
+      'email' => 'required|email|max:255|unique:pc_subscribes',
     ];
   }
 }

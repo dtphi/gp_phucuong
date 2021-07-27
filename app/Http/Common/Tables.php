@@ -4,6 +4,7 @@ namespace App\Http\Common;
 
 final class Tables
 {
+    public static $subscribes = DB_PREFIX . 'subscribes';
     public static $categorys = DB_PREFIX . 'categorys';
     public static $category_to_layouts = DB_PREFIX . 'category_to_layouts';
     public static $category_paths = DB_PREFIX . 'category_paths';
@@ -60,7 +61,6 @@ final class Tables
         '_self'
     ];
 
-    public static $email_subscribes = 'email_subscribes';
     public static $module_left_info_left_side_bar = 'info-left-side-bar';
     public static $module_left_category_left_side_bar = 'category-left-side-bar';
     public static $module_left_newsletter_register = 'newsletter-register';

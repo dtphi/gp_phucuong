@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!-- Show errors -->
-    <template v-if="_errors">
-      <div class="alert alert-danger">
-        <i class="fa fa-exclamation-circle"></i>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-        <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{ err }}</p>
-      </div>
-    </template>
     <!--  Loading page -->
     <template v-if="loading">
       <loading-over-lay :active.sync="loading" :is-full-page="fullPage">
@@ -24,7 +14,7 @@
           <validation-provider
             name="email"
             rules="required|email|max:191"
-            v-slot="{ errors }"
+            v-slot="{}"
           >
             <input
               class="d-block mb-3 form-input"
@@ -34,7 +24,7 @@
               placeholder="Enter your e-mail address"
               v-model="subscribe.email"
             />
-            <span class="cms-text-red">{{ errors[0] }}</span>
+            
           </validation-provider>
           <!-- Submit from -->
           <button class="btn" type="button" @click="_submitInfo">
@@ -50,7 +40,6 @@
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 import { MODULE_SUBSCRIBE } from "store@front/types/module-types";
-import { fn_get_tinymce_langs_url } from "@app/api/utils/fn-helper";
 import { setInteractionMode } from 'vee-validate'
 setInteractionMode('passive')
 
@@ -61,9 +50,6 @@ export default {
     return {
       text_notification: '',
       fullPage: false,
-      options: {
-        language_url: fn_get_tinymce_langs_url("vi_VN"),
-      },
     };
   },
   // loading vs errors trong stata
@@ -79,16 +65,20 @@ export default {
   },
   watch: {
     'insertSuccess'(newValue) {
-      console.log(newValue);
-      if(newValue){
-        this.$refs.observerNewEmail.reset();
-        this._notificationUpdate();
+      if (typeof newValue == "boolean") {
+        if(newValue){
+          this.$refs.observerNewEmail.reset();
+          this._notificationUpdate('Đã đăng ký nhận tin thành công!', 'success');
+        } else {
+          this._notificationUpdate('Email nhận tin chưa hợp lệ!', 'error');
+        }
       }
     },
   },
   methods: {
     ...mapActions(MODULE_SUBSCRIBE, [
       "ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER",
+      "RESET_NOTIFICATION"
     ]),
     _errorToArrs() {
       const errs = [];
@@ -108,29 +98,28 @@ export default {
       await _self.$refs.observerNewEmail.validate().then((isValid) => {
         if (isValid) {
           _self.ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER(_self.subscribe);
-          this.text_notification = _self.subscribe.email;
+        } else {
+          _self._notificationUpdate('Email nhận tin chưa hợp lệ!', 'error');
         }
       });
     },
-    _notificationUpdate() {
+    _notificationUpdate(msg, type) {
       this.$notify({
-        group: 'add_email',
-        type: 'success',
-        title: 'Insert successfully!',
+        group: this.$options.setting.groupNotify,
+        type: type,
+        title: msg,
         text: this.text_notification,
-      })
+      });
+      this.RESET_NOTIFICATION(null);
     }
   },
   setting: {
     error_msg_system: "Lỗi hệ thống !",
+    groupNotify: 'add_email'
   },
 };
 </script>
 <style>
-.cms-text-red {
-  display: block;
-  color: red;
-}
 .form-input {
   width: 100%;
   border-radius: 4px;

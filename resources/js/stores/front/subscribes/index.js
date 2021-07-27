@@ -58,7 +58,6 @@ export default {
       apiEmailSubscribe(
         subscribe,
         (responses) => {
-          console.log(responses)
           commit(SET_ERROR, []);
           commit(SET_LOADING, false);
           commit('RESET_SUB', '');
@@ -67,8 +66,13 @@ export default {
         (errors) => {
           commit(SET_ERROR, errors);
           commit(SET_LOADING, false);
+          commit('SET_INSERT_SUCCESS', false);
         },
       );
     },
+
+    RESET_NOTIFICATION({commit}, msg) {
+      commit('SET_INSERT_SUCCESS', msg);
+    }
   }
 }

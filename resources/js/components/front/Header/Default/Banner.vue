@@ -7,8 +7,8 @@
                 <logo></logo>
               </b-col>
               <b-col cols="9">
-                <h2>Giáo phận phú cường</h2>
-                <h4>Muối men cho đời</h4>
+                <h2>{{logoTitle}}</h2>
+                <h4>{{logoTitle1}}</h4>
               </b-col>
             </b-row>
           </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-	import {mapGetters} from 'vuex';
+	import {mapGetters,mapState} from 'vuex';
   import Logo from 'com@front/Logo';
 
     export default {
@@ -29,7 +29,11 @@
           Logo
         },
         computed: {
-        	...mapGetters(['bannerUrl'])
+        	...mapGetters(['bannerUrl']),
+          ...mapState({
+                logoTitle: state => state.cfApp.setting.logoTitle,
+                logoTitle1: state => state.cfApp.setting.logoTitle1
+            }),
         }
     };
 </script>
