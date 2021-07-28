@@ -1,25 +1,14 @@
 <template>
     <div class="form-group">
-        <label
-            class="col-sm-1 control-label"
-            for="input-parent-category-name">
-        		<span data-toggle="tooltip"
-                      data-original-title="(Tự động hoàn toàn)">Key</span>
-        </label>
-
-        <div class="col-sm-3">
-            <input class="form-control"
-                   v-model="settingCategory.key" type="text" disabled/>
-        </div>
 
         <label
-            class="col-sm-1 control-label"
+            class="col-sm-2 control-label"
             for="input-parent-category-name">
         		<span data-toggle="tooltip"
-                      data-original-title="(Tự động hoàn toàn)">Value</span>
+                      data-original-title="(Tự động hoàn toàn)">Danh mục</span>
         </label>
 
-        <div class="col-sm-7" id="cms-scroll-dropdown">
+        <div class="col-sm-10" id="cms-scroll-dropdown">
             <input autocomplete="off"
                    v-on:focus="_focusParentCategory"
                    v-on:keyup.enter="_searchProducts()"

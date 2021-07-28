@@ -381,6 +381,7 @@
         fn_get_href_base_url
     } from '@app/api/utils/fn-helper';
     import Breadcrumb from 'com@admin/Breadcrumb';
+    import mixinModule from '@app/mixins/admin/module';
     import {
         MODULE_MODULE_HOME_BANNER
     } from 'store@admin/types/module-types';
@@ -392,6 +393,7 @@
 
     export default {
         name: 'HomeBannerPage',
+        mixins: [mixinModule],
         components: {
             Breadcrumb,        
         },
@@ -430,7 +432,6 @@
             })
 
             return {
-                fullPage: false,
                 media: {
                     type: '',
                     path: ''
@@ -438,13 +439,6 @@
                 fn: null,
                 mm: mm,
             };
-        },
-        watch: {
-            'updateSuccess'(newValue, oldValue) {
-                if (newValue) {
-                    this._notificationUpdate(newValue);
-                }
-            }
         },
         computed: {
             ...mapState(MODULE_MODULE_HOME_BANNER, {
@@ -455,9 +449,6 @@
                 'banners',
                 'updateSuccess'
             ]),
-            _errors() {
-                return this.errors.length;
-            },
             _getOnGoiAvatar() {
                 if (this.banners.img_on_goi != '') {
                     return fn_get_href_base_url(this.banners.img_on_goi);
@@ -522,18 +513,6 @@
                 ACTION_GET_SETTING,
                 "ACTION_UPDATE_BANNER",
             ]),
-            _errorToArrs() {
-                let errs = [];
-                if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
-                    errs = Object.values(this.errors[0].messages);
-                }
-
-                if (Object.entries(errs).length === 0 && this.errors.length) {
-                    errs.push(this.$options.setting.error_msg_system);
-                }
-
-                return errs;
-            },
             _submitInfo() {
                 const _self = this;
                 _self.$refs.observerNewsGroup.validate().then((isValid) => {
@@ -541,10 +520,6 @@
                         _self.ACTION_UPDATE_BANNER();
                     }
                 });
-            },
-            _notificationUpdate(notification) {
-                this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
             },
             _selectImage(type) {
                 this.fn = null;
