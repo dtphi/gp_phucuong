@@ -31,7 +31,7 @@ class InformationRequest extends BaseRequest
         if ($this->isAllowAll())
             return true;
 
-        if ($this->isMethod('option') || $user->actionCan(Tables::$tinTucAccessName, $this->allow)) {
+        if ($this->isMethod('options') || $user->actionCan(Tables::$tinTucAccessName, $this->allow)) {
             return true;
         } elseif ($this->isMethod('post')) {
             return $user->actionCan(Tables::$tinTucAccessName, $this->allowAdd);

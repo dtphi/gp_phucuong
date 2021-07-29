@@ -29,7 +29,7 @@ class GiaoPhanRequest extends BaseRequest
         if ($this->isAllowAll())
             return true;
 
-        if ($this->isMethod('option') || $user->actionCan(Tables::$giaoPhanAccessName, $this->allow)) {
+        if ($this->isMethod('options') || $user->actionCan(Tables::$giaoPhanAccessName, $this->allow)) {
             return true;
         } elseif ($this->isMethod('post')) {
             return $user->actionCan(Tables::$giaoPhanAccessName, $this->allowAdd);

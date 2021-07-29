@@ -22,7 +22,7 @@ const router = new Router({
 const initParamsApp = {
   type: 'init',
   pathName: window.location.pathname,
-  layout: layout
+  layout: layout.page
 }
 
 router.beforeEach(async (to, from, next) => {
@@ -39,4 +39,7 @@ store.dispatch('appSettings', initParamsApp).then(() => {
         router,
         store
     })
-})
+});
+
+delete window.page;
+delete window['page'];

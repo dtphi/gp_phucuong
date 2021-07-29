@@ -30,7 +30,7 @@ class NewsGroupRequest extends BaseRequest
         if ($this->isAllowAll())
             return true;
 
-        if ($this->isMethod('option') || $user->actionCan(Tables::$categoryAccessName, $this->allow)) {
+        if ($this->isMethod('options') || $user->actionCan(Tables::$categoryAccessName, $this->allow)) {
             return true;
         } elseif ($this->isMethod('post')) {
             return $user->actionCan(Tables::$categoryAccessName, $this->allowAdd);
