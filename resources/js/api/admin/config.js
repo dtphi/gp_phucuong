@@ -1,7 +1,7 @@
 const envBuild = process.env.NODE_ENV;
 let baseUrl = window.origin;
 if (envBuild == "server") {
-    //baseUrl = 'http://haydesachnoipodcast.com';
+    baseUrl = 'http://haydesachnoipodcast.com';
 }
 
 const existStatus = {
