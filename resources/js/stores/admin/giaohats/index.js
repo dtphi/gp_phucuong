@@ -202,12 +202,11 @@ export default {
         }
       );
     },
-
-    [ACTION_RELOAD_GET_INFO_LIST]: {
+    ACTION_RELOAD_GET_INFO_LIST_GIAOHAT: {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/informations');
+          return fn_redirect_url('admin/giao-hats');
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

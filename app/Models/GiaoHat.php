@@ -15,4 +15,18 @@ class GiaoHat extends BaseModel
      * @var string
      */
     protected $table = DB_PREFIX . 'giao_hats';
+
+
+    protected $fillable = [
+      'name',
+      'khuvuc',
+      'nguoiquanhat',
+      'sort_id',
+      'active',
+      'updateuser',
+      'updatetime',
+      'create_at',
+      'update_at',
+      'delete_at',
+    ];
 }

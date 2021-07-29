@@ -29,6 +29,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
         Route::get('/app/info/get-related-information', 'NewsController@showRelatedList');
         Route::get('/app/info/get-special-information', 'NewsController@showSpecialModuleList');
         Route::get('/app/get-data-module', 'ModuleController@showDataList');
+        Route::apiResource('/email_sub/create', 'EmailController');
     });
 
 Route::namespace('App\Http\Controllers\Api\Admin')

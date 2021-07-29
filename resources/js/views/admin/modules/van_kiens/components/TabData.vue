@@ -5,7 +5,7 @@
                    for="input-code-name">Mã Module Code</label>
             <div class="col-sm-10">
                 <input disabled
-                       v-model="moduleData.code"
+                       :value="texts[moduleData.code].text"
                        type="text"
                        placeholder="Mã Module Code" id="input-code-name"
                        class="form-control">
@@ -17,6 +17,12 @@
 </template>
 
 <script>
+    import {
+        mapGetters,
+    } from 'vuex';
+    import {
+        MODULE_MODULE_APP
+    } from 'store@admin/types/module-types';
     import InfoToCategoryAutocompleteEdit from './Category/InfoToCategoryAutocompleteEdit';
 
     export default {
@@ -29,5 +35,8 @@
                 type: Object
             }
         },
+        computed: {
+            ...mapGetters(MODULE_MODULE_APP, ['texts']),
+        }
     };
 </script>

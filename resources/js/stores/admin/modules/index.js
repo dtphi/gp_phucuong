@@ -56,6 +56,49 @@ export default {
     },
     updateSuccess(state) {
       return state.updateSuccess
+    },
+    texts() {
+      return {
+        module_noi_bat: {
+          text: 'Module nổi bật',
+          module_noi_bat_sach_nois: 'Sách nói',
+          module_noi_bat_youtubes: 'Youtube',
+          module_noi_bat_hanh_cac_thanhs: 'Hạnh các thánh',
+          module_noi_bat_banners: 'Banner liên kết'
+        },
+        module_van_kien: {
+          text: 'Module văn kiện',
+          module_van_kien_categories: 'Danh mục'
+        },
+        module_tin_giao_phan: {
+          text: 'Module tin giáo phận',
+          module_tin_giao_phan_categories: 'Danh mục',
+        },
+        module_tin_giao_hoi: {
+          text: 'Module tin giáo hội',
+          module_tin_giao_hoi_categories: 'Danh mục',
+        },
+        module_tin_giao_hoi_viet_nam: {
+          text: 'Module tin giáo hội việt nam',
+          module_tin_giao_hoi_viet_nam_categories: 'Danh mục',
+        },
+        module_thong_bao: {
+          text: 'Module thông báo',
+          module_thong_bao_categories: 'Danh mục'
+        },
+        module_category_icon_side_bar: {
+          text: 'Module Danh mục icon',
+          module_category_icon_side_bar_categories: 'Danh mục',
+        },
+        module_category_left_side_bar: {
+          text: 'Module danh mục trái',
+          module_category_left_side_bar_categories: 'Danh mục'
+        },
+        module_loi_chua: {
+          text: 'Module lời chúa',
+          module_loi_chua_categories: 'Danh mục'
+        }
+      }
     }
   },
   mutations: {

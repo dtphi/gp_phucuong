@@ -255,17 +255,39 @@ class ApiController extends Controller
             $systems = [];
             if ($settings) {
                 $systems = $settings->reduce(function ($carry, $item) {
-                    if ($item->key_data == 'module_system_banners')
-                        $carry['banner_image'] = ($item->serialized) ? unserialize($item->value) : $item->value;
-                    if ($item->key_data == 'module_system_logos')
-                        $carry['logo_image'] = ($item->serialized) ? unserialize($item->value) : $item->value;
+                    $value = '';
+
+                    switch ($item->serialized) {
+                        case 1:
+                            $value = unserialize($item->value);
+                            break;
+
+                        case 2:
+                            $value = json_decode($item->value);
+                            break;
+
+                        default:
+                            $value = $item->value;
+                            break;
+                    }
+
+                    $carry[$item->key_data] = $value;
     
                     return $carry;
                 });
             }
 
-            $data['banner']  = isset($systems['banner_image']) ? url($systems['banner_image']['image']) : url('Image/NewPicture/home_banners/banner_image.png');
-            $data['logo'] = isset($systems['logo_image']) ? url($systems['logo_image']): url('/front/img/logo.png');
+            $data['banner']  = isset($systems['module_system_banners']) ? url($systems['module_system_banners']['image']) : url('Image/NewPicture/home_banners/banner_image.png');
+            $data['logo'] = isset($systems['module_system_logos']) ? url($systems['module_system_logos']): url('/front/img/logo.png');
+            $data['phone'] = isset($systems['module_system_phones']) ? $systems['module_system_phones']: '';
+            $data['phoneBgColor'] = isset($systems['module_system_content_backgd_phones']) ? $systems['module_system_content_backgd_phones']: '#3aacda';
+            $data['email'] = isset($systems['module_system_emails']) ? $systems['module_system_emails']: '';
+            $data['headerTitle'] = isset($systems['module_system_header_titles']) ? $systems['module_system_header_titles']: '';
+            $data['headerBgColor'] = isset($systems['module_system_content_backgd_header_titles']) ? $systems['module_system_content_backgd_header_titles']: '#0071bc';
+            $data['logoTitle'] = isset($systems['module_system_logo_titles']) ? $systems['module_system_logo_titles']: '';
+            $data['logoTitle1'] = isset($systems['module_system_logo_title_1s']) ? $systems['module_system_logo_title_1s']: '';
+            $data['logoBgColor'] = isset($systems['module_system_content_backgd_logos']) ? $systems['module_system_content_backgd_logos']: '#2354a4';
+            $data['contentBgColor'] = isset($systems['module_system_con_background_colors']) ? $systems['module_system_con_background_colors']: 'rgba(128, 128, 128, 0.07)';
 
             $data['menus']   = $menus;
             $data['menus_1'] = $menuLayout_1;

@@ -2,7 +2,7 @@
     <button @click="_redirectUrl()"
             data-toggle="tooltip" title=""
             class="btn btn-primary"
-            data-original-title="Thêm Giáo Phận">
+            data-original-title="Thêm Giáo Hạt">
         <i class="fa fa-plus"></i>
     </button>
 </template>
@@ -25,8 +25,9 @@
         },
         methods: {
             _redirectUrl() {
-                return fn_redirect_url('admin/giao-phans/add');
+                return fn_redirect_url('admin/giao-hats/add');
             },
         }
+        
     };
 </script>

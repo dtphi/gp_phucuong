@@ -12,6 +12,13 @@ class Subscribe extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = DB_PREFIX . 'subscribes';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'subscribe_id';
+
     /**
      * The attributes that are mass assignable.
      *

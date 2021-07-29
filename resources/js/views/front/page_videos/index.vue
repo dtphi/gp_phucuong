@@ -3,7 +3,7 @@
         <div class="container">
             <main-menu></main-menu>
 
-            <div style="background-color: #80808008;">
+            <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
                 <content-top v-if="_isContentTop">
                     <template v-if="loading">
                         <loading-over-lay
@@ -62,6 +62,9 @@
             }
         },
         computed: {
+            ...mapState({
+                contentBgColor: state => state.cfApp.setting.contentBgColor,
+            }),
             ...mapState(MODULE_INFO, {
                 infoList: state => state.pageLists,
                 loading: state => state.loading

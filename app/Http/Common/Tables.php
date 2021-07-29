@@ -4,6 +4,7 @@ namespace App\Http\Common;
 
 final class Tables
 {
+    public static $subscribes = DB_PREFIX . 'subscribes';
     public static $categorys = DB_PREFIX . 'categorys';
     public static $category_to_layouts = DB_PREFIX . 'category_to_layouts';
     public static $category_paths = DB_PREFIX . 'category_paths';
