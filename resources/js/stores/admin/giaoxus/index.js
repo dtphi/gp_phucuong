@@ -2,7 +2,7 @@ import AppConfig from 'api@admin/constants/app-config';
 import adds from './add';
 import edits from './edit';
 import {
-  apiGetInfoById,
+  apiGetInfoGiaoXuById,
   apiGetGiaoXuInfos,
   apiDeleteInfo,
 } from 'api@admin/giaoxu';
@@ -27,7 +27,6 @@ import {
   ACTION_GET_INFO_LIST,
   ACTION_DELETE_INFO_BY_ID,
   ACTION_SET_INFO_DELETE_BY_ID,
-  ACTION_RELOAD_GET_INFO_LIST,
   ACTION_SET_LOADING,
   ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
@@ -188,7 +187,7 @@ export default {
     [ACTION_SET_INFO_DELETE_BY_ID]({
       commit
     }, infoId) {
-      apiGetInfoById(
+      apiGetInfoGiaoXuById(
         infoId,
         (result) => {
           commit(INFOS_INFO_DELETE_BY_ID, result.data);
@@ -203,11 +202,11 @@ export default {
       );
     },
 
-    [ACTION_RELOAD_GET_INFO_LIST]: {
+    ACTION_RELOAD_GET_INFO_LIST_GIAO_XU: {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/informations');
+          return fn_redirect_url('admin/giao-xus');
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

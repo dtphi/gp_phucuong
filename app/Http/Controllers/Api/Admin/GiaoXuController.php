@@ -132,7 +132,7 @@ class GiaoXuController extends ApiController
             $model = $this->gxSv->apiGetDetail($id);
 
         } catch (HandlerMsgCommon $e) {
-            Log::debug('Giao phan not found, Request ID = ' . $id);
+            Log::debug('Giao xu not found, Request ID = ' . $id);
 
             throw $e->render();
         }
@@ -167,7 +167,7 @@ class GiaoXuController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->gxSv->apiInsert($formData)) {
+        if ($result = $this->gxSv->apiInsertOrUpdate($formData)) {
             return $this->respondUpdated($result);
         }
 
@@ -184,7 +184,7 @@ class GiaoXuController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->gxSv->apiUpdate($model, $formData)) {
+        if ($result = $this->gxSv->apiUpdate($model, $formData["data"])) {
             return $this->respondUpdated($result);
         }
 

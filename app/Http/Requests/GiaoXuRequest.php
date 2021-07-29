@@ -14,7 +14,7 @@ class GiaoXuRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

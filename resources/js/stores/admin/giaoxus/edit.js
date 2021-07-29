@@ -1,8 +1,11 @@
 import AppConfig from 'api@admin/constants/app-config';
 import {
-  apiGetInfoById,
+  apiGetInfoGiaoXuById,
   apiUpdateInfo
 } from 'api@admin/giaoxu';
+import {
+  apiGetGiaoHatInfos,
+} from 'api@admin/giaohat';
 import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_SUCCESS,
@@ -15,13 +18,14 @@ import {
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
-  INFOS_FORM_SET_MAIN_IMAGE
+  INFOS_GET_INFO_LIST_FAILED
 } from '../types/mutation-types';
 import {
   ACTION_GET_INFO_BY_ID,
   ACTION_SET_LOADING,
   ACTION_SHOW_MODAL_EDIT,
   ACTION_UPDATE_INFO,
+  ACTION_UPDATE_INFO_BACK,
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_SET_IMAGE,
 } from '../types/action-types';
@@ -34,27 +38,23 @@ const defaultState = () => {
     styleCss: '',
     isExistInfo: config.existStatus.checking,
     info: {
-      image: "",
       date_available: null,
-      sort_order: 0,
-      status: 1,
-      name: '',
-      meta_title: '',
-      sort_description: '',
-      information_type: 1,
-      description: '',
-      tag: '',
-      meta_description: '',
-      meta_keyword: '',
-      multi_images: [],
-      relateds: [],
-      categorys: [],
-      downloads: [],
-      special_carousels: [],
+      dia_chi: '',
+      dien_thoai: '',
+      email: '',
+      active: 1,
+      danso: '',
+      sotinhuu: '',
+      giole: '',
+      viet: null,
+      latin: null,
+      noidung: null,
+      type: 'giaoxu',
+      updateuser: 0,
+      giaohat_id: null,
     },
-    isImgChange: false,
-    listCategorysDisplay: [],
-    listRelatedsDisplay: [],
+    listGiaoHat: [],
+    isGetInfoList: null,
     infoId: 0,
     loading: false,
     updateSuccess: false,
@@ -86,8 +86,10 @@ export default {
         state.isExistInfo !== config.existStatus.exist) {
         return false;
       }
-
       return true;
+    },
+    isGiaoHat(state) {
+      return state.listGiaoHat;
     }
   },
 
@@ -103,6 +105,7 @@ export default {
       state.errors = payload
     },
 
+    // INFO GIAO XU 
     [INFOS_MODAL_SET_INFO](state, payload) {
       state.info = payload
     },
@@ -134,36 +137,51 @@ export default {
     [INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST](state, payload) {
       state.listRelatedsDisplay = payload
     },
-
-    [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
-    }
+    INFO_GIAO_HAT(state, payload) {
+      state.listGiaoHat = payload;
+    },
+    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
+      state.isGetInfoList = payload
+    },
   },
 
   actions: {
+    // GET LIST GIAO HAT
+    ACTION_GET_LIST_GIAO_HAT({ commit }, params) {
+      apiGetGiaoHatInfos(
+        (infos) => {
+          console.log(infos);
+          commit('INFO_GIAO_HAT', infos.data.results);
+        },
+        (errors) => {
+          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+        },
+        params
+      )
+    },
+
     [ACTION_SHOW_MODAL_EDIT]({
       dispatch,
     }, infoId) {
       dispatch(ACTION_GET_INFO_BY_ID, infoId);
     },
 
+
+    // GET ID GIAO XU
     [ACTION_GET_INFO_BY_ID]({
       dispatch,
       commit
     }, infoId) {
       dispatch(ACTION_SET_LOADING, true);
-      apiGetInfoById(
+      apiGetInfoGiaoXuById(
         infoId,
         (result) => {
           commit(INFOS_MODAL_SET_INFO_ID, infoId);
           commit(INFOS_MODAL_SET_INFO, result.data);
-
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_MODAL_SET_INFO_ID_FAILED, Object.values(errors))
-
           dispatch(ACTION_SET_LOADING, false);
         }
       );
@@ -175,6 +193,8 @@ export default {
       commit(INFOS_MODAL_SET_LOADING, isLoading);
     },
 
+
+    // UPDATE GIAO XU
     [ACTION_UPDATE_INFO]({
       dispatch,
       commit
@@ -182,13 +202,35 @@ export default {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
       apiUpdateInfo(info,
         (result) => {
+          commit(INFOS_MODAL_SET_ERROR, [])
           commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-
-          dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
+          commit(INFOS_MODAL_SET_ERROR, [])
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
 
+    // UPDATE TO BACK
+    [ACTION_UPDATE_INFO_BACK]({
+      dispatch,
+      commit
+    }, info) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
+      apiUpdateInfo(info,
+        (result) => {
+          commit(INFOS_MODAL_SET_ERROR, [])
+          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+          dispatch(ACTION_GET_INFO_BY_ID, info.id);
+          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAO_XU', 'page', {
+            root: true
+          });
+        },
+        (errors) => {
+          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
+          commit(INFOS_MODAL_SET_ERROR, [])
           dispatch(ACTION_SET_LOADING, false);
         }
       )
@@ -198,12 +240,6 @@ export default {
       commit
     }, values) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
-    },
-
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
     },
   }
 }
