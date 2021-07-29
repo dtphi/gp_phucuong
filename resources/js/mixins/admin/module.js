@@ -1,16 +1,30 @@
 import {
+    mapGetters,
+} from 'vuex';
+import {
+    MODULE_MODULE_APP
+} from 'store@admin/types/module-types';
+import {
     ACTION_RESET_NOTIFICATION_INFO
 } from 'store@admin/types/action-types';
 
 export default {
+    props: {
+        moduleData: {
+            type: Object
+        }
+    },
     data() {
       return {
         fullPage: true
       }
     },
     computed: {
+        ...mapGetters(MODULE_MODULE_APP, ['texts']),
         _errors() {
-            return this.errors.length;
+            if (this.hasOwnProperty('errors')) return this.errors.length;
+
+            return 0;
         }
     },
     watch: {
@@ -41,7 +55,7 @@ export default {
             const _self = this;
             _self.$refs.observerInfo.validate().then((isValid) => {
                 if (isValid) {
-                    _self.$refs.formAddSetting._submitInfo();
+                    _self.$refs.formAddSetting._submitFormInfo();
                 }
             });
         },

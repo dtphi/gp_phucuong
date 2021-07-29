@@ -17,26 +17,14 @@
 </template>
 
 <script>
-    import {
-        mapGetters,
-    } from 'vuex';
-    import {
-        MODULE_MODULE_APP
-    } from 'store@admin/types/module-types';
     import InfoToCategoryAutocompleteEdit from './Category/InfoToCategoryAutocompleteEdit';
+    import mixinModule from '@app/mixins/admin/module';
 
     export default {
         name: 'TheTabData',
+        mixins: [mixinModule],
         components: {
             InfoToCategoryAutocompleteEdit
-        },
-        props: {
-            moduleData: {
-                type: Object
-            }
-        },
-        computed: {
-            ...mapGetters(MODULE_MODULE_APP, ['texts']),
         }
     };
 </script>

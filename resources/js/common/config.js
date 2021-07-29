@@ -6,5 +6,11 @@ export const config = {
     ],
 	trieuDongs: [
         'Tu Triều', 'Tu Dòng'
-    ]
+    ],
+    sortIcon: {
+        is: "glyphicon-sort",
+        base: "glyphicon",
+        up: "glyphicon-chevron-up",
+        down: "glyphicon-chevron-down"
+      },
 };

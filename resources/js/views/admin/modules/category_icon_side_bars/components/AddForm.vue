@@ -13,14 +13,13 @@
                 <tab-data
                     role="tabpanel"
                     class="tab-pane active"
-                    :module-data="moduleData"></tab-data>
+                    :module-data="modData"></tab-data>
             </div>
         </div>
     </form>
 </template>
 
 <script>
-    import {EventBus} from '@app/api/utils/event-bus';
     import {
         mapState,
         mapGetters,
@@ -34,29 +33,26 @@
         ACTION_GET_SETTING,
         ACTION_INSERT_SETTING
     } from 'store@admin/types/action-types';
+    import mixinModule from '@app/mixins/admin/module';
 
     import TabData from './TabData';
 
     export default {
         name: 'TheModuleForm',
+        mixins: [mixinModule],
         components: {
             TabData,
-        },
-        data() {
-            return {
-                fullPage: false,
-            };
         },
         computed: {
             ...mapState(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, {
                 loading: state => state.loading
             }),
 
-            ...mapGetters(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
-                'moduleData',
-            ])
+            ...mapGetters(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, {
+                modData: 'moduleData',
+            })
         },
-        created() {
+        mounted() {
             this.[ACTION_GET_SETTING]();
         },
         methods: {
@@ -64,8 +60,8 @@
                 ACTION_GET_SETTING,
                 ACTION_INSERT_SETTING
             ]),
-            _submitInfo() {
-                this.[ACTION_INSERT_SETTING](this.moduleData);
+            _submitFormInfo() {
+                this.[ACTION_INSERT_SETTING](this.modData);
             },
         },
         setting: {

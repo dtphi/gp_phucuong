@@ -25,28 +25,28 @@
                 <tab-sach-noi
                     role="tabpanel"
                     class="tab-pane active"
-                    :module-data="moduleData"></tab-sach-noi>
+                    :module-data="modData"></tab-sach-noi>
             </div>
 
             <div class="tab-pane" id="tab-youtube">
                 <tab-youtube
                     role="tabpanel"
                     class="tab-pane"
-                    :module-data="moduleData"></tab-youtube>
+                    :module-data="modData"></tab-youtube>
             </div>
 
             <div class="tab-pane" id="tab-hanh-cac-thanh">
                 <tab-hanh-cac-thanh
                     role="tabpanel"
                     class="tab-pane"
-                    :module-data="moduleData"></tab-hanh-cac-thanh>
+                    :module-data="modData"></tab-hanh-cac-thanh>
             </div>
 
             <div class="tab-pane" id="tab-banner">
                 <tab-banner
                     role="tabpanel"
                     class="tab-pane"
-                    :module-data="moduleData"></tab-banner>
+                    :module-data="modData"></tab-banner>
             </div>
         </div>
     </form>
@@ -66,6 +66,7 @@
         ACTION_GET_SETTING,
         ACTION_INSERT_SETTING
     } from 'store@admin/types/action-types';
+    import mixinModule from '@app/mixins/admin/module';
 
     import TabSachNoi from './TabSachNoi';
     import TabYoutube from './TabYoutube';
@@ -74,27 +75,23 @@
 
     export default {
         name: 'TheModuleForm',
+        mixins: [mixinModule],
         components: {
             TabSachNoi,
             TabYoutube,
             TabHanhCacThanh,
             TabBanner,
         },
-        data() {
-            return {
-                fullPage: false,
-            };
-        },
         computed: {
             ...mapState(MODULE_MODULE_NOI_BAT, {
                 loading: state => state.loading
             }),
 
-            ...mapGetters(MODULE_MODULE_NOI_BAT, [
-                'moduleData',
-            ])
+            ...mapGetters(MODULE_MODULE_NOI_BAT, {
+                modData: 'moduleData',
+            })
         },
-        created() {
+        mounted() {
             this.[ACTION_GET_SETTING]();
         },
         methods: {
@@ -102,8 +99,8 @@
                 ACTION_GET_SETTING,
                 ACTION_INSERT_SETTING
             ]),
-            _submitInfo() {
-                this.[ACTION_INSERT_SETTING](this.moduleData);
+            _submitFormInfo() {
+                this.[ACTION_INSERT_SETTING](this.modData);
             },
         },
         setting: {

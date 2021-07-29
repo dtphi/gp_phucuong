@@ -13,7 +13,7 @@
                 <tab-data
                     role="tabpanel"
                     class="tab-pane active"
-                    :module-data="moduleData"></tab-data>
+                    :module-data="modData"></tab-data>
             </div>
         </div>
     </form>
@@ -33,29 +33,26 @@
         ACTION_GET_SETTING,
         ACTION_INSERT_SETTING
     } from 'store@admin/types/action-types';
+    import mixinModule from '@app/mixins/admin/module';
 
     import TabData from './TabData';
 
     export default {
         name: 'TheModuleForm',
+        mixins: [mixinModule],
         components: {
             TabData,
-        },
-        data() {
-            return {
-                fullPage: false,
-            };
         },
         computed: {
             ...mapState(MODULE_MODULE_TIN_GIAO_HOI, {
                 loading: state => state.loading
             }),
 
-            ...mapGetters(MODULE_MODULE_TIN_GIAO_HOI, [
-                'moduleData',
-            ])
+            ...mapGetters(MODULE_MODULE_TIN_GIAO_HOI, {
+                modData: 'moduleData',
+            })
         },
-        created() {
+        mounted() {
             this.[ACTION_GET_SETTING]();
         },
         methods: {
@@ -63,8 +60,8 @@
                 ACTION_GET_SETTING,
                 ACTION_INSERT_SETTING
             ]),
-            _submitInfo() {
-                this.[ACTION_INSERT_SETTING](this.moduleData);
+            _submitFormInfo() {
+                this.[ACTION_INSERT_SETTING](this.modData);
             },
         },
         setting: {
