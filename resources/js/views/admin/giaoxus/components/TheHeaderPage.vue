@@ -43,7 +43,7 @@
     import ListSearch from 'com@admin/Search';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
-        MODULE_MODULE_GIAO_PHAN,
+        MODULE_MODULE_GIAO_XU,
     } from 'store@admin/types/module-types';
 
     import {
@@ -51,7 +51,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'LinhMucHeaderPage',
+        name: 'GiaoXuHeaderPage',
         components: {
             BtnAdd,
             Perpage,
@@ -64,11 +64,11 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_GIAO_PHAN, [
+            ...mapActions(MODULE_MODULE_GIAO_XU, [
                 ACTION_GET_INFO_LIST
             ]),
             _pushAddPage() {
-                this.$router.push(`/admin/linh-mucs/add`);
+                this.$router.push(`/admin/giao-xus/add`);
             },
             _refreshList() {
                 const params = {
@@ -78,7 +78,7 @@
             }
         },
         setting: {
-            title: 'Linh mục',
+            title: 'Giáo xứ',
             refresh_txt: 'Tải lại danh sách'
         }
     };

@@ -1,7 +1,10 @@
 import AppConfig from 'api@admin/constants/app-config';
 import {
-  apiInsertInfo,
+  apiInsertInfoGiaoXu,
 } from 'api@admin/giaoxu';
+import {
+  apiGetGiaoHatInfos,
+} from 'api@admin/giaohat';
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -15,13 +18,15 @@ import {
   INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS,
   INFOS_FORM_GET_DROPDOWN_RELATED_FAILED,
   INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED,
+  INFOS_GET_INFO_LIST_FAILED,
 } from '../types/mutation-types';
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
-  ACTION_RELOAD_GET_INFO_LIST,
   ACTION_INSERT_INFO_BACK,
   ACTION_SET_IMAGE,
+  ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_GET_INFO_LIST
 } from '../types/action-types';
 
 const defaultState = () => {
@@ -31,24 +36,23 @@ const defaultState = () => {
     classShow: 'modal fade',
     styleCss: '',
     info: {
-      image: "",
       date_available: null,
-      sort_order: 1,
-      status: 1,
-      name: '',
-      meta_title: '',
-      sort_description: '',
-      information_type: 1,
-      description: '',
-      tag: '',
-      meta_description: '',
-      meta_keyword: '',
-      multi_images: [],
-      relateds: [],
-      categorys: [],
-      downloads: [],
-      special_carousels: [],
+      dia_chi: '',
+      dien_thoai: '',
+      email: '',
+      active: 1,
+      danso: '',
+      sotinhuu: '',
+      giole: '',
+      viet: null,
+      latin: null,
+      noidung: null,
+      type: 'giaoxu',
+      updateuser: 0,
+      giaohat_id: null,
     },
+    isGetInfoList: null,
+    listGiaoHat: [],
     isImgChange: true,
     listCategorysDisplay: [],
     listRelatedsDisplay: [],
@@ -77,14 +81,17 @@ export default {
     loading(state) {
       return state.loading
     },
-    updateSuccess(state) {
-      return state.updateSuccess
+    insertSuccess(state) {
+      return state.insertSuccess
     },
     errors(state) {
       return state.errors
     },
     isError(state) {
       return state.errors.length
+    },
+    isGiaoHat(state) {
+      return state.listGiaoHat;
     }
   },
 
@@ -109,11 +116,11 @@ export default {
     },
 
     [INFOS_MODAL_INSERT_INFO_SUCCESS](state, payload) {
-      state.updateSuccess = payload
+      state.insertSuccess = payload
     },
 
     [INFOS_MODAL_INSERT_INFO_FAILED](state, payload) {
-      state.updateSuccess = payload
+      state.insertSuccess = payload
     },
 
     [INFOS_MODAL_SET_ERROR](state, payload) {
@@ -135,21 +142,43 @@ export default {
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload;
       state.isImgChange = true;
-    }
+    },
+    INFO_GIAO_HAT(state, payload) {
+      state.listGiaoHat = payload;
+    },
+    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
+      state.isGetInfoList = payload
+    },
   },
 
   actions: {
+    // GET LIST GIAO HAT
+    ACTION_GET_LIST_GIAO_HAT({ commit }, params) {
+      apiGetGiaoHatInfos(
+        (infos) => {
+          console.log(infos);
+          commit('INFO_GIAO_HAT', infos.data.results);
+        },
+        (errors) => {
+          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+        },
+        params
+      )
+    },
+
+    // GET ACTION LOADING PAGE
     [ACTION_SET_LOADING]({
       commit
     }, isLoading) {
       commit(INFOS_MODAL_SET_LOADING, isLoading);
     },
 
-    [ACTION_INSERT_INFO]({
+    // ACTION INSERT INFO GIAO XU
+    ACTION_INSERT_INFO_GIAOXU({
       dispatch,
       commit
     }, info) {
-      apiInsertInfo(
+      apiInsertInfoGiaoXu(
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
@@ -175,7 +204,7 @@ export default {
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
 
-          dispatch(ACTION_RELOAD_GET_INFO_LIST, 'page', {
+          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAOXU', 'page', {
             root: true
           });
         },
@@ -192,6 +221,10 @@ export default {
       commit
     }, imgFile) {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    },
+
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit }, values) {
+      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values);
     }
   }
 }

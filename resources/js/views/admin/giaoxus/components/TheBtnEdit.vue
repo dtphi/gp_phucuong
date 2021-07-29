@@ -2,7 +2,7 @@
     <a href="javascript:void(0);" data-toggle="tooltip"
        @click="_showModal()"
        class="btn btn-default cms-btn"
-       data-original-title="Sửa Tin">
+       data-original-title="Sửa giao xứ">
         <font-awesome-layers size="1x" style="background:honeydew">
             <font-awesome-icon icon="edit"/>
         </font-awesome-layers>
@@ -18,7 +18,7 @@
     } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'TheButtonEdit',
+        name: 'TheButtonEditGiaoXu',
         props: {
             isRedirect: {
                 type: Boolean,
@@ -42,7 +42,7 @@
                 }
             },
             _redirectUrl() {
-                return fn_redirect_url(`admin/giao-phans/edit/${this.infoId}`);
+                return fn_redirect_url(`admin/giao-xus/edit/${this.infoId}`);
             }
         }
     };

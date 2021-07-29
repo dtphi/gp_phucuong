@@ -14,13 +14,13 @@ import {
  * @param  {[type]} errResole [description]
  * @return {[type]}           [description]
  */
-export const apiGetInfoById = (infoId, resolve, errResole) => {
-  return axios.get(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, infoId))
+export const apiGetInfoGiaoXuById = (infoId, resolve, errResole) => {
+  return axios.get(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, infoId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = response.data.information;
+        json['data'] = response.data;
         json['status'] = 1000;
         resolve(json);
       } else {
@@ -83,7 +83,8 @@ export const apiGetGiaoXuInfos = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiUpdateInfo = (info, resolve, errResole) => {
-  return axios.put(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, info.information_id), info)
+  console.log(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info.data.id), 'test');
+  return axios.put(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info.data.id), info)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -108,8 +109,8 @@ export const apiUpdateInfo = (info, resolve, errResole) => {
  * @param  {[type]} errResole [description]
  * @return {[type]}           [description]
  */
-export const apiInsertInfo = (info, resolve, errResole) => {
-  return axios.post(fn_get_base_api_url(API_INFOMATIONS_RESOURCE), info)
+export const apiInsertInfoGiaoXu = (info, resolve, errResole) => {
+  return axios.post(fn_get_base_api_url(API_GIAO_XUS_RESOURCE), info)
     .then((response) => {
       console.log(response)
       if (response.status === 201) {
