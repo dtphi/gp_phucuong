@@ -28,6 +28,7 @@ class GiaoXuRequest extends FormRequest
         $formData = $this->all();
 
         $formData['name']             = isset($formData['name']) ? $formData['name'] : null;
+        $formData['giao_hat_id']             = isset($formData['giao_hat_id']) ? $formData['giao_hat_id'] : null;
         $formData['dia_chi']             = isset($formData['dia_chi']) ? $formData['dia_chi'] : null;
         $formData['dien_thoai']             = isset($formData['dien_thoai']) ? $formData['dien_thoai'] : null;
         $formData['email']             = isset($formData['email']) ? $formData['email'] : null;

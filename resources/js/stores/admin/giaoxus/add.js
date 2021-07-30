@@ -41,15 +41,14 @@ const defaultState = () => {
       dien_thoai: '',
       email: '',
       active: 1,
-      danso: '',
-      sotinhuu: '',
-      giole: '',
+      dan_so: '',
+      so_tin_huu: '',
+      gio_le: '',
       viet: null,
       latin: null,
-      noidung: null,
+      noi_dung: null,
       type: 'giaoxu',
-      updateuser: 0,
-      giaohat_id: null,
+      giao_hat_id: null,
     },
     isGetInfoList: null,
     listGiaoHat: [],
@@ -182,14 +181,10 @@ export default {
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          commit(INFOS_MODAL_SET_ERROR, []);
-
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
-
           dispatch(ACTION_SET_LOADING, false);
         }
       )
@@ -199,12 +194,11 @@ export default {
       dispatch,
       commit
     }, info) {
-      apiInsertInfo(
+      apiInsertInfoGiaoXu(
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-
-          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAOXU', 'page', {
+          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAO_XU', 'page', {
             root: true
           });
         },

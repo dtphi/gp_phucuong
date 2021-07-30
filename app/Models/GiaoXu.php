@@ -17,18 +17,18 @@ class GiaoXu extends BaseModel
   protected $table = DB_PREFIX . 'giao_xus';
   protected $fillable = [
     'name',
-    'giaohat_id',
+    'giao_hat_id',
     'dia_chi',
     'dien_thoai',
     'email',
     'active',
-    'danso',
-    'sotinhuu',
-    'giole',
+    'dan_so',
+    'so_tin_huu',
+    'gio_le',
     'viet',
     'latin',
-    'noidung',
+    'noi_dung',
     'type',
-    'updateuser'
+    'update_user'
   ];
 }

@@ -62,11 +62,11 @@ class GiaoXuController extends ApiController
                     'dien_thoai'          => $info->dien_thoai,
                     'email'    => $info->email,
                     'active'     => $info->active,
-                    'danso' => $info->danso,
-                    'sotinhuu'     => $info->sotinhuu,
-                    'giole' => $info->giole,
+                    'danso' => $info->dan_so,
+                    'sotinhuu'     => $info->so_tin_huu,
+                    'giole' => $info->gio_le,
                     'viet' => $info->viet,
-                    'noidung' => $info->noidung,
+                    'noidung' => $info->noi_dung,
                     'updatetime' => $info->updatetime
                 ];
             }

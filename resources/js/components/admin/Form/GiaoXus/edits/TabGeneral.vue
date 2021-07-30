@@ -34,7 +34,7 @@
           rules="max:50"
           v-slot="{ errors }"
         >
-          <select v-model="groupData.giaohat_id" class="form-control">
+          <select v-model="groupData.giao_hat_id" class="form-control">
             <option
               v-for="item in isGiaoHat"
               v-bind:value="item.id"
@@ -147,7 +147,7 @@
         >
           <input
             type="text"
-            v-model="groupData.danso"
+            v-model="groupData.dan_so"
             placeholder="Dân số"
             id="input-info-danso"
             class="form-control"
@@ -169,7 +169,7 @@
         >
           <input
             type="text"
-            v-model="groupData.sotinhuu"
+            v-model="groupData.so_tin_huu"
             placeholder="Số tín hữu"
             id="input-info-sotinhuu"
             class="form-control"
@@ -189,13 +189,11 @@
           rules="required|max:191"
           v-slot="{ errors }"
         >
-          <input
-            type="text"
-            v-model="groupData.giole"
-            placeholder="Giờ lễ"
-            id="input-info-gio-le"
-            class="form-control"
-          />
+          <tinymce
+            id="input-info-gio-lec"
+            :other_options="options"
+            v-model="groupData.gio_le"
+          ></tinymce>
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -253,7 +251,7 @@
         >
           <input
             type="text"
-            v-model="groupData.noidung"
+            v-model="groupData.noi_dung"
             placeholder="Nội dung"
             id="input-info-noidung"
             class="form-control"
@@ -389,7 +387,7 @@ export default {
     ...mapState(MODULE_MODULE_GIAO_XU_EDIT, {
       groupData: (state) => state.info.data || {},
       isGiaoHat: (state) => {
-        console.log(state.listGiaoHat, 'listGiaoHat');
+        console.log(state.listGiaoHat, "listGiaoHat");
         return state.listGiaoHat;
       },
     }),
