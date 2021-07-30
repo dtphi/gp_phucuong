@@ -10,11 +10,11 @@
       />
     </td>
     <td class="text-left">{{ info.name }}</td>
-    <td>
-      <div v-html="info.dia_chi"></div>
-    </td>
+    <td class="text-left">{{ info.dia_chi }}</td>
     <td class="text-center">{{ info.active }}</td>
-    <td class="text-center">{{ info.giole }}</td>
+    <td class="text-center">
+      <div v-html="info.giole"></div>
+    </td>
 
     <td class="text-right">
       <btn-edit :info-id="info.id"></btn-edit>

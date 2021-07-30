@@ -11,10 +11,7 @@
     <!-- Tab General -->
     <div class="tab-content">
       <div class="tab-pane active" id="tab-general">
-        <tab-general
-          role="tabpanel"
-          class="tab-panel active"
-        ></tab-general>
+        <tab-general role="tabpanel" class="tab-panel active"></tab-general>
       </div>
     </div>
   </form>
@@ -34,7 +31,7 @@ import {
 export default {
   name: "FormGiaoXuEdit",
   components: {
-    TabGeneral
+    TabGeneral,
   },
   data() {
     return {
@@ -50,8 +47,9 @@ export default {
     ...mapGetters(MODULE_MODULE_GIAO_XU_EDIT, ["info"]),
   },
   created() {
-    this.ACTION_GET_LIST_GIAO_HAT();
-    console.log(this.ACTION_GET_LIST_GIAO_HAT);
+    this.ACTION_GET_LIST_GIAO_HAT({
+      perPage: -1,
+    });
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
@@ -59,7 +57,7 @@ export default {
       ACTION_UPDATE_INFO,
       ACTION_UPDATE_INFO_BACK,
       ACTION_SET_IMAGE,
-      'ACTION_GET_LIST_GIAO_HAT',
+      "ACTION_GET_LIST_GIAO_HAT",
     ]),
     _submitInfo() {
       this[ACTION_UPDATE_INFO](this.info);
