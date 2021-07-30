@@ -140,6 +140,73 @@
             }
         }
     }
+
+    .header-linh-muc {
+        .line-header {
+            background-color: rgb(0, 113, 188);
+            height: 22px;
+        }
+
+        .box-header {
+            background-color: rgb(35, 84, 164);
+            padding: 10px 40px;
+
+            .img-header {
+                width: 140px;
+                height: 140px;
+                margin: auto;
+            }
+
+            .text-header {
+                color: #ffffff;
+                margin: auto;
+                
+                h2 {
+                    text-transform: capitalize;
+                    font-size: 40px;
+                }
+
+                h5 {
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+
+    .detail-linh-muc {
+        .bi-tich {
+            background-color: rgb(35, 84, 164);
+            border-radius: 24px;
+
+            a {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+        }
+
+        .level-text {
+            p {
+                background-color: rgb(35, 84, 164);
+                padding: 2px 10px;
+                color: #ffffff;
+            }
+        }
+
+        .avatar-img {
+            width: 250px;
+            margin: auto;
+        }
+
+        .maxim {
+            .tit-maxim {
+                border: 2px solid rgb(35, 84, 164);
+                display: inline-block;
+                margin: 10px auto;
+                padding: 15px 40px;
+                border-radius: 20px;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -153,6 +220,74 @@
 
             .box-social {
                 margin-top: 14px;
+            }
+        }
+
+        .header-linh-muc {
+            .line-header {
+                height: 18px;
+            }
+    
+            .box-header {
+                padding: 10px 20px;
+    
+                .img-header {
+                    width: 120px;
+                    height: 120px;
+                }
+    
+                .text-header {
+                    margin-top: 10px;
+
+                    h2 {
+                        font-size: 22px;
+                    }
+
+                    h5 {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    
+        .detail-linh-muc {
+            .bi-tich {
+                border-radius: 20px;
+
+                h4 {
+                    font-size: 16px;
+                }
+    
+                a {
+                    font-size: 14px;
+                    margin-bottom: 15px;
+                }
+            }
+    
+            .level-text {
+                p {
+                    padding: 2px 10px;
+                    margin-bottom: 10px;
+                }
+            }
+    
+            .avatar-img {
+                width: 140px;
+            }
+
+            .info-personal {
+                h4 {
+                    font-size: 16px;
+                }
+            }
+    
+            .maxim {
+                .tit-maxim {
+                    font-size: 16px;
+                    margin: 10px auto;
+                    padding: 10px 20px;
+                    border-radius: 18px;
+                }
             }
         }
     }
