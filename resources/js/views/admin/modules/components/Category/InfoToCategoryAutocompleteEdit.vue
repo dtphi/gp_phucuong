@@ -7,21 +7,25 @@
                       data-original-title="(Tự động hoàn toàn)">Danh mục</span>
         </label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
-            <input autocomplete="off"
-                   v-on:focus="_focusParentCategory"
-                   v-on:keyup.enter="_searchProducts()"
-                   v-model="query" type="text"
-                   name="category"
-                   :placeholder="$options.setting.paren_category_txt"
-                   id="input-parent-category-name"
-                   class="form-control"/>
-            <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
+            <input 
+                autocomplete="off"
+                v-on:focus="_focusParentCategory"
+                v-on:keyup.enter="_searchProducts()"
+                v-model="query" type="text"
+                name="category"
+                :placeholder="$options.setting.paren_category_txt"
+                id="input-parent-category-name"
+                class="form-control"/>
+            <span 
+                class="btn btn-default cms-btn-input-right" 
+                @click="_closeDropdown">
                 <font-awesome-layers size="2x" style="background:MistyRose">
                     <font-awesome-icon icon="circle" style="color:Tomato"/>
                     <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
                 </font-awesome-layers>
             </span>
-            <ul class="dropdown-menu cms-ul-cate-dropdown"
+            <ul 
+                class="dropdown-menu cms-ul-cate-dropdown"
                 :style="dropdownStyle">
                 <the-dropdown-category
                     :key="-1"
@@ -34,17 +38,20 @@
                     :category="item"
                     :select-dropdown-category-item="_selectCategory"></the-dropdown-category>
             </ul>
-            <template v-if="categorys.length">
-                <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    <category-item
-                        v-for="(item,idx) in categorys"
-                        :key="idx"
-                        :info-to-category="item"></category-item>
-                </div>
-            </template>
-            <template v-else>
-                <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
-            </template>
+            <div 
+                v-if="categorys.length"
+                key="module-category-results"
+                class="well well-sm" style="height: 150px; overflow: auto;">
+                <category-item
+                    v-for="(item,idx) in categorys"
+                    :key="idx"
+                    :info-to-category="item"></category-item>
+            </div>
+            <div
+                v-else
+                key="module-category-results"
+                class="well well-sm" style="height: 150px; overflow: auto;">
+            </div>
         </div>
     </div>
 </template>

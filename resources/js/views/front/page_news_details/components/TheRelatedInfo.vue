@@ -4,8 +4,16 @@
         <b-row>
             <b-col class="col-mobile" cols="4" v-for="(item, idx) in _getRelatedListInfo" :key="idx">
                 <a class="d-block img-related" :href="_getHref(item)">
-                    <img v-if="_innerScreen767" class="img" v-lazy="item.imgUrl" alt="">
-                    <img v-else class="img" v-lazy="item.imgThumMediumImg" alt="">
+                    <img 
+                        v-if="_innerScreen767"
+                        key="image-news-related-screen-767"
+                        class="img" 
+                        v-lazy="item.imgUrl" alt=""/>
+                    <img 
+                        v-else 
+                        key="image-news-related-screen"
+                        class="img" 
+                        v-lazy="item.imgThumMediumImg" alt="">
                 </a>
                 <h4 class="tit-bg-common mt-2">
                     <a class="pl-0" :href="_getHref(item)">{{item.name}}</a>

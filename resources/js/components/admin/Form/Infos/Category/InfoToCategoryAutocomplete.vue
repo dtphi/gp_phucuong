@@ -36,19 +36,23 @@
                 <the-dropdown-category v-for="(item,idx) in dropdowns" :key="idx" 
                     :category="item"></the-dropdown-category>            
             </ul>
-
-            <template v-if="categorys.length">
-                <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    <category-item 
-                        v-for="(item,idx) in categorys" 
-                        :key="idx" 
-                        :info-to-category="item"></category-item>
-                </div>
-            </template>
-            <template v-else>
-                <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
-            </template>
-
+            
+            <div 
+                v-if="categorys.length"
+                key="category-result-list"
+                class="well well-sm" 
+                style="height: 150px; overflow: auto;">
+                <category-item 
+                    v-for="(item,idx) in categorys" 
+                    :key="idx" 
+                    :info-to-category="item"></category-item>
+            </div>
+            <div 
+                v-else 
+                key="category-result-empty"
+                class="well well-sm" 
+                style="height: 150px; overflow: auto;"></div>
+        
         </div>
     </div>
 </template>

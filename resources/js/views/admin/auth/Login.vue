@@ -31,11 +31,13 @@
             <div class="col-4">
                 <a
                     v-if="isSubmit"
+                    key="btn-submit-spinner"
                     class="btn btn-success btn-block">{{$options.setting.btn_submit_txt}}
                     <font-awesome-icon icon="spinner" pulse/>
                 </a>
                 <button
                     v-else
+                    key="btn-submit-key"
                     type="submit"
                     class="btn btn-success btn-block">
                     <i class="fa fa-key"></i>{{$options.setting.btn_submit_txt}}

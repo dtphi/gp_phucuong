@@ -1,6 +1,8 @@
 <template>
   <div class="row">
-    <template v-if="_isResource">
+    <template 
+      v-if="_isResource"
+    >
       <div class="col-sm-6 text-left">
         <div class="dataTables_info">
           {{ _getTextPagination() }}
@@ -19,7 +21,9 @@
         </div>
       </div>
     </template>
-    <template v-else>
+    <template 
+      v-else
+    >
       <div class="col-sm-6 text-left">
         <div class="dataTables_info">
           {{ _getTextPaginationCollection() }}

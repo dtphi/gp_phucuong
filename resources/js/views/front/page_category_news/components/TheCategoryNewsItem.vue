@@ -7,15 +7,20 @@
                 class="rounded img"
                 :alt="_getHref()">
         </a>
-        <video-caption v-if="info.information_type == 2" :info="info"></video-caption>
-        <news-caption v-else :info="info"></news-caption>
+        <video-caption 
+            v-if="info.information_type == 2"
+            key="video-info-item"
+            :info="info"
+        ></video-caption>
+        <news-caption 
+            v-else 
+            key="news-info-item"
+            :info="info"
+        ></news-caption>
     </figure>
 </template>
 
 <script>
-    import {
-        mapGetters,
-    } from 'vuex';
     import {
         fn_get_href_base_url,
         fn_change_to_slug

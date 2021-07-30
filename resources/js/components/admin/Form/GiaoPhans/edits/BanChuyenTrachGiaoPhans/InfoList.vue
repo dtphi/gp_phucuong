@@ -15,9 +15,16 @@
           <td style="width: 30%" class="text-right">Thực hiện</td>
         </tr>
       </thead>
-      <tbody v-for="(item, idx) in lists" :key="idx">
-        <info-item v-if="item.isEdit" :item="item"></info-item>
-        <info-new-item v-else :item="item"></info-new-item>
+      <tbody v-for="(item, idx) in lists" 
+        :key="idx">
+        <info-item 
+          v-if="item.isEdit" 
+          key="ban-chuyen-trach-edit"
+          :item="item"></info-item>
+        <info-new-item 
+          v-else 
+          key="ban-chuyen-trach-new"
+          :item="item"></info-new-item>
       </tbody>
       <tfoot>
         <tr>

@@ -86,17 +86,23 @@
                                         <td class="text-right">Ngày tạo</td>
                                     </tr>
                                     </thead>
-                                    <tbody v-if="_isNotEmptyList">
-                                    <tr>
-                                        <td class="text-center" colspan="6">No results!</td>
-                                    </tr>
+                                    <tbody 
+                                        v-if="_isNotEmptyList"
+                                        key="dashboard-news-list-empty"
+                                    >
+                                        <tr>
+                                            <td class="text-center" colspan="6">No results!</td>
+                                        </tr>
                                     </tbody>
-                                    <tbody v-else>
-                                    <info-item
-                                        v-for="(item, idx) in infos"
-                                        :info="item"
-                                        :no="idx"
-                                        :key="idx"></info-item>
+                                    <tbody 
+                                        v-else
+                                        key="dashboard-news-list-results"
+                                    >
+                                        <info-item
+                                            v-for="(item, idx) in infos"
+                                            :info="item"
+                                            :no="idx"
+                                            :key="idx"></info-item>
                                     </tbody>
                                 </table>
                             </div>

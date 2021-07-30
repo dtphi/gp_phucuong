@@ -19,19 +19,30 @@
           <td style="width: 30%" class="text-right">Thực hiện</td>
         </tr>
       </thead>
-      <tbody v-for="(congDts, idx) in item.cong_doan_tu_sis" :key="idx">
+      <tbody 
+        v-for="(congDts, idx) in item.cong_doan_tu_sis" 
+        :key="idx">
         <info-item
           v-if="congDts.isEdit"
+          key="hat-cong-dts-giao-phan-edit"
           :hat="item"
           :item="congDts"
         ></info-item>
-        <info-new-item v-else :hat="item" :item="congDts"></info-new-item>
+        <info-new-item 
+          v-else
+          key="hat-cong-dts-giao-phan-new" 
+          :hat="item" 
+          :item="congDts"></info-new-item>
       </tbody>
       <tfoot>
         <tr>
           <td colspan="4" class="text-right">
-            <btn-add-all :giao-hat="item"  v-show="lists.lenght"></btn-add-all>
-            <btn-add v-show="item.giao_hat_id" :giao-hat="item"></btn-add>
+            <btn-add-all 
+              :giao-hat="item"  
+              v-show="lists.lenght"></btn-add-all>
+            <btn-add 
+              v-show="item.giao_hat_id" 
+              :giao-hat="item"></btn-add>
           </td>
         </tr>
       </tfoot>

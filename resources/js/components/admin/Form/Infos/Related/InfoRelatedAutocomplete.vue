@@ -8,7 +8,8 @@
         			data-original-title="(Tự động hoàn toàn)">{{$options.setting.paren_category_txt}}</span>
         	</label>
         <div class="col-sm-10">
-    	   <input autocomplete="off"
+    	   <input 
+                autocomplete="off"
                 v-on:focus="_focusRelatedInfo"
 	    		v-on:keyup.enter="_searchProducts()" 
 	    		v-model="query" type="text" 
@@ -16,33 +17,42 @@
 	    		:placeholder="$options.setting.paren_category_txt" 
 	    		id="input-info-related" 
 	    		class="form-control" />
-            <ul class="dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
+            <ul class="dropdown-menu cms-ul-cate-dropdown" 
+                :style="dropdownStyle">
                 <li>
-                    <span class="btn btn-default cms-btn-dropdown" @click="_closeDropdown">
+                    <span class="btn btn-default cms-btn-dropdown" 
+                        @click="_closeDropdown">
                         <font-awesome-layers size="2x" style="background:MistyRose">
                             <font-awesome-icon icon="circle" style="color:Tomato"/>
                             <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
                         </font-awesome-layers>
                     </span>
                 </li>
-                <the-dropdown-related  :key="-1"
+                <the-dropdown-related  
+                    :key="-1"
                     :information="itemNone"></the-dropdown-related>
               
-                <the-dropdown-related v-for="(item,idx) in dropdowns" :key="idx" 
+                <the-dropdown-related 
+                    v-for="(item,idx) in dropdowns" 
+                    :key="idx" 
                     :information="item"></the-dropdown-related>            
             </ul>
 
-            <template v-if="relateds.length">
-                <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    <related-item 
-                        v-for="(item,idx) in relateds" 
-                        :key="idx" 
-                        :info-to-related="item"></related-item>
-                </div>
-            </template>
-            <template v-else>
-                <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
-            </template>
+            <div 
+                v-if="relateds.length" 
+                key="related-category-result-list"
+                class="well well-sm" 
+                style="height: 150px; overflow: auto;">
+                <related-item 
+                    v-for="(item,idx) in relateds" 
+                    :key="idx" 
+                    :info-to-related="item"></related-item>
+            </div>
+            <div 
+                v-else
+                key="related-category-result-empty"
+                class="well well-sm" 
+                style="height: 150px; overflow: auto;"></div>
         </div>
     </div>
 </template>

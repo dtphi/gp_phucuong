@@ -1,10 +1,9 @@
 <template>
   <li class="nav-item dropdown">
-    <template v-if="isShowLogOut">
-      <a class="nav-link" data-toggle="dropdown" href="#">
+      <a v-if="isShowLogOut" class="nav-link" data-toggle="dropdown" href="#">
         <font-awesome-icon icon="user" size="xs" />
       </a>
-      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      <div v-else-if="user.id" class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <span class="dropdown-item dropdown-header">{{ user.name }}</span>
         <div class="dropdown-divider"></div>
         <span class="dropdown-item dropdown-header">
@@ -12,12 +11,9 @@
         </span>
         <div class="dropdown-divider"></div>
       </div>
-    </template>
-    <template v-else>
-      <a class="nav-link" data-toggle="dropdown" href="#">
+      <a v-else class="nav-link" data-toggle="dropdown" href="#">
         <font-awesome-icon icon="user" size="xs" />
       </a>
-    </template>
   </li>
 </template>
 

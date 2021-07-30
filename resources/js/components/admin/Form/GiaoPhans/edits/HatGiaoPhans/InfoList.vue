@@ -17,14 +17,23 @@
           </td>
         </tr>
       </thead>
-      <tbody v-for="(item, idx) in lists" :key="idx">
-        <info-item v-if="item.isEdit" :item="item"></info-item>
-        <info-new-item v-else :item="item"></info-new-item>
+      <tbody 
+        v-for="(item, idx) in lists" 
+        :key="idx">
+        <info-item 
+          v-if="item.isEdit"
+          key="hat-giao-phan-edit" 
+          :item="item"></info-item>
+        <info-new-item 
+          v-else 
+          key="hat-giao-phan-new"
+          :item="item"></info-new-item>
       </tbody>
       <tfoot>
         <tr>
           <td colspan="4" class="text-right">
-            <btn-add-all v-show="lists.lenght"></btn-add-all>
+            <btn-add-all 
+              v-show="lists.lenght"></btn-add-all>
             <btn-add></btn-add>
           </td>
         </tr>

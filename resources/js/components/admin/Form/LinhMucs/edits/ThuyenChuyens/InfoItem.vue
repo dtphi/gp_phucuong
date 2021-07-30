@@ -1,10 +1,14 @@
 <template>
   <tbody>
-    <tr v-if="item.isEdit">
+    <tr 
+      v-if="item.isEdit"
+      key="thuyen-chuyen-title"
+    >
       <td class="text-center">
-        <input type="checkbox"
-                :id="`info_select_id_${item.id}`"
-                v-model="item.isCheck">
+        <input 
+          type="checkbox"
+          :id="`info_select_id_${item.id}`"
+          v-model="item.isCheck">
       </td>
       <td>{{ item.fromgiaoxuName }}</td>
       <td>{{ item.label_from_date }}</td>
@@ -44,7 +48,10 @@
         </button>
       </td>
     </tr>
-    <tr v-if="item.isEdit">
+    <tr 
+      v-if="item.isEdit"
+      key="thuyen-chuyen-edit"
+      >
       <td rowspan="15"></td>
       <td colspan="7" v-show="isEdit">
         <table class="table table-striped table-bordered table-hover">
@@ -153,9 +160,7 @@
               <td class="text-left">Ban chuyên trách</td>
               <td colspan="4">
                 <info-ban-chuyen-trach-autocomplete
-                  @on-select-ban-chuyen-trach="
-                    _selectThuyenChuyenBanChuyenTrach
-                  "
+                  @on-select-ban-chuyen-trach="_selectThuyenChuyenBanChuyenTrach"
                   :name="item.banchuyentrachName"
                   :key="`ban_chuyen_trach_${item.id}`"
                 ></info-ban-chuyen-trach-autocomplete>
@@ -247,15 +252,20 @@
         </table>
       </td>
     </tr>
-    <tr v-else>
+    <tr 
+      v-else
+      key="thuyen-chuyen-new"
+      >
       <td rowspan="15">
-        <input type="checkbox"
-                :id="`info_select_id_${item.id}`"
-                v-model="item.isCheck">
+        <input 
+          type="checkbox"
+          :id="`info_select_id_${item.id}`"
+          v-model="item.isCheck">
       </td>
       <td colspan="7">
         <table class="table table-striped table-bordered table-hover">
-          <info-new-item :item="item"></info-new-item>
+          <info-new-item 
+            :item="item"></info-new-item>
         </table>
       </td>
     </tr>

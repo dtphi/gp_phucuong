@@ -7,7 +7,8 @@
         			data-original-title="(Tự động hoàn toàn)">{{$options.setting.paren_category_txt}}</span>
         	</label>
         <div class="col-sm-10" id="cms-scroll-dropdown">
-    	   <input autocomplete="off"
+    	   <input 
+                autocomplete="off"
                 v-on:focus="_focusParentCategory"
 	    		v-on:keyup.enter="_searchProducts()" 
 	    		v-model="query" type="text" 
@@ -24,24 +25,30 @@
                         </font-awesome-layers>
                     </span>
                 </li>
-                <the-dropdown-category  :key="-1"
+                <the-dropdown-category  
+                    :key="-1"
                     :category="itemNone"></the-dropdown-category>
               
-                <the-dropdown-category v-for="(item,idx) in dropdowns" :key="idx" 
+                <the-dropdown-category 
+                    v-for="(item,idx) in dropdowns" 
+                    :key="idx" 
                     :category="item"></the-dropdown-category>            
             </ul>
 
-            <template v-if="categorys.length">
-                <div class="well well-sm" style="height: 150px; overflow: auto;">
+            <div 
+                v-if="categorys.length" 
+                key="category-result-list" 
+                class="well well-sm" 
+                style="height: 150px; overflow: auto;">
                     <category-item 
                         v-for="(item,idx) in categorys" 
                         :key="idx" 
                         :info-to-category="item"></category-item>
-                </div>
-            </template>
-            <template v-else>
-                <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
-            </template>
+            </div>
+            <div v-else 
+                key="category-result-empty" 
+                class="well well-sm" 
+                style="height: 150px; overflow: auto;"></div>
 
         </div>
     </div>

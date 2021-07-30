@@ -8,8 +8,14 @@
   	    <default-header></default-header>
 		<slot></slot>
         <default-footer></default-footer>
-		<croll-to-top-767 v-if="_innerScreen767"></croll-to-top-767>
-		<croll-to-top v-else></croll-to-top>
+		<croll-to-top-767 
+			v-if="_innerScreen767"
+			key="croll-to-top-screen-767"
+		></croll-to-top-767>
+		<croll-to-top 
+			v-else
+			key="croll-to-top-screen"
+		></croll-to-top>
   </div>
 </template>
 
