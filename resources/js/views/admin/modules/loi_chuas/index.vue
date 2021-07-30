@@ -1,10 +1,10 @@
 <template>
     <div id="category-left-side-bar-module" style="min-height:500px">
-        <template v-if="_errors">
+        <template v-if="$_module_errors">
             <div class="alert alert-danger">
                 <i class="fa fa-exclamation-circle"></i>
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{err}}</p>
+                <p v-for="(err, idx) in $_module_errorToArrs()" :key="idx">{{err}}</p>
             </div>
         </template>
         <template v-if="loading">
@@ -14,13 +14,13 @@
         </template>
         <validation-observer
             ref="observerInfo"
-            @submit.prevent="_submitInfo">
+            @submit.prevent="$_module_submitInfo">
             <div class="page-header">
                 <div class="container-fluid">
                     <div class="pull-right">
                         <button
                             type="button"
-                            @click="_submitInfo"
+                            @click="$_module_submitInfo"
                             data-toggle="tooltip"
                             :title="$options.setting.btn_save_txt"
                             class="btn btn-primary"><i class="fa fa-save"></i>

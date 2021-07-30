@@ -21,7 +21,7 @@ export default {
     },
     computed: {
         ...mapGetters(MODULE_MODULE_APP, ['texts']),
-        _errors() {
+        $_module_errors() {
             if (this.hasOwnProperty('errors')) return this.errors.length;
 
             return 0;
@@ -30,16 +30,16 @@ export default {
     watch: {
         'updateSuccess'(newValue, oldValue) {
             if (newValue) {
-                this._notificationUpdate(newValue);
+                this.$_module_notificationUpdate(newValue);
             }
         }
     },
     methods: {
-        _notificationUpdate(notification) {
+        $_module_notificationUpdate(notification) {
             this.$notify(notification);
             this.[ACTION_RESET_NOTIFICATION_INFO]('');
         },
-        _errorToArrs() {
+        $_module_errorToArrs() {
             let errs = [];
             if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
                 errs = Object.values(this.errors[0].messages);
@@ -51,7 +51,7 @@ export default {
 
             return errs;
         },
-        _submitInfo() {
+        $_module_submitInfo() {
             const _self = this;
             _self.$refs.observerInfo.validate().then((isValid) => {
                 if (isValid) {
