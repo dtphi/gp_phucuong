@@ -21,12 +21,18 @@
                     <font-awesome-icon icon="times" class="fa-inverse" transform="shrink-4"/>
                 </font-awesome-layers>
             </span>
-            <ul class="dropdown-menu cms-ul-cate-dropdown" :style="dropdownStyle">
-                <the-dropdown-category :key="-1"
-                                       :category="itemNone"></the-dropdown-category>
+            <ul class="dropdown-menu cms-ul-cate-dropdown"
+                :style="dropdownStyle">
+                <the-dropdown-category
+                    :key="-1"
+                    :category="itemNone"
+                    :select-dropdown-category-item="_selectCategory"></the-dropdown-category>
 
-                <the-dropdown-category v-for="(item,idx) in dropdowns" :key="idx"
-                                       :category="item"></the-dropdown-category>
+                <the-dropdown-category
+                    v-for="(item,idx) in dropdowns"
+                    :key="idx"
+                    :category="item"
+                    :select-dropdown-category-item="_selectCategory"></the-dropdown-category>
             </ul>
             <template v-if="categorys.length">
                 <div class="well well-sm" style="height: 150px; overflow: auto;">
@@ -46,28 +52,32 @@
 <script>
     import {
         mapState,
-        mapGetters,
         mapActions
     } from 'vuex';
     import TheDropdownCategory from './DropdownInfoToCategoryAutocomplete';
     import CategoryItem from './CategoryItemEdit';
     import {
         MODULE_NEWS_CATEGORY,
-        MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR,
         MODULE_INFO_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_DROPDOWN_CATEGORY_LIST,
         ACTION_ADD_INFO_TO_CATEGORY_LIST,
-        ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
     } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
 
     export default {
         name: 'TheCategoryAutocompleteList',
         components: {
             TheDropdownCategory,
             CategoryItem
+        },
+        props: {
+            infoCategory: Object,
+            getNameQuery: String,
+            settingCategory: Object,
+            dropdownCategory: [Object, Array],
+            resetSettingCategory: Function,
+            selectCategory: Function
         },
         data() {
             return {
@@ -81,12 +91,6 @@
             }
         },
         computed: {
-            ...mapGetters(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [
-                'infoCategory',
-                'getNameQuery',
-                'settingCategory',
-                'dropdownCategory'
-            ]),
             ...mapState(MODULE_INFO_EDIT, {
                 categorys: state => state.listCategorysDisplay,
                 categoryIds: state => state.info.categorys
@@ -107,16 +111,14 @@
                 }
             },
             'categoryIds'(newValue) {
-                this.[ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA](newValue);
+                this.resetSettingCategory(newValue);
             },
             'dropdownCategory'(newValue) {
                 this._initAddCategoryModule(newValue);
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [
-                ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
-            ]),
+    
             ...mapActions(MODULE_NEWS_CATEGORY, [
                 ACTION_GET_DROPDOWN_CATEGORY_LIST
             ]),
@@ -149,9 +151,13 @@
                     }
                 })
             },
+            _selectCategory(cate)
+            {
+                return this.selectCategory(cate);
+            }
         },
         setting: {
-            paren_category_txt: 'Danh mục hiển thị menu trái'
+            paren_category_txt: 'Danh mục hiển thị'
         }
     };
 </script>

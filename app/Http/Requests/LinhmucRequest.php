@@ -31,7 +31,7 @@ class LinhmucRequest extends BaseRequest
         if ($this->isAllowAll())
             return true;
 
-        if ($this->isMethod('option') || $user->actionCan(Tables::$linhMucAccessName, $this->allow)) {
+        if ($this->isMethod('options') || $user->actionCan(Tables::$linhMucAccessName, $this->allow)) {
             return true;
         } elseif ($this->isMethod('post')) {
             return $user->actionCan(Tables::$linhMucAccessName, $this->allowAdd);

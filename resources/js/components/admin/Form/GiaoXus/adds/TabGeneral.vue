@@ -34,7 +34,7 @@
           rules="max:50"
           v-slot="{ errors }"
         >
-          <select v-model="groupData.giaohat_id" class="form-control">
+          <select v-model="groupData.giao_hat_id" class="form-control">
             <option
               v-for="item in isGiaoHat"
               v-bind:value="item.id"
@@ -147,7 +147,7 @@
         >
           <input
             type="text"
-            v-model="groupData.danso"
+            v-model="groupData.dan_so"
             placeholder="Dân số"
             id="input-info-danso"
             class="form-control"
@@ -169,7 +169,7 @@
         >
           <input
             type="text"
-            v-model="groupData.sotinhuu"
+            v-model="groupData.so_tin_huu"
             placeholder="Số tín hữu"
             id="input-info-sotinhuu"
             class="form-control"
@@ -189,22 +189,19 @@
           rules="required|max:191"
           v-slot="{ errors }"
         >
-          <input
-            type="text"
-            v-model="groupData.giole"
-            placeholder="Giờ lễ"
+          <tinymce
             id="input-info-gio-le"
-            class="form-control"
-          />
+            :other_options="options"
+            v-model="groupData.gio_le"
+          >
+          </tinymce>
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
     </div>
     <!-- Viet -->
     <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-info-viet"
-        >Việt</label
-      >
+      <label class="col-sm-2 control-label" for="input-info-viet">Việt</label>
       <div class="col-sm-10">
         <validation-provider
           name="info_viet"
@@ -224,9 +221,7 @@
     </div>
     <!-- Latin -->
     <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-info-latin"
-        >Latin</label
-      >
+      <label class="col-sm-2 control-label" for="input-info-latin">Latin</label>
       <div class="col-sm-10">
         <validation-provider
           name="info_latin"
@@ -244,7 +239,7 @@
         </validation-provider>
       </div>
     </div>
-    <!-- Nội dung --> 
+    <!-- Nội dung -->
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-info-noidung"
         >Nội dung</label
@@ -257,7 +252,7 @@
         >
           <input
             type="text"
-            v-model="groupData.noidung"
+            v-model="groupData.noi_dung"
             placeholder="Nội dung"
             id="input-info-noidung"
             class="form-control"
@@ -268,9 +263,7 @@
     </div>
     <!-- Type -->
     <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-info-type"
-        >Type</label
-      >
+      <label class="col-sm-2 control-label" for="input-info-type">Type</label>
       <div class="col-sm-10">
         <validation-provider
           name="info_type"
@@ -296,9 +289,13 @@ import { mapState } from "vuex";
 import { config } from "@app/common/config";
 import { fn_get_tinymce_langs_url } from "@app/api/utils/fn-helper";
 import { MODULE_MODULE_GIAO_XU_ADD } from "store@admin/types/module-types";
+import tinymce from "vue-tinymce-editor";
 
 export default {
   name: "TabGeneralForm",
+  components: {
+    tinymce
+  },
   props: {
     groupData: {
       type: Object,
