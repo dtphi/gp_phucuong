@@ -1,8 +1,9 @@
 import AppConfig from 'api@admin/constants/app-config';
 import {
-  apiGetInfoById,
-  apiUpdateInfo
+  apiGetInfoDongById,
+  apiUpdateDongInfo
 } from 'api@admin/dong';
+import { apiGetGiaoPhanInfos } from 'api@admin/giaophan';
 import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_FAILED,
@@ -11,13 +12,13 @@ import {
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
   INFOS_MODAL_UPDATE_INFO_FAILED,
   INFOS_MODAL_SET_ERROR,
-  INFOS_FORM_SET_MAIN_IMAGE
+  INFOS_FORM_SET_MAIN_IMAGE,
+  INFOS_GET_INFO_LIST_FAILED
 } from '../types/mutation-types';
 import {
   ACTION_GET_INFO_BY_ID,
   ACTION_SET_LOADING,
   ACTION_SHOW_MODAL_EDIT,
-  ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_SET_IMAGE,
 } from '../types/action-types';
@@ -30,31 +31,27 @@ const defaultState = () => {
     styleCss: '',
     isExistInfo: config.existStatus.checking,
     info: {
-      image: '',
       date_available: null,
-      sort_order: 0,
-      status: 1,
       name: '',
-      meta_title: '',
-      sort_description: '',
-      information_type: 1,
-      description: '',
-      tag: '',
-      meta_description: '',
-      meta_keyword: '',
-      multi_images: [],
-      relateds: [],
-      categorys: [],
-      downloads: [],
-      special_carousels: [],
+      giaophan_id: null,
+      dia_chi: null,
+      dien_thoai: null,
+      email: '',
+      viet: null,
+      latin: null,
+      noi_dung: null,
+      active: 1,
+      update_user: 0,
     },
+    listGiaoPhan: [],
     isImgChange: false,
     listCategorysDisplay: [],
     listRelatedsDisplay: [],
     infoId: 0,
     loading: false,
     updateSuccess: false,
-    errors: []
+    errors: [],
+    isGetInfoList: null,
   }
 }
 
@@ -82,9 +79,14 @@ export default {
         state.isExistInfo !== config.existStatus.exist) {
         return false;
       }
-
       return true;
-    }
+    },
+    isGiaoPhan(state) {
+      return state.listGiaoPhan;
+    },
+    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
+      state.isGetInfoList = payload
+    },
   },
 
   mutations: {
@@ -123,10 +125,28 @@ export default {
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload;
       state.isImgChange = true;
-    }
+    },
+    INFO_GIAO_PHAN(state, payload) {
+      state.listGiaoPhan = payload;
+    },
+    /*   DONGS_SET_INFO(state, payload) {
+       state.info = payload;
+     } */
   },
 
   actions: {
+    // action get list giao phan 
+    ACTION_GET_LIST_GIAO_PHAN({ commit }, params) {
+      apiGetGiaoPhanInfos(
+        (infos) => {
+          commit('INFO_GIAO_PHAN', infos.data.results);
+        },
+        (errors) => {
+          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+        },
+        params
+      )
+    },
 
     [ACTION_SHOW_MODAL_EDIT]({
       dispatch,
@@ -134,22 +154,21 @@ export default {
       dispatch(ACTION_GET_INFO_BY_ID, infoId);
     },
 
+    // GET ID GIAO XU
     [ACTION_GET_INFO_BY_ID]({
       dispatch,
       commit
     }, infoId) {
       dispatch(ACTION_SET_LOADING, true);
-      apiGetInfoById(
+      apiGetInfoDongById(
         infoId,
         (result) => {
           commit(INFOS_MODAL_SET_INFO_ID, infoId);
-          commit(INFOS_MODAL_SET_INFO, result.data);
-
+          commit(INFOS_MODAL_SET_INFO, result.data.dong);
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_MODAL_SET_INFO_ID_FAILED, Object.values(errors))
-
           dispatch(ACTION_SET_LOADING, false);
         }
       );
@@ -161,20 +180,39 @@ export default {
       commit(INFOS_MODAL_SET_LOADING, isLoading);
     },
 
-    [ACTION_UPDATE_INFO]({
+    // UPDATE DONG
+    ACTION_UPDATE_INFO_DONG({
       dispatch,
       commit
     }, info) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
-      apiUpdateInfo(info,
+      apiUpdateDongInfo(
+        info,
         (result) => {
           commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-
-          dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
           commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
+          dispatch(ACTION_SET_LOADING, false);
+        }
+      )
+    },
 
+    // UPDATE DONG BACK
+    ACTION_UPDATE_INFO_DONG_BACK({
+      dispatch,
+      commit
+    }, info) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
+      apiUpdateDongInfo(info,
+        (result) => {
+          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+          dispatch('ACTION_RELOAD_GET_INFO_LIST_DONG', 'page', {
+            root: true
+          });
+        },
+        (errors) => {
+          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
           dispatch(ACTION_SET_LOADING, false);
         }
       )
