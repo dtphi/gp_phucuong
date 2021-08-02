@@ -43,7 +43,9 @@
                                         <item v-for="(item,index) in _infoList"
                                               :info="item"
                                               :no="index"
-                                              :key="item.id"></item>
+                                              :key="item.id"
+                                              @show-modal-edit="_showModalEdit"
+                                        ></item>
                                         </tbody>
                                     </table>
                                 </div>
@@ -55,6 +57,84 @@
                 </div>
             </div>
         </div>
+        <modal name="modal-linh-muc-bang-cap-edit" :height="455">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-edit"></i>Cập nhật bằng cấp</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="input-info-name" class="col-sm-2 control-label">Linh mục</label>
+                            <div class="col-sm-10">
+                                {{_infoUpdate.ten_linh_muc}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-info-name" class="col-sm-2 control-label">Bằng cấp</label>
+                            <div class="col-sm-10">
+                                <validation-provider
+                                name="info_name"
+                                rules="max:200"
+                                v-slot="{ errors }"
+                                >
+                                <input
+                                    v-model="_infoUpdate.name"
+                                    type="text"
+                                    id="input-info-name"
+                                    class="form-control"
+                                />
+
+                                <span class="cms-text-red">{{ errors[0] }}</span>
+                                </validation-provider>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-info-name" class="col-sm-2 control-label">Ghi chú</label>
+                            <div class="col-sm-10">
+                                <validation-provider
+                                name="info_ghi_chu"
+                                rules="max:200"
+                                v-slot="{ errors }"
+                                >
+                                <textarea class="form-control" v-model="_infoUpdate.ghi_chu"></textarea>
+
+                                <span class="cms-text-red">{{ errors[0] }}</span>
+                                </validation-provider>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-info-name" class="col-sm-2 control-label">Loại</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" v-model="_infoUpdate.type">
+                                    <option value="0" :selected="_infoUpdate.type == 0">Loại 1</option>
+                                    <option value="1" :selected="_infoUpdate.type == 1">Loại 2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-info-name" class="col-sm-2 control-label">Trạng thái</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" v-model="_infoUpdate.active">
+                                    <option value="1" :selected="_infoUpdate.active == 1">Xảy ra</option>
+                                    <option value="0" :selected="_infoUpdate.active == 0">Ẩn</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="container-fluid">
+                    <div class="pull-right">
+                        <input type="button" value="Hủy" class="btn btn-default"
+                            @click="_hideModalEdit"
+                        />
+                        <input type="button" value="Cập nhật" class="btn btn-primary"
+                            @click.prevent="_submitUpdate"/>
+                    </div>
+                </div>
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -88,6 +168,7 @@
             return {
                 fullPage: false,
                 isResource: false,
+                infoUpdate: {}
             }
         },
         watch: {
@@ -112,6 +193,9 @@
             },
             _notEmpty() {
                 return this.isNotEmptyList;
+            },
+            _infoUpdate() {
+                return this.infoUpdate
             }
         },
         methods: {
@@ -119,10 +203,21 @@
                 ACTION_GET_INFO_LIST,
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),
+            _showModalEdit(info) {console.log(info)
+                this.infoUpdate = info;
+                this.$modal.show('modal-linh-muc-bang-cap-edit');
+            },
+            _hideModalEdit() {
+                this.infoUpdate = {};
+                this.$modal.hide('modal-linh-muc-bang-cap-edit');
+            },
             _submitAction(event) {
                 this[event.target.value]({
                     action: event.target.value
                 });
+            },
+            _submitUpdate() {
+                alert('update db')
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
