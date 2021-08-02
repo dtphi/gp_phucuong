@@ -13,190 +13,187 @@ use Log;
 
 class DongController extends ApiController
 {
-    /**
-     * @var string
-     */
-    protected $resourceName = 'dong';
+  /**
+   * @var string
+   */
+  protected $resourceName = 'dong';
 
-    /**
-     * @var null
-     */
-    private $dongSv = null;
+  /**
+   * @var null
+   */
+  private $dongSv = null;
 
-    /**
-     * @author: dtphi .
-     * DongController constructor.
-     * @param DongSv $dongSv
-     * @param array $middleware
-     */
-    public function __construct(DongSv $dongSv, array $middleware = [])
-    {
-        $this->dongSv = $dongSv;
-        parent::__construct($middleware);
+  /**
+   * @author: dtphi .
+   * DongController constructor.
+   * @param DongSv $dongSv
+   * @param array $middleware
+   */
+  public function __construct(DongSv $dongSv, array $middleware = [])
+  {
+    $this->dongSv = $dongSv;
+    parent::__construct($middleware);
+  }
+
+  /**
+   * @author : dtphi .
+   * @param Request $request
+   * @return mixed
+   */
+  public function index(Request $request)
+  {
+    $data = $request->all();
+    $page = 1;
+    if ($request->query('page')) {
+      $page = $request->query('page');
     }
+    try {
+      $limit       = $this->_getPerPage();
+      $collections = $this->dongSv->apiGetList($data, $limit);
+      $pagination  = $this->_getTextPagination($collections);
+      $results = [];
 
-    /**
-     * @author : dtphi .
-     * @param Request $request
-     * @return mixed
-     */
-    public function index(Request $request)
-    {
-        $data = $request->all();
-        $page = 1;
-        if ($request->query('page')) {
-            $page = $request->query('page');
-        }
-        try {
-            $limit       = $this->_getPerPage();
-            $collections = $this->dongSv->apiGetList($data, $limit);
-            $pagination  = $this->_getTextPagination($collections);
-            $results = [];
-            
-            foreach ($collections as $key => $info) {
-                $results[] = [
-                    'id' => (int)$info->id,
-                    'name'           => $info->name,
-                    'dia_chi'         => $info->dia_chi,
-                    'dien_thoai'          => $info->dien_thoai,
-                    'email'    => $info->email,
-                    'viet'    => $info->viet,
-                    'latin'    => $info->latin,
-                    'active'     => $info->active
-                ];
-            }
-
-        } catch (HandlerMsgCommon $e) {
-            throw $e->render();
-        }
-
-        $json = [
-            'data' => [
-                'results'    => $results,
-                'pagination' => $pagination,
-                'page'       => $page
-            ]
+      foreach ($collections as $key => $info) {
+        $results[] = [
+          'id' => (int)$info->id,
+          'name'           => $info->name,
+          'dia_chi'         => $info->dia_chi,
+          'dien_thoai'          => $info->dien_thoai,
+          'email'    => $info->email,
+          'viet'    => $info->viet,
+          'latin'    => $info->latin,
+          'active'     => $info->active
         ];
-
-        return $this->respondWithCollectionPagination($json);
+      }
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
     }
 
-    /**
-     * @author : dtphi .
-     * @param null $id
-     * @return mixed
-     */
-    public function show($id = null)
-    {
-        try {
-            $json = $this->dongSv->apiGetResourceDetail($id);
-        } catch (HandlerMsgCommon $e) {
-            throw $e->render();
-        }
+    $json = [
+      'data' => [
+        'results'    => $results,
+        'pagination' => $pagination,
+        'page'       => $page
+      ]
+    ];
 
-        return $json;
+    return $this->respondWithCollectionPagination($json);
+  }
+
+  /**
+   * @author : dtphi .
+   * @param null $id
+   * @return mixed
+   */
+  public function show($id = null)
+  {
+    try {
+      $json = $this->dongSv->apiGetResourceDetail($id);
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
     }
 
-    /**
-     * @author : dtphi .
-     * @param DongRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function store(DongRequest $request)
-    {
-        $storeResponse = $this->__handleStore($request);
+    return $json;
+  }
 
-        if ($storeResponse->getStatusCode() === HttpResponse::HTTP_BAD_REQUEST) {
-            return $storeResponse;
-        }
+  /**
+   * @author : dtphi .
+   * @param DongRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function store(DongRequest $request)
+  {
+    $storeResponse = $this->__handleStore($request);
 
-        $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
-
-        return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
+    if ($storeResponse->getStatusCode() === HttpResponse::HTTP_BAD_REQUEST) {
+      return $storeResponse;
     }
 
-    /**
-     * @author : dtphi .
-     * @param DongRequest $request
-     * @param null $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(DongRequest $request, $id = null)
-    {
-        try {
-            $model = $this->dongSv->apiGetDetail($id);
+    $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
 
-        } catch (HandlerMsgCommon $e) {
-            Log::debug('Giao phan not found, Request ID = ' . $id);
+    return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
+  }
 
-            throw $e->render();
-        }
+  /**
+   * @author : dtphi .
+   * @param DongRequest $request
+   * @param null $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function update(DongRequest $request, $id = null)
+  {
+    try {
+      $model = $this->dongSv->apiGetDetail($id);
+    } catch (HandlerMsgCommon $e) {
+      Log::debug('Dong not found, Request ID = ' . $id);
 
-        return $this->__handleStoreUpdate($model, $request);
+      throw $e->render();
+    }
+    return $this->__handleStoreUpdate($model, $request);
+  }
+
+  /**
+   * @author : dtphi .
+   * @param null $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function destroy($id = null)
+  {
+    try {
+      $model = $this->dongSv->apiGetDetail($id);
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
     }
 
-    /**
-     * @author : dtphi .
-     * @param null $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy($id = null)
-    {
-        try {
-            $model = $this->dongSv->apiGetDetail($id);
-        } catch (HandlerMsgCommon $e) {
-            throw $e->render();
-        }
+    $this->infoSv->deleteInformation($model);
 
-        $this->infoSv->deleteInformation($model);
+    return $this->respondDeleted("{$this->resourceName} deleted.");
+  }
 
-        return $this->respondDeleted("{$this->resourceName} deleted.");
+  /**
+   * @author : dtphi .
+   * @param $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  private function __handleStore(&$request)
+  {
+    $formData = $request->all();
+
+    if ($result = $this->dongSv->apiInsertOrUpdate($formData)) {
+      return $this->respondUpdated($result);
     }
 
-    /**
-     * @author : dtphi .
-     * @param $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    private function __handleStore(&$request)
-    {
-        $formData = $request->all();
+    return $this->respondBadRequest();
+  }
 
-        if ($result = $this->dongSv->apiInsert($formData)) {
-            return $this->respondUpdated($result);
-        }
-
-        return $this->respondBadRequest();
+  /**
+   * @author : dtphi .
+   * @param $model
+   * @param $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  private function __handleStoreUpdate(&$model, &$request)
+  {
+    $formData = $request->all();
+    if ($result = $this->dongSv->apiUpdate($model, $formData)) {
+      dd($result);
+      return $this->respondUpdated($result);
     }
 
-    /**
-     * @author : dtphi .
-     * @param $model
-     * @param $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    private function __handleStoreUpdate(&$model, &$request)
-    {
-        $formData = $request->all();
+    return $this->respondBadRequest();
+  }
 
-        if ($result = $this->dongSv->apiUpdate($model, $formData)) {
-            return $this->respondUpdated($result);
-        }
-
-        return $this->respondBadRequest();
+  /**
+   * @author : dtphi .
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse|void
+   */
+  public function uploadImage(Request $request)
+  {
+    if ($request->is('options')) {
+      return;
     }
 
-    /**
-     * @author : dtphi .
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|void
-     */
-    public function uploadImage(Request $request)
-    {
-        if ($request->is('options')) {
-            return;
-        }
-
-        return $this->respondBadRequest();
-    }
+    return $this->respondBadRequest();
+  }
 }

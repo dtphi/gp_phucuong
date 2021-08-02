@@ -108,22 +108,16 @@ final class GiaoHatService implements BaseModel, GiaoHatModel
         return $this->model;
     }
 
-    // update Giao Hat
-    public function apiUpdate($model, $data = [])
-    {
-        /**
-         * Save user with transaction to make sure all data stored correctly
-         */
-        DB::beginTransaction();
-
-        if (!$this->model->save()) {
-            DB::rollBack();
-
-            return false;
-        }
-
-        DB::commit();
-
-        return $this->model;
+  // update Giao Hat
+  public function apiUpdate($model, $data = [])
+  {
+    $this->model->fill($data);
+    DB::beginTransaction();
+    if (!$this->model->save()) {
+      DB::rollBack();
+      return false;
     }
+    DB::commit();
+    return $this->model;
+  }
 }

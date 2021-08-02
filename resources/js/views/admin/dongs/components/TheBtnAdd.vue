@@ -2,7 +2,7 @@
     <button @click="_redirectUrl()"
             data-toggle="tooltip" title=""
             class="btn btn-primary"
-            data-original-title="Thêm Giáo Phận">
+            data-original-title="Thêm Dòng">
         <i class="fa fa-plus"></i>
     </button>
 </template>
@@ -16,7 +16,7 @@
     } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'TheButtonAdd',
+        name: 'TheButtonAddDong',
         props: {
             isRedirect: {
                 type: Boolean,
@@ -25,7 +25,7 @@
         },
         methods: {
             _redirectUrl() {
-                return fn_redirect_url('admin/giao-phans/add');
+                return fn_redirect_url('admin/dongs/add');
             },
         }
     };
