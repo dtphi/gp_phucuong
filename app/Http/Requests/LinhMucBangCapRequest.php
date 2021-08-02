@@ -8,17 +8,17 @@ use App\Http\Common\Tables;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
-class LinhMucVanThuRequest extends BaseRequest
+class LinhMucBangCapRequest extends BaseRequest
 {
-    private $allow = Tables::PREFIX_ALLOW_LINH_MUC_VAN_THU . ':*';
+    private $allow = Tables::PREFIX_ALLOW_LINH_MUC_BANG_CAP . ':*';
 
-    private $allowAdd = Tables::PREFIX_ALLOW_LINH_MUC_VAN_THU . ':add';
+    private $allowAdd = Tables::PREFIX_ALLOW_LINH_MUC_BANG_CAP . ':add';
 
-    private $allowEdit = Tables::PREFIX_ALLOW_LINH_MUC_VAN_THU . ':edit';
+    private $allowEdit = Tables::PREFIX_ALLOW_LINH_MUC_BANG_CAP . ':edit';
 
-    private $allowDelete = Tables::PREFIX_ALLOW_LINH_MUC_VAN_THU . ':delete';
+    private $allowDelete = Tables::PREFIX_ALLOW_LINH_MUC_BANG_CAP . ':delete';
 
-    private $allowList = Tables::PREFIX_ALLOW_LINH_MUC_VAN_THU . ':list';
+    private $allowList = Tables::PREFIX_ALLOW_LINH_MUC_BANG_CAP . ':list';
 
     /**
      * Determine if the user is authorized to make this request.
@@ -31,16 +31,16 @@ class LinhMucVanThuRequest extends BaseRequest
         if ($this->isAllowAll())
             return true;
 
-        if ($this->isMethod('options') || $user->actionCan(Tables::$linhMucVanThuAccessName, $this->allow)) {
+        if ($this->isMethod('options') || $user->actionCan(Tables::$linhMucBangCapAccessName, $this->allow)) {
             return true;
         } elseif ($this->isMethod('post')) {
-            return $user->actionCan(Tables::$linhMucVanThuAccessName, $this->allowAdd);
+            return $user->actionCan(Tables::$linhMucBangCapAccessName, $this->allowAdd);
         } elseif ($this->isMethod('put')) {
-            return $user->actionCan(Tables::$linhMucVanThuAccessName, $this->allowEdit);
+            return $user->actionCan(Tables::$linhMucBangCapAccessName, $this->allowEdit);
         } elseif ($this->isMethod('delete')) {
-            return $user->actionCan(Tables::$linhMucVanThuAccessName, $this->allowDelete);
+            return $user->actionCan(Tables::$linhMucBangCapAccessName, $this->allowDelete);
         } elseif ($this->isMethod('get')) {
-            return $user->actionCan(Tables::$linhMucVanThuAccessName, $this->allowList);
+            return $user->actionCan(Tables::$linhMucBangCapAccessName, $this->allowList);
         }
         
         return false;

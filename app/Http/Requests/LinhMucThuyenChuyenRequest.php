@@ -2,21 +2,48 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Common\BaseRequest;
 use Auth;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\Tables;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
-class LinhMucThuyenChuyenRequest extends FormRequest
+class LinhMucThuyenChuyenRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_ALLOW_LINH_MUC_THUYEN_CHUYEN . ':*';
+
+    private $allowAdd = Tables::PREFIX_ALLOW_LINH_MUC_THUYEN_CHUYEN . ':add';
+
+    private $allowEdit = Tables::PREFIX_ALLOW_LINH_MUC_THUYEN_CHUYEN . ':edit';
+
+    private $allowDelete = Tables::PREFIX_ALLOW_LINH_MUC_THUYEN_CHUYEN . ':delete';
+
+    private $allowList = Tables::PREFIX_ALLOW_LINH_MUC_THUYEN_CHUYEN . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
-        return true;
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('options') || $user->actionCan(Tables::$linhMucThuyenChuyenAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$linhMucThuyenChuyenAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$linhMucThuyenChuyenAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$linhMucThuyenChuyenAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$linhMucThuyenChuyenAccessName, $this->allowList);
+        }
+        
+        return false;
     }
 
     /**

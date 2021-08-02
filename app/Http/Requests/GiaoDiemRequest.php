@@ -2,18 +2,45 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\BaseRequest;
 use Auth;
+use App\Http\Common\Tables;
 
-class GiaoDiemRequest extends FormRequest
+class GiaoDiemRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_ALLOW_GIAO_DIEM . ':*';
+
+    private $allowAdd = Tables::PREFIX_ALLOW_GIAO_DIEM . ':add';
+
+    private $allowEdit = Tables::PREFIX_ALLOW_GIAO_DIEM . ':edit';
+
+    private $allowDelete = Tables::PREFIX_ALLOW_GIAO_DIEM . ':delete';
+
+    private $allowList = Tables::PREFIX_ALLOW_GIAO_DIEM . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('options') || $user->actionCan(Tables::$giaoDiemAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$giaoDiemAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$giaoDiemAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$giaoDiemAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$giaoDiemAccessName, $this->allowList);
+        }
+        
         return false;
     }
 

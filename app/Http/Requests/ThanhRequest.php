@@ -2,18 +2,45 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\BaseRequest;
 use Auth;
+use App\Http\Common\Tables;
 
-class ThanhRequest extends FormRequest
+class ThanhRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_ALLOW_THANH . ':*';
+
+    private $allowAdd = Tables::PREFIX_ALLOW_THANH . ':add';
+
+    private $allowEdit = Tables::PREFIX_ALLOW_THANH . ':edit';
+
+    private $allowDelete = Tables::PREFIX_ALLOW_THANH . ':delete';
+
+    private $allowList = Tables::PREFIX_ALLOW_THANH . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('options') || $user->actionCan(Tables::$thanhAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$thanhAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$thanhAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$thanhAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$thanhAccessName, $this->allowList);
+        }
+        
         return false;
     }
 

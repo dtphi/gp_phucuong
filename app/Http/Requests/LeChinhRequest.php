@@ -2,18 +2,45 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\BaseRequest;
 use Auth;
+use App\Http\Common\Tables;
 
-class LeChinhRequest extends FormRequest
+class LeChinhRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_ALLOW_LE_CHINH . ':*';
+
+    private $allowAdd = Tables::PREFIX_ALLOW_LE_CHINH . ':add';
+
+    private $allowEdit = Tables::PREFIX_ALLOW_LE_CHINH . ':edit';
+
+    private $allowDelete = Tables::PREFIX_ALLOW_LE_CHINH . ':delete';
+
+    private $allowList = Tables::PREFIX_ALLOW_LE_CHINH . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('options') || $user->actionCan(Tables::$leChinhAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$leChinhAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$leChinhAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$leChinhAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$leChinhAccessName, $this->allowList);
+        }
+        
         return false;
     }
 

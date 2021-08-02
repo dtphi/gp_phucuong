@@ -2,19 +2,46 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Common\BaseRequest;
 use Auth;
+use App\Http\Common\Tables;
 
-class GiaoXuRequest extends FormRequest
+class GiaoXuRequest extends BaseRequest
 {
+    private $allow = Tables::PREFIX_ALLOW_GIAO_XU . ':*';
+
+    private $allowAdd = Tables::PREFIX_ALLOW_GIAO_XU . ':add';
+
+    private $allowEdit = Tables::PREFIX_ALLOW_GIAO_XU . ':edit';
+
+    private $allowDelete = Tables::PREFIX_ALLOW_GIAO_XU . ':delete';
+
+    private $allowList = Tables::PREFIX_ALLOW_GIAO_XU . ':list';
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
-    {
-        return true;
+    {   
+        $user = Auth::user();
+        if ($this->isAllowAll())
+            return true;
+
+        if ($this->isMethod('options') || $user->actionCan(Tables::$giaoXuAccessName, $this->allow)) {
+            return true;
+        } elseif ($this->isMethod('post')) {
+            return $user->actionCan(Tables::$giaoXuAccessName, $this->allowAdd);
+        } elseif ($this->isMethod('put')) {
+            return $user->actionCan(Tables::$giaoXuAccessName, $this->allowEdit);
+        } elseif ($this->isMethod('delete')) {
+            return $user->actionCan(Tables::$giaoXuAccessName, $this->allowDelete);
+        } elseif ($this->isMethod('get')) {
+            return $user->actionCan(Tables::$giaoXuAccessName, $this->allowList);
+        }
+        
+        return false;
     }
 
     /**
