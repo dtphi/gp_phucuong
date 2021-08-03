@@ -437,56 +437,6 @@ export default [{
                     footer: true
                 }
             }
-        },{
-            path: 'add',
-            component: () => import ('v@admin/linhmucbangcaps/add'),
-            name: 'admin.linh.muc.bang.cap.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh mục tin',
-                    linkName: 'admin.linh_muc_bang_cap.list',
-                    linkPath: '/bang-caps'
-                }, {
-                    name: 'Thêm Bằng Cấp'
-                }],
-                header: 'Thêm bằng cấp',
-                role: 'admin',
-                title: 'Thêm bằng cấp | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:bangCapId',
-            component: () => import ('v@admin/linhmucbangcaps/edit'),
-            name: 'admin.linh.muc.bang.cap.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách bằng cấp',
-                    linkName: 'admin.linh_muc_bang_cap.list',
-                    linkPath: '/bang-caps'
-                }, {
-                    name: 'Sửa Bằng Cấp'
-                }],
-                header: 'Sửa bằng cấp',
-                role: 'admin',
-                title: 'Bằng cấp | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
         },]
     }, {
         path: 'chuc-thanhs',

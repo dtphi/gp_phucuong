@@ -56,7 +56,7 @@ Vue.use(VModal, {
   dialog: true,
   dynamic: true,
   dynamicDefaults: {
-    clickToClose: true
+    clickToClose: false
   }
 });
 

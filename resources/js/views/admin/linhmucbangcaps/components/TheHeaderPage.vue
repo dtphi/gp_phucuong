@@ -2,18 +2,14 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <btn-add></btn-add>
-                <button
-                    @click="_refreshList()"
-                    data-toggle="tooltip"
-                    :title="$options.setting.refresh_txt"
-                    class="btn btn-default"
-                    :data-original-title="$options.setting.refresh_txt">
-                    <i class="fa fa-refresh"></i>
-                </button>
+                 <button data-toggle="tooltip"
+                    @click.prevent="_showModal()"
+                    class="btn btn-primary cms-btn"
+                    data-original-title="Thêm"><i class="fa fa-plus"/>
+                 </button>
                 <button type="button"
                         data-toggle="tooltip" title=""
-                        class="btn btn-danger"
+                        class="btn btn-danger cms-btn"
                         onclick="confirm('Are you sure?') ? $('#form-category').submit() : false;"
                         data-original-title="Delete">
                     <i class="fa fa-trash-o"></i>
@@ -38,7 +34,6 @@
         mapState,
         mapActions
     } from 'vuex';
-    import BtnAdd from './TheBtnAdd';
     import Perpage from 'com@admin/Pagination/SelectPerpage';
     import ListSearch from 'com@admin/Search';
     import Breadcrumb from 'com@admin/Breadcrumb';
@@ -53,7 +48,6 @@
     export default {
         name: 'LinhMucHeaderPage',
         components: {
-            BtnAdd,
             Perpage,
             ListSearch,
             Breadcrumb
@@ -75,6 +69,9 @@
                     perPage: this.perPage
                 };
                 this.[ACTION_GET_INFO_LIST]();
+            },
+             _showModal() {
+                this.$emit('show-modal-add');
             }
         },
         setting: {
