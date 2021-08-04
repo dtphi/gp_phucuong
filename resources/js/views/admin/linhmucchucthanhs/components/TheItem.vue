@@ -24,8 +24,8 @@
                 class="btn btn-default cms-btn"
                 data-original-title="Sửa Tin"><i class="fa fa-edit"/>
             </a>
-            <!--<btn-delete
-                :info-id="info.id"></btn-delete>-->
+            <btn-delete
+                :info-id="info.id"></btn-delete>
         </td>
     </tr>
 </template>
@@ -35,7 +35,6 @@
         mapState,
         mapActions
     } from 'vuex';
-    import BtnEdit from './TheBtnEdit';
     import BtnDelete from './TheBtnDelete';
     import {
         fn_get_base_url_image,
@@ -45,7 +44,6 @@
     export default {
         name: 'TheItem',
         components: {
-            BtnEdit,
             BtnDelete
         },
         props: {

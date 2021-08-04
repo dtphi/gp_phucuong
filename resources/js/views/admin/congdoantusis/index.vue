@@ -1,6 +1,8 @@
 <template>
     <div id="content">
-        <!--<the-header-page></the-header-page>-->
+        <the-header-page
+            @show-modal-add="_showModalAdd"
+        ></the-header-page>
         <div class="container-fluid">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -42,10 +44,13 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <item v-for="(item,index) in _infoList"
-                                              :info="item"
-                                              :no="index"
-                                              :key="item.id"></item>
+                                        <item 
+                                            v-for="(item,index) in _infoList"
+                                            :info="item"
+                                            :no="index"
+                                            :key="item.id"
+                                            @show-modal-edit="_showModalEdit"
+                                        ></item>
                                         </tbody>
                                     </table>
                                 </div>
@@ -57,6 +62,11 @@
                 </div>
             </div>
         </div>
+        <the-modal-edit v-if="_infoUpdate.id"
+            :info="_infoUpdate"
+            :info-id="_infoUpdate.id"
+        ></the-modal-edit>
+        <the-modal-add></the-modal-add>
     </div>
 </template>
 
@@ -67,7 +77,7 @@
         mapActions
     } from 'vuex';
     import Item from './components/TheItem';
-    //import TheHeaderPage from './components/TheHeaderPage';
+    import TheHeaderPage from './components/TheHeaderPage';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import Paginate from 'com@admin/Pagination';
     import {
@@ -77,19 +87,24 @@
         ACTION_GET_INFO_LIST,
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
+    import TheModalAdd from './components/TheModalAdd';
+    import TheModalEdit from './components/TheModalEdit';
 
     export default {
-        name: 'InformationList',
+        name: 'DanhSachCongDoanTuSi',
         components: {
             Breadcrumb,
-            //TheHeaderPage,
+            TheHeaderPage,
             Item,
-            Paginate
+            Paginate,
+            TheModalAdd,
+            TheModalEdit
         },
         data() {
             return {
                 fullPage: false,
                 isResource: false,
+                infoUpdate: {}
             }
         },
         watch: {
@@ -114,6 +129,9 @@
             },
             _notEmpty() {
                 return this.isNotEmptyList;
+            },
+            _infoUpdate() {
+                return this.infoUpdate
             }
         },
         methods: {
@@ -121,6 +139,13 @@
                 ACTION_GET_INFO_LIST,
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),
+            _showModalAdd() {
+                this.$modal.show('modal-cong-doan-tu-si-add')
+            },
+            _showModalEdit(info) {
+                this.infoUpdate = info;
+                this.$modal.show('modal-cong-doan-tu-si-edit');
+            },
             _submitAction(event) {
                 this[event.target.value]({
                     action: event.target.value

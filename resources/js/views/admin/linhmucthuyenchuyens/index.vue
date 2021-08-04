@@ -1,6 +1,8 @@
 <template>
-        <div id="content">
-        <!--<the-header-page></the-header-page>-->
+    <div id="content">
+        <the-header-page
+            @show-modal-add="_showModalAdd"
+        ></the-header-page>
         <div class="container-fluid">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -25,7 +27,7 @@
                                             </th>
                                             <th style="width: 1px;" class="text-center">
                                                 <input type="checkbox"
-                                                       onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                                    onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                             </th>
                                             <th style="width: 100px" class="text-left">
                                                 Linh mục
@@ -43,7 +45,7 @@
                                             <th style="width: 200px" class="text-left">Đến ngày
                                             </th>
                                             <th style="width: 100px" class="text-left">
-                                               Chức vụ
+                                            Chức vụ
                                             </th>
                                             <th>Ghi chú</th>
                                             <th class="text-center">Trạng thái</th>
@@ -71,90 +73,12 @@
                 </div>
             </div>
         </div>
-         <modal name="modal-linh-muc-thuyen-chuyen-edit" :height="455">
-            <div class="panel panel-default" style="height:100%;overflow:auto">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <i class="fa fa-edit"></i>Cập nhật bằng cấp</h3>
 
-                    <div slot="top-right" class="pull-right">
-                        <button @click="_hideModalEdit">
-                            ❌
-                        </button>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label for="input-info-name" class="col-sm-2 control-label">Linh mục</label>
-                            <div class="col-sm-10">
-                                {{_infoUpdate.ten_linh_muc}}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input-info-name" class="col-sm-2 control-label">Tên văn thư</label>
-                            <div class="col-sm-10">
-                                <validation-provider
-                                name="info_name"
-                                rules="max:200"
-                                v-slot="{ errors }"
-                                >
-                                <input
-                                    v-model="_infoUpdate.name"
-                                    type="text"
-                                    id="input-info-name"
-                                    class="form-control"
-                                />
-
-                                <span class="cms-text-red">{{ errors[0] }}</span>
-                                </validation-provider>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input-info-name" class="col-sm-2 control-label">Ghi chú</label>
-                            <div class="col-sm-10">
-                                <validation-provider
-                                name="info_ghi_chu"
-                                rules="max:200"
-                                v-slot="{ errors }"
-                                >
-                                <textarea class="form-control" v-model="_infoUpdate.ghi_chu"></textarea>
-
-                                <span class="cms-text-red">{{ errors[0] }}</span>
-                                </validation-provider>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input-info-name" class="col-sm-2 control-label">Loại</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" v-model="_infoUpdate.type">
-                                    <option value="0" :selected="_infoUpdate.type == 0">Loại 1</option>
-                                    <option value="1" :selected="_infoUpdate.type == 1">Loại 2</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input-info-name" class="col-sm-2 control-label">Trạng thái</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" v-model="_infoUpdate.active">
-                                    <option value="1" :selected="_infoUpdate.active == 1">Xảy ra</option>
-                                    <option value="0" :selected="_infoUpdate.active == 0">Ẩn</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="container-fluid">
-                    <div class="pull-right">
-                        <input type="button" value="Hủy" class="btn btn-default"
-                            @click="_hideModalEdit"
-                        />
-                        <input type="button" value="Cập nhật" class="btn btn-primary"
-                            @click.prevent="_submitUpdate"/>
-                    </div>
-                </div>
-            </div>
-        </modal>
+        <the-modal-edit v-if="_infoUpdate.id"
+            :info="_infoUpdate"
+            :info-id="_infoUpdate.id"
+        ></the-modal-edit>
+        <the-modal-add></the-modal-add>
     </div>
 </template>
 
@@ -175,14 +99,18 @@
         ACTION_GET_INFO_LIST,
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
+    import TheModalAdd from './components/TheModalAdd';
+    import TheModalEdit from './components/TheModalEdit';
 
     export default {
-        name: 'InformationList',
+        name: 'DanhSachLinhMucThuyenChuyen',
         components: {
             Breadcrumb,
             TheHeaderPage,
             Item,
-            Paginate
+            Paginate,
+            TheModalAdd,
+            TheModalEdit
         },
         data() {
             return {
@@ -223,16 +151,12 @@
                 ACTION_GET_INFO_LIST,
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),
-            _showModalEdit(info) {console.log(info)
+             _showModalAdd() {
+                this.$modal.show('modal-linh-muc-thuyen-chuyen-add');
+            },
+            _showModalEdit(info) {
                 this.infoUpdate = info;
                 this.$modal.show('modal-linh-muc-thuyen-chuyen-edit');
-            },
-            _hideModalEdit() {
-                this.infoUpdate = {};
-                this.$modal.hide('modal-linh-muc-thuyen-chuyen-edit');
-            },
-            _submitUpdate() {
-                alert('update db')
             },
             _submitAction(event) {
                 this[event.target.value]({

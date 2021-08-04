@@ -464,56 +464,6 @@ export default [{
                     footer: true
                 }
             }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/linhmucchucthanhs/add'),
-            name: 'admin.linh.muc.chuc.thanh.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách chức thánh',
-                    linkName: 'admin.linh.muc.chuc.thanh.list',
-                    linkPath: '/chuc-thanhs'
-                }, {
-                    name: 'Thêm Chức Thánh'
-                }],
-                header: 'Thêm chức thánh',
-                role: 'admin',
-                title: 'Thêm chức thánh | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:chucthanhId',
-            component: () => import ('v@admin/linhmucchucthanhs/edit'),
-            name: 'admin.linh.muc.chuc.thanh.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách chức thánh',
-                    linkName: 'admin.linh.muc.chuc.thanh.list',
-                    linkPath: '/chuc-thanhs'
-                }, {
-                    name: 'Sửa Chức Thánh'
-                }],
-                header: 'Sửa Chức Thánh',
-                role: 'admin',
-                title: 'Chức Thánh | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
         },]
     }, {
         path: 'van-thus',
@@ -541,56 +491,6 @@ export default [{
                     footer: true
                 }
             }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/linhmucvanthus/add'),
-            name: 'admin.linh_muc_van_thu.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách văn thư',
-                    linkName: 'admin.linh.muc.van.thu.list',
-                    linkPath: '/van-thus'
-                }, {
-                    name: 'Thêm Văn Thư'
-                }],
-                header: 'Thêm văn thư',
-                role: 'admin',
-                title: 'Thêm văn thư | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:vanthuId',
-            component: () => import ('v@admin/linhmucvanthus/edit'),
-            name: 'admin.linh_muc_van_thu.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách văn thư',
-                    linkName: 'admin.linh.muc.van.thu.list',
-                    linkPath: '/van-thus'
-                }, {
-                    name: 'Sửa Văn Thư'
-                }],
-                header: 'Sửa Văn Thư',
-                role: 'admin',
-                title: 'Văn Thư | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
         },]
     }, {
         path: 'thuyen-chuyens',
@@ -614,56 +514,6 @@ export default [{
                 header: 'Danh sách thuyên chuyển',
                 role: 'admin',
                 title: 'Thuyên chuyển | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/linhmucthuyenchuyens/add'),
-            name: 'admin.linh_muc.thuyen.chuyen.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách thuyên chuyển',
-                    linkName: 'admin.linh.muc.thuyen.chuyen.list',
-                    linkPath: '/thuyen-chuyens'
-                }, {
-                    name: 'Thêm Thuyên Chuyển'
-                }],
-                header: 'Thêm thuyên chuyển',
-                role: 'admin',
-                title: 'Thêm thuyên chuyển | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:thuyenchuyenId',
-            component: () => import ('v@admin/linhmucthuyenchuyens/edit'),
-            name: 'admin.linh.muc.thuyen.chuyen.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách thuyên chuyển',
-                    linkName: 'admin.linh.muc.thuyen.chuyen.list',
-                    linkPath: '/thuyen-chuyens'
-                }, {
-                    name: 'Sửa Thuyên Chuyển'
-                }],
-                header: 'Sửa Thuyên Chuyển',
-                role: 'admin',
-                title: 'Thuyên Chuyển | ' + config.site_name,
                 show: {
                     footer: true
                 }
@@ -926,56 +776,6 @@ export default [{
                     footer: true
                 }
             }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/giaodiems/add'),
-            name: 'admin.giao.diem.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách giáo điểm',
-                    linkName: 'admin.giao.diem.list',
-                    linkPath: '/giao-diems'
-                }, {
-                    name: 'Giáo điểm'
-                }],
-                header: 'Danh sách giáo điểm',
-                role: 'admin',
-                title: 'Giao điểm | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:giaodiemId',
-            component: () => import ('v@admin/giaodiems/edit'),
-            name: 'admin.giao.diem.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách giáo điểm',
-                    linkName: 'admin.giao.diem.list',
-                    linkPath: '/giao-diems'
-                }, {
-                    name: 'Giáo điểm'
-                }],
-                header: 'Sửa giáo điểm',
-                role: 'admin',
-                title: 'Giao điểm | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
         }]
     }, {
         path: 'co-so-giao-phans',
@@ -1003,56 +803,6 @@ export default [{
                     footer: true
                 }
             }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/cosogiaophans/add'),
-            name: 'admin.co.so.giao.phan.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Quản trị',
-                    linkName: 'admin.co.so.giao.phan.list',
-                    linkPath: '/co-so-giao-phans'
-                }, {
-                    name: 'Cơ sở giáo phận'
-                }],
-                header: 'Thêm cơ sở giáo phận',
-                role: 'admin',
-                title: 'Giao điểm | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:cosogpId',
-            component: () => import ('v@admin/cosogiaophans/edit'),
-            name: 'admin.co.so.giao.phan.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Quản trị',
-                    linkName: 'admin.co.so.giao.phan.list',
-                    linkPath: '/co-so-giao-phans'
-                }, {
-                    name: 'Cơ sở giáo phận'
-                }],
-                header: 'Sửa cơ sở giáo phận',
-                role: 'admin',
-                title: 'Giao điểm | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
         }]
     }, {
         path: 'cong-doan-tu-sis',
@@ -1074,56 +824,6 @@ export default [{
                     name: 'Công đoàn tu sĩ'
                 }],
                 header: 'Danh sách công đoàn tu sĩ',
-                role: 'admin',
-                title: 'Giao điểm | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/congdoantusis/add'),
-            name: 'admin.cong.doan.tu.si.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách công đoàn tu sĩ',
-                    linkName: 'admin.cong.doan.tu.si.list',
-                    linkPath: '/cong-doan-tu-sis'
-                }, {
-                    name: 'Công đoàn tu sĩ'
-                }],
-                header: 'Thêm công đoàn tu sĩ',
-                role: 'admin',
-                title: 'Giao điểm | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:congdtsId',
-            component: () => import ('v@admin/congdoantusis/edit'),
-            name: 'admin.cong.doan.tu.si.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                }, {
-                    name: 'Danh sách công đoàn tu sĩ',
-                    linkName: 'admin.cong.doan.tu.si.list',
-                    linkPath: '/cong-doan-tu-sis'
-                }, {
-                    name: 'Công đoàn tu sĩ'
-                }],
-                header: 'Sửa công đoàn tu sĩ',
                 role: 'admin',
                 title: 'Giao điểm | ' + config.site_name,
                 show: {
@@ -1234,57 +934,7 @@ export default [{
                     footer: true
                 }
             }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/thanhs/add'),
-            name: 'admin.thanh.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                },{
-                    name: 'Danh sách thánh',
-                    linkName: 'admin.thanh.list',
-                    linkPath: '/thanhs'
-                }, {
-                    name: 'Thánh'
-                }],
-                header: 'Thêm thánh',
-                role: 'admin',
-                title: 'Thánh | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:thanhId',
-            component: () => import ('v@admin/thanhs/edit'),
-            name: 'admin.thanh.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                },{
-                    name: 'Danh sách thánh',
-                    linkName: 'admin.thanh.list',
-                    linkPath: '/thanhs'
-                }, {
-                    name: 'Thánh'
-                }],
-                header: 'Thêm thánh',
-                role: 'admin',
-                title: 'Thánh | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }]
+        },]
     }, {
         path: 'chuc-vus',
         component: {
@@ -1311,57 +961,7 @@ export default [{
                     footer: true
                 }
             }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/chucvus/add'),
-            name: 'admin.chuc.vu.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                },{
-                    name: 'Danh sách chức vụ',
-                    linkName: 'admin.chuc.vu.list',
-                    linkPath: '/chuc-vus'
-                }, {
-                    name: 'Chức vụ'
-                }],
-                header: 'Thêm chức vụ',
-                role: 'admin',
-                title: 'Chức vụ | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:chucvuId',
-            component: () => import ('v@admin/chucvus/edit'),
-            name: 'admin.chuc.vu.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                },{
-                    name: 'Danh sách chức vụ',
-                    linkName: 'admin.chuc.vu.list',
-                    linkPath: '/chuc-vus'
-                }, {
-                    name: 'Chức vụ'
-                }],
-                header: 'Thêm chức vụ',
-                role: 'admin',
-                title: 'Chức vụ | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }]
+        },]
     }, {
         path: 'le-chinhs',
         component: {
@@ -1388,56 +988,6 @@ export default [{
                     footer: true
                 }
             }
-        }, {
-            path: 'add',
-            component: () => import ('v@admin/lechinhs/add'),
-            name: 'admin.le.chinh.add',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                },{
-                    name: 'Danh sách lễ chính',
-                    linkName: 'admin.le.chinh.list',
-                    linkPath: '/lechinhs'
-                }, {
-                    name: 'Lễ Chính'
-                }],
-                header: 'Thêm lễ chính',
-                role: 'admin',
-                title: 'Lễ Chính | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }, {
-            path: 'edit/:leChinhId',
-            component: () => import ('v@admin/lechinhs/edit'),
-            name: 'admin.le.chinh.edit',
-            meta: {
-                layout: DefaultLayout,
-                auth: true,
-                breadcrumbs: [{
-                    name: 'Quản trị',
-                    linkName: 'admin.dashboards',
-                    linkPath: '/dashboards'
-                },{
-                    name: 'Danh sách lễ chính',
-                    linkName: 'admin.le.chinh.list',
-                    linkPath: '/lechinhs'
-                }, {
-                    name: 'Lễ Chính'
-                }],
-                header: 'Thêm lễ chính',
-                role: 'admin',
-                title: 'Lễ Chính | ' + config.site_name,
-                show: {
-                    footer: true
-                }
-            }
-        }]
+        },]
     },] 
 }];

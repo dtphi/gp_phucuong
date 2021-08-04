@@ -2,7 +2,11 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <btn-add></btn-add>
+                <button data-toggle="tooltip"
+                    @click.prevent="_showModal()"
+                    class="btn btn-primary cms-btn"
+                    data-original-title="Thêm"><i class="fa fa-plus"/>
+                 </button>
                 <button
                     @click="_refreshList()"
                     data-toggle="tooltip"
@@ -38,7 +42,6 @@
         mapState,
         mapActions
     } from 'vuex';
-    import BtnAdd from './TheBtnAdd';
     import Perpage from 'com@admin/Pagination/SelectPerpage';
     import ListSearch from 'com@admin/Search';
     import Breadcrumb from 'com@admin/Breadcrumb';
@@ -51,9 +54,8 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'LinhMucHeaderPage',
+        name: 'TheHeaderPage',
         components: {
-            BtnAdd,
             Perpage,
             ListSearch,
             Breadcrumb
@@ -67,14 +69,14 @@
             ...mapActions(MODULE_MODULE_GIAO_PHAN, [
                 ACTION_GET_INFO_LIST
             ]),
-            _pushAddPage() {
-                this.$router.push(`/admin/linh-mucs/add`);
-            },
             _refreshList() {
                 const params = {
                     perPage: this.perPage
                 };
                 this.[ACTION_GET_INFO_LIST]();
+            },
+            _showModal() {
+                this.$emit('show-modal-add');
             }
         },
         setting: {

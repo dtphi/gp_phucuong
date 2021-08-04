@@ -1,9 +1,9 @@
 <template>
-    <modal name="modal-linh-muc-bang-cap-add" :height="455">
+    <modal name="modal-linh-muc-van-thu-edit" :height="455">
         <div class="panel panel-default" style="height:100%;overflow:auto">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <i class="fa fa-plus"></i>Thêm bằng cấp</h3>
+                    <i class="fa fa-edit"></i>Cập nhật văn thư</h3>
 
                 <div slot="top-right" class="pull-right">
                     <button @click="_hideModalEdit">
@@ -16,11 +16,11 @@
                     <div class="form-group">
                         <label for="input-info-name" class="col-sm-2 control-label">Linh mục</label>
                         <div class="col-sm-10">
-                            {{infoUpdate.ten_linh_muc}}
+                            {{info.ten_linh_muc}}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Bằng cấp</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Tên văn thư</label>
                         <div class="col-sm-10">
                             <validation-provider
                             name="info_name"
@@ -28,7 +28,7 @@
                             v-slot="{ errors }"
                             >
                             <input
-                                v-model="infoUpdate.name"
+                                v-model="info.name"
                                 type="text"
                                 id="input-info-name"
                                 class="form-control"
@@ -46,7 +46,7 @@
                             rules="max:200"
                             v-slot="{ errors }"
                             >
-                            <textarea class="form-control" v-model="infoUpdate.ghi_chu"></textarea>
+                            <textarea class="form-control" v-model="info.ghi_chu"></textarea>
 
                             <span class="cms-text-red">{{ errors[0] }}</span>
                             </validation-provider>
@@ -55,18 +55,18 @@
                     <div class="form-group">
                         <label for="input-info-name" class="col-sm-2 control-label">Loại</label>
                         <div class="col-sm-10">
-                            <select class="form-control" v-model="infoUpdate.type">
-                                <option value="0" :selected="infoUpdate.type == 0">Loại 1</option>
-                                <option value="1" :selected="infoUpdate.type == 1">Loại 2</option>
+                            <select class="form-control" v-model="info.type">
+                                <option value="0" :selected="info.type == 0">Loại 1</option>
+                                <option value="1" :selected="info.type == 1">Loại 2</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="input-info-name" class="col-sm-2 control-label">Trạng thái</label>
                         <div class="col-sm-10">
-                            <select class="form-control" v-model="infoUpdate.active">
-                                <option value="1" :selected="infoUpdate.active == 1">Xảy ra</option>
-                                <option value="0" :selected="infoUpdate.active == 0">Ẩn</option>
+                            <select class="form-control" v-model="info.active">
+                                <option value="1" :selected="info.active == 1">Xảy ra</option>
+                                <option value="0" :selected="info.active == 0">Ẩn</option>
                             </select>
                         </div>
                     </div>
@@ -87,31 +87,45 @@
 
 <script>
     import {
+        mapActions
+    } from 'vuex';
+    import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
+    import { config } from "@app/common/config";
 
     export default {
-        name: 'TheModalAdd',
-        data() {
-            return {
-                infoUpdate: {
-                    active: 1,
-                    ghi_chu: "",
-                    id: null,
-                    name: "",
-                    ten_linh_muc: "",
-                    type: 0
+        name: 'TheModalEdit',
+        props: {
+            info: {
+                type: Object,
+                default: {}
+            },
+            infoId: {
+                type: Number,
+                default: 0,
+                validator: function (value) {
+                    return (value && Number.isInteger(value))
                 }
             }
+        },
+        data() {
+            return {
+                infoUpdate: {}
+            };
         },
         methods: {
             _hideModalEdit() {
                 this.infoUpdate = {};
-                this.$modal.hide('modal-linh-muc-bang-cap-add');
+                this.$modal.hide('modal-linh-muc-van-thu-edit');
             },
-            _submitUpdate() {
-                return 0;
+             _submitUpdate() {
+               return 0;
             },
+        },
+         setting: {
+            cf: config,
+            list_title: 'Danh sách Linh mục'
         }
     };
 </script>

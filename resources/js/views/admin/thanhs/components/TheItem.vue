@@ -12,12 +12,15 @@
         </td>
         <td class="text-center">{{info.sort_id}}</td>
         <td class="text-center">{{info.active}}</td>
-        
+        <td></td>
         <td class="text-right">
-            <!--<btn-edit
-                :info-id="info.id"></btn-edit>-->
-            <!--<btn-delete
-                :info-id="info.id"></btn-delete>-->
+            <a href="javascript:void(0);" data-toggle="tooltip"
+                @click.prevent="_showModal"
+                class="btn btn-default cms-btn"
+                data-original-title="Sửa Tin"><i class="fa fa-edit"/>
+            </a>
+            <btn-delete
+                :info-id="info.id"></btn-delete>
         </td>
     </tr>
 </template>
@@ -27,7 +30,6 @@
         mapState,
         mapActions
     } from 'vuex';
-    import BtnEdit from './TheBtnEdit';
     import BtnDelete from './TheBtnDelete';
     import {
         fn_get_base_url_image,
@@ -37,7 +39,6 @@
     export default {
         name: 'TheItem',
         components: {
-            BtnEdit,
             BtnDelete
         },
         props: {
@@ -73,6 +74,9 @@
             _formatDate(date) {
                 return fn_format_dd_mm_yyyy(date);
             },
+            _showModal() {
+                this.$emit('show-modal-edit', this.info);
+            }
         }
     };
 </script>

@@ -46,7 +46,7 @@
     } from 'store@admin/types/action-types';
 
     export default {
-        name: 'LinhMucHeaderPage',
+        name: 'TheHeaderPage',
         components: {
             Perpage,
             ListSearch,
@@ -61,9 +61,6 @@
             ...mapActions(MODULE_MODULE_LINH_MUC, [
                 ACTION_GET_INFO_LIST
             ]),
-            _pushAddPage() {
-                this.$router.push(`/admin/linh-mucs/add`);
-            },
             _refreshList() {
                 const params = {
                     perPage: this.perPage
