@@ -13,35 +13,13 @@
             <div class="panel-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Linh mục</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Giáo phận</label>
                         <div class="col-sm-10">
                             {{info.ten_linh_muc}}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Chức thánh</label>
-                        <div class="col-sm-10">
-                            <validation-provider
-                            name="info_name"
-                            rules="max:200"
-                            v-slot="{ errors }"
-                            >
-                                <select class="form-control" v-model="info.chuc_thanh_id">
-                                    <option
-                                        :selected="item.chuc_thanh_id == idx"
-                                        :value="idx ? idx : ''"
-                                        v-for="(item, idx) in $options.setting.cf.chucThanhs"
-                                        :key="idx"
-                                        >
-                                        {{ item }}
-                                    </option>
-                                </select>
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                            </validation-provider>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Người thụ phong</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Tên cơ sở</label>
                         <div class="col-sm-10">
                             <validation-provider
                             name="info_name"
@@ -60,7 +38,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Nơi thụ phong</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Địa chỉ</label>
                         <div class="col-sm-10">
                             <validation-provider
                             name="info_name"
@@ -79,14 +57,79 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Ngày tháng</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-10">
-                            <cms-date-picker
-                                value-type="format"
-                                format="YYYY-MM-DD"
-                                v-model="info.ngay_thang"
-                                type="date"
-                            ></cms-date-picker>
+                            <validation-provider
+                            name="info_name"
+                            rules="max:255"
+                            v-slot="{ errors }"
+                            >
+                            <input
+                                v-model="info.noi_thu_phong"
+                                type="text"
+                                id="input-info-name"
+                                class="form-control"
+                            />
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                            </validation-provider>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Điện thoại</label>
+                        <div class="col-sm-10">
+                            <validation-provider
+                            name="info_name"
+                            rules="max:255"
+                            v-slot="{ errors }"
+                            >
+                            <input
+                                v-model="info.noi_thu_phong"
+                                type="text"
+                                id="input-info-name"
+                                class="form-control"
+                            />
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                            </validation-provider>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Fax</label>
+                        <div class="col-sm-10">
+                            <validation-provider
+                            name="info_name"
+                            rules="max:255"
+                            v-slot="{ errors }"
+                            >
+                            <input
+                                v-model="info.noi_thu_phong"
+                                type="text"
+                                id="input-info-name"
+                                class="form-control"
+                            />
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                            </validation-provider>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Website</label>
+                        <div class="col-sm-10">
+                            <validation-provider
+                            name="info_name"
+                            rules="max:255"
+                            v-slot="{ errors }"
+                            >
+                            <input
+                                v-model="info.noi_thu_phong"
+                                type="text"
+                                id="input-info-name"
+                                class="form-control"
+                            />
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                            </validation-provider>
                         </div>
                     </div>
                     <div class="form-group">
