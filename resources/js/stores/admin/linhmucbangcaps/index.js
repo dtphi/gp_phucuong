@@ -162,8 +162,8 @@ export default {
     }, infoId) {
       let getId = null;
       if (typeof state.infoDelete === "object") {
-        if (state.infoDelete.hasOwnProperty('information_id')) {
-          getId = parseInt(state.infoDelete.information_id);
+        if (state.infoDelete.hasOwnProperty('id')) {
+          getId = parseInt(state.infoDelete.id);
         }
       }
       const deleteId = parseInt(infoId);

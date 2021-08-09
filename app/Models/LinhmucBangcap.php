@@ -10,6 +10,7 @@ use App\Models\Linhmuc;
 
 class LinhmucBangcap extends BaseModel
 {
+    use SoftDeletes;
     /**
      * @var string
      */
@@ -31,7 +32,8 @@ class LinhmucBangcap extends BaseModel
         'name',
         'type',
         'ghi_chu',
-        'active'
+        'active',
+        'update_user'
     ];
 
     public function getTenLinhMucAttribute($value)

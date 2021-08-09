@@ -14,23 +14,28 @@ const AppConfig = {
 	noGroupType: noGrType,
 	comSuccessNo: {
 		group: noGrType.comSuccess,
-		text: 'Thành công'
+		text: 'Thành công',
+		type: 'success'
 	},
 	comUpdateNoSuccess: {
 		group: noGrType.comUpdate,
-		text: 'Thực hiện cập nhật thành công'
+		text: 'Thực hiện cập nhật thành công',
+		type: 'success'
 	},
 	comUpdateNoFail: {
 		group: noGrType.comUpdate,
-		text: 'Thực hiện cập nhật thất bại'
+		text: 'Thực hiện cập nhật thất bại',
+		type: 'error'
 	},
 	comInsertNoSuccess: {
 		group: noGrType.comUpdate,
-		text: 'Thực hiện thêm thành công'
+		text: 'Thực hiện thêm thành công',
+		type: 'success'
 	},
 	comInsertNoFail: {
 		group: noGrType.comUpdate,
-		text: 'Thực hiện thêm thất bại'
+		text: 'Thực hiện thêm thất bại',
+		type: 'error'
 	},
 }
 

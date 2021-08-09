@@ -59,10 +59,11 @@
                 </div>
             </div>
         </div>
-        <the-modal-edit v-if="_infoUpdate.id"
-            :info="_infoUpdate"
-            :info-id="_infoUpdate.id"
-        ></the-modal-edit>
+         <modal name="modal-linh-muc-bang-cap-edit" :height="455" :click-to-close="false">
+            <the-modal-edit v-if="_infoUpdate.id"
+                :info="_infoUpdate"
+            ></the-modal-edit>
+         </modal>
         <the-modal-add></the-modal-add>
     </div>
 </template>
@@ -79,6 +80,7 @@
     import Paginate from 'com@admin/Pagination';
     import {
         MODULE_MODULE_BANG_CAP,
+        MODULE_MODULE_BANG_CAP_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -101,7 +103,8 @@
             return {
                 fullPage: false,
                 isResource: false,
-                infoUpdate: {}
+                infoUpdate: {},
+                curInfo: {}
             }
         },
         watch: {
@@ -119,6 +122,9 @@
             ...mapState(MODULE_MODULE_BANG_CAP, [
                 'infos',
                 'loading',
+            ]),
+            ...mapState(MODULE_MODULE_BANG_CAP_EDIT, [
+                'info',
                 'updateSuccess',
             ]),
             _infoList() {
@@ -134,21 +140,27 @@
         methods: {
             ...mapActions(MODULE_MODULE_BANG_CAP, [
                 ACTION_GET_INFO_LIST,
+            ]),
+            ...mapActions(MODULE_MODULE_BANG_CAP_EDIT, [
                 ACTION_RESET_NOTIFICATION_INFO,
             ]),
             _showModalAdd() {
                 this.$modal.show('modal-linh-muc-bang-cap-add')
             },
             _showModalEdit(info) {
-                this.infoUpdate = info;
+                this.curInfo = info;
+                this.infoUpdate = {...info};
                 this.$modal.show('modal-linh-muc-bang-cap-edit');
             },
-            _submitAction(event) {
-                this[event.target.value]({
-                    action: event.target.value
-                });
-            },
             _notificationUpdate(notification) {
+                if (notification.type == 'success') {
+                    this.curInfo.name = this.info.name;
+                    this.curInfo.ghi_chu = this.info.ghi_chu;
+                    this.curInfo.type = this.info.type;
+                    this.curInfo.active = this.info.active;
+                    
+                    this.$modal.hide('modal-linh-muc-bang-cap-edit');
+                }
                 this.$notify(notification);
                 this.[ACTION_RESET_NOTIFICATION_INFO]();
             },

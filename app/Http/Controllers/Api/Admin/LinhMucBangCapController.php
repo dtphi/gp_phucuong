@@ -143,11 +143,10 @@ class LinhMucBangCapController extends ApiController
     {
         try {
             $model = $this->bangCapSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -161,7 +160,7 @@ class LinhMucBangCapController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->bangCapSv->apiInsert($formData)) {
+        if ($result = $this->bangCapSv->apiInsertOrUpdate($formData)) {
             return $this->respondUpdated($result);
         }
 
@@ -178,7 +177,7 @@ class LinhMucBangCapController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->bangCapSv->apiUpdate($model, $formData)) {
+        if ($result = $this->bangCapSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 
