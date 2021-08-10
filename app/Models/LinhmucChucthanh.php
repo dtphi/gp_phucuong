@@ -39,7 +39,8 @@ class LinhmucChucthanh extends BaseModel
         'noi_thu_phong',
         'nguoi_thu_phong',
         'ghi_chu',
-        'active'
+        'active',
+        'update_user'
     ];
 
     public static function insertByLinhmucId(

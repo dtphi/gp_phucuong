@@ -147,11 +147,10 @@ class LinhMucChucThanhController extends ApiController
     {
         try {
             $model = $this->chucThanhSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -182,7 +181,7 @@ class LinhMucChucThanhController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->chucThanhSv->apiUpdate($model, $formData)) {
+        if ($result = $this->chucThanhSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 

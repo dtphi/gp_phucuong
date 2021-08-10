@@ -37,6 +37,16 @@ const AppConfig = {
 		text: 'Thực hiện thêm thất bại',
 		type: 'error'
 	},
+	comDeleteNoSuccess: {
+		group: noGrType.comUpdate,
+		text: 'Thực hiện xóa thành công',
+		type: 'success'
+	},
+	comDeleteNoFail: {
+		group: noGrType.comUpdate,
+		text: 'Thực hiện xóa thất bại',
+		type: 'error'
+	},
 }
 
 export default AppConfig;

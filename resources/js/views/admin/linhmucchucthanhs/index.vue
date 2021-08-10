@@ -69,10 +69,13 @@
                 </div>
             </div>
         </div>
-        <the-modal-edit v-if="_infoUpdate.id"
-            :info="_infoUpdate"
-            :info-id="_infoUpdate.id"
-        ></the-modal-edit>
+        <modal name="modal-linh-muc-chuc-thanh-edit" :height="455" :click-to-close="false">
+            <the-modal-edit v-if="_infoUpdate.id"
+                :info="_infoUpdate"
+                :info-id="_infoUpdate.id"
+                @update-info-success="_updateInfoList"
+            ></the-modal-edit>
+        </modal>
         <the-modal-add></the-modal-add>
     </div>
 </template>
@@ -89,6 +92,7 @@
     import Paginate from 'com@admin/Pagination';
     import {
         MODULE_MODULE_CHUC_THANH,
+        MODULE_MODULE_CHUC_THANH_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -113,11 +117,12 @@
             return {
                 fullPage: false,
                 isResource: false,
-                infoUpdate: {}
+                infoUpdate: {},
+                curInfo: {}
             }
         },
         watch: {
-            'updateSuccess'(newValue, oldValue) {
+            'isDelete'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }
@@ -131,7 +136,10 @@
             ...mapState(MODULE_MODULE_CHUC_THANH, [
                 'infos',
                 'loading',
-                'updateSuccess',
+                'isDelete',
+            ]),
+            ...mapState(MODULE_MODULE_CHUC_THANH_EDIT, [
+                'info',
             ]),
             _infoList() {
                 return this.infos;
@@ -152,13 +160,19 @@
                 this.$modal.show('modal-linh-muc-chuc-thanh-add')
             },
             _showModalEdit(info) {
-                this.infoUpdate = info;
+                this.curInfo = info;
+                this.infoUpdate = {...info};
                 this.$modal.show('modal-linh-muc-chuc-thanh-edit');
             },
-            _submitAction(event) {
-                this[event.target.value]({
-                    action: event.target.value
-                });
+            _updateInfoList() {
+                this.curInfo.chuc_thanh_id = this.info.chuc_thanh_id;
+                this.curInfo.ngay_thang = this.info.ngay_thang;
+                this.curInfo.noi_thu_phong = this.info.noi_thu_phong;
+                this.curInfo.nguoi_thu_phong = this.info.nguoi_thu_phong;
+                this.curInfo.ghi_chu = this.info.ghi_chu;
+                this.curInfo.active = this.info.active;
+                
+                this.$modal.hide('modal-linh-muc-chuc-thanh-edit');
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
