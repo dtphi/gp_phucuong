@@ -19,7 +19,7 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
       console.log(response)
       if (response.status === 200) {
         var json = {};
-        json['data'] = response.data.information;
+        json['data'] = response.data.linhmuc_vanthu;
         json['status'] = 1000;
         resolve(json);
       } else {
@@ -82,7 +82,7 @@ export const apiGetInfos = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiUpdateInfo = (info, resolve, errResole) => {
-  return axios.put(fn_get_base_api_detail_url(API_LINH_MUC_VAN_THUS_RESOURCE, info.information_id), info)
+  return axios.put(fn_get_base_api_detail_url(API_LINH_MUC_VAN_THUS_RESOURCE, info.id), info)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {

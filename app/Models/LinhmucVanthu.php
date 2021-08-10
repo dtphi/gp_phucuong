@@ -37,7 +37,8 @@ class LinhmucVanthu extends BaseModel
         'title',
         'type',
         'ghi_chu',
-        'active'
+        'active',
+        'update_user'
     ];
 
     public static function insertByLinhmucId(

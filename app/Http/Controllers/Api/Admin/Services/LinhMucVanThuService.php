@@ -65,10 +65,15 @@ final class LinhMucVanThuService implements BaseModel, LinhMucVanThuModel
      * @param array $data
      * @return LinhMucVanThu|bool|null
      */
-    public function apiInsertOrUpdate(array $data = [])
+    public function apiInsertOrUpdate(array $data = [], $model = null)
     {
         // TODO: Implement apiInsertOrUpdate() method.
-        $this->model->fill($data);
+        
+        if (is_null($model)) {
+            $model = $this->model;
+        }
+
+        $model->fill($data);
 
         /**
          * Save user with transaction to make sure all data stored correctly

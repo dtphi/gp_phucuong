@@ -144,11 +144,10 @@ class LinhMucVanThuController extends ApiController
     {
         try {
             $model = $this->vanThuSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -179,7 +178,7 @@ class LinhMucVanThuController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->vanThuSv->apiUpdate($model, $formData)) {
+        if ($result = $this->vanThuSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 

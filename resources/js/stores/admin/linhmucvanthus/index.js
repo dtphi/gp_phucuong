@@ -20,7 +20,6 @@ import {
   INFOS_SET_INFO_DELETE_BY_ID_FAILED,
   INFOS_SET_INFO_DELETE_BY_ID_SUCCESS,
   INFOS_SET_ERROR,
-  MODULE_UPDATE_SETTING_SUCCESS,
   MODULE_UPDATE_SETTING_FAILED,
 } from '../types/mutation-types';
 import {
@@ -68,9 +67,6 @@ export default {
   },
 
   mutations: {
-    [MODULE_UPDATE_SETTING_SUCCESS](state,payload) {
-      state.updateSuccess = payload;
-    },
     [MODULE_UPDATE_SETTING_FAILED](state,payload) {
       state.updateSuccess = payload;
     },
@@ -162,8 +158,8 @@ export default {
     }, infoId) {
       let getId = null;
       if (typeof state.infoDelete === "object") {
-        if (state.infoDelete.hasOwnProperty('information_id')) {
-          getId = parseInt(state.infoDelete.information_id);
+        if (state.infoDelete.hasOwnProperty('id')) {
+          getId = parseInt(state.infoDelete.id);
         }
       }
       const deleteId = parseInt(infoId);
@@ -172,12 +168,12 @@ export default {
         await apiDeleteInfo(
           deleteId,
           (infos) => {
-            commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true);
+            commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, AppConfig.comDeleteNoSuccess);
             dispatch(ACTION_GET_INFO_LIST);
             commit(INFOS_INFO_DELETE_BY_ID, null);
           },
           (errors) => {
-            commit(INFOS_DELETE_INFO_BY_ID_FAILED, false);
+            commit(INFOS_DELETE_INFO_BY_ID_FAILED, AppConfig.comDeleteNoFail);
             if (errors) {
               commit(INFOS_SET_ERROR, errors);
             }
@@ -193,10 +189,10 @@ export default {
         infoId,
         (result) => {
           commit(INFOS_INFO_DELETE_BY_ID, result.data);
-          commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, true);
+          commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, null);
         },
         (errors) => {
-          commit(INFOS_SET_INFO_DELETE_BY_ID_FAILED, false);
+          commit(INFOS_SET_INFO_DELETE_BY_ID_FAILED, null);
           if (errors) {
             commit(INFOS_SET_ERROR, errors);
           }
@@ -224,7 +220,7 @@ export default {
     [ACTION_RESET_NOTIFICATION_INFO]({
       commit
     }, values) {
-      commit(MODULE_UPDATE_SETTING_SUCCESS, values);
+      commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, values);
     },
   },
 
