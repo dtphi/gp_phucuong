@@ -24,6 +24,8 @@ import CategoryListPage from 'v@admin/categorys';
 import UserListPage from 'v@admin/users';
 import InformationListPage from 'v@admin/informations';
 import FileManagerListPage from 'v@admin/filemanagers';
+import GiaoPhanInfosPage from 'v@admin/giaophaninfos';
+import GiaoPhanCatesPage from 'v@admin/giaophancates';
 
 import {
     config
@@ -989,5 +991,166 @@ export default [{
                 }
             }
         },]
-    },] 
-}];
+    }, {
+      /* Giáo phận danh mục */
+      path: 'giao-phan/danh-mucs',
+      component: {
+        render: c => c('router-view')
+      },
+      children: [{
+        path: '',
+        component: GiaoPhanCatesPage,
+        name: 'admin.giao.phan.danh.muc.list',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Giáo phận danh mục'
+          }],
+          header: 'Danh sách danh mục',
+          role: 'admin',
+          title: 'Danh mục | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+      }, {
+        path: 'add',
+        component: () =>
+          import('v@admin/giaophancates/add'),
+        name: 'admin.giao.phan.danh.muc.add',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Danh mục tin giáo phận',
+            linkName: 'admin.danh.muc.giao.phan.list',
+            linkPath: '/giao-phan/danh-mucs'
+          }, {
+            name: 'Thêm danh mục giáo phận'
+          }],
+          header: 'Thêm danh mục tin tức giáo phận',
+          role: 'admin',
+          title: 'Thêm danh mục giáo phận | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+      }, {
+        path: 'edit/:categoryId',
+        component: () =>
+          import('v@admin/giaophancates/edit'),
+        name: 'admin.danh.muc.giao.phan.edit',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards.list',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Danh mục tin giáo phận',
+            linkName: 'admin.danh.muc.giao.phan',
+            linkPath: '/giao-phan/danh-mucs'
+          }, {
+            name: 'Cập nhật danh mục'
+          }],
+          header: 'DanhMucEdit',
+          role: 'admin',
+          title: 'Edit category | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+      }]
+    }, {
+      /* Giáo phận tin tuc */
+      path: 'giao-phan/tin-tucs',
+      component: {
+        render: c => c('router-view')
+      },
+      children: [{
+        path: '',
+        component: GiaoPhanInfosPage,
+        name: 'admin.giao.phan.tin.tuc.list',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Giáo phận tin tức'
+          }],
+          header: 'Danh sách tin tức',
+          role: 'admin',
+          title: 'Tin tức | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+      }, {
+        path: 'add',
+        component: () =>
+          import('v@admin/giaophaninfos/add'),
+        name: 'admin.giao.phan.tin.tuc.add',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Danh mục tin',
+            linkName: 'admin.giao.phan.tin.tuc.list',
+            linkPath: '/danh-muc/tin-tucs'
+          }, {
+            name: 'Thêm tin tức'
+          }],
+          header: 'Thêm danh mục tin tức',
+          role: 'admin',
+          title: 'Thêm tin tức | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+      }, {
+        path: 'edit/:infoId',
+        component: () =>
+          import('v@admin/giaophaninfos/edit'),
+        name: 'admin.giao.phan.tin.tuc.edit',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards.list',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Danh mục tin giáo phận',
+            linkName: 'admin.giao.phan.tin.tuc',
+            linkPath: '/giao-phan/tin-tucs'
+          }, {
+            name: 'Cập nhật tin tức'
+          }],
+          header: 'GiaoPhanTinTucEdit',
+          role: 'admin',
+          title: 'Chỉnh sửa giáo phận tin tức | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+      }]
+    }]
+  }];
+  

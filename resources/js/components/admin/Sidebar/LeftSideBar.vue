@@ -59,6 +59,25 @@
           </li>
         </ul>
       </li>
+      <!-- Giáo phận tin tức -->
+      <li id="giao-phan-tin-tuc">
+        <a class="parent">
+          <i class="fa fa-newspaper-o fa-fw"></i>
+          <span>{{ $options.setting.giaophan_tintucs_title }}</span></a
+        >
+        <ul class="collapse">
+          <li>
+            <a :href="_getHref('giao-phan/danh-mucs')">
+              <span>{{ $options.setting.category_sub_cate_info_title }}</span></a
+            >
+          </li>
+          <li>
+            <a :href="_getHref('giao-phan/tin-tucs')">
+              <span>{{ $options.setting.category_sub_info_title }}</span></a
+            >
+          </li>
+        </ul>
+      </li>
       <li id="linh-muc">
         <a class="parent">
           <i class="fa fa-user fa-fw"></i>
@@ -276,6 +295,7 @@ export default {
     thanhs_title: "Thánh",
     chuc_vus_title: "Chức vụ",
     le_chinhs_title: "Lễ chính",
+    giaophan_tintucs_title: "Giáo phận tin tức"
   },
 };
 </script>

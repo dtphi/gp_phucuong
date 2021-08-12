@@ -4,6 +4,16 @@ namespace App\Http\Common;
 
 final class Tables
 {
+    // model GiaoPhanDanhMuc
+    public static $giaophandanhmucs = DB_PREFIX . 'danh_muc_giao_phans';
+    public static $giaophandanhmuc_motas = DB_PREFIX . 'danh_muc_giao_phan_mo_tas';
+    public static $giaophandanhmuc_lienkets = DB_PREFIX . 'danh_muc_giao_phan_lien_kets';
+
+    // model GiaoPhanTinTuc
+    public static $giaophantintucs = DB_PREFIX . 'giao_phan_tin_tucs';
+    public static $giaophantintuc_motas = DB_PREFIX . 'giao_phan_tin_tuc_mo_tas';
+    public static $giaophantintuc_danhmucs = DB_PREFIX . 'giao_phan_tin_tuc_danh_mucs';
+
     public static $subscribes = DB_PREFIX . 'subscribes';
     public static $categorys = DB_PREFIX . 'categorys';
     public static $category_to_layouts = DB_PREFIX . 'category_to_layouts';

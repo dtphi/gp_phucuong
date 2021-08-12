@@ -151,8 +151,14 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                 $this->model->save();
 
 
-                CategoryDescription::insertByCateId($data['category_id'], $data['name'], $data['description'],
-                    $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
+                CategoryDescription::insertByCateId(
+                    $data['category_id'],
+                    $data['name'],
+                    $data['description'],
+                    $data['meta_title'],
+                    $data['meta_description'],
+                    $data['meta_keyword']
+                );
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
                 $level       = 0;
@@ -169,13 +175,11 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                 if (isset($data['layout_id'])) {
                     CategoryToLayout::insertByCateId($data['category_id'], $data['layout_id']);
                 }
-
             } else {
                 DB::rollBack();
 
                 return false;
             }
-
         } catch (\Exceptions $e) {
             DB::rollBack();
 
@@ -219,7 +223,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     public function apiUpdate($model, array $data = [])
     {
         // TODO: Implement apiInsertOrUpdate() method.
-        $data['name_slug'] = Str::slug($data['name'] . ' ' . $model->category_id);
+        $data['name_slug'] = Str::slug($data['category_name'] . ' ' . $model->category_id);
 
         $model->fill($data);
 
@@ -234,7 +238,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
                 $modelDes = $model->description;
                 $dataDes  = [
-                    'name'             => $data['name'],
+                    'name'             => $data['category_name'],
                     'description'      => $data['description'],
                     'meta_title'       => $data['meta_title'],
                     'meta_description' => $data['meta_description'],
@@ -245,8 +249,14 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                     $modelDes->fill($dataDes);
                     $modelDes->save();
                 } else {
-                    CategoryDescription::insertByCateId($categoryId, $data['name'], $data['description'],
-                        $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
+                    CategoryDescription::insertByCateId(
+                        $categoryId,
+                        $data['name'],
+                        $data['description'],
+                        $data['meta_title'],
+                        $data['meta_description'],
+                        $data['meta_keyword']
+                    );
                 }
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
@@ -288,8 +298,10 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                     // Fix for records with no paths
                     $level = 0;
 
-                    $resultPathParents = $this->modelPath->where('category_id',
-                        (int)$data['parent_id'])->orderBy('level', 'ASC')->get();
+                    $resultPathParents = $this->modelPath->where(
+                        'category_id',
+                        (int)$data['parent_id']
+                    )->orderBy('level', 'ASC')->get();
 
                     foreach ($resultPathParents as $resultPathParent) {
                         CategoryPath::insertByCateId($categoryId, $resultPathParent['path_id'], $level);
@@ -304,13 +316,11 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                 if (isset($data['layout_id'])) {
                     CategoryToLayout::insertByCateId($categoryId, $data['layout_id']);
                 }
-
             } else {
                 DB::rollBack();
 
                 return false;
             }
-
         } catch (\Exceptions $e) {
             DB::rollBack();
 
@@ -335,14 +345,17 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         $cateDes2 = 'cd2';
 
         $query = $this->modelPath
-            ->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id',
-                $cate1 . '.sort_order', CategoryPath::getRawCategoryName($cateDes1, 'category_name'))
+            ->select(
+                Tables::$category_paths . '.category_id AS category_id',
+                $cate1 . '.parent_id',
+                $cate1 . '.sort_order',
+                CategoryPath::getRawCategoryName($cateDes1, 'category_name')
+            )
             ->gbByCategoryId()
             ->ljoinCategory($cate1)
             ->ljoinCategory($cate2)
             ->ljoinCateDescription($cateDes1)
             ->ljoinCateDescription($cateDes2);
-
         if (!empty($data['filter_name'])) {
             $query->filterLikeName($cateDes2, $data['filter_name']);
         }
@@ -365,19 +378,6 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             $query->orderBy($sqlSort, 'ASC');
         }
 
-        /*if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-
-            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-        }*/
-
-        //dd($query->toSql());
         return $query;
     }
 
@@ -418,7 +418,6 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             $cateId = $model->category_id;
 
             $this->_deleteById($cateId);
-
         } catch (\Exceptions $e) {
             DB::rollBack();
 
@@ -436,8 +435,12 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         $cd2   = 'cd2';
 
         $query = $this->modelPath
-            ->select(Tables::$category_paths . '.category_id AS category_id', $cate1 . '.parent_id',
-                $cate1 . '.sort_order', CategoryPath::getRawCategoryName($cd1))
+            ->select(
+                Tables::$category_paths . '.category_id AS category_id',
+                $cate1 . '.parent_id',
+                $cate1 . '.sort_order',
+                CategoryPath::getRawCategoryName($cd1)
+            )
             ->gbByCategoryId()
             ->ljoinCategory($cate1)
             ->ljoinCategory($cate2)
@@ -470,8 +473,14 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
                 Category::insertForce($group->id, $group->father_id);
                 $categoryId = $group->id;
 
-                CategoryDescription::insertByCateId($group->id, $group->newsgroupname, '',
-                    $group->newsgroupnamenomark, '', '');
+                CategoryDescription::insertByCateId(
+                    $group->id,
+                    $group->newsgroupname,
+                    '',
+                    $group->newsgroupnamenomark,
+                    '',
+                    ''
+                );
 
                 /*MySQL Hierarchical Data Closure Table Pattern*/
                 $level       = 0;
@@ -492,7 +501,6 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         }
 
         DB::commit();
-
     }
 
     public function connectSqlServer()
@@ -503,15 +511,17 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         $database   = "giaophanphucuong_db";
         $port       = "1433";
         try {
-            $conn = new \PDO("sqlsrv:server=103.139.202.9:1433;Database=giaophanphucuong_db;ConnectionPooling=0",
-                "giaophanphucuong_db", "xY8uKdxKazxBguiV82gQ",
+            $conn = new \PDO(
+                "sqlsrv:server=103.139.202.9:1433;Database=giaophanphucuong_db;ConnectionPooling=0",
+                "giaophanphucuong_db",
+                "xY8uKdxKazxBguiV82gQ",
                 array(
                     \PDO::ATTR_PERSISTENT => true,
                     \PDO::ATTR_ERRMODE    => \PDO::ERRMODE_EXCEPTION
                 )
             );
         } catch (\PDOException $e) {
-            echo("Error connecting to SQL Server: " . $e->getMessage());
+            echo ("Error connecting to SQL Server: " . $e->getMessage());
         }
 
         if (isset($conn)) {
@@ -522,5 +532,4 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             }
         }
     }
-
 }

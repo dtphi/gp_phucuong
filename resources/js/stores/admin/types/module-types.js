@@ -74,3 +74,12 @@ export const MODULE_MODULE_CHUC_VU_EDIT = 'chuc_vu/edit';
 export const MODULE_MODULE_LE_CHINH = 'le_chinh';
 export const MODULE_MODULE_LE_CHINH_ADD = 'le_chinh/add';
 export const MODULE_MODULE_LE_CHINH_EDIT = 'le_chinh/edit';
+export const MODULE_MODULE_DANHMUC_GIAOPHAN = 'danhmuc_giaophan';
+export const MODULE_MODULE_DANHMUC_GIAOPHAN_ADD = 'danhmuc_giaophan/add';
+export const MODULE_MODULE_DANHMUC_GIAOPHAN_EDIT = 'danhmuc_giaophan/edit';
+
+export const MODULE_MODULE_TINTUC_GIAOPHAN = 'tintuc_giaophan';
+export const MODULE_MODULE_TINTUC_GIAOPHAN_ADD = 'tintuc_giaophan/add';
+export const MODULE_MODULE_TINTUC_GIAOPHAN_EDIT = 'tintuc_giaophan/edit';
+export const MODULE_MODULE_TINTUC_GIAOPHAN_MODAL = 'tintuc_giaophan/modal';
+export const MODULE_TINTUC_GIAOPHAN_MODAL = 'tintuc_giaophan/modal';
