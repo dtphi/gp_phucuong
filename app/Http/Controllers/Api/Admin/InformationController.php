@@ -50,6 +50,7 @@ class InformationController extends ApiController
         try {
             $limit       = $this->_getPerPage();
             $collections = $this->infoSv->apiGetList($data, $limit);
+            
 
             if (isset($data['infoType']) && $data['infoType'] == 'module_special_info') {
                 $pagination = [];
@@ -60,9 +61,11 @@ class InformationController extends ApiController
             $results = [];
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
-                if (file_exists(public_path($info->image['path']))) {
+                
+                if (file_exists(public_path($info->image['path'])) && $info->image['path']!= '') {
                     $staticImgThum = $info->image['path'];
                 }
+
                 $results[] = [
                     'information_id' => (int)$info->information_id,
                     'image'          => $info->image,

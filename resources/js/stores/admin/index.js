@@ -24,6 +24,8 @@ import ban_chuyen_trach from './banchuyentrachs';
 import thanh from './thanhs';
 import chuc_vu from './chucvus';
 import le_chinh from './lechinhs';
+import danhmuc_giaophan from './giaophandanhmucs';
+import tintuc_giaophan from './giaophantintucs';
 import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex);
@@ -172,7 +174,9 @@ export default new Vuex.Store({
     ban_chuyen_trach,
     thanh,
     chuc_vu,
-    le_chinh
+    le_chinh,
+    danhmuc_giaophan,
+    tintuc_giaophan
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

@@ -2,48 +2,82 @@
 
 namespace App\Http\Controllers\Api\Admin\Services;
 
-use App\Http\Common\Tables;
-use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
-use App\Http\Controllers\Api\Admin\Services\Contracts\NewsGroupModel;
-use App\Http\Resources\NewsGroups\NewsGroupCollection;
-use App\Http\Resources\NewsGroups\NewsGroupResource;
-use App\Models\Category;
-use App\Models\CategoryDescription;
-use App\Models\CategoryPath;
-use App\Models\CategoryToLayout;
-use App\Models\InformationToCategory;
-use App\Models\NewsGroup;
 use DB;
+use App\Http\Common\Tables;
 use Illuminate\Support\Str;
+use App\Models\GiaoPhanDanhMuc;
+use App\Models\GiaoPhanDanhMucMoTa;
+use App\Models\GiaoPhanTinTucDanhMuc;
+use App\Models\GiaoPhanDanhMucLienKet;
+use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
+use App\Http\Resources\GiaoPhanDanhMucs\GiaoPhanDanhMucResource;
+use App\Http\Resources\GiaoPhanDanhMucs\GiaoPhanDanhMucCollection;
+use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanDanhMucModel;
 
-final class NewsGroupService implements BaseModel, NewsGroupModel
+final class GiaoPhanDanhMucService implements BaseModel, GiaoPhanDanhMucModel
 {
   /**
    * @var Admin|null
    */
   private $model = null;
 
-  /**
-   * @var CategoryDescription|null
-   */
+  //* GiaoPhanDanhMucMoTa | null
   private $modelDes = null;
 
-  /**
-   * @var CategoryPath|null
-   */
+  //* GiaoPhanDanhMucLienKet | null
   private $modelPath = null;
 
   private $separate = ' >> ';
 
-  /**
-   * @author : dtphi .
-   * AdminService constructor.
-   */
   public function __construct()
   {
-    $this->model     = new Category();
-    $this->modelDes  = new CategoryDescription();
-    $this->modelPath = new CategoryPath();
+    $this->model     = new GiaoPhanDanhMuc();
+    $this->modelDes  = new GiaoPhanDanhMucMoTa();
+    $this->modelPath = new GiaoPhanDanhMucLienKet();
+  }
+
+  public function apiGetDetail($id = null)
+  {
+    // TODO: Implement apiGetDetail() method.
+    $query = DB::table(Tables::$giaophandanhmucs . ' AS c')->select('*', 'c.category_id AS category_id', DB::raw("(
+                    SELECT
+                        GROUP_CONCAT(
+                            cd1.`name`
+                            ORDER BY
+                                `level` SEPARATOR '" . $this->separate . "'
+                        )
+                    FROM
+                        " . Tables::$giaophandanhmuc_lienkets . " cp
+                    LEFT JOIN " . Tables::$giaophandanhmuc_motas . " cd1 ON (
+                        cp.path_id = cd1.category_id
+                        AND cp.category_id != cp.path_id
+                    )
+                    WHERE
+                        cp.category_id = c.category_id
+                    GROUP BY
+                        cp.category_id
+                ) AS path"))
+      ->distinct()
+      ->leftJoin(Tables::$giaophandanhmuc_motas . ' AS cd2', 'c.category_id', '=', 'cd2.category_id')
+      ->where('c.category_id', $id);
+
+    return $query->first();
+  }
+
+  public function apiGetResourceDetail($id = null)
+  {
+    // TODO: Implement apiGetResourceDetail() method.
+
+    return new GiaoPhanDanhMucResource($this->apiGetDetail($id));
+  }
+
+  /**
+   * @author : dtphi .
+   * @param array $data
+   * @return mixed
+   */
+  public function apiInsertOrUpdate(array $data = [])
+  {
   }
 
   /**
@@ -55,7 +89,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
   public function apiGetList(array $options = [], $limit = 15)
   {
     // TODO: Implement apiGetList() method.
-    $query = $this->apiGetNewsGroupTrees($options, $limit);
+    $query = $this->apiGetGiaoPhanDanhMucTrees($options, $limit);
 
     return $query->paginate($limit);
   }
@@ -64,75 +98,60 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
    * author : dtphi .
    * @param array $options
    * @param int $limit
-   * @return NewsGroupCollection
+   * @return GiaoPhanDanhMucCollection
    */
   public function apiGetResourceCollection(array $options = [], $limit = 15)
   {
     // TODO: Implement apiGetResourceCollection() method.
     $paginations = $this->apiGetList($options, $limit);
 
-    return new NewsGroupCollection($paginations->getCollection());
-  }
-
-  /**
-   * @author : dtphi .
-   * @param null $id
-   * @return NewsGroup|null
-   */
-  public function apiGetDetail($id = null)
-  {
-    // TODO: Implement apiGetDetail() method.
-    $query = DB::table(Tables::$categorys . ' AS c')->select('*', 'c.category_id AS category_id', DB::raw("(
-                    SELECT
-                        GROUP_CONCAT(
-                            cd1.`name`
-                            ORDER BY
-                                `level` SEPARATOR '" . $this->separate . "'
-                        )
-                    FROM
-                        " . Tables::$category_paths . " cp
-                    LEFT JOIN " . Tables::$category_descriptions . " cd1 ON (
-                        cp.path_id = cd1.category_id
-                        AND cp.category_id != cp.path_id
-                    )
-                    WHERE
-                        cp.category_id = c.category_id
-                    GROUP BY
-                        cp.category_id
-                ) AS path"))
-      ->distinct()
-      ->leftJoin(Tables::$category_descriptions . ' AS cd2', 'c.category_id', '=', 'cd2.category_id')
-      ->leftJoin(Tables::$category_to_layouts . ' AS ctl', 'c.category_id', '=', 'ctl.category_id')
-      ->where('c.category_id', $id);
-
-    return $query->first();
-  }
-
-  /**
-   * @author : dtphi .
-   * @param null $id
-   * @return NewsGroupResource
-   */
-  public function apiGetResourceDetail($id = null)
-  {
-    // TODO: Implement apiGetResourceDetail() method.
-
-    return new NewsGroupResource($this->apiGetDetail($id));
+    return new GiaoPhanDanhMucCollection($paginations->getCollection());
   }
 
   /**
    * @author : dtphi .
    * @param array $data
+   * @return mixed
    */
-  public function apiInsertOrUpdate(array $data = [])
+  public function apiGetGiaoPhanDanhMucTrees($data = array())
   {
+    $cate1    = 'cate1';
+    $des1 = 'cd1';
+
+    $query = $this->modelPath->select(
+      Tables::$giaophandanhmuc_lienkets . '.category_id AS category_id',
+      $cate1 . '.parent_id',
+      $cate1 . '.sort_order',
+      GiaoPhanDanhMucLienKet::getRawCategoryName($des1, 'category_name')
+    )
+      ->gbByCategoryId()
+      ->ljoinCategory($cate1)
+      ->ljoinCategoryDescription($des1);
+
+    if (!empty($data['filter_name'])) {
+      $query->filterLikeName($des1, $data['filter_name']);
+    }
+
+    $sort_data = array(
+      'name',
+      'sort_order'
+    );
+
+    $sqlSort = '';
+    if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+      $sqlSort .= $cate1 . '.' . $data['sort'];
+    } else {
+      $sqlSort .= $cate1 . '.sort_order';
+    }
+
+    if (isset($data['order']) && ($data['order'] == 'DESC')) {
+      $query->orderBy($sqlSort, 'DESC');
+    } else {
+      $query->orderBy($sqlSort, 'ASC');
+    }
+    return $query;
   }
 
-  /**
-   * @author : dtphi .
-   * @param array $data
-   * @return Admin|bool|null
-   */
   public function apiInsert(array $data = [])
   {
     // TODO: Implement apiInsertOrUpdate() method.
@@ -151,7 +170,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
         $this->model->save();
 
 
-        CategoryDescription::insertByCateId(
+        GiaoPhanDanhMucMoTa::insertByCateId(
           $data['category_id'],
           $data['name'],
           $data['description'],
@@ -166,15 +185,10 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
           ->orderBy('level', 'ASC')->get();
 
         foreach ($resultPaths as $key => $resultPath) {
-          CategoryPath::insertByCateId($data['category_id'], $resultPath['path_id'], $level);
-
+          GiaoPhanDanhMucLienKet::insertByCateId($data['category_id'], $resultPath['path_id'], $level);
           $level++;
         }
-        CategoryPath::insertByCateId($data['category_id'], $data['category_id'], $level);
-
-        if (isset($data['layout_id'])) {
-          CategoryToLayout::insertByCateId($data['category_id'], $data['layout_id']);
-        }
+        GiaoPhanDanhMucLienKet::insertByCateId($data['category_id'], $data['category_id'], $level);
       } else {
         DB::rollBack();
 
@@ -191,11 +205,6 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     return $this->model;
   }
 
-  /**
-   * @author : dtphi .
-   * @param null $categoryId
-   * @return mixed
-   */
   public function getCateogryById($categoryId = null)
   {
     if ($categoryId) {
@@ -203,11 +212,6 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     }
   }
 
-  /**
-   * @author : dtphi .
-   * @param null $categoryId
-   * @return mixed
-   */
   public function getCategoryDesById($categoryId = null)
   {
     if ($categoryId) {
@@ -215,18 +219,14 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     }
   }
 
-  /**
-   * @author : dtphi .
-   * @param array $data
-   * @return Admin|bool|null
-   */
+  /// UPDATE
   public function apiUpdate($model, array $data = [])
   {
     // TODO: Implement apiInsertOrUpdate() method.
-    $data['name_slug'] = Str::slug($data['name'] . ' ' . $model->category_id);
-
+    $data['name_slug'] = Str::slug($data['category_name'] . ' ' . $model->category_id);
     $model->fill($data);
-
+ 
+   
     /**
      * Save user with transaction to make sure all data stored correctly
      */
@@ -238,7 +238,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
         $modelDes = $model->description;
         $dataDes  = [
-          'name'             => $data['name'],
+          'name'             => $data['category_name'],
           'description'      => $data['description'],
           'meta_title'       => $data['meta_title'],
           'meta_description' => $data['meta_description'],
@@ -249,9 +249,9 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
           $modelDes->fill($dataDes);
           $modelDes->save();
         } else {
-          CategoryDescription::insertByCateId(
+          GiaoPhanDanhMucMoTa::insertByCateId(
             $categoryId,
-            $data['name'],
+            $data['category_name'],
             $data['description'],
             $data['meta_title'],
             $data['meta_description'],
@@ -265,7 +265,7 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
         if ($resultPaths->count()) {
           foreach ($resultPaths as $key => $resultPath) {
-            CategoryPath::fcDeleteByCateIdAndLevelDown($resultPath['category_id'], $resultPath['level']);
+            GiaoPhanDanhMucLienKet::fcDeleteByCateIdAndLevelDown($resultPath['category_id'], $resultPath['level']);
 
             $path = [];
 
@@ -286,14 +286,13 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
             // Combine the paths with a new level
             $level = 0;
             foreach ($path as $path_id) {
-              CategoryPath::replaceByCateidAndPathAndLevel($resultPath['category_id'], $path_id, $level);
-
+              GiaoPhanDanhMucLienKet::replaceByCateidAndPathAndLevel($resultPath['category_id'], $path_id, $level);
               $level++;
             }
           }
         } else {
           // Delete the path below the current one
-          CategoryPath::fcDeleteByCateId($categoryId);
+          GiaoPhanDanhMucLienKet::fcDeleteByCateId($categoryId);
 
           // Fix for records with no paths
           $level = 0;
@@ -304,17 +303,11 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
           )->orderBy('level', 'ASC')->get();
 
           foreach ($resultPathParents as $resultPathParent) {
-            CategoryPath::insertByCateId($categoryId, $resultPathParent['path_id'], $level);
-
+            GiaoPhanDanhMucLienKet::insertByCateId($categoryId, $resultPathParent['path_id'], $level);
             $level++;
           }
 
-          CategoryPath::replaceByCateidAndPathAndLevel($categoryId, $categoryId, $level);
-        }
-
-        CategoryToLayout::fcDeleteByCateId($categoryId);
-        if (isset($data['layout_id'])) {
-          CategoryToLayout::insertByCateId($categoryId, $data['layout_id']);
+          GiaoPhanDanhMucLienKet::replaceByCateidAndPathAndLevel($categoryId, $categoryId, $level);
         }
       } else {
         DB::rollBack();
@@ -332,81 +325,24 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     return $this->model;
   }
 
-  /**
-   * @author : dtphi .
-   * @param array $data
-   * @return mixed
-   */
-  public function apiGetNewsGroupTrees($data = array())
-  {
-    $cate1    = 'cate1';
-    $cate2    = 'cate2';
-    $cateDes1 = 'cd1';
-    $cateDes2 = 'cd2';
-
-    $query = $this->modelPath
-      ->select(
-        Tables::$category_paths . '.category_id AS category_id',
-        $cate1 . '.parent_id',
-        $cate1 . '.sort_order',
-        CategoryPath::getRawCategoryName($cateDes1, 'category_name')
-      )
-      ->gbByCategoryId()
-      ->ljoinCategory($cate1)
-      ->ljoinCategory($cate2)
-      ->ljoinCateDescription($cateDes1)
-      ->ljoinCateDescription($cateDes2);
-    if (!empty($data['filter_name'])) {
-      $query->filterLikeName($cateDes2, $data['filter_name']);
-    }
-
-    $sort_data = array(
-      'name',
-      'sort_order'
-    );
-
-    $sqlSort = '';
-    if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-      $sqlSort .= $cate1 . '.' . $data['sort'];
-    } else {
-      $sqlSort .= $cate1 . '.sort_order';
-    }
-
-    if (isset($data['order']) && ($data['order'] == 'DESC')) {
-      $query->orderBy($sqlSort, 'DESC');
-    } else {
-      $query->orderBy($sqlSort, 'ASC');
-    }
-
-    return $query;
-  }
-
-  /**
-   * @author : dtphi.
-   * @param $cateId
-   */
+  // DELETE
   private function _deleteById($cateId)
   {
     if ($cateId) {
-      CategoryPath::fcDeleteByCateId($cateId);
+      GiaoPhanDanhMucMoTa::fcDeleteByCateId($cateId);
 
       $resultPaths = $this->modelPath->where('path_id', '=', (int)$cateId)->get();
       foreach ($resultPaths as $resultPath) {
         $this->_deleteById($resultPath->category_id);
       }
 
-      Category::fcDeleteByCateId($cateId);
-      CategoryDescription::fcDeleteByCateId($cateId);
-      CategoryToLayout::fcDeleteByCateId($cateId);
-      InformationToCategory::fcDeleteByCateId($cateId);
+      GiaoPhanDanhMuc::fcDeleteByCateId($cateId);
+      GiaoPhanDanhMucMoTa::fcDeleteByCateId($cateId);
+      GiaoPhanTinTucDanhMuc::fcDeleteByCateId($cateId);
     }
   }
 
-  /**
-   * @author : dtphi.
-   * @param $model
-   * @return bool
-   */
+  // DELETE CATEGORY
   public function deleteCategory($model)
   {
     /**
@@ -423,32 +359,28 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
       return false;
     }
-
     DB::commit();
   }
 
+  // get list categories
   public function apiGetCategories($data = array(), $limit = 15)
   {
     $cate1 = 'cate1';
-    $cate2 = 'cate2';
     $cd1   = 'cd1';
-    $cd2   = 'cd2';
 
     $query = $this->modelPath
       ->select(
-        Tables::$category_paths . '.category_id AS category_id',
+        Tables::$giaophandanhmuc_lienkets . '.category_id AS category_id',
         $cate1 . '.parent_id',
         $cate1 . '.sort_order',
-        CategoryPath::getRawCategoryName($cd1)
+        GiaoPhanDanhMucLienKet::getRawCategoryName($cd1)
       )
       ->gbByCategoryId()
       ->ljoinCategory($cate1)
-      ->ljoinCategory($cate2)
-      ->ljoinCateDescription($cd1)
-      ->ljoinCateDescription($cd2);
+      ->ljoinCategoryDescription($cd1);
 
     if (!empty($data['filter_name'])) {
-      $query->filterLikeName($cd2, $data['filter_name']);
+      $query->filterLikeName($cd1, $data['filter_name']);
     }
 
     if ($limit) {
@@ -470,10 +402,10 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
 
     try {
       foreach ($results as $group) {
-        Category::insertForce($group->id, $group->father_id);
+        GiaoPhanDanhMuc::insertForce($group->id, $group->father_id);
         $categoryId = $group->id;
 
-        CategoryDescription::insertByCateId(
+        GiaoPhanDanhMucMoTa::insertByCateId(
           $group->id,
           $group->newsgroupname,
           '',
@@ -488,11 +420,11 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
           ->orderBy('level', 'ASC')->get();
 
         foreach ($resultPaths as $key => $resultPath) {
-          CategoryPath::insertByCateId($group->id, $resultPath['path_id'], $level);
+          GiaoPhanDanhMucLienKet::insertByCateId($group->id, $resultPath['path_id'], $level);
 
           $level++;
         }
-        CategoryPath::insertByCateId($group->id, $group->id, $level);
+        GiaoPhanDanhMucLienKet::insertByCateId($group->id, $group->id, $level);
       }
     } catch (\Exceptions $e) {
       DB::rollBack();
@@ -501,35 +433,5 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
     }
 
     DB::commit();
-  }
-
-  public function connectSqlServer()
-  {
-    $servername = "103.139.202.9";
-    $username   = "giaophanphucuong_db";
-    $password   = "xY8uKdxKazxBguiV82gQ";
-    $database   = "giaophanphucuong_db";
-    $port       = "1433";
-    try {
-      $conn = new \PDO(
-        "sqlsrv:server=103.139.202.9:1433;Database=giaophanphucuong_db;ConnectionPooling=0",
-        "giaophanphucuong_db",
-        "xY8uKdxKazxBguiV82gQ",
-        array(
-          \PDO::ATTR_PERSISTENT => true,
-          \PDO::ATTR_ERRMODE    => \PDO::ERRMODE_EXCEPTION
-        )
-      );
-    } catch (\PDOException $e) {
-      echo ("Error connecting to SQL Server: " . $e->getMessage());
-    }
-
-    if (isset($conn)) {
-      $sql = "SELECT * FROM NewsGroup";
-
-      foreach ($conn->query($sql) as $row) {
-        dd($row);
-      }
-    }
   }
 }
