@@ -387,19 +387,20 @@ final class NewsGroupService implements BaseModel, NewsGroupModel
      */
     private function _deleteById($cateId)
     {
-        if ($cateId) {
-            CategoryPath::fcDeleteByCateId($cateId);
+		if ($cateId) {
+			CategoryDescription::fcDeleteByCateId($cateId);
 
-            $resultPaths = $this->modelPath->where('path_id', '=', (int)$cateId)->get();
-            foreach ($resultPaths as $resultPath) {
-                $this->_deleteById($resultPath->category_id);
-            }
-
-            Category::fcDeleteByCateId($cateId);
-            CategoryDescription::fcDeleteByCateId($cateId);
-            CategoryToLayout::fcDeleteByCateId($cateId);
-            InformationToCategory::fcDeleteByCateId($cateId);
-        }
+			$resultPaths = $this->modelPath->where('path_id', '=', (int)$cateId)->get();
+			foreach ($resultPaths as $itemPath) {
+				CategoryPath::fcDeleteByPathId($itemPath->path_id);
+				$resultlevels = $this->modelPath->where('category_id', '=', (int)$itemPath->category_id)->get();
+				foreach ($resultlevels as $item) {
+					CategoryPath::fcUpdateLevelByCateId($item->category_id, (int)$item->level);
+				}
+			}
+			Category::fcDeleteByCateId($cateId);
+			InformationToCategory::fcDeleteByCateId($cateId);
+		}
     }
 
     /**

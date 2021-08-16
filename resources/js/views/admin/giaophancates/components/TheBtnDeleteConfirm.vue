@@ -16,7 +16,7 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_NEWS_CATEGORY
+        MODULE_MODULE_DANHMUC_GIAOPHAN
     } from 'store@admin/types/module-types';
     import {
         ACTION_DELETE_NEWS_GROUP_BY_ID,
@@ -34,7 +34,7 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_NEWS_CATEGORY, [
+            ...mapActions(MODULE_MODULE_DANHMUC_GIAOPHAN, [
                 ACTION_DELETE_NEWS_GROUP_BY_ID
             ]),
 

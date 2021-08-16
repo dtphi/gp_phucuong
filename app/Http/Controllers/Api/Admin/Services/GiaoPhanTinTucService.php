@@ -249,17 +249,23 @@ final class GiaoPhanTinTucService implements BaseModel, GiaoPhanTinTucModel
    */
   public function deleteInformation($model = null)
   {
-    if ($model instanceof GiaoPhanTinTuc) {
-      $infoId = $model->information_id;
+		$infoId = $model->information_id;
 
+		if($infoId) {
+			GiaoPhanTinTuc::fcDeleteByInfoId($infoId);
+			GiaoPhanTinTucMoTa::fcDeleteByInfoId($infoId);
+			GiaoPhanTinTucDanhMuc::fcDeleteByInfoId($infoId);
+		}
+		
+    /* if ($model instanceof GiaoPhanTinTuc) {
+      $infoId = $model->information_id;
       $model->delete();
       $modelDes = $this->modelDes->where('information_id', $infoId)->first();
       if ($modelDes instanceof GiaoPhanTinTucMota) {
         $modelDes->delete();
       }
-
       GiaoPhanTinTucDanhMuc::fcDeleteByInfoId($infoId);
-    }
+    } */
   }
 
   public function importInformation()

@@ -108,7 +108,7 @@ class GiaoPhanTinTucController extends ApiController
 
     $resourceId = ($this->getResource()) ? $this->getResource()->information_id : null;
 
-    return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
+    return $this->respondCreated("GiaoPhanTinTuc {$this->resourceName} created.", $resourceId);
   }
 
  
@@ -125,10 +125,11 @@ class GiaoPhanTinTucController extends ApiController
     return $this->__handleStoreUpdate($model, $request);
   }
 
-  public function destroy($id = null, GiaoPhanTinTucRequest $request)
+  public function destroy($id = null, Request $request)
   {
     try {
       $model = $this->gpttSv->apiGetDetail($id);
+
     } catch (HandlerMsgCommon $e) {
       throw $e->render();
     }

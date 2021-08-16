@@ -54,7 +54,7 @@ class GiaoPhanDanhMuc extends BaseModel
   }
   public static function fcDeleteByCateId($cateId)
   {
-    DB::delete("delete from `" . Tables::$categorys . "` where category_id = '" . (int)$cateId . "'");
+    DB::delete("delete from `" . Tables::$giaophandanhmucs . "` where category_id = '" . (int)$cateId . "'");
   }
 
   public static function insertForce(

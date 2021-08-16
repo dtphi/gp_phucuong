@@ -37,6 +37,15 @@ class GiaoPhanTinTuc extends BaseModel
     return $this->hasMany(GiaoPhanTinTucDanhMuc::class, $this->primaryKey);
   }
 
+	// delete with infoId
+	public static function fcDeleteByInfoId($infoId = null)
+	{
+		$infoId = (int)$infoId;
+
+		if ($infoId) {
+			return DB::delete("delete from " . Tables::$giaophantintucs . " where information_id = '" . $infoId . "'");
+		}
+	}
 
   public function getImageAttribute($value)
   {
