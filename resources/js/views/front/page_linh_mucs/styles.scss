@@ -142,6 +142,81 @@
     }
 }
 
+.list-danh-muc {
+    padding: 0 15px;
+
+    .title-linh-muc {
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 50px;
+
+        .line-linh-muc {
+            background-color: #ED1C24;
+            width: 200px;
+            height: 2px;
+            margin: 6px auto;
+        }
+    }
+
+    .tab-linh-muc {
+        .nav-tabs {
+            padding-bottom: 15px;
+    
+            .nav-item {
+                flex: unset;
+            }
+    
+            .nav-link {
+                border: 0;
+                color: #ED1C24;
+                font-weight: bold;
+                text-transform: uppercase;
+        
+                &.active {
+                    background-color: #4D4D4D;
+                    color: #ffffff;
+                    border-top-left-radius: 0px;
+                    border-top-right-radius: 0px;
+                }
+            }
+        }
+
+        .tab-content {
+            margin-top: 30px !important;
+        }
+    
+        .list-linh-muc {
+            .row-linh-muc {
+                margin-bottom: 40px;
+    
+                .avatar {
+                    display: block;
+                }
+    
+                .content {
+                    .tit {
+                        font-size: 16px;
+                        font-weight: 600;
+                        margin-bottom: 14px;
+    
+                        a {
+                            color: #4D4D4D;
+                        }
+                    }
+    
+                    .row {
+                        span {
+                            display: block;
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 767px) {
     #news {
         .notication {
@@ -153,6 +228,49 @@
 
             .box-social {
                 margin-top: 14px;
+            }
+        }
+    }
+
+    .list-danh-muc {
+        .title-linh-muc {
+            font-size: 16px;
+            margin-bottom: 25px;
+    
+            .line-linh-muc {
+                width: 150px;
+                height: 1px;
+                margin: 4px auto;
+            }
+        }
+    
+        .tab-linh-muc {
+            .nav-tabs {
+                padding-bottom: 15px;
+            }
+    
+            .tab-content {
+                margin-top: 15px !important;
+            }
+        
+            .list-linh-muc {
+                .row-linh-muc {
+                    margin-bottom: 20px;
+        
+                    .content {
+                        .tit {
+                            font-size: 15px;
+                            margin-top: 8px;
+                            margin-bottom: 8px;
+                        }
+        
+                        .row {
+                            span {
+                                margin-bottom: 5px;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -53,6 +53,61 @@
                     <template v-slot:before>
                         <!-- Html linh mục detail -->
                         Nội dung thông tin Linh Mục
+
+                        <div class="list-danh-muc w-100">
+                            <h2 class="title-linh-muc text-center">Danh sách linh mục đoàn giáo phận phú cường <hr class="line-linh-muc"></h2>
+                            <div class="tab-linh-muc w-100">
+                                <b-tabs content-class="mt-3" fill>
+                                    <b-tab title="Lọc theo chức vụ / Giáo hạt" active>
+                                        <div class="list-linh-muc">
+                                            <div class="row row-linh-muc">
+                                                <div class="col-mobile col-2">
+                                                    <a class="avatar" href="#"><img class="img" src="https://donghanhonline.com/wp-content/uploads/2020/08/linh-muc.jpg" alt=""></a>
+                                                </div>
+                                                <div class="col-mobile col-10 content">
+                                                    <h4 class="tit"><a href="#">Linh mục Gioan Baotixita Nguyễn Văn A</a></h4>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <span>Chức vụ: Chánh xứ</span>
+                                                            <span>Nơi phục vụ: Gx. Tân Châu</span>
+                                                            <span>Giáo hạt: Bình Long</span>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <span>Năm sinh: 25/11/1982</span>
+                                                            <span>Chịu chức: 28/11/2014</span>
+                                                            <span>Địa chỉ: 104 Lạc Long Quân...</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <div class="row row-linh-muc">
+                                                <div class="col-mobile col-2">
+                                                    <a class="avatar" href="#"><img class="img" src="https://donghanhonline.com/wp-content/uploads/2020/08/linh-muc.jpg" alt=""></a>
+                                                </div>
+                                                <div class="col-mobile col-10 content">
+                                                    <h4 class="tit"><a href="#">Linh mục Gioan Baotixita Nguyễn Văn A</a></h4>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <span>Chức vụ: Chánh xứ</span>
+                                                            <span>Nơi phục vụ: Gx. Tân Châu</span>
+                                                            <span>Giáo hạt: Bình Long</span>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <span>Năm sinh: 25/11/1982</span>
+                                                            <span>Chịu chức: 28/11/2014</span>
+                                                            <span>Địa chỉ: 104 Lạc Long Quân...</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </b-tab>
+                                    <b-tab title="Tất cả">
+                                        <p>I'm the first tab</p>
+                                    </b-tab>
+                                </b-tabs>
+                            </div>
+                        </div>
                     </template>
                 </main-content>
                 <content-bottom v-if="_isContentBottom">
