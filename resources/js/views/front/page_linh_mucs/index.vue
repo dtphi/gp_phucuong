@@ -52,8 +52,6 @@
                 <main-content v-if="_isContentMain">
                     <template v-slot:before>
                         <!-- Html linh mục detail -->
-                        Nội dung thông tin Linh Mục
-
                         <div class="list-danh-muc w-100">
                             <h2 class="title-linh-muc text-center">Danh sách linh mục đoàn giáo phận phú cường <hr class="line-linh-muc"></h2>
                             <div class="tab-linh-muc w-100">
