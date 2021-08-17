@@ -17,7 +17,7 @@ import {
 export const apiGetInfoById = (infoId, resolve, errResole) => {
   return axios.get(fn_get_base_api_detail_url(API_TINTUCS_GIAOPHAN_RESOURCE, infoId))
     .then((response) => {
-      console.log(response, 'id giaophandanhmuc')
+
       if (response.status === 200) {
         var json = {};
         json['data'] = response.data.giaophantintucs;

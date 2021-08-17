@@ -370,7 +370,17 @@ final class InformationService implements BaseModel, InformationModel
      */
     public function deleteInformation($model = null)
     {
-        if ($model instanceof Information) {
+			$infoId = $model->information_id;
+
+			if ($infoId) {
+				Information::fcDeleteByInfoId($infoId);
+				InformationDescription::fcDeleteByInfoId($infoId);
+				InformationToCategory::fcDeleteByInfoId($infoId);
+				InformationToDownload::fcDeleteByInfoId($infoId);
+				InformationRelated::fcDeleteByInfoId($infoId);
+				InformationRelated::fcDeleteByRelatedId($infoId);
+			}
+        /* if ($model instanceof Information) {
             $infoId = $model->information_id;
 
             $model->delete();
@@ -385,7 +395,7 @@ final class InformationService implements BaseModel, InformationModel
             InformationRelated::fcDeleteByInfoId($infoId);
             InformationRelated::fcDeleteByRelatedId($infoId);
 
-        }
+        } */
     }
 
     public function importInformation()

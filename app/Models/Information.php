@@ -70,6 +70,14 @@ class Information extends BaseModel
         return $this->hasOne(InformationCarousel::class, $this->primaryKey);
     }
 
+		public static function fcDeleteByInfoId($infoId = null)
+		{
+			$infoId = (int)$infoId;
+
+			if ($infoId) {
+				return DB::delete("delete from " . Tables::$informations . " where information_id = '" . $infoId . "'");
+			}
+		}
     /**
      * @author : dtphi .
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

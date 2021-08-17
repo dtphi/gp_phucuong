@@ -79,13 +79,26 @@ class GiaoPhanDanhMucLienKet extends BaseModel
     return $query->where($alias . '.name', 'like', "%{$name}");
   }
 
-  // delete giaophandanhmuc lien ket
+  // delete giaophandanhmuc lien ket with category_id
   public static function fcDeleteByCateId($cateId = null)
   {
     if ($cateId) {
       return DB::delete("delete from `" . Tables::$giaophandanhmuc_lienkets . "` where " . Tables::$giaophandanhmuc_lienkets . ".category_id = '" . (int)$cateId . "'");
     }
   }
+
+	// delete giaophandanhmuclienket with paht_id
+	public static function fcDeleteByPathId($pathId = null) {
+		if ($pathId) {
+			return DB::delete("delete from `" . Tables::$giaophandanhmuc_lienkets . "` where " . Tables::$giaophandanhmuc_lienkets . ".path_id = '" . (int)$pathId . "'");
+		}
+	}
+	public static function fcUpdateLevelByCateId($cateId = null, $level){
+		(int)$result = $level - 1;
+		if($cateId) {
+			return DB::statement("update `". Tables::$giaophandanhmuc_lienkets ."` set  level = '" .(int)$result ."' where  category_id = '".(int)$cateId."'");
+		}
+	}
 
   // delete with downlevel
   public static function fcDeleteByCateIdAndLevelDown($cateId = null, $level = 0)

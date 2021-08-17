@@ -179,17 +179,15 @@ export default {
       dispatch,
       commit
     }, categoryId) {
-      if (categoryId) {
+			if (categoryId) {
         commit(NEWSGROUPS_GROUP_DELETE_BY_ID, {
           newsgroup: {
             category_id: categoryId
           }
         });
       }
-
-      await apiDeleteGiaoPhanDanhMucs(
-        state.newsGroupDelete.newsgroup.category_id,
-        (newsGroups) => {
+			await apiDeleteGiaoPhanDanhMucs(state.newsGroupDelete.newsgroup.category_id,
+				(newsGroups) => {
           commit(NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS, true)
           dispatch(ACTION_GET_NEWS_GROUP_LIST)
           commit(NEWSGROUPS_GROUP_DELETE_BY_ID, null)

@@ -95,6 +95,21 @@ class CategoryPath extends BaseModel
         }
     }
 
+	// delete category_path with path id
+		public static function fcDeleteByPathId($pathId = null)
+		{
+			if ($pathId) {
+				return DB::delete("delete from `" . Tables::$category_paths . "` where " . Tables::$category_paths . ".path_id = '" . (int)$pathId . "'");
+			}
+		}
+		public static function fcUpdateLevelByCateId($cateId = null, $level)
+		{
+			(int)$result = $level - 1;
+			if ($cateId) {
+				return DB::statement("update `" . Tables::$category_paths . "` set  level = '" . (int)$result . "' where  category_id = '" . (int)$cateId . "'");
+			}
+		}
+
     /**
      * @author : dtphi .
      * @param null $cateId

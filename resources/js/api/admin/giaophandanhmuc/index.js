@@ -107,7 +107,6 @@ export const apiUpdateGiaoPhanDanhMucs = (categoryId, newsGroup, resolve, errRes
 export const apiInsertGiaoPhanDanhMucs = (danhmucs, resolve, errResole) => {
   return axios.post(fn_get_base_api_url(API_DANHMUCS_GIAOPHAN_RESOURCE), danhmucs)
     .then((response) => {
-      console.log(response, 'insert giaophandanhmuc')
       if (response.status === 201) {
         var json = {};
         json['data'] = response.data.result;
@@ -135,9 +134,9 @@ export const apiInsertGiaoPhanDanhMucs = (danhmucs, resolve, errResole) => {
  * @return {[type]}             [description]
  */
 export const apiDeleteGiaoPhanDanhMucs = (newsGroupId, resolve, errResole) => {
-  return axios.delete(fn_get_base_api_detail_url(API_NEWS_GROUPS_RESOURCE, newsGroupId))
+  return axios.delete(fn_get_base_api_detail_url(API_DANHMUCS_GIAOPHAN_RESOURCE, newsGroupId))
     .then((response) => {
-      console.log(response)
+      console.log(newsGroupId, 'api delete giaophandanhmuc')
       if (response.status === 200) {
         var json = {};
         json['data'] = response.data;

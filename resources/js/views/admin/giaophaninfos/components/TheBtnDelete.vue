@@ -13,8 +13,8 @@
 <script>
     import {mapActions} from 'vuex';
     import {
-        MODULE_INFO,
-        MODULE_INFO_MODAL
+        MODULE_MODULE_TINTUC_GIAOPHAN,
+        MODULE_TINTUC_GIAOPHAN_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_INFO_DELETE_BY_ID,
@@ -36,7 +36,7 @@
             return {};
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
+            ...mapActions(MODULE_MODULE_TINTUC_GIAOPHAN, [
                 ACTION_SET_INFO_DELETE_BY_ID,
                 ACTION_DELETE_INFO_BY_ID
             ]),

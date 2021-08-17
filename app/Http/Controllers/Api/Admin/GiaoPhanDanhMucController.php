@@ -191,14 +191,13 @@ class GiaoPhanDanhMucController extends ApiController
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id = null, GiaoPhanDanhMucRequest $request)
+  public function destroy($id = null, Request $request)
   {
     try {
       $model = $this->gpdmSv->getCateogryById($id);
     } catch (HandlerMsgCommon $e) {
       throw $e->render();
     }
-
     $this->gpdmSv->deleteCategory($model);
 
     return $this->respondDeleted("{$this->resourceName} deleted.");
