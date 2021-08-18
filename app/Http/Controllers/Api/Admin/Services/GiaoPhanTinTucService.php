@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanTinTucModel;
 use App\Http\Resources\GiaoPhanTinTucs\GiaoPhanTinTucCollection;
 use App\Http\Resources\GiaoPhanTinTucs\GiaoPhanTinTucResource;
 use App\Models\GiaoPhanTinTuc;
-use App\Models\GiaoPhanTinTucMota;
+use App\Models\GiaoPhanTinTucMoTa;
 use App\Models\GiaoPhanTinTucDanhMuc;
 use DB;
 use Illuminate\Support\Str;
@@ -261,7 +261,7 @@ final class GiaoPhanTinTucService implements BaseModel, GiaoPhanTinTucModel
       $infoId = $model->information_id;
       $model->delete();
       $modelDes = $this->modelDes->where('information_id', $infoId)->first();
-      if ($modelDes instanceof GiaoPhanTinTucMota) {
+      if ($modelDes instanceof GiaoPhanTinTucMoTa) {
         $modelDes->delete();
       }
       GiaoPhanTinTucDanhMuc::fcDeleteByInfoId($infoId);
@@ -293,7 +293,7 @@ final class GiaoPhanTinTucService implements BaseModel, GiaoPhanTinTucModel
 
       $des = htmlentities($info->context);
 
-      GiaoPhanTinTucMota::insertByInfoId(
+      GiaoPhanTinTucMoTa::insertByInfoId(
         $infoId,
         $info->newsgroupname,
         $des,
