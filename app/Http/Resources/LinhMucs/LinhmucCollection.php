@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Linhmucs;
+namespace App\Http\Resources\LinhMucs;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

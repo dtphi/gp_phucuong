@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\EmailSubscribe;
+namespace App\Http\Resources\EmailSubscribes;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

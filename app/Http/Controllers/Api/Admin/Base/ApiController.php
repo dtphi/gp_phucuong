@@ -9,6 +9,7 @@ use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Image;
 use Storage;
+use Auth;
 
 class ApiController extends Controller
 {

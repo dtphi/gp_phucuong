@@ -22,7 +22,7 @@ use App\Models\LinhmucVanthu;
 use App\Models\Thanh;
 use DB;
 
-final class LinhmucService implements BaseModel, LinhMucModel
+final class LinhMucService implements BaseModel, LinhMucModel
 {
     /**
      * @var Linhmuc|null

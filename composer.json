@@ -18,7 +18,7 @@
         "laravel/sanctum": "^2.9",
         "laravel/tinker": "^2.5",
         "phpoffice/phpspreadsheet": "^1.17",
-        "pusher/pusher-php-server": "~4.0"
+        "pusher/pusher-php-server": "^7.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -6,7 +6,7 @@ use App\Http\Common\Tables;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class GiaoPhanTinTucMota extends BaseModel
+class GiaoPhanTinTucMoTa extends BaseModel
 {
   use SoftDeletes;
 
