@@ -29,16 +29,14 @@
                                                 <input type="checkbox"
                                                        onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
                                             </th>
-                                            <th style="width: 200px" class="text-left">Tên
+                                            <th style="width: 200px" class="text-left">Tên chức vụ
                                             </th>
                                             <th style="width: 100px" class="text-left">
-                                                Địa chỉ
+                                                Loại chức vụ
                                             </th>
-                                            <th>Ghi chú</th>
+                                            <th>Sắp xếp</th>
+                                            <th>Văn thư bổ nhiệm</th>
                                             <th class="text-center">Trạng thái</th>
-                                            <th style="width: 100px" class="text-center">
-                                                Ngày hoạt động
-                                            </th>
                                             <th style="width: 100px" class="text-right">Action
                                             </th>
                                         </tr>
@@ -62,10 +60,13 @@
                 </div>
             </div>
         </div>
-        <the-modal-edit v-if="_infoUpdate.id"
-            :info="_infoUpdate"
-            :info-id="_infoUpdate.id"
-        ></the-modal-edit>
+        <modal name="modal-chuc-vu-edit" :height="455" :click-to-close="false">
+            <the-modal-edit v-if="_infoUpdate.id"
+                :info="_infoUpdate"
+                :info-id="_infoUpdate.id"
+                @update-info-success="_updateInfoList"
+            ></the-modal-edit>
+        </modal>
         <the-modal-add></the-modal-add>
     </div>
 </template>
@@ -82,6 +83,7 @@
     import Paginate from 'com@admin/Pagination';
     import {
         MODULE_MODULE_CHUC_VU,
+        MODULE_MODULE_CHUC_VU_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -104,11 +106,12 @@
             return {
                 fullPage: false,
                 isResource: false,
-                infoUpdate: {}
+                infoUpdate: {},
+                curInfo: {}
             }
         },
         watch: {
-            'updateSuccess'(newValue, oldValue) {
+            'isDelete'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }
@@ -122,7 +125,10 @@
             ...mapState(MODULE_MODULE_CHUC_VU, [
                 'infos',
                 'loading',
-                'updateSuccess',
+                'isDelete',
+            ]),
+            ...mapState(MODULE_MODULE_CHUC_VU_EDIT, [
+                'info',
             ]),
             _infoList() {
                 return this.infos;
@@ -143,13 +149,18 @@
                 this.$modal.show('modal-chuc-vu-add')
             },
             _showModalEdit(info) {
-                this.infoUpdate = info;
+                this.curInfo = info;
+                this.infoUpdate = {...info};
                 this.$modal.show('modal-chuc-vu-edit');
             },
-            _submitAction(event) {
-                this[event.target.value]({
-                    action: event.target.value
-                });
+            _updateInfoList() {
+                this.curInfo.name = this.info.name;
+                this.curInfo.sort_id = this.info.sort_id;
+                this.curInfo.type_giao_xu = this.info.type_giao_xu;
+                this.curInfo.vtbn = this.info.vtbn;
+                this.curInfo.active = this.info.active;
+                
+                this.$modal.hide('modal-chuc-vu-edit');
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);

@@ -6,7 +6,6 @@ use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Http\Controllers\Api\Admin\Services\Contracts\ChucVuModel as ChucVuSv;
 use App\Http\Requests\ChucVuRequest;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Log;
@@ -57,12 +56,11 @@ class ChucVuController extends ApiController
                 $results[] = [
                     'id' => (int)$info->id,
                     'name'           => $info->name,
-                    'dia_chi'         => $info->dia_chi,
-                    'dien_thoai'          => $info->dien_thoai,
-                    'email'    => $info->email,
-                    'viet'    => $info->viet,
-                    'latin'    => $info->latin,
-                    'active'     => $info->active
+                    'sort_id'         => $info->sort_id,
+                    'type_giao_xu'          => $info->type_giao_xu,
+                    'vtbn'    => html_entity_decode($info->vtbn),
+                    'active'     => $info->active,
+                    'active_text' => $info->active?'Xảy ra':'Ẩn'
                 ];
             }
 
@@ -127,7 +125,7 @@ class ChucVuController extends ApiController
             $model = $this->thanhSv->apiGetDetail($id);
 
         } catch (HandlerMsgCommon $e) {
-            Log::debug('Giao phan not found, Request ID = ' . $id);
+            Log::debug('Chức vụ not found, Request ID = ' . $id);
 
             throw $e->render();
         }
@@ -144,11 +142,10 @@ class ChucVuController extends ApiController
     {
         try {
             $model = $this->thanhSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -179,7 +176,7 @@ class ChucVuController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->thanhSv->apiUpdate($model, $formData)) {
+        if ($result = $this->thanhSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 

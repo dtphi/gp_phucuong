@@ -14,24 +14,37 @@
             <div class="panel-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Linh mục</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Tên chức vụ</label>
                         <div class="col-sm-10">
-                            {{info.ten_linh_muc}}
+                            <validation-provider
+                            name="info_name"
+                            rules="max:255"
+                            v-slot="{ errors }"
+                            >
+                            <input
+                                v-model="info.name"
+                                type="text"
+                                id="input-info-name"
+                                class="form-control"
+                            />
+
+                            <span class="cms-text-red">{{ errors[0] }}</span>
+                            </validation-provider>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Chức thánh</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Loại chức vụ</label>
                         <div class="col-sm-10">
                             <validation-provider
                             name="info_name"
                             rules="max:200"
                             v-slot="{ errors }"
                             >
-                                <select class="form-control" v-model="info.chuc_thanh_id">
+                                <select class="form-control" v-model="info.type_giao_xu">
                                     <option
-                                        :selected="item.chuc_thanh_id == idx"
+                                        :selected="item.type_giao_xu == idx"
                                         :value="idx ? idx : ''"
-                                        v-for="(item, idx) in $options.setting.cf.chucThanhs"
+                                        v-for="(item, idx) in $options.setting.cf.loaiChucVus"
                                         :key="idx"
                                         >
                                         {{ item }}
@@ -42,7 +55,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Người thụ phong</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Sắp xếp</label>
                         <div class="col-sm-10">
                             <validation-provider
                             name="info_name"
@@ -50,8 +63,8 @@
                             v-slot="{ errors }"
                             >
                             <input
-                                v-model="info.nguoi_thu_phong"
-                                type="text"
+                                v-model="info.sort_id"
+                                type="number"
                                 id="input-info-name"
                                 class="form-control"
                             />
@@ -61,37 +74,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Nơi thụ phong</label>
-                        <div class="col-sm-10">
-                            <validation-provider
-                            name="info_name"
-                            rules="max:255"
-                            v-slot="{ errors }"
-                            >
-                            <input
-                                v-model="info.noi_thu_phong"
-                                type="text"
-                                id="input-info-name"
-                                class="form-control"
-                            />
-
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                            </validation-provider>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Ngày tháng</label>
-                        <div class="col-sm-10">
-                            <cms-date-picker
-                                value-type="format"
-                                format="YYYY-MM-DD"
-                                v-model="info.ngay_thang"
-                                type="date"
-                            ></cms-date-picker>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Ghi chú</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Văn thư bổ nhiệm</label>
                         <div class="col-sm-10">
                             <validation-provider
                             name="info_ghi_chu"
@@ -140,11 +123,11 @@
             return {
                 info: {
                     active: 1,
-                    ghi_chu: "",
+                    vtbn: "",
                     id: null,
                     name: "",
-                    ten_linh_muc: "",
-                    type: 0
+                    sort_id: "",
+                    type_giao_xu: 0
                 }
             }
         },

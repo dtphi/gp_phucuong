@@ -4,6 +4,9 @@ export const config = {
 	chucThanhs: [
         '--Chọn chức thánh--','Phó Tế', 'Linh Mục', 'Giám Mục'
     ],
+    loaiChucVus: [
+        '--Chọn--', 'Loại 1', 'Loại 2', 'Loại 3'  
+    ],
 	trieuDongs: [
         'Tu Triều', 'Tu Dòng'
     ],
