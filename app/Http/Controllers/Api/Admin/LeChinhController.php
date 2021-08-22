@@ -57,12 +57,7 @@ class LeChinhController extends ApiController
                 $results[] = [
                     'id' => (int)$info->id,
                     'name'           => $info->name,
-                    'dia_chi'         => $info->dia_chi,
-                    'dien_thoai'          => $info->dien_thoai,
-                    'email'    => $info->email,
-                    'viet'    => $info->viet,
-                    'latin'    => $info->latin,
-                    'active'     => $info->active
+                    'code'         => $info->code,
                 ];
             }
 
@@ -144,11 +139,10 @@ class LeChinhController extends ApiController
     {
         try {
             $model = $this->leChinhSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -179,7 +173,7 @@ class LeChinhController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->leChinhSv->apiUpdate($model, $formData)) {
+        if ($result = $this->leChinhSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 

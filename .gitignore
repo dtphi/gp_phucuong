@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+.idea
 .env
 .env.backup
 .phpunit.result.cache
@@ -16,6 +17,8 @@ yarn-error.log
 /public/js/*
 /public/images/logo*
 /public/images/ad_logo*
+/public/.tmb/*
+/public/Document
 composer.lock
 package-lock.json
 /public/fonts/vendor

@@ -11,11 +11,7 @@ import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
   INFOS_MODAL_UPDATE_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
-  INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
-  INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
-  INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
-  INFOS_FORM_SET_MAIN_IMAGE
+  INFOS_MODAL_SET_ERROR
 } from '../types/mutation-types';
 import {
   ACTION_GET_INFO_BY_ID,
@@ -23,7 +19,6 @@ import {
   ACTION_SHOW_MODAL_EDIT,
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
-  ACTION_SET_IMAGE,
 } from '../types/action-types';
 import {
   config
@@ -32,29 +27,10 @@ import {
 const defaultState = () => {
   return {
     styleCss: '',
-    isExistInfo: config.existStatus.checking,
     info: {
-      image: "",
-      date_available: null,
-      sort_order: 0,
-      status: 1,
-      name: '',
-      meta_title: '',
-      sort_description: '',
-      information_type: 1,
-      description: '',
-      tag: '',
-      meta_description: '',
-      meta_keyword: '',
-      multi_images: [],
-      relateds: [],
-      categorys: [],
-      downloads: [],
-      special_carousels: [],
+      code: "",
+      name: null
     },
-    isImgChange: false,
-    listCategorysDisplay: [],
-    listRelatedsDisplay: [],
     infoId: 0,
     loading: false,
     updateSuccess: false,
@@ -121,23 +97,6 @@ export default {
 
     [INFOS_MODAL_SET_ERROR](state, payload) {
       state.errors = payload
-    },
-
-    [INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST](state, payload) {
-      state.info.categorys = payload
-    },
-
-    [INFOS_FORM_ADD_INFO_TO_RELATED_LIST](state, payload) {
-      state.info.relateds = payload
-    },
-
-    [INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST](state, payload) {
-      state.listRelatedsDisplay = payload
-    },
-
-    [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
     }
   },
 
@@ -179,10 +138,11 @@ export default {
       dispatch,
       commit
     }, info) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
+      dispatch(ACTION_SET_LOADING, true);
       apiUpdateInfo(info,
         (result) => {
           commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+          commit(INFOS_MODAL_SET_INFO, info);
 
           dispatch(ACTION_SET_LOADING, false);
         },
@@ -198,12 +158,6 @@ export default {
       commit
     }, values) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
-    },
-
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
     }
   }
 }

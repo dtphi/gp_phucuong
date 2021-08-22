@@ -145,6 +145,7 @@ export default {
       apiUpdateInfo(info,
         (result) => {
           commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+          commit(INFOS_MODAL_SET_INFO, info);
 
           dispatch(ACTION_SET_LOADING, false);
         },
