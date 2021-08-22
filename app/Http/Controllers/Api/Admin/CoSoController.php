@@ -60,9 +60,10 @@ class CoSoController extends ApiController
                     'dia_chi'         => $info->dia_chi,
                     'dien_thoai'          => $info->dien_thoai,
                     'email'    => $info->email,
-                    'viet'    => $info->viet,
-                    'latin'    => $info->latin,
-                    'active'     => $info->active
+                    'fax'    => $info->fax,
+                    'website'    => $info->website,
+                    'active'     => $info->active,
+                    'active_text' => $info->active?'Xảy ra':'Ẩn'
                 ];
             }
 
@@ -144,11 +145,10 @@ class CoSoController extends ApiController
     {
         try {
             $model = $this->cosoSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -179,7 +179,7 @@ class CoSoController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->cosoSv->apiUpdate($model, $formData)) {
+        if ($result = $this->cosoSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 

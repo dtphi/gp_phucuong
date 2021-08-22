@@ -8,11 +8,13 @@
         </td>
         <td class="text-left">{{info.name}}</td>
         <td>
-            <div v-html="info.khai_quat"></div>
+            <div v-html="info.dia_chi"></div>
         </td>
-        <td class="text-center">{{info.sort_id}}</td>
+        <td class="text-center">{{info.email}}</td>
+        <td class="text-center">{{info.dien_thoai}}</td>
+        <td class="text-center">{{info.fax}}</td>
+        <td class="text-left"><a :href="info.website">{{info.website}}</a></td>
         <td class="text-center">{{info.active}}</td>
-        <td></td>
         <td class="text-right">
             <a href="javascript:void(0);" data-toggle="tooltip"
                 @click.prevent="_showModal"

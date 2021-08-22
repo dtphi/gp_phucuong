@@ -65,6 +65,7 @@
             <the-modal-edit v-if="_infoUpdate.id"
                 :info="_infoUpdate"
                 :info-id="_infoUpdate.id"
+                @update-info-success="_updateInfoList"
             ></the-modal-edit>
         </modal>
         <the-modal-add></the-modal-add>

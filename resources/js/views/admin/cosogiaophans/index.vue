@@ -34,11 +34,11 @@
                                             <th style="width: 100px" class="text-left">
                                                 Địa chỉ
                                             </th>
-                                            <th>Ghi chú</th>
+                                            <th>Email</th>
+                                            <th>Diện thoại</th>
+                                            <th>Fax</th>
+                                            <th>Website</th>
                                             <th class="text-center">Trạng thái</th>
-                                            <th style="width: 100px" class="text-center">
-                                                Ngày hoạt động
-                                            </th>
                                             <th style="width: 100px" class="text-right">Action
                                             </th>
                                         </tr>
@@ -62,10 +62,13 @@
                 </div>
             </div>
         </div>
-        <the-modal-edit v-if="_infoUpdate.id"
-            :info="_infoUpdate"
-            :info-id="_infoUpdate.id"
-        ></the-modal-edit>
+        <modal name="modal-co-so-edit" :height="455" :click-to-close="false">
+            <the-modal-edit v-if="_infoUpdate.id"
+                :info="_infoUpdate"
+                :info-id="_infoUpdate.id"
+                @update-info-success="_updateInfoList"
+            ></the-modal-edit>
+        </modal>
         <the-modal-add></the-modal-add>
     </div>
 </template>
@@ -82,6 +85,7 @@
     import Paginate from 'com@admin/Pagination';
     import {
         MODULE_MODULE_CO_SO,
+        MODULE_MODULE_CO_SO_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -104,11 +108,12 @@
             return {
                 fullPage: false,
                 isResource: false,
-                infoUpdate: {}
+                infoUpdate: {},
+                curInfo: {}
             }
         },
         watch: {
-            'updateSuccess'(newValue, oldValue) {
+            'isDelete'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }
@@ -122,7 +127,10 @@
             ...mapState(MODULE_MODULE_CO_SO, [
                 'infos',
                 'loading',
-                'updateSuccess',
+                'isDelete',
+            ]),
+            ...mapState(MODULE_MODULE_CO_SO_EDIT, [
+                'info',
             ]),
             _infoList() {
                 return this.infos;
@@ -143,13 +151,20 @@
                 this.$modal.show('modal-co-so-add')
             },
             _showModalEdit(info) {
-                this.infoUpdate = info;
+                this.curInfo = info;
+                this.infoUpdate = {...info};
                 this.$modal.show('modal-co-so-edit');
             },
-            _submitAction(event) {
-                this[event.target.value]({
-                    action: event.target.value
-                });
+            _updateInfoList() {
+                this.curInfo.name = this.info.name;
+                this.curInfo.dia_chi = this.info.dia_chi;
+                this.curInfo.email = this.info.email;
+                this.curInfo.dien_thoai = this.info.dien_thoai;
+                this.curInfo.fax = this.info.fax;
+                this.curInfo.website = this.info.website;
+                this.curInfo.active = this.info.active;
+                
+                this.$modal.hide('modal-cong-doan-tu-si-edit');
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
