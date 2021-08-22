@@ -10,4 +10,10 @@ class LeChinh extends BaseModel
      * @var string
      */
     protected $table = DB_PREFIX . 'le_chinhs';
+
+    protected $fillable = [
+        'name',
+        'code',
+        'update_user'
+    ];
 }

@@ -103,7 +103,8 @@
             return {
                 fullPage: false,
                 isResource: false,
-                infoUpdate: {}
+                infoUpdate: {},
+                curInfo: {}
             }
         },
         watch: {

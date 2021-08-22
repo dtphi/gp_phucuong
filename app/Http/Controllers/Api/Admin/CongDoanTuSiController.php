@@ -60,7 +60,8 @@ class CongDoanTuSiController extends ApiController
                     'dia_chi'         => $info->dia_chi,
                     'dien_thoai'          => $info->dien_thoai,
                     'ghi_chu'    => $info->ghi_chu,
-                    'active'     => $info->active
+                    'active'     => $info->active,
+                    'active_text' => $info->active?'Xảy ra':'Ẩn'
                 ];
             }
 
@@ -142,11 +143,10 @@ class CongDoanTuSiController extends ApiController
     {
         try {
             $model = $this->cdtsSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -177,7 +177,7 @@ class CongDoanTuSiController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->cdtsSv->apiUpdate($model, $formData)) {
+        if ($result = $this->cdtsSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 

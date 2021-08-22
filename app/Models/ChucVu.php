@@ -10,4 +10,13 @@ class ChucVu extends BaseModel
      * @var string
      */
     protected $table = DB_PREFIX . 'chuc_vus';
+
+    protected $fillable = [
+        'name',
+        'sort_id',
+        'type_giao_xu',
+        'vtbn',
+        'active',
+        'update_user'
+    ];
 }
