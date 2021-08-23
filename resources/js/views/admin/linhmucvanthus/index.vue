@@ -149,7 +149,7 @@
                 this.$modal.show('modal-linh-muc-van-thu-add')
             },
             _showModalEdit(info) {
-                 this.curInfo = info;
+                this.curInfo = info;
                 this.infoUpdate = {...info};
                 this.$modal.show('modal-linh-muc-van-thu-edit');
             },

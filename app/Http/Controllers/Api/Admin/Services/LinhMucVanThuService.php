@@ -88,7 +88,7 @@ final class LinhMucVanThuService implements BaseModel, LinhMucVanThuModel
 
         DB::commit();
 
-        return $this->model;
+        return $model;
     }
 
     public function apiGetLinhMucVanThus($data = array(), $limit = 5)
