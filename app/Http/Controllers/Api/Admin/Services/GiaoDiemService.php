@@ -65,17 +65,22 @@ final class GiaoDiemService implements BaseModel, GiaoDiemModel
      * @param array $data
      * @return GiaoDiem|bool|null
      */
-    public function apiInsertOrUpdate(array $data = [])
+    public function apiInsertOrUpdate(array $data = [], $model = null)
     {
         // TODO: Implement apiInsertOrUpdate() method.
-        $this->model->fill($data);
+        
+        if (is_null($model)) {
+            $model = $this->model;
+        }
+
+        $model->fill($data);
 
         /**
          * Save user with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
 
-        if (!$this->model->save()) {
+        if (!$model->save()) {
             DB::rollBack();
 
             return false;
@@ -83,7 +88,7 @@ final class GiaoDiemService implements BaseModel, GiaoDiemModel
 
         DB::commit();
 
-        return $this->model;
+        return $model;
     }
 
     public function apiGetGiaoDiems($data = array(), $limit = 5)

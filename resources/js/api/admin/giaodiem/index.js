@@ -15,7 +15,7 @@ import {
  * @return {[type]}           [description]
  */
 export const apiGetInfoById = (infoId, resolve, errResole) => {
-  return axios.get(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, infoId))
+  return axios.get(fn_get_base_api_detail_url(API_GIAO_DIEMS_RESOURCE, infoId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -83,7 +83,7 @@ export const apiGetGiaoDiemInfos = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiUpdateInfo = (info, resolve, errResole) => {
-  return axios.put(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, info.information_id), info)
+  return axios.put(fn_get_base_api_detail_url(API_GIAO_DIEMS_RESOURCE, info.id), info)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {
@@ -109,7 +109,7 @@ export const apiUpdateInfo = (info, resolve, errResole) => {
  * @return {[type]}           [description]
  */
 export const apiInsertInfo = (info, resolve, errResole) => {
-  return axios.post(fn_get_base_api_url(API_INFOMATIONS_RESOURCE), info)
+  return axios.post(fn_get_base_api_url(API_GIAO_DIEMS_RESOURCE), info)
     .then((response) => {
       console.log(response)
       if (response.status === 201) {
@@ -135,7 +135,7 @@ export const apiInsertInfo = (info, resolve, errResole) => {
  * @return {[type]}           [description]
  */
 export const apiDeleteInfo = (infoId, resolve, errResole) => {
-  return axios.delete(fn_get_base_api_detail_url(API_INFOMATIONS_RESOURCE, infoId))
+  return axios.delete(fn_get_base_api_detail_url(API_GIAO_DIEMS_RESOURCE, infoId))
     .then((response) => {
       console.log(response)
       if (response.status === 200) {

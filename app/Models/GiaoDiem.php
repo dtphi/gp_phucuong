@@ -15,4 +15,13 @@ class GiaoDiem extends BaseModel
      * @var string
      */
     protected $table = DB_PREFIX . 'giao_diems';
+
+    protected $fillable = [
+        'name',
+        'sort_id',
+        'dia_chi',
+        'ghi_chu',
+        'active',
+        'update_user'
+    ];
 }

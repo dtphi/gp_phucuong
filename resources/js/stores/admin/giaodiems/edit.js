@@ -10,16 +10,14 @@ import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
   INFOS_MODAL_UPDATE_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
-  INFOS_FORM_SET_MAIN_IMAGE
+  INFOS_MODAL_SET_ERROR
 } from '../types/mutation-types';
 import {
   ACTION_GET_INFO_BY_ID,
   ACTION_SET_LOADING,
   ACTION_SHOW_MODAL_EDIT,
   ACTION_UPDATE_INFO,
-  ACTION_RESET_NOTIFICATION_INFO,
-  ACTION_SET_IMAGE,
+  ACTION_RESET_NOTIFICATION_INFO
 } from '../types/action-types';
 import {
   config
@@ -28,29 +26,13 @@ import {
 const defaultState = () => {
   return {
     styleCss: '',
-    isExistInfo: config.existStatus.checking,
     info: {
-      image: "",
-      date_available: null,
-      sort_order: 0,
-      status: 1,
       name: '',
-      meta_title: '',
-      sort_description: '',
-      information_type: 1,
-      description: '',
-      tag: '',
-      meta_description: '',
-      meta_keyword: '',
-      multi_images: [],
-      relateds: [],
-      categorys: [],
-      downloads: [],
-      special_carousels: [],
+      dia_chi: '',
+      ghi_chu: '',
+      sort_id: 0,
+      active: 1
     },
-    isImgChange: false,
-    listCategorysDisplay: [],
-    listRelatedsDisplay: [],
     infoId: 0,
     loading: false,
     updateSuccess: false,
@@ -118,11 +100,6 @@ export default {
 
     [INFOS_MODAL_SET_ERROR](state, payload) {
       state.errors = payload
-    },
-
-    [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
     }
   },
 
@@ -183,12 +160,6 @@ export default {
       commit
     }, values) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
-    },
-
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
-    },
+    }
   }
 }

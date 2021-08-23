@@ -59,8 +59,10 @@ class GiaoDiemController extends ApiController
                     'id' => (int)$info->id,
                     'name'       => $info->name,
                     'dia_chi'    => $info->dia_chi,
+                    'sort_id'    => $info->sort_id,
                     'ghichu'     => $info->ghichu,
                     'active'     => $info->active,
+                    'active_text'     => $info->active?'Xảy ra':'Ẩn',
                     'updatetime' => $info->updatetime
                 ];
             }
@@ -143,11 +145,10 @@ class GiaoDiemController extends ApiController
     {
         try {
             $model = $this->gdSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -178,7 +179,7 @@ class GiaoDiemController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->gdSv->apiUpdate($model, $formData)) {
+        if ($result = $this->gdSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 
