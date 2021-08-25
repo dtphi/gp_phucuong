@@ -17,7 +17,7 @@
         <td class="text-left">{{info.label_to_date}}</td>
         <td class="text-left">{{info.chucvuName}}</td>
         <td class="text-center">{{info.ghi_chu}}</td>
-        <td class="text-center">{{info.active}}</td>
+        <td class="text-center">{{info.active_text}}</td>
         
         <td class="text-right">
             <a href="javascript:void(0);" data-toggle="tooltip"

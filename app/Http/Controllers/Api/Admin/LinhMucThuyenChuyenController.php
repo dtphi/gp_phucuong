@@ -59,7 +59,7 @@ class LinhMucThuyenChuyenController extends ApiController
                     'id' => (int)$info->id,
                     'linh_muc_url' => url('admin/linh-mucs/edit/' . $info->linh_muc_id),
                     'ten_linh_muc' => $info->ten_linh_muc,
-                    'fromgiaoxuName'      => $info->ten_from_giao_xu,
+                    'fromGiaoXuName'      => $info->ten_from_giao_xu,
                     'fromchucvuName' => $info->ten_from_chuc_vu,
                     'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"d-m-Y"):'',
                     'ducchaName' => $info->ten_duc_cha,
@@ -73,6 +73,7 @@ class LinhMucThuyenChuyenController extends ApiController
                     'quoc_gia' => $info->quoc_gia,
                     'ghi_chu' => $info->ghi_chu,
                     'active' => $info->active,
+                    'active_text' => $info->active?'Xảy ra':'Ẩn'
                 ];
             }
 
@@ -154,11 +155,10 @@ class LinhMucThuyenChuyenController extends ApiController
     {
         try {
             $model = $this->thuyenChuyenSv->apiGetDetail($id);
+            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
-
-        $this->infoSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -189,7 +189,7 @@ class LinhMucThuyenChuyenController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->thuyenChuyenSv->apiUpdate($model, $formData)) {
+        if ($result = $this->thuyenChuyenSv->apiInsertOrUpdate($formData, $model)) {
             return $this->respondUpdated($result);
         }
 

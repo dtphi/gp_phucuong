@@ -73,11 +73,13 @@
                 </div>
             </div>
         </div>
-
-        <the-modal-edit v-if="_infoUpdate.id"
-            :info="_infoUpdate"
-            :info-id="_infoUpdate.id"
-        ></the-modal-edit>
+        <modal name="modal-linh-muc-thuyen-chuyen-edit" :height="455" :click-to-close="false">
+            <the-modal-edit v-if="_infoUpdate.id"
+                :info="_infoUpdate"
+                @update-info-success="_updateInfoList"
+                @change-form="_changeForm"
+            ></the-modal-edit>
+        </modal>
         <the-modal-add></the-modal-add>
     </div>
 </template>
@@ -94,6 +96,7 @@
     import Paginate from 'com@admin/Pagination';
     import {
         MODULE_MODULE_THUYEN_CHUYEN,
+        MODULE_MODULE_THUYEN_CHUYEN_EDIT
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -116,11 +119,12 @@
             return {
                 fullPage: false,
                 isResource: false,
-                infoUpdate: {}
+                infoUpdate: {},
+                curInfo: {}
             }
         },
         watch: {
-            'updateSuccess'(newValue, oldValue) {
+            'isDelete'(newValue, oldValue) {
                 if (newValue) {
                     this._notificationUpdate(newValue);
                 }
@@ -134,7 +138,10 @@
             ...mapState(MODULE_MODULE_THUYEN_CHUYEN, [
                 'infos',
                 'loading',
-                'updateSuccess',
+                'isDelete',
+            ]),
+            ...mapState(MODULE_MODULE_THUYEN_CHUYEN_EDIT, [
+                'info',
             ]),
             _infoList() {
                 return this.infos;
@@ -155,13 +162,80 @@
                 this.$modal.show('modal-linh-muc-thuyen-chuyen-add');
             },
             _showModalEdit(info) {
-                this.infoUpdate = info;
+                this.curInfo = info;
+                this.infoUpdate = {...info};
                 this.$modal.show('modal-linh-muc-thuyen-chuyen-edit');
             },
-            _submitAction(event) {
-                this[event.target.value]({
-                    action: event.target.value
-                });
+            _updateInfoList() {
+                this.curInfo.from_giao_xu_id = this.info.from_giao_xu_id;
+                this.curInfo.from_chuc_vu_id = this.info.from_chuc_vu_id;
+                this.curInfo.from_date = this.info.from_date;
+                this.curInfo.duc_cha_id = this.info.duc_cha_id;
+                this.curInfo.to_date = this.info.to_date;
+                this.curInfo.chuc_vu_id = this.info.chuc_vu_id;
+                this.curInfo.giao_xu_id = this.info.giao_xu_id;
+                this.curInfo.co_so_gp_id = this.info.co_so_gp_id;
+                this.curInfo.dong_id = this.info.dong_id;
+                this.curInfo.ban_chuyen_trach_id = this.info.ban_chuyen_trach_id;
+                this.curInfo.du_hoc = this.info.du_hoc;
+                this.curInfo.quoc_gia = this.info.quoc_gia;
+                this.curInfo.ghi_chu = this.info.ghi_chu;
+                this.curInfo.active = this.info.active;
+                
+                this.$modal.hide('modal-linh-muc-thuyen-chuyen-edit');
+            },
+            _changeForm(info) {
+                switch(info.type) {
+                    case 'from.giao.xu':
+                        {
+                            this.infoUpdate.fromGiaoXuName = info.name;
+                            this.infoUpdate.from_giao_xu_id = info.id;
+                            break;
+                        }
+                    case 'from.chuc.vu':
+                        {
+                            this.infoUpdate.fromchucvuName = info.name;
+                            this.infoUpdate.from_chuc_vu_id = info.id;
+                            break;   
+                        }
+                    case 'from.duc.cha':
+                        {
+                            this.infoUpdate.ducchaName = info.name;
+                            this.infoUpdate.duc_cha_id = info.id;
+                            break;   
+                        }
+                    case 'to.chuc.vu':
+                        {
+                            this.infoUpdate.chucvuName = info.name;
+                            this.infoUpdate.chuc_vu_id = info.id;
+                            break;   
+                        }
+                    case 'to.giao.xu':
+                        {
+                            this.infoUpdate.giaoxuName = info.name;
+                            this.infoUpdate.giao_xu_id = info.id;
+                            break;   
+                        }
+                    case 'co.so.giao.phan':
+                        {
+                            this.infoUpdate.cosogpName = info.name;
+                            this.infoUpdate.co_so_gp_id = info.id;
+                            break;   
+                        }
+                    case 'dong':
+                        {
+                            this.infoUpdate.dongName = info.name;
+                            this.infoUpdate.dong_id = info.id;
+                            break;   
+                        }
+                    case 'ban.chuyen.trach':
+                        {
+                            this.infoUpdate.banchuyentrachName = info.name;
+                            this.infoUpdate.ban_chuyen_trach_id = info.id;
+                            break; 
+                        }
+                }
+
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);

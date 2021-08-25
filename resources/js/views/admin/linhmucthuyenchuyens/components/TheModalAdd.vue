@@ -20,74 +20,105 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Chức thánh</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Từ</label>
                         <div class="col-sm-10">
-                            <validation-provider
-                            name="info_name"
-                            rules="max:200"
-                            v-slot="{ errors }"
-                            >
-                                <select class="form-control" v-model="info.chuc_thanh_id">
-                                    <option
-                                        :selected="item.chuc_thanh_id == idx"
-                                        :value="idx ? idx : ''"
-                                        v-for="(item, idx) in $options.setting.cf.chucThanhs"
-                                        :key="idx"
-                                        >
-                                        {{ item }}
-                                    </option>
-                                </select>
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                            </validation-provider>
+                            <info-giao-xu-autocomplete
+                                @on-select-giao-xu="_selectThuyenChuyenFromGiaoXu"
+                                :name="info.fromGiaoXuName"
+                                :key="`from_giao_xu_${info.id}`"
+                                ></info-giao-xu-autocomplete>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Người thụ phong</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Từ</label>
                         <div class="col-sm-10">
-                            <validation-provider
-                            name="info_name"
-                            rules="max:255"
-                            v-slot="{ errors }"
-                            >
-                            <input
-                                v-model="info.nguoi_thu_phong"
-                                type="text"
-                                id="input-info-name"
-                                class="form-control"
-                            />
-
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                            </validation-provider>
+                            <info-chuc-vu-autocomplete
+                                @on-select-chuc-vu="_selectThuyenChuyenFromChucVu"
+                                :name="info.fromchucvuName"
+                                :key="`from_chuc_vu_${info.id}`"
+                                ></info-chuc-vu-autocomplete>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Nơi thụ phong</label>
-                        <div class="col-sm-10">
-                            <validation-provider
-                            name="info_name"
-                            rules="max:255"
-                            v-slot="{ errors }"
-                            >
-                            <input
-                                v-model="info.noi_thu_phong"
-                                type="text"
-                                id="input-info-name"
-                                class="form-control"
-                            />
-
-                            <span class="cms-text-red">{{ errors[0] }}</span>
-                            </validation-provider>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-info-name" class="col-sm-2 control-label">Ngày tháng</label>
+                        <label for="input-info-name" class="col-sm-2 control-label">Từ ngày</label>
                         <div class="col-sm-10">
                             <cms-date-picker
                                 value-type="format"
                                 format="YYYY-MM-DD"
-                                v-model="info.ngay_thang"
+                                v-model="info.from_date"
                                 type="date"
-                            ></cms-date-picker>
+                                ></cms-date-picker>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Linh mục</label>
+                        <div class="col-sm-10">
+                            <info-duc-cha-autocomplete
+                                @on-select-chuc-cha="_selectThuyenChuyenDucCha"
+                                :name="info.ducchaName"
+                                :key="`duc_cha_${info.id}`"
+                                ></info-duc-cha-autocomplete>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Đến ngày</label>
+                        <div class="col-sm-10">
+                            <cms-date-picker
+                                value-type="format"
+                                format="YYYY-MM-DD"
+                                v-model="info.to_date"
+                                type="date"
+                                ></cms-date-picker>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Chức vụ đến</label>
+                        <div class="col-sm-10">
+                            <info-chuc-vu-autocomplete
+                                @on-select-chuc-vu="_selectThuyenChuyenToChucVu"
+                                :name="info.chucvuName"
+                                :key="`to_chuc_vu_${info.id}`"
+                                ></info-chuc-vu-autocomplete>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Đến</label>
+                        <div class="col-sm-10">
+                            <info-giao-xu-autocomplete
+                                @on-select-giao-xu="_selectThuyenChuyenToGiaoXu"
+                                :name="info.giaoxuName"
+                                :key="`to_giao_xu_${info.id}`"
+                                ></info-giao-xu-autocomplete>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Cơ sở</label>
+                        <div class="col-sm-10">
+                            <info-co-so-giao-phan-autocomplete
+                                @on-select-co-so-giao-phan="_selectThuyenChuyenCoSoGiaoPhan"
+                                :name="info.cosogpName"
+                                :key="`co_so_giao_phan_${info.id}`"
+                                ></info-co-so-giao-phan-autocomplete>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Là</label>
+                        <div class="col-sm-10">
+                            <info-dong-autocomplete
+                                @on-select-dong="_selectThuyenChuyenDong"
+                                :name="info.dongName"
+                                :key="`dong_${info.id}`"
+                                ></info-dong-autocomplete>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-info-name" class="col-sm-2 control-label">Là</label>
+                        <div class="col-sm-10">
+                            <info-ban-chuyen-trach-autocomplete
+                                @on-select-ban-chuyen-trach="_selectThuyenChuyenBanChuyenTrach"
+                                :name="info.banchuyentrachName"
+                                :key="`ban_chuyen_trach_${info.id}`"
+                                ></info-ban-chuyen-trach-autocomplete>
                         </div>
                     </div>
                     <div class="form-group">
@@ -133,18 +164,26 @@
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
     import { config } from "@app/common/config";
+    import InfoGiaoXuAutocomplete from 'com@admin/Form/LinhMucs/Groups/InfoGiaoXuAutocomplete';
+    import InfoChucVuAutocomplete from "com@admin/Form/LinhMucs/Groups/InfoChucVuAutocomplete";
+    import InfoDucChaAutocomplete from "com@admin/Form/LinhMucs/Groups/InfoDucChaAutocomplete";
+    import InfoCoSoGiaoPhanAutocomplete from "com@admin/Form/LinhMucs/Groups/InfoCoSoGiaoPhanAutocomplete";
+    import InfoDongAutocomplete from "com@admin/Form/LinhMucs/Groups/InfoDongAutocomplete";
+    import InfoBanChuyenTrachAutocomplete from "com@admin/Form/LinhMucs/Groups/InfoBanChuyenTrachAutocomplete";
 
     export default {
         name: 'TheModalAdd',
+        components: {
+            InfoGiaoXuAutocomplete,
+            InfoChucVuAutocomplete,
+            InfoDucChaAutocomplete,
+            InfoCoSoGiaoPhanAutocomplete,
+            InfoDongAutocomplete,
+            InfoBanChuyenTrachAutocomplete
+        },
         data() {
             return {
                 info: {
-                    active: 1,
-                    ghi_chu: "",
-                    id: null,
-                    name: "",
-                    ten_linh_muc: "",
-                    type: 0
                 }
             }
         },
@@ -156,6 +195,40 @@
             _submitUpdate() {
                 return 0;
             },
+            _selectThuyenChuyenFromGiaoXu(values) {
+                this._changeForm(values, 'from.giao.xu');
+            },
+            _selectThuyenChuyenFromChucVu(values) {
+                this._changeForm(values, 'from.chuc.vu');
+            },
+            _selectThuyenChuyenDucCha(values) {
+                this._changeForm(values, 'from.duc.cha');
+            },
+            _selectThuyenChuyenToChucVu(values) {
+                this._changeForm(values, 'to.chuc.vu');
+            },
+            _selectThuyenChuyenToGiaoXu(values) {
+                this._changeForm(values, 'to.giao.xu');
+            },
+            _selectThuyenChuyenCoSoGiaoPhan(values) {
+                this._changeForm(values, 'co.so.giao.phan');
+            },
+            _selectThuyenChuyenDong(values) {
+                this._changeForm(values, 'dong');
+            },
+            _selectThuyenChuyenBanChuyenTrach(values) {
+                this._changeForm(values, 'ban.chuyen.trach');
+            },
+            _changeForm(values, type) {
+                this.$emit('change-form', {...values, type});
+            },
+            _notificationUpdate(notification) {
+                if (notification.type == 'success') {
+                    this.$emit('insert-info-success');
+                }
+                this.$notify(notification);
+                this.[ACTION_RESET_NOTIFICATION_INFO]();
+            }
         },
          setting: {
             cf: config,

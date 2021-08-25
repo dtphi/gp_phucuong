@@ -48,7 +48,8 @@ class LinhmucThuyenchuyen extends BaseModel
         'du_hoc',
         'quoc_gia',
         'ghi_chu',
-        'active'
+        'active',
+        'update_user'
     ];
 
     public function fromGiaoXu()
