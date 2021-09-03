@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import giaoxu from './giaoxus';
 import home from './homes';
 import video from './videos';
 import info from './infos';
@@ -31,7 +32,6 @@ const fnIsObject = (obj) => {
 
   return false;
 }
-
 
 const defaultState = () => {
   return {
@@ -265,6 +265,7 @@ export default new Vuex.Store({
     },
   },
   modules: {
+    giaoxu,
     home,
     video,
     info,

@@ -1,5 +1,6 @@
 // APP
 export const API_APP_SETTING = '/api/app/get-setting';
+export const API_GIAO_XU_LIST = '/api/app/get-data-giao-xu';
 
 // HOME 
 export const API_HOME_RESOURCE = '/api/homes/get-list';

@@ -31,6 +31,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::get('/app/info/get-related-information', 'NewsController@showRelatedList');
     Route::get('/app/info/get-special-information', 'NewsController@showSpecialModuleList');
     Route::get('/app/get-data-module', 'ModuleController@showDataList');
+    Route::get('/app/get-data-giao-xu', 'Base\ApiController@getGiaoXuList');
     Route::apiResource('/email_sub/create', 'EmailController');
   });
 

@@ -10,6 +10,7 @@ use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Common\Tables;
+use App\Helpers\Helper;
 use Image;
 use Storage;
 
@@ -476,5 +477,13 @@ class ApiController extends Controller
         }
 
         return $newsGroupTree;
+    }
+
+    public function getGiaoXuList() 
+    {
+        $results = $this->sv->apiGetGiaoXuList();
+        $json['results'] = $results;
+
+        return Helper::successResponse($json);
     }
 }

@@ -3,6 +3,7 @@ import HomePage from 'v@front/page_news';
 import CategoryPage from 'v@front/page_category_news';
 import VideoPage from 'v@front/page_videos';
 import LinhMucPage from 'v@front/page_linh_mucs';
+import GiaoXuPage from 'v@front/page_giao_xus';
 
 const debug = process.env.NODE_ENV === 'debuger';
 
@@ -217,6 +218,35 @@ routeEnv = {
             meta: {
                 auth: false,
                 header: 'Trang Chi Tiết Linh Mục',
+                layout: MainLayout,
+                role: 'guest',
+                layout_content: {}
+            }
+        }]
+    }, {
+        path: 'giao-xu',
+        component: {
+            render: c => c('router-view')
+        },
+        children: [{
+            path: '',
+            component: GiaoXuPage,
+            name: 'giao-xu-page',
+            meta: {
+                auth: false,
+                header: 'Trang Giáo Xứ',
+                layout: MainLayout,
+                role: 'guest',
+                layout_content: {}
+            }
+        }, {
+            path: 'chi-tiet/:giaoXuId',
+            component: () =>
+                import ('v@front/page_giao_xu_details'),
+            name: 'giao-xu-detail-page',
+            meta: {
+                auth: false,
+                header: 'Trang Chi Tiết Giáo Xứ',
                 layout: MainLayout,
                 role: 'guest',
                 layout_content: {}

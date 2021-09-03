@@ -1,3 +1,5 @@
+export const MODULE_GIAO_XU_PAGE = 'giaoxu';
+export const MODULE_GIAO_XU_DETAIL_PAGE = 'giaoxu/detail';
 export const MODULE_HOME = 'home';
 export const MODULE_INFO = 'info';
 export const MODULE_INFO_DETAIL = 'info/detail';

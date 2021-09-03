@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Front\Services;
 use App\Http\Common\Tables;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
 use App\Models\Category;
+use App\Models\GiaoXu;
 use App\Models\Information;
 use DB;
 
@@ -24,6 +25,7 @@ class Service implements BaseModel
     {
         $this->modelInfo     = new Information();
         $this->modelNewGroup = new Category();
+        $this->modelGiaoXu   = new GiaoXu();
     }
 
     /**
@@ -164,5 +166,12 @@ class Service implements BaseModel
         $query->orderByDesc('date_available');
 
         return $query->get();
+    }
+
+    public function apiGetGiaoXuList($data = array(), $limit = 5)
+    {
+        $query = $this->modelGiaoXu->select();
+
+        return $query->paginate(20);
     }
 }
