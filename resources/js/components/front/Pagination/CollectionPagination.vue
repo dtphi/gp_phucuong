@@ -19,7 +19,7 @@
                 :class="{'disabled': !computed.prevPageUrl}"
                 v-if="computed.prevPageUrl || showDisabled">
                 <a class="page-link"
-                   href="#"
+                   href="javascript:void(0)"
                    aria-label="Previous"
                    :tabindex="!computed.prevPageUrl && -1"
                    v-on="prevButtonEvents">
@@ -35,7 +35,7 @@
                 :class="{ 'active': page == computed.currentPage }">
                 <a
                     class="page-link"
-                    href="#"
+                    href="javascript:void(0)"
                     v-on="pageButtonEvents(page)">
                     {{ page }}
                     <span class="sr-only"
@@ -47,7 +47,7 @@
                 v-if="computed.nextPageUrl || showDisabled">
                 <a
                     class="page-link"
-                    href="#"
+                    href="javascript:void(0)"
                     aria-label="Next"
                     :tabindex="!computed.nextPageUrl && -1"
                     v-on="nextButtonEvents">

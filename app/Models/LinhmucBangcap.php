@@ -10,7 +10,7 @@ use App\Models\Linhmuc;
 
 class LinhmucBangcap extends BaseModel
 {
-    use SoftDeletes;
+    // use SoftDeletes;
     /**
      * @var string
      */

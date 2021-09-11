@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import giaoxu from './giaoxus';
+import linhmuc from './linhmucs';
 import home from './homes';
 import video from './videos';
 import info from './infos';
@@ -207,12 +208,12 @@ export default new Vuex.Store({
           commit('appSetError', error);
         },
         options
-      );
+      );	
     },
 
     setConfigApp({
       commit
-    }, configs) {
+		}, configs) {
       const links = (configs.hasOwnProperty('links')) ? configs.links : undefined;
       const meta = (configs.hasOwnProperty('meta')) ? configs.meta : undefined;
       const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive : undefined;
@@ -264,7 +265,8 @@ export default new Vuex.Store({
       }
     },
   },
-  modules: {
+	modules: {
+		linhmuc,
     giaoxu,
     home,
     video,

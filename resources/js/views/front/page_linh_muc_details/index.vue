@@ -42,20 +42,19 @@
                                 <div class="row">
                                     <p class="col-4 text-uppercase">Linh mục</p>
                                     <div class="col-8 level-text">
-                                        <p class="text-uppercase">Tên thánh</p>
-                                        <p class="text-uppercase">Họ và tên cha</p>
-                                        <p class="text-uppercase">Chức vụ hiện tại</p>
+                                        <p class="text-uppercase">Tên thánh: {{pageLists.thanh ? pageLists.thanh.name : 'Chưa cập nhật' }}</p>																				
+                                        <p class="text-uppercase">Họ và tên cha: {{pageLists.ho_ten_cha ? pageLists.ho_ten_cha : 'Chưa cập nhật' }}</p>
+                                        <p class="text-uppercase">Chức vụ hiện tại: {{pageLists.cvht_name ? pageLists.cvht_name : 'Chưa cập nhật' }}</p>
                                     </div>
                                 </div>
 
                                 <div class="bi-tich p-4 mt-3">
                                     <h4 class="text-uppercase text-white text-center mb-3">Bí tích</h4>
-                                    <a class="d-block text-white" href="#">Bí tích Rửa Tội</a>
-                                    <a class="d-block text-white" href="#">Bí tích Thêm sức</a>
-                                    <a class="d-block text-white" href="#">Bí tích Truyền Chức</a>
-                                    <a class="d-block text-white" href="#">1. Phó Tế</a>
-                                    <a class="d-block text-white" href="#">2. Linh Mục</a>
-                                    <a class="d-block text-white" href="#">3. Giám Mục</a>
+                                    <a class="d-block text-white" href="#">Bí tích Rửa Tội: {{pageLists.ngay_rua_toi ? pageLists.ngay_rua_toi : 'Chưa cập nhật' }}</a>
+                                    <a class="d-block text-white" href="#">Bí tích Thêm sức: {{pageLists.ngay_tham_suc ? pageLists.ngay_them_suc : 'Chưa cập nhật' }}</a>
+                                    <a class="d-block text-white" href="#">Bí tích Truyền Chức: {{pageLists.ngay_nhan_chuc ? pageLists.ngay_nhan_chuc : 'Chưa cập nhật' }}</a>
+                                    <a  v-for="(value, idx) in pageLists.ds_chuc_vu" :key="idx" class="d-block text-white">{{idx + 1}}. {{value.chucvu_name ? value.chucvu_name : 'Chưa cập nhật' }}</a>
+                                    
                                 </div>
                             </div>
                             <div class="col-mobile col-9">
@@ -65,19 +64,19 @@
                                 <div class="info-personal mt-5">
                                     <h4 class="text-uppercase">Thông tin cá nhân</h4>
                                     <p class="row">
-                                        <span class="col-mobile col-4">Ngày sinh: </span>
-                                        <span class="col-mobile col-4">Tại: </span>
+                                        <span class="col-mobile col-4">Ngày sinh: {{pageLists.ngay_thang_nam_sinh ? pageLists.ngay_thang_nam_sinh : 'Chưa cập nhật' }}</span>
+                                        <span class="col-mobile col-4">Tại:  {{pageLists.noi_sinh ? pageLists.noi_sinh : 'Chưa cập nhật' }} </span>
                                     </p>
                                     <p class="row">
-                                        <span class="col-mobile col-4">Giáo xứ: </span>
-                                        <span class="col-mobile col-4">Giáo phận: </span>
+                                        <span class="col-mobile col-4">Giáo xứ:  {{pageLists.ten_xu ? pageLists.ten_xu : 'Chưa cập nhật' }}</span>
+                                        <span class="col-mobile col-4">Giáo phận:  {{pageLists.gp_name ? pageLists.gp_name : 'Chưa cập nhật' }}</span>
                                     </p>
-                                    <p>Tên cha: </p>
-                                    <p>Tên mẹ: </p>
-                                    <p>CMND: </p>
+                                    <p>Tên cha:  {{pageLists.ho_ten_cha ? pageLists.ho_ten_cha : 'Chưa cập nhật' }}</p>
+                                    <p>Tên mẹ:  {{pageLists.ho_ten_me ? pageLists.ho_ten_me : 'Chưa cập nhật' }}</p>
+                                    <p>CMND:  {{pageLists.so_cmnd ? pageLists.so_cmnd : 'Chưa cập nhật' }}</p>
                                     <p class="row">
-                                        <span class="col-mobile col-4">Ngày cấp: </span>
-                                        <span class="col-mobile col-4">Nơi cấp: </span>
+                                        <span class="col-mobile col-4">Ngày cấp:  {{pageLists.ngay_cap_cmnd ? pageLists.ngay_cap_cmnd : 'Chưa cập nhật' }}</span>
+                                        <span class="col-mobile col-4">Nơi cấp:  {{pageLists.noicap_cmnd ? pageLists.noicap_cmnd : 'Chưa cập nhật' }}</span>
                                     </p>
                                 </div>
 
@@ -102,10 +101,10 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO
+        MODULE_LINH_MUC_DETAIL_PAGE
     } from '@app/stores/front/types/module-types'; 
     import {
-        GET_INFORMATION_LIST_TO_CATEGORY
+        GET_DETAIL_LINH_MUC
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
     import ContentTop from 'com@front/Common/ContentTop';
@@ -137,8 +136,11 @@
             }
         },
         computed: {
-            ...mapState(MODULE_INFO, {
-                infoList: state => state.pageLists,
+            ...mapState(MODULE_LINH_MUC_DETAIL_PAGE, {
+                pageLists: (state) => {
+									console.log(state.pageLists, 'pageLists123');
+									return state.pageLists;
+								},
                 loading: state => state.loading
             }),
             _isContentTop() {
@@ -152,11 +154,12 @@
             },
         },
          mounted() {
-            this.[GET_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
+            this.[GET_DETAIL_LINH_MUC](this.$route.params);			
+						
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                GET_INFORMATION_LIST_TO_CATEGORY,
+            ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, [
+                GET_DETAIL_LINH_MUC,
             ]),
         }
     }

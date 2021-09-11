@@ -67,7 +67,7 @@ export const apiGetLinhMucInfos = (resolve, errResole, params) => {
       params: params
     })
     .then((response) => {
-      console.log(response)
+      console.log(response, 'Resource')
       if (response.status === 200) {
         resolve({
           data: response.data.data

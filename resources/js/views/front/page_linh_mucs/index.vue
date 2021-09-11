@@ -4,11 +4,12 @@
             <main-menu></main-menu>
             <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
                 <content-top v-if="_isContentTop">
-                    <template v-if="loading">
+                    <!-- Loading -->
+													<template v-if="loading">
                         <loading-over-lay
                             :active.sync="loading"
                             :is-full-page="fullPage"></loading-over-lay>
-                    </template>
+                    		</template>
                     <template v-slot:column_right>
                         <social-network></social-network>
                         <div class="box-social">
@@ -51,62 +52,49 @@
                 </content-top>
                 <main-content v-if="_isContentMain">
                     <template v-slot:before>
-                        <!-- Html linh mục detail -->
+                        <!-- Html linh mục detail -->												
                         <div class="list-danh-muc w-100">
                             <h2 class="title-linh-muc text-center">Danh sách linh mục đoàn giáo phận phú cường <hr class="line-linh-muc"></h2>
-                            <div class="tab-linh-muc w-100">
+                            <div class="tab-linh-muc w-100">												
                                 <b-tabs content-class="mt-3" fill>
                                     <b-tab title="Lọc theo chức vụ / Giáo hạt" active>
                                         <div class="list-linh-muc">
-                                            <div class="row row-linh-muc">
+                                            <!-- Load danh sach linh muc -->
+																						<div v-for="(info,idx) in pageLists" :key="idx" class="row row-linh-muc">
                                                 <div class="col-mobile col-2">
-                                                    <a class="avatar" href="#"><img class="img" src="https://donghanhonline.com/wp-content/uploads/2020/08/linh-muc.jpg" alt=""></a>
+                                                    <a class="avatar" :href="`/linh-muc/chi-tiet/${info.id}`">
+                                                        <img class="img" :src="`${info.image}`" alt="Khong co gi">
+                                                    </a>
                                                 </div>
                                                 <div class="col-mobile col-10 content">
-                                                    <h4 class="tit"><a href="#">Linh mục Gioan Baotixita Nguyễn Văn A</a></h4>
+                                                    <h4 class="tit">
+                                                        Linh mục {{info.ten_thanh}} <a :href="`/linh-muc/chi-tiet/${info.id}`">{{info.ten}}</a>
+                                                    </h4>
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <span>Chức vụ: Chánh xứ</span>
-                                                            <span>Nơi phục vụ: Gx. Tân Châu</span>
-                                                            <span>Giáo hạt: Bình Long</span>
+                                                            <span>Chức vụ: {{info.chuc_vu}}</span>       
+																														<span>Nơi phục vụ: Gx. {{info.giao_xu}}</span>   
+																														<span>Giáo hạt: {{info.giao_hat}}</span>                                                     
                                                         </div>
                                                         <div class="col-6">
-                                                            <span>Năm sinh: 25/11/1982</span>
-                                                            <span>Chịu chức: 28/11/2014</span>
-                                                            <span>Địa chỉ: 104 Lạc Long Quân...</span>
+                                                            <span>Năm sinh: {{info.nam_sinh}}</span>
+                                                            <span>Chịu chức: {{info.ngay_nhan_chuc}}</span>  
+																														<span>Địa chỉ: {{info.dia_chi}}</span>                                                
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                                <div class="row row-linh-muc">
-                                                <div class="col-mobile col-2">
-                                                    <a class="avatar" href="#"><img class="img" src="https://donghanhonline.com/wp-content/uploads/2020/08/linh-muc.jpg" alt=""></a>
-                                                </div>
-                                                <div class="col-mobile col-10 content">
-                                                    <h4 class="tit"><a href="#">Linh mục Gioan Baotixita Nguyễn Văn A</a></h4>
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <span>Chức vụ: Chánh xứ</span>
-                                                            <span>Nơi phục vụ: Gx. Tân Châu</span>
-                                                            <span>Giáo hạt: Bình Long</span>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <span>Năm sinh: 25/11/1982</span>
-                                                            <span>Chịu chức: 28/11/2014</span>
-                                                            <span>Địa chỉ: 104 Lạc Long Quân...</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </div>																						
                                         </div>
-                                    </b-tab>
+																				<paginate :is-resource="isResource" v-if="pageLists"></paginate>
+                                    </b-tab>																																				
                                     <b-tab title="Tất cả">
                                         <p>I'm the first tab</p>
                                     </b-tab>
-                                </b-tabs>
+																		
+                                </b-tabs>																											
                             </div>
-                        </div>
-                    </template>
+                        </div>																							
+                    </template>										
                 </main-content>
                 <content-bottom v-if="_isContentBottom">
                 </content-bottom>
@@ -121,10 +109,10 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO
+        MODULE_LINH_MUC_PAGE
     } from '@app/stores/front/types/module-types';
     import {
-        GET_INFORMATION_LIST_TO_CATEGORY
+        GET_LISTS_LINH_MUC
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
     import ContentTop from 'com@front/Common/ContentTop';
@@ -134,6 +122,8 @@
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
+		import Paginate from 'com@front/Pagination';
+		
 
     export default {
         name: 'InfoPage',
@@ -145,22 +135,24 @@
             SocialNetwork,
             NewsletterRegister,
             MainContent,
-            ModulePageBannerList
+            ModulePageBannerList,
+						Paginate
         },
         data() {
             return {
                 isContentBottom: true,
-                fullPage: false,
+                fullPage: true,
                 isTopBottomBoth: false,
-                imgCarousel: 'https://picsum.photos/1024/480/?image=58'
+                imgCarousel: 'https://picsum.photos/1024/480/?image=58',
+								isResource: false,
             }
         },
         computed: {
             ...mapState({
                 contentBgColor: state => state.cfApp.setting.contentBgColor,
             }),
-            ...mapState(MODULE_INFO, {
-                infoList: state => state.pageLists,
+            ...mapState(MODULE_LINH_MUC_PAGE, {
+                pageLists: state => state.pageLists,
                 loading: state => state.loading
             }),
             _isContentTop() {
@@ -174,11 +166,11 @@
             },
         },
          mounted() {
-            this.[GET_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
+            this.[GET_LISTS_LINH_MUC](this.$route.params);
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                GET_INFORMATION_LIST_TO_CATEGORY,
+            ...mapActions(MODULE_LINH_MUC_PAGE, [
+                GET_LISTS_LINH_MUC,
             ]),
         }
     }

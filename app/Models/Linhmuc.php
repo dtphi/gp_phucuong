@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Http\Common\Tables;
 use DB;
+use App\Models\GiaoXu;
+use App\Http\Common\Tables;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Linhmuc extends BaseModel
 {
@@ -84,12 +85,12 @@ class Linhmuc extends BaseModel
 
     public function bangCaps()
     {
-        return $this->hasMany(LinhmucBangcap::class, 'linh_muc_id');
+        return $this->hasMany(LinhmucBangcap::class, 'linhmuc_id');
     }
 
     public function chucThanhs()
     {
-        return $this->hasMany(LinhmucChucthanh::class, 'linh_muc_id');
+        return $this->hasMany(LinhmucChucthanh::class, 'linhmuc_id');
     }
 
     public function vanThus()
@@ -99,7 +100,7 @@ class Linhmuc extends BaseModel
 
     public function thuyenChuyens()
     {
-        return $this->hasMany(LinhmucThuyenchuyen::class, 'linh_muc_id');
+        return $this->hasMany(LinhmucThuyenchuyen::class, 'linhmuc_id');
     }
 
     public function getTenThanhAttribute($value)

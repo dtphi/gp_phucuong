@@ -1,6 +1,8 @@
 // APP
 export const API_APP_SETTING = '/api/app/get-setting';
 export const API_GIAO_XU_LIST = '/api/app/get-data-giao-xu';
+export const API_LINH_MUC_LIST = '/api/app/get-data-linh-muc';
+export const API_LINH_MUC_DETAIL = '/api/app/get-detail-linh-muc';
 
 // HOME 
 export const API_HOME_RESOURCE = '/api/homes/get-list';

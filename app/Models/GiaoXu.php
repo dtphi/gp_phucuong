@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Http\Common\Tables;
 use DB;
+use App\Models\GiaoHat;
+use App\Http\Common\Tables;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GiaoXu extends BaseModel
 {
-  use SoftDeletes;
+	public function giaoHat()
+	{
+		return $this->hasOne(GiaoHat::class, $this->primaryKey, 'giao_hat_id');
+	}
 
   /**
    * @var string
