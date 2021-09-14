@@ -85,12 +85,12 @@ class Linhmuc extends BaseModel
 
     public function bangCaps()
     {
-        return $this->hasMany(LinhmucBangcap::class, 'linhmuc_id');
+        return $this->hasMany(LinhmucBangcap::class, 'linh_muc_id');
     }
 
     public function chucThanhs()
     {
-        return $this->hasMany(LinhmucChucthanh::class, 'linhmuc_id');
+        return $this->hasMany(LinhmucChucthanh::class, 'linh_muc_id');
     }
 
     public function vanThus()
@@ -100,7 +100,7 @@ class Linhmuc extends BaseModel
 
     public function thuyenChuyens()
     {
-        return $this->hasMany(LinhmucThuyenchuyen::class, 'linhmuc_id');
+        return $this->hasMany(LinhmucThuyenchuyen::class, 'linh_muc_id');
     }
 
     public function getTenThanhAttribute($value)
