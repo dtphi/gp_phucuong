@@ -61,8 +61,8 @@ class InformationController extends ApiController
             $results = [];
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
-                
-                if (file_exists(public_path($info->image['path'])) && $info->image['path']!= '') {
+                $realPath = public_path($info->image['path']);
+                if (file_exists($realPath) && (false !== realpath($realPath)) && !empty($info->image['path'])) {
                     $staticImgThum = $info->image['path'];
                 }
 

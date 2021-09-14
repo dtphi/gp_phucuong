@@ -543,7 +543,7 @@ class NewsController extends Controller
 
     public function showSpecialModuleList(Request $request)
     {
-        $json                      = [];
+        $json['results']           = [];
         $params                    = $request->all();
         $params['information_ids'] = [];
         if (!empty($request->query('specialInfoIds'))) {

@@ -5,11 +5,11 @@
             <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
                 <content-top v-if="_isContentTop">
                     <!-- Loading -->
-													<template v-if="loading">
+					<template v-if="loading">
                         <loading-over-lay
                             :active.sync="loading"
                             :is-full-page="fullPage"></loading-over-lay>
-                    		</template>
+                    </template>
                     <template v-slot:column_right>
                         <social-network></social-network>
                         <div class="box-social">
@@ -57,13 +57,13 @@
                             <h2 class="title-linh-muc text-center">Danh sách linh mục đoàn giáo phận phú cường <hr class="line-linh-muc"></h2>
                             <div class="tab-linh-muc w-100">												
                                 <b-tabs content-class="mt-3" fill>
-                                    <b-tab title="Lọc theo chức vụ / Giáo hạt" active>
+                                    <b-tab title="Tất cả" active>
                                         <div class="list-linh-muc">
                                             <!-- Load danh sach linh muc -->
-																						<div v-for="(info,idx) in pageLists" :key="idx" class="row row-linh-muc">
+												<div v-for="(info,idx) in pageLists" :key="idx" class="row row-linh-muc">
                                                 <div class="col-mobile col-2">
                                                     <a class="avatar" :href="`/linh-muc/chi-tiet/${info.id}`">
-                                                        <img class="img" :src="`${info.image}`" alt="Khong co gi">
+                                                        <img class="img" :src="`${info.image}`" alt="Hình ảnh đại diện">
                                                     </a>
                                                 </div>
                                                 <div class="col-mobile col-10 content">
@@ -73,22 +73,22 @@
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <span>Chức vụ: {{info.chuc_vu}}</span>       
-																														<span>Nơi phục vụ: Gx. {{info.giao_xu}}</span>   
-																														<span>Giáo hạt: {{info.giao_hat}}</span>                                                     
+															<span>Nơi phục vụ: Gx. {{info.giao_xu}}</span>   
+															<span>Giáo hạt: {{info.giao_hat}}</span>                                                     
                                                         </div>
                                                         <div class="col-6">
                                                             <span>Năm sinh: {{info.nam_sinh}}</span>
                                                             <span>Chịu chức: {{info.ngay_nhan_chuc}}</span>  
-																														<span>Địa chỉ: {{info.dia_chi}}</span>                                                
+															<span>Địa chỉ: {{info.dia_chi}}</span>                                                
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>																						
                                         </div>
-																				<paginate :is-resource="isResource" v-if="pageLists"></paginate>
+										<paginate :is-resource="isResource" v-if="pageLists"></paginate>
                                     </b-tab>																																				
-                                    <b-tab title="Tất cả">
-                                        <p>I'm the first tab</p>
+                                    <b-tab title="Lọc theo chức vụ / Giáo hạt">
+                                        <p>Đang cập nhật</p>
                                     </b-tab>
 																		
                                 </b-tabs>																											

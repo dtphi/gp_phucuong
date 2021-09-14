@@ -197,9 +197,9 @@ class Service implements BaseModel
 			Tables::$thanhs . '.id'
 		)->leftJoin(Tables::$giao_xus, Tables::$linhmucs . '.giao_xu_id', '=', Tables::$giao_xus . '.id')
 		->leftJoin(Tables::$giao_hats, Tables::$giao_xus . '.giao_hat_id', '=', Tables::$giao_hats . '.id')
-		->leftJoin(Tables::$linhmuc_chucthanhs, Tables::$linhmuc_chucthanhs . '.linhmuc_id', '=', Tables::$linhmucs . '.id')
-		->leftJoin(Tables::$linhmuc_thuyenchuyens, Tables::$linhmuc_thuyenchuyens . '.linhmuc_id', '=', Tables::$linhmucs . '.id')
-		->leftJoin(Tables::$chuc_vus, Tables::$linhmuc_thuyenchuyens . '.chucvu_id', '=', Tables::$chuc_vus . '.id')
+		->leftJoin(Tables::$linhmuc_chucthanhs, Tables::$linhmuc_chucthanhs . '.linh_muc_id', '=', Tables::$linhmucs . '.id')
+		->leftJoin(Tables::$linhmuc_thuyenchuyens, Tables::$linhmuc_thuyenchuyens . '.linh_muc_id', '=', Tables::$linhmucs . '.id')
+		->leftJoin(Tables::$chuc_vus, Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', '=', Tables::$chuc_vus . '.id')
 		->select(Tables::$chuc_vus . '.name as cv_name',
 					  Tables::$linhmucs. '.id',
 						Tables::$linhmucs . '.ten',
@@ -226,18 +226,18 @@ class Service implements BaseModel
 	{
 		/*lấy thông tin chi tiết linh mục*/
 		$query = DB::table(Tables::$linhmucs)		
-		->leftJoin(Tables::$linhmuc_thuyenchuyens, Tables::$linhmuc_thuyenchuyens . '.linhmuc_id', '=', Tables::$linhmucs . '.id')
+		->leftJoin(Tables::$linhmuc_thuyenchuyens, Tables::$linhmuc_thuyenchuyens . '.linh_muc_id', '=', Tables::$linhmucs . '.id')
 		->leftJoin(Tables::$thanhs, Tables::$thanhs . '.id', '=', Tables::$linhmucs . '.ten_thanh_id')
 		->leftJoin(Tables::$giao_xus, Tables::$linhmucs . '.giao_xu_id', '=', Tables::$giao_xus . '.id')
-		->leftJoin(Tables::$chuc_vus, Tables::$chuc_vus . '.id', '=', Tables::$linhmuc_thuyenchuyens . '.chucvu_id')
-		->leftJoin(Tables::$linhmuc_chucthanhs, Tables::$linhmuc_chucthanhs . '.linhmuc_id', '=', Tables::$linhmucs . '.id')
+		->leftJoin(Tables::$chuc_vus, Tables::$chuc_vus . '.id', '=', Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id')
+		->leftJoin(Tables::$linhmuc_chucthanhs, Tables::$linhmuc_chucthanhs . '.linh_muc_id', '=', Tables::$linhmucs . '.id')
 		->leftJoin(Tables::$giaophan_hat_xus, Tables::$giaophan_hat_xus . '.giao_xu_id', '=', Tables::$linhmucs . '.giao_xu_id')
 		->leftJoin(Tables::$giaophans, Tables::$giaophans . '.id', '=', Tables::$giaophan_hat_xus . '.giao_phan_id')
-		//->where(Tables::$linhmuc_thuyenchuyens . '.giaoxu_id', '=', Tables::$linhmucs . '.giao_xu_id')
-		//->leftJoin(Tables::$chuc_vus, Tables::$linhmuc_thuyenchuyens . '.chucvu_id', '=', Tables::$chuc_vus . '.id')
+		//->where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', '=', Tables::$linhmucs . '.giao_xu_id')
+		//->leftJoin(Tables::$chuc_vus, Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', '=', Tables::$chuc_vus . '.id')
 		->where(Tables::$linhmucs . '.id', '=', $id)
-		//->whereRaw(Tables::$linhmuc_thuyenchuyens . '.giaoxu_id = ' . Tables::$linhmucs . '.giao_xu_id')
-		->whereColumn(Tables::$linhmuc_thuyenchuyens . '.giaoxu_id', '=', Tables::$linhmucs . '.giao_xu_id')
+		//->whereRaw(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id = ' . Tables::$linhmucs . '.giao_xu_id')
+		->whereColumn(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', '=', Tables::$linhmucs . '.giao_xu_id')
 		->select(
 			Tables::$linhmucs . '.id',
 			Tables::$linhmucs . '.ten',
@@ -251,7 +251,7 @@ class Service implements BaseModel
 			Tables::$linhmucs . '.ngay_them_suc',
 			Tables::$linhmucs . '.so_cmnd',
 			Tables::$linhmucs . '.ngay_cap_cmnd',
-			Tables::$linhmucs . '.noicap_cmnd',
+			Tables::$linhmucs . '.noi_cap_cmnd',
 			Tables::$giao_xus . '.name as ten_xu',
 			Tables::$chuc_vus . '.name as cvht_name',
 			Tables::$linhmuc_chucthanhs . '.ngay_thang_nam_chuc_thanh as ngay_nhan_chuc',
@@ -260,17 +260,19 @@ class Service implements BaseModel
 
 		/*Lấy ds chucvu thuộc linh mục hiện tại*/
 		$query_other = DB::table(Tables::$linhmuc_thuyenchuyens)
-		->leftJoin(Tables::$chuc_vus, Tables::$chuc_vus . '.id', '=', Tables::$linhmuc_thuyenchuyens . '.chucvu_id')
-		->where(Tables::$linhmuc_thuyenchuyens . '.linhmuc_id', '=', $id)
-		->whereColumn(Tables::$chuc_vus . '.id', '=', Tables::$linhmuc_thuyenchuyens . '.chucvu_id')
+		->leftJoin(Tables::$chuc_vus, Tables::$chuc_vus . '.id', '=', Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id')
+		->where(Tables::$linhmuc_thuyenchuyens . '.linh_muc_id', '=', $id)
+		->whereColumn(Tables::$chuc_vus . '.id', '=', Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id')
 		->select(
 			Tables::$chuc_vus . '.name as chucvu_name',
 			Tables::$linhmuc_thuyenchuyens . '.from_date',
 			Tables::$linhmuc_thuyenchuyens . '.to_date',
 		)->distinct();
 		
-		$query->ds_chuc_vu = ($query_other) ? $query_other->get() : null;
-
+		if ($query) {
+			$query->ds_chuc_vu = ($query_other) ? $query_other->get() : [];
+		}
+		
 		return $query;
 	}
 }

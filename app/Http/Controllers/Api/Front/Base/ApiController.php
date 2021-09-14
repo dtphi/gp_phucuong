@@ -534,7 +534,7 @@ class ApiController extends Controller
 					'id' => (int) $info->id,
 					'ten' => $info->ten,
 					'nam_sinh' => $info->ngay_thang_nam_sinh ?? "Chưa cập nhật",
-					'image'	=> $info->image,
+					'image'	=> !empty($info->image) ? url($info->image): url('images/linh-muc.jpg'),
 					'giao_xu' => $info->gx_name ?? "Chưa cập nhật",
 					'dia_chi' => $info->dia_chi ?? "Chưa cập nhật",
 					'giao_hat' => $info->gh_name ?? "Chưa cập nhật",
