@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Front\Services;
 
 use DB;
 use App\Models\GiaoXu;
-use App\Models\LinhMuc;
+use App\Models\Linhmuc;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
@@ -33,7 +33,7 @@ class Service implements BaseModel
 		$this->modelInfo     = new Information();
 		$this->modelNewGroup = new Category();
 		$this->modelGiaoXu   = new GiaoXu();
-		$this->modelLinhMuc = new LinhMuc();
+		$this->modelLinhMuc = new Linhmuc();
 		$this->modelLinhMucChucThanh = new LinhMucChucThanh();
 	}
 
