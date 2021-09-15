@@ -197,10 +197,35 @@ class Service implements BaseModel
 			Tables::$thanhs . '.id'
 		)->leftJoin(Tables::$giao_xus, Tables::$linhmucs . '.giao_xu_id', '=', Tables::$giao_xus . '.id')
 		->leftJoin(Tables::$giao_hats, Tables::$giao_xus . '.giao_hat_id', '=', Tables::$giao_hats . '.id')
-		->leftJoin(Tables::$linhmuc_chucthanhs, Tables::$linhmuc_chucthanhs . '.linh_muc_id', '=', Tables::$linhmucs . '.id')
-		->leftJoin(Tables::$linhmuc_thuyenchuyens, Tables::$linhmuc_thuyenchuyens . '.linh_muc_id', '=', Tables::$linhmucs . '.id')
-		->leftJoin(Tables::$chuc_vus, Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', '=', Tables::$chuc_vus . '.id')
-		->select(Tables::$chuc_vus . '.name as cv_name',
+		->leftJoin(
+		DB::raw("(select `t1`.`id`, `t1`.`linh_muc_id`, `t1`.`chuc_thanh_id`, `t1`.`ngay_thang_nam_chuc_thanh`
+						from `pc_linhmuc_chucthanhs` t1
+						INNER JOIN (
+								SELECT max(`pc_linhmuc_chucthanhs`.`id`) as id
+								FROM `pc_linhmuc_chucthanhs`
+								GROUP BY `pc_linhmuc_chucthanhs`.`linh_muc_id`
+						) t2
+						ON `t1`.`id` = `t2`.`id`) max_linhmuc_chucthanhs"),
+				'pc_linhmucs.id',
+				'=',
+				'max_linhmuc_chucthanhs.linh_muc_id'
+		)	
+		->leftJoin(
+				DB::raw("(select `t1`.`id`, `t1`.`linh_muc_id`,`chuc_vu_id`
+						from `pc_linhmuc_thuyenchuyens` t1
+						INNER JOIN (
+								SELECT max(`pc_linhmuc_thuyenchuyens`.`id`) as id
+								FROM `pc_linhmuc_thuyenchuyens`
+								GROUP BY `pc_linhmuc_thuyenchuyens`.`linh_muc_id`
+						) t2
+						ON `t1`.`id` = `t2`.`id`) max_linhmuc_thuyenchuyens"),
+						'pc_linhmucs.id',
+						'=',
+						'max_linhmuc_thuyenchuyens.linh_muc_id'
+		)
+		->leftJoin(Tables::$chuc_vus, 'max_linhmuc_thuyenchuyens' . '.chuc_vu_id', '=', Tables::$chuc_vus . '.id')
+		->select(
+						Tables::$chuc_vus . '.name as cvht_name',
 					  Tables::$linhmucs. '.id',
 						Tables::$linhmucs . '.ten',
 						Tables::$linhmucs . '.image',
@@ -209,7 +234,7 @@ class Service implements BaseModel
 						Tables::$giao_xus . '.dia_chi',
 						Tables::$giao_hats . '.name as gh_name',
 						Tables::$thanhs . '.name as th_name',
-						Tables::$linhmuc_chucthanhs . '.ngay_thang_nam_chuc_thanh',
+						'max_linhmuc_chucthanhs' . '.ngay_thang_nam_chuc_thanh',
 		)->orderBy(Tables::$linhmucs . '.id', 'DESC');
 		return $query;
 	}
@@ -229,15 +254,24 @@ class Service implements BaseModel
 		->leftJoin(Tables::$linhmuc_thuyenchuyens, Tables::$linhmuc_thuyenchuyens . '.linh_muc_id', '=', Tables::$linhmucs . '.id')
 		->leftJoin(Tables::$thanhs, Tables::$thanhs . '.id', '=', Tables::$linhmucs . '.ten_thanh_id')
 		->leftJoin(Tables::$giao_xus, Tables::$linhmucs . '.giao_xu_id', '=', Tables::$giao_xus . '.id')
-		->leftJoin(Tables::$chuc_vus, Tables::$chuc_vus . '.id', '=', Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id')
+			->leftJoin(
+				DB::raw("(select `t1`.`id`, `t1`.`linh_muc_id`,`chuc_vu_id`
+						from `pc_linhmuc_thuyenchuyens` t1
+						INNER JOIN (
+								SELECT max(`pc_linhmuc_thuyenchuyens`.`id`) as id
+								FROM `pc_linhmuc_thuyenchuyens`
+								GROUP BY `pc_linhmuc_thuyenchuyens`.`linh_muc_id`
+						) t2
+						ON `t1`.`id` = `t2`.`id`) max_linhmuc_thuyenchuyens"),
+				'pc_linhmucs.id',
+				'=',
+				'max_linhmuc_thuyenchuyens.linh_muc_id'
+			)
+		->leftJoin(Tables::$chuc_vus, 'max_linhmuc_thuyenchuyens' . '.chuc_vu_id', '=', Tables::$chuc_vus . '.id')
 		->leftJoin(Tables::$linhmuc_chucthanhs, Tables::$linhmuc_chucthanhs . '.linh_muc_id', '=', Tables::$linhmucs . '.id')
 		->leftJoin(Tables::$giaophan_hat_xus, Tables::$giaophan_hat_xus . '.giao_xu_id', '=', Tables::$linhmucs . '.giao_xu_id')
 		->leftJoin(Tables::$giaophans, Tables::$giaophans . '.id', '=', Tables::$giaophan_hat_xus . '.giao_phan_id')
-		//->where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', '=', Tables::$linhmucs . '.giao_xu_id')
-		//->leftJoin(Tables::$chuc_vus, Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', '=', Tables::$chuc_vus . '.id')
 		->where(Tables::$linhmucs . '.id', '=', $id)
-		//->whereRaw(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id = ' . Tables::$linhmucs . '.giao_xu_id')
-		->whereColumn(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', '=', Tables::$linhmucs . '.giao_xu_id')
 		->select(
 			Tables::$linhmucs . '.id',
 			Tables::$linhmucs . '.ten',
@@ -267,12 +301,21 @@ class Service implements BaseModel
 			Tables::$chuc_vus . '.name as chucvu_name',
 			Tables::$linhmuc_thuyenchuyens . '.from_date',
 			Tables::$linhmuc_thuyenchuyens . '.to_date',
-		)->distinct();
+		);
+
+		/* Lay ds linhmuc_chucthanh */
+		$query_other_chucthanhs = DB::table(Tables::$linhmuc_chucthanhs)
+		->where(Tables::$linhmuc_chucthanhs . '.linh_muc_id', '=', $id)
+		->select(
+			Tables::$linhmuc_chucthanhs . '.chuc_thanh_id',
+			Tables::$linhmuc_chucthanhs . '.ngay_thang_nam_chuc_thanh',
+			Tables::$linhmuc_chucthanhs . '.noi_thu_phong',
+		);
 		
 		if ($query) {
 			$query->ds_chuc_vu = ($query_other) ? $query_other->get() : [];
+			$query->ds_chuc_thanh = ($query_other_chucthanhs) ? $query_other_chucthanhs->get() : [];
 		}
-		
 		return $query;
 	}
 }

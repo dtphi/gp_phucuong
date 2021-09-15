@@ -43,8 +43,8 @@ export default {
     }, routeParams) {
         apiGetDetail(
           routeParams.linhMucId,
-          (responses) => {
-            commit(INIT_LIST, responses.data);          
+					(responses) => {
+            commit(INIT_LIST, responses.data[0]);          
           },
           (errors) => {
             console.log(errors, 'errors')

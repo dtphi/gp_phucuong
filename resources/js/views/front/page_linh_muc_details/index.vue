@@ -42,18 +42,20 @@
                                 <div class="row">
                                     <p class="col-4 text-uppercase">Linh mục</p>
                                     <div class="col-8 level-text">
-                                        <p class="text-uppercase">Tên thánh: {{pageLists.thanh ? pageLists.thanh.name : 'Chưa cập nhật' }}</p>																				
-                                        <p class="text-uppercase">Họ và tên cha: {{pageLists.ho_ten_cha ? pageLists.ho_ten_cha : 'Chưa cập nhật' }}</p>
-                                        <p class="text-uppercase">Chức vụ hiện tại: {{pageLists.cvht_name ? pageLists.cvht_name : 'Chưa cập nhật' }}</p>
+                                        <p class="text-uppercase">Tên thánh: {{pageLists.ten_thanh}}</p>																				
+                                        <p class="text-uppercase">Họ và tên cha: {{pageLists.ho_ten_cha}}</p>
+                                        <p class="text-uppercase">Chức vụ hiện tại: {{pageLists.cv_hien_tai}}</p>
                                     </div>
                                 </div>
 
                                 <div class="bi-tich p-4 mt-3">
                                     <h4 class="text-uppercase text-white text-center mb-3">Bí tích</h4>
-                                    <a class="d-block text-white" href="#">Bí tích Rửa Tội: {{pageLists.ngay_rua_toi ? pageLists.ngay_rua_toi : 'Chưa cập nhật' }}</a>
-                                    <a class="d-block text-white" href="#">Bí tích Thêm sức: {{pageLists.ngay_tham_suc ? pageLists.ngay_them_suc : 'Chưa cập nhật' }}</a>
-                                    <a class="d-block text-white" href="#">Bí tích Truyền Chức: {{pageLists.ngay_nhan_chuc ? pageLists.ngay_nhan_chuc : 'Chưa cập nhật' }}</a>
-                                    <a  v-for="(value, idx) in pageLists.ds_chuc_vu" :key="idx" class="d-block text-white">{{idx + 1}}. {{value.chucvu_name ? value.chucvu_name : 'Chưa cập nhật' }}</a>
+                                    <a class="d-block text-white" href="#">Bí tích Rửa Tội: {{_formatDate(pageLists.ngay_rua_toi)}}</a>
+                                    <a class="d-block text-white" href="#">Bí tích Thêm sức: {{_formatDate(pageLists.ngay_them_suc)}}</a>
+                                    <a class="d-block text-white" href="#">- Bí tích Truyền Chức: </a>
+																		<a v-for="value in pageLists.ds_chuc_thanh" :key="value.chuc_thanh_id + '_ct'" class="d-block text-white">Chức thánh {{value.chuc_thanh_id}}. {{_formatDate(value.ngay_thang_nam_chuc_thanh)}}</a>
+																		<a class="d-block text-white" href="#">- Danh sách chức vụ: </a>
+                                    <a  v-for="(value, idx) in pageLists.ds_chuc_vu" :key="idx" class="d-block text-white">{{idx + 1}}. {{value.chucvu_name}} ({{_formatDate(value.from_date)}}&nbsp; - &nbsp;{{value.to_date?_formatDate(value.to_date):"Chưa cập nhật"}})</a>
                                     
                                 </div>
                             </div>
@@ -64,19 +66,19 @@
                                 <div class="info-personal mt-5">
                                     <h4 class="text-uppercase">Thông tin cá nhân</h4>
                                     <p class="row">
-                                        <span class="col-mobile col-4">Ngày sinh: {{pageLists.ngay_thang_nam_sinh ? pageLists.ngay_thang_nam_sinh : 'Chưa cập nhật' }}</span>
-                                        <span class="col-mobile col-4">Tại:  {{pageLists.noi_sinh ? pageLists.noi_sinh : 'Chưa cập nhật' }} </span>
+                                        <span class="col-mobile col-4">Ngày sinh: {{_formatDate(pageLists.nam_sinh)}}</span>
+                                        <span class="col-mobile col-4">Tại: {{pageLists.dia_chi}} </span>
                                     </p>
                                     <p class="row">
-                                        <span class="col-mobile col-4">Giáo xứ:  {{pageLists.ten_xu ? pageLists.ten_xu : 'Chưa cập nhật' }}</span>
-                                        <span class="col-mobile col-4">Giáo phận:  {{pageLists.gp_name ? pageLists.gp_name : 'Chưa cập nhật' }}</span>
+                                        <span class="col-mobile col-4">Giáo xứ: {{pageLists.giao_xu}}</span>
+                                        <span class="col-mobile col-4">Giáo phận: {{pageLists.giao_phan}}</span>
                                     </p>
-                                    <p>Tên cha:  {{pageLists.ho_ten_cha ? pageLists.ho_ten_cha : 'Chưa cập nhật' }}</p>
-                                    <p>Tên mẹ:  {{pageLists.ho_ten_me ? pageLists.ho_ten_me : 'Chưa cập nhật' }}</p>
-                                    <p>CMND:  {{pageLists.so_cmnd ? pageLists.so_cmnd : 'Chưa cập nhật' }}</p>
+                                    <p>Tên cha: {{pageLists.ho_ten_cha}}</p>
+                                    <p>Tên mẹ: {{pageLists.ho_ten_me}}</p>
+                                    <p>CMND: {{pageLists.so_cmnd}}</p>
                                     <p class="row">
-                                        <span class="col-mobile col-4">Ngày cấp:  {{pageLists.ngay_cap_cmnd ? pageLists.ngay_cap_cmnd : 'Chưa cập nhật' }}</span>
-                                        <span class="col-mobile col-4">Nơi cấp:  {{pageLists.noicap_cmnd ? pageLists.noicap_cmnd : 'Chưa cập nhật' }}</span>
+                                        <span class="col-mobile col-4">Ngày cấp: {{pageLists.ngay_cap_cmnd}}</span>
+                                        <span class="col-mobile col-4">Nơi cấp: {{pageLists.noi_cap_cmnd}}</span>
                                     </p>
                                 </div>
 
@@ -114,6 +116,9 @@
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
+		import {
+			fn_format_dd_mm_yyyy,
+		} from '@app/api/utils/fn-helper';
 
     export default {
         name: 'InfoPage',
@@ -138,7 +143,6 @@
         computed: {
             ...mapState(MODULE_LINH_MUC_DETAIL_PAGE, {
                 pageLists: (state) => {
-									console.log(state.pageLists, 'pageLists123');
 									return state.pageLists;
 								},
                 loading: state => state.loading
@@ -161,6 +165,9 @@
             ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, [
                 GET_DETAIL_LINH_MUC,
             ]),
+						_formatDate(date) {
+							return fn_format_dd_mm_yyyy(date);
+						}
         }
     }
 </script>

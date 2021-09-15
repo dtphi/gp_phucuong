@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Front\Base;
 use Image;
 use Storage;
 use Exception;
+use Carbon\Carbon;
 use App\Helpers\Helper;
 use Illuminate\Http\File;
 use App\Http\Common\Tables;
@@ -533,14 +534,14 @@ class ApiController extends Controller
 				$results[] = [
 					'id' => (int) $info->id,
 					'ten' => $info->ten,
-					'nam_sinh' => $info->ngay_thang_nam_sinh ?? "Chưa cập nhật",
+					'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? "Chưa cập nhật",
 					'image'	=> !empty($info->image) ? url($info->image): url('images/linh-muc.jpg'),
 					'giao_xu' => $info->gx_name ?? "Chưa cập nhật",
 					'dia_chi' => $info->dia_chi ?? "Chưa cập nhật",
 					'giao_hat' => $info->gh_name ?? "Chưa cập nhật",
-					'ten_thanh' => $info->th_name ?? self::$thumImgNo,
-					'ngay_nhan_chuc' => $info->ngay_thang_nam_chuc_thanh ?? "Chưa cập nhật",
-					'chuc_vu' => $info->cv_name ?? "Chưa cập nhật",
+					'ten_thanh' => $info->th_name ?? "Chưa cập nhật",
+					'ngay_nhan_chuc' => \Carbon\Carbon::parse($info->ngay_thang_nam_chuc_thanh)->format('d-m-Y') ?? "Chưa cập nhật",
+					'chuc_vu' => $info->cvht_name ?? "Chưa cập nhật",
 				];
 			}
 		} catch (HandlerMsgCommon $e) {
@@ -560,10 +561,31 @@ class ApiController extends Controller
 	public function getLinhMucDetail($id = null, Request $request)
 	{
 		try {
-			$json = $this->sv->apiGetDetailLinhMuc($id); 
-		} catch (HandlerMsgCommon $e) {
+			$infos = $this->sv->apiGetDetailLinhMuc($id);
+				$results[] = [
+					'id' => (int) $infos->id,
+					'ten' => $infos->ten,
+					'ten_thanh' => $infos->th_name ?? "Chưa cập nhật",
+					'nam_sinh' => $infos->ngay_sinh ?? "Chưa cập nhật",
+					'image'	=> !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
+					'giao_xu' => $infos->ten_xu ?? "Chưa cập nhật",
+					'dia_chi' => $infos->noi_sinh ?? "Chưa cập nhật",
+					'giao_phan' => $infos->gp_name ?? "Chưa cập nhật",	
+					'ho_ten_cha' => $infos->ho_ten_cha ?? "Chưa cập nhật",
+					'ho_ten_me' => $infos->ho_ten_me ?? "Chưa cập nhật",
+					'ngay_rua_toi' => $infos->ngay_rua_toi ?? "Chưa cập nhật",
+					'ngay_them_suc' => $infos->ngay_them_suc ?? "Chưa cập nhật",
+					'so_cmnd' => $infos->so_cmnd ?? "Chưa cập nhật",
+					'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? "Chưa cập nhật",
+					'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? "Chưa cập nhật",
+					'cv_hien_tai' => $infos->cvht_name ?? "Chưa cập nhật",
+					'ds_chuc_vu' => $infos->ds_chuc_vu ?? "",
+					'ds_chuc_thanh' => $infos->ds_chuc_thanh ?? "",
+				];
+			}
+		catch (HandlerMsgCommon $e) {
 			throw $e->render();
 		}
-		return $json;
+		return  $results;
 	}
 }
