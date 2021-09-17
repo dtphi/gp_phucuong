@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col-mobile col-3">
                                     <span class="d-block img-header">
-                                        <img class="img rounded-circle" src="http://haydesachnoipodcast.com/storage/.tmb/thumb_730x410/Image/NewPicture/Tin-Giao-Phan/Thu-Keu-Goi.jpg" alt="">
+                                        <img class="img rounded-circle" :src="`${pageLists.image}`" alt="">
                                     </span>
                                 </div>
                                 <div class="col-mobile col-9 text-center text-header">
@@ -53,10 +53,7 @@
                                     <a class="d-block text-white" href="#">Bí tích Rửa Tội: {{_formatDate(pageLists.ngay_rua_toi)}}</a>
                                     <a class="d-block text-white" href="#">Bí tích Thêm sức: {{_formatDate(pageLists.ngay_them_suc)}}</a>
                                     <a class="d-block text-white" href="#">- Bí tích Truyền Chức: </a>
-																		<a v-for="value in pageLists.ds_chuc_thanh" :key="value.chuc_thanh_id + '_ct'" class="d-block text-white">Chức thánh {{value.chuc_thanh_id}}. {{_formatDate(value.ngay_thang_nam_chuc_thanh)}}</a>
-																		<a class="d-block text-white" href="#">- Danh sách chức vụ: </a>
-                                    <a  v-for="(value, idx) in pageLists.ds_chuc_vu" :key="idx" class="d-block text-white">{{idx + 1}}. {{value.chucvu_name}} ({{_formatDate(value.from_date)}}&nbsp; - &nbsp;{{value.to_date?_formatDate(value.to_date):"Chưa cập nhật"}})</a>
-                                    
+																		<a v-for="value in pageLists.ds_chuc_thanh" :key="value.chuc_thanh_id + '_ct'" class="d-block text-white">Chức thánh {{value.chuc_thanh_id}}. {{_formatDate(value.ngay_thang_nam_chuc_thanh)}}</a>																	
                                 </div>
                             </div>
                             <div class="col-mobile col-9">
@@ -85,6 +82,10 @@
                                 <div class="maxim text-center">
                                     <h4 class="tit-maxim">Châm ngôn đời linh mục</h4>
                                 </div>
+																<div>
+																	<h3>HOẠT ĐỘNG SỨ VỤ</h3>														
+                                 		<h4 v-for="(value, idx) in pageLists.ds_chuc_vu" :key="idx" class="d-block text-black">{{idx + 1}}. {{value.chucvu_name}} ({{_formatDate(value.from_date)}}&nbsp; - &nbsp;{{value.to_date?_formatDate(value.to_date):"Chưa cập nhật"}})</h4>                        																				
+																</div>																
                             </div>
                         </div>
                     </div>
@@ -166,7 +167,7 @@
                 GET_DETAIL_LINH_MUC,
             ]),
 						_formatDate(date) {
-							return fn_format_dd_mm_yyyy(date);
+								return fn_format_dd_mm_yyyy(date);		
 						}
         }
     }

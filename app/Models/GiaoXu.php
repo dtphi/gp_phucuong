@@ -25,6 +25,7 @@ class GiaoXu extends BaseModel
     'dia_chi',
     'dien_thoai',
     'email',
+		'image',
     'active',
     'dan_so',
     'so_tin_huu',

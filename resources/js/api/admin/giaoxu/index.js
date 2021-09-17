@@ -83,8 +83,7 @@ export const apiGetGiaoXuInfos = (resolve, errResole, params) => {
  * @return {[type]}           [description]
  */
 export const apiUpdateInfo = (info, resolve, errResole) => {
-  console.log(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info.data.id), 'test');
-  return axios.put(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info.data.id), info)
+  return axios.put(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info.id), info)
     .then((response) => {
       console.log(response)
       if (response.status === 200) {

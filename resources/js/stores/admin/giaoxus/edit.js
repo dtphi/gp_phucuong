@@ -18,7 +18,8 @@ import {
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
-  INFOS_GET_INFO_LIST_FAILED
+	INFOS_GET_INFO_LIST_FAILED,
+	INFOS_FORM_SET_MAIN_IMAGE,
 } from '../types/mutation-types';
 import {
   ACTION_GET_INFO_BY_ID,
@@ -37,7 +38,8 @@ const defaultState = () => {
   return {
     styleCss: '',
     isExistInfo: config.existStatus.checking,
-    info: {
+		info: {
+			image: '',
       date_available: null,
       dia_chi: '',
       dien_thoai: '',
@@ -58,7 +60,8 @@ const defaultState = () => {
     infoId: 0,
     loading: false,
     updateSuccess: false,
-    errors: []
+		errors: [],
+		isImgChange: true,
   }
 }
 
@@ -142,6 +145,10 @@ export default {
     },
     [INFOS_GET_INFO_LIST_FAILED](state, payload) {
       state.isGetInfoList = payload
+		},
+		[INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
+      state.info.image = payload;
+      state.isImgChange = true;
     },
   },
 
@@ -175,9 +182,10 @@ export default {
       dispatch(ACTION_SET_LOADING, true);
       apiGetInfoGiaoXuById(
         infoId,
-        (result) => {
-          commit(INFOS_MODAL_SET_INFO_ID, infoId);
-          commit(INFOS_MODAL_SET_INFO, result.data);
+				(result) => {
+					commit(INFOS_MODAL_SET_INFO_ID, infoId);
+					console.log(result.data.data, 'result');
+          commit(INFOS_MODAL_SET_INFO, result.data.data);
           dispatch(ACTION_SET_LOADING, false);
         },
         (errors) => {
@@ -198,7 +206,8 @@ export default {
     [ACTION_UPDATE_INFO]({
       dispatch,
       commit
-    }, info) {
+		}, info) {
+			console.log(info, 'info');
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
       apiUpdateInfo(info,
         (result) => {
@@ -208,7 +217,7 @@ export default {
         (errors) => {
           commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
           commit(INFOS_MODAL_SET_ERROR, [])
-          dispatch(ACTION_SET_LOADING, false);
+          /* dispatch(ACTION_SET_LOADING, false); */
         }
       )
     },
@@ -240,6 +249,12 @@ export default {
       commit
     }, values) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
-    },
+		},
+		[ACTION_SET_IMAGE]({
+      commit
+		}, imgFile) {
+			console.log(imgFile, 'imgFile');
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    }
   }
 }

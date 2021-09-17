@@ -73,7 +73,9 @@
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <span>Chức vụ: {{info.chuc_vu}}</span>       
-															<span>Nơi phục vụ: Gx. {{info.giao_xu}}</span>   
+															<a :href="`/giao-xu/chi-tiet/${info.id_giaoxu}`">
+																<span>Nơi phục vụ: Gx. {{info.giao_xu}} </span>
+															</a>
 															<span>Giáo hạt: {{info.giao_hat}}</span>                                                     
                                                         </div>
                                                         <div class="col-6">

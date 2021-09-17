@@ -59,6 +59,8 @@ class GiaoXuRequest extends BaseRequest
         $formData['dia_chi']             = isset($formData['dia_chi']) ? $formData['dia_chi'] : null;
         $formData['dien_thoai']             = isset($formData['dien_thoai']) ? $formData['dien_thoai'] : null;
         $formData['email']             = isset($formData['email']) ? $formData['email'] : null;
+				
+				$formData['image']         = isset($formData['image']) ? $formData['image'] : null;
         $formData['dan_so']           = isset($formData['dan_so']) ? $formData['dan_so'] : null;
         $formData['so_tin_huu']           = isset($formData['so_tin_huu']) ? $formData['so_tin_huu'] : null;
         $formData['gio_le']           = isset($formData['gio_le']) ? $formData['gio_le'] : null;

@@ -534,6 +534,7 @@ class ApiController extends Controller
 				$results[] = [
 					'id' => (int) $info->id,
 					'ten' => $info->ten,
+					'id_giaoxu' => $info->id_giao_xu ?? "Chưa cập nhật",
 					'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? "Chưa cập nhật",
 					'image'	=> !empty($info->image) ? url($info->image): url('images/linh-muc.jpg'),
 					'giao_xu' => $info->gx_name ?? "Chưa cập nhật",

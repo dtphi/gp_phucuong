@@ -171,7 +171,7 @@ export default {
     tab_van_thu_title: "Văn Thư",
     tab_special_info_title: "Slide tin tức tiêu điểm",
     error_msg_system: "Lỗi hệ thống !",
-    isForm: "add",
+    isForm: "edit",
   }
 };
 </script>

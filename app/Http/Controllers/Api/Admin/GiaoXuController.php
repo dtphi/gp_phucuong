@@ -55,11 +55,15 @@ class GiaoXuController extends ApiController
             
             $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
+								if (!empty($info->image) && file_exists(public_path($info->image))) {
+									$staticImgThum = $info->image;
+								}
                 $results[] = [
                     'id' => (int)$info->id,
                     'name'           => $info->name,
                     'dia_chi'         => $info->dia_chi,
                     'dien_thoai'          => $info->dien_thoai,
+										'image'      => $info->image,
                     'email'    => $info->email,
                     'active'     => $info->active,
                     'danso' => $info->dan_so,
@@ -183,8 +187,7 @@ class GiaoXuController extends ApiController
     private function __handleStoreUpdate(&$model, &$request)
     {
         $formData = $request->all();
-
-        if ($result = $this->gxSv->apiUpdate($model, $formData["data"])) {
+        if ($result = $this->gxSv->apiUpdate($model, $formData)) {
             return $this->respondUpdated($result);
         }
 

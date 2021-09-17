@@ -15,7 +15,7 @@
         :is-full-page="fullPage"
       ></loading-over-lay>
     </template>
-    <validation-observer ref="observerInfo" @submit.prevent="_submitInfo">
+    <validation-observer ref="observerInfo">
       <div class="page-header">
         <div class="container-fluid">
           <div class="pull-right">

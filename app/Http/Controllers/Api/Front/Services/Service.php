@@ -227,6 +227,7 @@ class Service implements BaseModel
 		->select(
 						Tables::$chuc_vus . '.name as cvht_name',
 					  Tables::$linhmucs. '.id',
+						Tables::$linhmucs . '.giao_xu_id',
 						Tables::$linhmucs . '.ten',
 						Tables::$linhmucs . '.image',
 						Tables::$linhmucs . '.ngay_thang_nam_sinh',

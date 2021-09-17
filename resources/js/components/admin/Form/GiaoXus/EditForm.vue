@@ -11,7 +11,11 @@
     <!-- Tab General -->
     <div class="tab-content">
       <div class="tab-pane active" id="tab-general">
-        <tab-general role="tabpanel" class="tab-panel active"></tab-general>
+        <tab-general role="tabpanel"
+				 class="tab-panel active"
+				 :group-data="info"
+				 :media="mm"
+				 ></tab-general>
       </div>
     </div>
   </form>
@@ -33,16 +37,45 @@ export default {
   components: {
     TabGeneral,
   },
-  data() {
+	data() {
+    const mm = new MM({
+        el: '#modal-general-info-manager',
+        api: {
+            baseUrl: window.origin + '/api/mmedia',
+            listUrl: 'list',
+            uploadUrl: 'upload',
+        },
+        onSelect: function (fi) {
+            if (typeof fi === "object") {
+                if (fi.hasOwnProperty('selected') && fi.selected) {
+                    const pathImg = 'Image/NewPicture/';
+
+                    if (fi.selected.hasOwnProperty('path')) {
+                        if (this._selfCom.fn) {
+                            this._selfCom.fn(pathImg + fi.selected.path, fi.selected);
+                        } else {
+                          if (typeof this._selfCom.[ACTION_SET_IMAGE] == "function"){
+                            this._selfCom.[ACTION_SET_IMAGE](pathImg + fi.selected.path);
+                          }
+                        }
+
+                        document.getElementById('media-file-manager-content').style = "display:none";
+                    }
+                }
+            }
+        },
+        _selfCom: null
+    })
+    
     return {
       fullPage: false,
-      file: null,
+      mm: mm
     };
   },
   computed: {
     ...mapState(MODULE_MODULE_GIAO_XU_EDIT, {
       loading: (state) => state.loading,
-      info: (state) => state.info.data,
+      info: (state) => state.info,
     }),
     ...mapGetters(MODULE_MODULE_GIAO_XU_EDIT, ["info"]),
   },
@@ -56,7 +89,6 @@ export default {
       ACTION_SET_LOADING,
       ACTION_UPDATE_INFO,
       ACTION_UPDATE_INFO_BACK,
-      ACTION_SET_IMAGE,
       "ACTION_GET_LIST_GIAO_HAT",
     ]),
     _submitInfo() {

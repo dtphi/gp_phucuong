@@ -35,7 +35,8 @@ const defaultState = () => {
     action: null,
     classShow: 'modal fade',
     styleCss: '',
-    info: {
+		info: {
+			image: '',
       date_available: null,
       dia_chi: '',
       dien_thoai: '',

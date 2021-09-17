@@ -15,6 +15,7 @@
           role="tabpanel"
           class="tab-pane active"
           :group-data="info"
+          :media="mm"
         ></tab-general>
       </div>
     </div>
@@ -38,9 +39,41 @@ export default {
     TabGeneral,
   },
   data() {
+    const mm = new MM({
+        el: '#modal-general-info-manager',
+        api: {
+            baseUrl: window.origin + '/api/mmedia',
+            listUrl: 'list',
+            uploadUrl: 'upload',
+        },
+        onSelect: function (fi) {
+            if (typeof fi === "object") {
+                if (fi.hasOwnProperty('selected') && fi.selected) {
+                    const pathImg = '/Image/NewPicture/';
+
+                    if (fi.selected.hasOwnProperty('path')) {
+                        if (this._selfCom.fn) {
+														console.log(this._selfCom.fn, '_selfCom')
+                            this._selfCom.fn(pathImg + fi.selected.path, fi.selected);
+                        } else {
+                          if (typeof this._selfCom.[ACTION_SET_IMAGE] == "function"){
+														console.log(this._selfCom,'123');
+                            this._selfCom.[ACTION_SET_IMAGE](pathImg + fi.selected.path
+														);
+                          }
+                        }
+
+                        document.getElementById('media-file-manager-content').style = "display:none";
+                    }
+                }
+            }
+        },
+        _selfCom: null
+    })
     return {
       fullPage: false,
       file: null,
+      mm: mm
     };
   },
   computed: {
