@@ -41,24 +41,30 @@
                             <div class="col-mobile col-3">
                                 <div class="row">
                                     <p class="col-4 text-uppercase">Linh mục</p>
-                                    <div class="col-8 level-text">
-                                        <p class="text-uppercase">Tên thánh: {{pageLists.ten_thanh}}</p>																				
-                                        <p class="text-uppercase">Họ và tên cha: {{pageLists.ho_ten_cha}}</p>
-                                        <p class="text-uppercase">Chức vụ hiện tại: {{pageLists.cv_hien_tai}}</p>
+                                    <div class="col-8">
+                                        <p style="font-size: 20px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten_thanh}}</p>																				
+                                        <p style="font-weight: bold;font-size: 20px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten}}</p>
+                                        <p>{{pageLists.cv_hien_tai}}</p>
                                     </div>
                                 </div>
 
                                 <div class="bi-tich p-4 mt-3">
                                     <h4 class="text-uppercase text-white text-center mb-3">Bí tích</h4>
-                                    <a class="d-block text-white" href="#">Bí tích Rửa Tội: {{_formatDate(pageLists.ngay_rua_toi)}}</a>
-                                    <a class="d-block text-white" href="#">Bí tích Thêm sức: {{_formatDate(pageLists.ngay_them_suc)}}</a>
-                                    <a class="d-block text-white" href="#">- Bí tích Truyền Chức: </a>
-																		<a v-for="value in pageLists.ds_chuc_thanh" :key="value.chuc_thanh_id + '_ct'" class="d-block text-white">Chức thánh {{value.chuc_thanh_id}}. {{_formatDate(value.ngay_thang_nam_chuc_thanh)}}</a>																	
+                                    <a class="d-block text-white" href="#">Bí tích Rửa Tội</a>
+                                    <p class="d-block text-white">{{_formatDate(pageLists.ngay_rua_toi)}}</p>
+                                    <a class="d-block text-white" href="#">Bí tích Thêm sức </a>
+                                    <p class="d-block text-white">{{_formatDate(pageLists.ngay_them_suc)}}</p>
+                                    <a class="d-block text-white" href="#">Bí tích Truyền Chức </a>
+									<p
+                                        v-for="value in pageLists.ds_chuc_thanh" 
+                                        :key="value.chuc_thanh_id + '_ct'" 
+                                        class="d-block text-white">{{value.chuc_thanh_id+'.'+chucThanh[value.chuc_thanh_id]}} : {{_formatDate(value.ngay_thang_nam_chuc_thanh)}}</p>	
+                                        															
                                 </div>
                             </div>
                             <div class="col-mobile col-9">
                                 <span class="d-block avatar-img mt-3">
-                                    <img class="img" src="https://giaophanphucuong.org/Image/Picture/Logo/logo%20for%20web.png" alt="">
+                                    <img class="img" :src="`${pageLists.image}`" alt="">
                                 </span>
                                 <div class="info-personal mt-5">
                                     <h4 class="text-uppercase">Thông tin cá nhân</h4>
@@ -138,7 +144,8 @@
                 isContentBottom: true,
                 fullPage: false,
                 isTopBottomBoth: false,
-                imgCarousel: 'https://picsum.photos/1024/480/?image=58'
+                imgCarousel: 'https://picsum.photos/1024/480/?image=58',
+                chucThanh: ['','Phó Tế', 'Linh Mục', 'Giám Mục']
             }
         },
         computed: {
@@ -166,9 +173,9 @@
             ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, [
                 GET_DETAIL_LINH_MUC,
             ]),
-						_formatDate(date) {
-								return fn_format_dd_mm_yyyy(date);		
-						}
+            _formatDate(date) {
+                    return fn_format_dd_mm_yyyy(date);		
+            }
         }
     }
 </script>
