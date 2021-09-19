@@ -6,7 +6,7 @@
                 v-model="item.isCheck">
     </td>
     <td>
-      <span v-show="!isEdit">{{ item.dongName }}</span>
+      <a :href="item.hrefDong"><span v-show="!isEdit">{{ item.dongName }}</span></a>
       <info-dong-autocomplete
         v-show="isEdit"
         :dong="item"

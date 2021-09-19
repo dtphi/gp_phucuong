@@ -6,7 +6,7 @@
                 v-model="item.isCheck">
     </td>
     <td>
-      <span v-show="!isEdit">{{ item.hatName }}</span>
+      <a :href="item.hrefGiaoHat"><span v-show="!isEdit">{{ item.hatName }}</span></a>
       <info-giao-hat-autocomplete
         v-show="isEdit"
         :hat="item"

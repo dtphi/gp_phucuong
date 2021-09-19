@@ -76,6 +76,7 @@ class GiaoPhan extends BaseModel
                     'active'=> $hat->active,
                     'cong_doan_tu_sis'=> $hat->arr_cong_doan_tu_si_list,
                     'giao_hat_id'=> $hat->giao_hat_id,
+                    'hrefGiaoHat' => url('admin/giao-hats/edit/'.$hat->giao_hat_id),
                     'giao_xus' => $hat->arr_giao_xu_list,
                     'hatName' => $hat->name
                 ];
@@ -97,6 +98,7 @@ class GiaoPhan extends BaseModel
                     'isEdit' => 1,
                     'active'=> $dong->active,
                     'dong_id'=> $dong->dong_id,
+                    'hrefDong' => url('admin/dongs/edit/'.$dong->dong_id),
                     'dongName' => $dong->name
                 ];
             }
@@ -117,6 +119,7 @@ class GiaoPhan extends BaseModel
                     'isEdit' => 1,
                     'active'=> $coso->active,
                     'co_so_giao_phan_id'=> $coso->co_so_giao_phan_id,
+                    'hrefCoSo' => url('admin/co-so-giao-phans?coSoId'.$coso->co_so_giao_phan_id),
                     'cosoName' => $coso->name
                 ];
             }

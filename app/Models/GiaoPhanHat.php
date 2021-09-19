@@ -66,6 +66,7 @@ class GiaoPhanHat extends BaseModel
                         'giao_phan_hat_id'=> $giaoXu->giao_phan_hat_id,
                         'giao_hat_id'=> $giaoXu->giao_hat_id,
                         'giao_xu_id' => $giaoXu->giao_xu_id,
+                        'hrefGiaoXu' => url('admin/giao-xus/edit/'.$giaoXu->giao_xu_id),
                         'hatId' => $this->id,
                         'hatXuName' => $giaoXu->name,
                         'id'=> $giaoXu->id
@@ -92,6 +93,7 @@ class GiaoPhanHat extends BaseModel
                         'giao_phan_hat_id'=> $congDoanTuSi->giao_phan_hat_id,
                         'giao_hat_id'=> $congDoanTuSi->giao_hat_id,
                         'cong_doan_tu_si_id' => $congDoanTuSi->cong_doan_tu_si_id,
+                        'hrefCongDoanTs' => url('admin/cong-doan-tu-sis?cdtsId='.$congDoanTuSi->cong_doan_tu_si_id),
                         'hatId' => $this->id,
                         'hatCongDtsName' => $congDoanTuSi->name
                     ];

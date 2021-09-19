@@ -6,7 +6,7 @@
                 v-model="item.isCheck">
     </td>
     <td>
-      <span v-show="!isEdit">{{ item.cosoName }}</span>
+      <a :href="item.hrefCoSo"><span v-show="!isEdit">{{ item.cosoName }}</span></a>
       <info-co-so-giao-phan-autocomplete
         v-show="isEdit"
         :coso="item"
