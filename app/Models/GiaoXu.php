@@ -36,4 +36,9 @@ class GiaoXu extends BaseModel
     'type',
     'update_user'
   ];
+
+  public function getNoiDungAttribute($value)
+  {
+      return htmlspecialchars_decode($value);
+  }
 }
