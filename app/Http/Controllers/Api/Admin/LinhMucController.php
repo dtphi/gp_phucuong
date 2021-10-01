@@ -68,13 +68,17 @@ class LinhMucController extends ApiController
         try {
             $limit       = $this->_getPerPage();
             $collections = $this->linhMucSv->apiGetList($data, $limit);
+          
             $pagination  = $this->_getTextPagination($collections);
             $results     = [];
+          
+            
 
-            $staticImgThum = self::$thumImgNo;
+            
             foreach ($collections as $key => $info) {
-                if (!empty($info->image) && file_exists(public_path($info->image))) {
-                    $staticImgThum = $info->image;
+                $staticImgThum = self::$thumImgNo;
+                if (!empty($info->image) && file_exists(public_path($info->image))) {                
+                  $staticImgThum = $info->image;
                 }
                 $results[] = [
                     'id'         => (int)$info->id,
@@ -89,7 +93,7 @@ class LinhMucController extends ApiController
                     'ngay_sinh' => $info->ngay_thang_nam_sinh,
                 ];
             }
-
+            
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }

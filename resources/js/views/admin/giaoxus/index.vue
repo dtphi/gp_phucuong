@@ -22,18 +22,19 @@
                   <table class="table table-bordered table-hover">
                     <thead>
                       <tr role="row">
-                        <th style="width: 1px" class="text-left">No</th>
-                        <th style="width: 1px" class="text-center">
+                        <th style="width: 5%" class="text-left">No</th>
+                        <th style="width: 5%" class="text-center">
                           <input
                             type="checkbox"
                             onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"
                           />
                         </th>
-                        <th style="width: 200px" class="text-left">Tên</th>
-                        <th style="" class="text-left">Địa chỉ</th>
-                        <th class="text-center">Trạng thái</th>
-                        <th style="width: 100px" class="text-center">Giờ lễ</th>
-                        <th style="width: 100px" class="text-right">Action</th>
+                        <th style="width: 20%" class="text-left">Tên</th>
+                        <th style="width: 10%" class="text-left">Địa chỉ</th>
+                        <th style="width: 10%" class="text-left">Hình ảnh</th>
+                        <th style="width: 10%" class="text-center">Trạng thái</th>
+                        <th style="width: 20%" class="text-center">Giờ lễ</th>
+                        <th style="width: 10%" class="text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody>

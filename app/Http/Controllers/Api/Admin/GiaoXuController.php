@@ -52,10 +52,10 @@ class GiaoXuController extends ApiController
             $collections = $this->gxSv->apiGetList($data, $limit);
             $pagination  = $this->_getTextPagination($collections);
             $results = [];
-            
-            $staticImgThum = self::$thumImgNo;
+                       
             foreach ($collections as $key => $info) {
-								if (!empty($info->image) && file_exists(public_path($info->image))) {
+                $staticImgThum = self::$thumImgNo;
+								if (!empty($info->image) && file_exists(public_path($info->image))) {                 
 									$staticImgThum = $info->image;
 								}
                 $results[] = [
@@ -64,6 +64,7 @@ class GiaoXuController extends ApiController
                     'dia_chi'         => $info->dia_chi,
                     'dien_thoai'          => $info->dien_thoai,
 										'image'      => $info->image,
+                    'imgThum'    => url($this->getThumbnail($staticImgThum, 0, 40)),
                     'email'    => $info->email,
                     'active'     => $info->active,
                     'danso' => $info->dan_so,
