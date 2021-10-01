@@ -212,7 +212,7 @@
             <div class="col-sm-10">
                 <validation-provider
                     name="info_gio_le"
-                    rules="required|max:191"
+                    rules="required"
                     v-slot="{ errors }"
                 >
                     <tinymce

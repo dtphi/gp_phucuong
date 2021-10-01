@@ -41,7 +41,7 @@ class GiaoXuRequest extends BaseRequest
             return $user->actionCan(Tables::$giaoXuAccessName, $this->allowList);
         }
         
-        return false;
+        return false;        
     }
 
     /**
@@ -64,8 +64,8 @@ class GiaoXuRequest extends BaseRequest
         $formData['dan_so']           = isset($formData['dan_so']) ? $formData['dan_so'] : null;
         $formData['so_tin_huu']           = isset($formData['so_tin_huu']) ? $formData['so_tin_huu'] : null;
         $formData['gio_le']           = isset($formData['gio_le']) ? $formData['gio_le'] : null;
-        $formData['viet']        = isset($formData['viet']) ? htmlentities($formData['viet']) : null;
-        $formData['latin']        = isset($formData['latin']) ? htmlentities($formData['latin']) : null;
+        $formData['viet']        = isset($formData['viet']) ? ($formData['viet']) : null;
+        $formData['latin']        = isset($formData['latin']) ? ($formData['latin']) : null;
         $formData['noi_dung']        = isset($formData['noi_dung']) ? htmlentities($formData['noi_dung']) : null;
         $formData['type']           = isset($formData['type']) ? $formData['type'] : null;
         $formData['active']           = isset($formData['active']) ? $formData['active'] : null;

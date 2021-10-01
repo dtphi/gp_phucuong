@@ -11,6 +11,9 @@
     </td>
     <td class="text-left">{{ info.name }}</td>
     <td class="text-left">{{ info.dia_chi }}</td>
+    <td class="text-center" style="width:7%">
+      <img :src="info.imgThum" class="img-thumbnail"/>
+    </td>
     <td class="text-center">{{ info.active }}</td>
     <td class="text-center">
       <div v-html="info.giole"></div>
