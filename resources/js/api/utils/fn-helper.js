@@ -68,7 +68,10 @@ export function fn_redirect_url(path) {
 }
 
 export function fn_format_dd_mm_yyyy(date) {
-	return moment(date).format(AppConfig.formatDateString);
+	if (date) {
+		return moment(date).format(AppConfig.formatDateString);
+	}
+	return '';
 }
 
 export function fn_get_com_update_no() {

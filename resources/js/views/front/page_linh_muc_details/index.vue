@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col-mobile col-3">
                                     <span class="d-block img-header">
-                                        <img class="img rounded-circle" :src="`${pageLists.image}`" alt="">
+                                        <img class="img rounded-circle" v-lazy="`${pageLists.image}`" :alt="pageLists.ten">
                                     </span>
                                 </div>
                                 <div class="col-mobile col-9 text-center text-header">
@@ -42,56 +42,60 @@
                                 <div class="row">
                                     <p class="col-4 text-uppercase">Linh mục</p>
                                     <div class="col-8">
-                                        <p style="font-size: 20px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten_thanh}}</p>																				
-                                        <p style="font-weight: bold;font-size: 20px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten}}</p>
+                                        <p style="font-size: 17px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten_thanh}}</p>																				
+                                        <p style="font-weight: bold;font-size: 15px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten}}</p>
                                         <p>{{pageLists.cv_hien_tai}}</p>
                                     </div>
                                 </div>
 
-                                <div class="bi-tich p-4 mt-3">
+                                <div class="bi-tich p-3 mt-3">
                                     <h4 class="text-uppercase text-white text-center mb-3">Bí tích</h4>
-                                    <a class="d-block text-white" href="#">Bí tích Rửa Tội</a>
-                                    <p class="d-block text-white">{{_formatDate(pageLists.ngay_rua_toi)}}</p>
-                                    <a class="d-block text-white" href="#">Bí tích Thêm sức </a>
-                                    <p class="d-block text-white">{{_formatDate(pageLists.ngay_them_suc)}}</p>
-                                    <a class="d-block text-white" href="#">Bí tích Truyền Chức </a>
-									<p
-                                        v-for="value in pageLists.ds_chuc_thanh" 
+                                    <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Rửa Tội</a>
+                                    <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block text-white">{{_formatDate(pageLists.ngay_rua_toi)}}</p>
+                                    <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Thêm sức </a>
+                                    <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block text-white">{{_formatDate(pageLists.ngay_them_suc)}}</p>
+                                    <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Truyền Chức </a>
+									<p style="margin-bottom: 2rem;font-size: 20px;"
+                                        v-for="(value,idx) in pageLists.ds_chuc_thanh" 
                                         :key="value.chuc_thanh_id + '_ct'" 
-                                        class="d-block text-white">{{value.chuc_thanh_id+'.'+chucThanh[value.chuc_thanh_id]}} : {{_formatDate(value.ngay_thang_nam_chuc_thanh)}}</p>	
+                                        class="d-block text-white">{{(idx+1)+'. '+chucThanh[value.chuc_thanh_id]}}</p>	
                                         															
                                 </div>
                             </div>
                             <div class="col-mobile col-9">
-                                <span class="d-block avatar-img mt-3">
-                                    <img class="img" :src="`${pageLists.image}`" alt="">
+                                <span class="d-block avatar-img mt-3" style="margin-top: 0px !important;">
+                                    <img class="img" v-lazy="`${pageLists.image}`" :alt="pageLists.ten">
                                 </span>
                                 <div class="info-personal mt-5">
                                     <h4 class="text-uppercase">Thông tin cá nhân</h4>
-                                    <p class="row">
+                                    <p style="margin-bottom: 0.3rem;" class="row">
                                         <span class="col-mobile col-4">Ngày sinh: {{_formatDate(pageLists.nam_sinh)}}</span>
                                         <span class="col-mobile col-4">Tại: {{pageLists.dia_chi}} </span>
                                     </p>
-                                    <p class="row">
+                                    <p style="margin-bottom: 0.3rem;" class="row">
                                         <span class="col-mobile col-4">Giáo xứ: {{pageLists.giao_xu}}</span>
                                         <span class="col-mobile col-4">Giáo phận: {{pageLists.giao_phan}}</span>
                                     </p>
-                                    <p>Tên cha: {{pageLists.ho_ten_cha}}</p>
-                                    <p>Tên mẹ: {{pageLists.ho_ten_me}}</p>
-                                    <p>CMND: {{pageLists.so_cmnd}}</p>
-                                    <p class="row">
+                                    <p style="margin-bottom: 0.3rem;">Tên cha: {{pageLists.ho_ten_cha}}</p>
+                                    <p style="margin-bottom: 0.3rem;">Tên mẹ: {{pageLists.ho_ten_me}}</p>
+                                    <p style="margin-bottom: 0.3rem;">CMND: {{pageLists.so_cmnd}}</p>
+                                    <p style="margin-bottom: 0.3rem;" class="row">
                                         <span class="col-mobile col-4">Ngày cấp: {{pageLists.ngay_cap_cmnd}}</span>
                                         <span class="col-mobile col-4">Nơi cấp: {{pageLists.noi_cap_cmnd}}</span>
                                     </p>
-                                </div>
-
+                                </div>															
+                            </div>
+                            <div class="col-mobile col-12">
                                 <div class="maxim text-center">
                                     <h4 class="tit-maxim">Châm ngôn đời linh mục</h4>
                                 </div>
-																<div>
-																	<h3>HOẠT ĐỘNG SỨ VỤ</h3>														
-                                 		<h4 v-for="(value, idx) in pageLists.ds_chuc_vu" :key="idx" class="d-block text-black">{{idx + 1}}. {{value.chucvu_name}} ({{_formatDate(value.from_date)}}&nbsp; - &nbsp;{{value.to_date?_formatDate(value.to_date):"Chưa cập nhật"}})</h4>                        																				
-																</div>																
+                                <div>
+                                    <h3>HOẠT ĐỘNG SỨ VỤ</h3>
+                                    <simple-timeline
+                                        :items="_itemChucVus(pageLists.ds_chuc_vu)" 
+                                        dateFormat="DD/MM/YY" 
+                                        v-on="$listeners"></simple-timeline>                       																				
+                                </div>	
                             </div>
                         </div>
                     </div>
@@ -123,9 +127,22 @@
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
-		import {
-			fn_format_dd_mm_yyyy,
-		} from '@app/api/utils/fn-helper';
+    import {
+        fn_format_dd_mm_yyyy,
+    } from '@app/api/utils/fn-helper';
+
+    import Vue from "vue";
+    import { SimpleTimelinePlugin } from 'simple-vue-timeline';
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'; 
+    Vue.use(SimpleTimelinePlugin);
+    Vue.component('font-awesome-icon', FontAwesomeIcon);
+    import { Item, Status } from "simple-vue-timeline";
+    import 'simple-vue-timeline/dist/simple-vue-timeline.css';
+    import { BadgePlugin, ButtonPlugin, CardPlugin } from 'bootstrap-vue';
+
+    Vue.use(BadgePlugin);
+    Vue.use(ButtonPlugin);
+    Vue.use(CardPlugin);
 
     export default {
         name: 'InfoPage',
@@ -145,7 +162,8 @@
                 fullPage: false,
                 isTopBottomBoth: false,
                 imgCarousel: 'https://picsum.photos/1024/480/?image=58',
-                chucThanh: ['','Phó Tế', 'Linh Mục', 'Giám Mục']
+                chucThanh: ['','Phó Tế', 'Linh Mục', 'Giám Mục'],
+                chucVus: []
             }
         },
         computed: {
@@ -163,7 +181,7 @@
             },
             _isContentMain() {
                 return this.$route.meta.layout_content.content_main;
-            },
+            }
         },
          mounted() {
             this.[GET_DETAIL_LINH_MUC](this.$route.params);			
@@ -175,6 +193,28 @@
             ]),
             _formatDate(date) {
                     return fn_format_dd_mm_yyyy(date);		
+            },
+            _itemChucVus(chucVus) {
+                const self  = this;
+                if (self.chucVus.length)
+                    return self.chucVus;
+                if (chucVus && chucVus.length) {
+                    //Status.WARNING = 'rgba(0, 0, 0, 0.125)';
+                    chucVus.forEach(function(item, idx) {
+                        var fromDate = fn_format_dd_mm_yyyy(item.from_date)?fn_format_dd_mm_yyyy(item.from_date):'';
+                        var toDate = fn_format_dd_mm_yyyy(item.to_date)?(' đến ngày ' + fn_format_dd_mm_yyyy(item.to_date)): '';
+                        self.chucVus.push(new Item(
+                            idx,
+                            "edit",
+                            Status.DANGER,
+                            item.chucvu_name,
+                            [],
+                            (item.from_date)?new Date(item.from_date):'',
+                            'Từ ngày ' + fromDate + toDate
+                            ));
+                    });
+                }
+                return self.chucVus;
             }
         }
     }
