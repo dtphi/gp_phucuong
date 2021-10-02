@@ -15,43 +15,15 @@
                         <div class="box-social">
                             <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
                         </div>
-                        <div class="box-care mt-3">
-                            <b-row class="mt-3">
-                                <b-col cols="12" class="m-auto">
-                                    <p class="mb-0 text-download" style="padding: 4px 0">Tải app sách nói công giáo</p>
-                                </b-col>
-                                <b-col cols="12">
-                                    <b-carousel
-                                        id="carousel-2"
-                                        :interval="4000"
-                                        style="cursor: pointer;height:150px"
-                                        controls
-                                        indicators
-                                    >
-                                        <b-carousel-slide>
-                                                <template v-slot:img>
-                                                    <img
-                                                        class="d-block img-fluid w-100"
-                                                        style="width:100%; height:150px !important"
-                                                        :src="imgCarousel">
-                                                </template>
-                                        </b-carousel-slide>
-                                        <b-carousel-slide>
-                                            <template v-slot:img>
-                                                    <img
-                                                        class="d-block img-fluid w-100"
-                                                        style="width:100%; height:150px !important"
-                                                        :src="imgCarousel">
-                                                </template>
-                                        </b-carousel-slide>
-                                    </b-carousel>
-                                </b-col>
-                            </b-row>
-                        </div>
                     </template>
                 </content-top>
                 <main-content v-if="_isContentMain">
-                    <template v-slot:before>
+                    <template v-slot:before_column_both>
+                        <div class="col-mobile col-12">
+                            <module-page-banner-list></module-page-banner-list>
+                        </div>
+                    </template>
+                    <template v-slot:bottom>
                         <!-- Html linh mục detail -->												
                         <div class="list-danh-muc w-100">
                             <h2 class="title-linh-muc text-center">Danh sách linh mục đoàn giáo phận phú cường <hr class="line-linh-muc"></h2>
@@ -68,12 +40,12 @@
                                                 </div>
                                                 <div class="col-mobile col-10 content">
                                                     <h4 class="tit">
-                                                        Linh mục {{info.ten_thanh}} <a :href="`/linh-muc/chi-tiet/${info.id}`">{{info.ten}}</a>
+                                                       <a :href="`/linh-muc/chi-tiet/${info.id}`"> Linh mục {{info.ten_thanh}} {{info.ten}}</a>
                                                     </h4>
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <span>Chức vụ: {{info.chuc_vu}}</span>       
-															<a :href="`/giao-xu/chi-tiet/${info.id_giaoxu}`">
+															<a :href="info.href_giaoxu">
 																<span>Nơi phục vụ: Gx. {{info.giao_xu}} </span>
 															</a>
 															<span>Giáo hạt: {{info.giao_hat}}</span>                                                     
@@ -124,7 +96,7 @@
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
-		import Paginate from 'com@front/Pagination';
+	import Paginate from 'com@front/Pagination';
 		
 
     export default {
@@ -138,7 +110,7 @@
             NewsletterRegister,
             MainContent,
             ModulePageBannerList,
-						Paginate
+			Paginate
         },
         data() {
             return {
@@ -146,7 +118,7 @@
                 fullPage: true,
                 isTopBottomBoth: false,
                 imgCarousel: 'https://picsum.photos/1024/480/?image=58',
-								isResource: false,
+				isResource: false,
             }
         },
         computed: {

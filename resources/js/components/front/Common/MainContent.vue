@@ -1,8 +1,10 @@
 <template>
     <b-row id="content-main" class="my-3">
         <slot name="before"></slot>
+        <slot name="before_column_both"></slot>
         <keep-alive>
-            <component v-bind:is="_currentContentBoth" :content-type="contentType" class="col-mobile col-12"></component>
+            <component v-bind:is="_currentContentBoth" :content-type="contentType" class="col-mobile col-12">
+            </component>
         </keep-alive>
         <keep-alive>
             <component v-bind:is="_currentContentLeft" :content-type="contentType">
@@ -20,6 +22,7 @@
             </component>
         </keep-alive>
         <slot name="bottom"></slot>
+        <slot name="bottom_column_both"></slot>
     </b-row>
 </template>
 
