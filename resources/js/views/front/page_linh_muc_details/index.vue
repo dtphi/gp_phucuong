@@ -19,111 +19,128 @@
             <main-content v-if="_isContentMain">
                 <template v-slot:before>
                     <!-- Html linh mục detail -->
-                    <div class="header-linh-muc w-100">
-                        <span class="d-block line-header"></span>
-                        <div class="box-header">
-                            <div class="row">
-                                <div class="col-mobile col-3">
-                                    <span class="d-block img-header">
-                                        <img class="img rounded-circle" v-lazy="`${pageLists.image}`" :alt="pageLists.ten">
-                                    </span>
-                                </div>
-                                <div class="col-mobile col-9 text-center text-header">
-                                    <h2>Trang thông tin linh mục</h2>
-                                    <h5>Giáo phận phú cường</h5>
+                    <div class="col-mobile col-12">
+                        <div class="header-linh-muc w-100">
+                            <span class="d-block line-header"></span>
+                            <div class="box-header">
+                                <div class="row">
+                                    <div class="col-mobile col-3">
+                                        <span class="d-block img-header">
+                                            <img class="img rounded-circle" v-lazy="`${pageLists.image}`" :alt="pageLists.ten">
+                                        </span>
+                                    </div>
+                                    <div class="col-mobile col-9 text-center text-header">
+                                        <h2>Trang thông tin linh mục</h2>
+                                        <h5>Giáo phận phú cường</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="detail-linh-muc w-100 mt-3">
-                        <div class="row">
-                            <div class="col-mobile col-3">
-                                <div class="row">
-                                    <p class="col-4 text-uppercase">Linh mục</p>
-                                    <div class="col-8">
-                                        <p style="font-size: 17px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten_thanh}}</p>																				
-                                        <p style="font-weight: bold;font-size: 15px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten}}</p>
-                                        <p>{{pageLists.cv_hien_tai}}</p>
+                    <div class="col-mobile col-12">
+                        <div class="detail-linh-muc w-100 mt-3">
+                            <div class="row">
+                                <div class="col-mobile col-4">
+                                    <div class="row">
+                                        <p class="col-4 text-uppercase">Linh mục</p>
+                                        <div class="col-8">
+                                            <p style="font-size: 20px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten_thanh}}</p>																				
+                                            <p style="font-weight: bold;font-size: 16px; margin-bottom: 0.1rem;" class="text-uppercase">{{pageLists.ten}}</p>
+                                            <p>{{pageLists.cv_hien_tai}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="bi-tich p-3 mt-3">
+                                        <h4 class="text-uppercase text-white text-center mb-3">Bí tích</h4>
+                                        <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Rửa Tội</a>
+                                        <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block text-white">{{_formatDate(pageLists.ngay_rua_toi)}}</p>
+                                        <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Thêm sức </a>
+                                        <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block text-white">{{_formatDate(pageLists.ngay_them_suc)}}</p>
+                                        <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Truyền Chức </a>
+                                        <p style="margin-bottom: 2rem;font-size: 20px;"
+                                            v-for="(value,idx) in pageLists.ds_chuc_thanh" 
+                                            :key="value.chuc_thanh_id + '_ct'" 
+                                            class="d-block text-white">{{(idx+1)+'. '+chucThanh[value.chuc_thanh_id]}}</p>	
+                                                                                                        
                                     </div>
                                 </div>
-
-                                <div class="bi-tich p-3 mt-3">
-                                    <h4 class="text-uppercase text-white text-center mb-3">Bí tích</h4>
-                                    <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Rửa Tội</a>
-                                    <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block text-white">{{_formatDate(pageLists.ngay_rua_toi)}}</p>
-                                    <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Thêm sức </a>
-                                    <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block text-white">{{_formatDate(pageLists.ngay_them_suc)}}</p>
-                                    <a style="font-size: 25px;" class="d-block text-white" href="javascript:void(0);">Bí tích Truyền Chức </a>
-									<p style="margin-bottom: 2rem;font-size: 20px;"
-                                        v-for="(value,idx) in pageLists.ds_chuc_thanh" 
-                                        :key="value.chuc_thanh_id + '_ct'" 
-                                        class="d-block text-white">{{(idx+1)+'. '+chucThanh[value.chuc_thanh_id]}}</p>	
-                                        															
+                                <div class="col-mobile col-8">
+                                    <span class="d-block avatar-img mt-3">
+                                        <img class="img" v-lazy="`${pageLists.image}`" :alt="pageLists.ten">
+                                    </span>
+                                    <div class="info-personal mt-5" style="font-size:0.87rem">
+                                        <h4 class="text-uppercase">Thông tin cá nhân</h4>
+                                        <p style="margin-bottom: 0.3rem;" class="row">
+                                            <span class="col-mobile col-5">
+                                                <label class="doted-bottom" style="position: absolute; left: 97px; top: 0px; font-weight: 400;">..................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 97px;top: 0px;font-weight: 400;">...............................................</label>
+                                                Ngày sinh: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{_formatDate(pageLists.nam_sinh)}}</label></span>
+                                            <span class="col-mobile col-6">
+                                                <label class="doted-bottom" style="position: absolute; left: 39px; top: 0px; font-weight: 400;">...............................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 41px;top: 0px;font-weight: 400;">............................................................</label>
+                                                tại: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.dia_chi}}</label>
+                                            </span>
+                                        </p>
+                                        <p style="margin-bottom: 0.3rem;" class="row">
+                                            <span class="col-mobile col-5">
+                                                <label class="doted-bottom" style="position: absolute; left: 80px; top: 0px; font-weight: 400;">......................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 80px;top: 0px;font-weight: 400;">...................................................</label>
+                                                Giáo xứ: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.giao_xu}}</label>
+                                            </span>
+                                            <span class="col-mobile col-6">
+                                                <label class="doted-bottom" style="position: absolute; left: 100px; top: 0px; font-weight: 400;">.................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 99px;top: 0px;font-weight: 400;">...............................................</label>
+                                                Giáo phận: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.giao_phan}}</label>
+                                            </span>
+                                        </p>
+                                        <p style="margin-bottom: 0.3rem;" class="row">
+                                            <span class="col-mobile col-11">
+                                                <label class="doted-bottom" style="position: absolute; left: 82px; top: 0px; font-weight: 400;">..........................................................................................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 82px;top: 0px;font-weight: 400;">...................................................</label>
+                                                Tên cha: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.ho_ten_cha}}</label>
+                                            </span>    
+                                        </p>
+                                        <p style="margin-bottom: 0.3rem;" class="row">
+                                            <span class="col-mobile col-11">
+                                                <label class="doted-bottom" style="position: absolute; left: 78px; top: 0px; font-weight: 400;">...........................................................................................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 78px;top: 0px;font-weight: 400;">....................................................</label>
+                                                Tên mẹ: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.ho_ten_me}}</label>
+                                            </span>    
+                                        </p>
+                                        <p style="margin-bottom: 0.3rem;" class="row">
+                                            <span class="col-mobile col-11">
+                                                <label class="doted-bottom" style="position: absolute; left: 71px; top: 0px; font-weight: 400;">.............................................................................................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 71px;top: 0px;font-weight: 400;">.....................................................</label>
+                                                CMND: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.so_cmnd}}</label>
+                                            </span>    
+                                        </p>
+                                        <p style="margin-bottom: 0.3rem;" class="row">
+                                            <span class="col-mobile col-5">
+                                                <label class="doted-bottom" style="position: absolute; left: 94px; top: 0px; font-weight: 400;">...................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 93px;top: 0px;font-weight: 400;">................................................</label>
+                                                Ngày cấp: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{_formatDate(pageLists.ngay_cap_cmnd)}}</label>
+                                            </span>
+                                            <span class="col-mobile col-6">
+                                                <label class="doted-bottom" style="position: absolute; left: 80px; top: 0px; font-weight: 400;">......................................</label>
+                                                <label class="doted-xs-bottom" style="position: absolute;left: 80px;top: 0px;font-weight: 400;">...................................................</label>
+                                                Nơi cấp: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.noi_cap_cmnd}}</label>
+                                            </span>
+                                        </p>
+                                    </div>															
                                 </div>
-                            </div>
-                            <div class="col-mobile col-9">
-                                <span class="d-block avatar-img mt-3" style="margin-top: 0px !important;">
-                                    <img class="img" v-lazy="`${pageLists.image}`" :alt="pageLists.ten">
-                                </span>
-                                <div class="info-personal mt-5" style="font-size:1rem">
-                                    <h4 class="text-uppercase">Thông tin cá nhân</h4>
-                                    <p style="margin-bottom: 0.3rem;" class="row">
-                                        <span class="col-mobile col-4">
-                                            <label style="position: absolute; left: 109px; top: 0px; font-weight: 400;">................................</label>
-                                            Ngày sinh: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{_formatDate(pageLists.nam_sinh)}}</label></span>
-                                        <span class="col-mobile col-4">
-                                            <label style="position: absolute;left: 43px;top: 0px;font-weight: 400;">............................................</label>
-                                            tại: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.dia_chi}}</label></span>
-                                    </p>
-                                    <p style="margin-bottom: 0.3rem;" class="row">
-                                        <span class="col-mobile col-4">
-                                            <label style="position: absolute;left: 91px;top: 0px;font-weight: 400;">...................................</label>
-                                            Giáo xứ: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.giao_xu}}</label></span>
-                                        <span class="col-mobile col-4">
-                                            <label style="position: absolute; left: 109px; top: 0px; font-weight: 400;">................................</label>
-                                            Giáo phận: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.giao_phan}}</label></span>
-                                    </p>
-                                    <p style="margin-bottom: 0.3rem;" class="row">
-                                        <span class="col-mobile col-8">
-                                            <label style="position: absolute;left: 92px;top: 0px;font-weight:400;">...........................................................................................</label>
-                                            Tên cha: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.ho_ten_cha}}</label>
-                                        </span>    
-                                    </p>
-                                    <p style="margin-bottom: 0.3rem;" class="row">
-                                        <span class="col-mobile col-8">
-                                            <label style="position: absolute;left: 88px;top: 0px;font-weight:400;">............................................................................................</label>
-                                            Tên mẹ: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.ho_ten_me}}</label>
-                                        </span>    
-                                    </p>
-                                    <p style="margin-bottom: 0.3rem;" class="row">
-                                        <span class="col-mobile col-8">
-                                            <label style="position: absolute;left: 80px;top: 0px;font-weight:400;">..............................................................................................</label>
-                                            CMND: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.so_cmnd}}</label>
-                                        </span>    
-                                    </p>
-                                    <p style="margin-bottom: 0.3rem;" class="row">
-                                        <span class="col-mobile col-4">
-                                            <label style="position: absolute;left: 105px;top: 0px;font-weight: 400;">.................................</label>
-                                            Ngày cấp: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{_formatDate(pageLists.ngay_cap_cmnd)}}</label></span>
-                                        <span class="col-mobile col-4">
-                                            <label style="position: absolute;left: 91px;top: 0px;font-weight: 400;">....................................</label>
-                                            Nơi cấp: <label style="position: absolute;top: -3px;padding-left: 10px;font-style: italic;">{{pageLists.noi_cap_cmnd}}</label>
-                                        </span>
-                                    </p>
-                                </div>															
-                            </div>
-                            <div class="col-mobile col-12">
-                                <div class="maxim text-center">
-                                    <h4 class="tit-maxim">Châm ngôn đời linh mục</h4>
+                                <div class="col-mobile col-12">
+                                    <div class="maxim text-center">
+                                        <h4 class="tit-maxim">Châm ngôn đời linh mục</h4>
+                                    </div>
+                                    <div>
+                                        <h3>HOẠT ĐỘNG SỨ VỤ</h3>
+                                        <simple-timeline
+                                            :items="_itemChucVus(pageLists.ds_chuc_vu)" 
+                                            dateFormat="DD/MM/YY" 
+                                            v-on="$listeners"></simple-timeline>                       																				
+                                    </div>	
                                 </div>
-                                <div>
-                                    <h3>HOẠT ĐỘNG SỨ VỤ</h3>
-                                    <simple-timeline
-                                        :items="_itemChucVus(pageLists.ds_chuc_vu)" 
-                                        dateFormat="DD/MM/YY" 
-                                        v-on="$listeners"></simple-timeline>                       																				
-                                </div>	
                             </div>
                         </div>
                     </div>
