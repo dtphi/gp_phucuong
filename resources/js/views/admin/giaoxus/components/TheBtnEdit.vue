@@ -30,6 +30,10 @@
                 validator: function (value) {
                     return (value && Number.isInteger(value))
                 }
+            },
+            hrefEdit: {
+                type: String,
+                default: ''
             }
         },
         data() {
@@ -42,6 +46,8 @@
                 }
             },
             _redirectUrl() {
+                if (this.hrefEdit) 
+                    return window.location.href = this.hrefEdit;
                 return fn_redirect_url(`admin/giao-xus/edit/${this.infoId}`);
             }
         }

@@ -60,10 +60,11 @@ class GiaoXuController extends ApiController
 								}
                 $results[] = [
                     'id' => (int)$info->id,
+                    'hrefDetail' => url('admin/giao-xus/edit/' . $info->id),
                     'name'           => $info->name,
                     'dia_chi'         => $info->dia_chi,
                     'dien_thoai'          => $info->dien_thoai,
-										'image'      => $info->image,
+					'image'      => $info->image,
                     'imgThum'    => url($this->getThumbnail($staticImgThum, 0, 40)),
                     'email'    => $info->email,
                     'active'     => $info->active,

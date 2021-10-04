@@ -89,7 +89,7 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
   public function apiGetGiaoXus($data = array(), $limit = 5)
   {
     $query = $this->model->select()
-      ->orderBy('id', 'DESC');
+      ->orderByDesc('id');
 
     return $query;
   }

@@ -183,7 +183,7 @@ class Service implements BaseModel
 
 	public function apiGetGiaoXuList($data = array(), $limit = 5)
 	{
-		$query = $this->modelGiaoXu->select();
+		$query = $this->modelGiaoXu->select()->orderByDesc('id');
 
 		return $query->paginate($limit);
 	}
