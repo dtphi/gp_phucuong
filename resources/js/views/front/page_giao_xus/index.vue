@@ -1,10 +1,11 @@
 <template>
-    <main id="giao-xu" class="py-2">
+    <main id="news" class="py-2">
         <div class="container">
             <main-menu></main-menu>
             <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
                 <content-top v-if="_isContentTop">
-                    <template v-if="loading">
+                    <!-- Loading -->
+					<template v-if="loading">
                         <loading-over-lay
                             :active.sync="loading"
                             :is-full-page="fullPage"></loading-over-lay>
@@ -14,44 +15,15 @@
                         <div class="box-social">
                             <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
                         </div>
-                        <div class="box-care mt-3">
-                            <b-row class="mt-3">
-                                <b-col cols="12" class="m-auto">
-                                    <p class="mb-0 text-download" style="padding: 4px 0">Tải app sách nói công giáo</p>
-                                </b-col>
-                                <b-col cols="12">
-                                    <b-carousel
-                                        id="carousel-2"
-                                        :interval="4000"
-                                        style="cursor: pointer;height:150px"
-                                        controls
-                                        indicators
-                                    >
-                                        <b-carousel-slide>
-                                                <template v-slot:img>
-                                                    <img
-                                                        class="d-block img-fluid w-100"
-                                                        style="width:100%; height:150px !important"
-                                                        :src="imgCarousel">
-                                                </template>
-                                        </b-carousel-slide>
-                                        <b-carousel-slide>
-                                            <template v-slot:img>
-                                                    <img
-                                                        class="d-block img-fluid w-100"
-                                                        style="width:100%; height:150px !important"
-                                                        :src="imgCarousel">
-                                                </template>
-                                        </b-carousel-slide>
-                                    </b-carousel>
-                                </b-col>
-                            </b-row>
-                        </div>
                     </template>
                 </content-top>
                 <main-content v-if="_isContentMain">
-                    <template v-slot:before>
-                        <!-- Html linh mục detail -->
+                    <template v-slot:before_column_both>
+                        <div class="col-mobile col-12">
+                            <module-page-banner-list></module-page-banner-list>
+                        </div>
+                    </template>
+                    <template v-slot:bottom>
                         <div class="list-danh-muc w-100">
                             <h2 class="title-linh-muc text-center">Danh sách giáo xứ giáo phận phú cường <hr class="line-linh-muc"></h2>
                             <div class="tab-linh-muc w-100">
@@ -60,13 +32,13 @@
                                         <div class="list-giao-xu">
                                             <div v-for="(info,idx) in infoList" :key="idx" class="row row-linh-muc">
                                                 <div class="col-mobile col-2">
-                                                    <a class="avatar" :href="`/giao-xu/chi-tiet/${info.id}`">
-                                                        <img class="img" src="/Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png" alt="">
+                                                    <a class="avatar" :href="info.hrefDetail">
+                                                        <img class="img" v-lazy="info.image" :alt="info.name">
                                                     </a>
                                                 </div>
                                                 <div class="col-mobile col-10 content">
                                                     <h4 class="tit">
-                                                        Giáo Xứ <a :href="`/giao-xu/chi-tiet/${info.id}`">{{info.name}}</a>
+                                                       <a :href="info.hrefDetail"> Giáo Xứ {{info.name}}</a>
                                                     </h4>
                                                     <div class="row">
                                                         <div class="col-6">
@@ -83,6 +55,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <paginate :is-resource="isResource" v-if="infoList"></paginate>
                                     </b-tab>
                                     <b-tab title="Lọc theo Giáo phận / Giáo hạt">
                                         <div class="list-giao-xu">
@@ -90,8 +63,8 @@
                                     </b-tab>
                                 </b-tabs>
                             </div>
-                        </div>
-                    </template>
+                        </div>																							
+                    </template>										
                 </main-content>
                 <content-bottom v-if="_isContentBottom">
                 </content-bottom>
@@ -109,7 +82,7 @@
         MODULE_GIAO_XU_PAGE 
     } from '@app/stores/front/types/module-types';
     import {
-        GET_INFORMATION_LIST_TO_CATEGORY
+        GET_LISTS
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
     import ContentTop from 'com@front/Common/ContentTop';
@@ -119,6 +92,7 @@
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
+    import Paginate from 'com@front/Pagination';
 
     export default {
         name: 'GiaoXuPage',
@@ -130,14 +104,16 @@
             SocialNetwork,
             NewsletterRegister,
             MainContent,
-            ModulePageBannerList
+            ModulePageBannerList,
+            Paginate
         },
         data() {
             return {
                 isContentBottom: false,
                 fullPage: false,
                 isTopBottomBoth: false,
-                imgCarousel: 'https://picsum.photos/1024/480/?image=58'
+                imgCarousel: 'https://picsum.photos/1024/480/?image=58',
+                isResource: false,
             }
         },
         computed: {
@@ -159,11 +135,11 @@
             },
         },
          mounted() {
-            this.GET_GIAO_XU_LIST(this.$route.params);
+            this.[GET_LISTS](this.$route.params);
         },
         methods: {
             ...mapActions(MODULE_GIAO_XU_PAGE, [
-                "GET_GIAO_XU_LIST",
+                GET_LISTS,
             ]),
         }
     }

@@ -12,7 +12,7 @@ export const apiGetLists = (resolve, errResole, params) => {
     })
     .then((response) => {
       if (response.status === 200) {
-        resolve(response.data.data.results);
+        resolve(response.data);
       } else {
         errResole([{
           status: response.status,

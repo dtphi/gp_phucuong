@@ -484,12 +484,50 @@ class ApiController extends Controller
 		return $newsGroupTree;
 	}
 
-	public function getGiaoXuList()
+	public function getGiaoXuList(Request $request)
 	{
-		$results = $this->sv->apiGetGiaoXuList();
-		$json['results'] = $results;
+		$page = 1;
+		if ($request->query('page')) {
+			$page = $request->query('page');
+		}
+		try {
+			$results = [];
+			$collections = $this->sv->apiGetGiaoXuList();
+			$pagination = $this->_getTextPagination($collections);
 
-		return Helper::successResponse($json);
+			foreach ($collections as $key => $info) {
+				$results[] = [
+					'id' => (int) $info->id,
+					'name' => $info->name,
+					'hrefDetail' => url('giao-xu/chi-tiet/' . $info->id),
+					'image'	=> !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+					'gio_le' => $info->gio_le ?? "Chưa cập nhật",
+					'dia_chi' => $info->dia_chi ?? "Chưa cập nhật",
+					'email' => $info->email ?? "Chưa cập nhật",
+					'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
+					'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
+					'dan_so' => $info->dan_so ?? "Chưa cập nhật",
+				];
+			}
+
+			$json = [
+				'data' => [
+					'results'    => $results,
+					'pagination' => $pagination,
+					'page'       => $page
+				]
+			];
+		} catch (HandlerMsgCommon $e) {
+			$json = [
+				'data' => [
+					'results'    => [],
+					'pagination' => [],
+					'msg'       => $e->render()
+				]
+			];
+		}
+
+		return $this->respondWithCollectionPagination($json);
 	}
 
 	/// lấy danh sách linh mục

@@ -1,5 +1,5 @@
 <template>
-    <div class="highlights mt-3">
+    <div id="gp-phucuong-content-bottom" class="highlights mt-3">
         <slot name="before"></slot>
         <keep-alive>
             <component v-bind:is="_currentContentBoth" :content-type="contentType"></component>

@@ -1,5 +1,5 @@
 <template>
-    <b-row class="my-3">
+    <b-row id="gp-phucuong-content-top" class="my-3">
         <slot name="before"></slot>
         <keep-alive>
             <component v-bind:is="_currentContentLeft" :content-type="contentType">

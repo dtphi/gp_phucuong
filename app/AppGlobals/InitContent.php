@@ -123,6 +123,24 @@ class InitContent
             }
         }
 
+        if (isset($segments[0]) && Request::is('giao-xu*')) {
+            $this->settings['meta_title'] = 'Giáo xứ';
+
+            if (isset($segments[1]) && Request::is('giao-xu/chi-tiet*')) {
+                $layout = $this->__getLayoutContent('giao-xu');
+                
+                $endSegment  = end($segments);
+                $arrSegments = explode('-', $endSegment);
+                $idSegment   = (int)end($arrSegments);
+
+                if ($idSegment) {
+                    //
+                }
+            } else {
+                $layout = $this->__getLayoutContent('giao-xu');
+            }
+        }
+
         if (empty($layout)) {
             $layout = $this->__getLayoutContent();
         }

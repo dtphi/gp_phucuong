@@ -185,7 +185,7 @@ class Service implements BaseModel
 	{
 		$query = $this->modelGiaoXu->select();
 
-		return $query->paginate(20);
+		return $query->paginate($limit);
 	}
 	/// LINH MUC
 	public function apiGetLinhmucs($data = array(), $limit = 15)
