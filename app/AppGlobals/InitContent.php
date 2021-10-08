@@ -127,7 +127,7 @@ class InitContent
             $this->settings['meta_title'] = 'Giáo xứ';
 
             if (isset($segments[1]) && Request::is('giao-xu/chi-tiet*')) {
-                $layout = $this->__getLayoutContent('giao-xu');
+                $layout = $this->__getLayoutContent('giao-xu/chi-tiet/*');
                 
                 $endSegment  = end($segments);
                 $arrSegments = explode('-', $endSegment);

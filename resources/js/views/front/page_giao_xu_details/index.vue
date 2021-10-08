@@ -17,8 +17,13 @@
                 </template>
             </content-top>
             <main-content v-if="_isContentMain">
-                <template v-slot:before>
-                    <!-- Html linh mục detail -->
+                <template v-slot:before_column_both>
+                    <div class="col-mobile col-12">
+                        <module-page-banner-list></module-page-banner-list>
+                    </div>
+                </template>
+                <template v-slot:column_middle>
+                    Hình ảnh giáo xứ
                 </template>
             </main-content>
             <content-bottom v-if="_isContentBottom">

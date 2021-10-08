@@ -13,7 +13,7 @@
         </keep-alive>
         <keep-alive>
             <component v-bind:is="_currentContentMiddle" :content-type="contentType">
-                <slot></slot>
+                <slot name="column_middle"></slot>
             </component>
         </keep-alive>
         <keep-alive>
