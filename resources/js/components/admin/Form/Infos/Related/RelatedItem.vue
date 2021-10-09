@@ -29,7 +29,7 @@
         		ACTION_REMOVE_INFO_TO_RELATED_LIST
         	]),
           _deleteRelated() {
-              this.[ACTION_REMOVE_INFO_TO_RELATED_LIST](this.infoToRelated)
+              this[ACTION_REMOVE_INFO_TO_RELATED_LIST](this.infoToRelated)
           },
         },
         setting: {

@@ -29,7 +29,7 @@
             ]),
 
             _showModal() {
-                this.[ACTION_SHOW_MODAL]({action: 'add'});
+                this[ACTION_SHOW_MODAL]({action: 'add'});
             }
         },
         setting: {

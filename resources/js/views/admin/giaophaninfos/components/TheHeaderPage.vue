@@ -69,7 +69,7 @@
                 const params = {
                     perPage: this.perPage
                 };
-                this.[ACTION_GET_INFO_LIST](params);
+                this[ACTION_GET_INFO_LIST](params);
             }
         },
         setting: {

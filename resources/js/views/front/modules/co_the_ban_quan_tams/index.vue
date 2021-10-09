@@ -24,9 +24,6 @@
     import {
         MODULE_INFO
     } from '@app/stores/front/types/module-types';
-    import {
-        GET_POPULAR_INFORMATION_LIST_TO_CATEGORY
-    } from '@app/stores/front/types/action-types';
 
     export default {
         name: 'ModuleThongBao',
@@ -52,9 +49,6 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                GET_POPULAR_INFORMATION_LIST_TO_CATEGORY
-            ]),
             _getHref(info) {
                 if (info.hasOwnProperty('name_slug')) {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);

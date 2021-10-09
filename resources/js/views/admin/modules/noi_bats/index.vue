@@ -77,9 +77,9 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
-                ACTION_RESET_NOTIFICATION_INFO
-            ])
+            ...mapActions(MODULE_MODULE_NOI_BAT, {
+                'moduleResetNotification':ACTION_RESET_NOTIFICATION_INFO
+            })
         },
         setting: {
             panel_title: 'Module nổi bật',

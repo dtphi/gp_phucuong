@@ -84,9 +84,9 @@
             })
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
-                ACTION_RESET_NOTIFICATION_INFO
-            ])
+            ...mapActions(MODULE_MODULE_LINH_MUC_ADD, {
+                'resetNotification': ACTION_RESET_NOTIFICATION_INFO
+            })
         },
         setting: {
             panel_title: 'Linh Mục',

@@ -28,7 +28,7 @@
         		ACTION_REMOVE_INFO_TO_CATEGORY_LIST
         	]),
           _deleteCategory() {
-              this.[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
+              this[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
           },
         },
     };

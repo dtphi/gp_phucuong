@@ -35,13 +35,13 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_USER, [
-                ACTION_SET_USER_DELETE_BY_ID,
-                ACTION_DELETE_USER_BY_ID
-            ]),
+            ...mapActions(MODULE_USER, {
+                'setUserDelete':ACTION_SET_USER_DELETE_BY_ID,
+                'deleteUser':ACTION_DELETE_USER_BY_ID
+            }),
 
             _showConfirm() {
-                this.[ACTION_SET_USER_DELETE_BY_ID](this.userId);
+                this.setUserDelete(this.userId);
                 this.$modal.show('dialog', {
                     title: this.$options.setting.modal_title_txt,
                     text: this.$options.setting.content_txt,
@@ -55,7 +55,7 @@
                         {
                             title: this.$options.setting.btn_delete_submit_txt,
                             handler: () => {
-                                this.[ACTION_DELETE_USER_BY_ID]();
+                                this.deleteUser();
                                 this.$modal.hide('dialog')
                             }
                         }

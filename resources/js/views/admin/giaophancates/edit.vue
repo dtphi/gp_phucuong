@@ -441,18 +441,18 @@ export default {
             const _self = this;
             await _self.$refs.observerGiaoPhanDanhMucs.validate().then((isValid) => {
                 if (isValid) {
-                    _self.[ACTION_UPDATE_NEWS_GROUP](_self.newsGroup);
+                    _self[ACTION_UPDATE_NEWS_GROUP](_self.newsGroup);
                 }
             });
         },
         _notificationUpdate(notification) {
             this.$notify(notification);
-            this.[ACTION_RESET_NOTIFICATION_INFO]('');
+            this[ACTION_RESET_NOTIFICATION_INFO]('');
         }
     },
     mounted() {
         const cateId = this.$route.params.categoryId;
-        this.[ACTION_GET_NEWS_GROUP_BY_ID](cateId);
+        this[ACTION_GET_NEWS_GROUP_BY_ID](cateId);
     },
     setting: {
         title: 'Cập nhật nhóm tin',

@@ -206,7 +206,7 @@
                 this.$modal.hide('modal-co-so-edit');
             },
              _submitUpdate() {
-                this.[ACTION_UPDATE_INFO](this.info);
+                this[ACTION_UPDATE_INFO](this.info);
                 return 0;
             },
             _notificationUpdate(notification) {
@@ -214,7 +214,7 @@
                     this.$emit('update-info-success');
                 }
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this[ACTION_RESET_NOTIFICATION_INFO]();
             },
         },
          setting: {

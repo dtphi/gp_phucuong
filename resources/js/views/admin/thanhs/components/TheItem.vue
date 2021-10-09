@@ -56,10 +56,6 @@
                 default: 1
             }
         },
-        data() {
-            return {
-            }
-        },
         computed: {
             ...mapState({
                 meta: state => state.cfApp.collectionData

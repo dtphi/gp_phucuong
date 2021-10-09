@@ -121,19 +121,19 @@ e
             _searchRelateds() {
                   const query = this.query;
                   if (query && query.length) {
-                  	this.[ACTION_GET_DROPDOWN_RELATED_LIST](query);
+                  	this[ACTION_GET_DROPDOWN_RELATED_LIST](query);
                   }
           },
           _focusRelatedInfo() {
             const query = this.query;
-              this.[ACTION_GET_DROPDOWN_RELATED_LIST](query);
+              this[ACTION_GET_DROPDOWN_RELATED_LIST](query);
               this.$data.dropdownStyle = 'display:block';
           },
           _closeDropdown() {
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToRelated(info) {
-            this.[ACTION_ADD_INFO_TO_RELATED_LIST](info);
+            this[ACTION_ADD_INFO_TO_RELATED_LIST](info);
           }
         },
         setting: {

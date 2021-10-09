@@ -104,10 +104,10 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_INFO_ADD, [
-                ACTION_RESET_NOTIFICATION_INFO,
-                'update_special_carousel'
-            ]),
+            ...mapActions(MODULE_INFO_ADD, {
+                'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
+                'update_special_carousel':'update_special_carousel'
+            }),
             _errorToArrs() {
                 let errs = [];
                 if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
@@ -141,7 +141,7 @@
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
+                this.resetNotification('');
             }
         },
         setting: {

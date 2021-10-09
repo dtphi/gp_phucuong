@@ -23,12 +23,12 @@
     export default {
         name: 'TheButtonAdd',
         methods: {
-            ...mapActions(MODULE_USER_MODAL, [
-                ACTION_SHOW_MODAL
-            ]),
+            ...mapActions(MODULE_USER_MODAL, {
+                'showModal':ACTION_SHOW_MODAL
+            }),
 
             _showModal() {
-                this.[ACTION_SHOW_MODAL]({action: 'add'});
+                this.showModal({action: 'add'});
             }
         },
         setting: {

@@ -105,10 +105,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_XU, [
-      ACTION_GET_INFO_LIST,
-      ACTION_RESET_NOTIFICATION_INFO,
-    ]),
+    ...mapActions(MODULE_MODULE_GIAO_XU, {
+       'getInfoList': ACTION_GET_INFO_LIST,
+       'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
+    }),
     _submitAction(event) {
       this[event.target.value]({
         action: event.target.value,
@@ -116,14 +116,14 @@ export default {
     },
     _notificationUpdate(notification) {
       this.$notify(notification);
-      this[ACTION_RESET_NOTIFICATION_INFO]();
+      this.resetNotification();
     },
   },
   mounted() {
     const params = {
       perPage: this.perPage,
     };
-    this[ACTION_GET_INFO_LIST](params);
+    this.getInfoList(params);
   },
   setting: {
     list_title: "Danh sách Giáo Xứ",

@@ -49,7 +49,7 @@
                 if (this.isRedirect) {
                     this._redirectUrl();
                 } else {
-                    this.[ACTION_SHOW_MODAL_EDIT](this.infoId);
+                    this[ACTION_SHOW_MODAL_EDIT](this.infoId);
                 }
             },
             _redirectUrl() {

@@ -161,8 +161,18 @@
 
 <script>
     import {
+        mapActions,
+        mapState
+    } from 'vuex';
+    import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
+    import {
+        MODULE_MODULE_THUYEN_CHUYEN_ADD,
+    } from 'store@admin/types/module-types';
+    import {
+        ACTION_RESET_NOTIFICATION_INFO 
+    } from 'store@admin/types/action-types';
     import { config } from "@app/common/config";
     import InfoGiaoXuAutocomplete from 'com@admin/Form/LinhMucs/Groups/InfoGiaoXuAutocomplete';
     import InfoChucVuAutocomplete from "com@admin/Form/LinhMucs/Groups/InfoChucVuAutocomplete";
@@ -187,7 +197,16 @@
                 }
             }
         },
+        computed: {
+            ...mapState(MODULE_MODULE_THUYEN_CHUYEN_ADD, [
+                'loading',
+                'insertSuccess'
+            ])
+        },
         methods: {
+            ...mapActions(MODULE_MODULE_THUYEN_CHUYEN_ADD, {
+                'resetNotification': ACTION_RESET_NOTIFICATION_INFO
+            }),
             _hideModalEdit() {
                 this.info = {};
                 this.$modal.hide('modal-linh-muc-thuyen-chuyen-add');
@@ -227,7 +246,7 @@
                     this.$emit('insert-info-success');
                 }
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this.resetNotification();
             }
         },
          setting: {

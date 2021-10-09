@@ -35,12 +35,12 @@
             return {};
         },
         methods: {
-            ...mapActions(MODULE_MODULE_VAN_THU, [
-                ACTION_SET_INFO_DELETE_BY_ID,
-                ACTION_DELETE_INFO_BY_ID
-            ]),
+            ...mapActions(MODULE_MODULE_VAN_THU, {
+                'setInfoDelete': ACTION_SET_INFO_DELETE_BY_ID,
+                'deleteInfo': ACTION_DELETE_INFO_BY_ID
+            }),
             _showDiaglogConfirm() {
-                this.[ACTION_SET_INFO_DELETE_BY_ID](this.infoId);
+                this.setInfoDelete(this.infoId);
                 this.$modal.show('dialog', {
                     title: 'Xóa Văn Thư',
                     text: 'Bạn muốn xóa văn thư linh mục ?',
@@ -54,7 +54,7 @@
                         {
                             title: 'Xóa',
                             handler: () => {
-                                this.[ACTION_DELETE_INFO_BY_ID](this.infoId);
+                                this.deleteInfo(this.infoId);
                                 this.$modal.hide('dialog')
                             }
                         }

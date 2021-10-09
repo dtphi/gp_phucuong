@@ -50,12 +50,12 @@
             },
         },
         methods: {
-            ...mapActions(MODULE_HOME, [
-                GET_LISTS
-            ]),
+            ...mapActions(MODULE_HOME, {
+                'getList':GET_LISTS
+            }),
         },
         mounted() {
-            this.[GET_LISTS](this.$route.params);
+            this.getList(this.$route.params);
         }
     }
 </script>

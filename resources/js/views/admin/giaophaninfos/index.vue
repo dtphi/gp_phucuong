@@ -138,7 +138,7 @@
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this[ACTION_RESET_NOTIFICATION_INFO]();
             },
         },
         created() {
@@ -148,7 +148,7 @@
             const params = {
                 perPage: this.perPage
             };
-            this.[ACTION_GET_INFO_LIST](params);
+            this[ACTION_GET_INFO_LIST](params);
         },
         setting: {
             list_title: 'Danh sách tin tức giáo phận'

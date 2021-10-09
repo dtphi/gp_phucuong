@@ -34,12 +34,12 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_USER_EDIT_MODAL, [
-                ACTION_SHOW_MODAL
-            ]),
+            ...mapActions(MODULE_USER_EDIT_MODAL, {
+                'showModal':ACTION_SHOW_MODAL
+            }),
 
             _showModal() {
-                this.[ACTION_SHOW_MODAL](this.userId)
+                this.showModal(this.userId)
             }
         }
     };

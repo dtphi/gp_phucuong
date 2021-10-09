@@ -75,10 +75,10 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                ACTION_UPDATE_INFO_SPECIAL,
-                'addSpecial'
-            ]),
+            ...mapActions(MODULE_INFO, {
+                'updateInfo':ACTION_UPDATE_INFO_SPECIAL,
+                'addSpecial':'addSpecial'
+            }),
             _getImgUrl() {
                 return fn_get_base_url_image(this.info.image);
             },

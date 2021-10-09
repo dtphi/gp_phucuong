@@ -97,12 +97,12 @@
             }
         },
         created() {
-            this.[ACTION_GET_SETTING]();
+            this.getSetting();
         },
         methods: {
-            ...mapActions(MODULE_MODULE_SPECIAL_INFO, [
-                ACTION_GET_SETTING,
-            ]),
+            ...mapActions(MODULE_MODULE_SPECIAL_INFO, {
+                'getSetting':ACTION_GET_SETTING,
+            }),
             _getHref(info) {
                 if (info.hasOwnProperty('name_slug')) {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);

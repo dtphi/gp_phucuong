@@ -39,7 +39,7 @@
             ]),
 
             _delete() {
-                this.[ACTION_DELETE_NEWS_GROUP_BY_ID](this.categoryId); 
+                this[ACTION_DELETE_NEWS_GROUP_BY_ID](this.categoryId); 
             },
 
             _showConfirm() {

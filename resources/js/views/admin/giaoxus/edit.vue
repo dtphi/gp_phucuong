@@ -105,16 +105,15 @@ export default {
   watch: {
     updateSuccess(newValue, oldValue) {
       if (newValue) {
-        console.log('Update successful !!');
         this._notificationUpdate(newValue);
       }
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
-      ACTION_RESET_NOTIFICATION_INFO,
-      ACTION_GET_INFO_BY_ID,
-    ]),
+    ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, {
+       'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
+       'getInfo': ACTION_GET_INFO_BY_ID,
+    }),
     _errorToArrs() {
       let errs = [];
       if (
@@ -149,7 +148,7 @@ export default {
     },
     _notificationUpdate(notification) {
       this.$notify(notification);
-      this[ACTION_RESET_NOTIFICATION_INFO]("");
+      this.resetNotification("");
     },
   },
   setting: {
@@ -161,7 +160,7 @@ export default {
   mounted() {
     const giaoxuId = parseInt(this.$route.params.giaoxuId);
     if (giaoxuId) {
-      this[ACTION_GET_INFO_BY_ID](giaoxuId);
+      this.getInfo(giaoxuId);
     }
   },
 };

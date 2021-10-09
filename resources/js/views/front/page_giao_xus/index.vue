@@ -135,12 +135,12 @@
             },
         },
          mounted() {
-            this.[GET_LISTS](this.$route.params);
+            this.getList(this.$route.params);
         },
         methods: {
-            ...mapActions(MODULE_GIAO_XU_PAGE, [
-                GET_LISTS,
-            ]),
+            ...mapActions(MODULE_GIAO_XU_PAGE, {
+                'getList':GET_LISTS,
+            }),
         }
     }
 </script>

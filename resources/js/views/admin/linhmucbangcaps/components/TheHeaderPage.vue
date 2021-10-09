@@ -58,14 +58,14 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC, [
-                ACTION_GET_INFO_LIST
-            ]),
+            ...mapActions(MODULE_MODULE_LINH_MUC, {
+                'getInfoList': ACTION_GET_INFO_LIST
+            }),
             _refreshList() {
                 const params = {
                     perPage: this.perPage
                 };
-                this.[ACTION_GET_INFO_LIST]();
+                this.getInfoList();
             },
              _showModal() {
                 this.$emit('show-modal-add');

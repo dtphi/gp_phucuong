@@ -42,14 +42,14 @@
             return {};
         },
         methods: {
-            ...mapActions(MODULE_INFO_MODAL, [
-                ACTION_SHOW_MODAL_EDIT
-            ]),
+            ...mapActions(MODULE_INFO_MODAL, {
+                'showModal': ACTION_SHOW_MODAL_EDIT
+            }),
             _showModal() {
                 if (this.isRedirect) {
                     this._redirectUrl();
                 } else {
-                    this.[ACTION_SHOW_MODAL_EDIT](this.infoId);
+                    this.showModal(this.infoId);
                 }
             },
             _redirectUrl() {

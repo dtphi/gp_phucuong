@@ -55,7 +55,7 @@
         		this.$router.push(`/admin/news-categories/add`);
         	},
             _refreshList() {
-                this.[ACTION_GET_NEWS_GROUP_LIST]();
+                this[ACTION_GET_NEWS_GROUP_LIST]();
             },
             _redirectUrl() {
                 return fn_redirect_url(`admin/news-categories/add`);

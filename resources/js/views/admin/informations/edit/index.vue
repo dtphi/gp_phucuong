@@ -91,7 +91,7 @@
         mounted() {
             const infoId = parseInt(this.$route.params.infoId);
             if (infoId) {
-                this.[ACTION_SHOW_MODAL_EDIT](infoId);
+                this.showModal(infoId);
             }
         },
         updated() {
@@ -125,11 +125,11 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_INFO_EDIT, [
-                ACTION_RESET_NOTIFICATION_INFO,
-                ACTION_SHOW_MODAL_EDIT,
-                'update_special_carousel'
-            ]),
+            ...mapActions(MODULE_INFO_EDIT, {
+                'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
+                'showModal': ACTION_SHOW_MODAL_EDIT,
+                'update_special_carousel': 'update_special_carousel'
+            }),
             _errorToArrs() {
                 let errs = [];
                 if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
@@ -144,7 +144,7 @@
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this.resetNotification();
             },
             _submitInfo() {
                 const _self = this;

@@ -125,19 +125,19 @@
             _searchCategories() {
               const query = this.query;
               if (query && query.length) {
-              	this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
+              	this[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
               }
           },
           _focusParentCategory() {
             const query = this.query;
-              this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
+              this[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
               this.$data.dropdownStyle = 'display:block';
           },
           _closeDropdown() {
               this.$data.dropdownStyle = 'display:none';
           },
           _addInfoToCategory(infoCategory) {
-            this.[ACTION_ADD_INFO_TO_CATEGORY_LIST](infoCategory);
+            this[ACTION_ADD_INFO_TO_CATEGORY_LIST](infoCategory);
           }
         },
         setting: {

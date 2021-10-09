@@ -126,28 +126,28 @@
         },
         methods: {
     
-            ...mapActions(MODULE_NEWS_CATEGORY, [
-                ACTION_GET_DROPDOWN_CATEGORY_LIST
-            ]),
-            ...mapActions(MODULE_INFO_EDIT, [
-                ACTION_ADD_INFO_TO_CATEGORY_LIST
-            ]),
+            ...mapActions(MODULE_NEWS_CATEGORY, {
+                'moduleGetDropdownCategoryList':ACTION_GET_DROPDOWN_CATEGORY_LIST
+            }),
+            ...mapActions(MODULE_INFO_EDIT,{
+                'moduleAddInfoToCategoryList':ACTION_ADD_INFO_TO_CATEGORY_LIST
+            }),
             _searchCategories() {
                 const query = this.query;
                 if (query && query.length) {
-                    this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
+                    this.moduleGetDropdownCategoryList(query);
                 }
             },
             _focusParentCategory() {
                 const query = this.query;
-                this.[ACTION_GET_DROPDOWN_CATEGORY_LIST](query);
+                this.moduleGetDropdownCategoryList(query);
                 this.$data.dropdownStyle = 'display:block';
             },
             _closeDropdown() {
                 this.$data.dropdownStyle = 'display:none';
             },
             _addInfoToCategory(infoCategory) {
-                this.[ACTION_ADD_INFO_TO_CATEGORY_LIST](infoCategory);
+                this.moduleAddInfoToCategoryList(infoCategory);
             },
             _initAddCategoryModule(cateList) {
                 const _self = this;

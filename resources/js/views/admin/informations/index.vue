@@ -125,12 +125,12 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                ACTION_GET_INFO_LIST,
-                ACTION_RESET_NOTIFICATION_INFO,
-                'module_special_info_ids',
-                'get_module_special_info_ids'
-            ]),
+            ...mapActions(MODULE_INFO, {
+                'getInfoList': ACTION_GET_INFO_LIST,
+                'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
+                'module_special_info_ids': 'module_special_info_ids',
+                'get_module_special_info_ids': 'get_module_special_info_ids'
+            }),
             _submitAction(event) {
                 this[event.target.value]({
                     action: event.target.value
@@ -138,7 +138,7 @@
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this.resetNotification();
             },
         },
         created() {
@@ -148,7 +148,7 @@
             const params = {
                 perPage: this.perPage
             };
-            this.[ACTION_GET_INFO_LIST](params);
+            this.getInfoList(params);
         },
         setting: {
             list_title: 'Danh sách tin tức'

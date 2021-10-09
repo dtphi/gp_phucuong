@@ -13,8 +13,7 @@
 <script>
     import {mapActions} from 'vuex';
     import {
-        MODULE_INFO,
-        MODULE_INFO_MODAL
+        MODULE_INFO
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_INFO_DELETE_BY_ID,
@@ -32,16 +31,13 @@
                 }
             }
         },
-        data() {
-            return {};
-        },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                ACTION_SET_INFO_DELETE_BY_ID,
-                ACTION_DELETE_INFO_BY_ID
-            ]),
+            ...mapActions(MODULE_INFO, {
+                'setInfoDelete':ACTION_SET_INFO_DELETE_BY_ID,
+                'deleteInfo':ACTION_DELETE_INFO_BY_ID
+            }),
             _showDiaglogConfirm() {
-                this.[ACTION_SET_INFO_DELETE_BY_ID](this.infoId);
+                this.setInfoDelete(this.infoId);
                 this.$modal.show('dialog', {
                     title: 'Xóa Tin Tức',
                     text: 'Bạn muốn xóa tin tức ?',
@@ -55,7 +51,7 @@
                         {
                             title: 'Xóa',
                             handler: () => {
-                                this.[ACTION_DELETE_INFO_BY_ID](this.infoId);
+                                this.deleteInfo(this.infoId);
                                 this.$modal.hide('dialog')
                             }
                         }

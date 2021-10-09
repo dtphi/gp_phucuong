@@ -222,8 +222,8 @@
                                 if (this._selfCom.fn) {
                                     this._selfCom.fn(pathImg + fi.selected.path, fi.selected);
                                 } else {
-                                    if (typeof this._selfCom.[ACTION_SET_IMAGE] == "function"){
-                                        this._selfCom.[ACTION_SET_IMAGE](pathImg + fi.selected.path);
+                                    if (typeof this._selfCom.setImage == "function"){
+                                        this._selfCom.setImage(pathImg + fi.selected.path);
                                     }
                                 }
 
@@ -272,13 +272,13 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_APP, [
-                ACTION_SET_IMAGE,
-                ACTION_RESET_NOTIFICATION_INFO,
-                ACTION_GET_SETTING,
-                "ACTION_UPDATE_BANNER",
-                "ACTION_UPDATE_LOGO",
-            ]),
+            ...mapActions(MODULE_MODULE_APP, {
+                'setImage':ACTION_SET_IMAGE,
+                'resetNotification':ACTION_RESET_NOTIFICATION_INFO,
+                'getSetting':ACTION_GET_SETTING,
+                'updateBanner':"ACTION_UPDATE_BANNER",
+                'updateLogo':"ACTION_UPDATE_LOGO",
+            }),
             _errorToArrs() {
                 let errs = [];
                 if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
@@ -295,7 +295,7 @@
                 const _self = this;
                 _self.$refs.observerBanner.validate().then((isValid) => {
                     if (isValid) {
-                        _self.ACTION_UPDATE_BANNER();
+                        _self.updateBanner();
                     }
                 });
             },
@@ -303,20 +303,20 @@
                 const _self = this;
                 _self.$refs.observerLogo.validate().then((isValid) => {
                     if (isValid) {
-                        _self.ACTION_UPDATE_LOGO();
+                        _self.updateLogo();
                     }
                 });
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
+                this.resetNotification('');
             },
             _selectImage() {
                 this.fn = null;
                 document.getElementById('media-file-manager-content').style = "display:block";
             },
             _selectLogoImage() {
-                this.fn = this.ACTION_UPDATE_LOGO;
+                this.fn = this.updateLogo;
                 document.getElementById('media-file-manager-content').style = "display:block";
             }
         },
@@ -325,7 +325,7 @@
             error_msg_system: 'Lỗi hệ thống !',
         },
         mounted() {
-            this.[ACTION_GET_SETTING]();
+            this.getSetting();
         }
     };
 </script>

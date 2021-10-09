@@ -76,9 +76,9 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_TIN_GIAO_PHAN, [
-                ACTION_RESET_NOTIFICATION_INFO
-            ]),
+            ...mapActions(MODULE_MODULE_TIN_GIAO_PHAN, {
+                'moduleResetNotification': ACTION_RESET_NOTIFICATION_INFO
+            }),
         },
         setting: {
             panel_title: 'Module Tin Giáo Phận',

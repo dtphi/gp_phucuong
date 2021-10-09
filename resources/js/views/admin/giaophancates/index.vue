@@ -125,7 +125,7 @@ export default {
         const params = {
             perPage: this.perPage
         };
-         this.[ACTION_GET_NEWS_GROUP_LIST](params);
+         this[ACTION_GET_NEWS_GROUP_LIST](params);
     },
     methods: {
         ...mapActions(MODULE_MODULE_DANHMUC_GIAOPHAN, [

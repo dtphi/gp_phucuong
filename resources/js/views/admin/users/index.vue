@@ -138,23 +138,23 @@
             const params = {
                 perPage: this.perPage
             }
-            this.[ACTION_GET_USER_LIST](params);
+            this.getUserList(params);
             /*window.Echo.channel('search-user')
             .listen('.searchAllResults', (e) => {
                 this.$store.commit(USERS_SET_USER_LIST, e.users.results)
             });*/
         },
         methods: {
-            ...mapActions(MODULE_USER, [
-                ACTION_GET_USER_LIST
-            ]),
-            ...mapActions(MODULE_USER_MODAL, [
-                ACTION_RESET_NOTIFICATION_INFO
-            ]),
+            ...mapActions(MODULE_USER, {
+                'getUserList':ACTION_GET_USER_LIST
+            }),
+            ...mapActions(MODULE_USER_MODAL, {
+                'getResetNotification':ACTION_RESET_NOTIFICATION_INFO
+            }),
             ...mapActions(['getNo']),
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
+                this.getResetNotification('');
             }
         },
         setting: {

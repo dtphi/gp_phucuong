@@ -30,7 +30,7 @@
         			ACTION_SELECT_DROPDOWN_PARENT_CATEGORY
         	]),
             _selectParentCategory() {
-                this.[ACTION_SELECT_DROPDOWN_PARENT_CATEGORY](this.category);
+                this[ACTION_SELECT_DROPDOWN_PARENT_CATEGORY](this.category);
             }
         },
         setting: {

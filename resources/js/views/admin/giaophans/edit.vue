@@ -140,7 +140,7 @@
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
+                this[ACTION_RESET_NOTIFICATION_INFO]('');
             }
         },
         setting: {
@@ -152,7 +152,7 @@
         mounted() {
             const giaoPhanId = parseInt(this.$route.params.giaoPhanId);
             if (giaoPhanId) {
-                this.[ACTION_GET_INFO_BY_ID](giaoPhanId);
+                this[ACTION_GET_INFO_BY_ID](giaoPhanId);
             }
         },
     };

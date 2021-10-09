@@ -126,8 +126,8 @@ export default {
                         if (this._selfCom.fn) {
                             this._selfCom.fn(pathImg + fi.selected.path, fi.selected);
                         } else {
-                          if (typeof this._selfCom.[ACTION_SET_IMAGE] == "function"){
-                            this._selfCom.[ACTION_SET_IMAGE](pathImg + fi.selected.path);
+                          if (typeof this._selfCom[ACTION_SET_IMAGE] == "function"){
+                            this._selfCom[ACTION_SET_IMAGE](pathImg + fi.selected.path);
                           }
                         }
 

@@ -61,7 +61,9 @@
             ...mapState({
                 perPage: state => state.cfApp.perPage
             }),
-            ...mapActions(MODULE_INFO, [ACTION_GET_INFO_LIST]),
+            ...mapActions(MODULE_INFO, {
+                'getInfoList': ACTION_GET_INFO_LIST
+            }),
             _pushAddPage() {
                 this.$router.push(`/admin/informations/add`);
             },
@@ -69,7 +71,7 @@
                 const params = {
                     perPage: this.perPage
                 };
-                this.[ACTION_GET_INFO_LIST](params);
+                this.getInfoList(params);
             }
         },
         setting: {

@@ -159,9 +159,9 @@
             const params = {
                 perPage: 5
             }
-            this.[ACTION_GET_INFO_LIST](params);
-            this.[ACTION_GET_NEWS_GROUP_LIST](params);
-            this.[ACTION_GET_USER_LIST](params);
+            this[ACTION_GET_INFO_LIST](params);
+            this[ACTION_GET_NEWS_GROUP_LIST](params);
+            this[ACTION_GET_USER_LIST](params);
             this.ACTION_GET_INFO_LINH_MUC_LIST(params);
             this.ACTION_GET_INFO_GIAO_PHAN_LIST(params);
         },

@@ -41,7 +41,7 @@
                 ACTION_DELETE_INFO_BY_ID
             ]),
             _showDiaglogConfirm() {
-                this.[ACTION_SET_INFO_DELETE_BY_ID](this.infoId);
+                this[ACTION_SET_INFO_DELETE_BY_ID](this.infoId);
                 this.$modal.show('dialog', {
                     title: 'Xóa Tin Tức',
                     text: 'Bạn muốn xóa tin tức ?',
@@ -55,7 +55,7 @@
                         {
                             title: 'Xóa',
                             handler: () => {
-                                this.[ACTION_DELETE_INFO_BY_ID](this.infoId);
+                                this[ACTION_DELETE_INFO_BY_ID](this.infoId);
                                 this.$modal.hide('dialog')
                             }
                         }

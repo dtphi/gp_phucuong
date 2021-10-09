@@ -306,7 +306,7 @@
 
                 await _self.$refs.observerGiaoPhanDanhMucs.validate().then((isValid) => {
                     if (isValid) {
-                        _self.[ACTION_INSERT_NEWS_GROUP](_self.newsGroupAdd);
+                        _self[ACTION_INSERT_NEWS_GROUP](_self.newsGroupAdd);
                     }
                 });
             },
@@ -316,13 +316,13 @@
 
                 await _self.$refs.observerGiaoPhanDanhMucs.validate().then((isValid) => {
                     if (isValid) {
-                        _self.[ACTION_INSERT_NEWS_GROUP_BACK](_self.newsGroupAdd);
+                        _self[ACTION_INSERT_NEWS_GROUP_BACK](_self.newsGroupAdd);
                     }
                 });
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
+                this[ACTION_RESET_NOTIFICATION_INFO]('');
             }
         },
         setting: {

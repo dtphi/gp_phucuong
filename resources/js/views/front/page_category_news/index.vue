@@ -116,15 +116,15 @@
             },
         },
         mounted() {
-            this.[GET_INFORMATION_LIST_TO_CATEGORY]({
+            this.getInfoListToCategory({
                 ...this.$route.params,
                 renderType: 1
             });
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                GET_INFORMATION_LIST_TO_CATEGORY,
-            ]),
+            ...mapActions(MODULE_INFO, {
+                'getInfoListToCategory':GET_INFORMATION_LIST_TO_CATEGORY,
+            }),
         }
     }
 </script>

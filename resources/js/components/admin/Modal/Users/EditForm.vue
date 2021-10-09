@@ -212,7 +212,7 @@
             },
 
             _close() {
-                this.[ACTION_CLOSE_MODAL]()
+                this[ACTION_CLOSE_MODAL]()
             },
 
             _errorToArrs() {
@@ -228,7 +228,7 @@
                 const _self = this;
                 await _self.$refs.observerUser.validate().then((isValid) => {
                     if (isValid) {
-                      _self.[ACTION_UPDATE_USER](_self.user);
+                      _self[ACTION_UPDATE_USER](_self.user);
                       _self._resetModal();
                     }
                 })
@@ -236,7 +236,7 @@
 
             _submitUserPermission() {
                 const _self = this;
-                _self.[ACTION_UPDATE_USER]({
+                _self[ACTION_UPDATE_USER]({
                     action: 'permission',
                     abilities: _self.user.ruleSelect,
                     userId: _self.user.id,

@@ -64,9 +64,9 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_GIAO_XU, [
-                ACTION_GET_INFO_LIST
-            ]),
+            ...mapActions(MODULE_MODULE_GIAO_XU, {
+                'getInfoList': ACTION_GET_INFO_LIST
+            }),
             _pushAddPage() {
                 this.$router.push(`/admin/giao-xus/add`);
             },
@@ -74,7 +74,7 @@
                 const params = {
                     perPage: this.perPage
                 };
-                this.[ACTION_GET_INFO_LIST]();
+                this.getInfoList();
             }
         },
         setting: {

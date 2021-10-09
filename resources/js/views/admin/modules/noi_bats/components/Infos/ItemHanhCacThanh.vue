@@ -20,7 +20,7 @@
         ACTION_ADD_INFO_TO_CATEGORY_LIST,
         ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
     } from 'store@admin/types/action-types';
-    import lodash from 'lodash';
+    //import lodash from 'lodash';
     import InfoList from './InfoList';
 
     export default {
@@ -28,25 +28,21 @@
         components: {
             InfoList
         },
-        data() {
-            return {
-            }
-        },
         computed: {
             ...mapGetters(MODULE_MODULE_NOI_BAT, [
                 'settingHanhCacThanh',
             ]),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
-                ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
-            ]),
-            ...mapActions(MODULE_NEWS_CATEGORY, [
-                ACTION_GET_DROPDOWN_CATEGORY_LIST
-            ]),
-            ...mapActions(MODULE_INFO_EDIT, [
-                ACTION_ADD_INFO_TO_CATEGORY_LIST
-            ]),
+            ...mapActions(MODULE_MODULE_NOI_BAT, {
+                'moduleUpdateResetSettingCategory':ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA
+            }),
+            ...mapActions(MODULE_NEWS_CATEGORY, {
+                'moduleGetDropdownCategoryList':ACTION_GET_DROPDOWN_CATEGORY_LIST
+            }),
+            ...mapActions(MODULE_INFO_EDIT, {
+                'moduleAddInfoToCategoryList':ACTION_ADD_INFO_TO_CATEGORY_LIST
+            }),
         },
         setting: {
             paren_category_txt: 'Danh mục hiển thị thông báo'

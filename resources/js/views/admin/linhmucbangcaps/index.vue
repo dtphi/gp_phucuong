@@ -138,12 +138,12 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_BANG_CAP, [
-                ACTION_GET_INFO_LIST,
-            ]),
-            ...mapActions(MODULE_MODULE_BANG_CAP_EDIT, [
-                ACTION_RESET_NOTIFICATION_INFO,
-            ]),
+            ...mapActions(MODULE_MODULE_BANG_CAP, {
+                'getInfoList': ACTION_GET_INFO_LIST,
+            }),
+            ...mapActions(MODULE_MODULE_BANG_CAP_EDIT, {
+                'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
+            }),
             _showModalAdd() {
                 this.$modal.show('modal-linh-muc-bang-cap-add')
             },
@@ -162,14 +162,14 @@
                     this.$modal.hide('modal-linh-muc-bang-cap-edit');
                 }
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this.resetNotification();
             },
         },
         mounted() {
             const params = {
                 perPage: this.perPage
             };
-            this.[ACTION_GET_INFO_LIST](params);
+            this.getInfoList(params);
         },
         setting: {
             list_title: 'Danh sách bằng cấp'

@@ -80,9 +80,9 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LOI_CHUA, [
-                ACTION_RESET_NOTIFICATION_INFO
-            ]),
+            ...mapActions(MODULE_MODULE_LOI_CHUA, {
+                'moduleResetNotification':ACTION_RESET_NOTIFICATION_INFO
+            }),
         },
         setting: {
             panel_title: 'Module Thông Báo',

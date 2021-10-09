@@ -121,14 +121,14 @@
             ])
         },
         methods: {
-            ...mapActions(MODULE_MODULE_BANG_CAP_EDIT, [
-                ACTION_UPDATE_INFO
-            ]),
+            ...mapActions(MODULE_MODULE_BANG_CAP_EDIT, {
+               'updateInfo': ACTION_UPDATE_INFO
+            }),
             _hideModalEdit() {
                 this.$modal.hide('modal-linh-muc-bang-cap-edit');
             },
              _submitUpdate() {
-                this.[ACTION_UPDATE_INFO](this.info);
+                this.updateInfo(this.info);
                 return 0;
             }
         }

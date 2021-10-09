@@ -115,11 +115,6 @@
 </template>
 
 <script>
-    import {
-        fn_redirect_url
-    } from '@app/api/utils/fn-helper';
-    import { config } from "@app/common/config";
-
     export default {
         name: 'TheModalAdd',
         data() {
@@ -144,7 +139,6 @@
             },
         },
          setting: {
-            cf: config,
             list_title: 'Danh sách Linh mục'
         }
     };

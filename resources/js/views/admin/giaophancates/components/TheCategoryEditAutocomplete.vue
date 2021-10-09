@@ -84,11 +84,11 @@
             _searchProducts() {
               const query = this.getNameQuery;
               if (query && query.length) {
-              	this.[ACTION_GET_DROPDOWN_CATEGORY_LIST]('');
+              	this[ACTION_GET_DROPDOWN_CATEGORY_LIST]('');
               }
           },
           _focusParentCategory() {
-              this.[ACTION_GET_DROPDOWN_CATEGORY_LIST]('');
+              this[ACTION_GET_DROPDOWN_CATEGORY_LIST]('');
               this.$data.dropdownStyle = 'display:block';
           },
           _closeDropdown() {

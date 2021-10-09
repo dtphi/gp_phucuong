@@ -224,15 +224,15 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_THUYEN_CHUYEN_EDIT, [
-                ACTION_UPDATE_INFO,
-                ACTION_RESET_NOTIFICATION_INFO
-            ]),
+            ...mapActions(MODULE_MODULE_THUYEN_CHUYEN_EDIT, {
+                'updateInfo': ACTION_UPDATE_INFO,
+                'resetNotification': ACTION_RESET_NOTIFICATION_INFO
+            }),
             _hideModalEdit() {
                 this.$modal.hide('modal-linh-muc-thuyen-chuyen-edit');
             },
              _submitUpdate() {
-                this.[ACTION_UPDATE_INFO](this.info);
+                this.updateInfo(this.info);
                 return 0;
             },
             _selectThuyenChuyenFromGiaoXu(values) {
@@ -267,7 +267,7 @@
                     this.$emit('update-info-success');
                 }
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this.resetNotification();
             }
         },
          setting: {

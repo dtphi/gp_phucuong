@@ -9,9 +9,6 @@
                         <img style="width:100%" v-bind:style="{ height: _getBanner.height + 'px' }"  
                             :src="'/Image/NewPicture/'+_getBanner.image" 
                             alt="Hình ảnh Phú Cường" class="img">
-                        <!--<img v-bind:style="{ width: _getBanner.width + 'px', height: _getBanner.height + 'px' }"  
-                            :src="'/Image/NewPicture/'+_getBanner.image" 
-                            alt="Hình ảnh Phú Cường" class="img">-->
                     </a>
                 </div>
             </b-col>
@@ -101,9 +98,9 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
-                ACTION_GET_SETTING,
-            ]),
+            ...mapActions(MODULE_MODULE_NOI_BAT, {
+                'getSetting':ACTION_GET_SETTING,
+            }),
             _getStyle(format) {
                 let top = format.top;
                 let left = format.left;

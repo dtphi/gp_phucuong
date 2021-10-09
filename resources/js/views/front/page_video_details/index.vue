@@ -92,15 +92,15 @@
             },
         },
         mounted() {
-            this.[GET_DETAIL]({
+            this.getDetail({
                 slug: this.$route.params.slug,
                 infoType: 2
             });
         },
         methods: {
-            ...mapActions(MODULE_VIDEO_DETAIL, [
-                GET_DETAIL,
-            ]),
+            ...mapActions(MODULE_VIDEO_DETAIL, {
+                'getDetail':GET_DETAIL,
+            }),
         }
     }
 </script>

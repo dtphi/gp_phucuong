@@ -141,10 +141,10 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_THANH, [
-                ACTION_GET_INFO_LIST,
-                ACTION_RESET_NOTIFICATION_INFO,
-            ]),
+            ...mapActions(MODULE_MODULE_THANH, {
+                'getInfoList':ACTION_GET_INFO_LIST,
+                'resetNotification':ACTION_RESET_NOTIFICATION_INFO,
+            }),
             _showModalAdd() {
                 this.$modal.show('modal-thanh-add')
             },
@@ -165,14 +165,14 @@
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this.resetNotification();
             },
         },
         mounted() {
             const params = {
                 perPage: this.perPage
             };
-            this.[ACTION_GET_INFO_LIST](params);
+            this.getInfoList(params);
         },
         setting: {
             list_title: 'Danh sách Linh mục'

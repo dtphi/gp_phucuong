@@ -21,9 +21,6 @@
     import {
         MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR
     } from '@app/stores/front/types/module-types';
-    import {
-        ACTION_GET_SETTING,
-    } from '@app/stores/front/types/action-types';
     import CategoryItem from './components/CategoryItem';
 
     export default {
@@ -51,11 +48,6 @@
             _settingCategory() {
                 return this.settingCategorys.module_category_left_side_bar_categories;
             }
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [
-                ACTION_GET_SETTING,
-            ]),
         },
         setting: {
             panel_title: 'Module Danh Mục Icon',

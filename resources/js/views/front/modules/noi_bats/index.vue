@@ -108,12 +108,12 @@
             if (Object.keys(this.settingCategorys).length) {
                 moduleData = this.settingCategorys;
             }
-            this.[ACTION_GET_SETTING](moduleData);
+            this.getSetting(moduleData);
         },
         methods: {
-            ...mapActions(MODULE_MODULE_NOI_BAT, [
-                ACTION_GET_SETTING,
-            ])
+            ...mapActions(MODULE_MODULE_NOI_BAT, {
+                'getSetting':ACTION_GET_SETTING,
+            })
         },
         setting: {
             panel_title: 'Module Danh Mục Icon',

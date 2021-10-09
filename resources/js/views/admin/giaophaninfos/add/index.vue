@@ -145,7 +145,7 @@
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]('');
+                this[ACTION_RESET_NOTIFICATION_INFO]('');
             }
         },
         setting: {

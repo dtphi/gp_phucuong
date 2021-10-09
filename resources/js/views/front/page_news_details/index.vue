@@ -92,14 +92,14 @@
             },
         },
         mounted() {
-            this.[GET_DETAIL]({
+            this.getDetail({
                 slug: this.$route.params.slug
             });
         },
         methods: {
-            ...mapActions(MODULE_INFO_DETAIL, [
-                GET_DETAIL,
-            ]),
+            ...mapActions(MODULE_INFO_DETAIL, {
+                'getDetail':GET_DETAIL,
+            }),
         }
     }
 </script>

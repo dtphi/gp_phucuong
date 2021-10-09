@@ -19,12 +19,6 @@
         mapState,
         mapActions
     } from 'vuex';
-    import {
-        MODULE_MODULE_CATEGORY_ICON_SIDE_BAR
-    } from '@app/stores/front/types/module-types';
-    import {
-        ACTION_GET_SETTING,
-    } from '@app/stores/front/types/action-types';
     import CategoryItem from './components/CategoryItem';
 
     export default {
@@ -50,11 +44,6 @@
             _settingCategory() {
                 return this.settingCategorys.module_category_icon_side_bar_categories;
             }
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_CATEGORY_ICON_SIDE_BAR, [
-                ACTION_GET_SETTING,
-            ]),
         },
         setting: {
             module_title: 'Danh Mục',

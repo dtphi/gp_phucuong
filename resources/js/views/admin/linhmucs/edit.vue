@@ -91,15 +91,15 @@
             })
         },
         methods: {
-            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-                ACTION_GET_INFO_BY_ID,
-                ACTION_RESET_NOTIFICATION_INFO
-            ])
+            ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, {
+                'getInfo': ACTION_GET_INFO_BY_ID,
+                'resetNotification': ACTION_RESET_NOTIFICATION_INFO
+            })
         },
         mounted() {
             const linhmucId = parseInt(this.$route.params.linhmucId);
             if (linhmucId) {
-                this.[ACTION_GET_INFO_BY_ID](linhmucId);
+                this.getInfo(linhmucId);
             }
         },
         setting: {

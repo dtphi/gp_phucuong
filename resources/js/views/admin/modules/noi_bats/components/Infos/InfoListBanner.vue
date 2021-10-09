@@ -73,7 +73,7 @@
     import {
         MODULE_MODULE_NOI_BAT,
     } from 'store@admin/types/module-types';
-    import lodash from 'lodash';
+    //import lodash from 'lodash';
     import ItemBanner from './ItemBanner';
     import ItemFormatBanner from './ItemFormatBanner';
 

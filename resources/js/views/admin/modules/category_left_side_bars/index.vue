@@ -76,9 +76,9 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, [
-                ACTION_RESET_NOTIFICATION_INFO
-            ]),
+            ...mapActions(MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, {
+                'moduleResetNotification': ACTION_RESET_NOTIFICATION_INFO
+            }),
         },
         setting: {
             panel_title: 'Module Danh Mục Trái',

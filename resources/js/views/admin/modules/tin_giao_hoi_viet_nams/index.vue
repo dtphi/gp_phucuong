@@ -76,9 +76,9 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_TIN_GIAO_HOI_VIET_NAM, [
-                ACTION_RESET_NOTIFICATION_INFO
-            ]),
+            ...mapActions(MODULE_MODULE_TIN_GIAO_HOI_VIET_NAM, {
+                'moduleResetNotification':ACTION_RESET_NOTIFICATION_INFO
+            }),
         },
         setting: {
             panel_title: 'Module Tin Giáo Hội Việt Nam',

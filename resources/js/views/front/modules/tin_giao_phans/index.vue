@@ -109,12 +109,12 @@
             if (this.settingCategorys.hasOwnProperty('module_tin_giao_phan_categories')) {
                 moduleData = this.settingCategorys.module_tin_giao_phan_categories;
             }
-            this.[ACTION_GET_SETTING](moduleData);
+            this.getSetting(moduleData);
         },
         methods: {
-            ...mapActions(MODULE_MODULE_TIN_GIAO_PHAN, [
-                ACTION_GET_SETTING,
-            ]),
+            ...mapActions(MODULE_MODULE_TIN_GIAO_PHAN, {
+                'getSetting':ACTION_GET_SETTING,
+            }),
             _getHref(info) {
                 if (info.hasOwnProperty('name_slug')) {
                     return fn_get_href_base_url('tin-tuc/chi-tiet/' + info.name_slug);

@@ -60,11 +60,11 @@
             Breadcrumb
         },
         methods: {
-            ...mapActions(MODULE_USER, [
-                ACTION_GET_USER_LIST
-            ]),
+            ...mapActions(MODULE_USER, {
+                'getUserList':ACTION_GET_USER_LIST
+            }),
             _refreshList() {
-                this.[ACTION_GET_USER_LIST]();
+                this.getUserList();
             },
             _deleteMultiple() {
                 confirm(this.$options.setting.delete_warning_txt) ? $('#form-category').submit() : false;

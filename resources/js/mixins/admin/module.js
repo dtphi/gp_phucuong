@@ -4,9 +4,6 @@ import {
 import {
     MODULE_MODULE_APP
 } from 'store@admin/types/module-types';
-import {
-    ACTION_RESET_NOTIFICATION_INFO
-} from 'store@admin/types/action-types';
 
 export default {
     props: {
@@ -37,7 +34,7 @@ export default {
     methods: {
         $_module_notificationUpdate(notification) {
             this.$notify(notification);
-            this.[ACTION_RESET_NOTIFICATION_INFO]('');
+            this.moduleResetNotification('');
         },
         $_module_errorToArrs() {
             let errs = [];

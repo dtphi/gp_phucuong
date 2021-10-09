@@ -27,7 +27,7 @@
         		ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
         	]),
             _selectParentCategory() {
-                this.[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](this.category);
+                this[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](this.category);
             }
         },
         setting: {

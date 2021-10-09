@@ -73,10 +73,10 @@
                 ACTION_SET_IMAGE
             ]),
             _submitInfo() {
-                this.[ACTION_INSERT_INFO](this.info);
+                this[ACTION_INSERT_INFO](this.info);
             },
             _submitInfoBack() {
-                this.[ACTION_INSERT_INFO_BACK](this.info);
+                this[ACTION_INSERT_INFO_BACK](this.info);
             },
             _selectMainImg(file) {
                 const image = {
@@ -97,7 +97,7 @@
                         selected = file.selected;
                     }
 
-                    this.[ACTION_SET_IMAGE](selected);
+                    this[ACTION_SET_IMAGE](selected);
                 }
             }
         },

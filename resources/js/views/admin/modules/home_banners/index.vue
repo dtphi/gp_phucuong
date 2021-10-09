@@ -418,8 +418,8 @@
                                 if (this._selfCom.fn) {
                                     this._selfCom.fn(this._selfCom.media, fi.selected);
                                 } else {
-                                    if (typeof this._selfCom.[ACTION_SET_IMAGE] == "function"){
-                                        this._selfCom.[ACTION_SET_IMAGE](this._selfCom.media);
+                                    if (typeof this._selfCom.moduleSetImage == "function"){
+                                        this._selfCom.moduleSetImage(this._selfCom.media);
                                     }
                                 }
 
@@ -507,17 +507,17 @@
             }
         },
         methods: {
-            ...mapActions(MODULE_MODULE_HOME_BANNER, [
-                ACTION_SET_IMAGE,
-                ACTION_RESET_NOTIFICATION_INFO,
-                ACTION_GET_SETTING,
-                "ACTION_UPDATE_BANNER",
-            ]),
+            ...mapActions(MODULE_MODULE_HOME_BANNER, {
+                'moduleSetImage': ACTION_SET_IMAGE,
+                'moduleResetNotification': ACTION_RESET_NOTIFICATION_INFO,
+                'moduleGetSetting': ACTION_GET_SETTING,
+                'moduleUpdateBanner': "ACTION_UPDATE_BANNER",
+            }),
             _submitInfo() {
                 const _self = this;
                 _self.$refs.observerNewsGroup.validate().then((isValid) => {
                     if (isValid) {
-                        _self.ACTION_UPDATE_BANNER();
+                        _self.moduleUpdateBanner();
                     }
                 });
             },
@@ -532,7 +532,7 @@
             error_msg_system: 'Lỗi hệ thống !',
         },
         mounted() {
-            this.[ACTION_GET_SETTING]();
+            this.moduleGetSetting();
         }
     };
 </script>

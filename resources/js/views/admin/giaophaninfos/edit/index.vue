@@ -91,7 +91,7 @@
         mounted() {
             const infoId = parseInt(this.$route.params.infoId);
             if (infoId) {
-                this.[ACTION_SHOW_MODAL_EDIT](infoId);
+                this[ACTION_SHOW_MODAL_EDIT](infoId);
             }
         },
         updated() {
@@ -144,7 +144,7 @@
             },
             _notificationUpdate(notification) {
                 this.$notify(notification);
-                this.[ACTION_RESET_NOTIFICATION_INFO]();
+                this[ACTION_RESET_NOTIFICATION_INFO]();
             },
             _submitInfo() {
                 const _self = this;

@@ -96,12 +96,9 @@
 </template>
 
 <script>
-import {
-    mapActions
-} from 'vuex';
     import {
-        fn_get_base_url_image
-    } from '@app/api/utils/fn-helper';
+        mapActions
+    } from 'vuex';
     import BtnAddSetting from '../Btn/BtnAddSetting';
     import {
         MODULE_MODULE_NOI_BAT

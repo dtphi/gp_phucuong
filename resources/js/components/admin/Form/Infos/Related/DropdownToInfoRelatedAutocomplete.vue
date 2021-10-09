@@ -27,7 +27,7 @@
         			ACTION_SELECT_DROPDOWN_RELATED_INFO
         	]),
             _selectRelatedInfo() {
-                this.[ACTION_SELECT_DROPDOWN_RELATED_INFO](this.information);
+                this[ACTION_SELECT_DROPDOWN_RELATED_INFO](this.information);
             }
         },
         setting: {

@@ -229,13 +229,13 @@
             }
         },
          mounted() {
-            this.[GET_DETAIL_LINH_MUC](this.$route.params);			
+            this.getDetail(this.$route.params);			
 						
         },
         methods: {
-            ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, [
-                GET_DETAIL_LINH_MUC,
-            ]),
+            ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, {
+                'getDetail':GET_DETAIL_LINH_MUC,
+            }),
             _formatDate(date) {
                     return fn_format_dd_mm_yyyy(date);		
             },

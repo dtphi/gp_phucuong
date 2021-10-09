@@ -197,21 +197,21 @@
             },
 
             _close() {
-                this.[ACTION_CLOSE_MODAL]()
+                this[ACTION_CLOSE_MODAL]()
             },
 
             async _submitInfo() {
                 const _self = this;
-                _self.[ACTION_SET_LOADING](true);
+                _self[ACTION_SET_LOADING](true);
                 _self.$refs.observerInfo.validate().then((isValid) => {
                     if (isValid) {
                         if (_self._isEditAction()) {
-                            _self.[ACTION_UPDATE_INFO](_self.newsData)
+                            _self[ACTION_UPDATE_INFO](_self.newsData)
                         } else {
-                            _self.[ACTION_INSERT_INFO](_self.newsData)
+                            _self[ACTION_INSERT_INFO](_self.newsData)
                         }
                     } else {
-                        _self.[ACTION_SET_LOADING](false)
+                        _self[ACTION_SET_LOADING](false)
                     }
                 });
             }

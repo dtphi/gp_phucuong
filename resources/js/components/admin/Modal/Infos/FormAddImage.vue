@@ -133,7 +133,7 @@
             },
 
             _close() {
-                this.[ACTION_CLOSE_MODAL]()
+                this[ACTION_CLOSE_MODAL]()
             },
 
             _errorToArrs() {
@@ -153,7 +153,7 @@
                 const _self = this;
                 await _self.$refs.observerUser.validate().then((isValid) => {
                     if (isValid) {
-                        _self.[ACTION_INSERT_USER](_self.user);
+                        _self[ACTION_INSERT_USER](_self.user);
                         _self._resetModal();
                     }
                 })

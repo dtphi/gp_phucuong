@@ -40,9 +40,6 @@
                 return this.settingCategory.length;
             }
         },
-        created() {
-            //this.[ACTION_GET_SETTING]();
-        },
         methods: {
             ...mapActions(MODULE_MODULE_THONG_BAO, [
                 ACTION_GET_SETTING,

@@ -57,12 +57,14 @@
             Breadcrumb
         },
         methods: {
-            ...mapActions(MODULE_INFO, [ACTION_GET_INFO_LIST]),
+            ...mapActions(MODULE_INFO, {
+                'getInfoList':ACTION_GET_INFO_LIST
+            }),
             _pushAddPage() {
                 this.$router.push(`/admin/informations/add`);
             },
             _refreshList() {
-                this.[ACTION_GET_INFO_LIST]();
+                this.getInfoList();
             }
         },
         setting: {

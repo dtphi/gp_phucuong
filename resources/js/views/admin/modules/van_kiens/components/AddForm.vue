@@ -50,15 +50,15 @@
             })
         },
         mounted() {
-            this.[ACTION_GET_SETTING]();
+            this.moduleGetSetting();
         },
         methods: {
-            ...mapActions(MODULE_MODULE_VAN_KIEN, [
-                ACTION_GET_SETTING,
-                ACTION_INSERT_SETTING
-            ]),
+            ...mapActions(MODULE_MODULE_VAN_KIEN, {
+                'moduleGetSetting':ACTION_GET_SETTING,
+                'moduleInsertSetting':ACTION_INSERT_SETTING
+            }),
             _submitFormInfo() {
-                this.[ACTION_INSERT_SETTING](this.modData);
+                this.moduleInsertSetting(this.modData);
             },
         },
         setting: {

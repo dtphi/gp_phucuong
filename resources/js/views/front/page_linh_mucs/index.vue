@@ -140,12 +140,12 @@
             },
         },
          mounted() {
-            this.[GET_LISTS_LINH_MUC](this.$route.params);
+            this.getList(this.$route.params);
         },
         methods: {
-            ...mapActions(MODULE_LINH_MUC_PAGE, [
-                GET_LISTS_LINH_MUC,
-            ]),
+            ...mapActions(MODULE_LINH_MUC_PAGE, {
+                'getList':GET_LISTS_LINH_MUC,
+            }),
         }
     }
 </script>

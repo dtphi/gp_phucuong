@@ -139,7 +139,7 @@
             ]),
             _submitInfo() {
                 const _self = this;
-                _self.[ACTION_UPDATE_INFO](_self.info);
+                _self[ACTION_UPDATE_INFO](_self.info);
             },
             _selectMainImg(file) {
                 const image = {
@@ -160,11 +160,11 @@
                         selected = file.selected;
                     }
 
-                    this.[ACTION_SET_IMAGE](selected);
+                    this[ACTION_SET_IMAGE](selected);
                 }
             },
             _setInfoCarousel() {
-                this.[ACTION_GET_SETTING](this.info.special_carousels);
+                this[ACTION_GET_SETTING](this.info.special_carousels);
             }
         },
         setting: {

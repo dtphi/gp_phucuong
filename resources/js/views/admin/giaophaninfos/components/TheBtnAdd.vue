@@ -35,7 +35,7 @@
                 if (this.isRedirect) {
                     return this._redirectUrl();
                 } else {
-                    this.[ACTION_SHOW_MODAL]('add');
+                    this[ACTION_SHOW_MODAL]('add');
                 }
             },
             _redirectUrl() {

@@ -501,8 +501,8 @@ class ApiController extends Controller
 					'name' => $info->name,
 					'hrefDetail' => url('giao-xu/chi-tiet/' . $info->id),
 					'image'	=> !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
-					'gio_le' => $info->gio_le ?? "Chưa cập nhật",
-					'dia_chi' => $info->dia_chi ?? "Chưa cập nhật",
+					'gio_le' => html_entity_decode($info->gio_le) ?? "Chưa cập nhật",
+					'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
 					'email' => $info->email ?? "Chưa cập nhật",
 					'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
 					'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
@@ -539,10 +539,22 @@ class ApiController extends Controller
 				'id' => $giaoXuId,
 				'name' => $info->name,
 				'image' => !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
-				'noi_dung' => html_entity_decode($info->noi_dung)
+				'noi_dung' => html_entity_decode($info->noi_dung),
+				'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
+				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? "Chưa cập nhật",
+				'gio_le' => html_entity_decode($info->gio_le)?? "Chưa cập nhật",
+				'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
+				'dien_thoai' => $this->phoneNumber($info->dien_thoai) ?? "Chưa cập nhật",
+				'email' => $info->email ?? "Chưa cập nhật",
 			];
 		}
 		return $json;
+	}
+
+	public function phoneNumber($data) {
+		// add logic to correctly format number here
+		// a more robust ways would be to use a regular expression
+		return "(".substr($data, 0, 3).") ".substr($data, 3, 3)." ".substr($data,6);
 	}
 
 	/// lấy danh sách linh mục

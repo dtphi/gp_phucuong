@@ -23,8 +23,63 @@
                     </div>
                 </template>
                 <template v-slot:column_middle v-if="info">
-                    <img :src="info.image"/>
-                    <div v-html="info.noi_dung"></div>
+                    <img style="width:100%; margin-bottom:15px" v-lazy="info.image"/>
+                    <!-- Latest update -->
+                    <vue-timeline-update
+                        :date="new Date()"
+                        dateString="Giáo dân"
+                        :category="info.so_tin_huu"
+                        :title="info.name"
+                        :description="info.dan_so"
+                        icon="home"
+                        color="red"
+                    />
+                    <vue-timeline-update
+                        :date="new Date()"
+                        dateString="Giờ cử hành thánh lễ"
+                        category="Giờ lễ trong tuần"
+                        :title="info.name"
+                        :description="info.gio_le"
+                        icon="home"
+                        color="red"
+                    />
+                    <vue-timeline-update
+                        :date="new Date()"
+                        dateString="Địa chỉ"
+                        category="Địa chỉ giáo xứ"
+                        :title="info.name"
+                        :description="info.dia_chi"
+                        icon="home"
+                        color="red"
+                    />
+                    <vue-timeline-update
+                        :date="new Date()"
+                        dateString="Điện thoại"
+                        :category="info.dien_thoai"
+                        :title="info.name"
+                        description="Số điện thoại liên hệ"
+                        icon="home"
+                        color="red"
+                    />
+                    <vue-timeline-update
+                        :date="new Date()"
+                        dateString="E-mail"
+                        category="E-mail liện hệ"
+                        :title="info.name"
+                        :description="info.email"
+                        icon="home"
+                        color="red"
+                    />
+                    <vue-timeline-update
+                        :date="new Date()"
+                        dateString="Linh mục"
+                        category="Các linh mục tiền nhiệm"
+                        :title="info.name"
+                        description="Chưa cập nhật"
+                        icon="home"
+                        color="red"
+                    />
+                    <div style="margin-top:15px" v-html="info.noi_dung"></div>
                 </template>
             </main-content>
             <content-bottom v-if="_isContentBottom">
@@ -53,6 +108,9 @@
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
+    import Vue from "vue"
+    import vuetimeline from "@growthbunker/vuetimeline"
+    Vue.use(vuetimeline)
 
     export default {
         name: 'InfoPage',
@@ -90,12 +148,12 @@
             },
         },
          mounted() {
-            this.[GET_DETAIL](this.$route.params);
+            this.getDetail(this.$route.params);
         },
         methods: {
-            ...mapActions(MODULE_GIAO_XU_DETAIL_PAGE, [
-                GET_DETAIL,
-            ]),
+            ...mapActions(MODULE_GIAO_XU_DETAIL_PAGE, {
+                'getDetail':GET_DETAIL,
+            }),
         }
     }
 </script>

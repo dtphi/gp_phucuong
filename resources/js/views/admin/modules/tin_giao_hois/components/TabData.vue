@@ -51,15 +51,15 @@
             }),
         },
         methods: {
-            ...mapActions(MODULE_MODULE_TIN_GIAO_HOI, [
-                ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA,
-                ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
-            ]),
+            ...mapActions(MODULE_MODULE_TIN_GIAO_HOI, {
+                'moduleUpdateResetSettingCategory': ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA,
+                'moduleSelectDropdownInfoToParentCategory': ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY
+            }),
             _resetUpdateCategory(category) {
-                this.[ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA](category);
+                this.moduleUpdateResetSettingCategory(category);
             },
             _selectDropdownCategoryItem(category) {
-                this.[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](category);
+                this.moduleSelectDropdownInfoToParentCategory(category);
             }
         }
     };
