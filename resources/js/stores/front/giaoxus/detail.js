@@ -5,8 +5,7 @@ import {
   INIT_LIST,
 } from '@app/stores/front/types/mutation-types';
 import {
-  GET_DETAIL,
-  GET_RELATED_INFORMATION_LIST_TO_CATEGORY
+  GET_DETAIL
 } from '@app/stores/front/types/action-types';
 
 export default {
@@ -46,16 +45,12 @@ export default {
       commit,
       dispatch
     }, routeParams) {
-      if (routeParams.hasOwnProperty('slug')) {
+      if (routeParams.hasOwnProperty('giaoXuId')) {
         apiGetDetail(
-          routeParams.slug,
+          routeParams.giaoXuId,
           (result) => {
             console.log(result)
-            commit(INIT_LIST, result.data.results);
-
-            dispatch(GET_RELATED_INFORMATION_LIST_TO_CATEGORY, {
-              slug: 'category-related-' + result.data.results.related_category
-            })
+            commit(INIT_LIST, result);
           },
           (errors) => {
             console.log(errors)

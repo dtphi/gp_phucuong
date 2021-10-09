@@ -530,6 +530,21 @@ class ApiController extends Controller
 		return $this->respondWithCollectionPagination($json);
 	}
 
+	public function getGiaoXuDetail(Request $request, $giaoXuId = null)
+	{
+		$info = $this->sv->apiGetDetailGiaoXu($giaoXuId);
+		$json['results'] = [];
+		if ($info) {
+			$json['results'] = [
+				'id' => $giaoXuId,
+				'name' => $info->name,
+				'image' => !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+				'noi_dung' => html_entity_decode($info->noi_dung)
+			];
+		}
+		return $json;
+	}
+
 	/// lấy danh sách linh mục
 	public function respondWithCollectionPagination($data)
 	{

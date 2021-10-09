@@ -187,6 +187,10 @@ class Service implements BaseModel
 
 		return $query->paginate($limit);
 	}
+
+	public function apiGetDetailGiaoXu($id) {
+		return GiaoXu::findOrFail($id);
+	}
 	/// LINH MUC
 	public function apiGetLinhmucs($data = array(), $limit = 15)
 	{

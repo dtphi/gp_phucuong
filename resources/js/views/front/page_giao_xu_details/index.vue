@@ -22,8 +22,9 @@
                         <module-page-banner-list></module-page-banner-list>
                     </div>
                 </template>
-                <template v-slot:column_middle>
-                    Hình ảnh giáo xứ
+                <template v-slot:column_middle v-if="info">
+                    <img :src="info.image"/>
+                    <div v-html="info.noi_dung"></div>
                 </template>
             </main-content>
             <content-bottom v-if="_isContentBottom">
@@ -39,10 +40,10 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_INFO
+        MODULE_GIAO_XU_DETAIL_PAGE
     } from '@app/stores/front/types/module-types'; 
     import {
-        GET_INFORMATION_LIST_TO_CATEGORY
+        GET_DETAIL
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
     import ContentTop from 'com@front/Common/ContentTop';
@@ -74,8 +75,8 @@
             }
         },
         computed: {
-            ...mapState(MODULE_INFO, {
-                infoList: state => state.pageLists,
+            ...mapState(MODULE_GIAO_XU_DETAIL_PAGE, {
+                info: state => state.pageLists.results,
                 loading: state => state.loading
             }),
             _isContentTop() {
@@ -89,11 +90,11 @@
             },
         },
          mounted() {
-            this.[GET_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
+            this.[GET_DETAIL](this.$route.params);
         },
         methods: {
-            ...mapActions(MODULE_INFO, [
-                GET_INFORMATION_LIST_TO_CATEGORY,
+            ...mapActions(MODULE_GIAO_XU_DETAIL_PAGE, [
+                GET_DETAIL,
             ]),
         }
     }
