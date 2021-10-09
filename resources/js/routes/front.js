@@ -4,11 +4,22 @@ import CategoryPage from 'v@front/page_category_news';
 import VideoPage from 'v@front/page_videos';
 import LinhMucPage from 'v@front/page_linh_mucs';
 import GiaoXuPage from 'v@front/page_giao_xus';
+import AuthLogin from '../views/front/auth/components/Login.vue'
+import AuthRegister from '../views/front/auth/components/Register.vue'
+import Profile from '../views/front/auth/components/Profile.vue'
 
+import store from '../stores/front/auth/index';
 const debug = process.env.NODE_ENV === 'debuger';
 
 const network = ['facebook', 'twitter', 'linkedin', 'whatsapp'];
 let routeEnv = {};
+function guard(to, from, next) {
+    if (store.state.isLoggedIn === true) {
+        next(); // allow to enter route
+    } else {
+        next("user/login"); // go to '/login';
+    }
+}
 
 routeEnv = {
     path: '',
@@ -252,6 +263,43 @@ routeEnv = {
                 layout_content: {}
             }
         }]
+    },  {
+            path: 'user/login',
+            component: AuthLogin,
+            name: 'login',
+            meta: {
+                auth: false,
+                header: 'Đăng nhập',               
+                role: 'guest',
+                layout_content: {
+              },
+                layout: MainLayout,
+            }
+      },
+     {
+       path: 'user/register',
+       name: 'register',
+        component: AuthRegister,
+        meta: {
+            auth: false,
+             header: 'Đăng kí',               
+             role: 'guest',
+            layout_content: {
+          },
+            layout: MainLayout,
+         }
+    },{
+            path: 'user/profile',
+            name: 'profile',
+            component: Profile,
+            beforeEnter: guard,
+            meta: {
+                auth: false,
+                header: 'Thông tin cá nhân',               
+                role: 'guest',
+                layout_content: {
+              },            
+       },
     }]
 }
 

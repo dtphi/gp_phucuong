@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import authUser from './auth'
 import giaoxu from './giaoxus';
 import linhmuc from './linhmucs';
 import home from './homes';
@@ -272,7 +273,8 @@ export default new Vuex.Store({
     video,
     info,
     subscribe,
-    appModule
+    appModule,
+    authUser
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

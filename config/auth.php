@@ -47,9 +47,8 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'admins',
-            'hash' => false,
+            'driver' => 'jwt',
+            'provider' => 'users',
         ],
     ],
 
@@ -73,7 +72,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Models\User::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
@@ -103,7 +102,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'admins',
+            'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

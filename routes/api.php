@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Broadcast;
+use App\Http\Controllers\Api\Front\AuthUserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +18,16 @@ use Illuminate\Support\Facades\Broadcast;
 Route::post('/test', function (Request $request) {
   return ['test' => 'ok'];
   die;
+});
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/login', [AuthUserController::class, 'login']);
+    Route::post('/register', [AuthUserController::class, 'register']);
+    Route::post('/logout', [AuthUserController::class, 'logout']);
+    Route::post('/refresh', [AuthUserController::class, 'refresh']);
+    Route::get('/user-profile', [AuthUserController::class, 'userProfile']);    
 });
 
 Route::namespace('App\Http\Controllers\Api\Front')
@@ -57,6 +68,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::get('/search-user', 'AdminController@search');
     Route::apiResource('news-groups', 'NewsGroupController');
     Route::get('/news-categories/dropdowns', 'NewsGroupController@dropdown');
+
     Route::apiResource('news', 'InformationController');
     Route::get('/informations/dropdowns', 'InformationController@dropdown');
     Route::apiResource('settings', 'SettingController');
