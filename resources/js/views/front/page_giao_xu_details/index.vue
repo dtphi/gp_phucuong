@@ -75,7 +75,7 @@
                         dateString="Linh mục"
                         category="Các linh mục tiền nhiệm"
                         :title="info.name"
-                        description="Chưa cập nhật"
+                        :description="info.linh_muc_tien_nhiem"
                         icon="home"
                         color="red"
                     />

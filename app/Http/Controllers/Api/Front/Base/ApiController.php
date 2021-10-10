@@ -533,6 +533,14 @@ class ApiController extends Controller
 	public function getGiaoXuDetail(Request $request, $giaoXuId = null)
 	{
 		$info = $this->sv->apiGetDetailGiaoXu($giaoXuId);
+		$linhMucs = $this->sv->apiGetLinhMucListByGiaoXuId($giaoXuId);
+
+		$linhMucTienNhiem = [];
+		foreach ($linhMucs as $linhMuc) {
+			$linhMucTienNhiem[] = $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc;
+		}
+		if (empty($linhMucTienNhiem))
+			$linhMucTienNhiem = ['Chưa cập nhật'];
 		$json['results'] = [];
 		if ($info) {
 			$json['results'] = [
@@ -544,17 +552,12 @@ class ApiController extends Controller
 				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? "Chưa cập nhật",
 				'gio_le' => html_entity_decode($info->gio_le)?? "Chưa cập nhật",
 				'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
-				'dien_thoai' => $this->phoneNumber($info->dien_thoai) ?? "Chưa cập nhật",
+				'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
 				'email' => $info->email ?? "Chưa cập nhật",
+				'linh_muc_tien_nhiem' => implode('<br>',$linhMucTienNhiem)
 			];
 		}
 		return $json;
-	}
-
-	public function phoneNumber($data) {
-		// add logic to correctly format number here
-		// a more robust ways would be to use a regular expression
-		return "(".substr($data, 0, 3).") ".substr($data, 3, 3)." ".substr($data,6);
 	}
 
 	/// lấy danh sách linh mục

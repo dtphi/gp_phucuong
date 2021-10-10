@@ -191,6 +191,13 @@ class Service implements BaseModel
 	public function apiGetDetailGiaoXu($id) {
 		return GiaoXu::findOrFail($id);
 	}
+
+	public function apiGetLinhMucListByGiaoXuId($giaoXuId = null) {
+		$linhMucs = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
+		->get();
+
+		return $linhMucs;
+	}
 	/// LINH MUC
 	public function apiGetLinhmucs($data = array(), $limit = 15)
 	{

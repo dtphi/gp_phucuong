@@ -19,10 +19,18 @@ class LinhmucThuyenchuyen extends BaseModel
     {
         return $this->belongsTo(Linhmuc::class);
     }
-		public function chucVu()
-		{
-		return $this->hasOne(ChucVu::class, 'id', 'chuc_vu_id');
-		}	
+
+    public function getTenThanhAttribute($value)
+    {
+        $value = ($this->linhMuc) ? $this->linhMuc->ten_thanh : '';
+
+        return $value;
+    }
+
+    public function chucVu()
+    {
+    return $this->hasOne(ChucVu::class, 'id', 'chuc_vu_id');
+    }	
 
     public function getTenLinhMucAttribute($value)
     {
