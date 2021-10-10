@@ -90,7 +90,8 @@ class Linhmuc extends BaseModel
 
     public function chucThanhs()
     {
-        return $this->hasMany(LinhmucChucthanh::class, 'linh_muc_id');
+        return $this->hasMany(LinhmucChucthanh::class, 'linh_muc_id')
+                ->orderBy('chuc_thanh_id');
     }
 
     public function vanThus()
@@ -100,7 +101,7 @@ class Linhmuc extends BaseModel
 
     public function thuyenChuyens()
     {
-        return $this->hasMany(LinhmucThuyenchuyen::class, 'linh_muc_id');
+        return $this->hasMany(LinhmucThuyenchuyen::class, 'linh_muc_id')->orderBy('from_date');
     }
 
     public function getTenThanhAttribute($value)

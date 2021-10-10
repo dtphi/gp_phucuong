@@ -246,13 +246,13 @@
                 if (chucVus && chucVus.length) {
                     //Status.WARNING = 'rgba(0, 0, 0, 0.125)';
                     chucVus.forEach(function(item, idx) {
-                        var fromDate = fn_format_dd_mm_yyyy(item.from_date)?fn_format_dd_mm_yyyy(item.from_date):'';
-                        var toDate = fn_format_dd_mm_yyyy(item.to_date)?(' đến ngày ' + fn_format_dd_mm_yyyy(item.to_date)): '';
+                        var fromDate = item.label_from_date;
+                        var toDate = (item.label_to_date)?(' đến ngày ' + item.label_to_date): '';
                         self.chucVus.push(new Item(
                             idx,
                             "edit",
                             Status.DANGER,
-                            item.chucvu_name,
+                            item.chucvuName,
                             [],
                             (item.from_date)?new Date(item.from_date):'',
                             'Từ ngày ' + fromDate + toDate

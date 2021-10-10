@@ -261,6 +261,13 @@ class Service implements BaseModel
 
 	public function apiGetDetailLinhMuc($id = null)
 	{
+		$model = $this->modelLinhMuc->find($id);
+
+		return $model;
+	}
+
+	private function __apiGetDetailLinhMuc($id = null)
+	{
 		/*lấy thông tin chi tiết linh mục*/
 		$query = DB::table(Tables::$linhmucs)		
 		->leftJoin(Tables::$linhmuc_thuyenchuyens, Tables::$linhmuc_thuyenchuyens . '.linh_muc_id', '=', Tables::$linhmucs . '.id')

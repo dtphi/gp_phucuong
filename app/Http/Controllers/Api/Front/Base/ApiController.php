@@ -631,26 +631,33 @@ class ApiController extends Controller
 	{
 		try {
 			$infos = $this->sv->apiGetDetailLinhMuc($id);
-				$results[] = [
-					'id' => (int) $infos->id,
-					'ten' => $infos->ten,
-					'ten_thanh' => $infos->th_name ?? "Chưa cập nhật",
-					'nam_sinh' => $infos->ngay_sinh ?? "Chưa cập nhật",
-					'image'	=> !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
-					'giao_xu' => $infos->ten_xu ?? "Chưa cập nhật",
-					'dia_chi' => $infos->noi_sinh ?? "Chưa cập nhật",
-					'giao_phan' => $infos->gp_name ?? "Chưa cập nhật",	
-					'ho_ten_cha' => $infos->ho_ten_cha ?? "Chưa cập nhật",
-					'ho_ten_me' => $infos->ho_ten_me ?? "Chưa cập nhật",
-					'ngay_rua_toi' => $infos->ngay_rua_toi ?? "Chưa cập nhật",
-					'ngay_them_suc' => $infos->ngay_them_suc ?? "Chưa cập nhật",
-					'so_cmnd' => $infos->so_cmnd ?? "Chưa cập nhật",
-					'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? "Chưa cập nhật",
-					'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? "Chưa cập nhật",
-					'cv_hien_tai' => $infos->cvht_name ?? "Chưa cập nhật",
-					'ds_chuc_vu' => $infos->ds_chuc_vu ?? "",
-					'ds_chuc_thanh' => $infos->ds_chuc_thanh ?? "",
-				];
+			$thuyenChuyens = $infos->arr_thuyen_chuyen_list;
+			$chucVuHienTai = '';
+			if (!empty($thuyenChuyens)) {
+				$endThuyenChuyen = end($thuyenChuyens);
+				$chucVuHienTai = $endThuyenChuyen['chucvuName'];
+			}
+
+			$results[] = [
+				'id' => (int) $infos->id,
+				'ten' => $infos->ten,
+				'ten_thanh' => $infos->th_name ?? "Chưa cập nhật",
+				'nam_sinh' => $infos->ngay_sinh ?? "Chưa cập nhật",
+				'image'	=> !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
+				'giao_xu' => $infos->ten_xu ?? "Chưa cập nhật",
+				'dia_chi' => $infos->noi_sinh ?? "Chưa cập nhật",
+				'giao_phan' => $infos->gp_name ?? "Chưa cập nhật",	
+				'ho_ten_cha' => $infos->ho_ten_cha ?? "Chưa cập nhật",
+				'ho_ten_me' => $infos->ho_ten_me ?? "Chưa cập nhật",
+				'ngay_rua_toi' => $infos->ngay_rua_toi ?? "Chưa cập nhật",
+				'ngay_them_suc' => $infos->ngay_them_suc ?? "Chưa cập nhật",
+				'so_cmnd' => $infos->so_cmnd ?? "Chưa cập nhật",
+				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? "Chưa cập nhật",
+				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? "Chưa cập nhật",
+				'cv_hien_tai' => $chucVuHienTai ?? "Chưa cập nhật",
+				'ds_chuc_vu' => $thuyenChuyens ?? "",
+				'ds_chuc_thanh' => $infos->arr_chuc_thanh_list ?? "",
+			];
 			}
 		catch (HandlerMsgCommon $e) {
 			throw $e->render();
