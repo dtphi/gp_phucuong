@@ -1,9 +1,5 @@
 import MainLayout from 'v@front/layouts/main';
 import HomePage from 'v@front/page_news';
-import CategoryPage from 'v@front/page_category_news';
-import VideoPage from 'v@front/page_videos';
-import LinhMucPage from 'v@front/page_linh_mucs';
-import GiaoXuPage from 'v@front/page_giao_xus';
 
 const debug = process.env.NODE_ENV === 'debuger';
 
@@ -15,7 +11,6 @@ routeEnv = {
     component: {
         render: c => c('router-view')
     },
-
     children: [{
         path: '/',
         component: {
@@ -52,7 +47,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: CategoryPage,
+            component: () => import ('v@front/page_category_news'),
             name: 'news-category-all-page',
             meta: {
                 auth: false,
@@ -70,7 +65,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: CategoryPage,
+            component: () => import ('v@front/page_category_news'),
             name: 'news-category-page',
             meta: {
                 auth: false,
@@ -88,7 +83,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: CategoryPage,
+            component: () => import ('v@front/page_category_news'),
             name: 'news-category_1-page',
             meta: {
                 auth: false,
@@ -106,7 +101,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: CategoryPage,
+            component: () => import ('v@front/page_category_news'),
             name: 'news-category_2-page',
             meta: {
                 auth: false,
@@ -124,7 +119,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: CategoryPage,
+            component: () => import ('v@front/page_category_news'),
             name: 'news-category_3-page',
             meta: {
                 auth: false,
@@ -142,8 +137,7 @@ routeEnv = {
         },
         children: [{
             path: 'xem-nhieu',
-            component: () =>
-                import ('v@front/page_news_populars'),
+            component: () => import ('v@front/page_news_populars'),
             name: 'news-popular-page',
             meta: {
                 auth: false,
@@ -172,7 +166,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: VideoPage,
+            component: () => import ('v@front/page_videos'),
             name: 'video-page',
             meta: {
                 auth: false,
@@ -183,8 +177,7 @@ routeEnv = {
             }
         }, {
             path: 'chi-tiet/:slug',
-            component: () =>
-                import ('v@front/page_video_details'),
+            component: () => import ('v@front/page_video_details'),
             name: 'video-detail-page',
             meta: {
                 auth: false,
@@ -201,7 +194,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: LinhMucPage,
+            component: () => import ('v@front/page_linh_mucs'),
             name: 'linh-muc-page',
             meta: {
                 auth: false,
@@ -212,8 +205,7 @@ routeEnv = {
             }
         }, {
             path: 'chi-tiet/:linhMucId',
-            component: () =>
-                import ('v@front/page_linh_muc_details'),
+            component: () => import ('v@front/page_linh_muc_details'),
             name: 'linh-muc-detail-page',
             meta: {
                 auth: false,
@@ -230,7 +222,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: GiaoXuPage,
+            component: () => import ('v@front/page_giao_xus'),
             name: 'giao-xu-page',
             meta: {
                 auth: false,
@@ -241,8 +233,7 @@ routeEnv = {
             }
         }, {
             path: 'chi-tiet/:giaoXuId',
-            component: () =>
-                import ('v@front/page_giao_xu_details'),
+            component: () => import ('v@front/page_giao_xu_details'),
             name: 'giao-xu-detail-page',
             meta: {
                 auth: false,
