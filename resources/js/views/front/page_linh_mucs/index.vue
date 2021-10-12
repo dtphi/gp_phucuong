@@ -62,7 +62,26 @@
 										<paginate :is-resource="isResource" v-if="pageLists"></paginate>
                                     </b-tab>																																				
                                     <b-tab title="Lọc theo chức vụ / Giáo hạt">
-                                        <p>Đang cập nhật</p>
+                                        <div class="col-mobile col-12">
+                                            <div class="col-mobile col-3">
+                                                <p>Chức vụ: </p>
+                                                <!-- string value -->
+                                                <model-select 
+                                                    key='chuc_vu'
+                                                    :options="options2"
+                                                    v-model="item2"
+                                                    placeholder="select item2"></model-select>
+                                            </div>
+                                            <div class="col-mobile col-3">
+                                                <p>Giáo hạt: </p>
+                                                <!-- string value -->
+                                                <model-select 
+                                                    key='giao_hat'
+                                                    :options="options3"
+                                                    v-model="item3"
+                                                    placeholder="select item2"></model-select>
+                                            </div>
+                                        </div>
                                     </b-tab>
 																		
                                 </b-tabs>																											
@@ -97,6 +116,9 @@
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
 	import Paginate from 'com@front/Pagination';
+
+    import 'vue-search-select/dist/VueSearchSelect.css'
+    import { ModelSelect } from 'vue-search-select';
 		
 
     export default {
@@ -110,7 +132,8 @@
             NewsletterRegister,
             MainContent,
             ModulePageBannerList,
-			Paginate
+			Paginate,
+            ModelSelect,
         },
         data() {
             return {
@@ -119,6 +142,16 @@
                 isTopBottomBoth: false,
                 imgCarousel: 'https://picsum.photos/1024/480/?image=58',
 				isResource: false,
+                options2: [
+                    { value: '1', text: 'Chức vụ' + ' - ' + '1' },
+                    { value: '2', text: 'Chức vụ' + ' - ' + '2' }
+                ],
+                item2: '',
+                options3: [
+                    { value: '1', text: 'Giáo hạt' + ' - ' + '1' },
+                    { value: '2', text: 'Giáo hạt' + ' - ' + '2' }
+                ],
+                item3: ''
             }
         },
         computed: {

@@ -2,7 +2,7 @@
     <main id="news" class="py-2">
         <div class="container">
             <main-menu></main-menu>
-            <div style="background-color: #80808008;">
+            <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
             <content-top v-if="_isContentTop">
                 <template v-if="loading">
                     <loading-over-lay
@@ -23,60 +23,61 @@
                     </div>
                 </template>
                 <template v-slot:column_middle v-if="info">
+                    <h2>Giáo xứ {{info.name}}</h2>
                     <img style="width:100%; margin-bottom:15px" v-lazy="info.image"/>
                     <!-- Latest update -->
                     <vue-timeline-update
                         :date="new Date()"
-                        dateString="Giáo dân"
-                        :category="info.so_tin_huu"
-                        :title="info.name"
+                        dateString="#"
+                        :category="`Giáo dân: ${info.so_tin_huu}`"
+                        title="Chi tiết"
                         :description="info.dan_so"
-                        icon="home"
+                        icon="people"
                         color="red"
                     />
                     <vue-timeline-update
                         :date="new Date()"
-                        dateString="Giờ cử hành thánh lễ"
-                        category="Giờ lễ trong tuần"
-                        :title="info.name"
+                        dateString="#"
+                        category="Giờ cử hành thánh lễ"
+                        title="Chi tiết"
                         :description="info.gio_le"
-                        icon="home"
+                        icon="schedule"
                         color="red"
                     />
                     <vue-timeline-update
                         :date="new Date()"
-                        dateString="Địa chỉ"
+                        dateString="#"
                         category="Địa chỉ giáo xứ"
-                        :title="info.name"
+                        title="Chi tiết"
                         :description="info.dia_chi"
-                        icon="home"
+                        icon="room"
                         color="red"
                     />
                     <vue-timeline-update
                         :date="new Date()"
-                        dateString="Điện thoại"
+                        dateString="#"
                         :category="info.dien_thoai"
-                        :title="info.name"
+                        title="Chi tiết"
                         description="Số điện thoại liên hệ"
-                        icon="home"
+                        icon="phone"
                         color="red"
                     />
                     <vue-timeline-update
                         :date="new Date()"
-                        dateString="E-mail"
+                        dateString="#"
                         category="E-mail liện hệ"
-                        :title="info.name"
+                        title="Chi tiết"
                         :description="info.email"
-                        icon="home"
+                        icon="markunread"
                         color="red"
                     />
                     <vue-timeline-update
                         :date="new Date()"
-                        dateString="Linh mục"
+                        dateString="#"
                         category="Các linh mục tiền nhiệm"
-                        :title="info.name"
+                        title="Chi tiết"
                         :description="info.linh_muc_tien_nhiem"
-                        icon="home"
+                        icon="group"
                         color="red"
                     />
                     <div style="margin-top:15px" v-html="info.noi_dung"></div>
@@ -133,6 +134,9 @@
             }
         },
         computed: {
+            ...mapState({
+                contentBgColor: state => state.cfApp.setting.contentBgColor,
+            }),
             ...mapState(MODULE_GIAO_XU_DETAIL_PAGE, {
                 info: state => state.pageLists.results,
                 loading: state => state.loading

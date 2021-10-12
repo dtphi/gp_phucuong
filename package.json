@@ -60,6 +60,7 @@
         "vue-monthly-picker": "^0.2.8",
         "vue-notification": "^1.3.20",
         "vue-router": "^3.4.8",
+        "vue-search-select": "^2.9.5",
         "vue-share-it": "^1.1.3",
         "vue-simple-context-menu": "^3.4.1",
         "vue-slick-carousel": "^1.0.6",

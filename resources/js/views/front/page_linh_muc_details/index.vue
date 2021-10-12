@@ -2,7 +2,7 @@
     <main id="news" class="py-2">
         <div class="container">
             <main-menu></main-menu>
-            <div style="background-color: #80808008;">
+            <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
             <content-top v-if="_isContentTop">
                 <template v-if="loading">
                     <loading-over-lay
@@ -26,7 +26,7 @@
                                 <div class="row">
                                     <div class="col-mobile col-3">
                                         <span class="d-block img-header">
-                                            <img class="img rounded-circle" v-lazy="`${pageLists.image}`" :alt="pageLists.ten">
+                                            <img class="img rounded-circle" v-lazy="`/images/logolinhmuc.jpg`" :alt="pageLists.ten">
                                         </span>
                                     </div>
                                     <div class="col-mobile col-9 text-center text-header">
@@ -212,6 +212,9 @@
             }
         },
         computed: {
+            ...mapState({
+                contentBgColor: state => state.cfApp.setting.contentBgColor,
+            }),
             ...mapState(MODULE_LINH_MUC_DETAIL_PAGE, {
                 pageLists: (state) => {
 									return state.pageLists;
@@ -260,6 +263,21 @@
                     });
                 }
                 return self.chucVus;
+            },
+
+            reset () {
+                this.item = {}
+            },
+            selectFromParentComponent1 () {
+                // select option from parent component
+                this.item = this.options[0]
+            },
+            reset2 () {
+                this.item2 = ''
+            },
+            selectFromParentComponent2 () {
+                // select option from parent component
+                this.item2 = this.options2[0].value
             }
         }
     }

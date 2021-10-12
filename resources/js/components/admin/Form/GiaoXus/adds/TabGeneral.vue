@@ -207,22 +207,14 @@
         <!-- Giờ lễ -->
         <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-info-gio-le"
-                >Giờ lễ</label
-            >
+                >Giờ lễ</label>
             <div class="col-sm-10">
-                <validation-provider
-                    name="info_gio_le"
-                    rules="required"
-                    v-slot="{ errors }"
+                <tinymce
+                    id="input-info-gio-le"
+                    :other_options="options"
+                    v-model="groupData.gio_le"
                 >
-                    <tinymce
-                        id="input-info-gio-le"
-                        :other_options="options"
-                        v-model="groupData.gio_le"
-                    >
-                    </tinymce>
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
+                </tinymce>
             </div>
         </div>
         <!-- Viet -->

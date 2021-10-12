@@ -58,7 +58,25 @@
                                         <paginate :is-resource="isResource" v-if="infoList"></paginate>
                                     </b-tab>
                                     <b-tab title="Lọc theo Giáo phận / Giáo hạt">
-                                        <div class="list-giao-xu">
+                                        <div class="col-mobile col-12 list-giao-xu">
+                                            <div class="col-mobile col-3">
+                                                <p>Giáo phận: </p>
+                                                <!-- string value -->
+                                                <model-select 
+                                                    key='giao_phan'
+                                                    :options="options2"
+                                                    v-model="item2"
+                                                    placeholder="select item2"></model-select>
+                                            </div>
+                                            <div class="col-mobile col-3">
+                                                <p>Giáo hạt: </p>
+                                                <!-- string value -->
+                                                <model-select 
+                                                    key='giao_hat'
+                                                    :options="options3"
+                                                    v-model="item3"
+                                                    placeholder="select item2"></model-select>
+                                            </div>
                                         </div>
                                     </b-tab>
                                 </b-tabs>
@@ -94,6 +112,9 @@
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
     import Paginate from 'com@front/Pagination';
 
+    import 'vue-search-select/dist/VueSearchSelect.css'
+    import { ModelSelect } from 'vue-search-select';
+
     export default {
         name: 'GiaoXuPage',
         components: {
@@ -105,7 +126,8 @@
             NewsletterRegister,
             MainContent,
             ModulePageBannerList,
-            Paginate
+            Paginate,
+            ModelSelect,
         },
         data() {
             return {
@@ -114,6 +136,16 @@
                 isTopBottomBoth: false,
                 imgCarousel: 'https://picsum.photos/1024/480/?image=58',
                 isResource: false,
+                options2: [
+                    { value: '1', text: 'Giáo phận' + ' - ' + '1' },
+                    { value: '2', text: 'Giáo phận' + ' - ' + '2' }
+                ],
+                item2: '',
+                options3: [
+                    { value: '1', text: 'Giáo hạt' + ' - ' + '1' },
+                    { value: '2', text: 'Giáo hạt' + ' - ' + '2' }
+                ],
+                item3: ''
             }
         },
         computed: {

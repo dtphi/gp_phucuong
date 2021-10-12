@@ -211,18 +211,11 @@
                 >Giờ lễ</label
             >
             <div class="col-sm-10">
-                <validation-provider
-                    name="info_gio_le"
-                    rules="required|max:191"
-                    v-slot="{ errors }"
-                >
-                    <tinymce
-                        id="input-info-gio-lec"
-                        :other_options="options"
-                        v-model="groupData.gio_le"
-                    ></tinymce>
-                    <span class="cms-text-red">{{ errors[0] }}</span>
-                </validation-provider>
+                <tinymce
+                    id="input-info-gio-lec"
+                    :other_options="options"
+                    v-model="groupData.gio_le"
+                ></tinymce>
             </div>
         </div>
         <!-- Viet -->
