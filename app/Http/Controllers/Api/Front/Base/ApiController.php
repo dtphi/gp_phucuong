@@ -548,6 +548,7 @@ class ApiController extends Controller
 				'name' => $info->name,
 				'image' => !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
 				'noi_dung' => html_entity_decode($info->noi_dung),
+				'sub_noi_dung' => \Illuminate\Support\Str::limit($info->noi_dung, 1200, '<a href="javascript:void(0)" onclick="$bvModal.show(\'giaoXuHistoryFull\')"  style="color:#007bff">>>>Xem toàn bộ</a>'),
 				'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
 				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? "Chưa cập nhật",
 				'gio_le' => html_entity_decode($info->gio_le)?? "Chưa cập nhật",

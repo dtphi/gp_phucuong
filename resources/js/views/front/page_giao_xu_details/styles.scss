@@ -210,12 +210,18 @@
             }
         }
     }
+}
 
-    .gb-vue-timeline-update--dark {
-        .gb-vue-timeline-update__center {
-            .gb-vue-timeline-update__bullet {
-                background-color: #ff0000;
-            }
+.gb-vue-timeline-update--dark {
+    .gb-vue-timeline-update__center {
+        .gb-vue-timeline-update__bullet {
+            background-color: #ff0000;
+        }
+    }
+
+    .gb-vue-timeline-update__right {
+        .gb-vue-timeline-update__description {
+            color:  black !important;
         }
     }
 }
@@ -307,7 +313,7 @@
 @media (min-width: 48em) {
     .gb-vue-timeline-update {
         .gb-vue-timeline-update__left {
-            width: 25px !important;
+            width: 15px !important;
         }
     }
 }

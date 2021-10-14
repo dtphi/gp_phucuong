@@ -26,67 +26,113 @@
                     <h2>Giáo xứ {{info.name}}</h2>
                     <img style="width:100%; margin-bottom:15px" v-lazy="info.image"/>
                     <!-- Latest update -->
-                    <vue-timeline-update
-                        :date="new Date()"
-                        dateString="#"
-                        :category="`Giáo dân: ${info.so_tin_huu}`"
-                        title="Chi tiết"
-                        :description="info.dan_so"
-                        icon="people"
-                        color="red"
-                    />
-                    <vue-timeline-update
-                        :date="new Date()"
-                        dateString="#"
-                        category="Giờ cử hành thánh lễ"
-                        title="Chi tiết"
-                        :description="info.gio_le"
-                        icon="schedule"
-                        color="red"
-                    />
-                    <vue-timeline-update
-                        :date="new Date()"
-                        dateString="#"
-                        category="Địa chỉ giáo xứ"
-                        title="Chi tiết"
-                        :description="info.dia_chi"
-                        icon="room"
-                        color="red"
-                    />
-                    <vue-timeline-update
-                        :date="new Date()"
-                        dateString="#"
-                        :category="info.dien_thoai"
-                        title="Chi tiết"
-                        description="Số điện thoại liên hệ"
-                        icon="phone"
-                        color="red"
-                    />
-                    <vue-timeline-update
-                        :date="new Date()"
-                        dateString="#"
-                        category="E-mail liện hệ"
-                        title="Chi tiết"
-                        :description="info.email"
-                        icon="markunread"
-                        color="red"
-                    />
-                    <vue-timeline-update
-                        :date="new Date()"
-                        dateString="#"
-                        category="Các linh mục tiền nhiệm"
-                        title="Chi tiết"
-                        :description="info.linh_muc_tien_nhiem"
-                        icon="group"
-                        color="red"
-                    />
-                    <div style="margin-top:15px" v-html="info.noi_dung"></div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-xs-12">
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
+                                :category="`Linh mục chánh xứ`"
+                                title="."
+                                thumbnail="/images/linh-muc.jpg"
+                                :description="`<div>Chưa cập nhật</div>`"
+                                icon="account_circle"
+                                color="red"
+                            />
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
+                                :category="`Giáo dân: ${info.so_tin_huu}`"
+                                title="."
+                                :description="info.dan_so"
+                                icon="people"
+                                color="red"
+                            />
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
+                                category="Giờ cử hành thánh lễ"
+                                title="."
+                                :description="info.gio_le"
+                                icon="schedule"
+                                color="red"
+                            />
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
+                                category="Địa chỉ giáo xứ"
+                                title="."
+                                :description="info.dia_chi"
+                                icon="room"
+                                color="red"
+                            />
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
+                                :category="info.dien_thoai"
+                                title="."
+                                description="Số điện thoại liên hệ"
+                                icon="phone"
+                                color="red"
+                            />
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
+                                category="E-mail liện hệ"
+                                title="."
+                                :description="info.email"
+                                icon="markunread"
+                                color="red"
+                            />
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
+                                category="Linh mục tiền nhiệm"
+                                title="."
+                                :description="info.linh_muc_tien_nhiem"
+                                icon="group"
+                                color="red"
+                            />
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-xs-12">
+                                <vue-timeline-update
+                                    :date="new Date()"
+                                    dateString="-"
+                                    :category="`Linh mục phó xứ`"
+                                    title="."
+                                    thumbnail="/images/linh-muc.jpg"
+                                    :description="`<div>Chưa cập nhật</div>`"
+                                    icon="account_circle"
+                                    color="red"
+                                />
+                               
+                                <vue-timeline-update
+                                    :date="new Date()"
+                                    dateString="-"
+                                    category="Lịch sử giáo xứ"
+                                    title="."
+                                    :description="info.sub_noi_dung"
+                                    icon="history"
+                                    color="red"
+                                />
+                        </div>
+                    </div>
                 </template>
             </main-content>
             <content-bottom v-if="_isContentBottom">
             </content-bottom>
             </div>
         </div>
+        <!-- Modal -->
+        <b-modal size="xl" id="giaoXuHistoryFull" hide-footer>
+            <template #modal-title>
+               <code>Lịch sử giáo xứ</code>
+            </template>
+            <div class="d-block text-center" v-if="info">
+                <div v-html="info.noi_dung"></div>
+            </div>
+            <b-button class="mt-3" block 
+                @click="$bvModal.hide('giaoXuHistoryFull')">Đóng</b-button>
+        </b-modal>
     </main>
 </template>
 
@@ -111,7 +157,7 @@
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
     import Vue from "vue"
     import vuetimeline from "@growthbunker/vuetimeline"
-    Vue.use(vuetimeline)
+    Vue.use(vuetimeline);
 
     export default {
         name: 'InfoPage',
@@ -153,11 +199,12 @@
         },
          mounted() {
             this.getDetail(this.$route.params);
+            window.$bvModal = this.$bvModal;
         },
         methods: {
             ...mapActions(MODULE_GIAO_XU_DETAIL_PAGE, {
                 'getDetail':GET_DETAIL,
-            }),
+            })
         }
     }
 </script>
