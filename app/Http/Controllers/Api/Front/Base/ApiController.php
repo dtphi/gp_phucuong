@@ -644,24 +644,25 @@ class ApiController extends Controller
 				$endThuyenChuyen = end($thuyenChuyens);
 				$chucVuHienTai = $endThuyenChuyen['chucvuName'];
 			}
+			$emptyStr = 'Chưa cập nhật';
 
 			$results[] = [
 				'id' => (int) $infos->id,
 				'ten' => $infos->ten,
-				'ten_thanh' => $infos->ten_thanh ?? "Chưa cập nhật",
-				'nam_sinh' => $infos->ngay_sinh ?? "Chưa cập nhật",
+				'ten_thanh' => $infos->ten_thanh ?? $emptyStr,
+				'nam_sinh' => $infos->ngay_sinh ?? $emptyStr,
 				'image'	=> !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
-				'giao_xu' => $infos->ten_xu ?? "Chưa cập nhật",
-				'dia_chi' => $infos->noi_sinh ?? "Chưa cập nhật",
-				'giao_phan' => $infos->gp_name ?? "Chưa cập nhật",	
-				'ho_ten_cha' => $infos->ho_ten_cha ?? "Chưa cập nhật",
-				'ho_ten_me' => $infos->ho_ten_me ?? "Chưa cập nhật",
-				'ngay_rua_toi' => $infos->ngay_rua_toi ?? "Chưa cập nhật",
-				'ngay_them_suc' => $infos->ngay_them_suc ?? "Chưa cập nhật",
-				'so_cmnd' => $infos->so_cmnd ?? "Chưa cập nhật",
-				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? "Chưa cập nhật",
-				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? "Chưa cập nhật",
-				'cv_hien_tai' => $chucVuHienTai ?? "Chưa cập nhật",
+				'giao_xu' => $infos->ten_xu ?? $emptyStr,
+				'dia_chi' => $infos->noi_sinh ?? $emptyStr,
+				'giao_phan' => $infos->gp_name ?? $emptyStr,	
+				'ho_ten_cha' => $infos->ho_ten_cha ?? $emptyStr,
+				'ho_ten_me' => $infos->ho_ten_me ?? $emptyStr,
+				'ngay_rua_toi' => ($infos->ngay_rua_toi)?date_format(date_create($infos->ngay_rua_toi),"d-m-Y"):$emptyStr,
+				'ngay_them_suc' => ($infos->ngay_them_suc)?date_format(date_create($infos->ngay_them_suc),"d-m-Y"):'',
+				'so_cmnd' => $infos->so_cmnd ?? $emptyStr,
+				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? $emptyStr,
+				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? $emptyStr,
+				'cv_hien_tai' => $chucVuHienTai ?? $emptyStr,
 				'ds_chuc_vu' => $thuyenChuyens ?? "",
 				'ds_chuc_thanh' => $infos->arr_chuc_thanh_list ?? "",
 			];

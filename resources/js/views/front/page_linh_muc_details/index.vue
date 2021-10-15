@@ -20,7 +20,7 @@
                 <template v-slot:before>
                     <!-- Html linh mục detail -->
                     <div class="col-mobile col-12">
-                        <div class="detail-linh-muc w-100 mt-3">
+                        <div class="detail-linh-muc w-100">
                             <div class="row">
                                 <div class="col-mobile col-4">
                                     <div class="bi-tich p-3 mt-3">
@@ -35,14 +35,18 @@
                                         </div>
                                         <h4 class="text-uppercase  text-center mb-3">Bí tích</h4>
                                         <a style="font-size: 25px;" class="d-block " href="javascript:void(0);">Bí tích Rửa Tội</a>
-                                        <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block ">{{_formatDate(pageLists.ngay_rua_toi)}}</p>
+                                        <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block ">{{pageLists.ngay_rua_toi}}</p>
                                         <a style="font-size: 25px;" class="d-block " href="javascript:void(0);">Bí tích Thêm sức </a>
-                                        <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block ">{{_formatDate(pageLists.ngay_them_suc)}}</p>
+                                        <p style="margin-bottom: 2rem;font-size: 20px;" class="d-block ">{{pageLists.ngay_them_suc}}</p>
                                         <a style="font-size: 25px;" class="d-block " href="javascript:void(0);">Bí tích Truyền Chức </a>
                                         <p style="margin-bottom: 2rem;font-size: 20px;"
                                             v-for="(value,idx) in pageLists.ds_chuc_thanh" 
                                             :key="value.chuc_thanh_id + '_ct'" 
-                                            class="d-block ">{{(idx+1)+'. '+chucThanh[value.chuc_thanh_id]}}</p>	
+                                            class="d-block ">{{(idx+1)+'. '+chucThanh[value.chuc_thanh_id]}}<br>
+                                            <span style="font-size:14px">Thụ phong bởi :<br> {{value.nguoi_thu_phong}}</span><br>
+                                            <span style="font-size:14px">Tại: {{value.noi_thu_phong}}</span><br>
+                                            <span style="font-size:14px">Ngày : {{value.label_ngay_thang_nam_chuc_thanh}}</span><br>
+                                        </p>	
                                                                                                         
                                     </div>
                                 </div>
