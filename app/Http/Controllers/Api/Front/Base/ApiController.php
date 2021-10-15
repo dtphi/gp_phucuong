@@ -550,11 +550,13 @@ class ApiController extends Controller
 			$linhMucTienNhiem = ['Chưa cập nhật'];
 
 		$imgChanhXu = '';
+		$nameChanhXu = '';
 		if ($linhMucChanhXu) {
 			$nameChanhXu = isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.'-'.$linhMucChanhXu->ten_linh_muc:$emptyStr;
 			$imgChanhXu = isset($linhMucChanhXu->linhMuc->image) ? url($linhMucChanhXu->linhMuc->image) : url('images/linh-muc.jpg');
 		}
 		$imgPhoXu = '';
+		$namePhoXu = '';
 		if ($linhMucPhoXu){
 			$namePhoXu = isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.'-'.$linhMucPhoXu->ten_linh_muc:$emptyStr;
 			$imgPhoXu = isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg');
