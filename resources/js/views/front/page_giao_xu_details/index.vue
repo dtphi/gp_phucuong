@@ -41,6 +41,24 @@
                             <vue-timeline-update
                                 :date="new Date()"
                                 dateString="#"
+                                :category="`Ngày thành lập`"
+                                title="."
+                                :description="info.ngay_thanh_lap"
+                                icon="home"
+                                color="red"
+                            />
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
+                                :category="`Bổn mạng`"
+                                title="."
+                                :description="info.bon_mang"
+                                icon="accessibility"
+                                color="red"
+                            />
+                            <vue-timeline-update
+                                :date="new Date()"
+                                dateString="#"
                                 :category="`Giáo dân: ${info.so_tin_huu}`"
                                 title="."
                                 :description="info.dan_so"

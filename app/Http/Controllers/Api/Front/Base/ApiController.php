@@ -543,19 +543,25 @@ class ApiController extends Controller
 			$linhMucTienNhiem = ['Chưa cập nhật'];
 		$json['results'] = [];
 		if ($info) {
+			$emptyStr = 'Chưa cập nhật';
+			$defaultImage = 'Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png';
+			$endStr = '<a href="javascript:void(0)" onclick="$bvModal.show(\'giaoXuHistoryFull\')"  style="color:#007bff">>>>Xem toàn bộ</a>';
+			$subNoiDung = \Illuminate\Support\Str::limit($info->noi_dung, 1650, $endStr);
 			$json['results'] = [
 				'id' => $giaoXuId,
 				'name' => $info->name,
-				'image' => !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+				'image' => !empty($info->image) ? url($info->image): url($defaultImage),
 				'noi_dung' => html_entity_decode($info->noi_dung),
-				'sub_noi_dung' => \Illuminate\Support\Str::limit($info->noi_dung, 1200, '<a href="javascript:void(0)" onclick="$bvModal.show(\'giaoXuHistoryFull\')"  style="color:#007bff">>>>Xem toàn bộ</a>'),
-				'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
-				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? "Chưa cập nhật",
-				'gio_le' => html_entity_decode($info->gio_le)?? "Chưa cập nhật",
-				'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
-				'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
-				'email' => $info->email ?? "Chưa cập nhật",
-				'linh_muc_tien_nhiem' => implode('<br>',$linhMucTienNhiem)
+				'sub_noi_dung' => $subNoiDung,
+				'so_tin_huu' => $info->so_tin_huu ?? $emptyStr,
+				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? $emptyStr,
+				'gio_le' => html_entity_decode($info->gio_le)?? $emptyStr,
+				'dia_chi' => html_entity_decode($info->dia_chi) ?? $emptyStr,
+				'dien_thoai' => $info->dien_thoai ?? $emptyStr,
+				'email' => $info->email ?? $emptyStr,
+				'linh_muc_tien_nhiem' => implode('<br>',$linhMucTienNhiem),
+				'ngay_thanh_lap' => $emptyStr,
+				'bon_mang' => $emptyStr
 			];
 		}
 		return $json;
