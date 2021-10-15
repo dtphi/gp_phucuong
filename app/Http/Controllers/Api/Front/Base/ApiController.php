@@ -534,16 +534,33 @@ class ApiController extends Controller
 	{
 		$info = $this->sv->apiGetDetailGiaoXu($giaoXuId);
 		$linhMucs = $this->sv->apiGetLinhMucListByGiaoXuId($giaoXuId);
+		$emptyStr = 'Chưa cập nhật';
 
 		$linhMucTienNhiem = [];
+		$linhMucChanhXu = $this->sv->apiGetLinhMucChanhXuByGiaoXuId($giaoXuId);
+		$linhMucPhoXu = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
+		$arrLmIds = [];
 		foreach ($linhMucs as $linhMuc) {
-			$linhMucTienNhiem[] = $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc;
+			if (!in_array($linhMuc->linh_muc_id, $arrLmIds)) {
+				$linhMucTienNhiem[] = $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc;
+			}
+			array_push($arrLmIds, $linhMuc->linh_muc_id);
 		}
 		if (empty($linhMucTienNhiem))
 			$linhMucTienNhiem = ['Chưa cập nhật'];
+
+		$imgChanhXu = '';
+		if ($linhMucChanhXu) {
+			$nameChanhXu = isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.'-'.$linhMucChanhXu->ten_linh_muc:$emptyStr;
+			$imgChanhXu = isset($linhMucChanhXu->linhMuc->image) ? url($linhMucChanhXu->linhMuc->image) : url('images/linh-muc.jpg');
+		}
+		$imgPhoXu = '';
+		if ($linhMucPhoXu){
+			$namePhoXu = isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.'-'.$linhMucPhoXu->ten_linh_muc:$emptyStr;
+			$imgPhoXu = isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg');
+		}
 		$json['results'] = [];
 		if ($info) {
-			$emptyStr = 'Chưa cập nhật';
 			$defaultImage = 'Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png';
 			$endStr = ' <a href="javascript:void(0)" onclick="$bvModal.show(\'giaoXuHistoryFull\')"  style="color:#007bff !important">>>>Xem toàn bộ</a>';
 			$subNoiDung = \Illuminate\Support\Str::limit($info->noi_dung, 1650, $endStr);
@@ -560,6 +577,10 @@ class ApiController extends Controller
 				'dien_thoai' => $info->dien_thoai ?? $emptyStr,
 				'email' => $info->email ?? $emptyStr,
 				'linh_muc_tien_nhiem' => implode('<br>',$linhMucTienNhiem),
+				'chanh_xu' => $nameChanhXu,
+				'img_chanh_xu' => $imgChanhXu,
+				'pho_xu' => $namePhoXu,
+				'img_pho_xu' => $imgPhoXu,
 				'ngay_thanh_lap' => $emptyStr,
 				'bon_mang' => $emptyStr
 			];

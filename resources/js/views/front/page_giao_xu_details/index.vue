@@ -33,8 +33,8 @@
                                 dateString="#"
                                 :category="`Linh mục chánh xứ`"
                                 title="."
-                                thumbnail="/images/linh-muc.jpg"
-                                :description="`<div>Chưa cập nhật</div>`"
+                                :thumbnail="info.img_chanh_xu"
+                                :description="`<div>${info.chanh_xu}</div>`"
                                 icon="account_circle"
                             />
                             <vue-timeline-update
@@ -80,17 +80,17 @@
                             <vue-timeline-update
                                 :date="new Date()"
                                 dateString="#"
-                                :category="info.dien_thoai"
+                                category="Điện thoại"
                                 title="."
-                                description="Số điện thoại liên hệ"
+                                :description="info.dien_thoai"
                                 icon="phone"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
                                 dateString="#"
-                                :category="info.email"
+                                category="E-mail"
                                 title="."
-                                description="E-mail liện hệ"
+                                :description="info.email"
                                 icon="markunread"
                             />
                             <vue-timeline-update
@@ -108,8 +108,8 @@
                                     dateString="-"
                                     :category="`Linh mục phó xứ`"
                                     title="."
-                                    thumbnail="/images/linh-muc.jpg"
-                                    :description="`<div>Chưa cập nhật</div>`"
+                                    :thumbnail="info.img_pho_xu"
+                                    :description="`<div>${info.pho_xu}</div>`"
                                     icon="account_circle"
                                 />
                                

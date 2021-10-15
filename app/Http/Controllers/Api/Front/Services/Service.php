@@ -198,6 +198,24 @@ class Service implements BaseModel
 
 		return $linhMucs;
 	}
+
+	public function apiGetLinhMucChanhXuByGiaoXuId($giaoXuId = null) {
+		$linhMuc = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
+		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', 1)
+		->orderByDesc('from_date')
+		->first();
+
+		return $linhMuc;
+	}
+
+	public function apiGetLinhMucPhoXuByGiaoXuId($giaoXuId = null) {
+		$linhMuc = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
+		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', 4)
+		->orderByDesc('from_date')
+		->first();
+
+		return $linhMuc;
+	}
 	/// LINH MUC
 	public function apiGetLinhmucs($data = array(), $limit = 15)
 	{
