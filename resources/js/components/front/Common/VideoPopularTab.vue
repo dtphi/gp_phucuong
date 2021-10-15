@@ -50,7 +50,7 @@
             }),
         },
         mounted() {
-            this.[GET_POPULAR_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
+            this[GET_POPULAR_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
         },
         methods: {
             ...mapActions(MODULE_INFO, [

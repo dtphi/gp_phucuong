@@ -213,9 +213,14 @@
 }
 
 .gb-vue-timeline-update--dark {
+    color: #fff !important;
+    a {
+        color:#fff !important;
+        text-decoration: none !important;
+    }
     .gb-vue-timeline-update__center {
         .gb-vue-timeline-update__bullet {
-            background-color: #ff0000;
+            background-color: #7597c1;
         }
     }
 

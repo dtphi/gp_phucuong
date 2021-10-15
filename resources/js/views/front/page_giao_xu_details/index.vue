@@ -17,11 +17,11 @@
                 </template>
             </content-top>
             <main-content v-if="_isContentMain">
-                <template v-slot:before_column_both>
+                <!--<template v-slot:before_column_both>
                     <div class="col-mobile col-12">
                         <module-page-banner-list></module-page-banner-list>
                     </div>
-                </template>
+                </template>-->
                 <template v-slot:column_middle v-if="info">
                     <h2>Giáo xứ {{info.name}}</h2>
                     <img style="width:100%; margin-bottom:15px" v-lazy="info.image"/>
@@ -36,7 +36,6 @@
                                 thumbnail="/images/linh-muc.jpg"
                                 :description="`<div>Chưa cập nhật</div>`"
                                 icon="account_circle"
-                                color="red"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
@@ -45,7 +44,6 @@
                                 title="."
                                 :description="info.ngay_thanh_lap"
                                 icon="home"
-                                color="red"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
@@ -54,7 +52,6 @@
                                 title="."
                                 :description="info.bon_mang"
                                 icon="accessibility"
-                                color="red"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
@@ -63,7 +60,6 @@
                                 title="."
                                 :description="info.dan_so"
                                 icon="people"
-                                color="red"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
@@ -72,7 +68,6 @@
                                 title="."
                                 :description="info.gio_le"
                                 icon="schedule"
-                                color="red"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
@@ -81,7 +76,6 @@
                                 title="."
                                 :description="info.dia_chi"
                                 icon="room"
-                                color="red"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
@@ -90,16 +84,14 @@
                                 title="."
                                 description="Số điện thoại liên hệ"
                                 icon="phone"
-                                color="red"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
                                 dateString="#"
-                                category="E-mail liện hệ"
+                                :category="info.email"
                                 title="."
-                                :description="info.email"
+                                description="E-mail liện hệ"
                                 icon="markunread"
-                                color="red"
                             />
                             <vue-timeline-update
                                 :date="new Date()"
@@ -108,7 +100,6 @@
                                 title="."
                                 :description="info.linh_muc_tien_nhiem"
                                 icon="group"
-                                color="red"
                             />
                         </div>
                         <div class="col-lg-6 col-md-12 col-xs-12">
@@ -120,7 +111,6 @@
                                     thumbnail="/images/linh-muc.jpg"
                                     :description="`<div>Chưa cập nhật</div>`"
                                     icon="account_circle"
-                                    color="red"
                                 />
                                
                                 <vue-timeline-update
@@ -130,7 +120,6 @@
                                     title="."
                                     :description="info.sub_noi_dung"
                                     icon="history"
-                                    color="red"
                                 />
                         </div>
                     </div>

@@ -545,7 +545,7 @@ class ApiController extends Controller
 		if ($info) {
 			$emptyStr = 'Chưa cập nhật';
 			$defaultImage = 'Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png';
-			$endStr = '<a href="javascript:void(0)" onclick="$bvModal.show(\'giaoXuHistoryFull\')"  style="color:#007bff">>>>Xem toàn bộ</a>';
+			$endStr = ' <a href="javascript:void(0)" onclick="$bvModal.show(\'giaoXuHistoryFull\')"  style="color:#007bff !important">>>>Xem toàn bộ</a>';
 			$subNoiDung = \Illuminate\Support\Str::limit($info->noi_dung, 1650, $endStr);
 			$json['results'] = [
 				'id' => $giaoXuId,
@@ -648,7 +648,7 @@ class ApiController extends Controller
 			$results[] = [
 				'id' => (int) $infos->id,
 				'ten' => $infos->ten,
-				'ten_thanh' => $infos->th_name ?? "Chưa cập nhật",
+				'ten_thanh' => $infos->ten_thanh ?? "Chưa cập nhật",
 				'nam_sinh' => $infos->ngay_sinh ?? "Chưa cập nhật",
 				'image'	=> !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
 				'giao_xu' => $infos->ten_xu ?? "Chưa cập nhật",

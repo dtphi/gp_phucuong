@@ -18,11 +18,11 @@
                     </template>
                 </content-top>
                 <main-content v-if="_isContentMain">
-                    <template v-slot:before_column_both>
+                    <!--<template v-slot:before_column_both>
                         <div class="col-mobile col-12">
                             <module-page-banner-list></module-page-banner-list>
                         </div>
-                    </template>
+                    </template>-->
                     <template v-slot:bottom>
                         <!-- Html linh mục detail -->												
                         <div class="list-danh-muc w-100">

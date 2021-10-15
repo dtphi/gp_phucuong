@@ -38,7 +38,7 @@
             }
         },
         created() {
-            //this.[ACTION_GET_SETTING]();
+            //this[ACTION_GET_SETTING]();
         },
         methods: {
             ...mapActions(MODULE_MODULE_THONG_BAO, [

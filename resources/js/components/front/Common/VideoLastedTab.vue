@@ -51,7 +51,7 @@
             }),
         },
         mounted() {
-            this.[GET_LASTED_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
+            this[GET_LASTED_INFORMATION_LIST_TO_CATEGORY](this.$route.params);
         },
         methods: {
             ...mapActions(MODULE_INFO, [

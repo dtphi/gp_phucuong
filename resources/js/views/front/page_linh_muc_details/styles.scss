@@ -1,11 +1,6 @@
 /* 
   Giáo phận phú cường: Page linh muc detail main css
 */
-.timeline {
-    &:before {
-        background-color: #ED1C24;
-    }
-}
 .card-header {
     &:first-child{
         text-align: left !important;
@@ -190,7 +185,7 @@
 
     .detail-linh-muc {
         .bi-tich {
-            background-color: #dc3545 !important;
+            background-color: #4241410f !important;
             border-radius: 24px;
 
             a {
@@ -215,7 +210,7 @@
 
         .maxim {
             .tit-maxim {
-                border: 4px solid red;
+                border: 4px solid rgb(5, 9, 207);
                 display: inline-block;
                 margin: 20px auto;
                 padding: 15px 70px;
@@ -233,6 +228,29 @@
         }
     }
 }
+
+.gb-vue-timeline-update--dark {
+    color: #6b6969 !important;
+    a {
+        color:#6b6969 !important;
+        text-decoration: none !important;
+    }
+    a:hover {
+        color: dodgerblue !important;
+    }
+    .gb-vue-timeline-update__center {
+        .gb-vue-timeline-update__bullet {
+            background-color: #7597c1;
+        }
+    }
+
+    .gb-vue-timeline-update__right {
+        .gb-vue-timeline-update__description {
+            color:  black !important;
+        }
+    }
+}
+
 @media screen and (max-width: 996px) {
     #news {
         .detail-linh-muc {
@@ -332,6 +350,13 @@
             .doted-xs-bottom {
                 display: block;
             }
+        }
+    }
+}
+@media (min-width: 48em) {
+    .gb-vue-timeline-update {
+        .gb-vue-timeline-update__left {
+            width: 75px !important;
         }
     }
 }
