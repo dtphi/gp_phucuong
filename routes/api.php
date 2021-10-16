@@ -39,14 +39,14 @@ Route::namespace('App\Http\Controllers\Api\Front')
   });
 
 Route::namespace('App\Http\Controllers\Api\Admin')
-  ->middleware('web')
+  ->middleware(['web', 'secip'])
   ->group(function () {
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
   });
 
 Route::namespace('App\Http\Controllers\Api\Admin')
-  ->middleware('auth:sanctum')
+  ->middleware(['auth:sanctum', 'secip'])
   ->group(function () {
     Route::get('/user', function (Request $request) {
       $user = $request->user();
