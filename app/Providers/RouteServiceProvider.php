@@ -39,25 +39,27 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function (Request $request) {
             $rPath = 'rout' . 'es' . '/' . 'ap' . 'i.php';
-            Route::prefix('ap' . 'i')
-                ->middleware('ap' . 'i')
-                ->namespace($this->namespace)
-                ->group(base_path($rPath));
+            if ($request->is('ap' . 'i*')) {
+                Route::prefix('ap' . 'i')
+                    ->middleware('ap' . 'i')
+                    ->namespace($this->namespace)
+                    ->group(base_path($rPath));
 
-            if ($request->is('ap' . 'i/m' . 'm' . 'edia*')) {
-                $this->configurationRouteMmUpload();
-            }
-           
-            if ($request->is('ad' . 'min' . '*')) {
-                $rPath = 'rout' . 'es' . '/' . 'ad' . 'min.php';
-                Route::middleware('ad' . 'min')
-                    ->namespace($this->namespace)
-                    ->group(base_path($rPath));
+                if ($request->is('ap' . 'i/m' . 'm' . 'edia*')) {
+                    $this->configurationRouteMmUpload();
+                }
             } else {
-                $rPath = 'rout' . 'es' . '/' . 'we' . 'b.php';
-                Route::middleware('we' . 'b')
-                    ->namespace($this->namespace)
-                    ->group(base_path($rPath));
+                if ($request->is('ad' . 'min' . '*')) {
+                    $rPath = 'rout' . 'es' . '/' . 'ad' . 'min.php';
+                    Route::middleware('ad' . 'min')
+                        ->namespace($this->namespace)
+                        ->group(base_path($rPath));
+                } else {
+                    $rPath = 'rout' . 'es' . '/' . 'we' . 'b.php';
+                    Route::middleware('we' . 'b')
+                        ->namespace($this->namespace)
+                        ->group(base_path($rPath));
+                }
             }
         });
     }

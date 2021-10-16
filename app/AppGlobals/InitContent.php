@@ -18,134 +18,154 @@ class InitContent
 
     public function __construct()
     {
-        $this->pathInfo = trim(request()->getPathInfo(), '/');
         
-        $layout = [];
+        $request = request();
+        $flag = '';
+        if ($request->is('/') || $request->is('trang-chu*'))
+            $flag = 'trang-chu';
+        if ($request->is('danh-muc-tin*'))
+            $flag = 'danh-muc-tin';
+        if ($request->is('tin-tuc*'))
+            $flag = 'tin-tuc';
+        if ($request->is('video*'))
+            $flag = 'video';
+        if ($request->is('linh-muc*'))
+            $flag = 'linh-muc';
+        if ($request->is('giao-xu*'))
+            $flag = 'giao-xu';
 
-        $this->settings = [
-            'og_url'           => request()->fullUrl(),
-            'og_width'         => 500,
-            'og_height'        => 300,
-            'meta_title'       => 'GIÁO PHẬN PHÚ CƯỜNG ',
-            'meta_description' => 'Chuyên trang truyền thông Giáo Phận Phú Cường',
-            'meta_keyword'     => 'Giáo Phận Phú Cường, giao phan phu cuong',
-            'og_image'         => url('images/default_image.jpg'),
-        ];
-
-        $segments = request()->segments();
-        if (isset($segments[0]) && Request::is('danh-muc-tin*')) {
-            $layout = $this->__getLayoutContent('danh-muc-tin/*');
+        if (!empty($flag)) {
+            $this->pathInfo = trim($request->getPathInfo(), '/');
             
-            $this->settings['meta_title'] = 'Danh mục Giáo Phận Phú Cường';
-            $model                        = new \App\Models\CategoryDescription();
+            $layout = [];
 
-            $endSegment  = end($segments);
-            $arrSegments = explode('-', $endSegment);
-            $idSegment   = (int)end($arrSegments);
+            $this->settings = [
+                'og_url'           => $request->fullUrl(),
+                'og_width'         => 500,
+                'og_height'        => 300,
+                'meta_title'       => 'GIÁO PHẬN PHÚ CƯỜNG ',
+                'meta_description' => 'Chuyên trang truyền thông Giáo Phận Phú Cường',
+                'meta_keyword'     => 'Giáo Phận Phú Cường, giao phan phu cuong',
+                'og_image'         => url('images/default_image.jpg'),
+            ];
 
-            if ($idSegment) {
-                $result = $model->select()->where('category_id', $idSegment)->first();
-                if ($result) {
-                    $this->settings['meta_title']       = $result->meta_title;
-                    $this->settings['meta_description'] = $result->meta_description;
-                    $this->settings['meta_keyword']     = $result->meta_keyword;
-                }
-            }
-        }
-
-        if (isset($segments[0]) && Request::is('tin-tuc*')) {
-            if (isset($segments[1]) && Request::is('tin-tuc/xem-nhieu*')) {
-                $this->settings['meta_title'] = 'Tin tức xem nhiều';
-
-                $layout                       = $this->__getLayoutContent('tin-tuc/xem-nhieu');
-            }
-
-            if (isset($segments[1]) && Request::is('tin-tuc/chi-tiet*')) {
-                $layout = $this->__getLayoutContent('tin-tuc/chi-tiet/*');
-                $model  = new \App\Models\Information();
+            $segments = $request->segments();
+            if (isset($segments[0]) && ($flag == 'danh-muc-tin')) {
+                $layout = $this->__getLayoutContent('danh-muc-tin/*');
+                
+                $this->settings['meta_title'] = 'Danh mục Giáo Phận Phú Cường';
+                $model                        = new \App\Models\CategoryDescription();
 
                 $endSegment  = end($segments);
                 $arrSegments = explode('-', $endSegment);
                 $idSegment   = (int)end($arrSegments);
 
                 if ($idSegment) {
-                    $result = $model->select()->where('information_id', $idSegment)->first();
+                    $result = $model->select()->where('category_id', $idSegment)->first();
                     if ($result) {
-                        $this->settings['meta_title']       = $result->infoDes->meta_title;
-                        $this->settings['meta_description'] = $result->infoDes->meta_description;
-                        $this->settings['meta_keyword']     = $result->infoDes->meta_keyword;
-                        $this->settings['og_image']         = url($result->image['path']);
+                        $this->settings['meta_title']       = $result->meta_title;
+                        $this->settings['meta_description'] = $result->meta_description;
+                        $this->settings['meta_keyword']     = $result->meta_keyword;
                     }
                 }
             }
-        }
 
-        if (isset($segments[0]) && Request::is('video*')) {
-            $this->settings['meta_title'] = 'Video';
+            if (isset($segments[0]) && ($flag == 'tin-tuc')) {
+                if (isset($segments[1]) && $request->is('tin-tuc/xem-nhieu*')) {
+                    $this->settings['meta_title'] = 'Tin tức xem nhiều';
 
-            if (isset($segments[1]) && Request::is('video/chi-tiet*')) {
-                $layout = $this->__getLayoutContent('video/chi-tiet/*');
-                $model  = new \App\Models\Information();
+                    $layout                       = $this->__getLayoutContent('tin-tuc/xem-nhieu');
+                }
 
-                $endSegment  = end($segments);
-                $arrSegments = explode('-', $endSegment);
-                $idSegment   = (int)end($arrSegments);
+                if (isset($segments[1]) && $request->is('tin-tuc/chi-tiet*')) {
+                    $layout = $this->__getLayoutContent('tin-tuc/chi-tiet/*');
+                    $model  = new \App\Models\Information();
 
-                if ($idSegment) {
-                    $result = $model->select()->where('information_id', $idSegment)->first();
-                    if ($result) {
-                        $this->settings['meta_title']       = $result->infoDes->meta_title;
-                        $this->settings['meta_description'] = $result->infoDes->meta_description;
-                        $this->settings['meta_keyword']     = $result->infoDes->meta_keyword;
-                        $this->settings['og_image']         = url($result->image['path']);
+                    $endSegment  = end($segments);
+                    $arrSegments = explode('-', $endSegment);
+                    $idSegment   = (int)end($arrSegments);
+
+                    if ($idSegment) {
+                        $result = $model->select()->where('information_id', $idSegment)->first();
+                        if ($result) {
+                            $this->settings['meta_title']       = $result->infoDes->meta_title;
+                            $this->settings['meta_description'] = $result->infoDes->meta_description;
+                            $this->settings['meta_keyword']     = $result->infoDes->meta_keyword;
+                            $this->settings['og_image']         = url($result->image['path']);
+                        }
                     }
                 }
-            } else {
-                $layout = $this->__getLayoutContent('video');
             }
-        }
 
-        if (isset($segments[0]) && Request::is('linh-muc*')) {
-            $this->settings['meta_title'] = 'Linh Mục';
+            if (isset($segments[0]) && ($flag == 'video')) {
+                $this->settings['meta_title'] = 'Video';
 
-            if (isset($segments[1]) && Request::is('linh-muc/chi-tiet*')) {
-                $layout = $this->__getLayoutContent('linh-muc');
-                
-                $endSegment  = end($segments);
-                $arrSegments = explode('-', $endSegment);
-                $idSegment   = (int)end($arrSegments);
+                if (isset($segments[1]) && $request->is('video/chi-tiet*')) {
+                    $layout = $this->__getLayoutContent('video/chi-tiet/*');
+                    $model  = new \App\Models\Information();
 
-                if ($idSegment) {
-                    //
+                    $endSegment  = end($segments);
+                    $arrSegments = explode('-', $endSegment);
+                    $idSegment   = (int)end($arrSegments);
+
+                    if ($idSegment) {
+                        $result = $model->select()->where('information_id', $idSegment)->first();
+                        if ($result) {
+                            $this->settings['meta_title']       = $result->infoDes->meta_title;
+                            $this->settings['meta_description'] = $result->infoDes->meta_description;
+                            $this->settings['meta_keyword']     = $result->infoDes->meta_keyword;
+                            $this->settings['og_image']         = url($result->image['path']);
+                        }
+                    }
+                } else {
+                    $layout = $this->__getLayoutContent('video');
                 }
-            } else {
-                $layout = $this->__getLayoutContent('linh-muc');
             }
-        }
 
-        if (isset($segments[0]) && Request::is('giao-xu*')) {
-            $this->settings['meta_title'] = 'Giáo xứ';
+            if (isset($segments[0]) && ($flag == 'linh-muc')) {
+                $this->settings['meta_title'] = 'Linh Mục';
 
-            if (isset($segments[1]) && Request::is('giao-xu/chi-tiet*')) {
-                $layout = $this->__getLayoutContent('giao-xu/chi-tiet/*');
-                
-                $endSegment  = end($segments);
-                $arrSegments = explode('-', $endSegment);
-                $idSegment   = (int)end($arrSegments);
+                if (isset($segments[1]) && $request->is('linh-muc/chi-tiet*')) {
+                    $layout = $this->__getLayoutContent('linh-muc');
+                    
+                    $endSegment  = end($segments);
+                    $arrSegments = explode('-', $endSegment);
+                    $idSegment   = (int)end($arrSegments);
 
-                if ($idSegment) {
-                    //
+                    if ($idSegment) {
+                        //
+                    }
+                } else {
+                    $layout = $this->__getLayoutContent('linh-muc');
                 }
-            } else {
-                $layout = $this->__getLayoutContent('giao-xu');
             }
-        }
 
-        if (empty($layout)) {
-            $layout = $this->__getLayoutContent();
-        }
+            if (isset($segments[0]) && ($flag == 'giao-xu')) {
+                $this->settings['meta_title'] = 'Giáo xứ';
 
-        $this->settings['page'] = $layout;
+                if (isset($segments[1]) && $request->is('giao-xu/chi-tiet*')) {
+                    $layout = $this->__getLayoutContent('giao-xu/chi-tiet/*');
+                    
+                    $endSegment  = end($segments);
+                    $arrSegments = explode('-', $endSegment);
+                    $idSegment   = (int)end($arrSegments);
+
+                    if ($idSegment) {
+                        //
+                    }
+                } else {
+                    $layout = $this->__getLayoutContent('giao-xu');
+                }
+            }
+
+            if (empty($layout)) {
+                $layout = $this->__getLayoutContent();
+            }
+
+            $this->settings['page'] = $layout;
+        } else {
+            $this->settings['page'] = [];
+        }
     }
 
     private function __getLayoutContent($route = '') 
