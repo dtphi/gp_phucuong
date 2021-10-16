@@ -231,6 +231,7 @@ return [
     ],
 
     'api_name_key' => env('APP_API_NAME_KEY'),
-    'force_https' => env('APP_FORCE_HTTPS', 'https')
+    'force_https' => env('APP_FORCE_HTTPS', 'https'),
+    'sec_ips' => env('SEC_IPS')
 
 ];
