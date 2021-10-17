@@ -69,7 +69,6 @@
 
         <!-- Facebook Metadata /-->
         <meta property="fb:app_id" content="581209272088537"/>
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <!--[if lt IE 9]>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.min.js"></script>    
         <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>   

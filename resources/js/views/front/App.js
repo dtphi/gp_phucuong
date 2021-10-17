@@ -1,5 +1,6 @@
 import Vue from 'vue';
-
+//font.awsome.icon
+require('./assets/font.awsome.icon');
 /* Add BootstrapVue */
 import 'bootstrap/dist/css/bootstrap.css';
 import {

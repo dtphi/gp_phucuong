@@ -634,11 +634,11 @@ class ApiController extends Controller
 				
 				if (empty($giaoXuHienTai)) {
 					$giaoXuHienTai = $info->ten_giao_xu;
-					$hrefGx = (isset($info->id_giao_xu)) ? url('giao-xu/chi-tiet/' . $info->id_giao_xu): "javascript:void(0);";
+					$hrefGx = ($info->id_giao_xu) ? url('giao-xu/chi-tiet/' . $info->id_giao_xu): "javascript:void(0);";
 					$giaoHatHienTai = $info->ten_hat_xu;
 				} else {
 					$giaoXu = end($giaoXuHienTai);
-					$hrefGx = (isset($giaoXu['giao_xu_id'])) ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']): "javascript:void(0);";
+					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']): "javascript:void(0);";
 					$giaoXuHienTai = $giaoXu['giaoxuName'];
 					$chucVuHienTai = $giaoXu['chucvuName'];
 					$giaoHatHienTai = $giaoXu['giaoHatName'];
