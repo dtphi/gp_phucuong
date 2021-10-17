@@ -625,22 +625,49 @@ class ApiController extends Controller
 			$pagination = $this->_getTextPagination($collections);
 			$results = [];
 			$staticImgThum = self::$thumImgNo;
+			$emptyStr = 'Chưa cập nhật';
 			foreach ($collections as $key => $info) {
-			/* 	if(!empty($info->image) && file_exists(public_path($info->image))) {
-					$info->image = $staticImgThum ;
-				} */
+				$giaoHatHienTai = '';
+				$chucVuHienTai = '';
+				$giaoXuHienTai = !empty($info->arr_thuyen_chuyen_list)?$info->arr_thuyen_chuyen_list:'';
+				$chucThanhs = !empty($info->arr_chuc_thanh_list)?$info->arr_chuc_thanh_list:'';
+				
+				if (empty($giaoXuHienTai)) {
+					$giaoXuHienTai = $info->ten_giao_xu;
+					$hrefGx = (isset($info->id_giao_xu)) ? url('giao-xu/chi-tiet/' . $info->id_giao_xu): "javascript:void(0);";
+					$giaoHatHienTai = $info->ten_hat_xu;
+				} else {
+					$giaoXu = end($giaoXuHienTai);
+					$hrefGx = (isset($giaoXu['giao_xu_id'])) ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']): "javascript:void(0);";
+					$giaoXuHienTai = $giaoXu['giaoxuName'];
+					$chucVuHienTai = $giaoXu['chucvuName'];
+					$giaoHatHienTai = $giaoXu['giaoHatName'];
+				}
+
+				$ngayNhanChucThanhHienTai = '';
+				$tenChucThanh = '';
+				if (empty($chucThanhs)) {
+					$ngayNhanChucThanhHienTai = $emptyStr;
+				} else {
+					$chucThanhs = end($chucThanhs);
+					$ngayNhanChucThanhHienTai = $chucThanhs['label_ngay_thang_nam_chuc_thanh'];
+					$tenChucThanh = Tables::$chucThanhs[$chucThanhs['chuc_thanh_id']];
+				}
+				
 				$results[] = [
 					'id' => (int) $info->id,
 					'ten' => $info->ten,
-					'href_giaoxu' => (isset($info->id_giao_xu)) ? url('giao-xu/chi-tiet/' . $info->id_giao_xu): "javascript:void(0);",
-					'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? "Chưa cập nhật",
+					'chucThanhName' => $tenChucThanh,
+					'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? $emptyStr,
 					'image'	=> !empty($info->image) ? url($info->image): url('images/linh-muc.jpg'),
-					'giao_xu' => $info->gx_name ?? "Chưa cập nhật",
-					'dia_chi' => $info->dia_chi ?? "Chưa cập nhật",
-					'giao_hat' => $info->gh_name ?? "Chưa cập nhật",
-					'ten_thanh' => $info->th_name ?? "Chưa cập nhật",
-					'ngay_nhan_chuc' => \Carbon\Carbon::parse($info->ngay_thang_nam_chuc_thanh)->format('d-m-Y') ?? "Chưa cập nhật",
-					'chuc_vu' => $info->cvht_name ?? "Chưa cập nhật",
+					'href_giaoxu' => $hrefGx,
+					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai: $emptyStr,
+					'dia_chi' => $info->dia_chi ?? $emptyStr,
+					'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
+					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
+					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+					'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
 				];
 			}
 		} catch (HandlerMsgCommon $e) {

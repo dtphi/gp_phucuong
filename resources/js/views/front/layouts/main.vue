@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper-container">
-	    <template v-if="pageLoading">
+	    <!--<template v-if="pageLoading">
             <loading-over-lay
                 :active.sync="pageLoading"
                 :is-full-page="pageFullPage"></loading-over-lay>
-        </template>
+        </template>-->
   	    <default-header></default-header>
 		<slot></slot>
         <default-footer></default-footer>
@@ -79,8 +79,8 @@
 </script>
 
 <style lang="scss">
+	@import url('//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css');
 	@import url('https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,vietnamese');
-	
 	.wrapper-container {
 		font-size: 14px;
 		font-family: 'Roboto', sans-serif;

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
 import giaoxu from './giaoxus';
 import linhmuc from './linhmucs';
 import home from './homes';
@@ -8,7 +7,7 @@ import video from './videos';
 import info from './infos';
 import subscribe from './subscribes';
 import appModule from './modules';
-import createLogger from '../../plugins/logger';
+//import createLogger from '../../plugins/logger';
 import {
   GET_INFORMATION_LIST_TO_CATEGORY
 } from '@app/stores/front/types/action-types';
@@ -16,13 +15,13 @@ import {
   MODULE_INFO
 } from '@app/stores/front/types/module-types';
 
-Vue.use(Vuex);
-
 const debug = process.env.NODE_ENV === 'debuger';
 
 import {
   apiGetSettings
 } from '@app/api/front/apps';
+
+Vue.use(Vuex);
 
 const fnIsObject = (obj) => {
   if (typeof obj !== "undefined" &&
@@ -274,6 +273,6 @@ export default new Vuex.Store({
     subscribe,
     appModule
   },
-  strict: debug,
-  plugins: debug ? [createLogger()] : []
+  //strict: debug,
+  //plugins: debug ? [createLogger()] : []
 });

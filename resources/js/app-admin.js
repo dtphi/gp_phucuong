@@ -1,5 +1,5 @@
 require('./bootstrap');
-
+window.Pusher = {};//require('pusher-js');
 window.axios.interceptors.response.use(function (response) {
     if(_.includes([403], response.data.code) && !(_.includes(["/admin/dashboards"], window.location.pathname))) {
         window.location = '/admin/dashboards';

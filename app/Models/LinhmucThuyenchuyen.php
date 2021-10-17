@@ -29,7 +29,7 @@ class LinhmucThuyenchuyen extends BaseModel
 
     public function chucVu()
     {
-    return $this->hasOne(ChucVu::class, 'id', 'chuc_vu_id');
+        return $this->hasOne(ChucVu::class, 'id', 'chuc_vu_id');
     }	
 
     public function getTenLinhMucAttribute($value)
@@ -156,6 +156,13 @@ class LinhmucThuyenchuyen extends BaseModel
     public function getTenToGiaoXuAttribute($value)
     {
         $value = ($this->toGiaoXu) ? $this->toGiaoXu->name : '';
+
+        return $value;
+    }
+
+    public function getTenToHatXuAttribute($value)
+    {
+        $value = ($this->toGiaoXu) ? $this->toGiaoXu->ten_giao_hat : '';
 
         return $value;
     }

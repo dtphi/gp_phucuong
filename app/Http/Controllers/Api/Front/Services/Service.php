@@ -217,7 +217,7 @@ class Service implements BaseModel
 		return $linhMuc;
 	}
 	/// LINH MUC
-	public function apiGetLinhmucs($data = array(), $limit = 15)
+	private function __apiGetLinhmucs($data = array(), $limit = 15)
 	{
 		$query = DB::table(Tables::$linhmucs)->leftJoin(
 			Tables::$thanhs,
@@ -266,6 +266,13 @@ class Service implements BaseModel
 						Tables::$thanhs . '.name as th_name',
 						'max_linhmuc_chucthanhs' . '.ngay_thang_nam_chuc_thanh',
 		)->orderBy(Tables::$linhmucs . '.id', 'DESC');
+		return $query;
+	}
+
+	public function apiGetLinhmucs($data = []) {
+		$query = $this->modelLinhMuc->select()
+            ->orderBy('id', 'DESC');
+
 		return $query;
 	}
 

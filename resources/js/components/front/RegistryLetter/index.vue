@@ -33,19 +33,27 @@
         </div>
       </validation-observer>
     </template>
-    <notifications group="add_email" />
+    <notifications group="add_email"></notifications>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import Vue from 'vue';
+import Notifications from 'vue-notification';
+Vue.use(Notifications);
+import {
+  ValidationObserver,
+  ValidationProvider
+} from 'vee-validate';
+Vue.component('ValidationObserver', ValidationObserver);
+Vue.component('ValidationProvider', ValidationProvider);
 import { MODULE_SUBSCRIBE } from "store@front/types/module-types";
-import { setInteractionMode } from 'vee-validate'
+import { setInteractionMode } from 'vee-validate';
 setInteractionMode('passive')
 
 export default {
   name: "RegistryLetter",
-  components: {},
   data() {
     return {
       text_notification: '',

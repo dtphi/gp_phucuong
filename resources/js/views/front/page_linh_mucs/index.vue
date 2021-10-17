@@ -40,13 +40,13 @@
                                                 </div>
                                                 <div class="col-mobile col-10 content">
                                                     <h4 class="tit">
-                                                       <a :href="`/linh-muc/chi-tiet/${info.id}`"> Linh mục {{info.ten_thanh}} {{info.ten}}</a>
+                                                       <a :href="`/linh-muc/chi-tiet/${info.id}`">{{info.ten_day_du}}</a>
                                                     </h4>
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <span>Chức vụ: {{info.chuc_vu}}</span>       
 															<a :href="info.href_giaoxu">
-																<span>Nơi phục vụ: Gx. {{info.giao_xu}} </span>
+																<span>Nơi phục vụ: {{info.giao_xu}} </span>
 															</a>
 															<span>Giáo hạt: {{info.giao_hat}}</span>                                                     
                                                         </div>

@@ -19,6 +19,7 @@ class GiaoXu extends BaseModel
    * @var string
    */
   protected $table = DB_PREFIX . 'giao_xus';
+
   protected $fillable = [
     'name',
     'giao_hat_id',
@@ -40,5 +41,12 @@ class GiaoXu extends BaseModel
   public function getNoiDungAttribute($value)
   {
       return htmlspecialchars_decode($value);
+  }
+
+  public function getTenGiaoHatAttribute($value) 
+  {
+    $value = ($this->giaoHat) ? $this->giaoHat->name : '';
+
+    return $value;
   }
 }

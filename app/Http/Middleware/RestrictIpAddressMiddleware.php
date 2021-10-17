@@ -20,7 +20,6 @@ class RestrictIpAddressMiddleware
     public function handle(Request $request, Closure $next)
     {
         $this->getIps();
-        Log::info($request->ip());
 
         if (!empty($this->__restrictedIp)) {
             if (in_array($request->ip(), $this->__restrictedIp)) {

@@ -19,14 +19,13 @@
 		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 		})(window,document,'script','dataLayer','GTM-PZ6DTNG');</script>-->
 		<!-- End Google Tag Manager -->
-
       
         <title>GP Phú Cường | {{$data->settings['meta_title']}}</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="apple-mobile-web-app-capable" content="yes">
-	      <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <meta name="robots" content="noｰindex, no-follow">
         <meta name="VisitorTimeout" content="0">
         <meta name="VisitorPath" content="">
@@ -70,12 +69,7 @@
 
         <!-- Facebook Metadata /-->
         <meta property="fb:app_id" content="581209272088537"/>
-
-        <!--
-        <link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
-        -->
-        
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <!--[if lt IE 9]>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.min.js"></script>    
         <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>   
@@ -110,8 +104,6 @@
             </component>
         </div>
         <!-- Scripts -->
-        <script>
-        </script>
-        <script src="{{ asset('js/app-front.js') }}" defer></script>
+        <script src="{{ mix('js/app-front.js') }}" async></script>
     </body>
 </html>

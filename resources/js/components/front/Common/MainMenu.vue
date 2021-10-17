@@ -37,10 +37,10 @@
         </nav>
         <div class="icon-nav">
             <p>
-                <b-icon class="person" icon="person-fill"></b-icon>
+                <i class='person fas'>&#xf406;</i>
             </p>
             <p>
-                <b-icon class="search" icon="search"></b-icon>
+                <i class='search fas'>&#xf002;</i>
             </p>
         </div>
     </div>

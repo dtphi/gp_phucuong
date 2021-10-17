@@ -15,5 +15,3 @@ axios.defaults.params = {};
 if (process.env.MIX_APP_API_NAME_KEY) {
     axios.defaults.params['app'] = process.env.MIX_APP_API_NAME_KEY;
 }
-
-window.Pusher = require('pusher-js');

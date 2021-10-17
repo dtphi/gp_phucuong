@@ -1,5 +1,4 @@
 import MainLayout from 'v@front/layouts/main';
-import HomePage from 'v@front/page_news';
 
 const debug = process.env.NODE_ENV === 'debuger';
 
@@ -18,7 +17,7 @@ routeEnv = {
         },
         children: [{
             path: '',
-            component: HomePage,
+            component: () => import ('v@front/page_news'),
             name: 'home-page',
             meta: {
                 auth: false,
@@ -29,7 +28,7 @@ routeEnv = {
             }
         }, {
             path: 'trang-chu',
-            component: HomePage,
+            component: () => import ('v@front/page_news'),
             name: 'home-page1',
             meta: {
                 auth: false,

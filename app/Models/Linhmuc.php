@@ -60,10 +60,10 @@ class Linhmuc extends BaseModel
         'sort_id'
     ];
 
-     /**
+    /**
      * Get the post's thanh.
-     */
-    public function thanh()
+    */
+     public function thanh()
     {
         return $this->hasOne(Thanh::class, $this->primaryKey, 'ten_thanh_id');
     }
@@ -114,6 +114,13 @@ class Linhmuc extends BaseModel
     public function getTenGiaoXuAttribute($value)
     {
         $value = ($this->giaoXu) ? $this->giaoXu->name : '';
+
+        return $value;
+    }
+
+    public function getTenHatXuAttribute($value) 
+    {
+        $value = ($this->giaoXu) ? $this->giaoXu->ten_giao_hat : '';
 
         return $value;
     }
@@ -218,6 +225,7 @@ class Linhmuc extends BaseModel
                     'chucvuName' => $thuyenChuyen->ten_to_chuc_vu,
                     'giao_xu_id' => $thuyenChuyen->giao_xu_id,
                     'giaoxuName' => $thuyenChuyen->ten_to_giao_xu,
+                    'giaoHatName' => $thuyenChuyen->ten_to_hat_xu,
                     'co_so_gp_id' => $thuyenChuyen->co_so_gp_id,
                     'cosogpName' => $thuyenChuyen->ten_co_so,
                     'dong_id' => $thuyenChuyen->dong_id,
