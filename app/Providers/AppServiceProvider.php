@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\URL;
 use App\Models\PersonalAccessToken;
+use Illuminate\Support\Facades\Response;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,10 @@ class AppServiceProvider extends ServiceProvider
 
     /*use when auth bear token, create client_access_tokens table*/
     Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
+
+    Response::macro('js/appfirebasejs', function ($value) {
+      return Response::make(strtoupper($value));
+    });
   }
 
   private function __bindAdminService()

@@ -634,7 +634,7 @@ class ApiController extends Controller
 				
 				if (empty($giaoXuHienTai)) {
 					$giaoXuHienTai = $info->ten_giao_xu;
-					$hrefGx = ($info->id_giao_xu) ? url('giao-xu/chi-tiet/' . $info->id_giao_xu): "javascript:void(0);";
+					$hrefGx = ($info->giao_xu_id) ? url('giao-xu/chi-tiet/' . $info->giao_xu_id): "javascript:void(0);";
 					$giaoHatHienTai = $info->ten_hat_xu;
 				} else {
 					$giaoXu = end($giaoXuHienTai);

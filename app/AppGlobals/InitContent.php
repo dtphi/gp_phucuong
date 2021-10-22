@@ -168,6 +168,14 @@ class InitContent
         }
     }
 
+    public static function getHeaderScript () {
+        if (isset($_SERVER['HTTP_SEC_FETCH_DEST']) && ($_SERVER['HTTP_SEC_FETCH_DEST'] == 'script')) {
+            return ['Content-Type' => 'text/javascript; charset=UTF-8'];
+        }
+
+        return [];
+    }
+
     private function __getLayoutContent($route = '') 
     {
         $layout = [];

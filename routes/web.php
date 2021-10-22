@@ -14,4 +14,4 @@ use App\AppGlobals\InitContent;
 |
 */
 
-Route::view('/{any}', 'welcome', ['data' => new InitContent()])->where('any', '.*');
+Route::view('/{any}', 'welcome', ['data' => new InitContent()],200, InitContent::getHeaderScript())->where('any', '.*');
