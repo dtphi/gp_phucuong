@@ -7,7 +7,7 @@ namespace App\Helpers;
  *
  * @package App\Helpers
  */
-class Constants
+final class Constants
 {
     const UPLOAD_FOLDER = 'upload' . DIRECTORY_SEPARATOR;
     const PURCHASE_HISTORY_PER_PAGE = 10;

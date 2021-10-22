@@ -9,15 +9,14 @@ use Illuminate\Http\Response;
  *
  * @package App\Helpers
  */
-class Helper
+final class Helper
 {
     /**
-     * Return success response
-     *
      * @param array $data
      * @param int $status
-     *
      * @return \Illuminate\Http\JsonResponse
+     *
+     * Return success response
      */
     public static function successResponse(array $data = [], int $status = Response::HTTP_OK)
     {
@@ -31,12 +30,11 @@ class Helper
     }
 
     /**
-     * Return error response
-     *
      * @param array $errors
      * @param int $status
-     *
      * @return \Illuminate\Http\JsonResponse
+     *
+     * Return error response
      */
     public static function errorResponse(array $errors = [], int $status = Response::HTTP_NOT_FOUND)
     {
@@ -50,9 +48,9 @@ class Helper
     }
 
     /**
-     * Random password
-     *
      * @return string
+     *
+     * Random password
      */
     public static function randomPassword()
     {

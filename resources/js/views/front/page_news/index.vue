@@ -4,11 +4,11 @@
             <main-menu></main-menu>
             <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
                 <content-top v-if="_isContentTop">
-                    <template v-if="loading">
+                    <!--<template v-if="loading">
                         <loading-over-lay
                             :active.sync="loading"
                             :is-full-page="fullPage"></loading-over-lay>
-                    </template>
+                    </template>-->
                     <template v-slot:column_right>
                         <social-network></social-network>
                         <div class="box-social">

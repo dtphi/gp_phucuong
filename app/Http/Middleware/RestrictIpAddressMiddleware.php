@@ -1,4 +1,7 @@
 <?php
+/**
+ * Restrict ip address middleware.
+ */
 
 namespace App\Http\Middleware;
 
@@ -8,14 +11,16 @@ use Log;
 
 class RestrictIpAddressMiddleware
 {
+    /**
+     * @var array
+     */
     private $__restrictedIp = [];
 
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
+     * Handle an incoming request.
      */
     public function handle(Request $request, Closure $next)
     {
@@ -28,14 +33,15 @@ class RestrictIpAddressMiddleware
 
             abort(404);
         }
-        
+
         return $next($request);
     }
 
     /**
      * get sec ips
      */
-    public function getIps() {
+    public function getIps()
+    {
         $ips = config('app.sec_ips');
         if (!empty($ips)) {
             $this->__restrictedIp = explode(',', $ips);

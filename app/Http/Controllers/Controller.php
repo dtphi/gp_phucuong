@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * The base controller .
+ * Run check app middleware.
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;

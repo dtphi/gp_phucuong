@@ -13,11 +13,30 @@ use Yii;
  */
 class AdapterLocal extends Local
 {
+    /**
+     * Thumb size
+     */
     const SIZE_THUMB = 'thumb';
+
+    /**
+     * Medium size.
+     */
     const SIZE_MEDIUM = 'medium';
+
+    /**
+     * Lage size.
+     */
     const SIZE_LARGE = 'large';
+
+    /**
+     * Full size.
+     */
     const SIZE_FULL = 'full';
 
+    /**
+     * @var array
+     * Image extensions .
+     */
     public static $extensions = [
         'jpg'  => 'jpeg',
         'jpeg' => 'jpeg',
@@ -26,6 +45,10 @@ class AdapterLocal extends Local
         'bmp'  => 'bmp',
     ];
 
+    /**
+     * @var array
+     * Image size array.
+     */
     public static $sizes = [
         self::SIZE_THUMB  => [150, 150],
         self::SIZE_MEDIUM => [300, 300],

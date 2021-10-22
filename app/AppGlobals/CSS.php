@@ -1,18 +1,30 @@
 <?php
-
+/**
+ * Init css for Backend.
+ */
 namespace App\AppGlobals;
 
 use Request;
 
-class CSS
+final class CSS
 {
-    public $css = []; // all my css filename and path is store in here
+    /**
+     * all my css filename and path is store in here
+     * @var array
+     */
+    public $css = [];
+    /**
+     * @var array
+     */
     public $cssSetting = [];
-    private $pathPlugin = '';
-    private $pathAdminCss = '';
-    private $pathInfo = '';
+    /**
+     * @var array
+     */
     public $testInfo = [];
 
+    /**
+     * CSS constructor.
+     */
     public function __construct()
     {
         $this->pathInfo     = trim(request()->getPathInfo(), '/');
@@ -25,6 +37,10 @@ class CSS
         $this->cssSetting['bodyClass'] = $bodyClass;
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function getDistJsScript($src)
     {
         $path = asset('administrator/dist/js/' . $src);
@@ -32,6 +48,10 @@ class CSS
         return "<script src='" . $path . "'></script>\n";
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function getPluginPathScript($src)
     {
         $path = asset('administrator/plugins/' . $src);
@@ -39,6 +59,10 @@ class CSS
         return "<script src='" . $path . "'></script>\n";
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function getDistPathCss($src)
     {
         $path = asset('administrator/dist/css/' . $src);
@@ -46,6 +70,10 @@ class CSS
         return "<link rel='stylesheet' href='" . $path . "'>\n";
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function getPluginPathCss($src)
     {
         $path = asset('administrator/plugins/' . $src);
@@ -53,7 +81,11 @@ class CSS
         return "<link rel='stylesheet' href='" . $path . "'>\n";
     }
 
-    // add css
+    /**
+     * @param $path
+     * @param $filename
+     * @return array
+     */
     public function add($path, $filename)
     {
         $path                 = asset($path);
@@ -62,7 +94,10 @@ class CSS
         return $this->css;
     }
 
-    // remove css
+    /**
+     * remove css
+     * @param $filename
+     */
     public function remove($filename)
     {
         if (array_key_exists($filename, $this->css)) {
@@ -70,8 +105,10 @@ class CSS
         }
     }
 
-    // print css
-    public function print()
+    /**
+     * print css
+     */
+    public function printCss()
     {
         $output = '';
         if (count($this->css)) {
@@ -82,6 +119,9 @@ class CSS
         echo $output;
     }
 
+    /**
+     * @return array
+     */
     public function init()
     {
         /*$optionClass = 'hold-transition login-page';
@@ -145,14 +185,20 @@ class CSS
         ];
     }
 
+    /**
+     * @return string
+     */
     public function mapCssTest()
     {
         $output = '';
-       
+
 
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapScriptTest()
     {
         $output = '';
@@ -164,6 +210,9 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     private function _initCss()
     {
         $cssStype = $this->mapCss();
@@ -175,6 +224,9 @@ class CSS
         return $cssStype;
     }
 
+    /**
+     * @return string
+     */
     private function _initScript()
     {
         $scripts = $this->mapScript();
@@ -186,6 +238,9 @@ class CSS
         return $scripts;
     }
 
+    /**
+     * @return string
+     */
     public function mapCss()
     {
         $output = '';
@@ -201,15 +256,18 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapScriptFileManager()
     {
         $output = '';
         /*<!-- jQuery and jQuery UI (REQUIRED) -->*/
-        
+
         $output .= "<script src='/packages/barryvdh/elfinder/jquery-1.11.0/jquery.min.js'></script>\n";
         $output .= "<script src='/packages/barryvdh/elfinder/jqueryui-1.10.4/jquery-ui.min.js'></script>\n";
         /*<!-- elFinder CSS (REQUIRED) -->*/
-        
+
         /*<!-- elFinder JS (REQUIRED) -->*/
         $output .= "<script src='/packages/barryvdh/elfinder/js/elfinder.min.js'></script>\n";
         $output .= "<script src='/packages/barryvdh/elfinder/js/i18n/elfinder.vi.js'></script>\n";
@@ -217,6 +275,9 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapCssUser()
     {
         /*<!-- Font Awesome -->*/
@@ -236,6 +297,9 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapCssNewsGroups()
     {
         /*<!-- Font Awesome -->*/
@@ -264,6 +328,9 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapScript()
     {
         $output = '';
@@ -277,6 +344,9 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapScriptUser()
     {
         /*<!-- jQuery -->*/
@@ -289,6 +359,9 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapScriptNews()
     {
         /*<!-- jQuery -->*/
@@ -301,6 +374,9 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapScriptNewsGroups()
     {
         /*<!-- jQuery -->*/
@@ -353,6 +429,9 @@ class CSS
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function mapBodyClass()
     {
         $optionClass = 'hold-transition login-page';

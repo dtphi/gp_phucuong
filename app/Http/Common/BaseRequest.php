@@ -1,25 +1,33 @@
 <?php
-
+/**
+ * The Base request class.
+ */
 namespace App\Http\Common;
 
 use App\Exceptions\AccessDeniedCommon;
-use Illuminate\Foundation\Http\FormRequest;
 use Auth;
-use App\Http\Common\Tables;
+use Illuminate\Foundation\Http\FormRequest;
 
 class BaseRequest extends FormRequest
 {
-    private $listPermission = 'all';
     /**
-     * Determine if the user is authorized to make this request.
+     * @var string
+     */
+    private $listPermission = 'all';
+
+    /**
+     * @return mixed
      *
-     * @return bool
+     * Determine if the user is authorized to make this request.
      */
     public function isAllowAll()
-    {   
-        return Auth::user()->actionCan(Tables::PREFIX_ACCESS_NAME.$this->listPermission, '*');
+    {
+        return Auth::user()->actionCan(Tables::PREFIX_ACCESS_NAME . $this->listPermission, '*');
     }
 
+    /**
+     * @throws AccessDeniedCommon
+     */
     protected function failedAuthorization()
     {
         throw new AccessDeniedCommon();

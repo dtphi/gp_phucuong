@@ -1,42 +1,63 @@
 <?php
 
+/**
+ * Init css for Frontend.
+ */
+
 namespace App\AppGlobals;
 
 use App\Http\Common\Tables;
-use Request;
 use DB;
 use Log;
+use Request;
 
-class InitContent
+final class InitContent
 {
-    public $css = []; // all my css filename and path is store in here
+    /**
+     * @var array
+     * all my css filename and path is store in here
+     */
+    public $css = [];
+
+    /**
+     * @var array
+     */
     public $cssSetting = [];
-    private $pathPlugin = '';
-    private $pathAdminCss = '';
-    private $pathInfo = '';
+
+    /**
+     * @var array
+     */
     public $testInfo = [];
 
+    /**
+     * InitContent constructor.
+     */
     public function __construct()
     {
-        
         $request = request();
-        $flag = '';
-        if ($request->is('/') || $request->is('trang-chu*'))
+        $flag    = '';
+        if ($request->is('/') || $request->is('trang-chu*')) {
             $flag = 'trang-chu';
-        if ($request->is('danh-muc-tin*'))
+        }
+        if ($request->is('danh-muc-tin*')) {
             $flag = 'danh-muc-tin';
-        if ($request->is('tin-tuc*'))
+        }
+        if ($request->is('tin-tuc*')) {
             $flag = 'tin-tuc';
-        if ($request->is('video*'))
+        }
+        if ($request->is('video*')) {
             $flag = 'video';
-        if ($request->is('linh-muc*'))
+        }
+        if ($request->is('linh-muc*')) {
             $flag = 'linh-muc';
-        if ($request->is('giao-xu*'))
+        }
+        if ($request->is('giao-xu*')) {
             $flag = 'giao-xu';
+        }
 
         if (!empty($flag)) {
             $this->pathInfo = trim($request->getPathInfo(), '/');
-            
+
             $layout = [];
 
             $this->settings = [
@@ -51,10 +72,10 @@ class InitContent
 
             $segments = $request->segments();
             if (isset($segments[0]) && ($flag == 'danh-muc-tin')) {
+                $model  = new \App\Models\CategoryDescription();
                 $layout = $this->__getLayoutContent('danh-muc-tin/*');
-                
+
                 $this->settings['meta_title'] = 'Danh mục Giáo Phận Phú Cường';
-                $model                        = new \App\Models\CategoryDescription();
 
                 $endSegment  = end($segments);
                 $arrSegments = explode('-', $endSegment);
@@ -72,14 +93,14 @@ class InitContent
 
             if (isset($segments[0]) && ($flag == 'tin-tuc')) {
                 if (isset($segments[1]) && $request->is('tin-tuc/xem-nhieu*')) {
-                    $this->settings['meta_title'] = 'Tin tức xem nhiều';
+                    $layout = $this->__getLayoutContent('tin-tuc/xem-nhieu');
 
-                    $layout                       = $this->__getLayoutContent('tin-tuc/xem-nhieu');
+                    $this->settings['meta_title'] = 'Tin tức xem nhiều';
                 }
 
                 if (isset($segments[1]) && $request->is('tin-tuc/chi-tiet*')) {
-                    $layout = $this->__getLayoutContent('tin-tuc/chi-tiet/*');
                     $model  = new \App\Models\Information();
+                    $layout = $this->__getLayoutContent('tin-tuc/chi-tiet/*');
 
                     $endSegment  = end($segments);
                     $arrSegments = explode('-', $endSegment);
@@ -101,8 +122,8 @@ class InitContent
                 $this->settings['meta_title'] = 'Video';
 
                 if (isset($segments[1]) && $request->is('video/chi-tiet*')) {
-                    $layout = $this->__getLayoutContent('video/chi-tiet/*');
                     $model  = new \App\Models\Information();
+                    $layout = $this->__getLayoutContent('video/chi-tiet/*');
 
                     $endSegment  = end($segments);
                     $arrSegments = explode('-', $endSegment);
@@ -127,7 +148,7 @@ class InitContent
 
                 if (isset($segments[1]) && $request->is('linh-muc/chi-tiet*')) {
                     $layout = $this->__getLayoutContent('linh-muc');
-                    
+
                     $endSegment  = end($segments);
                     $arrSegments = explode('-', $endSegment);
                     $idSegment   = (int)end($arrSegments);
@@ -145,7 +166,7 @@ class InitContent
 
                 if (isset($segments[1]) && $request->is('giao-xu/chi-tiet*')) {
                     $layout = $this->__getLayoutContent('giao-xu/chi-tiet/*');
-                    
+
                     $endSegment  = end($segments);
                     $arrSegments = explode('-', $endSegment);
                     $idSegment   = (int)end($arrSegments);
@@ -168,7 +189,11 @@ class InitContent
         }
     }
 
-    public static function getHeaderScript () {
+    /**
+     * @return array
+     */
+    public static function getHeaderScript()
+    {
         if (isset($_SERVER['HTTP_SEC_FETCH_DEST']) && ($_SERVER['HTTP_SEC_FETCH_DEST'] == 'script')) {
             return ['Content-Type' => 'text/javascript; charset=UTF-8'];
         }
@@ -176,12 +201,16 @@ class InitContent
         return [];
     }
 
-    private function __getLayoutContent($route = '') 
+    /**
+     * @param string $route
+     * @return array
+     */
+    private function __getLayoutContent($route = '')
     {
         $layout = [];
 
-        $route = DB::table('pc_layout_routes')->where('route', $route)->first();
-        $settings = DB::table('pc_layout_settings')->where('layout_id', $route->layout_id)->get();
+        $route    = DB::table(Tables::$layout_routes)->where('route', $route)->first();
+        $settings = DB::table(Tables::$layout_settings)->where('layout_id', $route->layout_id)->get();
         foreach ($settings as $setting) {
             $value = $setting->value;
             if ($setting->serialized == 1) {
@@ -195,6 +224,10 @@ class InitContent
         return $layout;
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function getDistJsScript($src)
     {
         $path = asset('administrator/dist/js/' . $src);
@@ -202,6 +235,10 @@ class InitContent
         return "<script src='" . $path . "'></script>\n";
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function getPluginPathScript($src)
     {
         $path = asset('administrator/plugins/' . $src);
@@ -209,6 +246,10 @@ class InitContent
         return "<script src='" . $path . "'></script>\n";
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function getDistPathCss($src)
     {
         $path = asset('administrator/dist/css/' . $src);
@@ -216,6 +257,10 @@ class InitContent
         return "<link rel='stylesheet' href='" . $path . "'>\n";
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function getPluginPathCss($src)
     {
         $path = asset('administrator/plugins/' . $src);
@@ -223,7 +268,12 @@ class InitContent
         return "<link rel='stylesheet' href='" . $path . "'>\n";
     }
 
-    // add css
+    /**
+     * @param $path
+     * @param $filename
+     * @return array
+     * add css
+     */
     public function add($path, $filename)
     {
         $path                 = asset($path);
@@ -232,7 +282,10 @@ class InitContent
         return $this->css;
     }
 
-    // remove css
+    /**
+     * @param $filename
+     * remove css
+     */
     public function remove($filename)
     {
         if (array_key_exists($filename, $this->css)) {
@@ -240,8 +293,10 @@ class InitContent
         }
     }
 
-    // print css
-    public function print()
+    /**
+     * print css.
+     */
+    public function printCss()
     {
         $output = '';
         if (count($this->css)) {

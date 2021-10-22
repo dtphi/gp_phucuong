@@ -1,26 +1,47 @@
 <?php
+/**
+ * The base api controller.
+ */
 
 namespace App\Http\Controllers\Api\Admin\Base;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\File;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Image;
 use Storage;
-use Auth;
 
 class ApiController extends Controller
 {
     use AuthorizesRequests;
 
+    /**
+     * @var string
+     *
+     * Default no image.
+     */
     public static $thumImgNo = '/images/no-photo.jpg';
 
+    /**
+     * @var int
+     *
+     * Thumb size default .
+     */
     public static $thumSize = 40;
 
+    /**
+     * @var string
+     */
     public static $tmbThumbDir = '.tmb';
 
+    /**
+     * @var string
+     *
+     * Drive file default.
+     */
     public static $disk = 'public';
 
     /**
@@ -36,16 +57,36 @@ class ApiController extends Controller
     const RESPONSE_IN_PROGRESS = 2004;
 
     // Unexpected error (bug)
-    const RESPONSE_SERVER_ERROR = 3000;  // eg: database connection error
-    const RESPONSE_BAD_REQUEST = 3001;  // eg: JSON request body couldn't be parsed
-    const RESPONSE_AUTHORISATION_FAILED = 3002;  // User is not authorised to perform the requested action
-    const RESPONSE_NOT_FOUND = 3003;  // eg: no route matches the URL; no entity exists with the specified ID
-    const RESPONSE_INVALID_SIGNATURE = 3004;  // Invalid/missing HMAC signature
-    const RESPONSE_INVALID_RELATIONSHIP = 3005;  // Child entity doesn't belong to parent entity
-    const RESPONSE_INVALID_API_VERSION = 3006;  // API version was not specified, or is invalid
-    const RESPONSE_INSECURE_CONNECTION = 3007;  // Client is using an HTTP connection instead of HTTPS
-    const RESPONSE_CONFLICT = 3008; // conflict || duplicate data
-    const RESPONSE_UNKNOWN_ERROR = 3999;  // Any other error
+
+    // eg: database connection error
+    const RESPONSE_SERVER_ERROR = 5000;
+
+    // eg: JSON request body couldn't be parsed
+    const RESPONSE_BAD_REQUEST = 5001;
+
+    // User is not authorised to perform the requested action
+    const RESPONSE_AUTHORISATION_FAILED = 5002;
+
+    // eg: no route matches the URL; no entity exists with the specified ID
+    const RESPONSE_NOT_FOUND = 5003;
+
+    // Invalid/missing HMAC signature
+    const RESPONSE_INVALID_SIGNATURE = 5004;
+
+    // Child entity doesn't belong to parent entity
+    const RESPONSE_INVALID_RELATIONSHIP = 5005;
+
+    // API version was not specified, or is invalid
+    const RESPONSE_INVALID_API_VERSION = 5006;
+
+    // Client is using an HTTP connection instead of HTTPS
+    const RESPONSE_INSECURE_CONNECTION = 5007;
+
+    // conflict || duplicate data
+    const RESPONSE_CONFLICT = 5008;
+
+    // Any other error
+    const RESPONSE_UNKNOWN_ERROR = 5999;
 
     /**
      * @var int
@@ -82,6 +123,13 @@ class ApiController extends Controller
         parent::__construct($middleware);
     }
 
+    /**
+     * @param $imgOrigin
+     * @param int $thumbSize
+     * @param int $thumbHeight
+     * @param bool $force
+     * @return mixed
+     */
     public function getThumbnail($imgOrigin, $thumbSize = 0, $thumbHeight = 0, $force = false)
     {
         $imgThumUrl = '';
@@ -115,6 +163,12 @@ class ApiController extends Controller
         }
     }
 
+    /**
+     * @param $staticThumImg
+     * @param int $thumbSize
+     * @param int $thumbHeight
+     * @return mixed
+     */
     public function forceThumbnail($staticThumImg, $thumbSize = 200, $thumbHeight = 0)
     {
         $fileResize = new File(public_path($staticThumImg));
@@ -184,9 +238,8 @@ class ApiController extends Controller
     }
 
     /**
-     * @param       $data
+     * @param $data
      * @param array $headers
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     private function respond($data, $headers = [])
@@ -199,7 +252,6 @@ class ApiController extends Controller
     /**
      * @param $message
      * @param $newId
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function respondCreated($message, $newId)
@@ -215,8 +267,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @param $message
-     *
+     * @param string $message
      * @return \Illuminate\Http\JsonResponse
      */
     public function respondDeleted($message = 'Deleted')
@@ -229,10 +280,9 @@ class ApiController extends Controller
     }
 
     /**
-     * @param string|null $message
+     * @param string $message
      * @param int $returnCode
-     * @param array|null $data An optional associative array of data to be returned
-     *
+     * @param array|null $data | An optional associative array of data to be returned
      * @return \Illuminate\Http\JsonResponse
      */
     public function respondBadRequest(

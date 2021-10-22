@@ -4,6 +4,9 @@ namespace App\Http\Common;
 
 final class Tables
 {
+    public static $layout_routes = DB_PREFIX . 'layout_routes';
+    public static $layout_settings = DB_PREFIX . 'layout_settings';
+
     // model GiaoPhanDanhMuc
     public static $giaophandanhmucs = DB_PREFIX . 'danh_muc_giao_phans';
     public static $giaophandanhmuc_motas = DB_PREFIX . 'danh_muc_giao_phan_mo_tas';
