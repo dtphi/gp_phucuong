@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row admin-cusstom-paging">
     <template 
       v-if="_isResource"
     >

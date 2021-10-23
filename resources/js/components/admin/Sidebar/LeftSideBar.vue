@@ -1,5 +1,5 @@
 <template>
-  <nav id="column-left" class="active" style="min-height: 400px">
+  <nav id="column-left" class="active" :style="navStyle">
     <div id="profile">
       <div>
         <i class="fa fa-user"></i>
@@ -10,7 +10,7 @@
         <small>{{userPhone}}</small>
       </div>
     </div>
-    <ul id="menu">
+    <ul id="menu" :style="ulMenu">
       <li id="dashboard">
         <a :href="_getHref('dashboards')">
           <i class="fa fa-dashboard fa-fw"></i>
@@ -254,7 +254,19 @@ export default {
     ...mapState(MODULE_AUTH, {
         user: (state) => state.user,
         userPhone: (state) => state.linhMucExpectSignInPhone
-    })
+    }),
+    navStyle() {
+      return {
+        'min-height':innerHeight + 'px'
+      }
+    },
+    ulMenu() {
+      return {
+        'height': '530px',
+        'overflow-x': 'hidden',
+        'overflow-y': 'scroll'
+      }
+    }
   },
   methods: {
     _getHref(path) {
@@ -301,3 +313,34 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .panel-body {
+    .admin-cusstom-paging {
+      padding-top: 15px;
+      border-top: 1px solid #bcbabaab;
+    }
+  }
+  .table-responsive {
+    max-height: 450px;
+  }
+  /* custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #d7dddf;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #595a5a;
+  }
+</style>
