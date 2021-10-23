@@ -49,12 +49,14 @@ function _startAuth(_sendVerifyCode) {
     if (user) {
       // User just signed in, we should not display dialog next time because of firebase auto-login
       localStorage.setItem('linhMuc.expectSignIn', '1');
+      localStorage.setItem('linhMuc.expectSignInPhone', user.phoneNumber);
       $('#container-firebase').children().remove();
       $('#container-firebase-logout').removeAttr('style');
       $('#user-phone-success').text(user.phoneNumber)
     } else {
       // User just signed-out or auto-login failed, we will show sign-in form immediately the next time he loads the page
       localStorage.removeItem('linhMuc.expectSignIn');
+      localStorage.removeItem('linhMuc.expectSignInPhone');
       $('#container-firebase').removeAttr('style');
       $('#container-firebase-logout').children().remove();
 

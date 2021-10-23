@@ -14,4 +14,6 @@ use App\AppGlobals\CSS;
 |
 */
 
+Route::view('/admin', 'administrator', ['css' => new CSS()]);
+
 Route::view('/admin/{any}', 'administrator', ['css' => new CSS()])->where('any', '.*');

@@ -54,6 +54,18 @@ export default [{
             title: 'Login | ' + config.site_name
         }
     }, {
+        path: 'phone-verify',
+        component: null,
+        name: 'admin.auth.login.phone.verify',
+        meta: {
+            layout: null,
+            role: 'admin',
+            show: {
+                footer: true
+            },
+            title: 'Quản trị | ' + config.site_name
+        }
+    }, {
         path: 'dashboards',
         component: DashboardPage,
         name: 'admin.dashboards',

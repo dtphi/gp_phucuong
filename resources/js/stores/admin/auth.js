@@ -20,6 +20,9 @@ const options = {
   logout: 'logout'
 };
 
+const linhMucExpectSignIn = localStorage.getItem('linhMuc.expectSignIn');
+const linhMucExpectSignInPhone = localStorage.getItem('linhMuc.expectSignInPhone');
+
 export default {
   namespaced: true,
   state: {
@@ -27,6 +30,9 @@ export default {
     user: null,
     redirectUrl: 'admin/dashboards',
     redirectLogoutUrl: 'admin/login',
+    redirectPhoneLoginUrl: 'admin/phone-verify',
+    linhMucExpectSignIn: linhMucExpectSignIn,
+    linhMucExpectSignInPhone: linhMucExpectSignInPhone,
     errors: []
   },
   getters: {

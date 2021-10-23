@@ -43,17 +43,21 @@ Route::namespace('App\Http\Controllers\Api\Admin')
   ->group(function () {
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
-  });
+});
 
 Route::namespace('App\Http\Controllers\Api\Admin')
   ->middleware(['auth:sanctum', 'secip'])
-  ->group(function () {
+  ->group(function () { 
     Route::get('/user', function (Request $request) {
       $user = $request->user();
       $user->isAdmin = fn_is_admin_permission();
       return $request->user();
     });
+});
 
+Route::namespace('App\Http\Controllers\Api\Admin')
+  ->middleware(['auth:sanctum', 'secip'])
+  ->group(function () {
     Route::apiResource('users', 'AdminController');
     Route::get('/search-user', 'AdminController@search');
     Route::apiResource('news-groups', 'NewsGroupController');

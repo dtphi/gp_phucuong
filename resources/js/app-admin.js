@@ -42,18 +42,33 @@ const envBuild = process.env.NODE_ENV;
 router.beforeEach(async (to, from, next) => {
     document.title = to.meta.title;
 
-    if (to.query.test && envBuild === 'server') {
-        next();
-        return;
-    }
-
     if (store.state.auth.authenticated) {
         if (to.name === "admin.auth.login") {
             window.location = window.origin + '/' + store.state.auth.redirectUrl;
             return;
         } else {
-            next();
-            return;
+            if (envBuild === "production") {
+                if (store.state.auth.linhMucExpectSignIn) {
+                    if (to.name === "admin.auth.login.phone.verify") {
+                        window.location = window.origin + '/' + store.state.auth.redirectUrl;
+                        return;
+                    } else {
+                        next();
+                        return;
+                    }
+                } else {
+                    if (to.name === "admin.auth.login.phone.verify") {
+                        next();
+                        return;
+                    } else {
+                        window.location = window.origin + '/' + store.state.auth.redirectPhoneLoginUrl;
+                        return;
+                    }
+                }
+            } else {
+                next();
+                return;
+            }
         }
     } else {
         if (to.name === "admin.auth.login") {

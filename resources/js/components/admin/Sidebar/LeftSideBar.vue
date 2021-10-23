@@ -7,6 +7,7 @@
       <div>
         <h4>Logo</h4>
         <small>{{user.name}}</small>
+        <small>{{userPhone}}</small>
       </div>
     </div>
     <ul id="menu">
@@ -252,6 +253,7 @@ export default {
   computed: {
     ...mapState(MODULE_AUTH, {
         user: (state) => state.user,
+        userPhone: (state) => state.linhMucExpectSignInPhone
     })
   },
   methods: {

@@ -22,7 +22,53 @@
   <?php echo $css->cssSetting['mapCss']; ?>
 </head>
 <body class="{{ $css->cssSetting['bodyClass'] }}">
-  <div id="gp-phu-cuong">
+  @if($css->cssSetting['isFireBaseAuth'])
+    @if($css->cssSetting['isInternalLogin'])
+      <script type="module">
+        import { _getFbConfig, _deleteSessionItem } from "/js/appfirebasejs/9.1.3/auth/app-firebase-auth.js";
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "/js/appfirebasejs/9.1.3/firebase-app.js";
+        import { getAuth, signOut } from "/js/appfirebasejs/9.1.3/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Initialize Firebase
+        const initapp = initializeApp(_getFbConfig());
+        const auth = getAuth(initapp);
+        auth.onAuthStateChanged(user => {
+          if (user) {
+            signOut(auth);
+          }
+          _deleteSessionItem();
+        });
+      </script>  
+    @endif
+
+    @if(!$css->cssSetting['isInternalLogin'])
+      @if(request()->is('admin/phone-verify'))
+        <div data-path="{{request()->path()}}" id="container-firebase" class="container-fluid">
+          @include('administrator-otp')
+        </div>
+      @endif
+
+      <script type="module">
+          // Import app
+          import { _getFbConfig, _initAuth, _startAuth } from "/js/appfirebasejs/9.1.3/auth/app-firebase-auth.js";
+          // Import the functions you need from the SDKs you need
+          import { initializeApp } from "/js/appfirebasejs/9.1.3/firebase-app.js";
+          import { getAuth, signInWithPhoneNumber, signOut, RecaptchaVerifier } from "/js/appfirebasejs/9.1.3/firebase-auth.js";
+          // TODO: Add SDKs for Firebase products that you want to use
+          // https://firebase.google.com/docs/web/setup#available-libraries
+
+          // Initialize Firebase
+          const initapp = initializeApp(_getFbConfig());
+          _initAuth(getAuth(initapp), RecaptchaVerifier);
+          _startAuth(signInWithPhoneNumber);
+      </script>
+    @endif
+  @endif
+
+  <div data-path="{{request()->path()}}" id="gp-phu-cuong">
     <component :is="this.$route.meta.layout || 'div'">
       <router-view></router-view>
     </component>

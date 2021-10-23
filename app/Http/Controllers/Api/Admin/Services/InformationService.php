@@ -345,10 +345,13 @@ final class InformationService implements BaseModel, InformationModel
     {
         if (isset($data['infoIds']) && isset($data['infoType']) && $data['infoType'] == 'module_special_info') {
             $infoIds = [];
-            foreach ($data['infoIds'] as $info) {
-                $infoSlide = json_decode($info);
-                if (isset($infoSlide->id)) {
-                    $infoIds[] = (int)$infoSlide->id;
+
+            if (is_array($data['infoIds']) && !empty($data['infoIds'])) {
+                foreach ($data['infoIds'] as $info) {
+                    $infoSlide = json_decode($info);
+                    if (isset($infoSlide->id)) {
+                        $infoIds[] = (int)$infoSlide->id;
+                    }
                 }
             }
            

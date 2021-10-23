@@ -27,7 +27,9 @@ final class CSS
      */
     public function __construct()
     {
-        $this->pathInfo     = trim(request()->getPathInfo(), '/');
+        $request = request();
+
+        $this->pathInfo     = trim($request->getPathInfo(), '/');
         $this->pathPlugin   = asset('administrator/plugins');
         $this->pathAdminCss = asset('administrator/dist/css');
 
@@ -35,6 +37,9 @@ final class CSS
         $this->cssSetting['mapCss']    = $css;
         $this->cssSetting['mapScript'] = $script;
         $this->cssSetting['bodyClass'] = $bodyClass;
+
+        $this->cssSetting['isFireBaseAuth'] = true;// true or false;
+        $this->cssSetting['isInternalLogin'] = (request()->is('admin/login') || request()->is('admin'));
     }
 
     /**

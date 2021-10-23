@@ -156,6 +156,8 @@ export default {
     addSpecial({commit, state},data) {
       let infos = state.module_special_info_ids;
       let values = state.module_special_infos;
+      if (typeof values === "boolean")
+        values = [];
       
       if (data.isChecked) {
         infos.push(data.info.information_id);
