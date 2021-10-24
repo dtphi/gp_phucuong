@@ -18,7 +18,7 @@ class GiaoPhanDanhMucController extends ApiController
 
   private $gpdmSv = null;
 
-  public function __construct(gpdmSv $gpdmSv, array $middleware = [])
+  public function __construct(GiaoPhanDanhMucRequest $request, gpdmSv $gpdmSv, array $middleware = [])
   {
 
     $this->gpdmSv = $gpdmSv;
@@ -131,7 +131,7 @@ class GiaoPhanDanhMucController extends ApiController
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id = null, GiaoPhanDanhMucRequest $request)
+  public function show($id = null)
   {
     $json = [];
 
@@ -191,7 +191,7 @@ class GiaoPhanDanhMucController extends ApiController
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id = null, Request $request)
+  public function destroy($id = null)
   {
     try {
       $model = $this->gpdmSv->getCateogryById($id);
@@ -204,7 +204,7 @@ class GiaoPhanDanhMucController extends ApiController
   }
 
   // dropdown list giaophandanhmuc
-  public function dropdown(Request $request)
+  public function dropdown(GiaoPhanDanhMucRequest $request)
   {
     $data = $request->all();
 

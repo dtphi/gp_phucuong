@@ -30,7 +30,7 @@ class LinhMucVanThuController extends ApiController
      * @param LinhMucVanThuSv $vanThuSv
      * @param array $middleware
      */
-    public function __construct(LinhMucVanThuSv $vanThuSv, array $middleware = [])
+    public function __construct(LinhMucVanThuRequest $request, LinhMucVanThuSv $vanThuSv, array $middleware = [])
     {
         $this->vanThuSv = $vanThuSv;
         parent::__construct($middleware);
@@ -41,7 +41,7 @@ class LinhMucVanThuController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(LinhMucVanThuRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -190,7 +190,7 @@ class LinhMucVanThuController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(LinhMucVanThuRequest $request)
     {
         if ($request->is('options')) {
             return;

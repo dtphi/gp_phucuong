@@ -29,7 +29,7 @@ class DongController extends ApiController
    * @param DongSv $dongSv
    * @param array $middleware
    */
-  public function __construct(DongSv $dongSv, array $middleware = [])
+  public function __construct(DongRequest $request, DongSv $dongSv, array $middleware = [])
   {
     $this->dongSv = $dongSv;
     parent::__construct($middleware);
@@ -40,7 +40,7 @@ class DongController extends ApiController
    * @param Request $request
    * @return mixed
    */
-  public function index(Request $request)
+  public function index(DongRequest $request)
   {
     $data = $request->all();
     $page = 1;
@@ -188,7 +188,7 @@ class DongController extends ApiController
    * @param Request $request
    * @return \Illuminate\Http\JsonResponse|void
    */
-  public function uploadImage(Request $request)
+  public function uploadImage(DongRequest $request)
   {
     if ($request->is('options')) {
       return;

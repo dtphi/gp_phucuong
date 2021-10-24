@@ -31,7 +31,7 @@ class AdminController extends ApiController
      * @param AdminSv $adSv
      * @param array $middleware
      */
-    public function __construct(AdminSv $adSv, array $middleware = [])
+    public function __construct(AdminRequest $request, AdminSv $adSv, array $middleware = [])
     {
         $this->adSv = $adSv;
         parent::__construct($middleware);
@@ -59,7 +59,7 @@ class AdminController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null, AdminRequest $request)
+    public function show($id = null)
     {
         try {
             $json = $this->adSv->apiGetResourceDetail($id);
@@ -114,7 +114,7 @@ class AdminController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null, AdminRequest $request)
+    public function destroy($id = null)
     {
         try {
             $user = $this->adSv->apiGetDetail($id);

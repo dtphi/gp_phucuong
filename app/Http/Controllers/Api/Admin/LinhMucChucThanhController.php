@@ -30,7 +30,7 @@ class LinhMucChucThanhController extends ApiController
      * @param LinhMucChucThanhSv $chucThanhSv
      * @param array $middleware
      */
-    public function __construct(LinhMucChucThanhSv $chucThanhSv, array $middleware = [])
+    public function __construct(LinhMucChucThanhRequest $request, LinhMucChucThanhSv $chucThanhSv, array $middleware = [])
     {
         $this->chucThanhSv = $chucThanhSv;
         parent::__construct($middleware);
@@ -41,7 +41,7 @@ class LinhMucChucThanhController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(LinhMucChucThanhRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -193,7 +193,7 @@ class LinhMucChucThanhController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(LinhMucChucThanhRequest $request)
     {
         if ($request->is('options')) {
             return;

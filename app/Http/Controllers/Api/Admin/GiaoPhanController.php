@@ -29,7 +29,7 @@ class GiaoPhanController extends ApiController
      * @param GphSv $gphSv
      * @param array $middleware
      */
-    public function __construct(GphSv $gphSv, array $middleware = [])
+    public function __construct(GiaoPhanRequest $request, GphSv $gphSv, array $middleware = [])
     {
         $this->gphSv = $gphSv;
         parent::__construct($middleware);
@@ -93,7 +93,7 @@ class GiaoPhanController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null, GiaoPhanRequest $request)
+    public function show($id = null)
     {
         try {
             $json = $this->gphSv->apiGetResourceDetail($id);
@@ -200,7 +200,7 @@ class GiaoPhanController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null, GiaoPhanRequest $request)
+    public function destroy($id = null)
     {
         try {
             $model = $this->gphSv->apiGetDetail($id);

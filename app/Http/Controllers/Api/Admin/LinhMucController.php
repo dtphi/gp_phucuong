@@ -30,7 +30,7 @@ class LinhMucController extends ApiController
      * @param LinhMucSv $linhMucSv
      * @param array $middleware
      */
-    public function __construct(LinhMucSv $linhMucSv, array $middleware = [])
+    public function __construct(LinhmucRequest $request, LinhMucSv $linhMucSv, array $middleware = [])
     {
         $this->linhMucSv = $linhMucSv;
         parent::__construct($middleware);
@@ -114,7 +114,7 @@ class LinhMucController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null, LinhmucRequest $request)
+    public function show($id = null)
     {
         try {
             $json = $this->linhMucSv->apiGetResourceDetail($id);
@@ -205,7 +205,7 @@ class LinhMucController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null, LinhmucRequest $request)
+    public function destroy($id = null)
     {
         try {
             $model = $this->linhMucSv->apiGetDetail($id);

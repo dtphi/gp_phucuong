@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Exceptions\HandlerMsgCommon;
 use Validator;
+use Str;
 
 class CheckApp
 {
@@ -23,13 +24,23 @@ class CheckApp
      */
     public function handle($request, Closure $next)
     {
-        $appNameKey = config('app.api_name_key') ? config('app.api_name_key'): $this->appName;
-        $validator = Validator::make([
+        $appNameKey = config('app.api_name_key') ? config('app.api_name_key'): Str::random(16);
+        $firebasePhoneAuthNameKey = config('app.api_firebase_phone_name_key') ? config('app.api_firebase_phone_name_key'): Str::random(32);
+        $services = [];
+        $servicesValid = [];
+        if (fn_is_prod_env()) {
+            $services = [
+                'firebasephone' => (int)$request->get('firebasephone'),
+                'firebase_phone_auth' => $firebasePhoneAuthNameKey
+            ];
+            $servicesValid = ['firebasephone' => 'required|string|same:firebase_phone_auth'];
+        }
+        $validator = Validator::make(array_merge([
             'app'      => $request->get('app'),
             'app_name' => $appNameKey
-        ], [
+        ], $services), array_merge( [
             'app' => 'required|string|same:app_name'
-        ]);
+        ], $servicesValid));
 
         if ($validator->fails()) {
             throw new HandlerMsgCommon();

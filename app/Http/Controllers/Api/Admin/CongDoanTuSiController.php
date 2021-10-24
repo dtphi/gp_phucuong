@@ -29,7 +29,7 @@ class CongDoanTuSiController extends ApiController
      * @param CdtsSv $cdtsSv
      * @param array $middleware
      */
-    public function __construct(CdtsSv $cdtsSv, array $middleware = [])
+    public function __construct(CongDoanTuSiRequest $request, CdtsSv $cdtsSv, array $middleware = [])
     {
         $this->cdtsSv = $cdtsSv;
         parent::__construct($middleware);
@@ -40,7 +40,7 @@ class CongDoanTuSiController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(CongDoanTuSiRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -189,7 +189,7 @@ class CongDoanTuSiController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(CongDoanTuSiRequest $request)
     {
         if ($request->is('options')) {
             return;

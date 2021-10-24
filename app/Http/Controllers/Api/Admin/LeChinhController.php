@@ -29,7 +29,7 @@ class LeChinhController extends ApiController
      * @param LeChinhSv $leChinhSv
      * @param array $middleware
      */
-    public function __construct(LeChinhSv $leChinhSv, array $middleware = [])
+    public function __construct(LeChinhRequest $request, LeChinhSv $leChinhSv, array $middleware = [])
     {
         $this->leChinhSv = $leChinhSv;
         parent::__construct($middleware);
@@ -40,7 +40,7 @@ class LeChinhController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(LeChinhRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -185,7 +185,7 @@ class LeChinhController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(LeChinhRequest $request)
     {
         if ($request->is('options')) {
             return;

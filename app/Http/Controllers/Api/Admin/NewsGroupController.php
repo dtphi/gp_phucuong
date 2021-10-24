@@ -35,7 +35,7 @@ class NewsGroupController extends ApiController
      * @param newsGpSv $newsGpSv
      * @param array $middleware
      */
-    public function __construct(newsGpSv $newsGpSv, array $middleware = [])
+    public function __construct(NewsGroupRequest $request, newsGpSv $newsGpSv, array $middleware = [])
     {
         $this->newsGpSv = $newsGpSv;
         parent::__construct($middleware);
@@ -126,7 +126,7 @@ class NewsGroupController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null, NewsGroupRequest $request)
+    public function show($id = null)
     {
         $json = [];
 
@@ -187,7 +187,7 @@ class NewsGroupController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null, NewsGroupRequest $request)
+    public function destroy($id = null)
     {
         try {
             $model = $this->newsGpSv->getCateogryById($id);
@@ -239,7 +239,7 @@ class NewsGroupController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdown(Request $request)
+    public function dropdown(NewsGroupRequest $request)
     {
         $data = $request->all();
 

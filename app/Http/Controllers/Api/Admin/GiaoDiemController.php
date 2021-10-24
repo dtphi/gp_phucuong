@@ -29,7 +29,7 @@ class GiaoDiemController extends ApiController
      * @param GdSv $gdSv
      * @param array $middleware
      */
-    public function __construct(GdSv $gdSv, array $middleware = [])
+    public function __construct(GiaoDiemRequest $request, GdSv $gdSv, array $middleware = [])
     {
         $this->gdSv = $gdSv;
         parent::__construct($middleware);
@@ -40,7 +40,7 @@ class GiaoDiemController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(GiaoDiemRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -191,7 +191,7 @@ class GiaoDiemController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(GiaoDiemRequest $request)
     {
         if ($request->is('options')) {
             return;

@@ -29,7 +29,7 @@ class InformationController extends ApiController
      * @param InfoSv $infoSv
      * @param array $middleware
      */
-    public function __construct(InfoSv $infoSv, array $middleware = [])
+    public function __construct(InformationRequest $request, InfoSv $infoSv, array $middleware = [])
     {
         $this->infoSv = $infoSv;
         parent::__construct($middleware);
@@ -99,7 +99,7 @@ class InformationController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($id = null, InformationRequest $request)
+    public function show($id = null)
     {
         try {
             $json = $this->infoSv->apiGetResourceDetail($id);
@@ -153,7 +153,7 @@ class InformationController extends ApiController
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null, InformationRequest $request)
+    public function destroy($id = null)
     {
         try {
             $model = $this->infoSv->apiGetDetail($id);
@@ -204,7 +204,7 @@ class InformationController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(InformationRequest $request)
     {
         if ($request->is('options')) {
             return;
@@ -218,7 +218,7 @@ class InformationController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function dropdown(Request $request)
+    public function dropdown(InformationRequest $request)
     {
         $data = $request->all();
 

@@ -24,7 +24,7 @@ class GiaoPhanTinTucController extends ApiController
   private $gpttSv = null;
 
   
-  public function __construct(GpttSv $gpttSv, array $middleware = [])
+  public function __construct(GiaoPhanTinTucRequest $request, GpttSv $gpttSv, array $middleware = [])
   {
     $this->gpttSv = $gpttSv;
     parent::__construct($middleware);
@@ -87,7 +87,7 @@ class GiaoPhanTinTucController extends ApiController
     return $this->respondWithCollectionPagination($json);
   }
 
-  public function show($id = null, GiaoPhanTinTucRequest $request)
+  public function show($id = null)
   {
     try {
       $json = $this->gpttSv->apiGetResourceDetail($id);
@@ -125,7 +125,7 @@ class GiaoPhanTinTucController extends ApiController
     return $this->__handleStoreUpdate($model, $request);
   }
 
-  public function destroy($id = null, Request $request)
+  public function destroy($id = null)
   {
     try {
       $model = $this->gpttSv->apiGetDetail($id);
@@ -161,7 +161,7 @@ class GiaoPhanTinTucController extends ApiController
     return $this->respondBadRequest();
   }
 
-  public function uploadImage(Request $request)
+  public function uploadImage(GiaoPhanTinTucRequest $request)
   {
     if ($request->is('options')) {
       return;
@@ -171,7 +171,7 @@ class GiaoPhanTinTucController extends ApiController
   }
 
 
-  public function dropdown(Request $request)
+  public function dropdown(GiaoPhanTinTucRequest $request)
   {
     $data = $request->all();
 

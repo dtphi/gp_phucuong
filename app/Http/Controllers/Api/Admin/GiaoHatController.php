@@ -29,7 +29,7 @@ class GiaoHatController extends ApiController
      * @param GhSv $ghSv
      * @param array $middleware
      */
-    public function __construct(GhSv $ghSv, array $middleware = [])
+    public function __construct(GiaoHatRequest $request, GhSv $ghSv, array $middleware = [])
     {
         $this->ghSv = $ghSv;
         parent::__construct($middleware);
@@ -40,7 +40,7 @@ class GiaoHatController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(GiaoHatRequest $request)
     {
         $data = $request->all();
         $page = 1;

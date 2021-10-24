@@ -28,7 +28,7 @@ class SettingController extends ApiController
      * @param newsGpSv $settingSv
      * @param array $middleware
      */
-    public function __construct(SettingSv $settingSv, array $middleware = [])
+    public function __construct(SettingRequest $request, SettingSv $settingSv, array $middleware = [])
     {
         $this->settingSv = $settingSv;
         parent::__construct($middleware);
@@ -39,7 +39,7 @@ class SettingController extends ApiController
      * @param null $id
      * @return mixed
      */
-    public function show($code = null, SettingRequest $request)
+    public function show($code = null)
     {
         try {
             $json = $this->settingSv->apiGetResourceCollection(['code' => $code]);

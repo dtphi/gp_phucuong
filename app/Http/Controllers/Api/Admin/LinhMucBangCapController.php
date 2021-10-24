@@ -29,7 +29,7 @@ class LinhMucBangCapController extends ApiController
      * @param LinhMucBangCapSv $bangCapSv
      * @param array $middleware
      */
-    public function __construct(LinhMucBangCapSv $bangCapSv, array $middleware = [])
+    public function __construct(LinhMucBangCapRequest $request, LinhMucBangCapSv $bangCapSv, array $middleware = [])
     {
         $this->bangCapSv = $bangCapSv;
         parent::__construct($middleware);
@@ -40,7 +40,7 @@ class LinhMucBangCapController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(LinhMucBangCapRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -189,7 +189,7 @@ class LinhMucBangCapController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(LinhMucBangCapRequest $request)
     {
         if ($request->is('options')) {
             return;

@@ -28,7 +28,7 @@ class ChucVuController extends ApiController
      * @param ChucVuSv $thanhSv
      * @param array $middleware
      */
-    public function __construct(ChucVuSv $thanhSv, array $middleware = [])
+    public function __construct(ChucVuRequest $request, ChucVuSv $thanhSv, array $middleware = [])
     {
         $this->thanhSv = $thanhSv;
         parent::__construct($middleware);
@@ -39,7 +39,7 @@ class ChucVuController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(ChucVuRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -188,7 +188,7 @@ class ChucVuController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(ChucVuRequest $request)
     {
         if ($request->is('options')) {
             return;

@@ -29,7 +29,7 @@ class ThanhController extends ApiController
      * @param ThanhSv $thanhSv
      * @param array $middleware
      */
-    public function __construct(ThanhSv $thanhSv, array $middleware = [])
+    public function __construct(ThanhRequest $request, ThanhSv $thanhSv, array $middleware = [])
     {
         $this->thanhSv = $thanhSv;
         parent::__construct($middleware);
@@ -40,7 +40,7 @@ class ThanhController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(ThanhRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -190,7 +190,7 @@ class ThanhController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(ThanhRequest $request)
     {
         if ($request->is('options')) {
             return;

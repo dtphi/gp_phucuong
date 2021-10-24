@@ -29,7 +29,7 @@ class GiaoXuController extends ApiController
      * @param GxSv $gxSv
      * @param array $middleware
      */
-    public function __construct(GxSv $gxSv, array $middleware = [])
+    public function __construct(GiaoXuRequest $request, GxSv $gxSv, array $middleware = [])
     {
         $this->gxSv = $gxSv;
         parent::__construct($middleware);
@@ -40,7 +40,7 @@ class GiaoXuController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(GiaoXuRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -201,7 +201,7 @@ class GiaoXuController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(GiaoXuRequest $request)
     {
         if ($request->is('options')) {
             return;

@@ -29,7 +29,7 @@ class CoSoController extends ApiController
      * @param CoSoSv $cosoSv
      * @param array $middleware
      */
-    public function __construct(CoSoSv $cosoSv, array $middleware = [])
+    public function __construct(CoSoGiaoPhanRequest $request, CoSoSv $cosoSv, array $middleware = [])
     {
         $this->cosoSv = $cosoSv;
         parent::__construct($middleware);
@@ -40,7 +40,7 @@ class CoSoController extends ApiController
      * @param Request $request
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(CoSoGiaoPhanRequest $request)
     {
         $data = $request->all();
         $page = 1;
@@ -191,7 +191,7 @@ class CoSoController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(CoSoGiaoPhanRequest $request)
     {
         if ($request->is('options')) {
             return;

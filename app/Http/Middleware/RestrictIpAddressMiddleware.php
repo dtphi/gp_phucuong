@@ -32,6 +32,9 @@ class RestrictIpAddressMiddleware
             }
 
             abort(404);
+        } else {
+            if (fn_is_prod_env()) 
+                abort(404);
         }
 
         return $next($request);
