@@ -27,6 +27,27 @@ define('APP_TOOL_MM_FILE_MANAGER_THUMB_SIZE', 'thumb');
 use App\Http\Common\Tables;
 use Illuminate\Support\Str;
 
+if (!function_exists('fn_is_prod_env')) {
+    /**
+     * @return boolean|mixed
+     */
+    function fn_is_prod_env()
+    {
+        return (config('app.env') === 'production') ?? false;
+    }
+}
+
+if (!function_exists('fn_is_internal_admin_login')) {
+    /**
+     * @return boolean|mixed
+     */
+    function fn_is_internal_admin_login()
+    {
+        $request = request();
+        return ($request->is('admin/login') || $request->is('admin'));
+    }
+}
+
 if (!function_exists('fn_mysql_escape')) {
     /**
      * @param $inp

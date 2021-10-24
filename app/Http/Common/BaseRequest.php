@@ -7,6 +7,7 @@ namespace App\Http\Common;
 use App\Exceptions\AccessDeniedCommon;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Log;
 
 class BaseRequest extends FormRequest
 {
@@ -22,7 +23,17 @@ class BaseRequest extends FormRequest
      */
     public function isAllowAll()
     {
-        return Auth::user()->actionCan(Tables::PREFIX_ACCESS_NAME . $this->listPermission, '*');
+        return fn_is_prod_env() ? Auth::user()->actionCan(Tables::PREFIX_ACCESS_NAME . $this->listPermission, '*'): true;
+    }
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    protected function isIgnoreProdAuthorize()
+    {
+        fn_is_prod_env() ? ((boolean)config('app.ignore_prod_authorize') ? false: true): true;
     }
 
     /**

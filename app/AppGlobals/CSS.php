@@ -38,8 +38,9 @@ final class CSS
         $this->cssSetting['mapScript'] = $script;
         $this->cssSetting['bodyClass'] = $bodyClass;
 
-        $this->cssSetting['isFireBaseAuth'] = true;// true or false;
-        $this->cssSetting['isInternalLogin'] = (request()->is('admin/login') || request()->is('admin'));
+        // true or false;
+        $this->cssSetting['isFireBaseAuth'] = fn_is_prod_env();
+        $this->cssSetting['isInternalLogin'] = fn_is_internal_admin_login();
     }
 
     /**
