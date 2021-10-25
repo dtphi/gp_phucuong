@@ -46,7 +46,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
 });
 
 Route::namespace('App\Http\Controllers\Api\Admin')
-  ->middleware(['auth:sanctum', 'secip'])
+  ->middleware(['app.version', 'auth:sanctum', 'secip'])
   ->group(function () { 
     Route::get('/user', function (Request $request) {
       $user = $request->user();
