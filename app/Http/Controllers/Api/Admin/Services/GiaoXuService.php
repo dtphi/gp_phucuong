@@ -34,7 +34,6 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
     return $query->paginate($limit);
   }
 
-
   public function apiGetResourceCollection(array $options = [], $limit = 5)
   {
     // TODO: Implement apiGetResourceCollection() method.
@@ -93,6 +92,7 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 
     return $query;
   }
+  
   public function apiUpdate($model, $data = [])
   {
     $this->model->fill($data);

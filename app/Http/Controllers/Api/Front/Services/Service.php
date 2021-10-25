@@ -188,11 +188,13 @@ class Service implements BaseModel
 		return $query->paginate($limit);
 	}
 
-	public function apiGetDetailGiaoXu($id) {
+	public function apiGetDetailGiaoXu($id) 
+	{
 		return GiaoXu::findOrFail($id);
 	}
 
-	public function apiGetLinhMucListByGiaoXuId($giaoXuId = null) {
+	public function apiGetLinhMucListByGiaoXuId($giaoXuId = null)
+	{
 		$linhMucs = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
 		->get();
 
@@ -216,6 +218,7 @@ class Service implements BaseModel
 
 		return $linhMuc;
 	}
+
 	/// LINH MUC
 	private function __apiGetLinhmucs($data = array(), $limit = 15)
 	{
