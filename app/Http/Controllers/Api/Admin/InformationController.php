@@ -29,10 +29,11 @@ class InformationController extends ApiController
      * @param InfoSv $infoSv
      * @param array $middleware
      */
-    public function __construct(InformationRequest $request, InfoSv $infoSv, array $middleware = [])
+    public function __construct(InfoSv $infoSv, array $middleware = [])
     {
         $this->infoSv = $infoSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new InformationRequest);
     }
 
     /**

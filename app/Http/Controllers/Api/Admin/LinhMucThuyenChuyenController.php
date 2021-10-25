@@ -30,10 +30,11 @@ class LinhMucThuyenChuyenController extends ApiController
      * @param LinhMucThuyenChuyenSv $thuyenChuyenSv
      * @param array $middleware
      */
-    public function __construct(LinhMucThuyenChuyenRequest $request, LinhMucThuyenChuyenSv $thuyenChuyenSv, array $middleware = [])
+    public function __construct(LinhMucThuyenChuyenSv $thuyenChuyenSv, array $middleware = [])
     {
         $this->thuyenChuyenSv = $thuyenChuyenSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new LinhMucThuyenChuyenRequest);
     }
 
     /**

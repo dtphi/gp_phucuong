@@ -6,6 +6,7 @@ use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Http\Controllers\Api\Admin\Services\Contracts\CoSoModel as CoSoSv;
 use App\Http\Requests\CoSoGiaoPhanRequest;
+use App\Models\CoSoGiaoPhan;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
@@ -29,10 +30,11 @@ class CoSoController extends ApiController
      * @param CoSoSv $cosoSv
      * @param array $middleware
      */
-    public function __construct(CoSoGiaoPhanRequest $request, CoSoSv $cosoSv, array $middleware = [])
+    public function __construct(CoSoSv $cosoSv, array $middleware = [])
     {
         $this->cosoSv = $cosoSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new CoSoGiaoPhanRequest);
     }
 
     /**

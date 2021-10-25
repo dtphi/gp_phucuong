@@ -29,10 +29,11 @@ class GiaoHatController extends ApiController
      * @param GhSv $ghSv
      * @param array $middleware
      */
-    public function __construct(GiaoHatRequest $request, GhSv $ghSv, array $middleware = [])
+    public function __construct(GhSv $ghSv, array $middleware = [])
     {
         $this->ghSv = $ghSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new GiaoHatRequest);
     }
 
     /**

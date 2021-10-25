@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\File;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Foundation\Http\FormRequest;
 use Image;
 use Storage;
 
@@ -121,6 +122,10 @@ class ApiController extends Controller
     public function __construct($middleware = [])
     {
         parent::__construct($middleware);
+    }
+
+    protected function _initAuthor(FormRequest $request) {
+        return $request;
     }
 
     /**

@@ -29,10 +29,11 @@ class LinhMucBangCapController extends ApiController
      * @param LinhMucBangCapSv $bangCapSv
      * @param array $middleware
      */
-    public function __construct(LinhMucBangCapRequest $request, LinhMucBangCapSv $bangCapSv, array $middleware = [])
+    public function __construct(LinhMucBangCapSv $bangCapSv, array $middleware = [])
     {
         $this->bangCapSv = $bangCapSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new LinhMucBangCapRequest);
     }
 
     /**

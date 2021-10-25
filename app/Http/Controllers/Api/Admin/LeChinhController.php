@@ -29,10 +29,11 @@ class LeChinhController extends ApiController
      * @param LeChinhSv $leChinhSv
      * @param array $middleware
      */
-    public function __construct(LeChinhRequest $request, LeChinhSv $leChinhSv, array $middleware = [])
+    public function __construct(LeChinhSv $leChinhSv, array $middleware = [])
     {
         $this->leChinhSv = $leChinhSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new LeChinhRequest);
     }
 
     /**

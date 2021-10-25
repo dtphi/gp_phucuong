@@ -29,10 +29,11 @@ class DongController extends ApiController
    * @param DongSv $dongSv
    * @param array $middleware
    */
-  public function __construct(DongRequest $request, DongSv $dongSv, array $middleware = [])
+  public function __construct(DongSv $dongSv, array $middleware = [])
   {
     $this->dongSv = $dongSv;
     parent::__construct($middleware);
+    $this->_initAuthor(new DongRequest);
   }
 
   /**

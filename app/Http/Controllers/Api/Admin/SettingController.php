@@ -28,10 +28,11 @@ class SettingController extends ApiController
      * @param newsGpSv $settingSv
      * @param array $middleware
      */
-    public function __construct(SettingRequest $request, SettingSv $settingSv, array $middleware = [])
+    public function __construct(SettingSv $settingSv, array $middleware = [])
     {
         $this->settingSv = $settingSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new SettingRequest);
     }
 
     /**

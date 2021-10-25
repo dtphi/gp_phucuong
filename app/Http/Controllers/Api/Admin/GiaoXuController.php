@@ -29,10 +29,11 @@ class GiaoXuController extends ApiController
      * @param GxSv $gxSv
      * @param array $middleware
      */
-    public function __construct(GiaoXuRequest $request, GxSv $gxSv, array $middleware = [])
+    public function __construct(GxSv $gxSv, array $middleware = [])
     {
         $this->gxSv = $gxSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new GiaoXuRequest);
     }
 
     /**

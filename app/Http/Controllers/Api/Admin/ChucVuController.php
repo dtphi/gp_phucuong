@@ -28,10 +28,11 @@ class ChucVuController extends ApiController
      * @param ChucVuSv $thanhSv
      * @param array $middleware
      */
-    public function __construct(ChucVuRequest $request, ChucVuSv $thanhSv, array $middleware = [])
+    public function __construct(ChucVuSv $thanhSv, array $middleware = [])
     {
         $this->thanhSv = $thanhSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new ChucVuRequest);
     }
 
     /**

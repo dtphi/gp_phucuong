@@ -30,10 +30,11 @@ class LinhMucController extends ApiController
      * @param LinhMucSv $linhMucSv
      * @param array $middleware
      */
-    public function __construct(LinhmucRequest $request, LinhMucSv $linhMucSv, array $middleware = [])
+    public function __construct(LinhMucSv $linhMucSv, array $middleware = [])
     {
         $this->linhMucSv = $linhMucSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new LinhmucRequest);
     }
 
     /**

@@ -24,10 +24,11 @@ class GiaoPhanTinTucController extends ApiController
   private $gpttSv = null;
 
   
-  public function __construct(GiaoPhanTinTucRequest $request, GpttSv $gpttSv, array $middleware = [])
+  public function __construct(GpttSv $gpttSv, array $middleware = [])
   {
     $this->gpttSv = $gpttSv;
     parent::__construct($middleware);
+    $this->_initAuthor(new GiaoPhanTinTucRequest);
   }
 
   /**

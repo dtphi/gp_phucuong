@@ -29,10 +29,11 @@ class GiaoDiemController extends ApiController
      * @param GdSv $gdSv
      * @param array $middleware
      */
-    public function __construct(GiaoDiemRequest $request, GdSv $gdSv, array $middleware = [])
+    public function __construct(GdSv $gdSv, array $middleware = [])
     {
         $this->gdSv = $gdSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new GiaoDiemRequest);
     }
 
     /**
