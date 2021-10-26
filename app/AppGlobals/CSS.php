@@ -41,6 +41,14 @@ final class CSS
         // true or false;
         $this->cssSetting['isFireBaseAuth'] = fn_is_prod_env();
         $this->cssSetting['isInternalLogin'] = fn_is_internal_admin_login();
+
+        if (fn_is_prod_env()) {
+            $this->cssSetting['pageDir'] = mix('js/admin-' . config('app.api_name_key') . '.js');
+        } else if(fn_is_stg_env()) {
+            $this->cssSetting['pageDir'] = asset('js/stg/app-admin.js');
+        } else {
+            $this->cssSetting['pageDir'] = asset('js/app-admin.js');
+        }
     }
 
     /**

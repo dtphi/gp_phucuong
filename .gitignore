@@ -25,3 +25,6 @@ package-lock.json
 /public/fonts/vendor
 src
 Image
+webpack.a*
+webpack.f*
+webpack.p*

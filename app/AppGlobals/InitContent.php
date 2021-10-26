@@ -36,6 +36,7 @@ final class InitContent
     {
         $request = request();
         $flag    = '';
+        
         if ($request->is('/') || $request->is('trang-chu*')) {
             $flag = 'trang-chu';
         }
@@ -186,6 +187,17 @@ final class InitContent
             $this->settings['page'] = $layout;
         } else {
             $this->settings['page'] = [];
+        }
+
+        $this->settings['isMix'] = false;
+        
+        if (fn_is_prod_env()) {
+            $this->settings['isMix'] = true;
+            $this->settings['pageDir'] = mix('js/front-' . config('app.api_name_key') . '.js');
+        } else if(fn_is_stg_env()) {
+            $this->settings['pageDir'] = asset('js/stg/app-front.js');
+        } else {
+            $this->settings['pageDir'] = asset('js/app-front.js');
         }
     }
 

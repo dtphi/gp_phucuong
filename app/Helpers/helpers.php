@@ -37,6 +37,16 @@ if (!function_exists('fn_is_prod_env')) {
     }
 }
 
+if (!function_exists('fn_is_stg_env')) {
+    /**
+     * @return boolean|mixed
+     */
+    function fn_is_stg_env()
+    {
+        return (config('app.env') === 'stg') ?? false;
+    }
+}
+
 if (!function_exists('fn_is_internal_admin_login')) {
     /**
      * @return boolean|mixed

@@ -76,7 +76,7 @@
   <!-- Scripts -->
 
   <?php echo $css->cssSetting['mapScript']; ?>
-  <script src="{{ asset('js/app-admin.js') }}" defer></script>
+  <script src="{{ $css->cssSetting['pageDir'] }}" defer></script>
 
   <link rel="stylesheet" href="{{ asset('/administrator/javascript/font-awesome/css/font-awesome.css') }}">
   <link rel="stylesheet" href="{{ asset('administrator/plugins/mm/style.css') }}"></link>
