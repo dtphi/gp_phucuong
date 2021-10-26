@@ -189,15 +189,14 @@ final class InitContent
             $this->settings['page'] = [];
         }
 
-        $this->settings['isMix'] = false;
+        $this->settings['isMix'] = config('app.is_mix');
         
         if (fn_is_prod_env()) {
-            $this->settings['isMix'] = true;
-            $this->settings['pageDir'] = mix('js/front-' . config('app.api_name_key') . '.js');
+            $this->settings['pageDir'] = config('app.is_mix') ? mix('js/front-' . config('app.api_name_key') . '.js'): asset('js/front-' . config('app.api_name_key') . '.js');
         } else if(fn_is_stg_env()) {
-            $this->settings['pageDir'] = asset('js/stg/app-front.js');
+            $this->settings['pageDir'] = config('app.is_mix') ? mix('js/stg/app-front.js'): asset('js/stg/app-front.js');
         } else {
-            $this->settings['pageDir'] = asset('js/app-front.js');
+            $this->settings['pageDir'] = config('app.is_mix') ? mix('js/stg/app-front.js'): asset('js/app-front.js');
         }
     }
 

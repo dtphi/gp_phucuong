@@ -43,11 +43,11 @@ final class CSS
         $this->cssSetting['isInternalLogin'] = fn_is_internal_admin_login();
 
         if (fn_is_prod_env()) {
-            $this->cssSetting['pageDir'] = mix('js/admin-' . config('app.api_name_key') . '.js');
+            $this->cssSetting['pageDir'] = config('app.is_mix') ? mix('js/admin-' . config('app.api_name_key') . '.js'): asset('js/admin-' . config('app.api_name_key') . '.js');
         } else if(fn_is_stg_env()) {
-            $this->cssSetting['pageDir'] = asset('js/stg/app-admin.js');
+            $this->cssSetting['pageDir'] = config('app.is_mix') ? mix('js/stg/app-admin.js'): asset('js/stg/app-admin.js');
         } else {
-            $this->cssSetting['pageDir'] = asset('js/app-admin.js');
+            $this->cssSetting['pageDir'] = config('app.is_mix') ? mix('js/stg/app-admin.js'): asset('js/app-admin.js');
         }
     }
 
@@ -218,8 +218,8 @@ final class CSS
         $output = '';
         /*<!-- jQuery -->*/
         $output .= "<script src='/administrator/javascript/jquery/jquery-2.1.1.min.js'></script>\n";
-        $output .= "<script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
-        $output .= "<script src='/administrator/javascript/bootstrap/js/bootstrap.min.js'></script>\n";
+        $output .= "    <script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
+        $output .= "    <script src='/administrator/javascript/bootstrap/js/bootstrap.min.js'></script>\n";
 
         return $output;
     }
@@ -277,7 +277,6 @@ final class CSS
     {
         $output = '';
         /*<!-- jQuery and jQuery UI (REQUIRED) -->*/
-
         $output .= "<script src='/packages/barryvdh/elfinder/jquery-1.11.0/jquery.min.js'></script>\n";
         $output .= "<script src='/packages/barryvdh/elfinder/jqueryui-1.10.4/jquery-ui.min.js'></script>\n";
         /*<!-- elFinder CSS (REQUIRED) -->*/

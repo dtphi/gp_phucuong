@@ -233,6 +233,6 @@ return [
     'api_name_key' => env('APP_API_NAME_KEY'),
     'api_firebase_phone_name_key' => env('APP_API_FIREBASE_PHONE_NAME_KEY'),
     'force_https' => env('APP_FORCE_HTTPS', 'https'),
-    'sec_ips' => env('APP_SEC_IPS')
-
+    'sec_ips' => env('APP_SEC_IPS'),
+    'is_mix' => env('APP_IS_MIX', false)
 ];

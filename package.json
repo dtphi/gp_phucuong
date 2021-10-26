@@ -14,6 +14,8 @@
         "watch": "npm run development -- --watch",
         "watch-html": "npm run debuger -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",
+        "watch-front": "npm run staging-front -- --watch",
+        "watch-admin": "npm run staging-admin -- --watch",
         "hot": "cross-env NODE_ENV=server node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js --app=dev",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js --app=prod",
