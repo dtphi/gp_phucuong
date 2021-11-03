@@ -46,6 +46,11 @@ const AppConfig = {
 		group: noGrType.comUpdate,
 		text: 'Thực hiện xóa thất bại',
 		type: 'error'
+  },
+  updateOrInsertNoFail: {
+		group: noGrType.comUpdate,
+		text: 'IP đã tồn tại',
+		type: 'error'
 	},
 }
 

@@ -237,6 +237,9 @@
           <li>
             <a :href="_getHref('system')">{{ $options.setting.sytem_title }}</a>
           </li>
+          <li>
+            <a :href="_getHref('restrict-ips')">{{ $options.setting.restrict_ips_title }}</a>
+          </li>
         </ul>
       </li>
     </ul>
@@ -309,7 +312,8 @@ export default {
     thanhs_title: "Thánh",
     chuc_vus_title: "Chức vụ",
     le_chinhs_title: "Lễ chính",
-    giaophan_tintucs_title: "Giáo phận tin tức"
+    giaophan_tintucs_title: "Giáo phận tin tức",
+    restrict_ips_title: "Restrict ip",
   },
 };
 </script>

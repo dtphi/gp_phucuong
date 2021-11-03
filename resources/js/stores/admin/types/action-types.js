@@ -36,6 +36,7 @@ export const ACTION_REMOVE_INFO_TO_RELATED_LIST = 'removeInfoToRelatedList';
 export const ACTION_GET_DROPDOWN_CATEGORY_LIST = 'getDropdownCategoryList';
 export const ACTION_UPDATE_INFO_SPECIAL = 'updateInfoSpecial';
 export const ACTION_GET_INFO_SPECIAL = 'getInfoSpecial';
+export const ACTION_DELETE_RESTRICT_IP_BY_ID = 'deleteRestrictIpById';
 
 export const ACTION_SET_LOADING = 'setLoading';
 export const ACTION_SHOW_MODAL = 'showModal';

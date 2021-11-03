@@ -58,6 +58,7 @@ final class Tables
     public static $giao_xus = DB_PREFIX . 'giao_xus';
     public static $giao_diems = DB_PREFIX . 'giao_diems';
     public static $personal_access_tokens = DB_PREFIX . 'personal_access_tokens';
+    public static $restrict_ips = 'restrict_ips';
 
     public static $infoStatus = [
         'Ẩn',
@@ -178,6 +179,8 @@ final class Tables
     public static $categoryAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_NEWS_GROUP;
     const PREFIX_ALLOW_TIN_TUC = 'tin.tuc';
     public static $tinTucAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_TIN_TUC;
+    const PREFIX_ALLOW_RESTRICT_IP = 'restrict.ip';
+    public static $restrictIpAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_RESTRICT_IP;
 
     const RULE_SETTING_CODE = 'system_rule';
     const RULE_SETTING_KEY_DATA = 'system_rule_allow';

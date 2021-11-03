@@ -41,7 +41,6 @@ const defaultState = () => {
     giaophandanhmucs: [],
     dropdownCategories: [],
     total: 0,
-    newsGroupDelete: null,
     isDelete: false,
     isList: false,
     loading: false,
@@ -198,17 +197,17 @@ export default {
       );
     },
 
-    [ACTION_SET_NEWS_GROUP_DELETE_BY_ID]({
-      commit
-    }, newsGroupId) {
-      apiGetGiaoPhanDanhMucsById(
-        newsGroupId,
-        (result) => {
-          commit(NEWSGROUPS_GROUP_DELETE_BY_ID, result.data);
-          commit(NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS, false);
-        }
-      );
-    },
+    // [ACTION_SET_NEWS_GROUP_DELETE_BY_ID]({
+    //   commit
+    // }, newsGroupId) {
+    //   apiGetGiaoPhanDanhMucsById(
+    //     newsGroupId,
+    //     (result) => {
+    //       commit(NEWSGROUPS_GROUP_DELETE_BY_ID, result.data);
+    //       commit(NEWSGROUPS_DELETE_GROUP_BY_ID_SUCCESS, false);
+    //     }
+    //   );
+    // },
 
     [ACTION_SET_LOADING]({
       commit

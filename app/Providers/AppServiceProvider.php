@@ -129,6 +129,10 @@ class AppServiceProvider extends ServiceProvider
       \App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanTinTucModel::class,
       \App\Http\Controllers\Api\Admin\Services\GiaoPhanTinTucService::class,
     );
+    $this->app->bind(
+      \App\Http\Controllers\Api\Admin\Services\Contracts\RestrictIpModel::class,
+      \App\Http\Controllers\Api\Admin\Services\RestrictIpService::class,
+    );
   }
 
   private function __bindFrontService()
