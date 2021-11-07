@@ -29,7 +29,7 @@ export function fn_get_href_base_url(path) {
 	return config.baseUrl + '/';
 }
 export function fn_get_admin_base_url() {
-	return config.baseUrl + '/admin';
+	return config.baseUrl + '/' + config.adminPrefix;
 }
 
 export function fn_get_base_api_url(apiPath) {

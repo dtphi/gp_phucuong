@@ -33,7 +33,7 @@ import {
 } from '../common/config';
 
 export default [{
-    path: '/admin',
+    path: '/'+config.adminPrefix,
     component: {
         render: c => c('router-view')
     },

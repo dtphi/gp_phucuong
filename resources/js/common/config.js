@@ -1,3 +1,7 @@
+const envBuild = process.env.NODE_ENV;
+var pathArray = process.env.MIX_APP_ADMIN_API_ROUTE_LOGIN.split(",");
+var _adminPathName = (envBuild === "production")?pathArray[0]:"adminlocal";
+
 export const config = {
 	site_name: 'GP-PhuCuong',
 	carouselLimit: 5,
@@ -15,5 +19,6 @@ export const config = {
         base: "glyphicon",
         up: "glyphicon-chevron-up",
         down: "glyphicon-chevron-down"
-      },
+    },
+    adminPrefix: _adminPathName
 };

@@ -19,4 +19,14 @@ class AccessDeniedCommon extends Exception
             'results'  => []
         ], Response::HTTP_OK);
     }
+
+    public function getJsonArray()
+    {
+        return json_encode(['data' => [
+            'code'    => Response::HTTP_FORBIDDEN,
+            'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+            'message' => 'Bạn chưa có quyền thực hiện',
+            'results'  => []
+        ]]);
+    }
 }
