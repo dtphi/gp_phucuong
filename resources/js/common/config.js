@@ -20,6 +20,7 @@ export const config = {
         up: "glyphicon-chevron-up",
         down: "glyphicon-chevron-down"
     },
+    slashDir: "/",
     adminPrefix: _adminPathName,
     adminRoute: {
         login: {
@@ -33,6 +34,13 @@ export const config = {
         dashboard: {
             path: 'dashboards',
             name: _adminPathName + '.dashboards'
-        }
+        },
+        redirectLogedUrl: _adminPathName + "/dashboards",
+        redirectLogoutUrl: _adminPathName + "/login",
+        redirectPhoneLoginUrl: _adminPathName + "/phone-verify",
+        storageLinhMucExpectSignInKey: 'linhMuc.expectSignIn',
+        storageLinhMucExpectSignInPhoneKey: 'linhMuc.expectSignInPhone',
+        history: true,
+        mode: 'history'
     }
 };

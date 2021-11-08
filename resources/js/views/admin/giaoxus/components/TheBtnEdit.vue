@@ -11,8 +11,8 @@
 
 <script>
     import {
-        mapActions
-    } from 'vuex';
+        config
+    } from '@app/common/config';
     import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
@@ -48,7 +48,7 @@
             _redirectUrl() {
                 if (this.hrefEdit) 
                     return window.location.href = this.hrefEdit;
-                return fn_redirect_url(`admin/giao-xus/edit/${this.infoId}`);
+                return fn_redirect_url(`${config.adminPrefix}/giao-xus/edit/${this.infoId}`);
             }
         }
     };

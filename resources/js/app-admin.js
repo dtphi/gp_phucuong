@@ -15,8 +15,8 @@ window.vue = Vue;
 require('./views/admin/App');
 
 const router = new Router({
-    history: true,
-    mode: 'history',
+    history: config.adminRoute.history,
+    mode: config.adminRoute.mode,
     routes: [
         ...routes
     ]
@@ -28,13 +28,13 @@ router.beforeEach(async (to, from, next) => {
 
     if (store.state.auth.authenticated) {
         if (to.name === config.adminRoute.login.name) {
-            window.location = window.origin + '/' + store.state.auth.redirectUrl;
+            window.location.href = store.state.auth.redirectUrl;
             return;
         } else {
             if (envBuild === "production") {
                 if (store.state.auth.linhMucExpectSignIn) {
                     if (to.name === config.adminRoute.phone_verify.name) {
-                        window.location = window.origin + '/' + store.state.auth.redirectUrl;
+                        window.location.href = store.state.auth.redirectUrl;
                         return;
                     } else {
                         next();
@@ -45,7 +45,7 @@ router.beforeEach(async (to, from, next) => {
                         next();
                         return;
                     } else {
-                        window.location = window.origin + '/' + store.state.auth.redirectPhoneLoginUrl;
+                        window.location.href = store.state.auth.redirectPhoneLoginUrl;
                         return;
                     }
                 }
@@ -59,7 +59,7 @@ router.beforeEach(async (to, from, next) => {
             next();
             return;
         } else {
-            window.location = window.origin + '/' + store.state.auth.redirectLogoutUrl;
+            window.location.href = store.state.auth.redirectLogoutUrl;
             return;
         }
     }
@@ -109,13 +109,13 @@ if (envBuild === "production") {
     var pathDashboardArray = [];
     if (loginUriMap) {
         var pathArray = loginUriMap.split(",");
-        pathDashboardArray.push("/"+pathArray[0]+"/" + config.adminRoute.dashboard.path);
-        pathDashboardArray.push("/"+pathArray[0]+"/"+ config.adminRoute.dashboard.path + "/");
+        pathDashboardArray.push(config.slashDir + pathArray[0] + config.slashDir + config.adminRoute.dashboard.path);
+        pathDashboardArray.push(config.slashDir + pathArray[0] + config.slashDir + config.adminRoute.dashboard.path + config.slashDir);
             
         // Display array values on page
         for(var i = 0; i < pathArray.length; i++){
-            pathLoginArray.push("/" + pathArray[i]);
-            pathLoginArray.push("/" + pathArray[i] + "/");
+            pathLoginArray.push(config.slashDir + pathArray[i]);
+            pathLoginArray.push(config.slashDir + pathArray[i] + config.slashDir);
         }
     }
     if (pathLoginArray.length === 0) {

@@ -11,8 +11,8 @@
 
 <script>
     import {
-        mapActions
-    } from 'vuex';
+        config
+    } from '@app/common/config';
     import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
@@ -42,7 +42,7 @@
                 }
             },
             _redirectUrl() {
-                return fn_redirect_url(`admin/dongs/edit/${this.infoId}`);
+                return fn_redirect_url(`${config.adminPrefix}/dongs/edit/${this.infoId}`);
             }
         }
     };

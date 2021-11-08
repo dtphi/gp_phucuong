@@ -20,6 +20,9 @@
     import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'TheButtonAdd',
@@ -41,10 +44,10 @@
                 }
             },
             _redirectUrl() {
-                return fn_redirect_url('admin/informations/add');
+                return fn_redirect_url(`${config.adminPrefix}/informations/add`);
             },
             _pushAddPage() {
-                this.$router.push(`/admin/informations/add`);
+                this.$router.push(`/${config.adminPrefix}/informations/add`);
             }
         }
     };

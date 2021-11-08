@@ -12,13 +12,16 @@
     import {
         fn_get_base_url
     } from '@app/api/utils/fn-helper';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'TheBtnBackListPage',
         props: {},
         methods: {
             _getHref() {
-                return fn_get_base_url() + `/admin/linh-mucs`;
+                return fn_get_base_url() + `/${config.adminPrefix}/linh-mucs`;
             }
         }
     };

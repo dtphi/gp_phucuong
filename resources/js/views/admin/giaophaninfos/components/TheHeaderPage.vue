@@ -48,6 +48,9 @@
     import {
         ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'GiaoPhanTinTucHeaderPage',
@@ -63,7 +66,7 @@
             }),
             ...mapActions(MODULE_MODULE_TINTUC_GIAOPHAN, [ACTION_GET_INFO_LIST]),
             _pushAddPage() {
-                this.$router.push(`/admin/giao-phan/tin-tucs/add`);
+                this.$router.push(`/${config.adminPrefix}/giao-phan/tin-tucs/add`);
             },
             _refreshList() {
                 const params = {

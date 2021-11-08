@@ -49,6 +49,9 @@
     import {
         ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'DongHeaderPage',
@@ -68,7 +71,7 @@
                 ACTION_GET_INFO_LIST
             ]),
             _pushAddPage() {
-                this.$router.push(`/admin/dongs/add`);
+                this.$router.push(`/${config.adminPrefix}/dongs/add`);
             },
             _refreshList() {
                 const params = {

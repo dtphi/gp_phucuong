@@ -111,7 +111,7 @@
                 }
             },
             _redirectUrl(info) {
-                window.location = this._getHref(info);
+                window.location.href = this._getHref(info);
             },
         }
     };

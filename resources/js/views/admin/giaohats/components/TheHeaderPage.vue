@@ -49,6 +49,9 @@
     import {
         ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'GiaoHatHeaderPage',
@@ -68,7 +71,7 @@
                 ACTION_GET_INFO_LIST
             ]),
             _pushAddPage() {
-                this.$router.push(`/admin/giao-hats/add`);
+                this.$router.push(`/${config.adminPrefix}/giao-hats/add`);
             },
             _refreshList() {
                 const params = {

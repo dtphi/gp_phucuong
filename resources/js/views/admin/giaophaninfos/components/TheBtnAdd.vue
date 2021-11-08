@@ -20,6 +20,9 @@
     import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'TheButtonAddGiaoPhanTinTuc',
@@ -39,10 +42,10 @@
                 }
             },
             _redirectUrl() {
-                return fn_redirect_url('admin/giao-phan/tin-tucs/add');
+                return fn_redirect_url(`${config.adminPrefix}/giao-phan/tin-tucs/add`);
             },
             _pushAddPage() {
-                this.$router.push(`/admin/giao-phan/tin-tucs/add`);
+                this.$router.push(`/${config.adminPrefix}/giao-phan/tin-tucs/add`);
             }
         }
     };

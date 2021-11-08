@@ -49,6 +49,9 @@
     import {
         ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'RestrictIpHeaderPage',
@@ -68,7 +71,7 @@
                 'getInfoList': ACTION_GET_INFO_LIST
             }),
             _pushAddPage() {
-                this.$router.push(`/admin/restrict-ips/add`);
+                this.$router.push(`/${config.adminPrefix}/restrict-ips/add`);
             },
             _refreshList() {
                 const params = {
