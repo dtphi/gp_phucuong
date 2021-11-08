@@ -20,5 +20,19 @@ export const config = {
         up: "glyphicon-chevron-up",
         down: "glyphicon-chevron-down"
     },
-    adminPrefix: _adminPathName
+    adminPrefix: _adminPathName,
+    adminRoute: {
+        login: {
+            path: 'login',
+            name: _adminPathName + '.auth.login'
+        },
+        phone_verify: {
+            path: 'phone-verify',
+            name: _adminPathName + '.auth.login.phone.verify'
+        },
+        dashboard: {
+            path: 'dashboards',
+            name: _adminPathName + '.dashboards'
+        }
+    }
 };

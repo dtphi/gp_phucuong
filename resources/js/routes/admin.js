@@ -40,12 +40,12 @@ export default [{
     children: [{
         path: '',
         redirect: {
-            name: 'admin.auth.login'
+            name: config.adminRoute.login.name
         }
     }, {
-        path: 'login',
+        path: config.adminRoute.login.path,
         component: Login,
-        name: 'admin.auth.login',
+        name: config.adminRoute.login.name,
         meta: {
             layout: AuthLayout,
             role: 'admin',
@@ -55,9 +55,9 @@ export default [{
             title: 'Login | ' + config.site_name
         }
     }, {
-        path: 'phone-verify',
+        path: config.adminRoute.phone_verify.path,
         component: null,
-        name: 'admin.auth.login.phone.verify',
+        name: config.adminRoute.phone_verify.name,
         meta: {
             layout: null,
             role: 'admin',
@@ -67,9 +67,9 @@ export default [{
             title: 'Quản trị | ' + config.site_name
         }
     }, {
-        path: 'dashboards',
+        path: config.adminRoute.dashboard.path,
         component: DashboardPage,
-        name: 'admin.dashboards',
+        name: config.adminRoute.dashboard.name,
         meta: {
             layout: DefaultLayout,
             role: 'admin',

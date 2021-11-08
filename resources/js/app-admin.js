@@ -1,5 +1,8 @@
 require('./bootstrap');
 
+import {
+    config
+} from './common/config';
 window.Pusher = {};//require('pusher-js');
 
 import Vue from 'vue';
@@ -24,13 +27,13 @@ router.beforeEach(async (to, from, next) => {
     document.title = to.meta.title;
 
     if (store.state.auth.authenticated) {
-        if (to.name === "admin.auth.login") {
+        if (to.name === config.adminRoute.login.name) {
             window.location = window.origin + '/' + store.state.auth.redirectUrl;
             return;
         } else {
             if (envBuild === "production") {
                 if (store.state.auth.linhMucExpectSignIn) {
-                    if (to.name === "admin.auth.login.phone.verify") {
+                    if (to.name === config.adminRoute.phone_verify.name) {
                         window.location = window.origin + '/' + store.state.auth.redirectUrl;
                         return;
                     } else {
@@ -38,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
                         return;
                     }
                 } else {
-                    if (to.name === "admin.auth.login.phone.verify") {
+                    if (to.name === config.adminRoute.phone_verify.name) {
                         next();
                         return;
                     } else {
@@ -52,7 +55,7 @@ router.beforeEach(async (to, from, next) => {
             }
         }
     } else {
-        if (to.name === "admin.auth.login") {
+        if (to.name === config.adminRoute.login.name) {
             next();
             return;
         } else {
@@ -106,8 +109,8 @@ if (envBuild === "production") {
     var pathDashboardArray = [];
     if (loginUriMap) {
         var pathArray = loginUriMap.split(",");
-        pathDashboardArray.push("/"+pathArray[0]+"/dashboards");
-        pathDashboardArray.push("/"+pathArray[0]+"/dashboards/");
+        pathDashboardArray.push("/"+pathArray[0]+"/" + config.adminRoute.dashboard.path);
+        pathDashboardArray.push("/"+pathArray[0]+"/"+ config.adminRoute.dashboard.path + "/");
             
         // Display array values on page
         for(var i = 0; i < pathArray.length; i++){
