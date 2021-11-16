@@ -13,7 +13,7 @@
 
 <script>
     import {
-        mapActions
+        mapActions, mapGetters
     } from 'vuex';
     import {
         MODULE_MODULE_RESTRICT_IP
@@ -31,17 +31,22 @@
                 validator: function (value) {
                     return (value && Number.isInteger(value))
                 }
-            }
+            },
+            no: {
+              type: Number,
+            },
+        },
+        computed: {
+           ...mapGetters(MODULE_MODULE_RESTRICT_IP, ["infos"]),
         },
         methods: {
             ...mapActions(MODULE_MODULE_RESTRICT_IP, [
                 ACTION_DELETE_RESTRICT_IP_BY_ID
             ]),
-
+           
             _delete() {
                 this[ACTION_DELETE_RESTRICT_IP_BY_ID](this.infoId); 
             },
-
             _showConfirm() {
                 const _self = this;
                 this.$modal.show('dialog', {
@@ -49,16 +54,17 @@
                     text: 'Bạn muốn xóa IP ?',
                     buttons: [
                         {
-                            title: 'Hủy',
-                            handler: () => {
-                                this.$modal.hide('dialog')
-                            }
+                          title: 'Hủy',
+                          handler: () => {
+                            this.$modal.hide('dialog')
+                          }
                         },
                         {
                             title: 'Xóa',
-                            handler: () => {
-                                this._delete();
-                                this.$modal.hide('dialog')
+                            handler: () => {                           
+                              this.$delete(this.infos, this.no);
+                              this._delete();
+                              this.$modal.hide('dialog')
                             }
                         }
                     ]

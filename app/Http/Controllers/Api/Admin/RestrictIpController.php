@@ -33,12 +33,12 @@ class RestrictIpController extends ApiController
     {
         $data = $request->all();
         $page = 1;
-        if ($request->query('page')) {
-            $page = $request->query('page');
+        if($request->query('page')) {
+          $page = (int)$request->query('page');
         }
         try {
             $limit       = $this->_getPerPage();
-            $collections = $this->ResIpSv->apiGetList($data, $limit);
+            $collections = $this->ResIpSv->apiGetSearch($data, $limit);
             $pagination  = $this->_getTextPagination($collections);
             $results = [];
             foreach ($collections as $key => $info) {
@@ -148,5 +148,48 @@ class RestrictIpController extends ApiController
       }
       $this->ResIpSv->apiDelete($model);
       return $this->respondDeleted("{$this->resourceName} deleted.");
+    }
+
+    public function search(RestrictIpRequest $request)
+    {
+      $data = $request->all();
+      $page = 1;
+      if($request->query('page')) {
+        $page = (int)$request->query('page');
+      }
+      if($request->query('query')) {
+        $query = $request->query('query');
+      }
+      try {
+        $limit       = $this->_getPerPage();
+        $collections = $this->ResIpSv->apiGetSearch($data, $limit, $query);
+        $pagination  = $this->_getTextPagination($collections);
+        $results = [];
+        foreach ($collections as $key => $info) {
+          $results[] = [
+            'id' => (int)$info->id,
+            'ip' => $info->ip,
+            'active' => $info->active,
+          ];
+        }
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+      $json = [
+        'data' => [
+          'results'    => $results,
+          'pagination' => $pagination,
+          'page'       => $page,
+        ]
+      ];
+      return $this->respondWithCollectionPagination($json);
+    }
+
+    public function changeStatus(Request $request) {
+      $formData = $request->all();
+      if ($result = $this->ResIpSv->apiChangeStatus($formData)) {
+          return $this->respondUpdated($result);
+      }
+      return $this->respondBadRequest();
     }
 }

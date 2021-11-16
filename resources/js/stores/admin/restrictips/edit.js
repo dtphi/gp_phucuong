@@ -141,7 +141,6 @@ export default {
       commit(INFOS_MODAL_SET_LOADING, isLoading);
     },
 
-    // UPDATE GIAO HAT
     [ACTION_UPDATE_INFO]({
       dispatch,
       commit

@@ -87,6 +87,8 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('giao-phan/tin-tucs', 'GiaoPhanTinTucController');
     Route::get('/tin-tucs/dropdowns', 'GiaoPhanTinTucController@dropdown');
     Route::apiResource('restrict-ips', 'RestrictIpController');
+    Route::get('search-ips','RestrictIpController@search');
+    Route::post('change-status-ips','RestrictIpController@changeStatus');
 
 
     Route::any('/mmedia/{any}', function () {
