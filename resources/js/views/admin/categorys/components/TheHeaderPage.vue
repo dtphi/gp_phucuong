@@ -41,6 +41,9 @@
     import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'CategoryHeaderPage',
@@ -52,13 +55,13 @@
         methods: {
             ...mapActions(MODULE_NEWS_CATEGORY, [ACTION_GET_NEWS_GROUP_LIST]),
         	_pushAddPage() {
-        		this.$router.push(`/admin/news-categories/add`);
+        		this.$router.push(`/${config.adminPrefix}/news-categories/add`);
         	},
             _refreshList() {
                 this[ACTION_GET_NEWS_GROUP_LIST]();
             },
             _redirectUrl() {
-                return fn_redirect_url(`admin/news-categories/add`);
+                return fn_redirect_url(`${config.adminPrefix}/news-categories/add`);
             },
         },
         setting: {

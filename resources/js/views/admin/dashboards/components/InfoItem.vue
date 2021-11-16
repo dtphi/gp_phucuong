@@ -21,6 +21,9 @@
         fn_get_base_url_image,
         fn_format_dd_mm_yyyy
     } from '@app/api/utils/fn-helper';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'InfoItem',
@@ -45,7 +48,7 @@
         },
         methods: {
             _getHref() {
-                return `/admin/informations/edit/${this.info.information_id}`;
+                return `/${config.adminPrefix}/informations/edit/${this.info.information_id}`;
             },
             _getImgUrl() {
                 return fn_get_base_url_image(this.info.image);

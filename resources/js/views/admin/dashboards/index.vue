@@ -11,7 +11,7 @@
                             <h2 class="pull-right">{{userTotal}}</h2>
                         </div>
                         <div class="tile-footer">
-                            <a href="/admin/users">Xem Thành viên...</a>
+                            <a :href="_gettUrl('users')">Xem Thành viên...</a>
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="tile-footer">
-                            <a href="/admin/news-categories">Xem Nhóm Tin...</a>
+                            <a :href="_gettUrl('news-categories')">Xem Nhóm Tin...</a>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="tile-footer">
-                            <a href="/admin/informations">Xem Tin...</a></div>
+                            <a :href="_gettUrl('informations')">Xem Tin...</a></div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6">
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="tile-footer">
-                            <a href="/admin/giao-phans">Xem Giáo Phận...</a></div>
+                            <a :href="_gettUrl('giao-phans')">Xem Giáo Phận...</a></div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6">
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="tile-footer">
-                            <a href="/admin/linh-mucs">Xem Linh Mục...</a></div>
+                            <a :href="_gettUrl('linh-mucs')">Xem Linh Mục...</a></div>
                     </div>
                 </div>
             </div>
@@ -129,6 +129,9 @@
         ACTION_GET_USER_LIST,
     } from 'store@admin/types/action-types';
     import InfoItem from './components/InfoItem';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'DashboardPage',
@@ -173,6 +176,9 @@
                 'ACTION_GET_INFO_GIAO_PHAN_LIST',
                 'ACTION_GET_INFO_LINH_MUC_LIST'
             ]),
+            _gettUrl(path) {
+                return `/${config.adminPrefix}/${path}`;
+            }
         },
         setting: {
             title: 'News Groups List'

@@ -49,6 +49,9 @@
     import {
         ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'LinhMucHeaderPage',
@@ -68,7 +71,7 @@
                 'getInfoList': ACTION_GET_INFO_LIST
             }),
             _pushAddPage() {
-                this.$router.push(`/admin/linh-mucs/add`);
+                this.$router.push(`/${config.adminPrefix}/linh-mucs/add`);
             },
             _refreshList() {
                 const params = {

@@ -19,10 +19,10 @@
                                         <input id="numberPhone" class="form-control" type="text" value="" placeholder="Số điện thoại"/>
                                     </div>
                                     <div class="clearfix" style="margin: 15px;"></div>
+                                    <div style="margin: 15px;" id="recaptcha-container"></div>
                                     <div>
-                                        <button onClick="sendOTP()" class="btn btn-success btn-block">Gửi OTP</button>
+                                        <button onClick="sendOTP()" class="btn btn-success btn-block" id="send-otp">Gửi OTP</button>
                                     </div>
-                                    <div id="recaptcha-container"></div>
                                 </div>
                                 <div id="user-info-varify" style="margin: 15px;">
                                     <div id="varify">
@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="clearfix" style="margin: 15px;"></div>
                                     <div>
-                                        <button onClick="verifyOTP()" class="btn btn-success btn-block" disabled>Đăng nhập OTP</button>
+                                        <button onClick="verifyOTP()" class="btn btn-success btn-block" id="verify-otp-login" disabled>Đăng nhập OTP</button>
                                     </div>
                                 </div>
                             </div>

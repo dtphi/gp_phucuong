@@ -11,6 +11,9 @@
     import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'TheButtonAdd',
@@ -22,7 +25,7 @@
         },
         methods: {
             _redirectUrl() {
-                return fn_redirect_url('admin/linh-mucs/add');
+                return fn_redirect_url(`${config.adminPrefix}/linh-mucs/add`);
             }
         }
     };

@@ -22,6 +22,9 @@
     import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'TheButtonEdit',
@@ -53,7 +56,7 @@
                 }
             },
             _redirectUrl() {
-                return fn_redirect_url(`admin/informations/edit/${this.infoId}`);
+                return fn_redirect_url(`${config.adminPrefix}/informations/edit/${this.infoId}`);
             }
         }
     };

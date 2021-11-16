@@ -69,6 +69,10 @@
     import {
         INFOS_SET_INFO_LIST,
     } from 'store@admin/types/mutation-types';
+    import {
+        config
+    } from '@app/common/config';
+
     export default {
         name: 'RestrictIpHeaderPage',
         components: {
@@ -107,7 +111,7 @@
                 return (!str || /^\s*$/.test(str));
             },
             _pushAddPage() {
-                this.$router.push(`/admin/restrict-ips/add`);
+                this.$router.push(`/${config.adminPrefix}/restrict-ips/add`);
             },
             _refreshList() {
                 const params = {

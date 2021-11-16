@@ -1,3 +1,7 @@
+const envBuild = process.env.NODE_ENV;
+var pathArray = process.env.MIX_APP_ADMIN_API_ROUTE_LOGIN.split(",");
+var _adminPathName = (envBuild === "production")?pathArray[0]:"adminlocal";
+
 export const config = {
 	site_name: 'GP-PhuCuong',
 	carouselLimit: 5,
@@ -15,5 +19,28 @@ export const config = {
         base: "glyphicon",
         up: "glyphicon-chevron-up",
         down: "glyphicon-chevron-down"
-      },
+    },
+    slashDir: "/",
+    adminPrefix: _adminPathName,
+    adminRoute: {
+        login: {
+            path: 'login',
+            name: _adminPathName + '.auth.login'
+        },
+        phone_verify: {
+            path: 'phone-verify',
+            name: _adminPathName + '.auth.login.phone.verify'
+        },
+        dashboard: {
+            path: 'dashboards',
+            name: _adminPathName + '.dashboards'
+        },
+        redirectLogedUrl: _adminPathName + "/dashboards",
+        redirectLogoutUrl: _adminPathName + "/login",
+        redirectPhoneLoginUrl: _adminPathName + "/phone-verify",
+        storageLinhMucExpectSignInKey: 'linhMuc.expectSignIn',
+        storageLinhMucExpectSignInPhoneKey: 'linhMuc.expectSignInPhone',
+        history: true,
+        mode: 'history'
+    }
 };

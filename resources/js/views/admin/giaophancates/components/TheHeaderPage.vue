@@ -41,6 +41,9 @@
     import {
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'GiaoPhanDanhMucHeaderPage',
@@ -52,13 +55,13 @@
         methods: {
             ...mapActions(MODULE_MODULE_DANHMUC_GIAOPHAN, [ACTION_GET_NEWS_GROUP_LIST]),
         	_pushAddPage() {
-        		this.$router.push(`/admin/giao-phan/danh-mucs/add`);
+        		this.$router.push(`/${config.adminPrefix}/giao-phan/danh-mucs/add`);
         	},
             _refreshList() {
                 this[ACTION_GET_NEWS_GROUP_LIST]();
             },
             _redirectUrl() {
-                return fn_redirect_url(`admin/giao-phan/danh-mucs/add`);
+                return fn_redirect_url(`${config.adminPrefix}/giao-phan/danh-mucs/add`);
             },
         },
         setting: {

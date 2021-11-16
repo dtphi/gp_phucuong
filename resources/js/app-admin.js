@@ -1,25 +1,9 @@
 require('./bootstrap');
+
+import {
+    config
+} from './common/config';
 window.Pusher = {};//require('pusher-js');
-window.axios.interceptors.response.use(function (response) {
-    if(_.includes([403], response.data.code) && !(_.includes(["/admin/dashboards"], window.location.pathname))) {
-        window.location = '/admin/dashboards';
-        alert('Tính năng đang phát triển');
-        return Promise.reject(response.data.message);
-    }
-    return response;
-    }, function (error) {
-        if (error.response) {
-            if((_.includes([401,419], error.response.status)) 
-                && !(_.includes(["/admin", "/admin/", "/admin/login", "/admin/login/"], window.location.pathname))) {
-                window.location.reload();
-            };
-            if(_.includes([403, 500], error.response.status)) {
-                window.location = '/admin/dashboards';
-                alert('Tính năng đang phát triển');
-                return Promise.reject(response.data.message);
-            }
-        }
-});
 
 import Vue from 'vue';
 import store from 'store@admin';
@@ -31,8 +15,8 @@ window.vue = Vue;
 require('./views/admin/App');
 
 const router = new Router({
-    history: true,
-    mode: 'history',
+    history: config.adminRoute.history,
+    mode: config.adminRoute.mode,
     routes: [
         ...routes
     ]
@@ -43,25 +27,25 @@ router.beforeEach(async (to, from, next) => {
     document.title = to.meta.title;
 
     if (store.state.auth.authenticated) {
-        if (to.name === "admin.auth.login") {
-            window.location = window.origin + '/' + store.state.auth.redirectUrl;
+        if (to.name === config.adminRoute.login.name) {
+            window.location.href = store.state.auth.redirectUrl;
             return;
         } else {
             if (envBuild === "production") {
                 if (store.state.auth.linhMucExpectSignIn) {
-                    if (to.name === "admin.auth.login.phone.verify") {
-                        window.location = window.origin + '/' + store.state.auth.redirectUrl;
+                    if (to.name === config.adminRoute.phone_verify.name) {
+                        window.location.href = store.state.auth.redirectUrl;
                         return;
                     } else {
                         next();
                         return;
                     }
                 } else {
-                    if (to.name === "admin.auth.login.phone.verify") {
+                    if (to.name === config.adminRoute.phone_verify.name) {
                         next();
                         return;
                     } else {
-                        window.location = window.origin + '/' + store.state.auth.redirectPhoneLoginUrl;
+                        window.location.href = store.state.auth.redirectPhoneLoginUrl;
                         return;
                     }
                 }
@@ -71,11 +55,11 @@ router.beforeEach(async (to, from, next) => {
             }
         }
     } else {
-        if (to.name === "admin.auth.login") {
+        if (to.name === config.adminRoute.login.name) {
             next();
             return;
         } else {
-            window.location = window.origin + '/' + store.state.auth.redirectLogoutUrl;
+            window.location.href = store.state.auth.redirectLogoutUrl;
             return;
         }
     }
@@ -117,6 +101,43 @@ if (envBuild == 'development') {
     console.log('ENV:', envBuild);
     console.log('STORE:', store);
     console.log('ROUTE:', routes);
+}
+
+if (envBuild === "production") {
+    var loginUriMap = process.env.MIX_APP_ADMIN_API_ROUTE_LOGIN;
+    var pathLoginArray = [];
+    var pathDashboardArray = [];
+    if (loginUriMap) {
+        var pathArray = loginUriMap.split(",");
+        pathDashboardArray.push(config.slashDir + pathArray[0] + config.slashDir + config.adminRoute.dashboard.path);
+        pathDashboardArray.push(config.slashDir + pathArray[0] + config.slashDir + config.adminRoute.dashboard.path + config.slashDir);
+            
+        // Display array values on page
+        for(var i = 0; i < pathArray.length; i++){
+            pathLoginArray.push(config.slashDir + pathArray[i]);
+            pathLoginArray.push(config.slashDir + pathArray[i] + config.slashDir);
+        }
+    }
+    if (pathLoginArray.length === 0) {
+        window.axios.interceptors.response.use(function (response) {
+            if(_.includes([403], response.data.code) && !(_.includes(pathDashboardArray, window.location.pathname))) {
+                window.location.href = window.location.origin;
+                return Promise.reject(response.data.message);
+            }
+            return response;
+            }, function (error) {
+                if (error.response) {
+                    if((_.includes([401,419], error.response.status)) 
+                        && !(_.includes(pathLoginArray, window.location.pathname))) {
+                        window.location.reload();
+                    };
+                    if(_.includes([403, 500], error.response.status)) {
+                        window.location.href = window.location.origin;
+                        return Promise.reject(response.data.message);
+                    }
+                }
+        });
+    }
 }
 
 store.dispatch('auth/admin', {

@@ -240,13 +240,16 @@
         ACTION_GET_NEWS_GROUP_BY_ID,
         ACTION_RESET_NOTIFICATION_INFO
     } from 'store@admin/types/action-types';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'CategoryEditPage',
         beforeCreate() {
             const cateId = this.$route.params.categoryId;
             if (!cateId) {
-                window.location = window.origin + '/admin/news-categories';
+                window.location.href = window.origin + `/${config.adminPrefix}/news-categories`;
             }
         },
         components: {

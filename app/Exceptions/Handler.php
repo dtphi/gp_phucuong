@@ -33,7 +33,8 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            
+            if (fn_is_prod_env())
+                abort(500);
         });
     }
 }

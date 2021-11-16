@@ -12,6 +12,9 @@
 
 <script>
     import {
+        config
+    } from '@app/common/config';
+    import {
     	fn_get_base_url,
         fn_redirect_url
     } from '@app/api/utils/fn-helper';
@@ -33,15 +36,15 @@
         },
         methods: {
             _pushEditPage() {
-                this.$router.push(`/admin/news-categories/edit/${this.categoryId}`)
+                this.$router.push(`/${config.adminPrefix}/news-categories/edit/${this.categoryId}`)
             },
 
             _redirectUrl() {
-                return fn_redirect_url(`admin/news-categories/edit/${this.categoryId}`);
+                return fn_redirect_url(`${config.adminPrefix}/news-categories/edit/${this.categoryId}`);
             },
 
             _getHref() {
-            	return fn_get_base_url() + `/admin/news-categories/edit/${this.categoryId}`;
+            	return fn_get_base_url() + `/${config.adminPrefix}/news-categories/edit/${this.categoryId}`;
             }
         }
     };

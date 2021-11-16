@@ -49,6 +49,9 @@
     import {
         ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'GiaoXuHeaderPage',
@@ -68,7 +71,7 @@
                 'getInfoList': ACTION_GET_INFO_LIST
             }),
             _pushAddPage() {
-                this.$router.push(`/admin/giao-xus/add`);
+                this.$router.push(`/${config.adminPrefix}/giao-xus/add`);
             },
             _refreshList() {
                 const params = {

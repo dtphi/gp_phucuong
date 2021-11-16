@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RestrictIp extends BaseModel
 {
+  use SoftDeletes;
+  
   protected $fillable = [
     'ip',
     'active',

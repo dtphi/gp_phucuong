@@ -19,18 +19,21 @@ const options = {
   login: 'login',
   logout: 'logout'
 };
+import {
+  config
+} from '@app/common/config';
 
-const linhMucExpectSignIn = localStorage.getItem('linhMuc.expectSignIn');
-const linhMucExpectSignInPhone = localStorage.getItem('linhMuc.expectSignInPhone');
+const linhMucExpectSignIn = localStorage.getItem(config.adminRoute.storageLinhMucExpectSignInKey);
+const linhMucExpectSignInPhone = localStorage.getItem(config.adminRoute.storageLinhMucExpectSignInPhoneKey);
 
 export default {
   namespaced: true,
   state: {
     authenticated: false,
     user: null,
-    redirectUrl: 'admin/dashboards',
-    redirectLogoutUrl: 'admin/login',
-    redirectPhoneLoginUrl: 'admin/phone-verify',
+    redirectUrl: window.location.origin + config.slashDir + config.adminRoute.redirectLogedUrl,
+    redirectLogoutUrl: window.location.origin + config.slashDir + config.adminRoute.redirectLogoutUrl,
+    redirectPhoneLoginUrl: window.location.origin + config.slashDir + config.adminRoute.redirectPhoneLoginUrl,
     linhMucExpectSignIn: linhMucExpectSignIn,
     linhMucExpectSignInPhone: linhMucExpectSignInPhone,
     errors: []
@@ -108,13 +111,13 @@ export default {
     redirectLoginSuccess({
       state
     }) {
-      window.location = window.location.origin + '/' + state.redirectUrl;
+      window.location.href = state.redirectUrl;
     },
 
     redirectLogoutSuccess({
       state
     }) {
-      window.location = window.location.origin + '/' + state.redirectLogoutUrl;
+      window.location.href = state.redirectLogoutUrl;
     }
   }
 }

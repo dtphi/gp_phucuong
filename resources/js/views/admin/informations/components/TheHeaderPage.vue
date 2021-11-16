@@ -48,6 +48,9 @@
     import {
         ACTION_GET_INFO_LIST
     } from 'store@admin/types/action-types';
+    import {
+        config
+    } from '@app/common/config';
 
     export default {
         name: 'InformationHeaderPage',
@@ -65,7 +68,7 @@
                 'getInfoList': ACTION_GET_INFO_LIST
             }),
             _pushAddPage() {
-                this.$router.push(`/admin/informations/add`);
+                this.$router.push(`/${config.adminPrefix}/informations/add`);
             },
             _refreshList() {
                 const params = {
