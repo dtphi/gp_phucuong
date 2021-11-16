@@ -173,11 +173,7 @@ final class RestrictIpService implements BaseModel, RestrictIpModel
     public function apiChangeStatus($data = [])
     {
       $id = $data['id'];
-      if($data['status'] == 0) {
-        $data['active'] = 1;
-      }else {
-        $data['active'] = 0;
-      }
+      $data['active'] = (int)$data['status'];
       $this->model = $this->model->findOrFail($id);
       $this->model->fill($data);
       DB::beginTransaction();
