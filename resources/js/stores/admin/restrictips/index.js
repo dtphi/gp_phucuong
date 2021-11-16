@@ -3,6 +3,8 @@ import edits from './edit';
 import {
   apiGetAllRestrictIp,
   apiDeleteResIp,
+  apiSearchResIp,
+  apiChangeStatus,
 } from 'api@admin/restrictip';
 import {
   MODULE_MODULE_RESTRICT_IP,
@@ -24,7 +26,9 @@ import {
   ACTION_GET_INFO_LIST,
   ACTION_DELETE_RESTRICT_IP_BY_ID,
   ACTION_SET_LOADING,
-  ACTION_RESET_NOTIFICATION_INFO
+  ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_SEARCH_ITEMS,
+  ACTION_CHANGE_STATUS
 } from '../types/action-types';
 import {
   fn_redirect_url
@@ -152,12 +156,24 @@ export default {
 			await apiDeleteResIp(infoId,
 				(results) => {
           commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, true)
-          dispatch(ACTION_GET_INFO_LIST)
+          //dispatch(ACTION_GET_INFO_LIST)
         },
         (errors) => {
           commit(INFOS_SET_INFO_DELETE_BY_ID_FAILED, false);
         }
       );
+    },
+
+    [ACTION_CHANGE_STATUS]({
+      dispatch,
+    }, info) {
+      apiChangeStatus(info,
+        (result) => {
+          //dispatch(ACTION_GET_INFO_LIST, { perPage: info.perPage });
+        },
+        (errors) => {
+        }
+      )
     },
 
     ACTION_RELOAD_GET_INFO_LIST_RESTRICT_IP: {
@@ -169,6 +185,20 @@ export default {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }
       }
+    },
+    /* ACTION SEARCH IP */
+     [ACTION_SEARCH_ITEMS]({
+      commit
+     }, query) {
+       apiSearchResIp(
+         (response) => {
+          commit(INFOS_SET_INFO_LIST, response.data.results);
+        },
+        (errors) => {
+          commit(INFOS_GET_INFO_LIST_FAILED, errors);
+        },
+        query,
+      );
     },
 
     [ACTION_SET_LOADING]({

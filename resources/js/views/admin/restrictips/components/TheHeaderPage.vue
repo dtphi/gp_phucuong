@@ -26,7 +26,23 @@
                     <perpage></perpage>
                 </li>
                 <li>
-                    <list-search></list-search>
+                    <ul class="cms-breadcrumb">
+                      <li>
+                          <input v-model="query"
+                              type="text"
+                              class="form-control"
+                              placeholder="Search"
+                              aria-describedby="basic-addon2"/>
+                      </li>
+                      <li>
+                          <button class="btn btn-primary btn-search"
+                              @click="preApiCall"
+                              @keyup.enter="preApiCall"
+                              type="button">
+                              Search
+                          </button>
+                      </li>
+                  </ul>
                 </li>
             </ul>
         </div>
@@ -36,37 +52,60 @@
 <script>
     import {
         mapState,
-        mapActions
+        mapActions,
+        mapMutations
     } from 'vuex';
     import BtnAdd from './TheBtnAdd';
     import Perpage from 'com@admin/Pagination/SelectPerpage';
-    import ListSearch from 'com@admin/Search';
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
         MODULE_MODULE_RESTRICT_IP,
     } from 'store@admin/types/module-types';
 
     import {
-        ACTION_GET_INFO_LIST
+        ACTION_GET_INFO_LIST,
+        ACTION_SEARCH_ITEMS
     } from 'store@admin/types/action-types';
-
+    import {
+        INFOS_SET_INFO_LIST,
+    } from 'store@admin/types/mutation-types';
     export default {
         name: 'RestrictIpHeaderPage',
         components: {
             BtnAdd,
             Perpage,
-            ListSearch,
             Breadcrumb
+        },
+        data() {
+          return {
+            query: '',
+            searchItemsSource:''
+          }
         },
         computed: {
             ...mapState({
                 perPage: state => state.cfApp.perPage
             }),
         },
+        watch: {
+          query: {
+            handler: _.debounce(function () {
+                this.preApiCall()
+            }, 100)
+          }
+        },
         methods: {
             ...mapActions(MODULE_MODULE_RESTRICT_IP, {
-                'getInfoList': ACTION_GET_INFO_LIST
+                'getInfoList': ACTION_GET_INFO_LIST,
+                'searchItems': ACTION_SEARCH_ITEMS,
             }),
+            ...mapMutations(MODULE_MODULE_RESTRICT_IP, {
+              'setResIp': INFOS_SET_INFO_LIST,
+            }),
+
+            isBlank(str) {
+                return (!str || /^\s*$/.test(str));
+            },
             _pushAddPage() {
                 this.$router.push(`/admin/restrict-ips/add`);
             },
@@ -74,8 +113,20 @@
                 const params = {
                     perPage: this.perPage
                 };
-                this.getInfoList();
-            }
+                this.getInfoList(params);
+            },
+            preApiCall() {
+              this.apiCall(this.query);
+            },
+
+            apiCall(query) {          
+              if(!this.isBlank(query)) {
+                this.searchItems(query);
+                }else {
+                  this._refreshList();
+                }
+              }
+                
         },
         setting: {
             title: 'Restrict Ip',

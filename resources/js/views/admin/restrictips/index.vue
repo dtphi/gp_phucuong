@@ -34,7 +34,7 @@
                         <th style="width: 10%" class="text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody v-if="_infoList.length">
                       <item
                         v-for="(item, index) in _infoList"
                         :info="item"
@@ -87,18 +87,18 @@ export default {
         this._notificationUpdate(newValue);
       }
     },
+
+
   },
   computed: {
     ...mapState({
       perPage: (state) => state.cfApp.perPage,
     }),
-    ...mapGetters(["isNotEmptyList"]),
-    ...mapState(MODULE_MODULE_RESTRICT_IP, ["infos", "loading", "updateSuccess"]),
+    ...mapGetters(MODULE_MODULE_RESTRICT_IP, ["infos"]),
+    ...mapState(MODULE_MODULE_RESTRICT_IP, ["loading", "updateSuccess"]),
+
     _infoList() {
       return this.infos;
-    },
-    _notEmpty() {
-      return this.isNotEmptyList;
     },
   },
   methods: {
@@ -106,11 +106,13 @@ export default {
        'getInfoList': ACTION_GET_INFO_LIST,
        'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
     }),
+
     _submitAction(event) {
       this[event.target.value]({
         action: event.target.value,
       });
     },
+
     _notificationUpdate(notification) {
       this.$notify(notification);
       this.resetNotification();

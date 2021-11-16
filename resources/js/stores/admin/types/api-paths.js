@@ -28,3 +28,5 @@ export const API_LECHINHS_RESOURCE = '/api/le-chinhs';
 export const API_DANHMUCS_GIAOPHAN_RESOURCE = '/api/giao-phan/danh-mucs';
 export const API_TINTUCS_GIAOPHAN_RESOURCE = '/api/giao-phan/tin-tucs';
 export const API_RESTRICT_IPS_RESOURCE = '/api/restrict-ips';
+export const API_RESTRICT_IPS_SEARCH_RESOURCE = '/api/search-ips';
+export const API_CHANGE_STATUS_IP = '/api/change-status-ips';

@@ -58,7 +58,6 @@ final class RestrictIpService implements BaseModel, RestrictIpModel
             DB::rollBack();
             return false;
         }
-
         DB::commit();
 
         return $this->model;
@@ -149,4 +148,44 @@ final class RestrictIpService implements BaseModel, RestrictIpModel
     {
       RestrictIp::fcDeleteById($id);
     }
-}
+
+    public function apiGetSearch(array $options = [], $limit = 5, $queryIps = '')
+    {
+      // TODO: Implement apiGetList() method.
+      $query = $this->apiGetRestrictIpsWithSearch($options, $limit, $queryIps);
+      // get all list giaohat with perPage = -1
+      if ($limit == -1) {
+        $results = $query->get();
+        return new \Illuminate\Pagination\LengthAwarePaginator($results, $results->count(), -1);
+      } else {
+        return $query->paginate($limit);
+      }
+    }
+
+    public function apiGetRestrictIpsWithSearch($data = array(), $limit = 5, $queryIps)
+    {
+      $query = $this->model->select()->where('ip', 'like', '%' . $queryIps . '%')
+      ->orWhere('active', 'like', '%' . $queryIps . '%')->orderBy('id', 'DESC');
+      return $query;
+    }
+
+    //apiChangeStatus
+    public function apiChangeStatus($data = [])
+    {
+      $id = $data['id'];
+      if($data['status'] == 0) {
+        $data['active'] = 1;
+      }else {
+        $data['active'] = 0;
+      }
+      $this->model = $this->model->findOrFail($id);
+      $this->model->fill($data);
+      DB::beginTransaction();
+      if (!$this->model->save()) {
+        DB::rollBack();
+        return false;
+      }
+      DB::commit();
+      return $this->model;
+    }
+  }
