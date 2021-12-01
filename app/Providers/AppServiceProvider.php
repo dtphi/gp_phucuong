@@ -133,6 +133,14 @@ class AppServiceProvider extends ServiceProvider
       \App\Http\Controllers\Api\Admin\Services\Contracts\RestrictIpModel::class,
       \App\Http\Controllers\Api\Admin\Services\RestrictIpService::class,
     );
+    $this->app->bind(
+      \App\Http\Controllers\Api\Admin\Services\Contracts\AlbumsModel::class,
+      \App\Http\Controllers\Api\Admin\Services\AlbumsService::class,
+    );
+    $this->app->bind(
+      \App\Http\Controllers\Api\Admin\Services\Contracts\GroupAlbumsModel::class,
+      \App\Http\Controllers\Api\Admin\Services\GroupAlbumsService::class,
+    );
   }
 
   private function __bindFrontService()

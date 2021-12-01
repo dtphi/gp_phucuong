@@ -25,6 +25,7 @@ import thanh from './thanhs';
 import chuc_vu from './chucvus';
 import le_chinh from './lechinhs';
 import restrict_ip from './restrictips';
+import albums from './albums';
 import danhmuc_giaophan from './giaophandanhmucs';
 import tintuc_giaophan from './giaophantintucs';
 import createLogger from '../../plugins/logger';
@@ -180,6 +181,7 @@ export default new Vuex.Store({
     danhmuc_giaophan,
     tintuc_giaophan,
     restrict_ip,
+    albums,
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []
