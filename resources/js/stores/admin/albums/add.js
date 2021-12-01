@@ -1,24 +1,19 @@
 import AppConfig from 'api@admin/constants/app-config';
+import { v4 as uuidv4 } from 'uuid';
 import {
-  apiInsertInfoGiaoXu,
-} from 'api@admin/giaoxu';
+  apiInsertInfoAlbums,
+} from 'api@admin/albums';
 import {
-  apiGetGiaoHatInfos,
-} from 'api@admin/giaohat';
+  apiGetGroupAlbums,
+} from 'api@admin/groupalbums';
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
   INFOS_MODAL_INSERT_INFO_FAILED,
   INFOS_MODAL_SET_ERROR,
-  INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
-  INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
-  INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
   INFOS_FORM_SET_MAIN_IMAGE,
-  INFOS_FORM_SET_DROPDOWN_RELATED_LIST,
-  INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS,
-  INFOS_FORM_GET_DROPDOWN_RELATED_FAILED,
-  INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED,
   INFOS_GET_INFO_LIST_FAILED,
+  MODULE_UPDATE_SET_KEYS_DATA
 } from '../types/mutation-types';
 import {
   ACTION_SET_LOADING,
@@ -26,8 +21,12 @@ import {
   ACTION_INSERT_INFO_BACK,
   ACTION_SET_IMAGE,
   ACTION_RESET_NOTIFICATION_INFO,
-  ACTION_GET_INFO_LIST
+  ACTION_GET_SETTING,
 } from '../types/action-types';
+
+const infoAlbumsImage = {
+  value: []
+}
 
 const defaultState = () => {
   return {
@@ -36,35 +35,29 @@ const defaultState = () => {
     classShow: 'modal fade',
     styleCss: '',
 		info: {
-			image: '',
-      date_available: null,
-      dia_chi: '',
-      dien_thoai: '',
-      email: '',
-      active: 1,
-      dan_so: '',
-      so_tin_huu: '',
-      gio_le: '',
-      viet: null,
-      latin: null,
-      noi_dung: null,
-      type: 'giaoxu',
-      giao_hat_id: null,
+      albums_name: '',
+      group_albums_id: null,
+      status: 1,
+      sort_id: 1,
+      albums_images: [],
+			image: {
+        basename: "",
+        dirname: "",
+        extension: "",
+        filename: "",
+        path: "",
+        size: 0,
+        thumb: "", //url thumb
+        timestamp: null,
+        type: null
+      },
     },
-    isGetInfoList: null,
-    listGiaoHat: [],
+    list_group_albums: [],
     isImgChange: true,
-    listCategorysDisplay: [],
-    listRelatedsDisplay: [],
-    dropdownsRelateds: [],
-    infoRelated: {
-      information_id: 0,
-      name: ''
-    },
-    infoId: 0,
     loading: false,
     insertSuccess: false,
-    errors: []
+    errors: [],
+    infoAlbumsImage: infoAlbumsImage,
   }
 }
 
@@ -90,27 +83,15 @@ export default {
     isError(state) {
       return state.errors.length
     },
-    isGiaoHat(state) {
-      return state.listGiaoHat;
+    isGroupAlbums(state) {
+      return state.list_group_albums;
+    },
+    infoAlbumsImage(state) {
+      return state.infoAlbumsImage;
     }
   },
 
   mutations: {
-    [INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED](state, payload) {
-      state.infoRelated = payload;
-    },
-
-    [INFOS_FORM_SET_DROPDOWN_RELATED_LIST](state, payload) {
-      state.dropdownsRelateds = payload;
-    },
-
-    [INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS](state, payload) {
-
-    },
-    [INFOS_FORM_GET_DROPDOWN_RELATED_FAILED](state, payload) {
-
-    },
-
     [INFOS_MODAL_SET_LOADING](state, payload) {
       state.loading = payload
     },
@@ -127,36 +108,58 @@ export default {
       state.errors = payload
     },
 
-    [INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST](state, payload) {
-      state.info.categorys = payload
-    },
-
-    [INFOS_FORM_ADD_INFO_TO_RELATED_LIST](state, payload) {
-      state.info.relateds = payload
-    },
-
-    [INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST](state, payload) {
-      state.listRelatedsDisplay = payload
-    },
-
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload;
       state.isImgChange = true;
     },
-    INFO_GIAO_HAT(state, payload) {
-      state.listGiaoHat = payload;
+    INFO_GROUP_ALBUMS(state, payload) {
+      state.list_group_albums = payload;
     },
-    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
-      state.isGetInfoList = payload
-    },
+    [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
+      state.infoAlbumsImage.value = payload;
+    }
   },
 
   actions: {
-    // GET LIST GIAO HAT
-    ACTION_GET_LIST_GIAO_HAT({ commit }, params) {
-      apiGetGiaoHatInfos(
+    pushInfoAlbumsImage({state}, value) {
+      const data = {
+        id: uuidv4(),
+        status: 1,
+        open: 0,
+        image: value.filePath,
+        width: 700,
+        height: 450,
+      };
+      state.infoAlbumsImage.value.push(data);
+    },
+
+    removeInfoAlbumsImage({state}, banner) {
+      console.log(banner, 'banner');
+      let banners = state.infoAlbumsImage.value;
+      if(state.infoAlbumsImage.value.length > 0) {
+        state.infoAlbumsImage.value = _.remove(banners, function(item) {
+          return !(item.id == banner.id);
+        })
+      }
+    },
+
+    update_info_albums_image({state}, albumsImage) {
+      state.info.albums_images = albumsImage;
+    },
+
+    [ACTION_GET_SETTING]({
+      commit
+    }, albumsImage) {
+      if (albumsImage.length) {
+        commit(MODULE_UPDATE_SET_KEYS_DATA, albumsImage);
+      }
+    },
+
+    // GET LIST GROUP ALBUMS
+    ACTION_GET_LIST_GROUP_ALBUMS({ commit }, params) {
+      apiGetGroupAlbums(
         (infos) => {
-          commit('INFO_GIAO_HAT', infos.data.results);
+          commit('INFO_GROUP_ALBUMS', infos.data.results);
         },
         (errors) => {
           commit(INFOS_GET_INFO_LIST_FAILED, errors)
@@ -165,19 +168,18 @@ export default {
       )
     },
 
-    // GET ACTION LOADING PAGE
     [ACTION_SET_LOADING]({
       commit
     }, isLoading) {
       commit(INFOS_MODAL_SET_LOADING, isLoading);
     },
 
-    // ACTION INSERT INFO GIAO XU
-    ACTION_INSERT_INFO_GIAOXU({
+    // ACTION INSERT ALBUMS
+    [ACTION_INSERT_INFO]({
       dispatch,
       commit
     }, info) {
-      apiInsertInfoGiaoXu(
+      apiInsertInfoAlbums(
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
@@ -194,11 +196,11 @@ export default {
       dispatch,
       commit
     }, info) {
-      apiInsertInfoGiaoXu(
+      apiInsertInfoAlbums(
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAO_XU', 'page', {
+          dispatch('ACTION_RELOAD_GET_INFO_LIST_ALBUMS', 'page', {
             root: true
           });
         },

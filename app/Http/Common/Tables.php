@@ -59,6 +59,8 @@ final class Tables
     public static $giao_diems = DB_PREFIX . 'giao_diems';
     public static $personal_access_tokens = DB_PREFIX . 'personal_access_tokens';
     public static $restrict_ips = 'restrict_ips';
+    public static $albums = DB_PREFIX . 'albums';
+    public static $group_albums = DB_PREFIX . 'group_albums';
 
     public static $infoStatus = [
         'Ẩn',
@@ -167,6 +169,10 @@ final class Tables
     public static $giaoHatAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_HAT;
     const PREFIX_ALLOW_GIAO_XU = 'giao.xu';
     public static $giaoXuAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_XU;
+    const PREFIX_ALLOW_GROUP_ALBUMS = 'group.albums';
+    public static $groupAlbumsAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GROUP_ALBUMS;
+    const PREFIX_ALLOW_ALBUMS = 'albums';
+    public static $albumsAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_ALBUMS;
     const PREFIX_ALLOW_GIAO_DIEM = 'giao.diem';
     public static $giaoDiemAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_DIEM;
     const PREFIX_ALLOW_LE_CHINH = 'le.chinh';

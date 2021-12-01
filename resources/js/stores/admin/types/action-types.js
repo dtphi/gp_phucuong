@@ -38,6 +38,8 @@ export const ACTION_UPDATE_INFO_SPECIAL = 'updateInfoSpecial';
 export const ACTION_GET_INFO_SPECIAL = 'getInfoSpecial';
 export const ACTION_DELETE_RESTRICT_IP_BY_ID = 'deleteRestrictIpById';
 export const ACTION_SEARCH_RESTRICT_IP = 'searchRestrictIp';
+export const ACTION_DELETE_ALBUMS_BY_ID = 'deleteAlbumsById';
+
 export const ACTION_SEARCH_ITEMS = 'searchItems';
 export const ACTION_CHANGE_STATUS = 'changeStatus';
 
