@@ -27,6 +27,8 @@ import FileManagerListPage from 'v@admin/filemanagers';
 import GiaoPhanInfosPage from 'v@admin/giaophaninfos';
 import GiaoPhanCatesPage from 'v@admin/giaophancates';
 import RestrictIpsPage from 'v@admin/restrictips';
+import AlbumsPage from 'v@admin/albums';
+import GroupAlbumsPage from 'v@admin/groupalbums';
 
 import {
     config
@@ -1237,6 +1239,162 @@ export default [{
               header: 'Sửa restrict ip',
               role: 'admin',
               title: 'Restrict IP | ' + config.site_name,
+              show: {
+                  footer: true
+              }
+          }
+      }]
+    },{
+      path: 'albums',
+      component: {
+        render: c => c('router-view')
+      },
+      children: [{
+        path: '',
+        component: AlbumsPage,
+        name: 'admin.albums',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Albums'
+          }],
+          header: 'Danh sách Albums',
+          role: 'admin',
+          title: 'Albums | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+      },{
+        path: 'add',
+        component: () =>
+          import('v@admin/albums/add'),
+        name: 'admin.albums.add',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Danh mục Albums',
+            linkName: 'admin.Albums.list',
+            linkPath: '/albums'
+          }, {
+            name: 'Thêm Albums'
+          }],
+          header: 'Thêm Albums',
+          role: 'admin',
+          title: 'Thêm Albums | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+    },{
+          path: 'edit/:infoId',
+          component: () => import ('v@admin/albums/edit'),
+          name: 'admin.albums.edit',
+          meta: {
+              layout: DefaultLayout,
+              auth: true,
+              breadcrumbs: [{
+                  name: 'Quản trị',
+                  linkName: 'admin.dashboards',
+                  linkPath: '/dashboards'
+              }, {
+                  name: 'Danh sách Albums',
+                  linkName: 'admin.albums.list',
+                  linkPath: '/albums'
+              }, {
+                  name: 'Sửa Albums'
+              }],
+              header: 'Sửa Albums',
+              role: 'admin',
+              title: 'Sửa Albums | ' + config.site_name,
+              show: {
+                  footer: true
+              }
+          }
+      }]
+    }, {
+      path: 'group-albums',
+      component: {
+        render: c => c('router-view')
+      },
+      children: [{
+        path: '',
+        component: GroupAlbumsPage,
+        name: 'admin.group.albums',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Group Albums'
+          }],
+          header: 'Danh sách Group albums',
+          role: 'admin',
+          title: 'Group albums | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+      },{
+        path: 'add',
+        component: () =>
+          import('v@admin/groupalbums/add'),
+        name: 'admin.group.albums.add',
+        meta: {
+          layout: DefaultLayout,
+          auth: true,
+          breadcrumbs: [{
+            name: 'Quản trị',
+            linkName: 'admin.dashboards',
+            linkPath: '/dashboards'
+          }, {
+            name: 'Danh mục Group albums',
+            linkName: 'admin.group.albums.list',
+            linkPath: '/group-albums'
+          }, {
+            name: 'Thêm Group albums'
+          }],
+          header: 'Thêm Group albums',
+          role: 'admin',
+          title: 'Thêm Group albums | ' + config.site_name,
+          show: {
+            footer: true
+          }
+        }
+    },{
+          path: 'edit/:infoId',
+          component: () => import ('v@admin/groupalbums/edit'),
+          name: 'admin.group.albums.edit',
+          meta: {
+              layout: DefaultLayout,
+              auth: true,
+              breadcrumbs: [{
+                  name: 'Quản trị',
+                  linkName: 'admin.dashboards',
+                  linkPath: '/dashboards'
+              }, {
+                  name: 'Danh sách group albums',
+                  linkName: 'admin.group.albums.list',
+                  linkPath: '/group-albums'
+              }, {
+                  name: 'Group albums'
+              }],
+              header: 'Sửa Group albums',
+              role: 'admin',
+              title: 'Group albums | ' + config.site_name,
               show: {
                   footer: true
               }

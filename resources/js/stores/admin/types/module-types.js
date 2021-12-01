@@ -83,6 +83,12 @@ export const MODULE_MODULE_TINTUC_GIAOPHAN_ADD = 'tintuc_giaophan/add';
 export const MODULE_MODULE_TINTUC_GIAOPHAN_EDIT = 'tintuc_giaophan/edit';
 export const MODULE_MODULE_TINTUC_GIAOPHAN_MODAL = 'tintuc_giaophan/modal';
 export const MODULE_TINTUC_GIAOPHAN_MODAL = 'tintuc_giaophan/modal';
+
 export const MODULE_MODULE_RESTRICT_IP = 'restrict_ip';
 export const MODULE_MODULE_RESTRICT_IP_ADD = 'restrict_ip/add';
 export const MODULE_MODULE_RESTRICT_IP_EDIT = 'restrict_ip/edit';
+
+export const MODULE_MODULE_ALBUMS = 'albums';
+export const MODULE_MODULE_ALBUMS_ADD = 'albums/add';
+export const MODULE_MODULE_ALBUMS_EDIT = 'albums/edit';
+export const MODULE_ALBUMS_MODAL = 'albums/modal';

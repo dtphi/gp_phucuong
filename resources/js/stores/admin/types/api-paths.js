@@ -30,3 +30,11 @@ export const API_TINTUCS_GIAOPHAN_RESOURCE = '/api/giao-phan/tin-tucs';
 export const API_RESTRICT_IPS_RESOURCE = '/api/restrict-ips';
 export const API_RESTRICT_IPS_SEARCH_RESOURCE = '/api/search-ips';
 export const API_CHANGE_STATUS_IP = '/api/change-status-ips';
+
+export const API_ALBUMS_RESOURCE = '/api/albums';
+export const API_ALBUMS_SEARCH_RESOURCE = '/api/search-albums';
+export const API_CHANGE_STATUS_ALBUMS = '/api/change-status-albums';
+
+export const API_GROUP_ALBUMS_RESOURCE = '/api/group-albums';
+export const API_GROUP_ALBUMS_SEARCH_RESOURCE = '/api/search-group-albums';
+export const API_CHANGE_STATUS_GROUP_ALBUMS = '/api/change-status-group-albums';
