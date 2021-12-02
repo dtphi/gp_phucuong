@@ -51,7 +51,7 @@ class AlbumsController extends ApiController
                     'status' => $info->status,
                     'sort_id' => $info->sort_id,
                     'imgThum' => url($this->getThumbnail($staticImgThum, 0, 40)),
-                    'name_group_albums' =>$info->groupAlbums->group_name ? $info->groupAlbums->group_name : '',
+                    'name_group_albums' => $info->groupAlbums ? $info->groupAlbums->group_name : '',
                 ];
             }
         } catch (HandlerMsgCommon $e) {

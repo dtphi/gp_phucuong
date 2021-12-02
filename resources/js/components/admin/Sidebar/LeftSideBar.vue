@@ -163,6 +163,24 @@
           </li>
         </ul>
       </li>
+      <li id="album">
+        <a class="parent">
+          <i class="fa fa-tags fa-fw"></i>
+          <span>{{ $options.setting.album_root_title }}</span></a
+        >
+        <ul class="collapse">
+          <li>
+            <a :href="_getHref('group-albums')">{{
+              $options.setting.group_albums_title
+            }}</a>
+          </li>
+          <li>
+            <a :href="_getHref('albums')">{{
+              $options.setting.albums_title
+            }}</a>
+          </li>
+        </ul>
+      </li>
       <li id="files" v-if="user.isAdmin">
         <a class="parent" :href="_getHref('filemanagers')"><i class="fa fa-file fw"></i><span>{{
           $options.setting.category_sub_image_title
@@ -314,6 +332,9 @@ export default {
     le_chinhs_title: "Lễ chính",
     giaophan_tintucs_title: "Giáo phận tin tức",
     restrict_ips_title: "Restrict ip",
+    album_root_title: "Album hình ảnh",
+    group_albums_title: "Nhóm Album",
+    albums_title: "Album"
   },
 };
 </script>

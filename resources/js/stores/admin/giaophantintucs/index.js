@@ -42,6 +42,9 @@ import {
 import {
   fn_redirect_url
 } from '@app/api/utils/fn-helper';
+import {
+  config
+} from '@app/common/config';
 import _ from 'lodash';
 
 const defaultState = () => {
@@ -340,11 +343,11 @@ export default {
       );
     },
 
-    [ACTION_RELOAD_GET_INFO_LIST]: {
+    [MODULE_MODULE_TINTUC_GIAOPHAN + '_' + ACTION_RELOAD_GET_INFO_LIST]: {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/giao-phan/tin-tucs');
+          return fn_redirect_url( `/${config.adminPrefix}/giao-phan/tin-tucs`);
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

@@ -1,5 +1,8 @@
 import AppConfig from 'api@admin/constants/app-config';
 import {
+  MODULE_INFO,
+} from '../types/module-types';
+import {
   apiInsertInfo,
   apiGetDropdownInfos
 } from 'api@admin/information';
@@ -202,7 +205,7 @@ export default {
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
 
-          dispatch(ACTION_RELOAD_GET_INFO_LIST, 'page', {
+          dispatch(MODULE_INFO + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
             root: true
           });
         },

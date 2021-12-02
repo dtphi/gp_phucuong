@@ -138,48 +138,7 @@ final class CSS
      */
     public function init()
     {
-        /*$optionClass = 'hold-transition login-page';
-        $cssStype    = $this->mapCss();
-        $scripts     = '';
-
-        if (Request::is('admin/test')) {
-            $cssStype    = $this->mapCssTest();
-            $scripts     = $this->mapScriptTest();
-            $optionClass = '';
-        }
-
-        if (Request::is('admin/dashboard')) {
-            $cssStype    = $this->mapCssTest();
-            $scripts     = $this->mapScriptTest();
-            $optionClass = '';
-        }
-
-        if (Request::is('admin/user*')) {
-            $cssStype    = $this->mapCssUser();
-            $scripts     = $this->mapScriptUser();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/news*') && !Request::is('*-groups*')) {
-            $cssStype    = $this->mapCssUser();
-            $scripts     = $this->mapScriptNews();
-            $scripts     .= $this->mapScriptFileManager();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/news-groups*')) {
-            $cssStype    = $this->mapCssNewsGroups();
-            $scripts     = $this->mapScriptNewsGroups();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/filemanagers*')) {
-            $cssStype    = $this->mapCss();
-            $scripts     = $this->mapScriptFileManager();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-
-            return [
-                $this->mapCss(),
-                $this->mapScriptFileManager(),
-                ''
-            ];
-        }*/
-
-        if (Request::is('admin/filemanagers*')) {
+        if (Request::is('admin/filemanagers*') || Request::is('adminlocal/filemanagers*')) {
             $cssStype    = $this->mapCss();
             $scripts     = $this->mapScriptFileManager();
             $scripts     .= "<script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
