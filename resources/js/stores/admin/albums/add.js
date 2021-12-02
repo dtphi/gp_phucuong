@@ -201,13 +201,11 @@ export default {
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
           dispatch('ACTION_RELOAD_GET_INFO_LIST_ALBUMS', 'page', {
-            root: true
+             root: true
           });
         },
         (errors) => {
           commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
-
           dispatch(ACTION_SET_LOADING, false);
         }
       )

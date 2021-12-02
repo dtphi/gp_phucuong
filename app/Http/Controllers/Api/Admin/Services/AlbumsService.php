@@ -42,6 +42,7 @@ final class AlbumsService implements BaseModel, AlbumsModel
     {
         $this->model->fill($data);
         if (isset($data['albums_images']) && !empty($data['albums_images'])) {
+          
           $this->model->image = serialize($data['albums_images']['value']);
         }
         
@@ -110,15 +111,17 @@ final class AlbumsService implements BaseModel, AlbumsModel
     public function apiUpdate($model, $data = [])
     {
         $model->fill($data);
-        if (isset($data['albums_images']) && !empty($data['albums_images'])) {
-          $model->image = serialize($data['albums_images']['value']);
+
+        if (isset($data['group_images']) && !empty($data['group_images'])) {
+          $model->image = serialize($data['group_images']['value']);
         }
-        
+
         if (isset($data['image_path'])) {
+        
             $model->image_origin  = $data['image_path'];
             $model->image_thumb   = $data['image_thumb'];
         }
-        
+      
         DB::beginTransaction();
         if (!$model->save()) {
           DB::rollBack();
@@ -128,7 +131,7 @@ final class AlbumsService implements BaseModel, AlbumsModel
         return $this->model;
     }
 
-    // DELETE RESTRICT IP
+ 
     public function apiDelete($model)
     {
       DB::beginTransaction();
@@ -145,7 +148,7 @@ final class AlbumsService implements BaseModel, AlbumsModel
 
     private function _deleteById($id)
     {
-      RestrictIp::fcDeleteById($id);
+      Albums::fcDeleteById($id);
     }
 
     public function apiGetSearch(array $options = [], $limit = 5, $queryIps = '')

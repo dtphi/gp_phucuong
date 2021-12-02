@@ -101,7 +101,7 @@ export default {
       commit,
       dispatch
     }, settingData) {
-      console.log(settingData)
+      console.log(settingData, 'settingdata')
       dispatch(ACTION_SET_LOADING, true);
       apiInsertSetting(
         settingData,

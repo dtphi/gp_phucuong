@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use DB;
 use App\Models\BaseModel;
 use App\Models\GroupAlbums;
+use App\Http\Common\Tables;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Albums extends BaseModel
@@ -72,4 +74,9 @@ class Albums extends BaseModel
         }
         return $value;
     }
+
+      public static function fcDeleteById($id)
+      {
+        DB::delete("delete from `" . Tables::$albums . "` where id = '" . (int)$id . "'");
+      }
 }

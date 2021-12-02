@@ -91,9 +91,8 @@
                 }
             },
             _getImgUrl() {
-             
-                if (this.groupData.image_origin.thumb && this.groupData.image_origin.thumb.length) {
-                    return this.groupData.image_origin.thumb;
+                if (this.groupData.image.thumb && this.groupData.image.thumb.length) {            
+                    return this.groupData.image.thumb;
                 } else {
                     return fn_get_base_url_image();
                 }

@@ -25,10 +25,10 @@ class AlbumsResource extends JsonResource
             $json = parent::toArray($request);
             $json = array_merge($json, [
                 'group_albums_name'   => $res->name_group_albums,
-                'group_images'        => $res->group_images
+                'group_images'        => $res->group_images,
+                'image'               => $res->image_origin
             ]);
         }
-
         return $json;
         return parent::toArray($request);
     }
