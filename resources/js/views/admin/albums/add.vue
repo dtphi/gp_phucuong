@@ -124,7 +124,6 @@ export default {
 
     _submitInfo() {
       const _self = this;
-      console.log(this.infoAlbumsImage, 'list_image');
       this.update_info_albums_image(this.infoAlbumsImage);
       _self.$refs.observerInfo.validate().then((isValid) => {
         if (isValid) {
@@ -136,6 +135,8 @@ export default {
     _submitInfoBack() {
       const _self = this;
 
+      this.update_info_albums_image(this.infoAlbumsImage);
+      
       _self.$refs.observerInfo.validate().then((isValid) => {
         if (isValid) {
           _self.$refs.formAddAlbums._submitInfoBack();

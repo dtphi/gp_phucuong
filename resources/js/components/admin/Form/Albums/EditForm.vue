@@ -83,6 +83,7 @@
                 'info'
             ])
         },
+
         watch: {
             'info.group_images'(newValue, oldValue) {
                 if (newValue) {
@@ -140,7 +141,6 @@
                 }
             },
             _setInfoCarousel() {
-              
                 this[ACTION_GET_SETTING](this.info.group_images);
             }
         },

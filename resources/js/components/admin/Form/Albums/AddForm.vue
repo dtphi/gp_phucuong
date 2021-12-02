@@ -97,7 +97,6 @@ export default {
       ACTION_SET_IMAGE,
       ACTION_GET_INFO_LIST,
       'ACTION_GET_LIST_GROUP_ALBUMS',
-      'ACTION_INSERT_INFO_GIAOXU'
     ]),
     _submitInfo() {
       this[ACTION_INSERT_INFO](this.info);

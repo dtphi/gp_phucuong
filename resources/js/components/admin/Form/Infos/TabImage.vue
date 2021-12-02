@@ -91,6 +91,7 @@
                 }
             },
             _getImgUrl() {
+              
                 if (this.groupData.image.thumb && this.groupData.image.thumb.length) {
                     return this.groupData.image.thumb;
                 } else {

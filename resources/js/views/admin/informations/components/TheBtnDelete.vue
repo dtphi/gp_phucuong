@@ -14,7 +14,6 @@
     import {mapActions} from 'vuex';
     import {
         MODULE_INFO,
-        MODULE_INFO_MODAL
     } from 'store@admin/types/module-types';
     import {
         ACTION_SET_INFO_DELETE_BY_ID,

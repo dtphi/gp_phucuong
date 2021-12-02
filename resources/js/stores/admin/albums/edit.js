@@ -31,7 +31,7 @@ const defaultState = () => {
     styleCss: '',
     isExistInfo: config.existStatus.checking,
     info: {
-      image_origin: {
+      image: {
         basename: "",
         dirname: "",
         extension: "",
@@ -120,7 +120,7 @@ export default {
     },
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image_origin = payload;
+      state.info.image = payload;
       state.isImgChange = true;
     }
   },
@@ -141,7 +141,6 @@ export default {
       commit
     }, infoId) {
       dispatch(ACTION_SET_LOADING, true);
-      console.log(infoId, 'id');
       apiGetAlbumsById(
         infoId,
         (result) => {
@@ -167,18 +166,16 @@ export default {
     [ACTION_UPDATE_INFO]({
       dispatch,
       commit
-    }, info) {    
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
+    }, info) {  
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');  
       apiUpdateAlbums(info,
         (result) => {
           commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-
           dispatch(ACTION_SET_LOADING, false);
           dispatch(ACTION_GET_INFO_BY_ID, info.id);
         },
         (errors) => {
           commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
-
           dispatch(ACTION_SET_LOADING, false);
         }
       )

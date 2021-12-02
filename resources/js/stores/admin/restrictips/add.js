@@ -113,6 +113,7 @@ export default {
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          
           dispatch('ACTION_RELOAD_GET_INFO_LIST_RESTRICT_IP', 'page', {
             root: true
           });
