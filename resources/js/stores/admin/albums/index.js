@@ -22,14 +22,15 @@ import {
   INFOS_SET_ERROR,
   MODULE_UPDATE_SETTING_SUCCESS,
   MODULE_UPDATE_SETTING_FAILED,
+  INFOS_INFO_DELETE_BY_ID
 } from '../types/mutation-types';
 import {
   ACTION_GET_INFO_LIST,
-  ACTION_DELETE_ALBUMS_BY_ID,
+  ACTION_DELETE_INFO_BY_ID,
   ACTION_SET_LOADING,
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_SEARCH_ITEMS,
-  ACTION_CHANGE_STATUS
+  ACTION_CHANGE_STATUS,
 } from '../types/action-types';
 import {
   fn_redirect_url
@@ -43,6 +44,7 @@ const defaultState = () => {
     isList: false,
     loading: false,
     updateSuccess: false,
+    infoDelete: null,
     errors: []
   }
 }
@@ -107,7 +109,11 @@ export default {
 
     [INFOS_SET_ERROR](state, payload) {
       state.errors = payload
-    }
+    },
+
+    [INFOS_INFO_DELETE_BY_ID](state, payload) {
+      state.infoDelete = payload
+    },
   },
 
   actions: {
@@ -150,7 +156,7 @@ export default {
     },
 
     /* ACTION DELETE */
-    async [ACTION_DELETE_ALBUMS_BY_ID]({
+    async [ACTION_DELETE_INFO_BY_ID]({
       commit
     }, infoId) {
 			await apiDeleteAlbums(infoId,
@@ -206,6 +212,19 @@ export default {
     }, values) {
       commit(MODULE_UPDATE_SETTING_SUCCESS, values);
     },
+  },
+
+  ACTION_RELOAD_GET_INFO_LIST_RESTRICT_IP: {
+    root: true,
+    handler(namespacedContext, payload) {
+      if (isNaN(payload)) {
+        console.log('up');
+        return fn_redirect_url('admin/albums');
+      } else {
+        console.log('down');
+        namespacedContext.dispatch(ACTION_GET_INFO_LIST);
+      }
+    }
   },
 
   modules: {

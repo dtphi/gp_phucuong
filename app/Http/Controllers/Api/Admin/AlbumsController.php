@@ -45,7 +45,6 @@ class AlbumsController extends ApiController
                 if (file_exists($realPath) && (false !== realpath($realPath)) && !empty($info->image_origin['path'])) {           
                   $staticImgThum = $info->image_origin['path'];
                 }
-             
                 $results[] = [
                     'id' => (int)$info->id,
                     'albums_name' => $info->albums_name,
@@ -168,6 +167,12 @@ class AlbumsController extends ApiController
      */
     public function destroy($id)
     {
-        //
+      try {
+        $model = $this->albumsSv->apiGetDetail($id);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+      $this->albumsSv->apiDelete($model);
+      return $this->respondDeleted("{$this->resourceName} deleted.");
     }
 }
