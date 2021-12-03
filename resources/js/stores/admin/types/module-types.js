@@ -92,3 +92,8 @@ export const MODULE_MODULE_ALBUMS = 'albums';
 export const MODULE_MODULE_ALBUMS_ADD = 'albums/add';
 export const MODULE_MODULE_ALBUMS_EDIT = 'albums/edit';
 export const MODULE_ALBUMS_MODAL = 'albums/modal';
+
+export const MODULE_MODULE_GROUP_ALBUMS = 'group_albums';
+export const MODULE_MODULE_GROUP_ALBUMS_ADD = 'group_albums/add';
+export const MODULE_MODULE_GROUP_ALBUMS_EDIT = 'group_albums/edit';
+

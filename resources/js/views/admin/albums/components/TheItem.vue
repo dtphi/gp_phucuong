@@ -31,7 +31,7 @@
 import BtnEdit from "./TheBtnEdit";
 import BtnDelete from "./TheBtnDelete";
 import { mapState, mapActions } from "vuex";
-import { MODULE_MODULE_RESTRICT_IP } from "store@admin/types/module-types";
+import { MODULE_MODULE_ALBUMS } from "store@admin/types/module-types";
 import {
   ACTION_CHANGE_STATUS,
 } from "store@admin/types/action-types";
@@ -63,7 +63,7 @@ export default {
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from);
     },
-    ...mapActions(MODULE_MODULE_RESTRICT_IP, {
+    ...mapActions(MODULE_MODULE_ALBUMS, {
        'changeStatusItem': ACTION_CHANGE_STATUS,
     }),
     changeStatus() {

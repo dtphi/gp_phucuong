@@ -175,4 +175,12 @@ class AlbumsController extends ApiController
       $this->albumsSv->apiDelete($model);
       return $this->respondDeleted("{$this->resourceName} deleted.");
     }
+
+    public function changeStatus(Request $request) {
+      $formData = $request->all();
+      if ($result = $this->albumsSv->apiChangeStatus($formData)) {
+          return $this->respondUpdated($result);
+      }
+      return $this->respondBadRequest();
+    }
 }

@@ -4,8 +4,11 @@ import {
   apiInsertInfoAlbums,
 } from 'api@admin/albums';
 import {
-  apiGetGroupAlbums,
+  apiGetAllGroupAlbums,
 } from 'api@admin/groupalbums';
+import {
+  MODULE_MODULE_ALBUMS,
+} from '../types/module-types';
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -22,6 +25,7 @@ import {
   ACTION_SET_IMAGE,
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_GET_SETTING,
+  ACTION_RELOAD_GET_INFO_LIST,
 } from '../types/action-types';
 
 const infoAlbumsImage = {
@@ -157,7 +161,7 @@ export default {
 
     // GET LIST GROUP ALBUMS
     ACTION_GET_LIST_GROUP_ALBUMS({ commit }, params) {
-      apiGetGroupAlbums(
+      apiGetAllGroupAlbums(
         (infos) => {
           commit('INFO_GROUP_ALBUMS', infos.data.results);
         },
@@ -200,7 +204,7 @@ export default {
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          dispatch('ACTION_RELOAD_GET_INFO_LIST_ALBUMS', 'page', {
+          dispatch(MODULE_MODULE_ALBUMS + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
              root: true
           });
         },

@@ -2,7 +2,7 @@
     <a href="javascript:void(0);" data-toggle="tooltip"
        @click="_showModal()"
        class="btn btn-default cms-btn"
-       data-original-title="Sửa giao xứ">
+       data-original-title="Sửa group albums">
         <font-awesome-layers size="1x" style="background:honeydew">
             <font-awesome-icon icon="edit"/>
         </font-awesome-layers>
@@ -18,7 +18,7 @@
     } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'TheButtonEditGiaoXu',
+        name: 'TheButtonEditGroupAlbums',
         props: {
             isRedirect: {
                 type: Boolean,
@@ -48,7 +48,7 @@
             _redirectUrl() {
                 if (this.hrefEdit) 
                     return window.location.href = this.hrefEdit;
-                return fn_redirect_url(`${config.adminPrefix}/giao-xus/edit/${this.infoId}`);
+                return fn_redirect_url(`${config.adminPrefix}/group-albums/edit/${this.infoId}`);
             }
         }
     };

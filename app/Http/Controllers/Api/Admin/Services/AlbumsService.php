@@ -171,11 +171,11 @@ final class AlbumsService implements BaseModel, AlbumsModel
       return $query;
     }
 
-    //apiChangeStatus
+    
     public function apiChangeStatus($data = [])
     {
       $id = $data['id'];
-      $data['active'] = (int)$data['status'];
+      $data['status'] = (int)$data['status'];
       $this->model = $this->model->findOrFail($id);
       $this->model->fill($data);
       DB::beginTransaction();

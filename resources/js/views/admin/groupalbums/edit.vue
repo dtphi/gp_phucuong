@@ -6,7 +6,7 @@
         <button type="button" class="close" data-dismiss="alert">
           &times;
         </button>
-        <p v-for="(err, idx) in _errorToArrs()" :key="idx">{{ err }}</p>
+        <h3 v-for="(err, idx) in _errorToArrs()" :key="idx">{{ err }}</h3>
       </div>
     </template>
     <template v-if="loading">
@@ -15,7 +15,7 @@
         :is-full-page="fullPage"
       ></loading-over-lay>
     </template>
-    <validation-observer ref="observerInfo">
+    <validation-observer ref="observerInfo" @submit.prevent="_submitInfo">
       <div class="page-header">
         <div class="container-fluid">
           <div class="pull-right">
@@ -52,7 +52,7 @@
           </div>
 
           <div class="panel-body">
-            <info-edit-form ref="formEditGiaoXu"></info-edit-form>
+            <info-edit-form ref="formEditGroupAlbums"></info-edit-form>
           </div>
         </div>
       </div>
@@ -63,10 +63,10 @@
 <script>
 import { mapState, mapActions } from "vuex";
 
-import InfoEditForm from "com@admin/Form/GiaoXus/EditForm";
+import InfoEditForm from "com@admin/Form/GroupAlbums/EditForm";
 import Breadcrumb from "com@admin/Breadcrumb";
 import TheBtnBackListPage from "./components/TheBtnBackListPage";
-import { MODULE_MODULE_GIAO_XU_EDIT } from "store@admin/types/module-types";
+import { MODULE_MODULE_GROUP_ALBUMS_EDIT } from "store@admin/types/module-types";
 import {
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_GET_INFO_BY_ID,
@@ -74,17 +74,17 @@ import {
 import { fn_redirect_url } from "@app/api/utils/fn-helper";
 
 export default {
-  name: "GiaoXuEdit",
+  name: "GroupAlbumsEdit",
   beforeCreate() {
-    const giaoxuId = parseInt(this.$route.params.giaoxuId);
-    if (!giaoxuId) {
-      return fn_redirect_url("admin/giao-xus");
+    const infoId = parseInt(this.$route.params.infoId);
+    if (!infoId) {
+      return fn_redirect_url("admin/group-albums");
     }
   },
   components: {
     Breadcrumb,
     TheBtnBackListPage,
-    InfoEditForm
+    InfoEditForm,
   },
   data() {
     return {
@@ -92,7 +92,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(MODULE_MODULE_GIAO_XU_EDIT, {
+    ...mapState(MODULE_MODULE_GROUP_ALBUMS_EDIT, {
       loading: (state) => state.loading,
       errors: (state) => state.errors,
       updateSuccess: (state) => state.updateSuccess,
@@ -110,10 +110,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, {
-       'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
-       'getInfo': ACTION_GET_INFO_BY_ID,
-    }),
+    ...mapActions(MODULE_MODULE_GROUP_ALBUMS_EDIT, [
+      ACTION_RESET_NOTIFICATION_INFO,
+      ACTION_GET_INFO_BY_ID,
+    ]),
     _errorToArrs() {
       let errs = [];
       if (
@@ -126,41 +126,41 @@ export default {
       if (Object.entries(errs).length === 0 && this.errors.length) {
         errs.push(this.$options.setting.error_msg_system);
       }
-
       return errs;
     },
+
     _submitInfo() {
       const _self = this;
       _self.$refs.observerInfo.validate().then((isValid) => {
         if (isValid) {
-          _self.$refs.formEditGiaoXu._submitInfo();
+          _self.$refs.formEditGroupAlbums._submitInfo();
         }
       });
     },
     _submitInfoBack() {
       const _self = this;
-
       _self.$refs.observerInfo.validate().then((isValid) => {
         if (isValid) {
-          _self.$refs.formEditGiaoXu._submitInfoBack();
+          _self.$refs.formEditGroupAlbums._submitInfoBack();
         }
       });
     },
     _notificationUpdate(notification) {
       this.$notify(notification);
-      this.resetNotification("");
+      this[ACTION_RESET_NOTIFICATION_INFO]("");
     },
   },
   setting: {
-    panel_title: "Giáo Xứ",
-    frm_title: "Sửa Giáo Xứ",
+    panel_title: "Group Albums",
+    frm_title: "Sửa Group Albums",
     btn_save_txt: "Lưu",
     btn_save_back_txt: "Lưu trở về danh sách",
+    error_msg_system: "Group albums đã tồn tại",
   },
   mounted() {
-    const giaoxuId = parseInt(this.$route.params.giaoxuId);
-    if (giaoxuId) {
-      this.getInfo(giaoxuId);
+    const infoId = parseInt(this.$route.params.infoId);
+    if (infoId) {
+      this[ACTION_GET_INFO_BY_ID](infoId);
     }
   },
 };

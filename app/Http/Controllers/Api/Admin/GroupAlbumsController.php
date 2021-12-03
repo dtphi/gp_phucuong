@@ -82,9 +82,25 @@ class GroupAlbumsController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GroupAlbumsRequest $request)
     {
-        //
+        $storeResponse = $this->__handleStore($request);
+        if ($storeResponse->getStatusCode() === HttpResponse::HTTP_BAD_REQUEST) {
+          return $storeResponse;
+        }
+
+        $resourceId = ($this->getResource()) ? $this->getResource()->id : null;
+
+        return $this->respondCreated("New {$this->resourceName} created.", $resourceId);
+    }
+
+    private function __handleStore(&$request)
+    {
+        $formData = $request->all();
+        if ($result = $this->grAlbumsSv->apiInsert($formData)) {
+            return $this->respondUpdated($result);
+        }
+        return $this->respondBadRequest();
     }
 
     /**
@@ -93,9 +109,14 @@ class GroupAlbumsController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id = null)
     {
-        //
+        try {
+            $json = $this->grAlbumsSv->apiGetResourceDetail($id);
+        } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+        }
+        return $json;
     }
 
     /**
@@ -106,7 +127,7 @@ class GroupAlbumsController extends ApiController
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -116,9 +137,26 @@ class GroupAlbumsController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GroupAlbumsRequest $request, $id)
     {
-        //
+        try {
+            $model = $this->grAlbumsSv->apiGetDetail($id);
+
+        } catch (HandlerMsgCommon $e) {
+            Log::debug('Group_albums ip not found, Request ID = ' . $id);
+            throw $e->render();
+        }
+        return $this->__handleStoreUpdate($model, $request);
+    }
+
+    private function __handleStoreUpdate(&$model, &$request)
+    {
+        $formData = $request->all();
+        if ($result = $this->grAlbumsSv->apiUpdate($model, $formData["data"])) {
+            return $this->respondUpdated($result);
+        }
+
+        return $this->respondBadRequest();
     }
 
     /**
@@ -129,6 +167,20 @@ class GroupAlbumsController extends ApiController
      */
     public function destroy($id)
     {
-        //
+        try {
+          $model = $this->grAlbumsSv->apiGetDetail($id);
+        } catch (HandlerMsgCommon $e) {
+          throw $e->render();
+        }
+        $this->grAlbumsSv->apiDelete($model);
+        return $this->respondDeleted("{$this->resourceName} deleted.");
+    }
+
+    public function changeStatus(Request $request) {
+      $formData = $request->all();
+      if ($result = $this->grAlbumsSv->apiChangeStatus($formData)) {
+          return $this->respondUpdated($result);
+      }
+      return $this->respondBadRequest();
     }
 }
