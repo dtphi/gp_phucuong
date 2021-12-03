@@ -1,14 +1,13 @@
 import adds from './add';
-import modals from './modal';
-import edits from './edit'; 
+import edits from './edit';
 import {
-  apiGetAllAlbums,
-  apiDeleteAlbums,
-  apiSearchAlbums,
+  apiGetAllGroupAlbums,
+  apiDeleteGroupAlbums,
+  apiSearchGroupAlbums,
   apiChangeStatus,
-} from 'api@admin/albums';
+} from 'api@admin/groupalbums';
 import {
-  MODULE_MODULE_ALBUMS,
+  MODULE_MODULE_GROUP_ALBUMS,
 } from '../types/module-types';
 import {
   INFOS_SET_LOADING,
@@ -22,7 +21,6 @@ import {
   INFOS_SET_ERROR,
   MODULE_UPDATE_SETTING_SUCCESS,
   MODULE_UPDATE_SETTING_FAILED,
-  INFOS_INFO_DELETE_BY_ID
 } from '../types/mutation-types';
 import {
   ACTION_GET_INFO_LIST,
@@ -45,7 +43,6 @@ const defaultState = () => {
     isList: false,
     loading: false,
     updateSuccess: false,
-    infoDelete: null,
     errors: []
   }
 }
@@ -110,21 +107,16 @@ export default {
 
     [INFOS_SET_ERROR](state, payload) {
       state.errors = payload
-    },
-
-    [INFOS_INFO_DELETE_BY_ID](state, payload) {
-      state.infoDelete = payload
-    },
+    }
   },
 
   actions: {
-    /* ACTION GET ALL ALBUMS */
     async [ACTION_GET_INFO_LIST]({
       dispatch,
       commit
     }, params) {
       dispatch(ACTION_SET_LOADING, true);
-      await apiGetAllAlbums(
+      await apiGetAllGroupAlbums(
         (infos) => {
           commit(INFOS_SET_INFO_LIST, infos.data.results);
           commit(INFOS_GET_INFO_LIST_SUCCESS, true);
@@ -138,7 +130,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_MODULE_ALBUMS,
+              name: MODULE_MODULE_GROUP_ALBUMS,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination
@@ -160,7 +152,7 @@ export default {
     async [ACTION_DELETE_INFO_BY_ID]({
       commit
     }, infoId) {
-			await apiDeleteAlbums(infoId,
+			await apiDeleteGroupAlbums(infoId,
 				(results) => {
           commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, true)
         },
@@ -175,23 +167,24 @@ export default {
       apiChangeStatus(info,
         (result) => {},
         (errors) => {}
-    )},
+      )
+    },
 
-    [MODULE_MODULE_ALBUMS + '_' + ACTION_RELOAD_GET_INFO_LIST]: {
+    [MODULE_MODULE_GROUP_ALBUMS + '_' + ACTION_RELOAD_GET_INFO_LIST]: {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/albums');
+          return fn_redirect_url('admin/group-albums');
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }
       }
     },
-    /* ACTION SEARCH ALBUMS */
+   
      [ACTION_SEARCH_ITEMS]({
       commit
      }, query) {
-       apiSearchAlbums(
+       apiSearchGroupAlbums(
          (response) => {
           commit(INFOS_SET_INFO_LIST, response.data.results);
         },
@@ -217,7 +210,6 @@ export default {
 
   modules: {
     add: adds,
-    edit: edits,
-    modal: modals
+    edit: edits
   }
 }

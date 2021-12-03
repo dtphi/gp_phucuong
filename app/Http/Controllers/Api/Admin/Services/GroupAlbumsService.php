@@ -80,42 +80,75 @@ final class GroupAlbumsService implements BaseModel, GroupAlbumsModel
 
     public function apiGetGroupAlbums($data = array(), $limit = 5)
     {
-        $query = $this->model->select()
-            ->orderBy('id', 'ASC');
+        $query = $this->model->select()->orderBy('id', 'DESC');
         return $query;
     }
 
-    // Insert Giao Hat
+    
     public function apiInsert(array $data = [])
     {
         $this->model->fill($data);
-
         DB::beginTransaction();
 
         if (!$this->model->save()) {
             DB::rollBack();
             return false;
         }
+        DB::commit();
+
+        return $this->model;
     }
 
     public function apiGetDetail($id = null)
     {
         // TODO: Implement apiGetDetail() method.
         $this->model = $this->model->findOrFail($id);
-
         return $this->model;
     }
 
-  // update Giao Hat
-  public function apiUpdate($model, $data = [])
-  {
-    $this->model->fill($data);
-    DB::beginTransaction();
-    if (!$this->model->save()) {
-      DB::rollBack();
-      return false;
+    public function apiUpdate($model, $data = [])
+    {
+      $model->fill($data);
+      DB::beginTransaction();
+      if (!$model->save()) {
+        DB::rollBack();
+        return false;
+      }
+      DB::commit();
+      return $this->model;
     }
-    DB::commit();
-    return $this->model;
-  }
+
+    public function apiDelete($model)
+    {
+      DB::beginTransaction();
+      try {
+        $id = $model->id;
+        $this->_deleteById($id);
+        DB::commit();
+      } catch (\Exceptions $e) {
+        DB::rollBack();
+        throw $e;
+        return false;
+      }
+    }
+
+    private function _deleteById($id)
+    {
+        GroupAlbums::fcDeleteById($id);
+    }
+
+    public function apiChangeStatus($data = [])
+    {
+      $id = $data['id'];
+      $data['status'] = (int)$data['status'];
+      $this->model = $this->model->findOrFail($id);
+      $this->model->fill($data);
+      DB::beginTransaction();
+      if (!$this->model->save()) {
+        DB::rollBack();
+        return false;
+      }
+      DB::commit();
+      return $this->model;
+    }
 }

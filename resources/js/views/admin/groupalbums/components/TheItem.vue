@@ -9,32 +9,28 @@
         :value="info.id"
       />
     </td>
-    <td class="text-left">{{ info.name }}</td>
-    <td class="text-left">{{ info.dia_chi }}</td>
-    <td class="text-center" style="width:7%">
-      <img :src="info.imgThum" class="img-thumbnail"/>
+    <td class="text-left">{{ info.group_name }}</td>
+    <td class="text-left">
+      <button @click="changeStatus">
+        <i v-if="info.status == 1" class="fa fa-check-circle btn_blue"></i>
+        <i v-else class="fa fa-minus-circle btn_red"></i>
+      </button>
     </td>
-    <td class="text-center">{{ info.active }}</td>
-    <td class="text-center">
-      <div v-html="info.giole"></div>
-    </td>
-
     <td class="text-right">
-      <btn-edit :info-id="info.id" :href-edit="info.hrefDetail"></btn-edit>
-      <!--<btn-delete
-                :info-id="info.id"></btn-delete>-->
+      <btn-edit :info-id="info.id" ></btn-edit>
+      <btn-delete :info-id="info.id" :no="no"></btn-delete>
     </td>
   </tr>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
 import BtnEdit from "./TheBtnEdit";
 import BtnDelete from "./TheBtnDelete";
+import { mapState, mapActions } from "vuex";
+import { MODULE_MODULE_GROUP_ALBUMS } from "store@admin/types/module-types";
 import {
-  fn_get_base_url_image,
-  fn_format_dd_mm_yyyy,
-} from "@app/api/utils/fn-helper";
+  ACTION_CHANGE_STATUS,
+} from "store@admin/types/action-types";
 
 export default {
   name: "TheItem",
@@ -51,24 +47,35 @@ export default {
     },
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapState({
       meta: (state) => state.cfApp.collectionData,
+      perPage: (state) => state.cfApp.perPage,
     }),
   },
   methods: {
-    _getImgUrl() {
-      return fn_get_base_url_image(this.info.image);
-    },
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from);
     },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date);
-    },
+    ...mapActions(MODULE_MODULE_GROUP_ALBUMS, {
+       'changeStatusItem': ACTION_CHANGE_STATUS,
+    }),
+    changeStatus() {
+      if(this.info.status == 1) {
+        this.info.status = 0;
+      }else {this.info.active = 1}
+      this.changeStatusItem({id: this.info.id, status: this.info.status, perPage: this.perPage});
+    }
   },
 };
 </script>
+<style scoped>
+  .btn_blue{
+    color: blue;
+  }
+  .btn_red{
+    color: red;
+  }
+</style>

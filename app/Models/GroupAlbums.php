@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Albums;
+use App\Http\Common\Tables;
+use DB;
 
-class GroupAlbums extends Model
+class GroupAlbums extends BaseModel
 {
     use HasFactory;
 
@@ -23,4 +24,9 @@ class GroupAlbums extends Model
 	  {
 	  	return $this->hasMany(Albums::class);
 	  }
+
+    public static function fcDeleteById($id)
+    {
+      DB::delete("delete from `" . Tables::$group_albums . "` where id = '" . (int)$id . "'");
+    }
 }

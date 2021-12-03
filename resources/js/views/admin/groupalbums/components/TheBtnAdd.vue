@@ -2,7 +2,7 @@
     <button @click="_redirectUrl()"
             data-toggle="tooltip" title=""
             class="btn btn-primary"
-            data-original-title="Thêm Giáo Xứ">
+            data-original-title="Thêm group albums">
         <i class="fa fa-plus"></i>
     </button>
 </template>
@@ -16,7 +16,7 @@
     } from '@app/api/utils/fn-helper';
 
     export default {
-        name: 'TheButtonAddGiaoXu',
+        name: 'TheButtonAddGroupAlbums',
         props: {
             isRedirect: {
                 type: Boolean,
@@ -25,7 +25,7 @@
         },
         methods: {
             _redirectUrl() {
-                return fn_redirect_url(`${config.adminPrefix}/giao-xus/add`);
+                return fn_redirect_url(`${config.adminPrefix}/group-albums/add`);
             },
         }
     };

@@ -21,7 +21,7 @@
         props: {},
         methods: {
             _getHref() {
-              return fn_get_base_url() + `/${config.adminPrefix}/giao-xus`;
+              return fn_get_base_url() + `/${config.adminPrefix}/group-albums`;
             }
         }
     };
