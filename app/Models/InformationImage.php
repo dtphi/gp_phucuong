@@ -53,7 +53,19 @@ class InformationImage extends BaseModel
                 ]);
         }
     }
+    public static function insertAlbumByInfoId($infoId = null, $albumId = null)
+    {
+        $infoId = (int)$infoId;
+        $albumId = (int)$albumId;
 
+        if ($infoId && $albumId) {
+            DB::insert('insert into ' . Tables::$information_images . ' (information_id, album_id) values (?, ?)',
+                [
+                    $infoId,
+                    $albumId
+                ]);
+        }
+    }
     public static function fcDeleteByInfoId($infoId = null)
     {
         $infoId = (int)$infoId;

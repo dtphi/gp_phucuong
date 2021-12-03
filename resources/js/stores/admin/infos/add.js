@@ -69,11 +69,13 @@ const defaultState = () => {
       categorys: [],
       downloads: [],
       special_carousels: [],
+      album: null
     },
     isImgChange: true,
     listCategorysDisplay: [],
     listRelatedsDisplay: [],
     dropdownsRelateds: [],
+    albumDropdowns: [],
     infoRelated: {
       information_id: 0,
       name: ''
@@ -110,6 +112,9 @@ export default {
   },
 
   mutations: {
+    INFOS_FORM_SET_DROPDOWN_ALBUMS_LIST(state, payload) {
+      state.albumDropdowns = payload;
+    },
     [INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED](state, payload) {
       state.infoRelated = payload;
     },
@@ -304,6 +309,23 @@ export default {
         },
         (errors) => {
           commit(INFOS_FORM_GET_DROPDOWN_RELATED_FAILED, 'Failed');
+        },
+        params
+      );
+    },
+
+    ACTION_GET_DROPDOWN_ALBUM_LIST({
+      commit
+    }, filters) {
+      const params = {
+        ...filters
+      }
+      apiGetDropdownInfos(
+        (result) => {
+          commit('INFOS_FORM_SET_DROPDOWN_ALBUMS_LIST', result);
+        },
+        (errors) => {
+          console.log(errors)
         },
         params
       );
