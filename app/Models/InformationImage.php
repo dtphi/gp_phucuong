@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Common\Tables;
+use App\Models\Albums;
 use DB;
 
 class InformationImage extends BaseModel
@@ -26,9 +27,19 @@ class InformationImage extends BaseModel
      */
     protected $fillable = [
         'infomation_id',
+        'album_id',
         'image',
         'sort_order'
     ];
+
+    /**
+     * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function album()
+    {
+        return $this->belongsTo(Albums::class, 'album_id');
+    }
 
     public function getImageAttribute($value)
     {
@@ -38,6 +49,27 @@ class InformationImage extends BaseModel
     public function getSortOrderAttribute($value)
     {
         return $value;
+    }
+
+    public function getImageOriginAttribute($value)
+    {
+        $value = ($this->album) ? $this->album->image_origin: '';
+
+        return $value;
+    }
+
+    public function getAlbumNameAttribute($value)
+    {
+        $value = ($this->album) ? $this->album->albums_name: '';
+
+        return $value;
+    }
+
+    public function getArrImageListAttribute($value)
+    {
+        $value = ($this->album) ? $this->album->image : [];
+
+        return !empty($value) ? unserialize($value): [];
     }
 
     public static function insertByInfoId($infoId = null, $image = '', $sortOrder = 0)

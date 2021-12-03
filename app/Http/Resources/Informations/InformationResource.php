@@ -40,6 +40,8 @@ class InformationResource extends JsonResource
                 'meta_keyword'          => $res->meta_keyword,
                 'relateds'              => $res->arr_related_list,
                 'multi_images'          => $res->arr_image_list,
+                'albums'                => $res->arr_album_list,
+                'album'                 => !empty($res->arr_album_list) ? $res->arr_album_list[0]['album_id']: null,
                 'categorys'             => $res->arr_category_list,
                 'downloads'             => $res->arr_download_list,
                 'category_display_list' => $res->category_display_list,

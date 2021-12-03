@@ -271,6 +271,10 @@ final class InformationService implements BaseModel, InformationModel
                 }
             }
 
+            if (isset($data['album'])) {
+                InformationImage::insertAlbumByInfoId($infoId, $data['album']);
+            }
+
             InformationToDownload::fcDeleteByInfoId($infoId);
             if (isset($data['downloads']) && !empty($data['downloads'])) {
                 foreach ($data['downloads'] as $downloadId) {
