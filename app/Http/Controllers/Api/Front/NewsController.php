@@ -373,10 +373,15 @@ class NewsController extends Controller
          
             if (!empty($albums)) {
                 foreach ($albums[0]['images'] as $key => $img) {
-                    $tmp = $img;
-                    $tmp['image'] = url('/Image/NewPicture/' . $img['image']);
-                    $tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 480, 480));
-                    $json['results']['albums'][0]['images'][$key] = $tmp;
+                    if ($img['status']) {
+                        $tmp = $img;
+                        $tmp['width'] = (int)$img['width'];
+                        $tmp['image'] = url('/Image/NewPicture/' . $img['image']);
+                        $tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280, 280));
+                        $json['results']['albums'][0]['images'][$key] = $tmp;
+                    } else {
+                        unset($json['results']['albums'][0]['images'][$key]);
+                    }
                 }
             }
         

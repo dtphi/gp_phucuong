@@ -69,7 +69,13 @@ class InformationImage extends BaseModel
     {
         $value = ($this->album) ? $this->album->image : [];
 
-        return !empty($value) ? unserialize($value): [];
+        $value = !empty($value) ? unserialize($value): [];
+        if (!empty($value)) {
+            $sort = array_column($value, 'width');
+            array_multisort($sort, SORT_ASC, $value);
+        }
+
+        return $value;
     }
 
     public static function insertByInfoId($infoId = null, $image = '', $sortOrder = 0)
