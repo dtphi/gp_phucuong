@@ -7,7 +7,7 @@ import {
   apiDeleteInfo,
 } from 'api@admin/coso';
 import {
-  MODULE_MODULE_GIAO_HAT,
+  MODULE_MODULE_CO_SO,
 } from '../types/module-types';
 import {
   INFOS_SET_LOADING,
@@ -34,7 +34,9 @@ import {
 import {
   fn_redirect_url
 } from '@app/api/utils/fn-helper';
-import _ from 'lodash';
+import {
+  config
+} from '@app/common/config';
 
 const defaultState = () => {
   return {
@@ -137,7 +139,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_MODULE_GIAO_HAT,
+              name: MODULE_MODULE_CO_SO,
               actionList: ACTION_GET_INFO_LIST
             },
             collectionData: pagination
@@ -204,11 +206,11 @@ export default {
       );
     },
 
-    [ACTION_RELOAD_GET_INFO_LIST]: {
+    [MODULE_MODULE_CO_SO + '_' + ACTION_RELOAD_GET_INFO_LIST]: {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/informations');
+          return fn_redirect_url(`/${config.adminPrefix}/co-so-giao-phans`);
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

@@ -37,7 +37,7 @@
           <tinymce
             id="input-info-khu-vuc"
             :other_options="options"
-            v-model="groupData.khuvuc"
+            v-model="groupData.khu_vuc"
           ></tinymce>
 
           <span class="cms-text-red">{{ errors[0] }}</span>
@@ -57,7 +57,7 @@
         >
           <input
             type="text"
-            v-model="groupData.nguoiquanhat"
+            v-model="groupData.nguoi_quan_hat"
             name="sort_order"
             placeholder="Người quản hạt"
             id="input-info-nguoiquanhat"
@@ -97,7 +97,7 @@
         >
           <input
             id="input-info-phanloai"
-            v-model="groupData.phanloai"
+            v-model="groupData.phan_loai"
             class="form-control"
             placeholder="Phân loại"
           />
@@ -247,7 +247,7 @@ export default {
       handler(newValue, oldValue) {
         if (Object.keys(newValue).length) {
           return (newValue.khuvuc =
-            newValue.khuvuc === null ? "" : newValue.khuvuc);
+            newValue.khu_vuc === null ? "" : newValue.khu_vuc);
         }
       },
     },

@@ -6,7 +6,9 @@ import {
 import {
   apiGetLinhMucInfos,
 } from 'api@admin/linhmuc';
-
+import {
+  MODULE_MODULE_GIAO_HAT,
+} from '../types/module-types';
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -19,6 +21,7 @@ import {
   ACTION_INSERT_INFO,
   ACTION_INSERT_INFO_BACK,
   ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_RELOAD_GET_INFO_LIST
 } from '../types/action-types';
 
 const defaultState = () => {
@@ -31,11 +34,10 @@ const defaultState = () => {
       date_available: null,
       sort_id: 1,
       active: 1,
-      nguoiquanhat: null,
-      updateUser: 1,
+      nguoi_quan_hat: null,
       name: '',
-      khuvuc: '',
-      phanloai: 0,
+      khu_vuc: '',
+      phan_loai: 0,
     },
     linhMuc: [],
     isImgChange: true,
@@ -166,7 +168,7 @@ export default {
         info,
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAOHAT', 'page', {
+          dispatch(MODULE_MODULE_GIAO_HAT + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
             root: true
           });
         },

@@ -347,7 +347,7 @@ export default {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url( `/${config.adminPrefix}/giao-phan/tin-tucs`);
+          return fn_redirect_url(`/${config.adminPrefix}/giao-phan/tin-tucs`);
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }
