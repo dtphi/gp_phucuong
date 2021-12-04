@@ -14,7 +14,7 @@
 
         <hr>
         
-        <h4 v-if="_getAlbums" class="tit-detail">ALBUM HÌNH</h4>
+        <h4 v-if="Object.keys(_getAlbums).length" class="tit-detail">ALBUM HÌNH</h4>
         <div class="docs-galley mb-3" style="position: relative;">
             <ul class="docs-pictures clearfix" id="images">
                 <li v-for="album in _getAlbums" :key="album.id">
@@ -54,9 +54,11 @@
                 'pageLists'
             ]),
             _getAlbums() {
+                let albums = [];
                 if (this.pageLists.albums && this.pageLists.albums.length)
-                    return this.pageLists.albums[0].images;
-                return [];
+                    albums = this.pageLists.albums[0].images;
+                
+                return albums;
             }
         },
         methods: {

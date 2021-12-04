@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Common\Tables;
+use App\Http\Controllers\Api\Admin\Base\ApiController;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -104,6 +105,10 @@ class Information extends BaseModel
     public function getImageAttribute($value)
     {
         $imgThumb = $value;
+        if (is_null($imgThumb)) {
+            $value = ApiController::$thumImgNo;
+            $imgThumb = $value;
+        }
         if (isset($this->image_thumb)
             && $this->image_thumb
             && file_exists(public_path('/.tmb' . $this->image_thumb))) {

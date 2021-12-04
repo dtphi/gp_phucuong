@@ -47,7 +47,7 @@
             },
             _redirectUrl() {
                 if (this.hrefEdit) 
-                    return window.location.href = this.hrefEdit;
+                    return fn_redirect_url(`${config.adminPrefix+this.hrefEdit}`);
                 return fn_redirect_url(`${config.adminPrefix}/giao-xus/edit/${this.infoId}`);
             }
         }
