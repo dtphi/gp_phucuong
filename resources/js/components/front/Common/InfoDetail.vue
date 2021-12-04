@@ -13,7 +13,7 @@
         <div class="text-detail" v-html="pageLists.description"></div>
 
         <hr>
-        <h4 class="tit-detail">ALBUM HÌNH</h4>
+        <h4 v-if="_getAlbums.length" class="tit-detail">ALBUM HÌNH</h4>
         <div class="docs-galley mb-3" style="position: relative;">
             <ul class="docs-pictures clearfix" id="images">
                 <li v-for="album in _getAlbums" :key="album.id">
@@ -53,7 +53,7 @@
                 'pageLists'
             ]),
             _getAlbums() {
-                if (this.pageLists.albums.length)
+                if (this.pageLists.albums && this.pageLists.albums.length)
                     return this.pageLists.albums[0].images;
                 return [];
             }
