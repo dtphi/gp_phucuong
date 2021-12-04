@@ -369,6 +369,15 @@ class NewsController extends Controller
             $this->newsSv->apiUpdateViewed($params['information_id']);
 
             $json['results']                  = $this->newsSv->apiGetInfo($params['information_id']);
+            $albums = !empty($json['results']['albums']) ? $json['results']['albums']: [];
+         
+            foreach ($albums[0]['images'] as $key => $img) {
+                $tmp = $img;
+                $tmp['image'] = url('/Image/NewPicture/' . $img['image']);
+                $tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 480, 480));
+                $json['results']['albums'][0]['images'][$key] = $tmp;
+            }
+        
             $json['result_category_relateds'] = $json['results']['related_category'];
         }
 

@@ -92,7 +92,19 @@
                     <span class="cms-text-red">{{ errors[0] }}</span>
                 </validation-provider>
             </div>
-        </div>                           
+        </div>
+        <!-- a block container is required -->
+        <h5>Album Hình</h5>
+        <div class="col-sm-12">
+            <div class="docs-galley mb-3" style="position: relative;">
+                <ul class="docs-pictures clearfix" id="images">
+                    <li v-for="album in groupData.group_images" :key="album.id">
+                        <img class="thumb" @click="_showSlide()"
+                            :data-original="`http://localhost:8000/Image/NewPicture/${album.image}`" 
+                            :src="`/Image/NewPicture/${album.image}`" alt="Picture 1"></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -105,6 +117,8 @@ import {
 } from "@app/api/utils/fn-helper";
 import { MODULE_MODULE_ALBUMS_ADD } from "store@admin/types/module-types";
 import tinymce from "vue-tinymce-editor";
+import 'viewerjs/dist/viewer.css';
+import Viewer from 'viewerjs';
 
 export default {
     name: "TabGeneralForm",
@@ -167,7 +181,8 @@ export default {
                     "undo redo | styleselect | fontsizeselect | fontselect | image ",
                 font_formats:
                     "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats"
-            }
+            },
+            viewer: false
         };
     },
     watch: {
@@ -185,6 +200,38 @@ export default {
     setting: {
         cf: config
     },
-    methods: {},
+    methods: {
+        _showSlide () {
+            if (this.viewer) {
+                return ;
+            }
+            new Viewer(document.getElementById('images'), {
+                url: 'data-original'
+            });
+            this.viewer = true;
+        }
+    }
 };
 </script>
+
+<style scoped>
+    .docs-pictures {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .docs-pictures > li {
+        border: 1px solid transparent;
+        float: left;
+        height: calc(100% / 6);
+        margin: 0 -1px -1px 0;
+        overflow: hidden;
+        width: calc(100% / 6);
+    }
+    .docs-pictures > li > img {
+        cursor: -webkit-zoom-in;
+        cursor: zoom-in;
+        width: 100%;
+    }
+
+</style>
