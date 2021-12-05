@@ -192,25 +192,31 @@ final class Tables
     const RULE_SETTING_KEY_DATA = 'system_rule_allow';
     const RULE_ACTION_SELECT = ['list' => false, 'add' => false, 'edit' => false, 'delete' => false];
     const RULE_SELECT = [
-            'setting' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'thanh' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'news_group' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'linh_muc_van_thu' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'linh_muc_thuyen_chuyen' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'linh_muc_bang_cap' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'linh_muc_chuc_thanh' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'linh_muc' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'le_chinh' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'chuc_vu' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'giao_phan' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'giao_hat' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'giao_xu' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'giao_diem' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'giao_phan_co_so' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'cong_doan_tu_si' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'dong' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-            'tin_tuc' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
-        ];
+        'setting' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'thanh' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'linh_muc_van_thu' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'linh_muc_thuyen_chuyen' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'linh_muc_bang_cap' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'linh_muc_chuc_thanh' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'linh_muc' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'le_chinh' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'chuc_vu' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'giao_phan' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'giao_phan_news_group' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'giao_phan_news' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'giao_hat' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'giao_xu' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'giao_diem' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'giao_phan_co_so' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'cong_doan_tu_si' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'dong' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'news_group' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'tin_tuc' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'slide_info_specials' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'album_group' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'album' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+    ];
 
     const NETWORK_TARGET = ['facebook', 'twitter', 'linkedin', 'reddit'];
 }
+//dd(serialize(Tables::RULE_SELECT));

@@ -122,6 +122,7 @@
     import Breadcrumb from 'com@admin/Breadcrumb';
     import {
         MODULE_DASHBOARD,
+        MODULE_AUTH
     } from 'store@admin/types/module-types';
     import {
         ACTION_GET_INFO_LIST,
@@ -145,6 +146,9 @@
             }
         },
         computed: {
+            ...mapState(MODULE_AUTH, {
+                user: (state) => state.user
+            }),
             ...mapState(MODULE_DASHBOARD, [
                 'infos',
                 'loading',
@@ -162,11 +166,13 @@
             const params = {
                 perPage: 5
             }
-            this[ACTION_GET_INFO_LIST](params);
-            this[ACTION_GET_NEWS_GROUP_LIST](params);
-            this[ACTION_GET_USER_LIST](params);
-            this.ACTION_GET_INFO_LINH_MUC_LIST(params);
-            this.ACTION_GET_INFO_GIAO_PHAN_LIST(params);
+            if (this.user.isAdmin) {
+                this[ACTION_GET_INFO_LIST](params);
+                this[ACTION_GET_NEWS_GROUP_LIST](params);
+                this[ACTION_GET_USER_LIST](params);
+                this.ACTION_GET_INFO_LINH_MUC_LIST(params);
+                this.ACTION_GET_INFO_GIAO_PHAN_LIST(params);
+            }
         },
         methods: {
             ...mapActions(MODULE_DASHBOARD, [
