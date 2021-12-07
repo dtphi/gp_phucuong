@@ -15,6 +15,11 @@ class GiaoXu extends BaseModel
 		return $this->hasOne(GiaoHat::class, $this->primaryKey, 'giao_hat_id');
 	}
 
+  public function giaohats()
+	{
+		return $this->belongsTo(GiaoHat::class);
+	}
+
   /**
    * @var string
    */

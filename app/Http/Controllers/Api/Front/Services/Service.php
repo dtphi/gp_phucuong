@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Api\Front\Services;
 
 use DB;
+use App\Models\Thanh;
 use App\Models\GiaoXu;
+use App\Models\GiaoHat;
 use App\Models\Linhmuc;
+use App\Models\Category;
+use App\Models\GiaoPhan;
+use App\Http\Common\Tables;
+use App\Models\GiaoPhanHat;
+use App\Models\Information;
+use App\Models\LinhmucVanthu;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
-use App\Models\LinhmucVanthu;
-use App\Models\Thanh;
-use App\Models\Category;
-use App\Http\Common\Tables;
-use App\Models\Information;
 use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
 
@@ -35,6 +38,9 @@ class Service implements BaseModel
 		$this->modelGiaoXu   = new GiaoXu();
 		$this->modelLinhMuc = new Linhmuc();
 		$this->modelLinhMucChucThanh = new LinhMucChucThanh();
+    $this->modelGiaoPhan = new GiaoPhan();
+    $this->modelGiaoHat = new GiaoHat();
+    $this->modelGiaoPhanHat = new GiaoPhanHat();
 	}
 
 	/**
@@ -184,8 +190,8 @@ class Service implements BaseModel
 	public function apiGetGiaoXuList($data = array(), $limit = 5)
 	{
 		$query = $this->modelGiaoXu->select()->orderByDesc('id');
-
-		return $query->paginate($limit);
+    
+    return $query->paginate($limit);
 	}
 
 	public function apiGetDetailGiaoXu($id) 
@@ -365,4 +371,22 @@ class Service implements BaseModel
 		}
 		return $query;
 	}
+
+  public function apiGetListGiaoPhan() { // List Giao Phan
+      $query = $this->modelGiaoPhan->select()
+              ->orderBy('id', 'ASC')->get();
+      return $query;
+	}
+
+  public function apiGetListGiaoHat($params) { // List Giao Hat apiGetListGiaoXu
+      $id_giaophan = $this->modelGiaoPhan->find($params);
+      $giao_hats = $id_giaophan->hats->load('giaoHat');  // relationship
+      return $giao_hats;
+  }
+
+  public function apiGetListGiaoXu($params) { // List Giao Xu By Id
+      $id_giaohat = $this->modelGiaoXu->where('giao_hat_id', $params)->get();
+      return $id_giaohat;
+  }
+  
 }

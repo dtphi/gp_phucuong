@@ -1,17 +1,27 @@
 import detail from './detail';
 import {
-  apiGetLists
+  apiGetLists,
+  apiGetListsGiaoXu,
 } from '@app/api/front/giaoxus';
+import {
+  apiGetListsGiaoPhan
+} from '@app/api/front/giaophans';
+import {
+  apiGetListsGiaoHat
+} from '@app/api/front/giaohats';
 
 import {
-  INIT_LIST,
   SET_ERROR,
+  INIT_LIST
 } from '@app/stores/front/types/mutation-types';
 import {
   MODULE_GIAO_XU_PAGE
 } from '@app/stores/front/types/module-types';
 import {
-  GET_LISTS
+  GET_LISTS,
+  GET_LISTS_GIAO_PHAN,
+  GET_LISTS_GIAO_HAT,
+  GET_LISTS_GIAO_XU,
 } from '@app/stores/front/types/action-types';
 
 export default {
@@ -19,6 +29,9 @@ export default {
   state: {
     mainMenus: [],
     pageLists: [],
+    giaoPhanLists:[],
+    giaoHatLists: [],
+    giaoXuLists:[],
     loading: false,
     errors: []
   },
@@ -31,6 +44,15 @@ export default {
     },
     loading(state) {
       return state.loading;
+    },
+    giaoPhanLists(state) {
+      return state.giaoPhanLists;
+    },
+    giaoHatLists(state) {
+      return state.giaoHatLists;
+    },
+    giaoXuLists(state) {
+      return state.giaoXuLists;
     }
   }, 
 
@@ -46,7 +68,16 @@ export default {
     },
     setLoading(state, payload) {
       state.loading = payload;
-    }
+    },
+    INIT_GIAO_PHAN_LIST(state, payload) {
+      state.giaoPhanLists = payload;
+    },
+    INIT_GIAO_HAT_LIST(state, payload) {
+      state.giaoHatLists = payload;
+    },
+    INIT_GIAO_XU_LIST(state, payload) {
+      state.giaoXuLists = payload;
+    },
   },
 
   actions: {
@@ -85,7 +116,55 @@ export default {
         options
       );
     },
+
+    async [GET_LISTS_GIAO_PHAN]({
+      commit
+    }) {
+      commit('setLoading', true);
+      await apiGetListsGiaoPhan(
+        (infos) => {
+          commit('INIT_GIAO_PHAN_LIST', infos.data.results);
+          commit('setLoading', false);
+        },
+        (errors) => {
+          commit('setLoading', false);
+        },
+      );
+    },
+
+    async [GET_LISTS_GIAO_HAT]({ 
+      commit
+    }, params) {
+      commit('setLoading', true);
+      await apiGetListsGiaoHat(
+        (infos) => {
+          commit('INIT_GIAO_HAT_LIST', infos.data.results);
+          commit('setLoading', false);
+        },
+        (errors) => {
+          commit('setLoading', false);
+        },
+        params
+      );
+    },
+
+    async [GET_LISTS_GIAO_XU]({ 
+      commit
+    }, params) {
+      commit('setLoading', true);
+      await apiGetListsGiaoXu(
+        (infos) => {
+          commit('INIT_GIAO_XU_LIST', infos.data.results);
+          commit('setLoading', false);
+        },
+        (errors) => {
+          commit('setLoading', false);
+        },
+        params
+      );
+    },
   },
+
   modules: {
     detail: detail
   }

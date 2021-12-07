@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Http\Common\Tables;
 use DB;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\GiaoXu;
+use App\Models\GiaoPhan;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GiaoHat extends BaseModel
-{
-    use SoftDeletes;
-
+{ 
     /**
+     * 
      * @var string
      */
     protected $table = DB_PREFIX . 'giao_hats';
@@ -29,4 +28,9 @@ class GiaoHat extends BaseModel
       'update_at',
       'delete_at',
     ];
+
+    public function giaoxus()
+	{
+		return $this->hasMany(GiaoXu::class);
+	}
 }

@@ -48,11 +48,10 @@ class InformationController extends ApiController
         if ($request->query('page')) {
             $page = $request->query('page');
         }
-        try {
+      try {
             $limit       = $this->_getPerPage();
             $collections = $this->infoSv->apiGetList($data, $limit);
             
-
             if (isset($data['infoType']) && $data['infoType'] == 'module_special_info') {
                 $pagination = [];
             } else {
@@ -60,8 +59,8 @@ class InformationController extends ApiController
             }
 
             $results = [];
-            $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
+              $staticImgThum = self::$thumImgNo;
                 $realPath = public_path($info->image['path']);
                 if (file_exists($realPath) && (false !== realpath($realPath)) && !empty($info->image['path'])) {
                     $staticImgThum = $info->image['path'];
@@ -104,6 +103,7 @@ class InformationController extends ApiController
     {
         try {
             $json = $this->infoSv->apiGetResourceDetail($id);
+            
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }

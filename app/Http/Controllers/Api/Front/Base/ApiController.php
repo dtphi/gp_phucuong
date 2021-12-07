@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Api\Front\Services\Service;
 use App\Http\Controllers\Api\Front\Services\SettingService;
+use GrahamCampbell\ResultType\Result;
 
 class ApiController extends Controller
 {
@@ -722,4 +723,95 @@ class ApiController extends Controller
 		}
 		return  $results;
 	}
+
+  public function getGiaoPhanList(Request $request)
+  {
+      try {
+          $results = [];
+          $collections = $this->sv->apiGetListGiaoPhan();
+          foreach ($collections as $key => $info) {
+              $results[] = [
+                'value' => $info->id,
+                'text' => $info->name
+              ];
+          } 
+          $json = [
+            'data' => [
+              'results'    => $results,
+            ]
+          ];
+        } catch (HandlerMsgCommon $e) {
+          $json = [
+            'data' => [
+              'results'   => [],
+              'msg'       => $e->render()
+            ]
+          ];
+      }
+
+      return $this->respondWithCollectionPagination($json);
+  }
+
+  public function getGiaoHatList(Request $request) {
+    try {
+      $results = [];
+      $collections = $this->sv->apiGetListGiaoHat($request->params);
+      foreach ($collections as $key => $info) {
+          $results[] = [
+            'value' => $info->giao_hat_id,
+            'text' => $info->name
+          ];
+      } 
+      $json = [
+        'data' => [
+          'results'    => $results,
+        ]
+      ];
+    } catch (HandlerMsgCommon $e) {
+      $json = [
+        'data' => [
+          'results'   => [],
+          'msg'       => $e->render()
+        ]
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($json);
+  }
+
+  public function getGiaoXuListById(Request $request) {
+      try {
+        $results = [];
+        $collections = $this->sv->apiGetListGiaoXu($request->params);
+        foreach ($collections as $key => $info) {     
+          
+            $results[] = [
+              'id' => (int) $info->id,
+              'name' => $info->name,
+              'hrefDetail' => url('giao-xu/chi-tiet/' . $info->id),
+              'image'	=> !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+              'gio_le' => html_entity_decode($info->gio_le) ?? "Chưa cập nhật",
+              'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
+              'email' => $info->email ?? "Chưa cập nhật",
+              'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
+              'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
+              'dan_so' => $info->dan_so ?? "Chưa cập nhật",
+            ];
+        } 
+        $json = [
+          'data' => [
+            'results'    => $results,
+          ]
+        ];
+      } catch (HandlerMsgCommon $e) {
+        $json = [
+          'data' => [
+            'results'   => [],
+            'msg'       => $e->render()
+          ]
+        ];
+      }
+
+      return $this->respondWithCollectionPagination($json);
+  }
 }

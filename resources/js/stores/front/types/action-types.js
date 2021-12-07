@@ -1,6 +1,9 @@
 export const GET_LISTS = 'getLists';
 export const GET_DETAIL = 'getDetail';
+export const GET_LISTS_GIAO_PHAN = 'getListsGiaoPhan';
+export const GET_LISTS_GIAO_HAT = 'getListsGiaoHat';
 export const GET_LISTS_LINH_MUC = 'getListsLinhMuc';
+export const GET_LISTS_GIAO_XU = 'getListsGiaoXu';
 export const GET_DETAIL_LINH_MUC = 'getDetailLinhMuc';
 export const GET_INFORMATION_LIST_TO_CATEGORY = 'getInformationListToCategory';
 export const GET_RELATED_INFORMATION_LIST_TO_CATEGORY = 'getRelatedInformationListToCategory';

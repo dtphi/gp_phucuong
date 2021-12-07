@@ -33,7 +33,7 @@ class GiaoPhanHat extends BaseModel
 
     public function giaoHat()
     {
-        return $this->hasOne(GiaoHat::class, $this->primaryKey, 'giao_hat_id');
+        return $this->belongsTo(GiaoHat::class);
     }
 
     public function giaoXus()
