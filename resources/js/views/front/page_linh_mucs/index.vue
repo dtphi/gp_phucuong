@@ -5,11 +5,11 @@
             <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
                 <content-top v-if="_isContentTop">
                     <!-- Loading -->
-					<template v-if="loading">
+					<!-- <template v-if="loading">
                         <loading-over-lay
                             :active.sync="loading"
                             :is-full-page="fullPage"></loading-over-lay>
-                    </template>
+                    </template> -->
                     <template v-slot:column_right>
                         <social-network></social-network>
                         <div class="box-social">
@@ -30,60 +30,87 @@
                             <div class="tab-linh-muc w-100">												
                                 <b-tabs content-class="mt-3" fill>
                                     <b-tab title="Tất cả" active>
-                                        <div class="list-linh-muc">
-                                            <!-- Load danh sach linh muc -->
-												<div v-for="(info,idx) in pageLists" :key="idx" class="row row-linh-muc">
-                                                <div class="col-mobile col-2">
-                                                    <a class="avatar" :href="`/linh-muc/chi-tiet/${info.id}`">
-                                                        <img class="img" :src="`${info.image}`" alt="Hình ảnh đại diện">
-                                                    </a>
+                                      <div class="list-linh-muc">
+                                          <!-- Load danh sach linh muc -->
+                                          <div v-for="(info,idx) in pageLists" :key="idx" class="row row-linh-muc">
+                                            <div class="col-mobile col-2">
+                                                <a class="avatar" :href="`/linh-muc/chi-tiet/${info.id}`">
+                                                    <img class="img" :src="`${info.image}`" alt="Hình ảnh đại diện">
+                                                </a>
+                                            </div>
+                                            <div class="col-mobile col-10 content">
+                                              <h4 class="tit">
+                                                <a :href="`/linh-muc/chi-tiet/${info.id}`">{{info.ten_day_du}}</a>
+                                              </h4>
+                                              <div class="row">
+                                                <div class="col-6">
+                                                  <span>Chức vụ: {{info.chuc_vu}}</span>       
+                                                  <a :href="info.href_giaoxu">
+                                                    <span>Nơi phục vụ: {{info.giao_xu}} </span>
+                                                  </a>
+                                                  <span>Giáo hạt: {{info.giao_hat}}</span>                                                     
                                                 </div>
-                                                <div class="col-mobile col-10 content">
-                                                    <h4 class="tit">
-                                                       <a :href="`/linh-muc/chi-tiet/${info.id}`">{{info.ten_day_du}}</a>
-                                                    </h4>
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <span>Chức vụ: {{info.chuc_vu}}</span>       
-															<a :href="info.href_giaoxu">
-																<span>Nơi phục vụ: {{info.giao_xu}} </span>
-															</a>
-															<span>Giáo hạt: {{info.giao_hat}}</span>                                                     
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <span>Năm sinh: {{info.nam_sinh}}</span>
-                                                            <span>Chịu chức: {{info.ngay_nhan_chuc}}</span>  
-															<span>Địa chỉ: {{info.dia_chi}}</span>                                                
-                                                        </div>
-                                                    </div>
+                                                <div class="col-6">
+                                                  <span>Năm sinh: {{info.nam_sinh}}</span>
+                                                  <span>Chịu chức: {{info.ngay_nhan_chuc}}</span>  
+                                                  <span>Địa chỉ: {{info.dia_chi}}</span>                                                
                                                 </div>
-                                            </div>																						
+                                              </div>
+                                            </div>
+                                          </div>																						
                                         </div>
-										<paginate :is-resource="isResource" v-if="pageLists"></paginate>
+                                        <paginate :is-resource="isResource" v-if="pageLists"></paginate>
                                     </b-tab>																																				
                                     <b-tab title="Lọc theo chức vụ / Giáo hạt">
                                         <div class="col-mobile col-12">
                                             <div class="col-mobile col-3">
                                                 <p>Chức vụ: </p>
-                                                <!-- string value -->
                                                 <model-select 
                                                     key='chuc_vu'
-                                                    :options="options2"
-                                                    v-model="item2"
-                                                    placeholder="select item2"></model-select>
-                                            </div>
+                                                    :options="chucVuLists"
+                                                    v-model="chucVu"
+                                                    placeholder="Chọn Chức Vụ"></model-select>
+                                            </div>          
                                             <div class="col-mobile col-3">
                                                 <p>Giáo hạt: </p>
-                                                <!-- string value -->
                                                 <model-select 
                                                     key='giao_hat'
-                                                    :options="options3"
-                                                    v-model="item3"
-                                                    placeholder="select item2"></model-select>
-                                            </div>
-                                        </div>
+                                                    :options="giaoHatLists"
+                                                    v-model="giaoHat"
+                                                    placeholder="Chọn Giáo Hạt"></model-select>                         
+                                            </div> 
+                                            <div class="mt-4" v-if="linhMucLists.length">
+                                              <div class="list-linh-muc mt-4">
+                                                <div v-for="(info,idx) in linhMucLists" :key="idx + 'A'" class="row row-linh-muc">
+                                                  <div class="col-mobile col-2">
+                                                      <a class="avatar" :href="`/linh-muc/chi-tiet/${info.id}`">
+                                                          <img class="img" :src="`${info.image}`" alt="Hình ảnh đại diện">
+                                                      </a>
+                                                  </div>
+                                                  <div class="col-mobile col-10 content">
+                                                    <h4 class="tit">
+                                                      <a :href="`/linh-muc/chi-tiet/${info.id}`">{{info.ten_day_du}}</a>
+                                                    </h4>
+                                                    <div class="row">
+                                                      <div class="col-6">
+                                                        <span>Chức vụ: {{info.chuc_vu}}</span>       
+                                                        <a :href="info.href_giaoxu">
+                                                          <span>Nơi phục vụ: {{info.giao_xu}} </span>
+                                                        </a>
+                                                        <span>Giáo hạt: {{info.giao_hat}}</span>                                                     
+                                                      </div>
+                                                      <div class="col-6">
+                                                        <span>Năm sinh: {{info.nam_sinh}}</span>
+                                                        <span>Chịu chức: {{info.ngay_nhan_chuc}}</span>  
+                                                        <span>Địa chỉ: {{info.dia_chi}}</span>                                                
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>																						
+                                              </div>
+                                            </div>                                        
+                                        </div>                           
                                     </b-tab>
-																		
                                 </b-tabs>																											
                             </div>
                         </div>																							
@@ -102,10 +129,14 @@
         mapActions
     } from 'vuex';
     import {
-        MODULE_LINH_MUC_PAGE
+        MODULE_LINH_MUC_PAGE,
+        MODULE_GIAO_XU_PAGE,
     } from '@app/stores/front/types/module-types';
     import {
-        GET_LISTS_LINH_MUC
+        GET_LISTS_LINH_MUC,
+        GET_LISTS_GIAO_HAT,
+        GET_LISTS_CHUC_VU,
+        GET_LISTS_LINH_MUC_BY_ID,
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
     import ContentTop from 'com@front/Common/ContentTop';
@@ -120,7 +151,6 @@
     import 'vue-search-select/dist/VueSearchSelect.css'
     import { ModelSelect } from 'vue-search-select';
 		
-
     export default {
         name: 'InfoPage',
         components: {
@@ -141,26 +171,37 @@
                 fullPage: true,
                 isTopBottomBoth: false,
                 imgCarousel: 'https://picsum.photos/1024/480/?image=58',
-				isResource: false,
-                options2: [
-                    { value: '1', text: 'Chức vụ' + ' - ' + '1' },
-                    { value: '2', text: 'Chức vụ' + ' - ' + '2' }
-                ],
-                item2: '',
-                options3: [
-                    { value: '1', text: 'Giáo hạt' + ' - ' + '1' },
-                    { value: '2', text: 'Giáo hạt' + ' - ' + '2' }
-                ],
-                item3: ''
+				        isResource: false,        
+                chucVu: '',             
+                giaoHat: '',
+            }
+        },
+        watch: {
+            giaoHat() {
+                this.getListGiaoHat(-1);
+                if(this.chucVu && this.giaoHat){
+                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat});
+                }
+            },
+            chucVu() {
+                this.getListChucVu();
+                if(this.chucVu && this.giaoHat){
+                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat});
+                }
             }
         },
         computed: {
             ...mapState({
-                contentBgColor: state => state.cfApp.setting.contentBgColor,
+                 contentBgColor: state => state.cfApp.setting.contentBgColor,
             }),
             ...mapState(MODULE_LINH_MUC_PAGE, {
                 pageLists: state => state.pageLists,
-                loading: state => state.loading
+                linhMucLists: state => state.linhMucLists,
+                chucVuLists: state => state.chucVuLists,
+                loading: state => state.loading,
+            }),
+            ...mapState(MODULE_GIAO_XU_PAGE, {
+                giaoHatLists: state => state.giaoHatLists,
             }),
             _isContentTop() {
                 return this.$route.meta.layout_content.content_top;
@@ -172,12 +213,19 @@
                 return this.$route.meta.layout_content.content_main;
             },
         },
-         mounted() {
+         created() {
             this.getList(this.$route.params);
+            this.getListGiaoHat(-1);
+            this.getListChucVu();
         },
         methods: {
             ...mapActions(MODULE_LINH_MUC_PAGE, {
                 'getList':GET_LISTS_LINH_MUC,
+                'getListChucVu':GET_LISTS_CHUC_VU,
+                'getListLinhMuc':GET_LISTS_LINH_MUC_BY_ID,
+            }),
+            ...mapActions(MODULE_GIAO_XU_PAGE, {
+                'getListGiaoHat':GET_LISTS_GIAO_HAT,
             }),
         }
     }

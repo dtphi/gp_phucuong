@@ -21,7 +21,7 @@ class RestrictIpController extends ApiController
     {
         $this->ResIpSv = $resIpSv;
         parent::__construct($middleware);
-        $this->_initAuthor(new RestrictIpRequest); // from apiController (formRequest)
+        $this->_initAuthor(new RestrictIpRequest);
     }
 
     /**
@@ -38,7 +38,7 @@ class RestrictIpController extends ApiController
         }
         try {
             $limit       = $this->_getPerPage();
-            $collections = $this->ResIpSv->apiGetSearch($data, $limit);
+            $collections = $this->ResIpSv->apiGetList($data, $limit);
             $pagination  = $this->_getTextPagination($collections);
             $results = [];
             foreach ($collections as $key => $info) {
