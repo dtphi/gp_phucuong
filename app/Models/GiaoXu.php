@@ -20,6 +20,12 @@ class GiaoXu extends BaseModel
 		return $this->belongsTo(GiaoHat::class);
 	}
 
+  public function linhmucs()
+	{
+		return $this->hasMany(LinhMuc::class, 'giao_xu_id');
+	}
+
+
   /**
    * @var string
    */

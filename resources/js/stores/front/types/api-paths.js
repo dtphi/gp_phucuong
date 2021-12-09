@@ -1,5 +1,7 @@
 // APP
 export const API_APP_SETTING = '/api/app/get-setting';
+export const API_LINH_MUC_LIST_BY_ID = '/api/app/get-data-linh-muc-by-id';
+export const API_CHUC_VU_LIST = '/api/app/get-data-chuc-vu';
 export const API_GIAO_XU_LIST = '/api/app/get-data-giao-xu';
 export const API_GIAO_PHAN_LIST = '/api/app/get-data-giao-phan';
 export const API_GIAO_HAT_LIST = '/api/app/get-data-giao-hat';

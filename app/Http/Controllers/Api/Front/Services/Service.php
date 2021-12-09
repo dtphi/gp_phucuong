@@ -18,6 +18,7 @@ use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
 use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
+use App\Models\ChucVu;
 
 class Service implements BaseModel
 {
@@ -40,7 +41,8 @@ class Service implements BaseModel
 		$this->modelLinhMucChucThanh = new LinhMucChucThanh();
     $this->modelGiaoPhan = new GiaoPhan();
     $this->modelGiaoHat = new GiaoHat();
-    $this->modelGiaoPhanHat = new GiaoPhanHat();
+    $this->modelChucVu = new ChucVu();
+    $this->modelLinhMucThuyenChuyen = new LinhmucThuyenchuyen();
 	}
 
 	/**
@@ -281,7 +283,6 @@ class Service implements BaseModel
 	public function apiGetLinhmucs($data = []) {
 		$query = $this->modelLinhMuc->select()
             ->orderBy('id', 'DESC');
-
 		return $query;
 	}
 
@@ -375,18 +376,50 @@ class Service implements BaseModel
   public function apiGetListGiaoPhan() { // List Giao Phan
       $query = $this->modelGiaoPhan->select()
               ->orderBy('id', 'ASC')->get();
+        
       return $query;
 	}
 
   public function apiGetListGiaoHat($params) { // List Giao Hat apiGetListGiaoXu
-      $id_giaophan = $this->modelGiaoPhan->find($params);
-      $giao_hats = $id_giaophan->hats->load('giaoHat');  // relationship
+      if($params != -1){
+          $id_giaophan = $this->modelGiaoPhan->find($params);
+          $giao_hats = $id_giaophan->hats->load('giaohats');
+      } else {   
+          $giao_hats = $this->modelGiaoHat->select('id', 'name')->orderBy('id', 'ASC')->get();
+      }
+
       return $giao_hats;
   }
 
   public function apiGetListGiaoXu($params) { // List Giao Xu By Id
       $id_giaohat = $this->modelGiaoXu->where('giao_hat_id', $params)->get();
       return $id_giaohat;
+  }
+
+  public function apiGetListChucVu() { // List Giao Phan
+    $query = $this->modelChucVu->select('id', 'name')
+            ->orderBy('id', 'ASC')->get();
+    return $query;
+  }
+
+  public function apiGetListLinhMucById($params) {
+    $array_id_linhmuc_by_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $params['id_chucvu'])->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
+    $linhmuc_by_giaohat = $this->modelGiaoHat->find($params['id_giaohat'])->giaoxus->load('linhmucs');
+    $array_id_linhmuc_by_giaohat = [];
+
+    foreach($linhmuc_by_giaohat->toArray() as $key => $value) {
+
+      foreach($value['linhmucs'] as $key1 => $item) {
+     
+          $array_id_linhmuc_by_giaohat[] = $item['id'];
+      }
+    }
+    
+    $array_id_linhmuc = array_intersect($array_id_linhmuc_by_giaohat, $array_id_linhmuc_by_chucvu);
+
+    $query = $this->modelLinhMuc->whereIn('id', $array_id_linhmuc)->get();
+ 
+    return $query;
   }
   
 }
