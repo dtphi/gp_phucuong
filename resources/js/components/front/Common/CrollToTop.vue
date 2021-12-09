@@ -4,7 +4,7 @@
     :boundary="$options.settings.boundary"
     :size="$options.settings.size"
     :bottom="$options.settings.bottom"
-    bg-color="#0071bc"
+    bg-color="rgb(0 113 188 / 49%)"
     ></go-top>
 </template>
 

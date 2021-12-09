@@ -313,7 +313,7 @@ export default {
       const rules = unserialize(this.user.ruleSelect);
       let menuHtml = '';
 
-      Object.entries(rules).forEach(function(item){   
+      Object.entries(rules).forEach(function(item){
         if (item[1].abilities.list) {
           const links = self._getRuleHref(item[0])
           menuHtml += '<li><a href=\'' + links.href + '\'>'

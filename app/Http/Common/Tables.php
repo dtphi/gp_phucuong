@@ -169,9 +169,9 @@ final class Tables
     public static $giaoHatAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_HAT;
     const PREFIX_ALLOW_GIAO_XU = 'giao.xu';
     public static $giaoXuAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_XU;
-    const PREFIX_ALLOW_GROUP_ALBUMS = 'group.albums';
+    const PREFIX_ALLOW_GROUP_ALBUMS = 'album.group';
     public static $groupAlbumsAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GROUP_ALBUMS;
-    const PREFIX_ALLOW_ALBUMS = 'albums';
+    const PREFIX_ALLOW_ALBUMS = 'album';
     public static $albumsAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_ALBUMS;
     const PREFIX_ALLOW_GIAO_DIEM = 'giao.diem';
     public static $giaoDiemAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_DIEM;
@@ -185,6 +185,8 @@ final class Tables
     public static $categoryAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_NEWS_GROUP;
     const PREFIX_ALLOW_TIN_TUC = 'tin.tuc';
     public static $tinTucAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_TIN_TUC;
+    const PREFIX_ALLOW_SLIDE_INFO_SPECIAL = 'slide.info.specials';
+    public static $slideInfoSpecialAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_SLIDE_INFO_SPECIAL;
     const PREFIX_ALLOW_RESTRICT_IP = 'restrict.ip';
     public static $restrictIpAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_RESTRICT_IP;
 
