@@ -5,11 +5,11 @@
             <div style="background-color: #80808008;" :style="{backgroundColor:contentBgColor}">
                 <content-top v-if="_isContentTop">
                     <!-- Loading -->
-					<template v-if="loading">
+					<!-- <template v-if="loading">
                         <loading-over-lay
                             :active.sync="loading"
                             :is-full-page="fullPage"></loading-over-lay>
-                    </template>
+                    </template> -->
                     <template v-slot:column_right>
                         <social-network></social-network>
                         <div class="box-social">
@@ -62,21 +62,47 @@
                                             <div class="col-mobile col-3">
                                                 <p>Giáo phận: </p>
                                                 <!-- string value -->
-                                                <model-select 
-                                                    key='giao_phan'
-                                                    :options="options2"
-                                                    v-model="item2"
-                                                    placeholder="select item2"></model-select>
+                                                <model-select                  
+                                                    :options="giaoPhanLists"
+                                                    v-model="giaoPhan"
+                                                    placeholder="Chọn Giáo Phận"></model-select>                                                                                       
                                             </div>
-                                            <div class="col-mobile col-3">
+                                            <div class="col-mobile col-3" v-if="giaoHatLists">
                                                 <p>Giáo hạt: </p>
                                                 <!-- string value -->
-                                                <model-select 
-                                                    key='giao_hat'
-                                                    :options="options3"
-                                                    v-model="item3"
-                                                    placeholder="select item2"></model-select>
-                                            </div>
+                                                <model-select                                         
+                                                    :options="giaoHatLists"
+                                                    v-model="giaoHat"
+                                                    placeholder="Chọn Giáo Hạt"></model-select>
+                                            </div> 
+                                            <div class="mt-4" v-if="giaoXuLists.length">
+                                              <div class="list-giao-xu">                  
+                                                <div v-for="(info,idx) in giaoXuLists" :key="idx + 'A'" class="row row-linh-muc">
+                                                    <div class="col-mobile col-2">
+                                                        <a class="avatar" :href="info.hrefDetail">
+                                                            <img class="img" v-lazy="info.image" :alt="info.name">
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-mobile col-10 content">
+                                                        <h4 class="tit">
+                                                          <a :href="info.hrefDetail"> Giáo Xứ {{info.name}}</a>
+                                                        </h4>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <span>Giờ lễ: <span v-html="info.gio_le"></span></span>
+                                                                <span>Địa chỉ: {{info.dia_chi}}</span>
+                                                                <span>Email: {{info.email}}</span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <span>Điện thoại: {{info.dien_thoai}}</span>
+                                                                <span>Dân số: {{info.dan_so}}</span>
+                                                                <span>Số tín hữu: {{info.so_tin_huu}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                              </div>                                     
+                                        </div>
                                         </div>
                                     </b-tab>
                                 </b-tabs>
@@ -100,7 +126,10 @@
         MODULE_GIAO_XU_PAGE 
     } from '@app/stores/front/types/module-types';
     import {
-        GET_LISTS
+        GET_LISTS,
+        GET_LISTS_GIAO_PHAN,
+        GET_LISTS_GIAO_HAT,
+        GET_LISTS_GIAO_XU,
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
     import ContentTop from 'com@front/Common/ContentTop';
@@ -136,17 +165,17 @@
                 isTopBottomBoth: false,
                 imgCarousel: 'https://picsum.photos/1024/480/?image=58',
                 isResource: false,
-                options2: [
-                    { value: '1', text: 'Giáo phận' + ' - ' + '1' },
-                    { value: '2', text: 'Giáo phận' + ' - ' + '2' }
-                ],
-                item2: '',
-                options3: [
-                    { value: '1', text: 'Giáo hạt' + ' - ' + '1' },
-                    { value: '2', text: 'Giáo hạt' + ' - ' + '2' }
-                ],
-                item3: ''
+                giaoPhan: '',
+                giaoHat: ''
             }
+        },
+        watch: {
+          giaoPhan() {
+              this.getListGiaoHat(this.giaoPhan);    
+          },
+          giaoHat() {
+              this.getListGiaoXu(this.giaoHat);        
+          }
         },
         computed: {
             ...mapState({
@@ -154,7 +183,10 @@
             }),
             ...mapState(MODULE_GIAO_XU_PAGE, {
                 infoList: state => state.pageLists,
-                loading: state => state.loading
+                giaoPhanLists: state => state.giaoPhanLists,
+                giaoHatLists: state => state.giaoHatLists,
+                giaoXuLists: state => state.giaoXuLists,
+                loading: state => state.loading,             
             }),
             _isContentTop() {
                 return this.$route.meta.layout_content.content_top;
@@ -166,12 +198,17 @@
                 return this.$route.meta.layout_content.content_main;
             },
         },
-         mounted() {
+         created() {         
             this.getList(this.$route.params);
+            this.getListGiaoPhan();
+           
         },
         methods: {
             ...mapActions(MODULE_GIAO_XU_PAGE, {
                 'getList':GET_LISTS,
+                'getListGiaoPhan': GET_LISTS_GIAO_PHAN,
+                'getListGiaoHat': GET_LISTS_GIAO_HAT,
+                'getListGiaoXu': GET_LISTS_GIAO_XU,
             }),
         }
     }

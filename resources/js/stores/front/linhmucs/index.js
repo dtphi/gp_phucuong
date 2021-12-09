@@ -1,13 +1,17 @@
 import detail from './detail';
 import {
   apiGetLists,
+  apiGetListsChucVu,
+  apiGetListsLinhMuc 
 } from '@app/api/front/linhmucs';
 import {
   INIT_LIST,
   SET_ERROR,
 } from '@app/stores/front/types/mutation-types';
 import {
-  GET_LISTS_LINH_MUC
+  GET_LISTS_LINH_MUC,
+  GET_LISTS_LINH_MUC_BY_ID,
+  GET_LISTS_CHUC_VU
 } from '@app/stores/front/types/action-types';
 import {
   MODULE_LINH_MUC_PAGE
@@ -17,8 +21,9 @@ export default {
   namespaced: true,
   state: {
     mainMenus: [],
-		pageLists: [
-		],
+		pageLists: [],
+    linhMucLists: [],
+    chucVuLists: [],
     loading: false,
     errors: []
   },
@@ -31,7 +36,14 @@ export default {
     },
     loading(state) {
       return state.loading;
-    }
+    },
+    chucVuLists(state) {
+      return state.chucVuLists;
+    },
+    linhMucLists(state) {
+      return state.linhMucLists;
+    },
+
   }, 
 
   mutations: {
@@ -46,7 +58,13 @@ export default {
     },
     setLoading(state, payload) {
       state.loading = payload;
-    }
+    },
+    INIT_CHUC_VU_LIST(state, payload) {
+      state.chucVuLists = payload;
+    },
+    INIT_LINH_MUC_BY_ID_LIST(state, payload) {
+      state.linhMucLists = payload;
+    },
   },
 
   actions: {
@@ -82,6 +100,37 @@ export default {
           commit('setLoading', false);
         },
         options
+      );
+    },
+
+    async [GET_LISTS_CHUC_VU]({
+      commit
+    }) {
+      commit('setLoading', true);
+      await apiGetListsChucVu(
+        (infos) => {
+          commit('INIT_CHUC_VU_LIST', infos.data.results);
+          commit('setLoading', false);
+        },
+        (errors) => {
+          commit('setLoading', false);
+        },
+      );
+    },
+
+    async [GET_LISTS_LINH_MUC_BY_ID]({ 
+      commit
+    }, params) {
+      commit('setLoading', true);
+      await apiGetListsLinhMuc(
+        (infos) => {
+          commit('INIT_LINH_MUC_BY_ID_LIST', infos.data.results);
+          commit('setLoading', false);
+        },
+        (errors) => {
+          commit('setLoading', false);
+        },
+        params
       );
     },
   },
