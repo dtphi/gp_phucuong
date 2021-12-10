@@ -3,7 +3,7 @@
     <v-col cols="12" sm="5" md="4">
       <v-card>
         <v-img
-          src="/icon.png"
+          src="/administrator/logo.png"
         />
         <v-card-title class="font-weight-bold title">
           Đăng nhập quản trị
@@ -21,7 +21,7 @@
         </div>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="teal" outlined @click="signInUser">
+          <v-btn color="teal" outlined @click="_signInUser">
             Đăng nhập
           </v-btn>
         </v-card-actions>
@@ -31,8 +31,8 @@
 </template>
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
-const auth = getAuth()
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+const firebaseAuth = getAuth()
 
 export default {
   data () {
@@ -49,29 +49,25 @@ export default {
     ...mapGetters('auth', ['isAuthenticated'])
   },
   created () {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        this.$router.push('/linhmucadmin/dashboard')
-      }
-    })
   },
   methods: {
     ...mapActions('auth', ['setUser']),
-    async signInUser () {
+    async _signInUser () {
       try {
-        await signInWithEmailAndPassword(auth, this.formData.email, this.formData.password)
-          .then((userCredential) => {
-            this.setUser(userCredential.user)
-          })
+        const userCredential = await signInWithEmailAndPassword(firebaseAuth, this.formData.email, this.formData.password)
           .catch((error) => {
             this.errors = error
           })
-        if (this.user) {
-          this.$router.push('/linhmucadmin/dashboard')
-        }
+        const { uid, email, displayName } = userCredential.user
+        this._redirectDashBoard({ uid, email, displayName })
       } catch (e) {
         alert(e)
       }
+    },
+    async _redirectDashBoard (loginAcount) {
+      const account = { ...loginAcount }
+      await this.setUser(account)
+      this.$router.push('/linhmucadmin/dashboard')
     }
   }
 }

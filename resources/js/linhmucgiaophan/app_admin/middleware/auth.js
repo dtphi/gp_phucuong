@@ -1,7 +1,7 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { initializeApp } from 'firebase/app'
+import { initializeApp, getApps } from 'firebase/app'
 
-const config = {
+const firebaseConfig = {
   apiKey: 'AIzaSyBKsiV4xyEV3CBbgc1lQh4HATdFkBeRMcM',
   authDomain: 'linhmucgiaophan-phucuong.firebaseapp.com',
   projectId: 'linhmucgiaophan-phucuong',
@@ -9,12 +9,15 @@ const config = {
   messagingSenderId: '1040600271080',
   appId: '1:1040600271080:web:01f9b8860c43bd24c7a15d'
 }
+const apps = getApps()
+if (!apps.length) {
+  initializeApp(firebaseConfig)
+}
 
-initializeApp(config)
-const auth = getAuth()
+const firebaseAuth = getAuth()
 // Check user login
 export default function ({ redirect }) {
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(firebaseAuth, (user) => {
     if (!user) {
       redirect('/linhmucadmin')
     }
