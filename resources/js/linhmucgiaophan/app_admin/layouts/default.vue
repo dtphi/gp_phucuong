@@ -56,6 +56,12 @@
       >
         <v-icon>mdi-menu</v-icon>
       </v-btn>
+      <v-btn
+        icon
+        @click="_signOut"
+      >
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -89,6 +95,9 @@
 </template>
 
 <script>
+import { getAuth, signOut } from 'firebase/auth'
+const auth = getAuth()
+
 export default {
   data () {
     return {
@@ -104,13 +113,18 @@ export default {
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
-          to: '/inspire'
+          to: '/linhmucadmin'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js'
+    }
+  },
+  methods: {
+    _signOut () {
+      signOut(auth)
     }
   }
 }
