@@ -14,9 +14,19 @@ use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
 class TestArrayExport implements FromArray, WithStyles, WithEvents
 { 
+    /**
+     * Num increment.
+     */
+    private $incrementNum = [
+        'A_#' => 1,
+        'B_#' => 1,
+        'C_#' => 1,
+        'D_#' => 1
+    ];
    
     public function array():array
     {
+        return $this->__readLogFile();
         /*$testCol = [];
         for ($i = 1; $i <= 16384; $i ++) {
             $testCol[] = $i;
@@ -28,6 +38,92 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
             ['d','e'],
             ['','','','','','', 'abc']
         ];
+    }
+
+    private function __readLogFile():array
+    {
+        $pathFile = storage_path('logs/test.log');
+        
+        if (!is_file($pathFile)) {
+            \File::put(storage_path('logs/test.log'), '');
+        }
+
+        $content = \File::get(storage_path('logs/test.log'));
+
+        $fileObject = new \SplFileObject('php://memory', 'r+');
+        $fileObject->fwrite($content);
+        $fileObject->rewind();
+
+        $arrExportContent = [];
+
+        while ($fileObject->valid()) {
+            $line = $fileObject->current();
+            $this->__setExportStructure($arrExportContent, $line);
+            $fileObject->next();
+        }
+
+        return $arrExportContent;
+    }
+
+    private function __setExportStructure(&$arrExportContent = array(), $row = ''):array
+    {
+        $arrRow = explode(' ', $row);
+        $arrTmpRow = [];
+        $rowNum = count($arrExportContent) + 2;
+
+        if (!empty($arrRow)) {
+            if (isset($arrRow[0])) {
+                $numberAdd = $arrRow[0];
+                unset($arrRow[0]);
+                $contentAdd = $arrRow;
+                if ($numberAdd == '#') {
+                    $arrTmpRow['__empty'] = $this->incrementNum['A_#'];
+                    $arrTmpRow['__empty_1'] = implode(' ', $contentAdd);
+                    $arrTmpRow['__rowNum__'] = $rowNum;
+                    $this->incrementNum['A_#'] += 1;
+
+                    return $arrExportContent[] = $arrTmpRow;
+                }
+                if ($numberAdd == '##') {
+                    $arrTmpRow['__empty_1'] = $this->incrementNum['B_#'];
+                    $arrTmpRow['__empty_2'] = implode(' ', $contentAdd);
+                    $arrTmpRow['__rowNum__'] = $rowNum;
+                    $this->incrementNum['B_#'] += 1;
+
+                    return $arrExportContent[] = $arrTmpRow;
+                }
+                if ($numberAdd === '###') {
+                    $arrTmpRow['__empty_2'] = $this->incrementNum['C_#'];
+                    $arrTmpRow['__empty_3'] = implode(' ', $contentAdd);
+                    $arrTmpRow['__rowNum__'] = $rowNum;
+                    $this->incrementNum['C_#'] += 1;
+
+                    return $arrExportContent[] = $arrTmpRow;
+                }
+                if ($numberAdd === '####') {
+                    $arrTmpRow['__empty_3'] = $this->incrementNum['D_#'];
+                    $arrTmpRow['__empty_4'] = implode(' ', $contentAdd);
+                    $arrTmpRow['__rowNum__'] = $rowNum;
+                    $this->incrementNum['D_#'] += 1;
+
+                    return $arrExportContent[] = $arrTmpRow;
+                }
+                if (in_array($numberAdd,['-', '='])) {
+                    $arrTmpRow['__empty_4'] = implode(' ', $contentAdd);
+                    $arrTmpRow['__rowNum__'] = $rowNum;
+
+                    return $arrExportContent[] = $arrTmpRow;
+                }
+                if (in_array($numberAdd,['+'])) {
+                    $arrTmpRow['__empty_21'] = implode(' ', $contentAdd);
+                    $arrTmpRow['__rowNum__'] = $rowNum;
+
+                    return $arrExportContent[] = $arrTmpRow;
+                }
+            }
+        }
+
+        return [];
     }
 
     /**
