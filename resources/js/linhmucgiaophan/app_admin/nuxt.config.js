@@ -9,8 +9,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - app_admin',
-    title: 'app_admin',
+    titleTemplate: '%s - Linh Mục Admin',
+    title: 'Linh Mục Giáo Phận',
     htmlAttrs: {
       lang: 'en'
     },
@@ -21,7 +21,12 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'shortcut icon', href: '/images/icons/favicon-33x33.png' },
+      { rel: 'icon', type: 'image/x-icon', href: '/images/icons/favicon.png' },
+      { rel: 'apple-touch-icon-precomposed', type: 'image/x-icon', href: '/images/icons/favicon-144x144.png' },
+      { rel: 'apple-touch-icon-precomposed', type: 'image/x-icon', href: '/images/icons/favicon-114x114.png' },
+      { rel: 'apple-touch-icon-precomposed', type: 'image/x-icon', href: '/images/icons/favicon-72x72.png' },
+      { rel: 'apple-touch-icon-precomposed', type: 'image/x-icon', href: '/images/icons/favicon-57x57.png' }
     ]
   },
 
@@ -75,5 +80,12 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    publicPath: 'http://localhost:8000/administrator/linhmucadmin-js'
+  },
+
+  generate: {
+    exclude: [
+      /^\/administator/
+    ]
   }
 }
