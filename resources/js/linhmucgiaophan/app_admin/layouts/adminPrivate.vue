@@ -88,10 +88,15 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer
+      justify="center"
+      align="center"
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}te</span>
+      <span
+        justify="center"
+        align="center"
+      >Copyright &copy; {{ new Date().getFullYear() }} By Giáo Phận Phú Cường, All rights reserved. Powered by<a href="/"> Catholic.App.Team</a><br>Version 1.0.0.0</span>
     </v-footer>
   </v-app>
 </template>
@@ -113,6 +118,11 @@ export default {
           to: '/linhmucadmin/dashboard'
         },
         {
+          icon: 'mdi-account',
+          title: 'User',
+          to: '/linhmucadmin/linhmucuser'
+        },
+        {
           icon: 'mdi-home',
           title: 'Giáo Xứ',
           to: '/linhmucadmin/giaoxu'
@@ -131,6 +141,7 @@ export default {
   },
   methods: {
     _signOut () {
+      localStorage.removeItem('authen-lm')
       signOut(firebaseAuth)
     }
   }

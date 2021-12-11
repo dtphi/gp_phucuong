@@ -1,5 +1,6 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { initializeApp, getApps } from 'firebase/app'
+import createPersistedState from 'vuex-persistedstate'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBKsiV4xyEV3CBbgc1lQh4HATdFkBeRMcM',
@@ -16,10 +17,25 @@ if (!apps.length) {
 
 const firebaseAuth = getAuth()
 // Check user login
-export default function ({ redirect }) {
+export default function ({ store, redirect }) {
   onAuthStateChanged(firebaseAuth, (user) => {
     if (!user) {
       redirect('/linhmucadmin')
+    } else {
+      let authLm = localStorage.getItem('authen-lm')
+      if (authLm) {
+        authLm = JSON.parse(authLm)
+
+        if (!Object.keys(authLm).length) {
+          if (user.uid !== authLm.auth.user.uid) {
+            localStorage.removeItem('authen-lm')
+            createPersistedState({
+              key: 'authen-lm',
+              paths: ['auth']
+            })(store)
+          }
+        }
+      }
     }
   })
 }

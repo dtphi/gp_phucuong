@@ -3,7 +3,7 @@
     <v-col cols="12" sm="5" md="4">
       <v-card>
         <v-img
-          src="/administrator/logo.png"
+          src="/administrator/linhmucadmin-images/logo.png"
         />
         <v-card-title class="font-weight-bold title">
           Đăng nhập quản trị
@@ -48,11 +48,13 @@ export default {
     ...mapState('auth', ['user']),
     ...mapGetters('auth', ['isAuthenticated'])
   },
-  created () {
+  mounted () {
+    this._checkQuery()
   },
   methods: {
     ...mapActions('auth', ['setUser']),
     async _signInUser () {
+      this._checkQuery()
       try {
         const userCredential = await signInWithEmailAndPassword(firebaseAuth, this.formData.email, this.formData.password)
           .catch((error) => {
@@ -67,7 +69,20 @@ export default {
     async _redirectDashBoard (loginAcount) {
       const account = { ...loginAcount }
       await this.setUser(account)
-      this.$router.push('/linhmucadmin/dashboard')
+      window.location.href = '/linh-muc/chi-tiet/' + this.$route.query.linhmucId
+    },
+    _checkQuery () {
+      if (this.$route.query) {
+        const values = Object.keys(this.$route.query)
+        if (!values.includes('linhmucId')) {
+          window.location.href = '/linh-muc'
+          return 0
+        }
+        if (!this.$route.query.linhmucId) {
+          window.location.href = '/linh-muc'
+          return 0
+        }
+      }
     }
   }
 }

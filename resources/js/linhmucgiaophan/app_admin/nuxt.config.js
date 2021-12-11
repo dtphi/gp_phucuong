@@ -80,8 +80,23 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    publicPath: 'http://localhost:8000/administrator/linhmucadmin-js'
+    //publicPath: 'http://localhost:8000/administrator/linhmucadmin-js'
+    publicPath: 'http://haydesachnoipodcast.com/administrator/linhmucadmin-js'
   },
+
+  env: {
+    appMiddle: 'gp.phu.cuong.vs.1.0.0',
+    firebasephoneMiddle: 'firebase.phone.vs.9.1.3',
+    baseUrl: 'http://haydesachnoipodcast.com',
+    apiBaseUrl: 'http://haydesachnoipodcast.com/api/linhmucadmin'
+  },
+
+  /*env: {
+    appMiddle: 'gp.phu.cuong.vs.1.0.0',
+    firebasephoneMiddle: 'firebase.phone.vs.9.1.3',
+    baseUrl: 'http://localhost:8000',
+    apiBaseUrl: 'http://localhost:8000/api/linhmucadmin'
+  },*/
 
   generate: {
     exclude: [
