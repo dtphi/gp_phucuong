@@ -39,6 +39,8 @@ export default {
   },
   computed: {
     ...mapState('auth', ['user'])
+  },
+  mounted () {
   }
 }
 </script>

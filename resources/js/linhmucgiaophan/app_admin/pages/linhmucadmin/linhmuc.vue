@@ -19,6 +19,9 @@
 <script>
 import { mapState } from 'vuex'
 import axios from 'axios'
+import { getAuth } from 'firebase/auth'
+const firebaseAuth = getAuth()
+const linhMucUser = firebaseAuth.currentUser
 
 export default {
   layout: 'adminPrivate',
@@ -56,6 +59,7 @@ export default {
       return process.env.firebasephoneMiddle
     },
     _getByUId (uId) {
+      uId = (linhMucUser) ? linhMucUser.uid : uId
       if (uId) {
         axios.get(this._getApiBaseUrl(), {
           params: {

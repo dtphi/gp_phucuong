@@ -17,10 +17,16 @@ if (!apps.length) {
 
 const firebaseAuth = getAuth()
 // Check user login
-export default function ({ store, redirect }) {
+export default function ({ store, route, redirect }) {
+  const values = Object.keys(route.query)
+  let linhMucId = null
+  if (values.includes('linhmucId')) {
+    linhMucId = route.query.linhmucId
+  }
   onAuthStateChanged(firebaseAuth, (user) => {
+    console.log('middleware', user)
     if (!user) {
-      redirect('/linhmucadmin')
+      redirect(`/linhmucadmin?linhmucId=${linhMucId}`)
     } else {
       let authLm = localStorage.getItem('authen-lm')
       if (authLm) {

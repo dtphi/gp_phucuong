@@ -31,7 +31,7 @@
 </template>
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, signOut, signInWithEmailAndPassword } from 'firebase/auth'
 const firebaseAuth = getAuth()
 
 export default {
@@ -49,6 +49,7 @@ export default {
     ...mapGetters('auth', ['isAuthenticated'])
   },
   mounted () {
+    console.log(window.$nuxt.context)
     this._checkQuery()
   },
   methods: {
@@ -69,6 +70,7 @@ export default {
     async _redirectDashBoard (loginAcount) {
       const account = { ...loginAcount }
       await this.setUser(account)
+      // const from = window.$nuxt.context
       window.location.href = '/linh-muc/chi-tiet/' + this.$route.query.linhmucId
     },
     _checkQuery () {
@@ -78,11 +80,15 @@ export default {
           window.location.href = '/linh-muc'
           return 0
         }
-        if (!this.$route.query.linhmucId) {
-          window.location.href = '/linh-muc'
-          return 0
-        }
+        // if (!this.$route.query.linhmucId) {
+        // window.location.href = '/linh-muc'
+        // return 0
+        // }
       }
+    },
+    _signOut () {
+      localStorage.removeItem('authen-lm')
+      signOut(firebaseAuth)
     }
   }
 }

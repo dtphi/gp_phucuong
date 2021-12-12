@@ -103,7 +103,50 @@
 
 <script>
 import { getAuth, signOut } from 'firebase/auth'
+import { mapState } from 'vuex'
 const firebaseAuth = getAuth()
+const adminMail = 'linhmucgiaophanphucuong@gmail.com'
+const adminUid = '8wK92awwqcauj8g7ljKsISOdpY82'
+let isSuperAdmin = 0
+const superMenu = [
+  {
+    icon: 'mdi-apps',
+    title: 'Quản trị',
+    to: '/linhmucadmin/dashboard'
+  },
+  {
+    icon: 'mdi-account',
+    title: 'User',
+    to: '/linhmucadmin/linhmucuser'
+  },
+  {
+    icon: 'mdi-home',
+    title: 'Giáo Xứ',
+    to: '/linhmucadmin/giaoxu'
+  },
+  {
+    icon: 'mdi-account',
+    title: 'Linh Mục',
+    to: '/linhmucadmin/linhmuc'
+  }
+]
+const menus = [
+  {
+    icon: 'mdi-apps',
+    title: 'Quản trị',
+    to: '/linhmucadmin/dashboard'
+  },
+  {
+    icon: 'mdi-home',
+    title: 'Giáo Xứ',
+    to: '/linhmucadmin/giaoxu'
+  },
+  {
+    icon: 'mdi-account',
+    title: 'Linh Mục',
+    to: '/linhmucadmin/linhmuc'
+  }
+]
 
 export default {
   data () {
@@ -111,32 +154,26 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Quản trị',
-          to: '/linhmucadmin/dashboard'
-        },
-        {
-          icon: 'mdi-account',
-          title: 'User',
-          to: '/linhmucadmin/linhmucuser'
-        },
-        {
-          icon: 'mdi-home',
-          title: 'Giáo Xứ',
-          to: '/linhmucadmin/giaoxu'
-        },
-        {
-          icon: 'mdi-account',
-          title: 'Linh Mục',
-          to: '/linhmucadmin/linhmuc'
-        }
-      ],
+      items: superMenu,
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'Linh Mục Giáo Phận'
+    }
+  },
+  computed: {
+    ...mapState('auth', ['user'])
+  },
+  updated () {
+    const userMenu = this.user
+    console.log('userAuth', userMenu)
+    if (userMenu) {
+      isSuperAdmin = ((userMenu.email === adminMail) && (userMenu.uid === adminUid)) ? 1 : 0
+      if (isSuperAdmin) {
+        this.items = superMenu
+      } else {
+        this.items = menus
+      }
     }
   },
   methods: {
