@@ -28,3 +28,7 @@ Image
 webpack.a*
 webpack.f*
 webpack.p*
+deploy*
+*.local*
+.md
+*html
