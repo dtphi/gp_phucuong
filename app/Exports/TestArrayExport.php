@@ -15,7 +15,8 @@ use Log;
 
 class TestArrayExport implements FromArray, WithStyles, WithEvents
 {
-    private $fileRead = 'logs/test.log';
+    private $fileRead = 'logs/test.log';// stubs/test.log
+
     /**
      * Num increment.
      */
@@ -30,8 +31,8 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
 
     public function array(): array
     {
-        //$content = $this->__readLogFile();
-        //$this->getTableHtmlVs1($content);
+        $content = $this->__readLogFile();
+        $this->getTableHtmlVs2($content);
         //$this->getTableHtml();
 
         return $this->__readLogFile();
@@ -46,6 +47,38 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
             ['d', 'e'],
             ['', '', '', '', '', '', 'abc']
         ];
+    }
+
+    public function getTableHtmlVs2(array $content = array()): string
+    {
+        $arrTables = [];
+        $tdNum = 30;
+
+        $items = [];
+        for ($i = 0; $i <= $tdNum; $i++) {
+            $items[] = '';
+        }
+
+        if (!empty($content)) {
+            foreach ($content as $rows) {
+                $tmpItems = $items;
+                $tmpRows = $rows;
+                $tmpItems['config'] = $rows['__config__'];
+
+                foreach ($tmpRows as $key => $value) {
+                    if (str_starts_with($key, '__empty')) { 
+                        $index = (int) preg_replace('/\D/', '', $key);
+                        $tmpItems[$index ? $index : 0] = $value;
+                    }
+                    
+                    unset($tmpRows[$key]);
+                }
+
+                $arrTables[] = $tmpItems;
+            }
+        }
+        Log::info(json_encode($arrTables));
+        return json_encode($arrTables);
     }
 
     public function getTableHtmlVs1(array $content = array()): string
@@ -77,7 +110,7 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
                 $arrTables[] = $tmpItems;
             }
         }
-
+        
         $html = '';
         foreach ($arrTables as $key => $row) {
             $html .= '<tr>';
@@ -89,6 +122,9 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
             foreach ($tmpRow as $key => $value) {
 
                 $classTd = 'td_empty';
+                if ($key == 0) {
+                    $classTd = 'td_empty col-content-first';
+                }
                 $lastContentIndex = $config['lastContentIndex'];
                 if ($key == $lastContentIndex) {
                     $classTd = 'td_content';
@@ -102,12 +138,25 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
                     $classTd = 'td_is_no_' . $config['isNo'];
                 }
 
+                $colColumClass = '';
+                if ($key == 19) {
+                    $colColumClass = ' col-content-' . $config['colContent'];
+                }
+                
                 if ($key <= $lastContentIndex) {
                     $txtColSpan = 'colspan="' . $colSpan . '"';
-                    $html .= '<td class="' . $classTd . '" ' . $txtColSpan . '>' . $value . '</td>';
+                    if ($colSpan > 10) {
+                        $colColumClass = ' col-content-' . $config['colContent'];
+                    }
+                    if ($classTd === 'td_empty') {
+                        $classTd .= $classTd . '_' . $key;
+                    }
+                    if ($key != 20) {
+                        $html .= '<td class="' . $classTd . $colColumClass . '" ' . $txtColSpan . '>' . $value . '</td>';
+                    }
                 } else {
                     if (($config['colContent'] == 1) && ($key < ($tdNum - $colSpan))) {
-                        $html .= '<td class="td_empty"></td>';
+                        $html .= '<td class="td_empty ' . $colColumClass . '"></td>';
                     }
                 }
             }
@@ -178,7 +227,7 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
 
         $html = '';
         foreach ($arrTables as $key => $row) {
-            $html .= '<tbody><tr>';
+            $html .= '<tr>';
             $config = $row['config'];
             unset($row['config']);
             $tmpRow = $row;
@@ -189,7 +238,7 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
                 $classTd = 'td_empty';
                 $lastContentIndex = $config['lastContentIndex'];
                 if ($key == $lastContentIndex) {
-                    $classTd = 'td_content';
+                    $classTd = 'td_content_' + $lastContentIndex;
                     if ($lastContentIndex < $tdColOneNum) {
                         $colSpan = ($tdColOneNum - (int)$config['lastContentIndex']);
                     } else {
@@ -209,7 +258,7 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
                     }
                 }
             }
-            $html .= '</tr></tbody>';
+            $html .= '</tr>';
         }
 
         return $html;
@@ -238,7 +287,7 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
         */
     }
 
-    private function __readLogFile(): array
+    public function __readLogFile(): array
     {
         $pathFile = storage_path($this->fileRead);
 
@@ -263,7 +312,7 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
         return $arrExportContent;
     }
 
-    private function __setExportStructureVs1(array &$arrExportContent = array(), string $row = ''): array
+    public function __setExportStructureVs1(array &$arrExportContent = array(), string $row = ''): array
     {
         $arrRow = explode(' ', $row);
         $arrTmpRow = [];
@@ -326,14 +375,15 @@ class TestArrayExport implements FromArray, WithStyles, WithEvents
             $isNo = -1;
             $indexContent = $this->mapColKeys[$content[0]];
             $lastContentIndex = (int)$indexContent;
+            $textContent = preg_replace( "/\r|\n|\'/", "", implode(' ', $content[1]));
             if (isset($this->incrementNum[$content[0]])) {
                 $isNo = (int)$indexContent;
                 $lastContentIndex += 1;
                 
                 $row['__empty' . $indexContent] = $this->incrementNum[$content[0]];
-                $row['__empty_' . ((int)$indexContent + 1)] = implode(' ', $content[1]);
+                $row['__empty_' . ((int)$indexContent + 1)] = $textContent;
             } else {
-                $row['__empty_' . (int)$indexContent] = implode(' ', $content[1]);
+                $row['__empty_' . (int)$indexContent] = $textContent;
             }
             
             $row['__rowNum__'] = $content[2];
