@@ -392,8 +392,8 @@ class Service implements BaseModel
   }
 
   public function apiGetListGiaoXu($params) { // List Giao Xu By Id
-      $id_giaohat = $this->modelGiaoXu->where('giao_hat_id', $params)->get();
-      return $id_giaohat;
+      $list_giaoxu = $this->modelGiaoXu->where('giao_hat_id', $params)->paginate(5);
+      return $list_giaoxu;
   }
 
   public function apiGetListChucVu() { // List Giao Phan
@@ -420,6 +420,11 @@ class Service implements BaseModel
     $query = $this->modelLinhMuc->whereIn('id', $array_id_linhmuc)->get();
  
     return $query;
+}
+
+  public function apiGetListGiaoXuSearch($request) {
+      $giaoxu = $this->modelGiaoXu->query();
+      $giaoxu->name($request);
+      return $giaoxu->paginate(5);
   }
-  
 }

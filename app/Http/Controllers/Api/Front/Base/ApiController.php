@@ -781,9 +781,16 @@ class ApiController extends Controller
   }
 
   public function getGiaoXuListById(Request $request) {
+      $page = 1;
+      if ($request->query('page')) {
+        $page = $request->query('page');
+      }
+
       try {
         $results = [];
         $collections = $this->sv->apiGetListGiaoXu($request->params);
+        $pagination = $this->_getTextPagination($collections);
+
         foreach ($collections as $key => $info) {     
             $results[] = [
               'id' => (int) $info->id,
@@ -801,12 +808,15 @@ class ApiController extends Controller
         $json = [
           'data' => [
             'results'    => $results,
+            'pagination' => $pagination,
+            'page'       => $page
           ]
         ];
       } catch (HandlerMsgCommon $e) {
         $json = [
           'data' => [
-            'results'   => [],
+            'results'    => [],
+            'pagination' => [],
             'msg'       => $e->render()
           ]
         ];
@@ -904,4 +914,51 @@ class ApiController extends Controller
 
       return $this->respondWithCollectionPagination($json);
   }
-}
+
+  public function getGiaoXuListSearch(Request $request)
+  { 
+      $page = 1;
+      if ($request->query('page')) {
+        $page = $request->query('page');
+      }
+      
+      try {
+        $results = [];
+        $collections = $this->sv->apiGetListGiaoXuSearch($request);
+        $pagination = $this->_getTextPagination($collections);
+  
+        foreach ($collections as $key => $info) {
+          $results[] = [
+            'id' => (int) $info->id,
+            'name' => $info->name,
+            'hrefDetail' => url('giao-xu/chi-tiet/' . $info->id),
+            'image'	=> !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+            'gio_le' => html_entity_decode($info->gio_le) ?? "Chưa cập nhật",
+            'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
+            'email' => $info->email ?? "Chưa cập nhật",
+            'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
+            'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
+            'dan_so' => $info->dan_so ?? "Chưa cập nhật",
+          ];
+        }
+  
+        $json = [
+          'data' => [
+            'results'    => $results,
+            'pagination' => $pagination,
+            'page'       => $page
+          ]
+        ];
+      } catch (HandlerMsgCommon $e) {
+        $json = [
+          'data' => [
+            'results'    => [],
+            'pagination' => [],
+            'msg'       => $e->render()
+          ]
+        ];
+      }
+  
+      return $this->respondWithCollectionPagination($json);
+    }
+} 
