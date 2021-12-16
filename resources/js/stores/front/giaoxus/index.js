@@ -2,6 +2,7 @@ import detail from './detail';
 import {
   apiGetLists,
   apiGetListsGiaoXu,
+  apiSearchItem,
 } from '@app/api/front/giaoxus';
 import {
   apiGetListsGiaoPhan
@@ -22,6 +23,10 @@ import {
   GET_LISTS_GIAO_PHAN,
   GET_LISTS_GIAO_HAT,
   GET_LISTS_GIAO_XU,
+  ACTION_SEARCH_ITEMS,
+  ACTION_GET_PAGE_SEARCH,
+  ACTION_REFESH_LIST_SEARCH,
+  ACTION_REFESH_LIST_FILTER
 } from '@app/stores/front/types/action-types';
 
 export default {
@@ -33,6 +38,8 @@ export default {
     giaoHatLists: [],
     giaoXuLists:[],
     loading: false,
+    paginationFilter: [],
+    paginationSearch: [],
     errors: []
   },
   getters: {
@@ -53,6 +60,12 @@ export default {
     },
     giaoXuLists(state) {
       return state.giaoXuLists;
+    },
+    paginationFilter(state) {
+      return state.paginationFilter;
+    },
+    paginationSearch(state) {
+      return state.paginationSearch;
     }
   }, 
 
@@ -78,6 +91,15 @@ export default {
     INIT_GIAO_XU_LIST(state, payload) {
       state.giaoXuLists = payload;
     },
+    INIT_PAGINATION_FILTER(state, payload) {
+      state.paginationFilter = payload;
+    },
+    INIT_PAGINATION_SEARCH(state, payload) {
+      state.paginationSearch = payload;
+    },
+    INIT_REFRESH_LIST(state, payload) {
+      state.giaoXuLists = payload;
+    }
   },
 
   actions: {
@@ -99,7 +121,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_GIAO_XU_PAGE,
+              name: MODULE_GIAO_XU_PAGE,    
               actionList: GET_LISTS
             },
             collectionData: pagination
@@ -149,20 +171,65 @@ export default {
     },
 
     async [GET_LISTS_GIAO_XU]({ 
-      commit
-    }, params) {
+      commit, dispatch
+    }, options) {
       commit('setLoading', true);
       await apiGetListsGiaoXu(
-        (infos) => {
-          commit('INIT_GIAO_XU_LIST', infos.data.results);
+        (response) => {
+          dispatch(ACTION_REFESH_LIST_SEARCH);
+          commit('INIT_GIAO_XU_LIST', response.data.results);
+          commit('INIT_PAGINATION_FILTER', response.data.pagination);
           commit('setLoading', false);
         },
         (errors) => {
           commit('setLoading', false);
         },
-        params
+        options
       );
     },
+
+    [ACTION_SEARCH_ITEMS]({
+      commit, dispatch
+     }, options) {
+       apiSearchItem(
+         (response) => {
+          dispatch(ACTION_REFESH_LIST_FILTER);
+          commit('INIT_GIAO_XU_LIST', response.data.results);
+          if (response.data.hasOwnProperty('pagination')) {
+            commit('INIT_PAGINATION_SEARCH', response.data.pagination);
+          }
+        },
+        (errors) => {
+          commit('INIT_GIAO_XU_LIST', errors);
+        },
+        options,
+      );
+    },
+
+    [ACTION_GET_PAGE_SEARCH]({
+      commit}, options){
+        apiSearchItem(
+            (response) => {
+              commit('INIT_GIAO_XU_LIST', response.data.results); 
+              if (response.data.hasOwnProperty('pagination')) {
+                commit('INIT_PAGINATION_SEARCH', response.data.pagination);
+              } 
+            },
+            (errors) => {
+                console.log(errors);
+            },
+            options)   
+    },
+
+    [ACTION_REFESH_LIST_SEARCH]({commit}) {
+        commit('INIT_REFRESH_LIST', []);
+        commit('INIT_PAGINATION_SEARCH', [])
+    },
+
+    [ACTION_REFESH_LIST_FILTER]({commit}) {
+      commit('INIT_REFRESH_LIST', []);
+      commit('INIT_PAGINATION_FILTER', [])
+    }
   },
 
   modules: {

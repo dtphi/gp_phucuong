@@ -37,8 +37,12 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::post('/app/get-data-giao-xu-by-id', 'Base\ApiController@getGiaoXuListById');
     Route::get('/app/get-data-giao-xu/{id}', 'Base\ApiController@getGiaoXuDetail');
 		Route::get('/app/get-data-linh-muc', 'Base\ApiController@getLinhMucList');
+    Route::get('/app/search-item-giaoxu', 'Base\ApiController@getGiaoXuListSearch');
+    Route::get('/app/search-item-linhmuc', 'Base\ApiController@getLinhMucListSearch');
+    Route::get('/app/get-data-chuc-vu', 'Base\ApiController@getChucVuList');
+    Route::post('/app/get-data-linh-muc-by-id', 'Base\ApiController@getLinhMucListById');
 		Route::get('/app/get-detail-linh-muc/{id}', 'Base\ApiController@getLinhMucDetail');
-    Route::apiResource('/email_sub/create', 'EmailController');
+    Route::apiResource('/email_sub/create', 'EmailController'); 
   });
 
 Route::namespace('App\Http\Controllers\Api\Admin')

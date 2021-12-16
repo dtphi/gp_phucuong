@@ -8,6 +8,8 @@ export const API_GIAO_HAT_LIST = '/api/app/get-data-giao-hat';
 export const API_GIAO_XU_LIST_BY_ID = '/api/app/get-data-giao-xu-by-id';
 export const API_LINH_MUC_LIST = '/api/app/get-data-linh-muc';
 export const API_LINH_MUC_DETAIL = '/api/app/get-detail-linh-muc';
+export const API_SEARCH_ITEM_GIAOXU_RESOURCE = '/api/app/search-item-giaoxu';
+export const API_SEARCH_ITEM_LINHMUC_RESOURCE = '/api/app/search-item-linhmuc';
 
 // HOME 
 export const API_HOME_RESOURCE = '/api/homes/get-list';
