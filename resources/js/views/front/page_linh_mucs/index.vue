@@ -62,35 +62,39 @@
                                         <paginate :is-resource="isResource" v-if="pageLists"></paginate>
                                     </b-tab>																																				
                                     <b-tab title="Lọc theo chức vụ / Giáo hạt">
-                                        <div class="col-mobile col-12">
-                                            <div class="col-mobile col-3">
-                                                <p>Chức vụ: </p>
-                                                <model-select 
+                                        <div class="col-mobile col-12 list-giao-xu" style="margin-top: -30px">
+                                            <div class="col-12 float-right bg-dark-gp" style="margin-bottom: 15px">
+                                              <ul class="list-group list-group-horizontal float-right">
+                                                <li class="list-group-item bg-dark-gp border-0">
+                                                  <model-select 
                                                     key='chuc_vu'
                                                     :options="chucVuLists"
                                                     v-model="chucVu"
                                                     placeholder="Chọn Chức Vụ"></model-select>
-                                            </div>          
-                                            <div class="col-mobile col-3">
-                                                <p>Giáo hạt: </p>
-                                                <model-select 
+                                                </li>
+                                                <li class="list-group-item bg-dark-gp border-0">
+                                                  <model-select 
                                                     key='giao_hat'
                                                     :options="giaoHatLists"
                                                     v-model="giaoHat"
-                                                    placeholder="Chọn Giáo Hạt"></model-select>                         
-                                            </div> 
-                                            <div class="col-mobile col-3">
-                                              <p>Tìm kiếm: </p>
-                                            </div>
-                                            <div class="input-group rounded col-3 col-mobile">
-                                              <input v-model="query" type="search" class="form-control rounded" placeholder="Tên linh mục ..." aria-label="Search"
-                                              aria-describedby="search-addon" />
-                                              <span class="input-group-text border-0" id="search-addon">
-                                                <i class="fas fa-search"></i>
-                                              </span>
+                                                    placeholder="Chọn Giáo Hạt"></model-select> 
+                                                </li>
+                                                <li class="list-group-item bg-dark-gp border-0">
+                                                  <input 
+                                                      v-model="query" type="search" 
+                                                      class="form-control-sm rounded border-0" 
+                                                      placeholder="Nhập tìm kiếm" aria-label="Search"
+                                                      aria-describedby="search-addon" />
+                                                </li>
+                                                <li class="list-group-item bg-dark-gp border-0" @click.prevent="filterLinhMuc">
+                                                  <span class="input-group-text border-0" id="search-addon">
+                                                      <i class="fas fa-search"></i>
+                                                  </span>
+                                                </li>
+                                              </ul>
                                             </div>
                                             <div class="mt-4" v-if="linhMucLists.length">
-                                              <div class="list-linh-muc mt-4">
+                                              <div class="list-linh-muc">
                                                 <div v-for="(info,idx) in linhMucLists" :key="idx + 'A'" class="row row-linh-muc">
                                                   <div class="col-mobile col-2">
                                                       <a class="avatar" :href="`/linh-muc/chi-tiet/${info.id}`">
@@ -118,13 +122,7 @@
                                                   </div>
                                                 </div>																						
                                               </div>
-                                            </div> 
-                                            <PaginationFilter 
-                                              v-if="paginationSearch.last_page > 1"
-                                              v-bind:pagination="paginationSearch"
-                                              v-on:click.native="getCurrentPageSearch(paginationSearch.current_page)"
-                                              :offset="4">
-                                            </PaginationFilter>
+                                            </div>                            
                                             <PaginationFilter 
                                                 v-if="paginationFilter.last_page > 1"
                                                 v-bind:pagination="paginationFilter"
@@ -159,10 +157,7 @@
         GET_LISTS_GIAO_HAT,
         GET_LISTS_CHUC_VU,
         GET_LISTS_LINH_MUC_BY_ID,
-        ACTION_SEARCH_ITEMS,
-        ACTION_GET_PAGE_SEARCH,
         ACTION_GET_PAGE_FILTER,
-        ACTION_REFESH_LIST_SEARCH,
         ACTION_REFESH_LIST_FILTER,
 
     } from '@app/stores/front/types/action-types';
@@ -221,11 +216,6 @@
                     this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: 1});
                 }
             },
-            query: {
-                handler: _.debounce(function () {
-                    this.preApiCall()
-                }, 100)
-            }
         },
         computed: {
             ...mapState({
@@ -237,7 +227,6 @@
                 chucVuLists: state => state.chucVuLists,
                 loading: state => state.loading,
                 paginationFilter: state => state.paginationFilter,
-                paginationSearch: state => state.paginationSearch,
             }),
             ...mapState(MODULE_GIAO_XU_PAGE, {
                 giaoHatLists: state => state.giaoHatLists,
@@ -262,10 +251,7 @@
                 'getList':GET_LISTS_LINH_MUC,
                 'getListChucVu':GET_LISTS_CHUC_VU,
                 'getListLinhMuc':GET_LISTS_LINH_MUC_BY_ID,
-                'searchItems': ACTION_SEARCH_ITEMS,
-                'getPageSearch': ACTION_GET_PAGE_SEARCH,
                 'getPageFilter':ACTION_GET_PAGE_FILTER,
-                'refreshListSearch': ACTION_REFESH_LIST_SEARCH,
                 'refreshListFilter': ACTION_REFESH_LIST_FILTER,
             }),
             ...mapActions(MODULE_GIAO_XU_PAGE, {
@@ -276,25 +262,16 @@
                 return (!str || /^\s*$/.test(str));
             },
 
-            preApiCall() {
-                this.apiCall(this.query);
-            },
-
-            apiCall(query)  {
-                if(!this.isBlank(query)) {
-                    this.searchItems({page: 1, query: this.query});
-                }else {
-                    this.refreshListSearch();
-                }
-            },
-
-            getCurrentPageSearch (page) {
-                this.refreshListFilter(); 
-                this.getPageSearch({page: page, query: this.query});       
-            },
-
             getCurrentPageFilter (page) {
-                this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: page});        
+                this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: page, query: this.query});        
+            },
+
+            filterLinhMuc() {
+                if(this.isBlank(this.query) && this.giaoHat == '' && this.chucVu == '') {
+                    this.refreshListFilter();
+                } else {
+                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: 1, query: this.query}); 
+                }
             }
         }
     }
@@ -302,4 +279,7 @@
 
 <style lang="scss">
     @import './styles.scss';
+    .bg-dark-gp {
+        background-color: #4D4D4D;
+    }
 </style>

@@ -7,9 +7,7 @@ import {
   API_LINH_MUC_LIST,
   API_CHUC_VU_LIST,
   API_LINH_MUC_LIST_BY_ID,
-  API_SEARCH_ITEM_LINHMUC_RESOURCE
 } from 'store@front/types/api-paths';
-import axios from 'axios';
 
 export const apiGetLists = (resolve, errResole, params) => {	
   return axios.get(fn_get_base_api_url(API_LINH_MUC_LIST), {
@@ -74,7 +72,8 @@ export const apiGetListsLinhMuc = (resolve, errResole, options) => {
   return axios.post(fn_get_base_api_url(API_LINH_MUC_LIST_BY_ID), {
     id_chucvu : options.id_chucvu,
     id_giaohat: options.id_giaohat,
-    page      : options.page
+    page      : options.page,
+    query     : options.query,    
   })
     .then((response) => {
       if (response.status === 200) {  
@@ -99,32 +98,4 @@ export const apiGetListsLinhMuc = (resolve, errResole, options) => {
       }
 
     })
-}
-
-
-const CancelToken = axios.CancelToken;
-let cancel;
-export const apiSearchItem = (resolve, errResole, options) => {
-  if(cancel != undefined) {
-               cancel();
- }
- axios.get(fn_get_base_api_url(API_SEARCH_ITEM_LINHMUC_RESOURCE), { params: { query: options.query, page: options.page }, cancelToken: new CancelToken(function executor(c) {
-   // An executor function receives a cancel function as a parameter
-   cancel = c;
- })
- })
-   .then((response) => {
-     if (response.status === 200) {
-       var json = {};
-       json['data'] = response.data.data;
-       resolve(json);
-     } else {
-       errResole([{
-         msg: 'error test'
-       }]);
-     }
-   })
-   .catch(errors => {
-     console.log(errors);
-   })
 }

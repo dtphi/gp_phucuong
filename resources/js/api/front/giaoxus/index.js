@@ -5,9 +5,7 @@ import {
 import {
   API_GIAO_XU_LIST,
   API_GIAO_XU_LIST_BY_ID,
-  API_SEARCH_ITEM_GIAOXU_RESOURCE
 } from 'store@front/types/api-paths';
-import axios from 'axios';
 
 export const apiGetLists = (resolve, errResole, params) => {
   return axios.get(fn_get_base_api_url(API_GIAO_XU_LIST), {
@@ -45,7 +43,8 @@ export const apiGetDetail = (infoId, resolve, errResole, params) => {
 export const apiGetListsGiaoXu = (resolve, errResole, options) => {
   return axios.post(fn_get_base_api_url(API_GIAO_XU_LIST_BY_ID), {
     params: options.params,
-    page: options.page
+    page: options.page,
+    query: options.query,
   })
     .then((response) => {
       if (response.status === 200) {  
@@ -68,34 +67,5 @@ export const apiGetListsGiaoXu = (resolve, errResole, options) => {
           messages: errors.response.data.errors
         }])
       }
-
     })
-}
-
-
-const CancelToken = axios.CancelToken;
-let cancel;
-export const apiSearchItem = (resolve, errResole, options) => {
-  if(cancel != undefined) {
-               cancel();
- }
- axios.get(fn_get_base_api_url(API_SEARCH_ITEM_GIAOXU_RESOURCE), { params: { query: options.query, page: options.page }, cancelToken: new CancelToken(function executor(c) {
-   // An executor function receives a cancel function as a parameter
-   cancel = c;
- })
- })
-   .then((response) => {
-     if (response.status === 200) {
-       var json = {};
-       json['data'] = response.data.data;
-       resolve(json);
-     } else {
-       errResole([{
-         msg: 'error test'
-       }]);
-     }
-   })
-   .catch(errors => {
-     console.log(errors);
-   })
 }
