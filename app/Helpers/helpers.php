@@ -25,6 +25,7 @@ define('APP_TOOL_MM_FILE_MANAGER_THUMB_DIR', '.tmb');
 define('APP_TOOL_MM_FILE_MANAGER_THUMB_SIZE', 'thumb');
 
 use App\Http\Common\Tables;
+use App\Models\Setting;
 use Illuminate\Support\Str;
 
 if (!function_exists('fn_is_prod_env')) {
@@ -167,5 +168,26 @@ if (!function_exists('fn_is_user_rule_permission')) {
         }
 
         return $ruleSelects;
+    }
+}
+
+if (!function_exists('fn_get_user_rule')) {
+    function fn_get_user_rule(&$user)
+    {
+        $user->isAdmin = fn_is_admin_permission();
+        if (!$user->isAdmin) {
+            $setting = new Setting(); 
+            $result = $setting->filterCode(Tables::RULE_SETTING_CODE)
+                                ->filterKey(Tables::RULE_SETTING_KEY_DATA)->first();
+            $ruleSelects = unserialize($result->value);
+
+            $res = $user->tokens()->getResults();
+            if ($res) {
+                foreach ($res as $permission) {
+                    fn_is_user_rule_permission($ruleSelects, $permission);
+                }
+                $user->ruleSelect = serialize($ruleSelects);
+            }
+        }
     }
 }

@@ -190,6 +190,10 @@ final class InitContent
         }
 
         $this->settings['isMix'] = config('app.is_mix');
+
+        if ($request->is('linhmucadmin*')) {
+            $this->settings['isLinhMucAdmin'] = true;
+        }
         
         if (fn_is_prod_env()) {
             $this->settings['pageDir'] = config('app.is_mix') ? mix('js/front-' . config('app.api_name_key') . '.js'): asset('js/front-' . config('app.api_name_key') . '.js');

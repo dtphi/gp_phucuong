@@ -64,11 +64,14 @@ export function fn_get_tinymce_langs_url(langName) {
 }
 
 export function fn_redirect_url(path) {
-	window.location = config.baseUrl + '/' + path.replace(/^\//, "");
+	window.location.href = config.baseUrl + '/' + path.replace(/^\//, "");
 }
 
 export function fn_format_dd_mm_yyyy(date) {
-	if (date) {
+	if (date === 'Chưa cập nhật' || !date) {
+		return '';
+	}
+	if (date && moment(date).isValid()) {
 		return moment(date).format(AppConfig.formatDateString);
 	}
 	return '';

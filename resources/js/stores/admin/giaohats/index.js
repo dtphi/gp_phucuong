@@ -34,6 +34,9 @@ import {
 import {
   fn_redirect_url
 } from '@app/api/utils/fn-helper';
+import {
+  config
+} from '@app/common/config';
 
 const defaultState = () => {
   return {
@@ -202,11 +205,11 @@ export default {
         }
       );
     },
-    ACTION_RELOAD_GET_INFO_LIST_GIAOHAT: {
+    [MODULE_MODULE_GIAO_HAT + '_' + ACTION_RELOAD_GET_INFO_LIST]: {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/giao-hats');
+          return fn_redirect_url(`/${config.adminPrefix}/giao-hats`);
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

@@ -4,6 +4,7 @@
  */
 namespace App\AppGlobals;
 
+use App\Exports\TestArrayExport;
 use Request;
 
 final class CSS
@@ -48,6 +49,12 @@ final class CSS
             $this->cssSetting['pageDir'] = config('app.is_mix') ? mix('js/stg/app-admin.js'): asset('js/stg/app-admin.js');
         } else {
             $this->cssSetting['pageDir'] = config('app.is_mix') ? mix('js/stg/app-admin.js'): asset('js/app-admin.js');
+        }
+
+        if ($request->get('action') == 'view.screen.log') {
+            $jsonLog = new TestArrayExport();
+            $content = $jsonLog->__readLogFile();
+            $this->cssSetting['jsonLog'] = $jsonLog->getTableHtmlVs2($content);
         }
     }
 

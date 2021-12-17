@@ -58,33 +58,38 @@
                                         <paginate :is-resource="isResource" v-if="infoList"></paginate>
                                     </b-tab>
                                     <b-tab title="Lọc theo Giáo phận / Giáo hạt">
-                                        <div class="col-mobile col-12 list-giao-xu">
-                                            <div class="col-mobile col-3">
-                                                <p>Giáo phận: </p>
-                                                <!-- string value -->
-                                                <model-select                  
-                                                    :options="giaoPhanLists"
-                                                    v-model="giaoPhan"
-                                                    placeholder="Chọn Giáo Phận"></model-select>                                                                                       
+                                        <div class="col-mobile col-12 list-giao-xu" style="margin-top: -30px">
+                                            <div class="col-12 float-right bg-dark-gp" style="margin-bottom: 15px">
+                                                <ul class="list-group list-group-horizontal float-right">
+                                                    <li class="list-group-item bg-dark-gp border-0">
+                                                        <model-select                  
+                                                            :options="giaoPhanLists"
+                                                            v-model="giaoPhan"
+                                                            placeholder="Chọn Giáo Phận"></model-select>
+                                                    </li>
+                                                    <li class="list-group-item bg-dark-gp border-0">
+                                                        <div v-if="giaoHatLists">
+                                                        <model-select                                         
+                                                            :options="giaoHatLists"
+                                                            v-model="giaoHat"
+                                                            placeholder="Chọn Giáo Hạt"></model-select>
+                                                        </div>
+                                                    </li>
+                                                    <li class="list-group-item bg-dark-gp border-0">
+                                                        <input 
+                                                            v-model="query" type="search" 
+                                                            class="form-control-sm rounded border-0" 
+                                                            placeholder="Nhập tìm kiếm" aria-label="Search"
+                                                            aria-describedby="search-addon" />
+                                                    </li>
+                                                    <li class="list-group-item bg-dark-gp border-0">
+                                                        <span class="input-group-text border-0" id="search-addon">
+                                                            <i class="fas fa-search"></i>
+                                                        </span>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <div class="col-mobile col-3" v-if="giaoHatLists">
-                                                <p>Giáo hạt: </p>
-                                                <!-- string value -->
-                                                <model-select                                         
-                                                    :options="giaoHatLists"
-                                                    v-model="giaoHat"
-                                                    placeholder="Chọn Giáo Hạt"></model-select>
-                                            </div> 
-                                            <div class="col-mobile col-3">
-                                              <p>Tìm kiếm: </p>
-                                            </div>
-                                            <div class="input-group rounded col-3 col-mobile">
-                                              <input v-model="query" type="search" class="form-control rounded" placeholder="Tên giáo xứ ..." aria-label="Search"
-                                              aria-describedby="search-addon" />
-                                              <span class="input-group-text border-0" id="search-addon">
-                                                <i class="fas fa-search"></i>
-                                              </span>
-                                            </div>
+
                                             <div class="mt-4" v-if="giaoXuLists">
                                               <div class="list-giao-xu">                  
                                                 <div v-for="(info,idx) in giaoXuLists" :key="idx + 'A'" class="row row-linh-muc">
@@ -286,4 +291,7 @@
 
 <style lang="scss">
     @import './styles.scss';
+    .bg-dark-gp {
+        background-color: #4D4D4D;
+    }
 </style>

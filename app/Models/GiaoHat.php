@@ -18,12 +18,11 @@ class GiaoHat extends BaseModel
 
     protected $fillable = [
       'name',
-      'khuvuc',
-      'nguoiquanhat',
+      'khu_vuc',
+      'nguoi_quan_hat',
       'sort_id',
       'active',
-      'updateuser',
-      'updatetime',
+      'update_user',
       'create_at',
       'update_at',
       'delete_at',

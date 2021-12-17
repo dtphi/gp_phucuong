@@ -24,7 +24,7 @@
       </div>
     </div>
     <!-- Giáo xứ thuộc giáo phận -->
-    <div class="form-group required">
+    <!--<div class="form-group required">
       <label class="col-sm-2 control-label" for="input-info-giaophan"
         >Thuộc giáo phận</label
       >
@@ -46,7 +46,7 @@
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
-    </div>
+    </div>-->
     <!-- Địa chỉ-->
     <div class="form-group">
       <label for="input-info-dia-chi" class="col-sm-2 control-label"

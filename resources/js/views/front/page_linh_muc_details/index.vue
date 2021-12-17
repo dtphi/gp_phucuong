@@ -115,6 +115,7 @@
                                     </div>	
                                     <div>
                                         <h3>HOẠT ĐỘNG SỨ VỤ</h3>
+                                        <a :href="`/linhmucadmin/dashboard?linhmucId=${pageLists.id}`">Đến trang quản trị</a>
                                         <vue-timeline-update 
                                             v-for="item in pageLists.ds_chuc_vu"
                                             :key="item.id"
@@ -159,7 +160,7 @@
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
     import {
-        fn_format_dd_mm_yyyy,
+        fn_format_dd_mm_yyyy
     } from '@app/api/utils/fn-helper';
 
     import Vue from "vue";
@@ -210,15 +211,14 @@
             }
         },
          mounted() {
-            this.getDetail(this.$route.params);			
-						
+            this.getDetail(this.$route.params);
         },
         methods: {
             ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, {
                 'getDetail':GET_DETAIL_LINH_MUC,
             }),
             _formatDate(date) {
-                    return fn_format_dd_mm_yyyy(date);		
+                return fn_format_dd_mm_yyyy(date);		
             },
             _des(item) {
                 var fromDate = item.label_from_date;

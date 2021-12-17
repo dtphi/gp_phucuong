@@ -7,6 +7,9 @@ import {
 import {
   GET_DETAIL_LINH_MUC,
 } from '@app/stores/front/types/action-types';
+import {
+  fn_redirect_url
+} from '@app/api/utils/fn-helper';
 
 export default {
   namespaced: true,
@@ -44,7 +47,29 @@ export default {
         apiGetDetail(
           routeParams.linhMucId,
 					(responses) => {
-            commit(INIT_LIST, responses.data[0]);          
+            commit(INIT_LIST, responses.data[0]);
+            const detail = responses.data[0];
+            if (detail.id) {
+              let authLm = localStorage.getItem('authen-lm')
+              if (authLm) {
+                  authLm = JSON.parse(authLm)
+
+                  if (!Object.keys(authLm).length) {
+                      return fn_redirect_url('/linhmucadmin?linhmucId='+detail.id);
+                  }
+                  if (!authLm.hasOwnProperty('auth')) {
+                      return fn_redirect_url('/linhmucadmin?linhmucId='+detail.id);
+                  }
+                  if (!authLm.auth.hasOwnProperty('user')) {
+                      return fn_redirect_url('/linhmucadmin?linhmucId='+detail.id);
+                  }
+                  if (!authLm.auth.user.hasOwnProperty('uid')) {
+                      return fn_redirect_url('/linhmucadmin?linhmucId='+detail.id);
+                  }
+              } else {
+                  return fn_redirect_url('/linhmucadmin?linhmucId='+detail.id);
+              }
+            }
           },
           (errors) => {
             console.log(errors, 'errors')

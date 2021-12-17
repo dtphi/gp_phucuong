@@ -59,9 +59,9 @@ class GiaoHatController extends ApiController
                 $results[] = [
                     'id' => (int)$info->id,
                     'name'           => $info->name,
-                    'khuvuc'         => $info->khuvuc,
-                    'nguoiquanhat'   => $info->nguoiquanhat,
-                    'phanloai'    => $info->phanloai,
+                    'khuvuc'         => $info->khu_vuc,
+                    'nguoiquanhat'   => $info->nguoi_quan_hat,
+                    'phanloai'    => $info->phan_loai,
                     'active'     => $info->active,
                     'sort_id' => $info->sort_id
                 ];

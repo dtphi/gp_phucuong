@@ -223,6 +223,10 @@ class InformationController extends ApiController
     {
         $data = $request->all();
 
+        if (isset($data['action']) && $data['action'] === 'info.album.dropdown') {
+            return $this->_getAlbumDropdown($data);
+        }
+
         $results     = $this->infoSv->apiGetList($data);
         $collections = [];
 
@@ -230,6 +234,26 @@ class InformationController extends ApiController
             $collections[] = [
                 'information_id' => $value->information_id,
                 'name'           => $value->name,
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function _getAlbumDropdown($data = [])
+    {
+        $results     = $this->infoSv->apiGetAlbumList($data);
+        $collections = [];
+
+        foreach ($results as $value) {
+            $collections[] = [
+                'album_id' => $value->id,
+                'name'     => $value->albums_name,
             ];
         }
 

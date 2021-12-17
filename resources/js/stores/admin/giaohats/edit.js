@@ -4,6 +4,9 @@ import {
   apiUpdateInfo
 } from 'api@admin/giaohat';
 import {
+  MODULE_MODULE_GIAO_HAT,
+} from '../types/module-types';
+import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_FAILED,
   INFOS_MODAL_SET_INFO,
@@ -20,12 +23,12 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_SET_IMAGE,
-  ACTION_UPDATE_INFO_BACK
+  ACTION_UPDATE_INFO_BACK,
+  ACTION_RELOAD_GET_INFO_LIST
 } from '../types/action-types';
 import {
   config
 } from '@app/api/admin/config';
-import { result } from 'lodash';
 
 const defaultState = () => {
   return {
@@ -36,11 +39,11 @@ const defaultState = () => {
       date_available: null,
       sort_id: 1,
       active: 1,
-      nguoiquanhat: null,
-      updateUser: 1,
+      nguoi_quan_hat: null,
+      update_user: 1,
       name: '',
-      khuvuc: '',
-      phanloai: 0,
+      khu_vuc: '',
+      phan_loai: 0,
     },
     isImgChange: false,
     listCategorysDisplay: [],
@@ -191,7 +194,7 @@ export default {
         (result) => {
           commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
           dispatch(ACTION_GET_INFO_BY_ID, info.id);
-           dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAOHAT', 'page', {
+           dispatch(MODULE_MODULE_GIAO_HAT + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
              root: true
            });
         },

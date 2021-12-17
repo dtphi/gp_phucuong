@@ -54,6 +54,20 @@
                 </select>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"
+                   for="input-info-album">Album hình ảnh</label>
+            <div class="col-sm-10">
+                <select
+                    v-model="groupData.album"
+                    id="input-info-album"
+                    class="form-control">
+                    <option value="0" selected="selected">-- Chọn Album --</option>
+
+                    <option v-for="album in albumDropdowns" :key="album.album_id" :value="album.album_id">{{album.name}}</option>
+                </select>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -65,11 +79,9 @@
     } from 'vuex';
     import {
         MODULE_NEWS_CATEGORY,
-        MODULE_NEWS_CATEGORY_ADD
+        MODULE_NEWS_CATEGORY_ADD,
+        MODULE_INFO_ADD
     } from 'store@admin/types/module-types';
-    import {
-        ACTION_GET_NEWS_GROUP_LIST,
-    } from 'store@admin/types/action-types';
     import InfoDateAvailable from './Datapicker/InfoDateAvailable';
 
     export default {
@@ -87,8 +99,20 @@
                 [
                     'newsGroups'
                 ]),
+            ...mapState(MODULE_INFO_ADD,
+                [
+                    'albumDropdowns'
+                ]),
             ...mapGetters(MODULE_NEWS_CATEGORY, ['loading']),
             ...mapGetters(MODULE_NEWS_CATEGORY_ADD, ['isOpen']),
+        },
+        methods: {
+            ...mapActions(MODULE_INFO_ADD, ['ACTION_GET_DROPDOWN_ALBUM_LIST'])
+        },
+        mounted() {
+            this.ACTION_GET_DROPDOWN_ALBUM_LIST({
+                action: 'info.album.dropdown'
+            });
         }
     };
 </script>

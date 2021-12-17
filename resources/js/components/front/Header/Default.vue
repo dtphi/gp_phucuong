@@ -7,7 +7,7 @@
                     <p class="txt-breaking-news d-inline-block" >{{title}}</p>
                 </div>
                 <div class="subscribe d-inline-block" :style="{backgroundColor:phoneBgColor}">
-                    <button class="btn"><i class="fa fa-phone" aria-hidden="true"></i>{{phone}}</button>
+                    <button class="btn"><i class="fa fa-phone" aria-hidden="true" style="padding-right:5px"></i>{{phone}}</button>
                 </div>
             </div>
         </div>
