@@ -47,7 +47,7 @@ export default {
     },
     paginationFilter(state) {
       return state.paginationFilter;
-    },
+    }
   }, 
 
   mutations: {
@@ -74,6 +74,9 @@ export default {
     },
     INIT_REFRESH_LIST(state, payload) {
       state.linhMucLists = payload;
+    },
+    initFilterList(state) {
+      state.linhMucLists = state.pageLists
     }
   },
 
@@ -121,6 +124,7 @@ export default {
         (infos) => {
           commit('INIT_CHUC_VU_LIST', infos.data.results);
           commit('setLoading', false);
+          commit('initFilterList')
         },
         (errors) => {
           commit('setLoading', false);

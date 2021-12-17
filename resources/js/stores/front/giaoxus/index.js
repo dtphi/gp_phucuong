@@ -88,6 +88,9 @@ export default {
     },
     INIT_REFRESH_LIST(state, payload) {
       state.giaoXuLists = payload;
+    },
+    initFilterList(state) {
+      state.giaoXuLists = state.pageLists
     }
   },
 
@@ -136,6 +139,7 @@ export default {
         (infos) => {
           commit('INIT_GIAO_PHAN_LIST', infos.data.results);
           commit('setLoading', false);
+          commit('initFilterList')
         },
         (errors) => {
           commit('setLoading', false);

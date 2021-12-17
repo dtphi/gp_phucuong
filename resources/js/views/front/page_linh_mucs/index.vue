@@ -65,14 +65,14 @@
                                         <div class="col-mobile col-12 list-giao-xu" style="margin-top: -30px">
                                             <div class="col-12 float-right bg-dark-gp" style="margin-bottom: 15px">
                                               <ul class="list-group list-group-horizontal float-right">
-                                                <li class="list-group-item bg-dark-gp border-0">
+                                                <li class="list-group-item bg-dark-gp border-0 select-filter-gp">
                                                   <model-select 
                                                     key='chuc_vu'
                                                     :options="chucVuLists"
                                                     v-model="chucVu"
                                                     placeholder="Chọn Chức Vụ"></model-select>
                                                 </li>
-                                                <li class="list-group-item bg-dark-gp border-0">
+                                                <li class="list-group-item bg-dark-gp border-0 select-filter-gp">
                                                   <model-select 
                                                     key='giao_hat'
                                                     :options="giaoHatLists"
@@ -87,9 +87,9 @@
                                                       aria-describedby="search-addon" />
                                                 </li>
                                                 <li class="list-group-item bg-dark-gp border-0" @click.prevent="filterLinhMuc">
-                                                  <span class="input-group-text border-0" id="search-addon">
+                                                  <a class="input-group-text" style="cursor:pointer">
                                                       <i class="fas fa-search"></i>
-                                                  </span>
+                                                  </a>
                                                 </li>
                                               </ul>
                                             </div>
@@ -279,7 +279,14 @@
 
 <style lang="scss">
     @import './styles.scss';
+    .nav-link {
+        color: #faf7f7b3;
+        background-color: #808080a6;
+    }
     .bg-dark-gp {
         background-color: #4D4D4D;
+    }
+    .select-filter-gp {
+        width: 300px;
     }
 </style>

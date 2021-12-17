@@ -61,13 +61,13 @@
                                         <div class="col-mobile col-12 list-giao-xu" style="margin-top: -30px">
                                             <div class="col-12 float-right bg-dark-gp" style="margin-bottom: 15px">
                                                 <ul class="list-group list-group-horizontal float-right">
-                                                    <li class="list-group-item bg-dark-gp border-0">
+                                                    <li class="list-group-item bg-dark-gp border-0 select-filter-gp">
                                                         <model-select                  
                                                             :options="giaoPhanLists"
                                                             v-model="giaoPhan"
                                                             placeholder="Chọn Giáo Phận"></model-select>
                                                     </li>
-                                                    <li class="list-group-item bg-dark-gp border-0">
+                                                    <li class="list-group-item bg-dark-gp border-0 select-filter-gp">
                                                         <div v-if="giaoHatLists">
                                                         <model-select                                         
                                                             :options="giaoHatLists"
@@ -83,9 +83,9 @@
                                                             aria-describedby="search-addon" />
                                                     </li>
                                                     <li class="list-group-item bg-dark-gp border-0" @click.prevent="filterGiaoXu">
-                                                        <span class="input-group-text border-0" id="search-addon">
+                                                        <a class="input-group-text" style="cursor:pointer">
                                                             <i class="fas fa-search"></i>
-                                                        </span>
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -226,8 +226,7 @@
         },
         created() {         
             this.getList(this.$route.params);
-            this.getListGiaoPhan();      
-
+            this.getListGiaoPhan();
         },
         methods: {
             ...mapActions(MODULE_GIAO_XU_PAGE, {
@@ -236,7 +235,7 @@
                 'getListGiaoHat': GET_LISTS_GIAO_HAT,
                 'getListGiaoXu': GET_LISTS_GIAO_XU,
                 'getPageFilter':ACTION_GET_PAGE_FILTER,
-                'refreshListFilter': ACTION_REFESH_LIST_FILTER,
+                'refreshListFilter': ACTION_REFESH_LIST_FILTER
             }),
 
             isBlank(str) {
@@ -260,8 +259,15 @@
 
 <style lang="scss">
     @import './styles.scss';
+    .nav-link {
+        color: #faf7f7b3;
+        background-color: #808080a6;
+    }
     .bg-dark-gp {
         background-color: #4D4D4D;
+    }
+    .select-filter-gp {
+        width: 300px;
     }
 </style>
 
