@@ -402,9 +402,9 @@ class Service implements BaseModel
     return $query;
   }
 
-  public function apiGetListLinhMucById($params) {
-    $array_id_linhmuc_by_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $params['id_chucvu'])->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
-    $linhmuc_by_giaohat = $this->modelGiaoHat->find($params['id_giaohat'])->giaoxus->load('linhmucs');
+  public function apiGetListLinhMucById($request) {
+    $array_id_linhmuc_by_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
+    $linhmuc_by_giaohat = $this->modelGiaoHat->find($request->input('id_giaohat'))->giaoxus->load('linhmucs');
     $array_id_linhmuc_by_giaohat = [];
 
     foreach($linhmuc_by_giaohat->toArray() as $key => $value) {
@@ -417,9 +417,8 @@ class Service implements BaseModel
     
     $array_id_linhmuc = array_intersect($array_id_linhmuc_by_giaohat, $array_id_linhmuc_by_chucvu);
 
-    $query = $this->modelLinhMuc->whereIn('id', $array_id_linhmuc)->get();
- 
-    return $query;
+    $query = $this->modelLinhMuc->select()->whereIn('id', $array_id_linhmuc);
+    return $query->paginate(5);
 }
 
   public function apiGetListGiaoXuSearch($request) {
@@ -427,4 +426,10 @@ class Service implements BaseModel
       $giaoxu->name($request);
       return $giaoxu->paginate(5);
   }
+
+  public function apiGetListLinhMucSearch($request) {
+    $linhmuc = $this->modelLinhMuc->query();
+    $linhmuc->name($request);
+    return $linhmuc->paginate(5);
+}
 }

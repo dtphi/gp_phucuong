@@ -79,6 +79,16 @@
                                                     v-model="giaoHat"
                                                     placeholder="Chọn Giáo Hạt"></model-select>                         
                                             </div> 
+                                            <div class="col-mobile col-3">
+                                              <p>Tìm kiếm: </p>
+                                            </div>
+                                            <div class="input-group rounded col-3 col-mobile">
+                                              <input v-model="query" type="search" class="form-control rounded" placeholder="Tên linh mục ..." aria-label="Search"
+                                              aria-describedby="search-addon" />
+                                              <span class="input-group-text border-0" id="search-addon">
+                                                <i class="fas fa-search"></i>
+                                              </span>
+                                            </div>
                                             <div class="mt-4" v-if="linhMucLists.length">
                                               <div class="list-linh-muc mt-4">
                                                 <div v-for="(info,idx) in linhMucLists" :key="idx + 'A'" class="row row-linh-muc">
@@ -108,7 +118,19 @@
                                                   </div>
                                                 </div>																						
                                               </div>
-                                            </div>                                        
+                                            </div> 
+                                            <PaginationFilter 
+                                              v-if="paginationSearch.last_page > 1"
+                                              v-bind:pagination="paginationSearch"
+                                              v-on:click.native="getCurrentPageSearch(paginationSearch.current_page)"
+                                              :offset="4">
+                                            </PaginationFilter>
+                                            <PaginationFilter 
+                                                v-if="paginationFilter.last_page > 1"
+                                                v-bind:pagination="paginationFilter"
+                                                v-on:click.native="getCurrentPageFilter(paginationFilter.current_page)"
+                                                :offset="4">
+                                            </PaginationFilter>                                       
                                         </div>                           
                                     </b-tab>
                                 </b-tabs>																											
@@ -137,6 +159,12 @@
         GET_LISTS_GIAO_HAT,
         GET_LISTS_CHUC_VU,
         GET_LISTS_LINH_MUC_BY_ID,
+        ACTION_SEARCH_ITEMS,
+        ACTION_GET_PAGE_SEARCH,
+        ACTION_GET_PAGE_FILTER,
+        ACTION_REFESH_LIST_SEARCH,
+        ACTION_REFESH_LIST_FILTER,
+
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
     import ContentTop from 'com@front/Common/ContentTop';
@@ -146,7 +174,8 @@
     import NewsletterRegister from 'com@front/Common/NewsletterRegister';
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
-	import Paginate from 'com@front/Pagination';
+	  import Paginate from 'com@front/Pagination';
+    import PaginationFilter from 'com@front/PaginationFilter';
 
     import 'vue-search-select/dist/VueSearchSelect.css'
     import { ModelSelect } from 'vue-search-select';
@@ -162,7 +191,8 @@
             NewsletterRegister,
             MainContent,
             ModulePageBannerList,
-			Paginate,
+			      Paginate,
+            PaginationFilter,
             ModelSelect,
         },
         data() {
@@ -174,20 +204,27 @@
 				        isResource: false,        
                 chucVu: '',             
                 giaoHat: '',
+                query: '',
+                offset: 4,
             }
         },
         watch: {
             giaoHat() {
                 this.getListGiaoHat(-1);
                 if(this.chucVu && this.giaoHat){
-                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat});
+                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: 1});
                 }
             },
             chucVu() {
                 this.getListChucVu();
                 if(this.chucVu && this.giaoHat){
-                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat});
+                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: 1});
                 }
+            },
+            query: {
+                handler: _.debounce(function () {
+                    this.preApiCall()
+                }, 100)
             }
         },
         computed: {
@@ -199,6 +236,8 @@
                 linhMucLists: state => state.linhMucLists,
                 chucVuLists: state => state.chucVuLists,
                 loading: state => state.loading,
+                paginationFilter: state => state.paginationFilter,
+                paginationSearch: state => state.paginationSearch,
             }),
             ...mapState(MODULE_GIAO_XU_PAGE, {
                 giaoHatLists: state => state.giaoHatLists,
@@ -223,10 +262,40 @@
                 'getList':GET_LISTS_LINH_MUC,
                 'getListChucVu':GET_LISTS_CHUC_VU,
                 'getListLinhMuc':GET_LISTS_LINH_MUC_BY_ID,
+                'searchItems': ACTION_SEARCH_ITEMS,
+                'getPageSearch': ACTION_GET_PAGE_SEARCH,
+                'getPageFilter':ACTION_GET_PAGE_FILTER,
+                'refreshListSearch': ACTION_REFESH_LIST_SEARCH,
+                'refreshListFilter': ACTION_REFESH_LIST_FILTER,
             }),
             ...mapActions(MODULE_GIAO_XU_PAGE, {
                 'getListGiaoHat':GET_LISTS_GIAO_HAT,
             }),
+
+            isBlank(str) {
+                return (!str || /^\s*$/.test(str));
+            },
+
+            preApiCall() {
+                this.apiCall(this.query);
+            },
+
+            apiCall(query)  {
+                if(!this.isBlank(query)) {
+                    this.searchItems({page: 1, query: this.query});
+                }else {
+                    this.refreshListSearch();
+                }
+            },
+
+            getCurrentPageSearch (page) {
+                this.refreshListFilter(); 
+                this.getPageSearch({page: page, query: this.query});       
+            },
+
+            getCurrentPageFilter (page) {
+                this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: page});        
+            }
         }
     }
 </script>

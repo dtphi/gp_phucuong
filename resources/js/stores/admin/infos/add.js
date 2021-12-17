@@ -194,7 +194,7 @@ export default {
           dispatch(ACTION_SET_LOADING, false);
         }
       )
-    },
+    },  
 
     [ACTION_INSERT_INFO_BACK]({
       dispatch,

@@ -2,7 +2,8 @@ import detail from './detail';
 import {
   apiGetLists,
   apiGetListsChucVu,
-  apiGetListsLinhMuc 
+  apiGetListsLinhMuc,
+  apiSearchItem
 } from '@app/api/front/linhmucs';
 import {
   INIT_LIST,
@@ -11,7 +12,11 @@ import {
 import {
   GET_LISTS_LINH_MUC,
   GET_LISTS_LINH_MUC_BY_ID,
-  GET_LISTS_CHUC_VU
+  GET_LISTS_CHUC_VU,
+  ACTION_SEARCH_ITEMS,
+  ACTION_GET_PAGE_SEARCH,
+  ACTION_REFESH_LIST_SEARCH,
+  ACTION_REFESH_LIST_FILTER
 } from '@app/stores/front/types/action-types';
 import {
   MODULE_LINH_MUC_PAGE
@@ -24,6 +29,8 @@ export default {
 		pageLists: [],
     linhMucLists: [],
     chucVuLists: [],
+    paginationFilter: [],
+    paginationSearch: [],
     loading: false,
     errors: []
   },
@@ -43,7 +50,12 @@ export default {
     linhMucLists(state) {
       return state.linhMucLists;
     },
-
+    paginationFilter(state) {
+      return state.paginationFilter;
+    },
+    paginationSearch(state) {
+      return state.paginationSearch;
+    }
   }, 
 
   mutations: {
@@ -65,6 +77,15 @@ export default {
     INIT_LINH_MUC_BY_ID_LIST(state, payload) {
       state.linhMucLists = payload;
     },
+    INIT_PAGINATION_FILTER(state, payload) {
+      state.paginationFilter = payload;
+    },
+    INIT_PAGINATION_SEARCH(state, payload) {
+      state.paginationSearch = payload;
+    },
+    INIT_REFRESH_LIST(state, payload) {
+      state.linhMucLists = payload;
+    }
   },
 
   actions: {
@@ -120,19 +141,65 @@ export default {
 
     async [GET_LISTS_LINH_MUC_BY_ID]({ 
       commit
-    }, params) {
+    }, options) {
       commit('setLoading', true);
       await apiGetListsLinhMuc(
-        (infos) => {
-          commit('INIT_LINH_MUC_BY_ID_LIST', infos.data.results);
+        (response) => {
+          commit('INIT_LINH_MUC_BY_ID_LIST', response.data.results);
+          if (response.data.hasOwnProperty('pagination')) {
+            commit('INIT_PAGINATION_FILTER', response.data.pagination);
+          }
           commit('setLoading', false);
         },
         (errors) => {
           commit('setLoading', false);
         },
-        params
+        options
       );
     },
+
+    [ACTION_SEARCH_ITEMS]({
+      commit, dispatch
+     }, options) {
+       apiSearchItem(
+         (response) => {
+          dispatch(ACTION_REFESH_LIST_FILTER);
+          commit('INIT_LINH_MUC_BY_ID_LIST', response.data.results);
+          if (response.data.hasOwnProperty('pagination')) {
+            commit('INIT_PAGINATION_SEARCH', response.data.pagination);
+          }
+        },
+        (errors) => {
+          commit('INIT_LINH_MUC_BY_ID_LIST', errors);
+        },
+        options,
+      );
+    },
+
+    [ACTION_GET_PAGE_SEARCH]({
+      commit}, options){
+        apiSearchItem(
+            (response) => {
+              commit('INIT_LINH_MUC_BY_ID_LIST', response.data.results); 
+              if (response.data.hasOwnProperty('pagination')) {
+                commit('INIT_PAGINATION_SEARCH', response.data.pagination);
+              } 
+            },
+            (errors) => {
+                console.log(errors);
+            },
+            options)   
+    },
+
+    [ACTION_REFESH_LIST_FILTER]({commit}) {
+      commit('INIT_REFRESH_LIST', []);
+      commit('INIT_PAGINATION_FILTER', [])
+    },
+
+    [ACTION_REFESH_LIST_SEARCH]({commit}) {
+      commit('INIT_REFRESH_LIST', []);
+      commit('INIT_PAGINATION_SEARCH', [])
+  },
   },
   modules: {
     detail: detail

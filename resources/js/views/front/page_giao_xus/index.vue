@@ -79,7 +79,7 @@
                                               <p>Tìm kiếm: </p>
                                             </div>
                                             <div class="input-group rounded col-3 col-mobile">
-                                              <input v-model="query" type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                                              <input v-model="query" type="search" class="form-control rounded" placeholder="Tên giáo xứ ..." aria-label="Search"
                                               aria-describedby="search-addon" />
                                               <span class="input-group-text border-0" id="search-addon">
                                                 <i class="fas fa-search"></i>
@@ -167,7 +167,7 @@
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
     import Paginate from 'com@front/Pagination';
-    import PaginationFilter from './pagination.vue';
+    import PaginationFilter from 'com@front/PaginationFilter';
 
     import 'vue-search-select/dist/VueSearchSelect.css'
     import { ModelSelect } from 'vue-search-select';
@@ -197,8 +197,6 @@
                 giaoPhan: '',
                 giaoHat: '',
                 query: '',
-                topics: [],
-                counter: 0,
                 offset: 4
             }
         },

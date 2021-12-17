@@ -10,13 +10,13 @@
           <li v-if="(this.pagination.current_page - this.offset) > 0" class="page-item">
              <a class="page-link" v-on:click.prevent="changePage(1)">1</a>
           </li>
-          <li v-if="(this.pagination.current_page - this.offset) > 0" class="disabled" >
+          <li v-if="(this.pagination.current_page - this.offset) > 0" class="page-item disabled" >
              <a href="javascript:void(0)" class="page-link"><span>...</span></a>
           </li>
           <li v-for="page in pagesNumber" :key="page" class="page-item" :class="{'active': page == pagination.current_page}">
             <a class="page-link" v-on:click.prevent="changePage(page)">{{page}}</a>
           </li>
-          <li v-if="(this.pagination.current_page + this.offset) < this.pagination.last_page" class="disabled">
+          <li v-if="(this.pagination.current_page + this.offset) < this.pagination.last_page" class="page-item disabled">
               <a href="javascript:void(0)" class="page-link"><span>...</span></a>
           </li>
           <li v-if="(this.pagination.current_page + this.offset) < this.pagination.last_page" class="page-item" >
@@ -60,3 +60,9 @@
         },
     }
 </script>
+<style scoped>
+    .disabled {
+        pointer-events:none;
+        opacity:0.6;      
+    }
+</style>
