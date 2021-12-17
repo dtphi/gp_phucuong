@@ -82,7 +82,7 @@
                                                             placeholder="Nhập tìm kiếm" aria-label="Search"
                                                             aria-describedby="search-addon" />
                                                     </li>
-                                                    <li class="list-group-item bg-dark-gp border-0">
+                                                    <li class="list-group-item bg-dark-gp border-0" @click.prevent="filterGiaoXu">
                                                         <span class="input-group-text border-0" id="search-addon">
                                                             <i class="fas fa-search"></i>
                                                         </span>
@@ -119,12 +119,6 @@
                                               </div>                                     
                                         </div>
                                         <PaginationFilter 
-                                            v-if="paginationSearch.last_page > 1"
-                                            v-bind:pagination="paginationSearch"
-                                            v-on:click.native="getCurrentPageSearch(paginationSearch.current_page)"
-                                            :offset="4">
-                                        </PaginationFilter>
-                                        <PaginationFilter 
                                             v-if="paginationFilter.last_page > 1"
                                             v-bind:pagination="paginationFilter"
                                             v-on:click.native="getCurrentPageFilter(paginationFilter.current_page)"
@@ -157,10 +151,7 @@
         GET_LISTS_GIAO_PHAN,
         GET_LISTS_GIAO_HAT,
         GET_LISTS_GIAO_XU,
-        ACTION_SEARCH_ITEMS,
-        ACTION_GET_PAGE_SEARCH,
         ACTION_GET_PAGE_FILTER,
-        ACTION_REFESH_LIST_SEARCH,
         ACTION_REFESH_LIST_FILTER,
     } from '@app/stores/front/types/action-types';
     import MainMenu from 'com@front/Common/MainMenu';
@@ -172,7 +163,7 @@
     import MainContent from 'com@front/Common/MainContent';
     import ModulePageBannerList from 'v@front/modules/page_banner_lists';
     import Paginate from 'com@front/Pagination';
-    import PaginationFilter from './pagination.vue';
+    import PaginationFilter from 'com@front/PaginationFilter';
 
     import 'vue-search-select/dist/VueSearchSelect.css'
     import { ModelSelect } from 'vue-search-select';
@@ -202,24 +193,14 @@
                 giaoPhan: '',
                 giaoHat: '',
                 query: '',
-                topics: [],
-                counter: 0,
                 offset: 4
             }
         },
         watch: {
-          giaoPhan() {
-              this.getListGiaoHat(this.giaoPhan);    
-          },
-          giaoHat() {
-              this.getListGiaoXu({params: this.giaoHat, page: 1});        
-          },
-
-          query: {
-            handler: _.debounce(function () {
-                this.preApiCall()
-            }, 100)
-          },
+            giaoPhan() {
+                this.giaoHat = '';
+                this.getListGiaoHat(this.giaoPhan);    
+            },
         },
         computed: {
             ...mapState({
@@ -232,7 +213,6 @@
                 loading: state => state.loading,  
                 giaoXuLists: state => state.giaoXuLists,
                 paginationFilter: state => state.paginationFilter,
-                paginationSearch: state => state.paginationSearch,
             }),
             _isContentTop() {
                 return this.$route.meta.layout_content.content_top;
@@ -255,10 +235,7 @@
                 'getListGiaoPhan': GET_LISTS_GIAO_PHAN,
                 'getListGiaoHat': GET_LISTS_GIAO_HAT,
                 'getListGiaoXu': GET_LISTS_GIAO_XU,
-                'searchItems': ACTION_SEARCH_ITEMS,
-                'getPageSearch': ACTION_GET_PAGE_SEARCH,
                 'getPageFilter':ACTION_GET_PAGE_FILTER,
-                'refreshListSearch': ACTION_REFESH_LIST_SEARCH,
                 'refreshListFilter': ACTION_REFESH_LIST_FILTER,
             }),
 
@@ -266,28 +243,18 @@
                 return (!str || /^\s*$/.test(str));
             },
 
-            preApiCall() {
-              this.apiCall(this.query);
-            },
-
-            apiCall(query)  {
-                if(!this.isBlank(query)) {
-                    this.searchItems({page: 1, query: this.query});
-                }else {
-                    this.refreshListSearch();
-                }
-            },
-
-            getCurrentPageSearch (page) {
-                this.refreshListFilter(); 
-                this.getPageSearch({page: page, query: this.query});       
-            },
-
             getCurrentPageFilter (page) {
-              this.getListGiaoXu({params: this.giaoHat, page: page});         
+                this.getListGiaoXu({params: this.giaoHat, page: page, query: this.query});         
+            },
+
+            filterGiaoXu() {
+                if(this.isBlank(this.query) && this.giaoHat == '') {
+                    this.refreshListFilter();
+                } else {
+                    this.getListGiaoXu({params: this.giaoHat, page: 1, query: this.query}); 
+                }
             }
         },
-
     }
 </script>
 
@@ -297,3 +264,4 @@
         background-color: #4D4D4D;
     }
 </style>
+

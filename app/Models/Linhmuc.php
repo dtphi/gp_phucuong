@@ -242,4 +242,8 @@ class Linhmuc extends BaseModel
 
         return $value;
     }
+
+    public function scopeName($query, $request) {
+      return  $query->where('ten', 'LIKE', '%' . $request->input('query') . '%');
+  }
 }

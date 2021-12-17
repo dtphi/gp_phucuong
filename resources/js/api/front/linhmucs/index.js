@@ -6,7 +6,7 @@ import {
   API_LINH_MUC_DETAIL,
   API_LINH_MUC_LIST,
   API_CHUC_VU_LIST,
-  API_LINH_MUC_LIST_BY_ID
+  API_LINH_MUC_LIST_BY_ID,
 } from 'store@front/types/api-paths';
 
 export const apiGetLists = (resolve, errResole, params) => {	
@@ -68,9 +68,12 @@ export const apiGetListsChucVu = (resolve, errResole) => {
     })
 }
 
-export const apiGetListsLinhMuc = (resolve, errResole, params) => {
+export const apiGetListsLinhMuc = (resolve, errResole, options) => {
   return axios.post(fn_get_base_api_url(API_LINH_MUC_LIST_BY_ID), {
-    params: params
+    id_chucvu : options.id_chucvu,
+    id_giaohat: options.id_giaohat,
+    page      : options.page,
+    query     : options.query,    
   })
     .then((response) => {
       if (response.status === 200) {  

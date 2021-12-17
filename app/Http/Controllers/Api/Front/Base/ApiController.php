@@ -780,15 +780,16 @@ class ApiController extends Controller
     return $this->respondWithCollectionPagination($json);
   }
 
-  public function getGiaoXuListById(Request $request) {
+  public function getGiaoXuListById(Request $request) 
+  {
       $page = 1;
-      if ($request->query('page')) {
-        $page = $request->query('page');
+      if ($request->input('page')) {
+        $page = $request->input('page');
       }
 
       try {
         $results = [];
-        $collections = $this->sv->apiGetListGiaoXu($request->params);
+        $collections = $this->sv->apiGetListGiaoXu($request);
         $pagination = $this->_getTextPagination($collections);
 
         foreach ($collections as $key => $info) {     
@@ -853,11 +854,18 @@ class ApiController extends Controller
       return $this->respondWithCollectionPagination($json);
   }
 
-  public function getLinhMucListById(Request $request) {
+  public function getLinhMucListById(Request $request) 
+  {     
+      if ($request->input('page')) {
+        $page = $request->input('page');
+      }
+
       try {
-        $collections = $this->sv->apiGetListLinhMucById($request->params);
+        $collections = $this->sv->apiGetListLinhMucById($request);
+        $pagination = $this->_getTextPagination($collections);
         $results = [];
         $emptyStr = 'Chưa cập nhật';
+
         foreach ($collections as $key => $info) {
           $giaoHatHienTai = '';
           $chucVuHienTai = '';
@@ -902,46 +910,7 @@ class ApiController extends Controller
             'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
           ];
         }
-      } catch (HandlerMsgCommon $e) {
-        throw $e->render();
-      }
-      
-      $json = [
-        'data' => [
-          'results'    => $results,
-        ]
-      ];
 
-      return $this->respondWithCollectionPagination($json);
-  }
-
-  public function getGiaoXuListSearch(Request $request)
-  { 
-      $page = 1;
-      if ($request->query('page')) {
-        $page = $request->query('page');
-      }
-      
-      try {
-        $results = [];
-        $collections = $this->sv->apiGetListGiaoXuSearch($request);
-        $pagination = $this->_getTextPagination($collections);
-  
-        foreach ($collections as $key => $info) {
-          $results[] = [
-            'id' => (int) $info->id,
-            'name' => $info->name,
-            'hrefDetail' => url('giao-xu/chi-tiet/' . $info->id),
-            'image'	=> !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
-            'gio_le' => html_entity_decode($info->gio_le) ?? "Chưa cập nhật",
-            'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
-            'email' => $info->email ?? "Chưa cập nhật",
-            'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
-            'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
-            'dan_so' => $info->dan_so ?? "Chưa cập nhật",
-          ];
-        }
-  
         $json = [
           'data' => [
             'results'    => $results,
@@ -949,6 +918,7 @@ class ApiController extends Controller
             'page'       => $page
           ]
         ];
+
       } catch (HandlerMsgCommon $e) {
         $json = [
           'data' => [
@@ -958,7 +928,84 @@ class ApiController extends Controller
           ]
         ];
       }
-  
+      
       return $this->respondWithCollectionPagination($json);
+  }
+
+    public function getLinhMucListSearch(Request $request) 
+    {     
+        if ($request->query('page')) {
+          $page = $request->query('page');
+        }
+        
+        try {
+          $collections = $this->sv->apiGetListLinhMucSearch($request);
+          $pagination = $this->_getTextPagination($collections);
+          $results = [];
+          $staticImgThum = self::$thumImgNo;
+          $emptyStr = 'Chưa cập nhật';
+          foreach ($collections as $key => $info) {
+            $giaoHatHienTai = '';
+            $chucVuHienTai = '';
+            $giaoXuHienTai = !empty($info->arr_thuyen_chuyen_list)?$info->arr_thuyen_chuyen_list:'';
+            $chucThanhs = !empty($info->arr_chuc_thanh_list)?$info->arr_chuc_thanh_list:'';
+            
+            if (empty($giaoXuHienTai)) {
+              $giaoXuHienTai = $info->ten_giao_xu;
+              $hrefGx = ($info->giao_xu_id) ? url('giao-xu/chi-tiet/' . $info->giao_xu_id): "javascript:void(0);";
+              $giaoHatHienTai = $info->ten_hat_xu;
+            } else {
+              $giaoXu = end($giaoXuHienTai);
+              $hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']): "javascript:void(0);";
+              $giaoXuHienTai = $giaoXu['giaoxuName'];
+              $chucVuHienTai = $giaoXu['chucvuName'];
+              $giaoHatHienTai = $giaoXu['giaoHatName'];
+            }
+    
+            $ngayNhanChucThanhHienTai = '';
+            $tenChucThanh = '';
+            if (empty($chucThanhs)) {
+              $ngayNhanChucThanhHienTai = $emptyStr;
+            } else {
+              $chucThanhs = end($chucThanhs);
+              $ngayNhanChucThanhHienTai = $chucThanhs['label_ngay_thang_nam_chuc_thanh'];
+              $tenChucThanh = Tables::$chucThanhs[$chucThanhs['chuc_thanh_id']];
+            }
+            
+            $results[] = [
+              'id' => (int) $info->id,
+              'ten' => $info->ten,
+              'chucThanhName' => $tenChucThanh,
+              'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? $emptyStr,
+              'image'	=> !empty($info->image) ? url($info->image): url('images/linh-muc.jpg'),
+              'href_giaoxu' => $hrefGx,
+              'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai: $emptyStr,
+              'dia_chi' => $info->dia_chi ?? $emptyStr,
+              'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+              'ten_thanh' => $info->ten_thanh ?? $emptyStr,
+              'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
+              'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+              'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
+            ];
+          }
+
+          $json = [
+            'data' => [
+              'results'    => $results,
+              'pagination' => $pagination,
+              'page'       => $page
+            ]
+          ];
+        } catch (HandlerMsgCommon $e) {
+            $json = [
+            'data' => [
+              'results'    => [],
+              'pagination' => [],
+              'msg'       => $e->render()
+            ]
+          ];
+        }
+    
+        return $this->respondWithCollectionPagination($json);
     }
 } 
