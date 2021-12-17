@@ -33,7 +33,9 @@ import {
 import {
   fn_redirect_url
 } from '@app/api/utils/fn-helper';
-import _ from 'lodash';
+import {
+  config
+} from '@app/common/config';
 
 const defaultState = () => {
   return {
@@ -207,7 +209,7 @@ export default {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url('admin/dongs');
+          return fn_redirect_url(`/${config.adminPrefix}/dongs`);
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

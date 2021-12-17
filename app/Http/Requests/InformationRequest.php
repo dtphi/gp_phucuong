@@ -111,6 +111,7 @@ class InformationRequest extends BaseRequest
 
             $formData['multi_images'] = null;
         }
+        $formData['album'] = isset($formData['album']) ? $formData['album'] : '';
 
         /*information relateds*/
         $formData['relateds'] = isset($formData['relateds']) ? $formData['relateds'] : '';

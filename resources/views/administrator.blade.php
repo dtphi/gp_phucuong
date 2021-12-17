@@ -1,3 +1,6 @@
+@if (isset($css->cssSetting['jsonLog'])) 
+  @include('./log_dashboard')
+@else
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
@@ -75,3 +78,4 @@
     </div>
   </body>
 </html>
+@endif

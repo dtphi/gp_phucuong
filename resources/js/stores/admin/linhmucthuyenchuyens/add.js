@@ -1,8 +1,10 @@
 import AppConfig from 'api@admin/constants/app-config';
-import { v4 as uuidv4 } from 'uuid';
 import {
   apiInsertInfo
 } from 'api@admin/linhmucthuyenchuyen';
+import {
+  MODULE_MODULE_THUYEN_CHUYEN,
+} from '../types/module-types';
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -166,7 +168,7 @@ export default {
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
 
-          dispatch(ACTION_RELOAD_GET_INFO_LIST, 'page', {
+          dispatch(MODULE_MODULE_THUYEN_CHUYEN + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
             root: true
           });
         },

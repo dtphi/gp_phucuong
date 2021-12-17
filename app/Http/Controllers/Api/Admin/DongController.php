@@ -177,7 +177,6 @@ class DongController extends ApiController
   {
     $formData = $request->all();
     if ($result = $this->dongSv->apiUpdate($model, $formData)) {
-      dd($result);
       return $this->respondUpdated($result);
     }
 

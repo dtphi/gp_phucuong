@@ -14,6 +14,7 @@ use App\Models\InformationRelated;
 use App\Models\InformationToCategory;
 use App\Models\InformationToDownload;
 use App\Models\InformationCarousel;
+use App\Models\Albums;
 use DB;
 use Illuminate\Support\Str;
 
@@ -29,6 +30,8 @@ final class InformationService implements BaseModel, InformationModel
      */
     private $modelDes = null;
 
+    private $modelAlbum = null;
+
     /**
      * @author : dtphi .
      * AdminService constructor.
@@ -37,6 +40,7 @@ final class InformationService implements BaseModel, InformationModel
     {
         $this->model    = new Information();
         $this->modelDes = new InformationDescription();
+        $this->modelAlbum = new Albums();
     }
 
     /**
@@ -154,6 +158,10 @@ final class InformationService implements BaseModel, InformationModel
                 }
             }
 
+            if (isset($data['album'])) {
+                InformationImage::insertAlbumByInfoId($infoId, $data['album']);
+            }
+
             if (isset($data['downloads']) && !empty($data['downloads'])) {
                 foreach ($data['downloads'] as $downloadId) {
                     InformationToDownload::insertByInfoId($infoId, $downloadId);
@@ -263,6 +271,10 @@ final class InformationService implements BaseModel, InformationModel
                 }
             }
 
+            if (isset($data['album'])) {
+                InformationImage::insertAlbumByInfoId($infoId, $data['album']);
+            }
+
             InformationToDownload::fcDeleteByInfoId($infoId);
             if (isset($data['downloads']) && !empty($data['downloads'])) {
                 foreach ($data['downloads'] as $downloadId) {
@@ -365,6 +377,15 @@ final class InformationService implements BaseModel, InformationModel
         }
 
         return $query;
+    }
+
+    public function apiGetAlbumList($data = array())
+    {
+        $query = $this->modelAlbum->select()
+                ->where('status', 1)
+                ->orderByDesc('updated_at', 'DESC');
+
+        return $query->get();
     }
 
     /**

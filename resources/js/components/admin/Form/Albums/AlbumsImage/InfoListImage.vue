@@ -9,7 +9,7 @@
                         <thead>
                         <tr>
                             <td class="text-left">{{$options.setting.image_title}}</td>
-                            <td>Width</td>
+                            <td>Sắp xếp</td>
                             <td>Height</td>
                             <td>Trạng thái</td>
                             <td>Mở</td>
@@ -67,7 +67,7 @@
             
         },
         setting: {
-            image_title: 'Banner',
+            image_title: 'Hình ảnh',
             image_url_title: 'Url hình'
         }
     };

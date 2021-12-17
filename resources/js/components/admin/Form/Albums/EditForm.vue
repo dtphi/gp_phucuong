@@ -6,13 +6,13 @@
         
     <ul class="nav nav-tabs">
       <li>
-        <a href="#tab-albums" data-toggle="tab">Albums</a>
+        <a href="#tab-albums" data-toggle="tab">Tổng quan</a>
       </li>
       <li>
-        <a href="#tab-media-manager" data-toggle="tab">Origin Image</a>
+        <a href="#tab-media-manager" data-toggle="tab">Ảnh đại diện</a>
       </li>
       <li>
-        <a href="#tab-albums-image" data-toggle="tab">Images</a>
+        <a href="#tab-albums-image" data-toggle="tab">Danh sách hình ảnh</a>
       </li>
     </ul>
     <div class="tab-content">

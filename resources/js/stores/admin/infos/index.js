@@ -349,7 +349,7 @@ export default {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {
-          return fn_redirect_url( `/${config.adminPrefix}/informations`);
+          return fn_redirect_url(`/${config.adminPrefix}/informations`);
         } else {
           namespacedContext.dispatch(ACTION_GET_INFO_LIST);
         }

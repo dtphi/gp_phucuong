@@ -13,7 +13,7 @@ class Dong extends BaseModel
 
     protected $fillable = [
       'name',
-      'giaophan_id',
+      //'giaophan_id',
       'dia_chi',
       'dien_thoai',
       'email',

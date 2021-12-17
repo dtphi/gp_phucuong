@@ -131,7 +131,7 @@ export default {
         status: 1,
         open: 0,
         image: value.filePath,
-        width: 700,
+        width: 0,
         height: 450,
       };
       state.infoAlbumsImage.value.push(data);

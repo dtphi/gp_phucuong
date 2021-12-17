@@ -3,6 +3,9 @@ import {
   apiInsertInfo,
 } from 'api@admin/coso';
 import {
+  MODULE_MODULE_CO_SO,
+} from '../types/module-types';
+import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
   INFOS_MODAL_INSERT_INFO_FAILED,
@@ -142,7 +145,7 @@ export default {
         (result) => {
           commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
 
-          dispatch(ACTION_RELOAD_GET_INFO_LIST, 'page', {
+          dispatch(MODULE_MODULE_CO_SO + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
             root: true
           });
         },
