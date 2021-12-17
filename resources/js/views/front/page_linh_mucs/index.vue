@@ -62,9 +62,9 @@
                                         <paginate :is-resource="isResource" v-if="pageLists"></paginate>
                                     </b-tab>																																				
                                     <b-tab title="Lọc theo chức vụ / Giáo hạt">
-                                        <div class="col-mobile col-12 list-giao-xu" style="margin-top: -30px">
+                                        <div class="col-mobile list-giao-xu" style="margin-top: -30px">
                                             <div class="col-12 float-right bg-dark-gp" style="margin-bottom: 15px">
-                                              <ul class="list-group list-group-horizontal float-right">
+                                              <ul class="list-group list-group-horizontal-xl float-right">
                                                 <li class="list-group-item bg-dark-gp border-0 select-filter-gp">
                                                   <model-select 
                                                     key='chuc_vu'
@@ -79,7 +79,7 @@
                                                     v-model="giaoHat"
                                                     placeholder="Chọn Giáo Hạt"></model-select> 
                                                 </li>
-                                                <li class="list-group-item bg-dark-gp border-0">
+                                                <li class="list-group-item bg-dark-gp border-0 select-filter-gp">
                                                   <input 
                                                       v-model="query" type="search" 
                                                       class="form-control-sm rounded border-0" 
@@ -287,6 +287,6 @@
         background-color: #4D4D4D;
     }
     .select-filter-gp {
-        width: 300px;
+        width: 275px;
     }
 </style>
