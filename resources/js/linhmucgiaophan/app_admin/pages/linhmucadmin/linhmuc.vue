@@ -1,16 +1,14 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
+    <v-col cols="12" sm="12" md="11">
       <v-card>
         <v-card-title class="headline">
           Welcome to Linh Mục
         </v-card-title>
-        <a
-          :href="_getHrefUserDetail"
-          target="_blank"
-        >
-          Thông tin Linh Mục
-        </a>
+        <div>
+          <a v-if="_getHrefUserDetail" :href="`/linh-muc/chi-tiet/${linhMuc.id}`" target="_blank">Thông tin chi tiết</a>
+          <span v-else>{{ user.email }}</span>
+        </div>
       </v-card>
     </v-col>
   </v-row>
@@ -35,10 +33,10 @@ export default {
     ...mapState('auth', ['user']),
     _getHrefUserDetail () {
       if (Object.keys(this.linhMuc).length) {
-        return '/linh-muc/chi-tiet/' + this.linhMuc.id
-      } else {
-        return 'javascript:void(0);'
+        return true
       }
+
+      return false
     }
   },
   mounted () {
@@ -58,10 +56,10 @@ export default {
     _getApiFirebase () {
       return process.env.firebasephoneMiddle
     },
-    _getByUId (uId) {
+    async _getByUId (uId) {
       uId = (linhMucUser) ? linhMucUser.uid : uId
       if (uId) {
-        axios.get(this._getApiBaseUrl(), {
+        await axios.get(this._getApiBaseUrl(), {
           params: {
             action: 'linh.muc.list.filter',
             app: this._getApiApp(),

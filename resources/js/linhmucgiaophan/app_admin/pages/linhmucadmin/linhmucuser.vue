@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="10" md="8">
+    <v-col cols="12" sm="12" md="11">
       <v-card>
-        <v-card-title class="headline">
+        <v-card-title class="headline justify-center">
           Tạo tài khoản linh mục quản trị
         </v-card-title>
         <div class="pa-3">
@@ -24,12 +24,14 @@
             autocomplete="off"
             label="Nhập tên linh mục tìm kiếm"
           />
-          <v-btn color="teal" outlined @click="_searchByUserName">
-            Tìm kiếm
-          </v-btn>
-          <v-btn color="teal" outlined @click="_getLinhMucAll">
-            Tìm tất cả
-          </v-btn>
+          <div class="text-right">
+            <v-btn color="teal" outlined @click="_searchByUserName">
+              Tìm kiếm
+            </v-btn>
+            <v-btn color="teal" outlined @click="_getLinhMucAll">
+              Tìm tất cả
+            </v-btn>
+          </div>
           <hr class="my-3">
           <v-card-title class="headline">
             <v-icon>mdi-account-box</v-icon>

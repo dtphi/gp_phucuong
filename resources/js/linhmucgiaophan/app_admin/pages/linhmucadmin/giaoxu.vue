@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
+    <v-col cols="12" sm="12" md="11">
       <v-card>
         <v-card-title class="headline">
           Welcome to Giáo xứ!

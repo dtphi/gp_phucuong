@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-
+// https://eslint.vuejs.org/rules/no-v-html.html
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -53,11 +53,20 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-history-state'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+
+  // set options (see below section)
+  historyState: {
+    maxHistoryLength: 1, // or any positive integer
+    reloadable: true, // or false
+    overrideDefaultScrollBehavior: false, // or true
+    scrollingElements: '#scroll' // or any selector
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -80,23 +89,23 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    //publicPath: 'http://localhost:8000/administrator/linhmucadmin-js'
-    publicPath: 'http://haydesachnoipodcast.com/administrator/linhmucadmin-js'
-  },
-
-  env: {
-    appMiddle: 'gp.phu.cuong.vs.1.0.0',
-    firebasephoneMiddle: 'firebase.phone.vs.9.1.3',
-    baseUrl: 'http://haydesachnoipodcast.com',
-    apiBaseUrl: 'http://haydesachnoipodcast.com/api/linhmucadmin'
+    publicPath: 'http://localhost:8000/administrator/linhmucadmin-js'
+    //publicPath: 'http://haydesachnoipodcast.com/administrator/linhmucadmin-js'
   },
 
   /*env: {
     appMiddle: 'gp.phu.cuong.vs.1.0.0',
     firebasephoneMiddle: 'firebase.phone.vs.9.1.3',
+    baseUrl: 'http://haydesachnoipodcast.com',
+    apiBaseUrl: 'http://haydesachnoipodcast.com/api/linhmucadmin'
+  },*/
+
+  env: {
+    appMiddle: 'gp.phu.cuong.vs.1.0.0',
+    firebasephoneMiddle: 'firebase.phone.vs.9.1.3',
     baseUrl: 'http://localhost:8000',
     apiBaseUrl: 'http://localhost:8000/api/linhmucadmin'
-  },*/
+  },
 
   generate: {
     exclude: [

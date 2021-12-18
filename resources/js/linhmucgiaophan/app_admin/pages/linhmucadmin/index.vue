@@ -2,10 +2,14 @@
   <v-row justify="center">
     <v-col cols="12" sm="5" md="4">
       <v-card>
-        <v-img
-          src="/administrator/linhmucadmin-images/logo.png"
-        />
-        <v-card-title class="font-weight-bold title">
+        <a href="/">
+          <v-img
+            max-height="150"
+            :src="_getLogoUrl()"
+            contain
+          />
+        </a>
+        <v-card-title class="font-weight-bold title justify-center">
           Đăng nhập quản trị
         </v-card-title>
         <div class="pa-3">
@@ -49,7 +53,6 @@ export default {
     ...mapGetters('auth', ['isAuthenticated'])
   },
   mounted () {
-    console.log(window.$nuxt.context)
     this._checkQuery()
   },
   methods: {
@@ -64,7 +67,8 @@ export default {
         const { uid, email, displayName } = userCredential.user
         this._redirectDashBoard({ uid, email, displayName })
       } catch (e) {
-        alert(e)
+        this.errors = e
+        alert('Đăng nhập sai email hoặc mật khẩu')
       }
     },
     async _redirectDashBoard (loginAcount) {
@@ -85,6 +89,9 @@ export default {
         // return 0
         // }
       }
+    },
+    _getLogoUrl () {
+      return process.env.baseUrl + '/administrator/linhmucadmin-images/logo.png'
     },
     _signOut () {
       localStorage.removeItem('authen-lm')

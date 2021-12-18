@@ -6,15 +6,14 @@
       </v-container>
     </v-main>
     <v-footer
-      justify="center"
-      align="center"
-      :absolute="!fixed"
+      class="v-footer justify-center text-center"
+      :absolute="fixed"
       app
     >
       <span
-        justify="center"
-        align="center"
-      >Copyright &copy; {{ new Date().getFullYear() }} By Giáo Phận Phú Cường, All rights reserved. Powered by<a href="/"> Catholic.App.Team</a><br>Version 1.0.0.0</span>
+      >Copyright &copy; {{ new Date().getFullYear() }} By Giáo Phận Phú Cường, All rights reserved. Powered by<a href="/"> Catholic.App.Team</a>
+        <br><div>Version 1.0.0.0</div>
+      </span>
     </v-footer>
   </v-app>
 </template>

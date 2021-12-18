@@ -28,6 +28,12 @@ export default function ({ store, route, redirect }) {
     if (!user) {
       redirect(`/linhmucadmin?linhmucId=${linhMucId}`)
     } else {
+      const keyItem = 'authen-lm-admin'
+      if (user.uid !== '8wK92awwqcauj8g7ljKsISOdpY82') {
+        localStorage.setItem(keyItem, 'normal')
+      } else {
+        localStorage.setItem(keyItem, 'lmadm')
+      }
       let authLm = localStorage.getItem('authen-lm')
       if (authLm) {
         authLm = JSON.parse(authLm)
