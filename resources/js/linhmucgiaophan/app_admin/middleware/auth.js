@@ -24,15 +24,16 @@ export default function ({ store, route, redirect }) {
     linhMucId = route.query.linhmucId
   }
   onAuthStateChanged(firebaseAuth, (user) => {
-    console.log('middleware', user)
     if (!user) {
       redirect(`/linhmucadmin?linhmucId=${linhMucId}`)
     } else {
       const keyItem = 'authen-lm-admin'
+      let accountItem = 'normal'
       if (user.uid !== '8wK92awwqcauj8g7ljKsISOdpY82') {
-        localStorage.setItem(keyItem, 'normal')
+        localStorage.setItem(keyItem, accountItem)
       } else {
-        localStorage.setItem(keyItem, 'lmadm')
+        accountItem = 'lmadm'
+        localStorage.setItem(keyItem, accountItem)
       }
       let authLm = localStorage.getItem('authen-lm')
       if (authLm) {
@@ -46,6 +47,15 @@ export default function ({ store, route, redirect }) {
               paths: ['auth']
             })(store)
           }
+        }
+      }
+      // Set user to page
+      const { uid, email, displayName } = user
+      store.commit('auth/setUser', { uid, email, displayName, accountItem })
+      // Check access url admin
+      if (accountItem === 'normal') {
+        if (['linhmucadmin-linhmucuser'].includes(route.name)) {
+          redirect(`/linhmucadmin/dashboard?linhmucId=${linhMucId}`)
         }
       }
     }

@@ -7,7 +7,7 @@
         </v-card-title>
         <div>
           <a v-if="_getHrefUserDetail" :href="`/linh-muc/chi-tiet/${linhMuc.id}`" target="_blank">Thông tin chi tiết</a>
-          <span v-else>{{ user.email }}</span>
+          <span v-else>{{ (user) ? user.email : 'Tài khoản chưa có trong dữ liệu' }}</span>
         </div>
       </v-card>
     </v-col>

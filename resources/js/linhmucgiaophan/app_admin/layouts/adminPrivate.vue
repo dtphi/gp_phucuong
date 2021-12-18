@@ -110,6 +110,11 @@ const superMenu = [
     icon: 'mdi-account',
     title: 'User',
     to: '/linhmucadmin/linhmucuser'
+  },
+  {
+    icon: 'mdi-account',
+    title: 'Thay đổi mật khẩu',
+    to: '/linhmucadmin/linhmucsuamatkhau'
   }
 ]
 const menus = [
@@ -141,24 +146,33 @@ export default {
       clipped: false,
       drawer: true,
       fixed: false,
-      items: superMenu,
+      items: [],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Linh Mục Giáo Phận'
+      title: 'Linh Mục Giáo Phận',
+      menuType: ''
     }
   },
   computed: {
     ...mapState('auth', ['user'])
   },
-  updated () {
-    this._updateMenu()
+  watch: {
+    user (newValue) {
+      if (newValue) {
+        this._updateMenu()
+      }
+    }
   },
   methods: {
     _updateMenu () {
-      const menuType = localStorage.getItem('authen-lm-admin')
-      if (menuType === 'normal') {
+      const isAdmin = Object.keys(this.user).includes('accountItem')
+      this.menuType = (isAdmin) ? this.user.accountItem : ''
+      if (this.menuType === 'normal') {
         this.items = menus
+      }
+      if (this.menuType === 'lmadm') {
+        this.items = superMenu
       }
     },
     _signOut () {
