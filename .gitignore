@@ -32,3 +32,4 @@ deploy*
 *.local*
 .md
 *html
+adminlinhmuc-production.blade.php

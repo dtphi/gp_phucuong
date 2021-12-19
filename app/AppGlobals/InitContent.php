@@ -193,6 +193,7 @@ final class InitContent
 
         if ($request->is('linhmucadmin*')) {
             $this->settings['isLinhMucAdmin'] = true;
+            $this->settings['viewTemplate'] = 'adminlinhmuc-' . config('app.env');
         }
         
         if (fn_is_prod_env()) {

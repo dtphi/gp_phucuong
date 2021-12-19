@@ -2,8 +2,8 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="12" md="11">
       <v-card>
-        <v-card-title class="headline">
-          Welcome to Linh Mục
+        <v-card-title class="headline justify-center">
+          Cập nhật thông tin Linh Mục
         </v-card-title>
         <div>
           <a v-if="_getHrefUserDetail" :href="`/linh-muc/chi-tiet/${linhMuc.id}`" target="_blank">Thông tin chi tiết</a>
@@ -40,6 +40,7 @@ export default {
     }
   },
   mounted () {
+    console.log(process.env.apiBaseUrl)
     if (this.user) {
       this._getByUId(this.user.uid)
     } else {

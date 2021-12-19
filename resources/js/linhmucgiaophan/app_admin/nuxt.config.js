@@ -1,3 +1,14 @@
+import dotenv from 'dotenv'
+dotenv.config()
+let baseUrl = process.env.BASE_URR
+let appMiddle = process.env.APP_API_NAME_KEY
+let firebasephoneMiddle = process.env.APP_API_FIREBASE_PHONE_NAME_KEY
+let apiBaseUrl = `${baseUrl}/api/linhmucadmin`
+if (process.env.APP_ENV !== 'production') {
+  baseUrl = 'http://localhost:8000'
+  apiBaseUrl = `${baseUrl}/api/linhmucadmin`
+}
+
 import colors from 'vuetify/es5/util/colors'
 // https://eslint.vuejs.org/rules/no-v-html.html
 export default {
@@ -58,7 +69,14 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: apiBaseUrl,
+    timeout: 60000,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+    }
+  },
 
   // set options (see below section)
   historyState: {
@@ -89,27 +107,20 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    publicPath: 'http://localhost:8000/administrator/linhmucadmin-js'
-    //publicPath: 'http://haydesachnoipodcast.com/administrator/linhmucadmin-js'
+    publicPath: '/administrator/linhmucadmin-js'
   },
 
-  /*env: {
-    appMiddle: 'gp.phu.cuong.vs.1.0.0',
-    firebasephoneMiddle: 'firebase.phone.vs.9.1.3',
-    baseUrl: 'http://haydesachnoipodcast.com',
-    apiBaseUrl: 'http://haydesachnoipodcast.com/api/linhmucadmin'
-  },*/
-
   env: {
-    appMiddle: 'gp.phu.cuong.vs.1.0.0',
-    firebasephoneMiddle: 'firebase.phone.vs.9.1.3',
-    baseUrl: 'http://localhost:8000',
-    apiBaseUrl: 'http://localhost:8000/api/linhmucadmin'
+    appMiddle,
+    firebasephoneMiddle,
+    baseUrl,
+    apiBaseUrl
   },
 
   generate: {
     exclude: [
-      /^\/administator/
-    ]
+      /^\/linhmucadmin/
+    ],
+    fallback: true
   }
 }

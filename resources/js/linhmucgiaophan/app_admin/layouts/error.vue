@@ -6,19 +6,18 @@
     <h1 v-else>
       {{ otherError }}
     </h1>
-    <NuxtLink to="/linhmucadmin">
-      Home page
-    </NuxtLink>
+    <a href="/linhmucadmin/dashboard" target="_blank">
+      Trang quản trị
+    </a>
     <v-footer
-      justify="center"
-      align="center"
-      :absolute="!fixed"
+      class="v-footer justify-center text-center"
+      :absolute="fixed"
       app
     >
       <span
-        justify="center"
-        align="center"
-      >Copyright &copy; {{ new Date().getFullYear() }} By Giáo Phận Phú Cường, All rights reserved. Powered by<a href="/"> Catholic.App.Team</a><br>Version 1.0.0.0</span>
+      >Copyright &copy; {{ new Date().getFullYear() }} By Giáo Phận Phú Cường, All rights reserved. Powered by<a href="/"> Catholic.App.Team</a>
+        <br><div>Version 1.0.0.0</div>
+      </span>
     </v-footer>
   </v-app>
 </template>
@@ -43,7 +42,7 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Welcome',
-          to: '/linhmucadmin'
+          to: '/linhmucadmin/dashboard'
         }
       ],
       miniVariant: false,
