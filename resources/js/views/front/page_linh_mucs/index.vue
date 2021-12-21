@@ -203,20 +203,6 @@
                 offset: 4,
             }
         },
-        watch: {
-            giaoHat() {
-                this.getListGiaoHat(-1);
-                if(this.chucVu && this.giaoHat){
-                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: 1});
-                }
-            },
-            chucVu() {
-                this.getListChucVu();
-                if(this.chucVu && this.giaoHat){
-                    this.getListLinhMuc({id_chucvu: this.chucVu, id_giaohat: this.giaoHat, page: 1});
-                }
-            },
-        },
         computed: {
             ...mapState({
                  contentBgColor: state => state.cfApp.setting.contentBgColor,
