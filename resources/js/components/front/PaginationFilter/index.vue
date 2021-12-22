@@ -65,4 +65,7 @@
         pointer-events:none;
         opacity:0.6;      
     }
+    .page-link {
+        cursor: pointer;
+    }
 </style>

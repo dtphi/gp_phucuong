@@ -1,5 +1,12 @@
 import dotenv from 'dotenv'
 dotenv.config()
+const fbApiKey = process.env.FB_API_KEY
+const fbAuthDomain = process.env.FB_AUTH_DOMAIN
+const fbProjectId = process.env.FB_PROJECT_ID
+const fbStorageBucket = process.env.FB_STORAGE_BUCKET
+const fbMessagingSenderId = process.env.FP_MESSAGING_SENDER_ID
+const fbAppId = process.env.FB_APP_ID
+
 let baseUrl = process.env.BASE_URR
 let appMiddle = process.env.APP_API_NAME_KEY
 let firebasephoneMiddle = process.env.APP_API_FIREBASE_PHONE_NAME_KEY
@@ -114,7 +121,13 @@ export default {
     appMiddle,
     firebasephoneMiddle,
     baseUrl,
-    apiBaseUrl
+    apiBaseUrl,
+    fbApiKey,
+    fbAuthDomain,
+    fbProjectId,
+    fbStorageBucket,
+    fbMessagingSenderId,
+    fbAppId
   },
 
   generate: {

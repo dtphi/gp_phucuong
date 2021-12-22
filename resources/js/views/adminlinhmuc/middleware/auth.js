@@ -3,12 +3,12 @@ import { initializeApp, getApps } from 'firebase/app'
 import createPersistedState from 'vuex-persistedstate'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBKsiV4xyEV3CBbgc1lQh4HATdFkBeRMcM',
-  authDomain: 'linhmucgiaophan-phucuong.firebaseapp.com',
-  projectId: 'linhmucgiaophan-phucuong',
-  storageBucket: 'linhmucgiaophan-phucuong.appspot.com',
-  messagingSenderId: '1040600271080',
-  appId: '1:1040600271080:web:01f9b8860c43bd24c7a15d'
+  apiKey: process.env.fbApiKey,
+  authDomain: process.env.fbAuthDomain,
+  projectId: process.env.fbProjectId,
+  storageBucket: process.env.fbStorageBucket,
+  messagingSenderId: process.env.fbMessagingSenderId,
+  appId: process.env.fbAppId
 }
 const apps = getApps()
 if (!apps.length) {

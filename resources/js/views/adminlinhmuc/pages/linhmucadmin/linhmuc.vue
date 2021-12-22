@@ -40,7 +40,6 @@ export default {
     }
   },
   mounted () {
-    console.log(process.env.apiBaseUrl)
     if (this.user) {
       this._getByUId(this.user.uid)
     } else {
