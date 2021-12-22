@@ -444,13 +444,13 @@ class Service implements BaseModel
       }else {
           $linhmuc_query = $this->modelLinhMuc->query()->name($request)->pluck('id')->toArray();
 
-          if ($request->input('id_giaohat') == null && $request->input('id_chucvu') != null) {
+          if (!$request->input('id_giaohat') && $request->input('id_chucvu')) {
             $list_linhmuc_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
             $merge_chucvu_query = array_unique(array_merge($list_linhmuc_chucvu, $linhmuc_query));
 
             $list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $merge_chucvu_query)->orderBy('id', 'ASC')->paginate(5);
 
-          } else if($request->input('id_chucvu') == null && $request->input('id_giaohat') != null) {
+          } else if(!$request->input('id_chucvu') && $request->input('id_giaohat')) {
             $linhmuc_by_giaohat = $this->modelGiaoHat->find($request->input('id_giaohat'))->giaoxus->load('linhmucs');
             $array_id_linhmuc_by_giaohat = [];
             foreach($linhmuc_by_giaohat->toArray() as $key => $value) {
@@ -463,15 +463,21 @@ class Service implements BaseModel
             $merge_giaohat_query = array_unique(array_merge($array_id_linhmuc_by_giaohat, $linhmuc_query));
             $list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $merge_giaohat_query)->orderBy('id', 'ASC')->paginate(5);
           } else {
-              $array_id_linhmuc_by_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
-              $linhmuc_by_giaohat = $this->modelGiaoHat->find($request->input('id_giaohat'))->giaoxus->load('linhmucs');
-              $array_id_linhmuc_by_giaohat = [];
-              foreach($linhmuc_by_giaohat->toArray() as $key => $value) {
-                foreach($value['linhmucs'] as $key1 => $item) {
-                    $array_id_linhmuc_by_giaohat[] = $item['id'];
-                }
+              if($request->input('id_chucvu')) {
+                  $array_id_linhmuc_by_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
+              } else {
+                  $array_id_linhmuc_by_chucvu = [];
               }
-
+              $array_id_linhmuc_by_giaohat = [];
+              if ($request->input('id_giaohat')) {
+                  $linhmuc_by_giaohat = $this->modelGiaoHat->find($request->input('id_giaohat'))->giaoxus->load('linhmucs');                 
+                  foreach($linhmuc_by_giaohat->toArray() as $key => $value) {
+                    foreach($value['linhmucs'] as $key1 => $item) {
+                        $array_id_linhmuc_by_giaohat[] = $item['id'];
+                    }
+                  }
+              }
+              
               $array_id_linhmuc = array_unique(array_merge($array_id_linhmuc_by_chucvu, $array_id_linhmuc_by_giaohat, $linhmuc_query));
               $list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $array_id_linhmuc)->paginate(5);
         }
