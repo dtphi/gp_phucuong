@@ -1,10 +1,9 @@
 import {
   fn_get_base_api_url,
-} from '@app/api/utils/fn-helper';
+} from '@app/api/utils/fn-helper'
 import {
-  API_EMAIL_SUBSCRIBE
-} from 'store@front/types/api-paths';
-
+  API_EMAIL_SUBSCRIBE,
+} from 'store@front/types/api-paths'
 
 /**
  * [description]
@@ -16,21 +15,20 @@ import {
  export const apiEmailSubscribe = (newEmailSub, resolve, errResole) => {
   return axios.post( fn_get_base_api_url(API_EMAIL_SUBSCRIBE), newEmailSub)
     .then((response) => {
-      console.log(response)
       if (response.status === 200) {
-        var json = {};
-        json['data'] = response.data;
-        resolve(json);
+        var json = {}
+        json['data'] = response.data
+        resolve(json)
       } else {
         errResole([{
           status: response.status,
-          msg: 'error test'
-        }]);
+          msg: 'error test',
+        }])
       }
     })
     .catch(errors => errResole([{
       status: errors.response.status,
       messageCommon: errors.response.data.message,
-      messages: errors.response.data.errors
+      messages: errors.response.data.errors,
     }]))
 }
