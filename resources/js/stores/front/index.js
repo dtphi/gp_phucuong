@@ -1,38 +1,26 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import giaoxu from './giaoxus';
-import linhmuc from './linhmucs';
-import home from './homes';
-import video from './videos';
-import info from './infos';
-import subscribe from './subscribes';
-import appModule from './modules';
-//import createLogger from '../../plugins/logger';
-import {
-  GET_INFORMATION_LIST_TO_CATEGORY
-} from '@app/stores/front/types/action-types';
-import {
-  MODULE_INFO
-} from '@app/stores/front/types/module-types';
-
-const debug = process.env.NODE_ENV === 'debuger';
-
-import {
-  apiGetSettings
-} from '@app/api/front/apps';
-
-Vue.use(Vuex);
-
+import Vue from 'vue'
+import Vuex from 'vuex'
+import giaoxu from './giaoxus'
+import linhmuc from './linhmucs'
+import home from './homes'
+import video from './videos'
+import info from './infos'
+import subscribe from './subscribes'
+import appModule from './modules'
+// import createLogger from '../../plugins/logger'
+import { GET_INFORMATION_LIST_TO_CATEGORY, } from '@app/stores/front/types/action-types'
+import { MODULE_INFO, } from '@app/stores/front/types/module-types'
+const debug = process.env.NODE_ENV === 'debuger'
+import { apiGetSettings, } from '@app/api/front/apps'
+Vue.use(Vuex)
 const fnIsObject = (obj) => {
-  if (typeof obj !== "undefined" &&
-    typeof obj === "object" &&
+  if (typeof obj !== 'undefined' &&
+    typeof obj === 'object' &&
     Object.keys(obj).length) {
-    return true;
+     return true
   }
-
-  return false;
+  return false
 }
-
 const defaultState = () => {
   return {
     logo: '/front/img/logo.png',
@@ -43,10 +31,9 @@ const defaultState = () => {
     appLists: [],
     infoLasteds: [],
     infoPopulars: [],
-    pages: {}
+    pages: {},
   }
 }
-
 const initPaginationState = () => {
   return {
     links: {},
@@ -55,200 +42,164 @@ const initPaginationState = () => {
     moduleActive: {
       name: MODULE_INFO,
       actionList: GET_INFORMATION_LIST_TO_CATEGORY,
-      params: {}
+      params: {},
     },
     collectionData: {
       current_page: 1,
       from: 0,
       to: 0,
-      total: 0
-    }
+      total: 0,
+    },
   }
 }
-
 export default new Vuex.Store({
   state: {
     cfApp: {
-      setting: defaultState()
+      setting: defaultState(),
     },
     paginationRoot: initPaginationState(),
     errors: [],
-    clientsTestimonialsPage: 4
+    clientsTestimonialsPage: 4,
   },
   getters: {
     cfApp(state) {
-      return state.cfApp;
+      return state.cfApp
     },
     bannerUrl(state) {
-      return state.cfApp.setting.banner;
+      return state.cfApp.setting.banner
     },
     logoUrl(state) {
-      return state.cfApp.setting.logo;
+      return state.cfApp.setting.logo
     },
     navMainLists(state) {
-      let menus = {
-        id: 0,
-        newsgroupname: 'Home',
-        children: []
-      };
-
+      let menus = { id: 0, newsgroupname: 'Home', children: [], }
       if (fnIsObject(state.cfApp.setting) &&
         state.cfApp.setting.hasOwnProperty('navMainLists') &&
         Array.isArray(state.cfApp.setting.navMainLists)) {
-        menus.children = { ...state.cfApp.setting.navMainLists
-        };
+        menus.children = { ...state.cfApp.setting.navMainLists, }
       }
-
-      return menus;
+      return menus
     },
     pageLists(state) {
-      return state.cfApp.setting.pageLists;
+      return state.cfApp.setting.pageLists
     },
-
     resourcePaginationData(state) {
       return {
         links: state.paginationRoot.links,
-        meta: state.paginationRoot.meta
+        meta: state.paginationRoot.meta,
       }
     },
     collectionPaginationData(state) {
-      const colData = {
-        current_page: 1,
-        from: 0,
-        to: 0,
-        total: 0
-      };
+      const colData = { current_page: 1, from: 0, to: 0, total: 0, }
       if (fnIsObject(state.paginationRoot.collectionData)) {
-        return state.paginationRoot.collectionData;
+        return state.paginationRoot.collectionData
       }
-
-      return colData;
+      return colData
     },
     isNotEmptyList(state) {
       if (fnIsObject(state.paginationRoot.meta) &&
         state.paginationRoot.meta.hasOwnProperty('total')) {
-        return (parseInt(state.paginationRoot.meta.total) > 0);
+        return (parseInt(state.paginationRoot.meta.total) > 0)
       }
-
-      return false;
+      return false
     },
     moduleNameActive(state) {
-      let mName = '';
+      let mName = ''
       if (fnIsObject(state.paginationRoot.moduleActive) &&
         state.paginationRoot.moduleActive.hasOwnProperty('name')) {
-        mName = state.paginationRoot.moduleActive.name;
+        mName = state.paginationRoot.moduleActive.name
       }
-
-      return mName;
+      return mName
     },
     moduleActionListActive(state) {
-      let mAction = '';
+      let mAction = ''
       if (fnIsObject(state.paginationRoot.moduleActive) &&
         state.paginationRoot.moduleActive.hasOwnProperty('actionList')) {
-        mAction = state.paginationRoot.moduleActive.actionList;
+        mAction = state.paginationRoot.moduleActive.actionList
       }
-
-      return mAction;
+      return mAction
     },
     isScreen414(state) {
-      return state.clientsTestimonialsPage == 414;
+      return state.clientsTestimonialsPage == 414
     },
     isScreen767(state) {
-      return state.clientsTestimonialsPage == 1;
+      return state.clientsTestimonialsPage == 1
     },
     isScreen1200(state) {
-      return state.clientsTestimonialsPage <= 3;
+      return state.clientsTestimonialsPage <= 3
     },
     isScreen960(state) {
-      return state.clientsTestimonialsPage <= 2;
-    }
+      return state.clientsTestimonialsPage <= 2
+    },
   },
   mutations: {
     initOptions(state, payload) {
-      state.options = payload;
+      state.options = payload
     },
     initSetting(state, payload) {
-      state.cfApp.setting = payload;
+      state.cfApp.setting = payload
     },
     appSetError(state, payload) {
-      state.errors = payload;
+      state.errors = payload
     },
-
     configApp(state, configs) {
       if (fnIsObject(configs.links)) {
-        state.paginationRoot.links = configs.links;
+        state.paginationRoot.links = configs.links
       }
       if (fnIsObject(configs.meta)) {
-        state.paginationRoot.meta = configs.meta;
+        state.paginationRoot.meta = configs.meta
       }
       if (fnIsObject(configs.moduleActive)) {
-        state.paginationRoot.moduleActive = configs.moduleActive;
+        state.paginationRoot.moduleActive = configs.moduleActive
       }
       if (fnIsObject(configs.collectionData)) {
-        state.paginationRoot.collectionData = configs.collectionData;
+        state.paginationRoot.collectionData = configs.collectionData
       }
-    }
+    },
   },
   actions: {
-    setParams({
-      commit
-    }, params) {
-      commit('initOptions', params);
+    setParams({ commit, }, params) {
+      commit('initOptions', params)
     },
-    appSettings({
-      commit
-    }, options) {
-      apiGetSettings(
-        (responses) => {
-          commit('initSetting', responses);
-          commit('appSetError', []);
-        },
-        (errors) => {
-          commit('appSetError', error);
-        },
-        options
-      );	
+    appSettings({ commit, }, options) {
+      apiGetSettings((responses) => {
+        commit('initSetting', responses)
+        commit('appSetError', [])
+      }, (errors) => {
+        commit('appSetError', errors)
+      }, options)
     },
-
-    setConfigApp({
-      commit
-		}, configs) {
-      const links = (configs.hasOwnProperty('links')) ? configs.links : undefined;
-      const meta = (configs.hasOwnProperty('meta')) ? configs.meta : undefined;
-      const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive : undefined;
-
-      let defaultState = initPaginationState();
-
-      if (typeof links !== "undefined") {
-        defaultState.links = links;
+    setConfigApp({ commit, }, configs) {
+      const links = (configs.hasOwnProperty('links')) ? configs.links : undefined
+      const meta = (configs.hasOwnProperty('meta')) ? configs.meta : undefined
+      const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive : undefined
+      let defaultState = initPaginationState()
+      if (typeof links !== 'undefined') {
+        defaultState.links = links
       }
-      if (typeof meta != "undefined") {
-        defaultState.meta = meta;
+      if (typeof meta != 'undefined') {
+        defaultState.meta = meta
       }
-      if (typeof moduleActive != "undefined") {
+      if (typeof moduleActive != 'undefined') {
         if (moduleActive.hasOwnProperty('name')) {
-          defaultState.moduleActive.name = moduleActive.name;
+          defaultState.moduleActive.name = moduleActive.name
         }
         if (moduleActive.hasOwnProperty('actionList')) {
-          defaultState.moduleActive.actionList = moduleActive.actionList;
+          defaultState.moduleActive.actionList = moduleActive.actionList
         }
         if (moduleActive.hasOwnProperty('params')) {
-          defaultState.moduleActive.params = moduleActive.params;
+          defaultState.moduleActive.params = moduleActive.params
         }
       }
-
-      let collectionPg = (configs.hasOwnProperty('collectionData')) ? configs.collectionData : undefined;
-      
+      let collectionPg = (configs.hasOwnProperty('collectionData')) ? configs.collectionData : undefined
       if (collectionPg.length == 0) {
-        collectionPg = defaultState.collectionData;
+        collectionPg = defaultState.collectionData
       }
-      defaultState.collectionData = collectionPg;
-
-      commit('configApp', defaultState);
+      defaultState.collectionData = collectionPg
+      commit('configApp', defaultState)
     },
-
-    winWidth({state}) {
-      var w = window.innerWidth;
+    winWidth({ state, }) {
+      var w = window.innerWidth
       state.clientsTestimonialsPage = 4
       if (w < 1200) {
         state.clientsTestimonialsPage = 3
@@ -271,8 +222,8 @@ export default new Vuex.Store({
     video,
     info,
     subscribe,
-    appModule
+    appModule,
   },
-  //strict: debug,
-  //plugins: debug ? [createLogger()] : []
-});
+  // strict: debug,
+  // plugins: debug ? [createLogger()] : []
+})

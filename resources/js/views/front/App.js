@@ -19,10 +19,10 @@ Vue.use(VueLazyload, {
 })
 Vue.config.productionTip = false
 /* Add vue loading overplay */
-/* import LoadingOverLay from 'vue-loading-overlay'
- import 'vue-loading-overlay/dist/vue-loading.css'
- Vue.component('LoadingOverLay', LoadingOverLay)
-*/
+import LoadingOverLay from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
+Vue.component('LoadingOverLay', LoadingOverLay)
+
 /* Add mixin global */
 import utilMixin from '@app/mixins/front'
 Vue.mixin(utilMixin)

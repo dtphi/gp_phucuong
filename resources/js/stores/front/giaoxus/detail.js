@@ -1,12 +1,6 @@
-import {
-  apiGetDetail
-} from '@app/api/front/giaoxus';
-import {
-  INIT_LIST,
-} from '@app/stores/front/types/mutation-types';
-import {
-  GET_DETAIL
-} from '@app/stores/front/types/action-types';
+import { apiGetDetail, } from '@app/api/front/giaoxus'
+import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
+import { GET_DETAIL, } from '@app/stores/front/types/action-types'
 
 export default {
   namespaced: true,
@@ -14,10 +8,10 @@ export default {
     mainMenus: [],
     pageLists: {
       name: '',
-      description: ''
+      description: '',
     },
     infoRelateds: [],
-    errors: []
+    errors: [],
   },
   getters: {
     mainMenus(state) {
@@ -28,36 +22,27 @@ export default {
     },
     infoRelateds(state) {
       return state.infoRelateds;
-    }
-  }, 
-
-  mutations: {
-    INIT_LIST(state, payload) {
-      state.pageLists = payload;
     },
-    SET_ERROR(state, payload) {
-      state.errors = payload;
-    }
   },
-
+  mutations: {
+    [INIT_LIST](state, payload) {
+      state.pageLists = payload
+    },
+    [SET_ERROR](state, payload) {
+      state.errors = payload
+    },
+  },
   actions: {
-    [GET_DETAIL]({
-      commit,
-      dispatch
-    }, routeParams) {
+    [GET_DETAIL]({ commit, }, routeParams) {
       if (routeParams.hasOwnProperty('giaoXuId')) {
-        apiGetDetail(
-          routeParams.giaoXuId,
+        apiGetDetail(routeParams.giaoXuId,
           (result) => {
-            console.log(result)
-            commit(INIT_LIST, result);
+            commit(INIT_LIST, result)
           },
           (errors) => {
-            console.log(errors)
-          },
-          routeParams
-        )
+            commit(SET_ERROR, errors)
+          }, routeParams)
       }
-    }
-  }
+    },
+  },
 }
