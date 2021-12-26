@@ -50,7 +50,6 @@
               <i class="fa fa-pencil"></i>{{ $options.setting.frm_title }}
             </h3>
           </div>
-
           <div class="panel-body">
             <info-edit-form ref="formEditGiaoHat"></info-edit-form>
           </div>
@@ -61,24 +60,23 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-
-import InfoEditForm from "com@admin/Form/GiaoHats/EditForm";
-import Breadcrumb from "com@admin/Breadcrumb";
-import TheBtnBackListPage from "./components/TheBtnBackListPage";
-import { MODULE_MODULE_GIAO_HAT_EDIT } from "store@admin/types/module-types";
+import { mapState, mapActions, } from 'vuex'
+import InfoEditForm from 'com@admin/Form/GiaoHats/EditForm'
+import Breadcrumb from 'com@admin/Breadcrumb'
+import TheBtnBackListPage from './components/TheBtnBackListPage'
+import { MODULE_MODULE_GIAO_HAT_EDIT, } from 'store@admin/types/module-types'
 import {
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_GET_INFO_BY_ID,
-} from "store@admin/types/action-types";
-import { fn_redirect_url } from "@app/api/utils/fn-helper";
+} from 'store@admin/types/action-types'
+import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 
 export default {
-  name: "GiaoHatEdit",
+  name: 'GiaoHatEdit',
   beforeCreate() {
-    const giaohatId = parseInt(this.$route.params.giaohatId);
+    const giaohatId = parseInt(this.$route.params.giaohatId)
     if (!giaohatId) {
-      return fn_redirect_url("admin/giao-hats");
+      return fn_redirect_url('admin/giao-hats')
     }
   },
   components: {
@@ -89,81 +87,75 @@ export default {
   data() {
     return {
       fullPage: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_GIAO_HAT_EDIT, {
-      loading: (state) => state.loading,
-      errors: (state) => state.errors,
-      updateSuccess: (state) => state.updateSuccess,
-      info: (state) => state.info.data,
+      loading: state => state.loading,
+      errors: state => state.errors,
+      updateSuccess: state => state.updateSuccess,
+      info: state => state.info.data,
     }),
     _errors() {
-      return this.errors.length;
+      return this.errors.length
     },
   },
   watch: {
-    updateSuccess(newValue, oldValue) {
+    updateSuccess(newValue) {
       if (newValue) {
-        console.log('Update Success !')
-        this._notificationUpdate(newValue);
+        this._notificationUpdate(newValue)
       }
     },
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_HAT_EDIT, [
       ACTION_RESET_NOTIFICATION_INFO,
-      ACTION_GET_INFO_BY_ID,
+      ACTION_GET_INFO_BY_ID
     ]),
     _errorToArrs() {
-      let errs = [];
+      let errs = []
       if (
         this.errors.length &&
-        typeof this.errors[0].messages !== "undefined"
+        typeof this.errors[0].messages !== 'undefined'
       ) {
-        errs = Object.values(this.errors[0].messages);
+        errs = Object.values(this.errors[0].messages)
       }
-
       if (Object.entries(errs).length === 0 && this.errors.length) {
-        errs.push(this.$options.setting.error_msg_system);
+        errs.push(this.$options.setting.error_msg_system)
       }
-
-      return errs;
+      
+      return errs
     },
     _submitInfo() {
-      const _self = this;
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formEditGiaoHat._submitInfo();
+          this.$refs.formEditGiaoHat._submitInfo()
         }
-      });
+      })
     },
     _submitInfoBack() {
-      const _self = this;
-
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formEditGiaoHat._submitInfoBack();
+          this.$refs.formEditGiaoHat._submitInfoBack()
         }
-      });
+      })
     },
     _notificationUpdate(notification) {
-      this.$notify(notification);
-      this[ACTION_RESET_NOTIFICATION_INFO]("");
+      this.$notify(notification)
+      this[ACTION_RESET_NOTIFICATION_INFO]('')
     },
   },
   setting: {
-    panel_title: "Giáo Hạt",
-    frm_title: "Sửa Giáo Hạt",
-    btn_save_txt: "Lưu",
-    btn_save_back_txt: "Lưu trở về danh sách",
+    panel_title: 'Giáo Hạt',
+    frm_title: 'Sửa Giáo Hạt',
+    btn_save_txt: 'Lưu',
+    btn_save_back_txt: 'Lưu trở về danh sách',
   },
   mounted() {
-    const giaohatId = parseInt(this.$route.params.giaohatId);
-    console.log(this.$route.params, 'test');
+    const giaohatId = parseInt(this.$route.params.giaohatId)
     if (giaohatId) {
-      this[ACTION_GET_INFO_BY_ID](giaohatId);
+      this[ACTION_GET_INFO_BY_ID](giaohatId)
     }
   },
-};
+}
 </script>

@@ -61,16 +61,16 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters, } from 'vuex'
 
-import Breadcrumb from "com@admin/Breadcrumb";
-import TheBtnBackListPage from "./components/TheBtnBackListPage";
-import InfoAddForm from "com@admin/Form/Albums/AddForm";
-import { MODULE_MODULE_ALBUMS_ADD } from "store@admin/types/module-types";
-import { ACTION_RESET_NOTIFICATION_INFO } from "store@admin/types/action-types";
+import Breadcrumb from 'com@admin/Breadcrumb'
+import TheBtnBackListPage from './components/TheBtnBackListPage'
+import InfoAddForm from 'com@admin/Form/Albums/AddForm'
+import { MODULE_MODULE_ALBUMS_ADD, } from 'store@admin/types/module-types'
+import { ACTION_RESET_NOTIFICATION_INFO, } from 'store@admin/types/action-types'
 
 export default {
-  name: "AlbumsAdd",
+  name: 'AlbumsAdd',
   components: {
     Breadcrumb,
     TheBtnBackListPage,
@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       fullPage: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_ALBUMS_ADD, {
@@ -91,13 +91,13 @@ export default {
       'infoAlbumsImage'
     ]),
     _errors() {
-      return this.errors.length;
+      return this.errors.length
     },
   },
   watch: {
-    insertSuccess(newValue, oldValue) {
+    insertSuccess(newValue) {
       if (newValue) {
-        this._notificationUpdate(newValue);
+        this._notificationUpdate(newValue)
       }
     },
   },
@@ -107,53 +107,53 @@ export default {
       'update_info_albums_image': 'update_info_albums_image',
     }),
     _errorToArrs() {
-      let errs = [];
+      let errs = []
       if (
         this.errors.length &&
-        typeof this.errors[0].messages !== "undefined"
+        typeof this.errors[0].messages !== 'undefined'
       ) {
-        errs = Object.values(this.errors[0].messages);
+        errs = Object.values(this.errors[0].messages)
       }
 
       if (Object.entries(errs).length === 0 && this.errors.length) {
-        errs.push(this.$options.setting.error_msg_system);
+        errs.push(this.$options.setting.error_msg_system)
       }
 
-      return errs;
+      return errs
     },
 
     _submitInfo() {
-      const _self = this;
-      this.update_info_albums_image(this.infoAlbumsImage);
+      const _self = this
+      this.update_info_albums_image(this.infoAlbumsImage)
       _self.$refs.observerInfo.validate().then((isValid) => {
         if (isValid) {
-          _self.$refs.formAddAlbums._submitInfo();
+          _self.$refs.formAddAlbums._submitInfo()
         }
-      });
+      })
     },
 
     _submitInfoBack() {
-      const _self = this;
+      const _self = this
 
-      this.update_info_albums_image(this.infoAlbumsImage);
+      this.update_info_albums_image(this.infoAlbumsImage)
       
       _self.$refs.observerInfo.validate().then((isValid) => {
         if (isValid) {
-          _self.$refs.formAddAlbums._submitInfoBack();
+          _self.$refs.formAddAlbums._submitInfoBack()
         }
-      });
+      })
     },
 
     _notificationUpdate(notification) {
-      this.$notify(notification);
-      this.resetNotification("");
+      this.$notify(notification)
+      this.resetNotification('')
     },
   },
   setting: {
-    panel_title: "Albums",
-    frm_title: "Thêm Albums",
-    btn_save_txt: "Lưu",
-    btn_save_back_txt: "Lưu trở về danh sách",
+    panel_title: 'Albums',
+    frm_title: 'Thêm Albums',
+    btn_save_txt: 'Lưu',
+    btn_save_back_txt: 'Lưu trở về danh sách',
   },
-};
+}
 </script>

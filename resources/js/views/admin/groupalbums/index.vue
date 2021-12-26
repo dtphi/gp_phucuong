@@ -29,7 +29,9 @@
                             onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"
                           />
                         </th>
-                        <th style="width: 30%" class="text-left">Group Name Albums</th>
+                        <th style="width: 30%" class="text-left">
+                          Group Name Albums
+                        </th>
                         <th style="width: 20%" class="text-left">Status</th>
                         <th style="width: 10%" class="text-right">Action</th>
                       </tr>
@@ -46,7 +48,6 @@
                 </div>
               </template>
             </div>
-
             <paginate :is-resource="isResource"></paginate>
           </div>
         </div>
@@ -82,17 +83,15 @@ export default {
     };
   },
   watch: {
-    updateSuccess(newValue, oldValue) {
+    updateSuccess(newValue) {
       if (newValue) {
         this._notificationUpdate(newValue);
       }
     },
-
-
   },
   computed: {
     ...mapState({
-      perPage: (state) => state.cfApp.perPage,
+      perPage: state => state.cfApp.perPage,
     }),
     ...mapGetters(MODULE_MODULE_GROUP_ALBUMS, ["infos"]),
     ...mapState(MODULE_MODULE_GROUP_ALBUMS, ["loading", "updateSuccess"]),
@@ -103,16 +102,14 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_GROUP_ALBUMS, {
-       'getInfoList': ACTION_GET_INFO_LIST,
-       'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
+      getInfoList: ACTION_GET_INFO_LIST,
+      resetNotification: ACTION_RESET_NOTIFICATION_INFO,
     }),
-
     _submitAction(event) {
       this[event.target.value]({
         action: event.target.value,
       });
     },
-
     _notificationUpdate(notification) {
       this.$notify(notification);
       this.resetNotification();

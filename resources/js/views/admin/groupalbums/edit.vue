@@ -50,7 +50,6 @@
               <i class="fa fa-pencil"></i>{{ $options.setting.frm_title }}
             </h3>
           </div>
-
           <div class="panel-body">
             <info-edit-form ref="formEditGroupAlbums"></info-edit-form>
           </div>
@@ -62,7 +61,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-
 import InfoEditForm from "com@admin/Form/GroupAlbums/EditForm";
 import Breadcrumb from "com@admin/Breadcrumb";
 import TheBtnBackListPage from "./components/TheBtnBackListPage";
@@ -93,17 +91,17 @@ export default {
   },
   computed: {
     ...mapState(MODULE_MODULE_GROUP_ALBUMS_EDIT, {
-      loading: (state) => state.loading,
-      errors: (state) => state.errors,
-      updateSuccess: (state) => state.updateSuccess,
-      info: (state) => state.info.data,
+      loading: state => state.loading,
+      errors: state => state.errors,
+      updateSuccess: state => state.updateSuccess,
+      info: state => state.info.data,
     }),
     _errors() {
       return this.errors.length;
     },
   },
   watch: {
-    updateSuccess(newValue, oldValue) {
+    updateSuccess(newValue) {
       if (newValue) {
         this._notificationUpdate(newValue);
       }
@@ -122,26 +120,22 @@ export default {
       ) {
         errs = Object.values(this.errors[0].messages);
       }
-
       if (Object.entries(errs).length === 0 && this.errors.length) {
         errs.push(this.$options.setting.error_msg_system);
       }
       return errs;
     },
-
     _submitInfo() {
-      const _self = this;
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formEditGroupAlbums._submitInfo();
+          this.$refs.formEditGroupAlbums._submitInfo();
         }
       });
     },
     _submitInfoBack() {
-      const _self = this;
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formEditGroupAlbums._submitInfoBack();
+          this.$refs.formEditGroupAlbums._submitInfoBack();
         }
       });
     },

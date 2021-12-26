@@ -65,7 +65,6 @@ import { mapState, mapActions } from "vuex";
 import InfoAddForm from "com@admin/Form/GroupAlbums/AddForm";
 import Breadcrumb from "com@admin/Breadcrumb";
 import TheBtnBackListPage from "./components/TheBtnBackListPage";
-
 import { MODULE_MODULE_GROUP_ALBUMS_ADD } from "store@admin/types/module-types";
 import { ACTION_RESET_NOTIFICATION_INFO } from "store@admin/types/action-types";
 
@@ -83,24 +82,25 @@ export default {
   },
   computed: {
     ...mapState(MODULE_MODULE_GROUP_ALBUMS_ADD, {
-      loading: (state) => state.loading,
-      errors: (state) => state.errors ,
-      insertSuccess: (state) => state.insertSuccess,
+      loading: state => state.loading,
+      errors: state => state.errors,
+      insertSuccess: state => state.insertSuccess,
     }),
     _errors() {
       return this.errors.length;
     },
   },
   watch: {
-    insertSuccess(newValue, oldValue) {
+    insertSuccess(newValue) {
       if (newValue) {
         this._notificationUpdate(newValue);
       }
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GROUP_ALBUMS_ADD,
-      [ACTION_RESET_NOTIFICATION_INFO]),
+    ...mapActions(MODULE_MODULE_GROUP_ALBUMS_ADD, [
+      ACTION_RESET_NOTIFICATION_INFO,
+    ]),
     _errorToArrs() {
       let errs = [];
       if (
@@ -109,27 +109,22 @@ export default {
       ) {
         errs = Object.values(this.errors[0].messages);
       }
-
       if (Object.entries(errs).length === 0 && this.errors.length) {
         errs.push(this.$options.setting.error_msg_system);
       }
-
       return errs;
     },
     _submitInfo() {
-      const _self = this;
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formAddGroupAlbums._submitInfo();
+          this.$refs.formAddGroupAlbums._submitInfo();
         }
       });
     },
     _submitInfoBack() {
-      const _self = this;
-
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formAddGroupAlbums._submitInfoBack();
+          this.$refs.formAddGroupAlbums._submitInfoBack();
         }
       });
     },
