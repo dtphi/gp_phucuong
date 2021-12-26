@@ -57,21 +57,20 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
-import Paginate from "com@admin/Pagination";
-import Item from "./components/TheItem";
-import TheHeaderPage from "./components/TheHeaderPage";
-import { MODULE_MODULE_ALBUMS } from "store@admin/types/module-types";
-import {
-  ACTION_GET_INFO_LIST,
-  ACTION_RESET_NOTIFICATION_INFO,
-} from "store@admin/types/action-types";
+import { mapState, mapGetters, mapActions, } from 'vuex'
+import Paginate from 'com@admin/Pagination'
+import Item from './components/TheItem'
+import TheHeaderPage from './components/TheHeaderPage'
+import { MODULE_MODULE_ALBUMS, } from 'store@admin/types/module-types'
+import { ACTION_GET_INFO_LIST, ACTION_RESET_NOTIFICATION_INFO,
+} from 'store@admin/types/action-types'
+
 export default {
   name: 'ListAlbums',
   components:{
     TheHeaderPage,
     Paginate,
-    Item
+    Item,
   },
   data() {
     return {
@@ -81,43 +80,37 @@ export default {
   },
   computed: {
     ...mapState({
-      perPage: (state) => state.cfApp.perPage,
+      perPage: state => state.cfApp.perPage,
     }),
-    ...mapState(MODULE_MODULE_ALBUMS, ["loading", "updateSuccess"]),
-    ...mapGetters(MODULE_MODULE_ALBUMS, ["infos"]),
-
+    ...mapState(MODULE_MODULE_ALBUMS, ['loading', 'updateSuccess']),
+    ...mapGetters(MODULE_MODULE_ALBUMS, ['infos']),
     _infoList() {
-      return this.infos;
-    }
+      return this.infos
+    },
   },
   watch: {
-    updateSuccess(newValue, oldValue) {
-      if(newValue){
-        this._notificationUpdate(newValue);
+    updateSuccess(newValue) {
+      if(newValue) {
+        this._notificationUpdate(newValue)
       }
-    }
+    },
   },
   methods: {
     ...mapActions(MODULE_MODULE_ALBUMS, {
       'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
       'getInfoList': ACTION_GET_INFO_LIST,
     }),
-
     _notificationUpdate(notification) {
-      this.$notify(notification);
-      this.resetNotification();
-    }
+      this.$notify(notification)
+      this.resetNotification()
+    },
   },
   mounted() {
-    const params = { perPage: this.perPage, };
-    this.getInfoList(params);
+    const params = { perPage: this.perPage, }
+    this.getInfoList(params)
   },
   setting: {
-    list_title: "Danh sách Albums",
+    list_title: 'Danh sách Albums',
   },
 }
 </script>
-
-<style>
-
-</style>
