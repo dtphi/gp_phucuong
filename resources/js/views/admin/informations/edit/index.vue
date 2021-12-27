@@ -145,11 +145,10 @@ export default {
       this.resetNotification()
     },
     _submitInfo() {
-      const _self = this
       this.update_special_carousel(this.specialInfoCarousel)
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formEditUser._submitInfo()
+          this.$refs.formEditUser._submitInfo()
         }
       })
     },

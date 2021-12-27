@@ -122,21 +122,17 @@ export default {
       return errs
     },
     _submitInfo() {
-      const _self = this
-
       this.update_special_carousel(this.specialInfoCarousel)
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formAddUser._submitInfo()
+          this.$refs.formAddUser._submitInfo()
         }
       })
     },
     _submitInfoBack() {
-      const _self = this
-
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formAddUser._submitInfoBack()
+          this.$refs.formAddUser._submitInfoBack()
         }
       })
     },

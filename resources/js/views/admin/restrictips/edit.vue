@@ -50,7 +50,6 @@
               <i class="fa fa-pencil"></i>{{ $options.setting.frm_title }}
             </h3>
           </div>
-
           <div class="panel-body">
             <info-edit-form ref="formEditRestrictIp"></info-edit-form>
           </div>
@@ -61,24 +60,23 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-
-import InfoEditForm from "com@admin/Form/RestrictIps/EditForm";
-import Breadcrumb from "com@admin/Breadcrumb";
-import TheBtnBackListPage from "./components/TheBtnBackListPage";
-import { MODULE_MODULE_RESTRICT_IP_EDIT } from "store@admin/types/module-types";
+import { mapState, mapActions, } from 'vuex'
+import InfoEditForm from 'com@admin/Form/RestrictIps/EditForm'
+import Breadcrumb from 'com@admin/Breadcrumb'
+import TheBtnBackListPage from './components/TheBtnBackListPage'
+import { MODULE_MODULE_RESTRICT_IP_EDIT, } from 'store@admin/types/module-types'
 import {
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_GET_INFO_BY_ID,
-} from "store@admin/types/action-types";
-import { fn_redirect_url } from "@app/api/utils/fn-helper";
+} from 'store@admin/types/action-types'
+import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 
 export default {
-  name: "RestrictIpEdit",
+  name: 'RestrictIpEdit',
   beforeCreate() {
-    const restrictipId = parseInt(this.$route.params.infoId);
+    const restrictipId = parseInt(this.$route.params.infoId)
     if (!restrictipId) {
-      return fn_redirect_url("admin/restrict-ips");
+      return fn_redirect_url('admin/restrict-ips')
     }
   },
   components: {
@@ -89,79 +87,76 @@ export default {
   data() {
     return {
       fullPage: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_RESTRICT_IP_EDIT, {
-      loading: (state) => state.loading,
-      errors: (state) => state.errors,
-      updateSuccess: (state) => state.updateSuccess,
-      info: (state) => state.info.data,
+      loading: state => state.loading,
+      errors: state => state.errors,
+      updateSuccess: state => state.updateSuccess,
+      info: state => state.info.data,
     }),
     _errors() {
-      return this.errors.length;
+      return this.errors.length
     },
   },
   watch: {
-    updateSuccess(newValue, oldValue) {
+    updateSuccess(newValue) {
       if (newValue) {
-        this._notificationUpdate(newValue);
+        this._notificationUpdate(newValue)
       }
     },
   },
   methods: {
     ...mapActions(MODULE_MODULE_RESTRICT_IP_EDIT, [
       ACTION_RESET_NOTIFICATION_INFO,
-      ACTION_GET_INFO_BY_ID,
+      ACTION_GET_INFO_BY_ID
     ]),
     _errorToArrs() {
-      let errs = [];
+      let errs = []
       if (
         this.errors.length &&
-        typeof this.errors[0].messages !== "undefined"
+        typeof this.errors[0].messages !== 'undefined'
       ) {
-        errs = Object.values(this.errors[0].messages);
+        errs = Object.values(this.errors[0].messages)
       }
-
       if (Object.entries(errs).length === 0 && this.errors.length) {
-        errs.push(this.$options.setting.error_msg_system);
+        errs.push(this.$options.setting.error_msg_system)
       }
-      return errs;
+      
+      return errs
     },
-
     _submitInfo() {
-      const _self = this;
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formEditRestrictIp._submitInfo();
+          this.$refs.formEditRestrictIp._submitInfo()
         }
-      });
+      })
     },
     _submitInfoBack() {
-      const _self = this;
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formEditRestrictIp._submitInfoBack();
+          this.$refs.formEditRestrictIp._submitInfoBack()
         }
-      });
+      })
     },
     _notificationUpdate(notification) {
-      this.$notify(notification);
-      this[ACTION_RESET_NOTIFICATION_INFO]("");
+      this.$notify(notification)
+      this[ACTION_RESET_NOTIFICATION_INFO]('')
     },
   },
   setting: {
-    panel_title: "Restrict IP",
-    frm_title: "Sửa Restrict Ip",
-    btn_save_txt: "Lưu",
-    btn_save_back_txt: "Lưu trở về danh sách",
-    error_msg_system: "IP đã tồn tại",
+    panel_title: 'Restrict IP',
+    frm_title: 'Sửa Restrict Ip',
+    btn_save_txt: 'Lưu',
+    btn_save_back_txt: 'Lưu trở về danh sách',
+    error_msg_system: 'IP đã tồn tại',
   },
   mounted() {
-    const restrictipId = parseInt(this.$route.params.infoId);
+    const restrictipId = parseInt(this.$route.params.infoId)
     if (restrictipId) {
-      this[ACTION_GET_INFO_BY_ID](restrictipId);
+      this[ACTION_GET_INFO_BY_ID](restrictipId)
     }
   },
-};
+}
 </script>

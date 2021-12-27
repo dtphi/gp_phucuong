@@ -24,16 +24,14 @@
 </template>
 
 <script>
-import BtnEdit from "./TheBtnEdit";
-import BtnDelete from "./TheBtnDelete";
-import { mapState, mapActions } from "vuex";
-import { MODULE_MODULE_RESTRICT_IP } from "store@admin/types/module-types";
-import {
-  ACTION_CHANGE_STATUS,
-} from "store@admin/types/action-types";
+import BtnEdit from './TheBtnEdit'
+import BtnDelete from './TheBtnDelete'
+import { mapState, mapActions, } from 'vuex'
+import { MODULE_MODULE_RESTRICT_IP, } from 'store@admin/types/module-types'
+import { ACTION_CHANGE_STATUS, } from 'store@admin/types/action-types'
 
 export default {
-  name: "TheItem",
+  name: 'TheItem',
   components: {
     BtnEdit,
     BtnDelete,
@@ -47,35 +45,41 @@ export default {
     },
   },
   data() {
-    return {};
+    return {}
   },
   computed: {
     ...mapState({
-      meta: (state) => state.cfApp.collectionData,
-      perPage: (state) => state.cfApp.perPage,
+      meta: state => state.cfApp.collectionData,
+      perPage: state => state.cfApp.perPage,
     }),
   },
   methods: {
     _getNo() {
-      return parseInt(this.no) + parseInt(this.meta.from);
+      return parseInt(this.no) + parseInt(this.meta.from)
     },
     ...mapActions(MODULE_MODULE_RESTRICT_IP, {
-       'changeStatusItem': ACTION_CHANGE_STATUS,
+      changeStatusItem: ACTION_CHANGE_STATUS,
     }),
     changeStatus() {
-      if(this.info.active == 1) {
-        this.info.active = 0;
-      }else {this.info.active = 1}
-      this.changeStatusItem({id: this.info.id, status: this.info.active, perPage: this.perPage});
-    }
+      if (this.info.active == 1) {
+        this.info.active = 0
+      } else {
+        this.info.active = 1
+      }
+      this.changeStatusItem({
+        id: this.info.id,
+        status: this.info.active,
+        perPage: this.perPage,
+      })
+    },
   },
-};
+}
 </script>
 <style scoped>
-  .btn_blue{
-    color: blue;
-  }
-  .btn_red{
-    color: red;
-  }
+.btn_blue {
+  color: blue;
+}
+.btn_red {
+  color: red;
+}
 </style>
