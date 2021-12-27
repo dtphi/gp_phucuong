@@ -33,6 +33,7 @@ export default {
       if (this.pageItem.imgThumbUrl) {
         return this.pageItem.imgThumbUrl
       }
+      
       return fn_get_base_url() + this.pageItem.img
     },
   },

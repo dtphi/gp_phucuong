@@ -147,17 +147,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import { MODULE_GIAO_XU_DETAIL_PAGE } from '@app/stores/front/types/module-types'
-import { GET_DETAIL } from '@app/stores/front/types/action-types'
+import { mapState, mapActions, } from 'vuex'
+import { MODULE_GIAO_XU_DETAIL_PAGE, } from '@app/stores/front/types/module-types'
+import { GET_DETAIL, } from '@app/stores/front/types/action-types'
 import MainMenu from 'com@front/Common/MainMenu'
 import ContentTop from 'com@front/Common/ContentTop'
 import ContentBottom from 'com@front/Common/ContentBottom'
 import SocialNetwork from 'com@front/Common/SocialNetwork'
 import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
-import NewsletterRegister from 'com@front/Common/NewsletterRegister'
 import MainContent from 'com@front/Common/MainContent'
-import ModulePageBannerList from 'v@front/modules/page_banner_lists'
 import Vue from 'vue'
 import vuetimeline from '@growthbunker/vuetimeline'
 Vue.use(vuetimeline)
@@ -170,9 +168,7 @@ export default {
     ContentTop,
     ContentBottom,
     SocialNetwork,
-    NewsletterRegister,
     MainContent,
-    ModulePageBannerList,
   },
   data() {
     return {

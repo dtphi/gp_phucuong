@@ -32,7 +32,7 @@ import {
 } from '@app/api/utils/fn-helper'
 
 export default {
-  name: "TheRelatedInfo",
+  name: 'TheRelatedInfo',
   computed: {
     ...mapGetters(MODULE_VIDEO_DETAIL, ['pageLists', 'infoRelateds']),
     _getRelatedListInfo() {
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     _getHref(info) {
-      if (info.hasOwnProperty("name_slug")) {
+      if ((String(info['name_slug']) !== 'undefined') && (String(info['name_slug']).length > 5)) {
         return fn_get_href_base_url(`video/chi-tiet/${info.name_slug}`)
       } else {
         return fn_get_href_base_url(`video/chi-tiet/${fn_change_to_slug(info.name)}`)

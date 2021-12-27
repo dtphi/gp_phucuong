@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, } from 'vuex'
+import { mapGetters, } from 'vuex'
 import { MODULE_MODULE_THONG_BAO, } from 'store@front/types/module-types'
 
 export default {

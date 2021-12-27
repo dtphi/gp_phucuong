@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, } from 'vuex'
 import {
   fn_get_href_base_url,
   fn_change_to_slug,
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     _getHref() {
-      if (this.info.hasOwnProperty('name_slug')) {
+      if ((String(this.info['name_slug']) !== 'undefined') && (String(this.info['name_slug']).length > 5)) {
         return fn_get_href_base_url(`video/chi-tiet/${this.info.name_slug}`)
       } else {
         return fn_get_href_base_url(`video/chi-tiet/${fn_change_to_slug(this.info.name)}`)

@@ -21,10 +21,14 @@ export default {
     NavItem: NavItem,
   },
   props: {
-    isRoot: 0,
+    isRoot: {
+      default() {
+        return 0
+      },
+    },
     item: [Object, Array],
   },
-  data: function () {
+  data: function() {
     return {}
   },
   computed: {

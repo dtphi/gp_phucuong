@@ -46,25 +46,26 @@ export default {
     ...mapGetters(['isScreen414', 'isScreen767']),
     ...mapGetters(MODULE_MODULE_NOI_BAT, [
       'settingBanner',
-      'settingBannerFormat',
+      'settingBannerFormat'
     ]),
     _isExist() {
       return this.settingBanner.length
     },
     _getBanner() {
-      const lists = _.remove(this.settingBanner,(item) => {
+      const lists = _.remove(this.settingBanner, (item) => {
         return parseInt(item.status)
       })
       if (lists.length) {
         return lists[0]
       }
+      
       return null
     },
     _getSettingFormat() {
       if (this.settingBannerFormat.length) {
         let format = this.settingBannerFormat[0]
         if (this.isScreen767) {
-          const sreen767 = _.filter(this.settingBannerFormat,(style) => style.media == 768)
+          const sreen767 = _.filter(this.settingBannerFormat, (style) => style.media == 768)
           format = {
             top: 39,
             left: 15,
@@ -77,7 +78,7 @@ export default {
           }
         }
         if (this.isScreen414) {
-          const sreen414 = _.filter(this.settingBannerFormat,(style) => style.media == 414)
+          const sreen414 = _.filter(this.settingBannerFormat, (style) => style.media == 414)
           format = {
             top: 44,
             left: 16,
@@ -89,8 +90,10 @@ export default {
             format = sreen414[0]
           }
         }
+        
         return this._getStyle(format)
       }
+      
       return ''
     },
   },
@@ -105,6 +108,7 @@ export default {
       let fontWeight = format.font_weight
       let fontSize = format.font_size
       let styleTitle = `top: ${top}%; left: ${left}%;color: ${color};font-weight: ${fontWeight};font-size: ${fontSize}px`
+      
       return styleTitle
     },
   },

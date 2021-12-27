@@ -87,15 +87,16 @@ export default {
     }),
     ...mapGetters(MODULE_MODULE_TIN_GIAO_PHAN, [
       'settingCategory',
-      'pageLists',
+      'pageLists'
     ]),
     _getInfoListModule() {
-      let lists = [];
-      _.forEach(this.pageLists,(item, index) => {
+      let lists = []
+      _.forEach(this.pageLists, (item, index) => {
         if (index >= 2) {
           lists.push(item)
         }
       })
+      
       return lists
     },
     _getLastedModuleInfo() {
@@ -105,12 +106,15 @@ export default {
       if (this.pageLists.length >= 2) {
         return this.pageLists[1]
       }
+      
       return null
     },
   },
   mounted() {
     let moduleData = null
-    if (this.settingCategorys.hasOwnProperty("module_tin_giao_phan_categories")) {
+    const moduleName = 'module_tin_giao_phan_categories'
+    const isModule = (String(this.settingCategorys[moduleName]) !== 'undefined')
+    if (isModule) {
       moduleData = this.settingCategorys.module_tin_giao_phan_categories
     }
     this.getSetting(moduleData)
@@ -120,7 +124,7 @@ export default {
       getSetting: ACTION_GET_SETTING,
     }),
     _getHref(info) {
-      if (info.hasOwnProperty('name_slug')) {
+      if ((String(info['name_slug']) !== 'undefined') && (String(info['name_slug']).length > 5)) {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${info.name_slug}`)
       } else {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(info.name)}`)

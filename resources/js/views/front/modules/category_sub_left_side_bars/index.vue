@@ -17,23 +17,25 @@
 
 <script>
 import { mapState, } from 'vuex'
-import NavMainItem from './components/Item'
 import NavTree from './components/TreeItem'
 
 export default {
   name: 'ModuleCategorySubLeftSideBar',
   components: {
-    NavMainItem,
     NavTree,
   },
   props: {
     menuItems: null,
-    layoutId: 0,
+    layoutId: {
+      default() {
+        return 0
+      },
+    },
   },
   data() {
     return {
       isHiddenMenu: false,
-    };
+    }
   },
   computed: {
     ...mapState({

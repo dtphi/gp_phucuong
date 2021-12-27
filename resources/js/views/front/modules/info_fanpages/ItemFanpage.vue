@@ -38,5 +38,5 @@
 export default {
   name: 'ModuleFanpageInfo',
   components: {},
-};
+}
 </script>

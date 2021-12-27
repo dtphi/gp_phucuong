@@ -461,10 +461,8 @@ import ContentTop from 'com@front/Common/ContentTop'
 import ContentBottom from 'com@front/Common/ContentBottom'
 import SocialNetwork from 'com@front/Common/SocialNetwork'
 import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
-import NewsletterRegister from 'com@front/Common/NewsletterRegister'
 import MainContent from 'com@front/Common/MainContent'
-import ModulePageBannerList from 'v@front/modules/page_banner_lists'
-import { fn_format_dd_mm_yyyy } from '@app/api/utils/fn-helper'
+import { fn_format_dd_mm_yyyy, } from '@app/api/utils/fn-helper'
 import Vue from 'vue'
 import vuetimeline from '@growthbunker/vuetimeline'
 Vue.use(vuetimeline)
@@ -477,9 +475,7 @@ export default {
     ContentTop,
     ContentBottom,
     SocialNetwork,
-    NewsletterRegister,
     MainContent,
-    ModulePageBannerList,
   },
   data() {
     return {
@@ -493,14 +489,14 @@ export default {
   },
   computed: {
     ...mapState({
-      contentBgColor: (state) => state.cfApp.setting.contentBgColor,
-      logoBgColor: (state) => state.cfApp.setting.logoBgColor,
+      contentBgColor: state => state.cfApp.setting.contentBgColor,
+      logoBgColor: state => state.cfApp.setting.logoBgColor,
     }),
     ...mapState(MODULE_LINH_MUC_DETAIL_PAGE, {
-      pageLists: (state) => {
+      pageLists: state => {
         return state.pageLists
       },
-      loading: (state) => state.loading,
+      loading: state => state.loading,
     }),
     _isContentTop() {
       return this.$route.meta.layout_content.content_top
@@ -526,6 +522,7 @@ export default {
       var fromDate = item.label_from_date
       var toDate = item.label_to_date ? ' đến ngày ' + item.label_to_date : ''
       var des = 'Từ ngày ' + fromDate + toDate + ' ' + item.ghi_chu
+      
       return des
     },
     _itemChucVus(chucVus) {
@@ -552,6 +549,7 @@ export default {
           )
         })
       }
+      
       return self.chucVus
     },
     edit(e) {

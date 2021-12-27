@@ -29,7 +29,7 @@ import {
   fn_get_href_base_url,
   fn_change_to_slug,
 } from '@app/api/utils/fn-helper'
-import { MODULE_INFO } from '@app/stores/front/types/module-types'
+import { MODULE_INFO, } from '@app/stores/front/types/module-types'
 
 export default {
   name: 'ModuleThongBao',
@@ -45,17 +45,18 @@ export default {
     }),
     _getInfoCarousel() {
       let lists = []
-      _.forEach(this.infoList,(item, index) => {
+      _.forEach(this.infoList, (item, index) => {
         if (index < 10) {
           lists.push(item)
         }
       })
+      
       return lists
     },
   },
   methods: {
     _getHref(info) {
-      if (info.hasOwnProperty('name_slug')) {
+      if ((String(info['name_slug']) !== 'undefined') && (String(info['name_slug']).length > 5)) {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${info.name_slug}`)
       } else {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(info.name)}`)

@@ -54,7 +54,9 @@ export default {
   },
   mounted() {
     let moduleData = null
-    if (this.settingCategorys.hasOwnProperty('module_van_kien_categories')) {
+    const moduleName = 'module_van_kien_categories'
+    const isModule = (String(this.settingCategorys[moduleName]) !== 'undefined')
+    if (isModule) {
       moduleData = this.settingCategorys.module_van_kien_categories
     }
     this.getSetting(moduleData)
@@ -64,7 +66,7 @@ export default {
       getSetting: ACTION_GET_SETTING,
     }),
     _getHref(info) {
-      if (info.hasOwnProperty('name_slug')) {
+      if ((String(info['name_slug']) !== 'undefined') && (String(info['name_slug']).length > 5)) {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${info.name_slug}`)
       } else {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(info.name)}`)

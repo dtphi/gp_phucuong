@@ -36,7 +36,7 @@ export default {
     return {
       pageFullPage: true,
       pageLoading: true,
-    };
+    }
   },
   computed: {
     ...mapState({
@@ -55,12 +55,12 @@ export default {
   },
   created() {
     this.winWidth()
-    window.addEventListener('resize',() => {
+    window.addEventListener('resize', () => {
       this.winWidth()
     })
   },
   destroyed() {
-    window.removeEventListener("resize",() => {
+    window.removeEventListener('resize', () => {
       this.winWidth()
     })
   },

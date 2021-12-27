@@ -38,7 +38,7 @@
 
 <script>
 import { mapGetters, } from 'vuex'
-import { MODULE_INFO_DETAIL } from '@app/stores/front/types/module-types'
+import { MODULE_INFO_DETAIL, } from '@app/stores/front/types/module-types'
 import {
   fn_get_href_base_url,
   fn_change_to_slug,
@@ -53,7 +53,7 @@ export default {
     ...mapGetters(['isScreen767']),
     ...mapGetters(MODULE_INFO_DETAIL, ['pageLists', 'infoRelateds']),
     _getRelatedListInfo() {
-      return _.filter(this.infoRelateds,(o) => {
+      return _.filter(this.infoRelateds, (o) => {
         return o.information_id !== this.pageLists.information_id
       })
     },
@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     _getHref(info) {
-      if (info.hasOwnProperty('name_slug')) {
+      if ((String(info['name_slug']) !== 'undefined') && (String(info['name_slug']).length > 5)) {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${info.name_slug}`)
       } else {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(info.name)}`)

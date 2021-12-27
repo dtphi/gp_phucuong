@@ -30,9 +30,12 @@ export default {
       settingCategorys: state => state.cfApp.setting.modules.module_category_left_side_bar,
     }),
     _isExist() {
-      if (this.settingCategorys.hasOwnProperty('module_category_left_side_bar_categories')) {
+      const moduleName = 'module_category_left_side_bar_categories'
+      const isModule = (String(this.settingCategorys[moduleName]) !== 'undefined')
+      if (isModule) {
         return this.settingCategorys.module_category_left_side_bar_categories.length
       }
+      
       return 0
     },
     _settingCategory() {

@@ -219,9 +219,7 @@ import ContentTop from 'com@front/Common/ContentTop'
 import ContentBottom from 'com@front/Common/ContentBottom'
 import SocialNetwork from 'com@front/Common/SocialNetwork'
 import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
-import NewsletterRegister from 'com@front/Common/NewsletterRegister'
 import MainContent from 'com@front/Common/MainContent'
-import ModulePageBannerList from 'v@front/modules/page_banner_lists'
 import Paginate from 'com@front/Pagination'
 import PaginationFilter from 'com@front/PaginationFilter'
 import 'vue-search-select/dist/VueSearchSelect.css'
@@ -235,9 +233,7 @@ export default {
     ContentTop,
     ContentBottom,
     SocialNetwork,
-    NewsletterRegister,
     MainContent,
-    ModulePageBannerList,
     Paginate,
     ModelSelect,
     PaginationFilter,
@@ -263,15 +259,15 @@ export default {
   },
   computed: {
     ...mapState({
-      contentBgColor: (state) => state.cfApp.setting.contentBgColor,
+      contentBgColor: state => state.cfApp.setting.contentBgColor,
     }),
     ...mapState(MODULE_GIAO_XU_PAGE, {
-      infoList: (state) => state.pageLists,
-      giaoPhanLists: (state) => state.giaoPhanLists,
-      giaoHatLists: (state) => state.giaoHatLists,
-      loading: (state) => state.loading,
-      giaoXuLists: (state) => state.giaoXuLists,
-      paginationFilter: (state) => state.paginationFilter,
+      infoList: state => state.pageLists,
+      giaoPhanLists: state => state.giaoPhanLists,
+      giaoHatLists: state => state.giaoHatLists,
+      loading: state => state.loading,
+      giaoXuLists: state => state.giaoXuLists,
+      paginationFilter: state => state.paginationFilter,
     }),
     _isContentTop() {
       return this.$route.meta.layout_content.content_top

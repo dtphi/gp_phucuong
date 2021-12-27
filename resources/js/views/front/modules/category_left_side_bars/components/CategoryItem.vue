@@ -11,10 +11,30 @@ import { MODULE_MODULE_CATEGORY_LEFT_SIDE_BAR, } from '@app/stores/front/types/m
 export default {
   name: 'NavigationMainItem',
   props: {
-    title: '',
-    link: '',
-    activeClass: '',
-    group: {},
+    title: {
+      type: String,
+      default() {
+        return ''
+      },
+    },
+    link: {
+      type: String,
+      default() {
+        return ''
+      },
+    },
+    activeClass: {
+      type: String,
+      default() {
+        return ''
+      },
+    },
+    group: {
+      type: [Object, Array],
+      default() {
+        return {}
+      },
+    },
   },
   computed: {
     ...mapGetters(['moduleNameActive', 'moduleActionListActive']),
@@ -23,6 +43,7 @@ export default {
       if (this.group.link == this.linkActive) {
         return 'active'
       }
+      
       return ''
     },
   },
@@ -32,6 +53,7 @@ export default {
       if (this.title) {
         return this.title
       }
+      
       return this.group.name
     },
     _getHref() {

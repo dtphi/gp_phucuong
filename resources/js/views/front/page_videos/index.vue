@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, } from 'vuex'
 import MainMenu from 'com@front/Common/MainMenu'
 import TheCategoryNewsItem from './components/TheVideoItem'
 import Paginate from 'com@front/Pagination'
-import { MODULE_INFO } from '@app/stores/front/types/module-types'
-import { GET_INFORMATION_LIST_TO_CATEGORY } from '@app/stores/front/types/action-types'
+import { MODULE_INFO, } from '@app/stores/front/types/module-types'
+import { GET_INFORMATION_LIST_TO_CATEGORY, } from '@app/stores/front/types/action-types'
 import MainContent from 'com@front/Common/MainContent'
 import ContentBottom from 'com@front/Common/ContentBottom'
 import ContentTop from 'com@front/Common/ContentTop'
@@ -55,7 +55,7 @@ export default {
     return {
       fullPage: false,
       isResource: false,
-    };
+    }
   },
   computed: {
     ...mapState({

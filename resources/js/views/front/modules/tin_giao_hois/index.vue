@@ -88,11 +88,12 @@ export default {
     ...mapGetters(MODULE_MODULE_TIN_GIAO_HOI, ['settingCategory', 'pageLists']),
     _getInfoListModule() {
       let lists = []
-      _.forEach(this.pageLists,(item, index) => {
+      _.forEach(this.pageLists, (item, index) => {
         if (index) {
           lists.push(item)
         }
       })
+      
       return lists
     },
     _getLastedModuleInfo() {
@@ -101,7 +102,9 @@ export default {
   },
   mounted() {
     let moduleData = null
-    if (this.settingCategorys.hasOwnProperty('module_tin_giao_hoi_categories')) {
+    const moduleName = 'module_tin_giao_hoi_categories'
+    const isModule = (String(this.settingCategorys[moduleName]) !== 'undefined')
+    if (isModule) {
       moduleData = this.settingCategorys.module_tin_giao_hoi_categories
     }
     this.getSetting(moduleData)
@@ -111,7 +114,7 @@ export default {
       getSetting: ACTION_GET_SETTING,
     }),
     _getHref(info) {
-      if (info && info.hasOwnProperty('name_slug')) {
+      if ((String(info['name_slug']) !== 'undefined') && (String(info['name_slug']).length > 5)) {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${info.name_slug}`)
       } else {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(info.name)}`)

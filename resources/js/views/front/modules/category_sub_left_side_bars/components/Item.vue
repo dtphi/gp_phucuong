@@ -15,10 +15,30 @@ import { fn_get_href_base_url, } from '@app/api/utils/fn-helper'
 export default {
   name: 'NavigationMainItem',
   props: {
-    title: '',
-    link: '',
-    activeClass: '',
-    group: {},
+    title: {
+      type: String,
+      default() {
+        return ''
+      },
+    },
+    link: {
+      type: String,
+      default() {
+        return ''
+      },
+    },
+    activeClass: {
+      type: String,
+      default() {
+        return ''
+      },
+    },
+    group: {
+      type: [Object, Array],
+      default() {
+        return {}
+      },
+    },
   },
   computed: {
     ...mapGetters(['moduleNameActive', 'moduleActionListActive']),
@@ -27,6 +47,7 @@ export default {
       if (this.group.link == this.linkSubActive) {
         return 'sub-active'
       }
+      
       return ''
     },
   },
@@ -37,12 +58,14 @@ export default {
       if (this.title) {
         return this.title
       }
+      
       return this.group.name
     },
     _getHref() {
       if (this.link) {
         return fn_get_href_base_url(this.link)
       }
+      
       return fn_get_href_base_url(`danh-muc-tin/${this.group.link}`)
     },
     _getInfo() {

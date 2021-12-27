@@ -80,30 +80,33 @@ export default {
       )
     },
     _getSachNoiList() {
-      const lists = _.remove(this.settingSachNoi,(item) => {
+      const lists = _.remove(this.settingSachNoi, (item) => {
         return parseInt(item.status)
       })
       if (lists && lists.length) {
         return lists
       }
+      
       return []
     },
     _getYoutubeList() {
-      const lists = _.remove(this.settingYoutube,(item) => {
+      const lists = _.remove(this.settingYoutube, (item) => {
         return parseInt(item.status)
       })
       if (lists && lists.length) {
         return lists
       }
+      
       return []
     },
     _getHanhCacThanhList() {
-      const lists = _.remove(this.settingHanhCacThanh,(item) => {
+      const lists = _.remove(this.settingHanhCacThanh, (item) => {
         return parseInt(item.status)
       })
       if (lists && lists.length) {
         return lists
       }
+      
       return []
     },
   },

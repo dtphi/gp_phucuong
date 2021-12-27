@@ -76,7 +76,6 @@ import ContentTop from 'com@front/Common/ContentTop'
 import ContentBottom from 'com@front/Common/ContentBottom'
 import SocialNetwork from './components/TheSocialNetwork'
 import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
-import NewsletterRegister from 'com@front/Common/NewsletterRegister'
 import MainContent from 'com@front/Common/MainContent'
 import ModulePageBannerList from 'v@front/modules/page_banner_lists'
 
@@ -88,7 +87,6 @@ export default {
     ContentTop,
     ContentBottom,
     SocialNetwork,
-    NewsletterRegister,
     MainContent,
     ModulePageBannerList,
   },
@@ -102,11 +100,11 @@ export default {
   },
   computed: {
     ...mapState({
-      contentBgColor: (state) => state.cfApp.setting.contentBgColor,
+      contentBgColor: state => state.cfApp.setting.contentBgColor,
     }),
     ...mapState(MODULE_INFO, {
-      infoList: (state) => state.pageLists,
-      loading: (state) => state.loading,
+      infoList: state => state.pageLists,
+      loading: state => state.loading,
     }),
     _isContentTop() {
       return this.$route.meta.layout_content.content_top

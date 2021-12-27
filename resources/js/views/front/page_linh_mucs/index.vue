@@ -241,25 +241,21 @@ import ContentTop from 'com@front/Common/ContentTop'
 import ContentBottom from 'com@front/Common/ContentBottom'
 import SocialNetwork from 'com@front/Common/SocialNetwork'
 import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
-import NewsletterRegister from 'com@front/Common/NewsletterRegister'
 import MainContent from 'com@front/Common/MainContent'
-import ModulePageBannerList from 'v@front/modules/page_banner_lists'
 import Paginate from 'com@front/Pagination'
 import PaginationFilter from 'com@front/PaginationFilter'
 import 'vue-search-select/dist/VueSearchSelect.css'
-import { ModelSelect } from 'vue-search-select'
+import { ModelSelect, } from 'vue-search-select'
 
 export default {
-  name: "InfoPage",
+  name: 'InfoPage',
   components: {
     MainMenu,
     TabInfoViewedAndPopular,
     ContentTop,
     ContentBottom,
     SocialNetwork,
-    NewsletterRegister,
     MainContent,
-    ModulePageBannerList,
     Paginate,
     PaginationFilter,
     ModelSelect,
@@ -275,21 +271,21 @@ export default {
       giaoHat: '',
       query: '',
       offset: 4,
-    };
+    }
   },
   computed: {
     ...mapState({
-      contentBgColor: (state) => state.cfApp.setting.contentBgColor,
+      contentBgColor: state => state.cfApp.setting.contentBgColor,
     }),
     ...mapState(MODULE_LINH_MUC_PAGE, {
-      pageLists: (state) => state.pageLists,
-      linhMucLists: (state) => state.linhMucLists,
-      chucVuLists: (state) => state.chucVuLists,
-      loading: (state) => state.loading,
-      paginationFilter: (state) => state.paginationFilter,
+      pageLists: state => state.pageLists,
+      linhMucLists: state => state.linhMucLists,
+      chucVuLists: state => state.chucVuLists,
+      loading: state => state.loading,
+      paginationFilter: state => state.paginationFilter,
     }),
     ...mapState(MODULE_GIAO_XU_PAGE, {
-      giaoHatLists: (state) => state.giaoHatLists,
+      giaoHatLists: state => state.giaoHatLists,
     }),
     _isContentTop() {
       return this.$route.meta.layout_content.content_top
@@ -329,7 +325,7 @@ export default {
       })
     },
     filterLinhMuc() {
-      if (this.isBlank(this.query) && this.giaoHat == "" && this.chucVu == "") {
+      if (this.isBlank(this.query) && this.giaoHat == '' && this.chucVu == '') {
         this.refreshListFilter()
       } else {
         this.getListLinhMuc({

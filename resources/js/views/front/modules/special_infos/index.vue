@@ -59,19 +59,21 @@ export default {
     ...mapGetters(['isScreen414', 'isScreen767']),
     ...mapGetters(MODULE_MODULE_SPECIAL_INFO, ['pageLists']),
     _getInfoCarousel() {
+      let values = []
       if (this.pageLists.length) {
         let infos = this.pageLists
-        var asorts = _.orderBy(infos,(o) => o.id, 'desc')
-        let values = []
-        _.forEach(asorts,(item, idx) => {
+        var asorts = _.orderBy(infos, (o) => o.id, 'desc')
+        
+        _.forEach(asorts, (item, idx) => {
           if (idx < 5) {
             values.push(item)
           } else {
             return 0
           }
-        });
-        return values
+        })
       }
+      
+      return values
     },
     _getSettingFormat() {
       let des = 1
@@ -81,6 +83,7 @@ export default {
       if (this.isScreen414) {
         des = 3
       }
+      
       return des
     },
   },
@@ -92,7 +95,7 @@ export default {
       getSetting: ACTION_GET_SETTING,
     }),
     _getHref(info) {
-      if (info.hasOwnProperty('name_slug')) {
+      if ((String(info['name_slug']) !== 'undefined') && (String(info['name_slug']).length > 5)) {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${info.name_slug}`)
       } else {
         return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(info.name)}`)
