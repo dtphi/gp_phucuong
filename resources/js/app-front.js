@@ -11,26 +11,26 @@ const router = new Router({
   history: true,
   mode: 'history',
   routes: [
-    ...routes,
-  ]
+    ...routes
+  ],
 })
 const initParamsApp = {
   type: 'init',
   pathName: window.location.pathname,
   layout: layout.page,
 }
-router.beforeEach(async (to, from, next) => {
-    if (Object.keys(to.meta.layout_content).length === 0) {
-      to.meta.layout_content = layout.layout_content
-    }
-    next()
+router.beforeEach(async(to, from, next) => {
+  if (Object.keys(to.meta.layout_content).length === 0) {
+    to.meta.layout_content = layout.layout_content
+  }
+  next()
 })
 store.dispatch('appSettings', initParamsApp).then(() => {
-    return new Vue({
-        el: '#gp-phu-cuong',
-        router,
-        store,
-    })
+  return new Vue({
+    el: '#gp-phu-cuong',
+    router,
+    store,
+  })
 })
 delete window.page
 delete window['page']

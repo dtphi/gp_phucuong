@@ -60,3 +60,14 @@ export function partial(fn, arg) {
     return fn(arg)
   }
 }
+export function fnIsObject(obj) {
+  if (typeof obj !== 'undefined' &&
+    typeof obj === 'object' &&
+    Object.keys(obj).length) {
+     return true
+  }
+  return false
+}
+export function fnCheckProp(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop)
+}

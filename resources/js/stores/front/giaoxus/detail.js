@@ -18,10 +18,10 @@ export default {
       return state.mainMenus
     },
     pageLists(state) {
-      return state.pageLists;
+      return state.pageLists
     },
     infoRelateds(state) {
-      return state.infoRelateds;
+      return state.infoRelateds
     },
   },
   mutations: {
@@ -34,7 +34,8 @@ export default {
   },
   actions: {
     [GET_DETAIL]({ commit, }, routeParams) {
-      if (routeParams.hasOwnProperty('giaoXuId')) {
+      const hasGiaoXuIdProp = Object.prototype.hasOwnProperty.call(routeParams, 'giaoXuId')
+      if (hasGiaoXuIdProp) {
         apiGetDetail(routeParams.giaoXuId,
           (result) => {
             commit(INIT_LIST, result)

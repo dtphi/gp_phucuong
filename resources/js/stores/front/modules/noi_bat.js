@@ -1,9 +1,10 @@
 import { apiGetSettingByCode, } from '@app/api/front/setting'
-import { INIT_LIST, SET_ERROR} from '@app/stores/front/types/mutation-types'
+import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { MODULE_UPDATE_SET_LOADING, MODULE_UPDATE_SET_ERROR, MODULE_UPDATE_SET_KEYS_DATA,
- } from '../../admin/types/mutation-types'
-import { ACTION_SET_LOADING, ACTION_GET_SETTING
- } from '../../admin/types/action-types'
+} from '../../admin/types/mutation-types'
+import { ACTION_SET_LOADING, ACTION_GET_SETTING,
+} from '../../admin/types/action-types'
+import { fnCheckProp, } from '@app/common/util'
 const settingSachNoi = {}
 const settingYoutube ={}
 const settingHanhCacThanh ={}
@@ -24,7 +25,7 @@ const defaultState = () => {
         settingHanhCacThanh,
         settingBanner,
         settingBannerFormat
-      ]
+      ],
     },
     pageLists: [],
     loading: false,
@@ -65,7 +66,7 @@ export default {
     },
     pageLists(state) {
       return state.pageLists
-    }
+    },
   },
   mutations: {
     [INIT_LIST](state, payload) {
@@ -78,20 +79,20 @@ export default {
       state.errors = payload
     },
     [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
-      if (payload.hasOwnProperty('module_noi_bat_banner_formats')) {
+      if (fnCheckProp(payload, 'module_noi_bat_banner_formats')) {
         state.module_noi_bat_banner_formats = payload.module_noi_bat_banner_formats
       }
-      if (payload.hasOwnProperty('module_noi_bat_banners')) {
+      if (fnCheckProp(payload, 'module_noi_bat_banners')) {
         state.module_noi_bat_banners = payload.module_noi_bat_banners
       }
-      if (payload.hasOwnProperty('module_noi_bat_sach_nois')) {
+      if (fnCheckProp(payload, 'module_noi_bat_sach_nois')) {
         state.module_noi_bat_sach_nois  = payload.module_noi_bat_sach_nois
       }
-      if (payload.hasOwnProperty('module_noi_bat_youtubes')) {
+      if (fnCheckProp(payload, 'module_noi_bat_youtubes')) {
         state.module_noi_bat_youtubes = payload.module_noi_bat_youtubes
       }
-      if (payload.hasOwnProperty('module_noi_bat_hanh_cac_thanhs')) {
-        state.module_noi_bat_hanh_cac_thanhs = payload.module_noi_bat_hanh_cac_thanhs;
+      if (fnCheckProp(payload, 'module_noi_bat_hanh_cac_thanhs')) {
+        state.module_noi_bat_hanh_cac_thanhs = payload.module_noi_bat_hanh_cac_thanhs
       }
       state.moduleData.keys = []
       state.moduleData.keys.push(payload.module_noi_bat_sach_nois)

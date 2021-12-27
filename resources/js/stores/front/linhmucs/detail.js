@@ -2,6 +2,7 @@ import { apiGetDetail, } from '@app/api/front/linhmucs'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_DETAIL_LINH_MUC, } from '@app/stores/front/types/action-types'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
+import { fnCheckProp, } from '@app/common/util'
 
 export default {
   namespaced: true,
@@ -44,13 +45,13 @@ export default {
               if (!Object.keys(authLm).length) {
                 return fn_redirect_url(redUrl)
               }
-              if (!authLm.hasOwnProperty('auth')) {
+              if (!fnCheckProp(authLm, 'auth')) {
                 return fn_redirect_url(redUrl)
               }
-              if (!authLm.auth.hasOwnProperty('user')) {
+              if (!fnCheckProp(authLm.auth, 'user')) {
                 return fn_redirect_url(redUrl)
               }
-              if (!authLm.auth.user.hasOwnProperty('uid')) {
+              if (!fnCheckProp(authLm.auth.user, 'uid')) {
                 return fn_redirect_url(redUrl)
               }
             } else {

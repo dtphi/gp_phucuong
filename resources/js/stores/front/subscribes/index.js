@@ -1,6 +1,6 @@
 import { apiEmailSubscribe, } from '@app/api/front/subscribes'
 import { SET_SUBSCRIBE, SET_ERROR, SET_LOADING,
- } from '@app/stores/front/types/mutation-types'
+} from '@app/stores/front/types/mutation-types'
 
 export default {
   namespaced: true,
@@ -45,10 +45,12 @@ export default {
       commit(SET_LOADING, true)
       apiEmailSubscribe(subscribe,
         (responses) => {
-          commit(SET_ERROR, [])
-          commit(SET_LOADING, false)
-          commit('RESET_SUB', '')
-          commit('SET_INSERT_SUCCESS', true)
+          if (responses) {
+            commit(SET_ERROR, [])
+            commit(SET_LOADING, false)
+            commit('RESET_SUB', '')
+            commit('SET_INSERT_SUCCESS', true)
+          }
         },
         (errors) => {
           commit(SET_ERROR, errors)
@@ -58,6 +60,6 @@ export default {
     },
     RESET_NOTIFICATION({ commit, }, msg) {
       commit('SET_INSERT_SUCCESS', msg)
-    }
-  }
+    },
+  },
 }

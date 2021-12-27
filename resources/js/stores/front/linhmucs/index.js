@@ -2,8 +2,9 @@ import detail from './detail'
 import { apiGetLists, apiGetListsChucVu, apiGetListsLinhMuc, } from '@app/api/front/linhmucs'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_LISTS_LINH_MUC, GET_LISTS_LINH_MUC_BY_ID, GET_LISTS_CHUC_VU, ACTION_REFESH_LIST_FILTER,
- } from '@app/stores/front/types/action-types'
+} from '@app/stores/front/types/action-types'
 import { MODULE_LINH_MUC_PAGE, } from '@app/stores/front/types/module-types'
+import { fnCheckProp, } from '@app/common/util'
 
 export default {
   namespaced: true,
@@ -66,28 +67,28 @@ export default {
     },
   },
   actions: {
-    [GET_LISTS_LINH_MUC]({ commit, dispatch }, options) {
+    [GET_LISTS_LINH_MUC]({ commit, dispatch, }, options) {
       commit('setLoading', true)
       apiGetLists((responses) => {			
-          commit(INIT_LIST, responses.data.results)
-          commit(SET_ERROR, [])
-          var pagination = { current_page: 1, total: 0, }
-          if (responses.data.hasOwnProperty('pagination')) {
-            pagination = responses.data.pagination
-          }
-          var configs = {
-              moduleActive: {
-                name: MODULE_LINH_MUC_PAGE,
-                actionList: GET_LISTS_LINH_MUC,
-              },
-              collectionData: pagination,
-            }
-          dispatch('setConfigApp', configs, { root: true, })
-          commit('setLoading', false)
-        }, (errors) => {
-          commit(SET_ERROR, errors)
-          commit('setLoading', false)
-        }, options)
+        commit(INIT_LIST, responses.data.results)
+        commit(SET_ERROR, [])
+        var pagination = { current_page: 1, total: 0, }
+        if (fnCheckProp(responses.data, 'pagination')) {
+          pagination = responses.data.pagination
+        }
+        var configs = {
+          moduleActive: {
+            name: MODULE_LINH_MUC_PAGE,
+            actionList: GET_LISTS_LINH_MUC,
+          },
+          collectionData: pagination,
+        }
+        dispatch('setConfigApp', configs, { root: true, })
+        commit('setLoading', false)
+      }, (errors) => {
+        commit(SET_ERROR, errors)
+        commit('setLoading', false)
+      }, options)
     },
     async [GET_LISTS_CHUC_VU]({ commit, }) {
       commit('setLoading', true)
@@ -104,7 +105,7 @@ export default {
       commit('setLoading', true)
       await apiGetListsLinhMuc((response) => {
         commit('INIT_LINH_MUC_BY_ID_LIST', response.data.results)
-        if (response.data.hasOwnProperty('pagination')) {
+        if (fnCheckProp(response.data, 'pagination')) {
           commit('INIT_PAGINATION_FILTER', response.data.pagination)
         }
         commit('setLoading', false)

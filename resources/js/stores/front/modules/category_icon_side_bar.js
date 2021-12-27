@@ -1,8 +1,8 @@
 import { apiGetSettingByCode, } from '@app/api/front/setting'
 import { MODULE_UPDATE_SET_LOADING, MODULE_UPDATE_SET_ERROR, MODULE_UPDATE_SET_KEYS_DATA,
- SET_ERROR, } from '../../admin/types/mutation-types'
+  SET_ERROR, } from '../../admin/types/mutation-types'
 import { ACTION_SET_LOADING, ACTION_GET_SETTING,
- } from '../../admin/types/action-types'
+} from '../../admin/types/action-types'
 const settingCategory = []
 
 const defaultState = () => {

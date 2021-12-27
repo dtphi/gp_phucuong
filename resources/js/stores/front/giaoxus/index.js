@@ -2,10 +2,11 @@ import detail from './detail'
 import { apiGetLists, apiGetListsGiaoXu, } from '@app/api/front/giaoxus'
 import { apiGetListsGiaoPhan, } from '@app/api/front/giaophans'
 import { apiGetListsGiaoHat, } from '@app/api/front/giaohats'
-import { SET_ERROR, INIT_LIST } from '@app/stores/front/types/mutation-types'
+import { SET_ERROR, INIT_LIST, } from '@app/stores/front/types/mutation-types'
 import { MODULE_GIAO_XU_PAGE, } from '@app/stores/front/types/module-types'
 import { GET_LISTS, GET_LISTS_GIAO_PHAN, GET_LISTS_GIAO_HAT, GET_LISTS_GIAO_XU, ACTION_REFESH_LIST_FILTER,
 } from '@app/stores/front/types/action-types'
+import { fnCheckProp, } from '@app/common/util'
 
 export default {
   namespaced: true,
@@ -84,7 +85,7 @@ export default {
           current_page: 1,
           total: 0,
         }
-        if (responses.data.hasOwnProperty('pagination')) {
+        if (fnCheckProp(responses.data, 'pagination')) {
           pagination = responses.data.pagination
         }
         var configs = {
@@ -112,14 +113,14 @@ export default {
         commit(SET_ERROR, errors)
       })
     },
-    async [GET_LISTS_GIAO_HAT]({ commit }, params) {
+    async [GET_LISTS_GIAO_HAT]({ commit, }, params) {
       commit('setLoading', true)
-      await apiGetListsGiaoHat( (infos) => {
+      await apiGetListsGiaoHat((infos) => {
         commit('INIT_GIAO_HAT_LIST', infos.data.results)
         commit('setLoading', false)
       }, (errors) => {
         commit('setLoading', false)
-        commit(SET_ERROR)
+        commit(SET_ERROR, errors)
       }, params)
     },
     async [GET_LISTS_GIAO_XU]({ commit, }, options) {
@@ -140,5 +141,5 @@ export default {
   },
   modules: {
     detail: detail,
-  }
+  },
 }

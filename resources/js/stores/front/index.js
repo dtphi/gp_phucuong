@@ -12,15 +12,8 @@ import { GET_INFORMATION_LIST_TO_CATEGORY, } from '@app/stores/front/types/actio
 import { MODULE_INFO, } from '@app/stores/front/types/module-types'
 const debug = process.env.NODE_ENV === 'debuger'
 import { apiGetSettings, } from '@app/api/front/apps'
+import { fnIsObject, fnCheckProp, } from '@app/common/util'
 Vue.use(Vuex)
-const fnIsObject = (obj) => {
-  if (typeof obj !== 'undefined' &&
-    typeof obj === 'object' &&
-    Object.keys(obj).length) {
-     return true
-  }
-  return false
-}
 const defaultState = () => {
   return {
     logo: '/front/img/logo.png',
@@ -73,8 +66,7 @@ export default new Vuex.Store({
     },
     navMainLists(state) {
       let menus = { id: 0, newsgroupname: 'Home', children: [], }
-      if (fnIsObject(state.cfApp.setting) &&
-        state.cfApp.setting.hasOwnProperty('navMainLists') &&
+      if (fnIsObject(state.cfApp.setting) && fnCheckProp(state.cfApp.setting, 'navMainLists') &&
         Array.isArray(state.cfApp.setting.navMainLists)) {
         menus.children = { ...state.cfApp.setting.navMainLists, }
       }
@@ -97,24 +89,23 @@ export default new Vuex.Store({
       return colData
     },
     isNotEmptyList(state) {
-      if (fnIsObject(state.paginationRoot.meta) &&
-        state.paginationRoot.meta.hasOwnProperty('total')) {
+      if (fnIsObject(state.paginationRoot.meta) && 
+        fnCheckProp(state.paginationRoot.meta, 'total')) {
         return (parseInt(state.paginationRoot.meta.total) > 0)
       }
       return false
     },
     moduleNameActive(state) {
       let mName = ''
-      if (fnIsObject(state.paginationRoot.moduleActive) &&
-        state.paginationRoot.moduleActive.hasOwnProperty('name')) {
+      if (fnIsObject(state.paginationRoot.moduleActive) && 
+        fnCheckProp(state.paginationRoot.moduleActive, 'name')) {
         mName = state.paginationRoot.moduleActive.name
       }
       return mName
     },
     moduleActionListActive(state) {
       let mAction = ''
-      if (fnIsObject(state.paginationRoot.moduleActive) &&
-        state.paginationRoot.moduleActive.hasOwnProperty('actionList')) {
+      if (fnIsObject(state.paginationRoot.moduleActive) && fnCheckProp(state.paginationRoot.moduleActive, 'actionList')) {
         mAction = state.paginationRoot.moduleActive.actionList
       }
       return mAction
@@ -170,9 +161,9 @@ export default new Vuex.Store({
       }, options)
     },
     setConfigApp({ commit, }, configs) {
-      const links = (configs.hasOwnProperty('links')) ? configs.links : undefined
-      const meta = (configs.hasOwnProperty('meta')) ? configs.meta : undefined
-      const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive : undefined
+      const links = (fnCheckProp(configs, 'links')) ? configs.links : undefined
+      const meta = (fnCheckProp(configs, 'meta')) ? configs.meta : undefined
+      const moduleActive = (fnCheckProp(configs, 'moduleActive')) ? configs.moduleActive : undefined
       let defaultState = initPaginationState()
       if (typeof links !== 'undefined') {
         defaultState.links = links
@@ -181,17 +172,17 @@ export default new Vuex.Store({
         defaultState.meta = meta
       }
       if (typeof moduleActive != 'undefined') {
-        if (moduleActive.hasOwnProperty('name')) {
+        if (fnCheckProp(moduleActive, 'name')) {
           defaultState.moduleActive.name = moduleActive.name
         }
-        if (moduleActive.hasOwnProperty('actionList')) {
+        if (fnCheckProp(moduleActive, 'actionList')) {
           defaultState.moduleActive.actionList = moduleActive.actionList
         }
-        if (moduleActive.hasOwnProperty('params')) {
+        if (fnCheckProp(moduleActive, 'params')) {
           defaultState.moduleActive.params = moduleActive.params
         }
       }
-      let collectionPg = (configs.hasOwnProperty('collectionData')) ? configs.collectionData : undefined
+      let collectionPg = (fnCheckProp(configs, 'collectionData')) ? configs.collectionData : undefined
       if (collectionPg.length == 0) {
         collectionPg = defaultState.collectionData
       }

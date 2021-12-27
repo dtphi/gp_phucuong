@@ -5,8 +5,8 @@ import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { MODULE_UPDATE_SET_LOADING, MODULE_UPDATE_SET_ERROR, MODULE_UPDATE_SET_KEYS_DATA,
 } from '../../admin/types/mutation-types'
 import { ACTION_SET_LOADING, ACTION_GET_SETTING, ACTION_GET_SPECIAL_INFORMATION_LIST_TO_MODULE,
- } from 'store@front/types/action-types'
-import { relativeTimeRounding } from 'moment'
+} from 'store@front/types/action-types'
+// import { relativeTimeRounding, } from 'moment'
 const settingSpecialInfo = []
 const defaultState = () => {
   return {
@@ -63,10 +63,10 @@ export default {
     },
     [SET_ERROR](state, payload) {
       state.errors = payload
-    }
+    },
   },
   actions: {
-    [ACTION_GET_SETTING]({ dispatch, state, commit }) {
+    [ACTION_GET_SETTING]({ dispatch, state, commit, }) {
       dispatch(ACTION_SET_LOADING, true)
       const params = { code: state.moduleData.code, }
       apiGetSettingByCode((res) => {
@@ -100,12 +100,12 @@ export default {
         moduleName: state.moduleData.code,
       }
       apiGetSpecialModuleList((result) => {
-          commit(INIT_LIST, result.data.results)
-          dispatch(ACTION_SET_LOADING, false)
-        }, (errors) => {
-          dispatch(ACTION_SET_LOADING, false)
-          commit(SET_ERROR, errors)
-        }, params)
+        commit(INIT_LIST, result.data.results)
+        dispatch(ACTION_SET_LOADING, false)
+      }, (errors) => {
+        dispatch(ACTION_SET_LOADING, false)
+        commit(SET_ERROR, errors)
+      }, params)
     },
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <nav id="column-left" class="active" :style="navStyle">
+  <nav v-if="user" id="column-left" class="active" :style="navStyle">
     <div id="profile">
       <div>
         <i class="fa fa-user"></i>

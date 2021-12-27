@@ -3,8 +3,9 @@ import { apiGetListsToCategory, } from '@app/api/front/infos'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_INFORMATION_LIST_TO_CATEGORY, } from '@app/stores/front/types/action-types'
 import { MODULE_UPDATE_SET_LOADING, MODULE_UPDATE_SET_ERROR, MODULE_UPDATE_SET_KEYS_DATA,
- } from '../../admin/types/mutation-types'
+} from '../../admin/types/mutation-types'
 import { ACTION_SET_LOADING, ACTION_GET_SETTING, } from '../../admin/types/action-types'
+import { fnCheckProp, } from '@app/common/util'
 const settingCategory = []
 const defaultState = () => {
   return {
@@ -42,7 +43,7 @@ export default {
     },
     pageLists(state) {
       return state.pageLists
-    }
+    },
   },
   mutations: {
     [INIT_LIST](state, payload) {
@@ -64,7 +65,7 @@ export default {
     },
   },
   actions: {
-    [ACTION_GET_SETTING]({ dispatch, state, commit }, options) {
+    [ACTION_GET_SETTING]({ dispatch, state, commit, }, options) {
       if (options) {
         commit(MODULE_UPDATE_SET_KEYS_DATA, options)
         dispatch(GET_INFORMATION_LIST_TO_CATEGORY, options[0])
@@ -86,16 +87,16 @@ export default {
     },
     [GET_INFORMATION_LIST_TO_CATEGORY]({ commit, }, routeParams) {
       let slug = ''
-      if (routeParams.hasOwnProperty('link')) {
+      if (fnCheckProp(routeParams, 'link')) {
         slug = routeParams.link
       }
       let page = 1
       let params = { page: page, slug: slug, limit: 5, }
       apiGetListsToCategory(result => {
-          commit(INIT_LIST, result.data.results);
-        }, errors => { 
-          commit(SET_ERROR, errors)
-        }, params)
+        commit(INIT_LIST, result.data.results)
+      }, errors => { 
+        commit(SET_ERROR, errors)
+      }, params)
     },
     [ACTION_SET_LOADING]({ commit, }, isLoading) {
       commit(MODULE_UPDATE_SET_LOADING, isLoading)

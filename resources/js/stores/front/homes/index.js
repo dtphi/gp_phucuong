@@ -12,13 +12,13 @@ export default {
   },
   getters: {
     mainMenus(state) {
-      return state.mainMenus;
+      return state.mainMenus
     },
     pageLists(state) {
-      return state.pageLists;
+      return state.pageLists
     },
     loading(state) {
-      return state.loading;
+      return state.loading
     },
   },
   mutations: {

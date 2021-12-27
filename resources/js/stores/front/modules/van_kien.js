@@ -3,8 +3,9 @@ import { apiGetListsToCategory, } from '@app/api/front/infos'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_INFORMATION_LIST_TO_CATEGORY, } from '@app/stores/front/types/action-types'
 import { MODULE_UPDATE_SET_LOADING, MODULE_UPDATE_SET_ERROR, MODULE_UPDATE_SET_KEYS_DATA,
- } from '../../admin/types/mutation-types'
+} from '../../admin/types/mutation-types'
 import { ACTION_SET_LOADING, ACTION_GET_SETTING, } from '../../admin/types/action-types'
+import { fnCheckProp, } from '@app/common/util'
 const settingCategory = []
 
 const defaultState = () => {
@@ -44,7 +45,7 @@ export default {
     },
     pageLists(state) {
       return state.pageLists
-    }
+    },
   },
   mutations: {
     [INIT_LIST](state, payload) {
@@ -88,7 +89,7 @@ export default {
     },
     [GET_INFORMATION_LIST_TO_CATEGORY]({ commit, state, }, routeParams) {
       let slug = ''
-      if (routeParams.hasOwnProperty('link')) {
+      if (fnCheckProp(routeParams, 'link')) {
         slug = routeParams.link
       }
       let page = 1
@@ -97,7 +98,7 @@ export default {
         limit: 3,
         page: page,
         slug: slug,
-      };
+      }
       apiGetListsToCategory(result => {
         commit(INIT_LIST, result.data.results)
       }, errors => {

@@ -1,6 +1,6 @@
 import { apiGetSettingByCode, } from '@app/api/front/setting'
 import { MODULE_UPDATE_SET_LOADING, MODULE_UPDATE_SET_ERROR,
- MODULE_UPDATE_SET_KEYS_DATA, SET_ERROR, } from '../../admin/types/mutation-types'
+  MODULE_UPDATE_SET_KEYS_DATA, SET_ERROR, } from '../../admin/types/mutation-types'
 import { ACTION_SET_LOADING, ACTION_GET_SETTING, } from '../../admin/types/action-types'
 const settingCategory = []
 
@@ -37,7 +37,7 @@ export default {
     },
     isError(state) {
       return state.errors.length
-    }
+    },
   },
   mutations: {
     [MODULE_UPDATE_SET_LOADING](state, payload) {
@@ -56,27 +56,27 @@ export default {
     },
   },
   actions: {
-    setSubActiveLink({state}, link) {
+    setSubActiveLink({ state, }, link) {
       state.linkSubActive = link
       state.linkActive = ''
     },
-    setActiveLink({state}, link) {
+    setActiveLink({ state, }, link) {
       state.linkActive = link
       state.linkSubActive = ''
     },
     [ACTION_GET_SETTING]({ dispatch, state, commit, }, options) {
-      dispatch(ACTION_SET_LOADING, true);
-      const params = { code: state.moduleData.code }
+      dispatch(ACTION_SET_LOADING, true)
+      const params = { code: state.moduleData.code, ...options, }
       apiGetSettingByCode((res) => {
-          if (Object.keys(res.data.moduleData).length) {
-            commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.moduleData)
-          } else {
-            dispatch(ACTION_SET_LOADING, false)
-          }
-        }, (errors) => {
+        if (Object.keys(res.data.moduleData).length) {
+          commit(MODULE_UPDATE_SET_KEYS_DATA, res.data.moduleData)
+        } else {
           dispatch(ACTION_SET_LOADING, false)
-          commit(SET_ERROR, errors)
-        }, params)
+        }
+      }, (errors) => {
+        dispatch(ACTION_SET_LOADING, false)
+        commit(SET_ERROR, errors)
+      }, params)
     },
     [ACTION_SET_LOADING]({ commit, }, isLoading) {
       commit(MODULE_UPDATE_SET_LOADING, isLoading)

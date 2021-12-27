@@ -1,4 +1,4 @@
-import detail from "./detail"
+import detail from './detail'
 import { apiGetLists, } from '@app/api/front/homes'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_LISTS, } from '@app/stores/front/types/action-types'
@@ -37,7 +37,7 @@ export default {
       }, (errors) => {
         commit(SET_ERROR, errors)
       }, options)
-    }
+    },
   },
   modules: {
     detail: detail,
