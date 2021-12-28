@@ -1,26 +1,20 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiGetInfoGiaoXuById,
-  apiUpdateInfo
-} from 'api@admin/giaoxu';
-import {
-  apiGetGiaoHatInfos,
-} from 'api@admin/giaohat';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiGetInfoGiaoXuById, apiUpdateInfo, } from 'api@admin/giaoxu'
+import { apiGetGiaoHatInfos, } from 'api@admin/giaohat'
 import {
   INFOS_MODAL_SET_INFO_ID,
-  INFOS_MODAL_SET_INFO_ID_SUCCESS,
   INFOS_MODAL_SET_INFO_ID_FAILED,
   INFOS_MODAL_SET_INFO,
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
   INFOS_MODAL_UPDATE_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
+  SET_ERROR,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
-	INFOS_GET_INFO_LIST_FAILED,
-	INFOS_FORM_SET_MAIN_IMAGE,
-} from '../types/mutation-types';
+  INFOS_GET_INFO_LIST_FAILED,
+  INFOS_FORM_SET_MAIN_IMAGE,
+} from '../types/mutation-types'
 import {
   ACTION_GET_INFO_BY_ID,
   ACTION_SET_LOADING,
@@ -29,17 +23,15 @@ import {
   ACTION_UPDATE_INFO_BACK,
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_SET_IMAGE,
-} from '../types/action-types';
-import {
-  config
-} from '@app/api/admin/config';
+} from '../types/action-types'
+import { config, } from '@app/api/admin/config'
 
 const defaultState = () => {
   return {
     styleCss: '',
     isExistInfo: config.existStatus.checking,
-		info: {
-			image: '',
+    info: {
+      image: '',
       date_available: null,
       dia_chi: '',
       dien_thoai: '',
@@ -60,8 +52,8 @@ const defaultState = () => {
     infoId: 0,
     loading: false,
     updateSuccess: false,
-		errors: [],
-		isImgChange: true,
+    errors: [],
+    isImgChange: true,
   }
 }
 
@@ -85,22 +77,25 @@ export default {
       return state.errors.length
     },
     isNotExistValidate(state) {
-      if (state.isExistInfo !== config.existStatus.checking ||
-        state.isExistInfo !== config.existStatus.exist) {
-        return false;
+      if (
+        state.isExistInfo !== config.existStatus.checking ||
+                state.isExistInfo !== config.existStatus.exist
+      ) {
+        return false
       }
-      return true;
+
+      return true
     },
     isGiaoHat(state) {
-      return state.listGiaoHat;
-    }
+      return state.listGiaoHat
+    },
   },
 
   mutations: {
     [INFOS_MODAL_SET_INFO_ID](state, payload) {
       if (payload) {
-        state.infoId = payload;
-        state.isExistInfo = config.existStatus.exist;
+        state.infoId = payload
+        state.isExistInfo = config.existStatus.exist
       }
     },
 
@@ -108,7 +103,7 @@ export default {
       state.errors = payload
     },
 
-    // INFO GIAO XU 
+    // INFO GIAO XU
     [INFOS_MODAL_SET_INFO](state, payload) {
       state.info = payload
     },
@@ -125,7 +120,7 @@ export default {
       state.updateSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
     },
 
@@ -141,24 +136,23 @@ export default {
       state.listRelatedsDisplay = payload
     },
     INFO_GIAO_HAT(state, payload) {
-      state.listGiaoHat = payload;
+      state.listGiaoHat = payload
     },
     [INFOS_GET_INFO_LIST_FAILED](state, payload) {
       state.isGetInfoList = payload
-		},
-		[INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
+    },
+    [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
+      state.info.image = payload
+      state.isImgChange = true
     },
   },
 
   actions: {
     // GET LIST GIAO HAT
-    ACTION_GET_LIST_GIAO_HAT({ commit }, params) {
+    ACTION_GET_LIST_GIAO_HAT({ commit, }, params) {
       apiGetGiaoHatInfos(
         (infos) => {
-          console.log(infos);
-          commit('INFO_GIAO_HAT', infos.data.results);
+          commit('INFO_GIAO_HAT', infos.data.results)
         },
         (errors) => {
           commit(INFOS_GET_INFO_LIST_FAILED, errors)
@@ -167,94 +161,96 @@ export default {
       )
     },
 
-    [ACTION_SHOW_MODAL_EDIT]({
-      dispatch,
-    }, infoId) {
-      dispatch(ACTION_GET_INFO_BY_ID, infoId);
+    [ACTION_SHOW_MODAL_EDIT]({ dispatch, }, infoId) {
+      dispatch(ACTION_GET_INFO_BY_ID, infoId)
     },
-
 
     // GET ID GIAO XU
-    [ACTION_GET_INFO_BY_ID]({
-      dispatch,
-      commit
-    }, infoId) {
-      dispatch(ACTION_SET_LOADING, true);
+    [ACTION_GET_INFO_BY_ID]({ dispatch, commit, }, infoId) {
+      dispatch(ACTION_SET_LOADING, true)
       apiGetInfoGiaoXuById(
         infoId,
-				(result) => {
-					commit(INFOS_MODAL_SET_INFO_ID, infoId);
-					console.log(result.data.data, 'result');
-          commit(INFOS_MODAL_SET_INFO, result.data.data);
-          dispatch(ACTION_SET_LOADING, false);
+        (result) => {
+          commit(INFOS_MODAL_SET_INFO_ID, infoId)
+          commit(INFOS_MODAL_SET_INFO, result.data.data)
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_MODAL_SET_INFO_ID_FAILED, Object.values(errors))
-          dispatch(ACTION_SET_LOADING, false);
+          commit(
+            INFOS_MODAL_SET_INFO_ID_FAILED,
+            Object.values(errors)
+          )
+          dispatch(ACTION_SET_LOADING, false)
         }
-      );
+      )
     },
 
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
-
 
     // UPDATE GIAO XU
-    [ACTION_UPDATE_INFO]({
-      dispatch,
-      commit
-		}, info) {
-			console.log(info, 'info');
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
-      apiUpdateInfo(info,
+    [ACTION_UPDATE_INFO]({ commit, }, info) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '')
+      apiUpdateInfo(
+        info,
         (result) => {
-          commit(INFOS_MODAL_SET_ERROR, [])
-          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+          if (result) {
+            commit(SET_ERROR, [])
+            commit(
+              INFOS_MODAL_UPDATE_INFO_SUCCESS,
+              AppConfig.comUpdateNoSuccess
+            )
+          }
         },
         (errors) => {
-          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
-          commit(INFOS_MODAL_SET_ERROR, [])
-          /* dispatch(ACTION_SET_LOADING, false); */
+          commit(
+            INFOS_MODAL_UPDATE_INFO_FAILED,
+            AppConfig.comUpdateNoFail
+          )
+          commit(SET_ERROR, errors)
         }
       )
     },
 
     // UPDATE TO BACK
-    [ACTION_UPDATE_INFO_BACK]({
-      dispatch,
-      commit
-    }, info) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
-      apiUpdateInfo(info,
+    [ACTION_UPDATE_INFO_BACK]({ dispatch, commit, }, info) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '')
+      apiUpdateInfo(
+        info,
         (result) => {
-          commit(INFOS_MODAL_SET_ERROR, [])
-          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-          dispatch(ACTION_GET_INFO_BY_ID, info.id);
-          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAO_XU', 'page', {
-            root: true
-          });
+          if (result) {
+            commit(SET_ERROR, [])
+            commit(
+              INFOS_MODAL_UPDATE_INFO_SUCCESS,
+              AppConfig.comUpdateNoSuccess
+            )
+            dispatch(ACTION_GET_INFO_BY_ID, info.id)
+            dispatch(
+              'ACTION_RELOAD_GET_INFO_LIST_GIAO_XU',
+              'page',
+              {
+                root: true,
+              }
+            )
+          }
         },
         (errors) => {
-          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
-          commit(INFOS_MODAL_SET_ERROR, [])
-          dispatch(ACTION_SET_LOADING, false);
+          commit(
+            INFOS_MODAL_UPDATE_INFO_FAILED,
+            AppConfig.comUpdateNoFail
+          )
+          commit(SET_ERROR, errors)
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_RESET_NOTIFICATION_INFO]({
-      commit
-    }, values) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
-		},
-		[ACTION_SET_IMAGE]({
-      commit
-		}, imgFile) {
-			console.log(imgFile, 'imgFile');
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
-    }
-  }
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values)
+    },
+    [ACTION_SET_IMAGE]({ commit, }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile)
+    },
+  },
 }

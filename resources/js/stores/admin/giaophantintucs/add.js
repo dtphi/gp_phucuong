@@ -1,16 +1,11 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiInsertInfo,
-  apiGetDropdownInfos
-} from 'api@admin/giaophantintuc';
-import {
-  MODULE_MODULE_TINTUC_GIAOPHAN,
-} from '../types/module-types';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiInsertInfo, apiGetDropdownInfos, } from 'api@admin/giaophantintuc'
+import { MODULE_MODULE_TINTUC_GIAOPHAN, } from '../types/module-types'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
   INFOS_MODAL_INSERT_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
+  SET_ERROR,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
@@ -20,7 +15,7 @@ import {
   INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS,
   INFOS_FORM_GET_DROPDOWN_RELATED_FAILED,
   INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED,
-} from '../types/mutation-types';
+} from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
@@ -33,8 +28,8 @@ import {
   ACTION_SET_IMAGE,
   ACTION_GET_DROPDOWN_RELATED_LIST,
   ACTION_SELECT_DROPDOWN_RELATED_INFO,
-  ACTION_RESET_NOTIFICATION_INFO
-} from '../types/action-types';
+  ACTION_RESET_NOTIFICATION_INFO,
+} from '../types/action-types'
 
 const defaultState = () => {
   return {
@@ -44,15 +39,15 @@ const defaultState = () => {
     styleCss: '',
     info: {
       image: {
-        basename: "",
-        dirname: "",
-        extension: "",
-        filename: "",
-        path: "",
+        basename: '',
+        dirname: '',
+        extension: '',
+        filename: '',
+        path: '',
         size: 0,
-        thumb: "", //url thumb
+        thumb: '', //url thumb
         timestamp: null,
-        type: null
+        type: null,
       },
       date_available: null,
       sort_order: 1,
@@ -77,12 +72,12 @@ const defaultState = () => {
     dropdownsRelateds: [],
     infoRelated: {
       information_id: 0,
-      name: ''
+      name: '',
     },
     infoId: 0,
     loading: false,
     insertSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -107,23 +102,16 @@ export default {
     },
     isError(state) {
       return state.errors.length
-    }
+    },
   },
 
   mutations: {
     [INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED](state, payload) {
-      state.infoRelated = payload;
+      state.infoRelated = payload
     },
 
     [INFOS_FORM_SET_DROPDOWN_RELATED_LIST](state, payload) {
-      state.dropdownsRelateds = payload;
-    },
-
-    [INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS](state, payload) {
-
-    },
-    [INFOS_FORM_GET_DROPDOWN_RELATED_FAILED](state, payload) {
-
+      state.dropdownsRelateds = payload
     },
 
     [INFOS_MODAL_SET_LOADING](state, payload) {
@@ -138,7 +126,7 @@ export default {
       state.insertSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
     },
 
@@ -159,167 +147,178 @@ export default {
     },
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
-    }
+      state.info.image = payload
+      state.isImgChange = true
+    },
   },
 
   actions: {
-    update_special_carousel({state}, specialCarousel) {
-      state.info.special_carousels = specialCarousel;
+    update_special_carousel({ state, }, specialCarousel) {
+      state.info.special_carousels = specialCarousel
     },
 
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
 
-    [ACTION_INSERT_INFO]({
-      dispatch,
-      commit
-    }, info) {
-      dispatch(ACTION_SET_LOADING, true);
+    [ACTION_INSERT_INFO]({ dispatch, commit, }, info) {
+      dispatch(ACTION_SET_LOADING, true)
       apiInsertInfo(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          commit(INFOS_MODAL_SET_ERROR, []);
-
-          dispatch(ACTION_SET_LOADING, false);
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            commit(SET_ERROR, [])
+          }
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_INSERT_INFO_BACK]({
-      dispatch,
-      commit
-    }, info) {
+    [ACTION_INSERT_INFO_BACK]({ dispatch, commit, }, info) {
       apiInsertInfo(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
 
-          dispatch(MODULE_MODULE_TINTUC_GIAOPHAN + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
-            root: true
-          });
+            dispatch(
+              MODULE_MODULE_TINTUC_GIAOPHAN +
+                                '_' +
+                                ACTION_RELOAD_GET_INFO_LIST,
+              'page',
+              {
+                root: true,
+              }
+            )
+          }
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({
-      commit,
-      state
-    }, category) {
-      const categorys = state.info.categorys;
-      const listCateShow = state.listCategorysDisplay;
+    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({ commit, state, }, category) {
+      const categorys = state.info.categorys
+      const listCateShow = state.listCategorysDisplay
 
-      if (typeof category === "object" && Object.keys(category).length) {
-        if ((categorys.indexOf(category.category_id) === -1) && (parseInt(category.category_id) > 0)) {
-          categorys.push(category.category_id);
-          listCateShow.push(category);
+      if (typeof category === 'object' && Object.keys(category).length) {
+        if (
+          categorys.indexOf(category.category_id) === -1 &&
+                    parseInt(category.category_id) > 0
+        ) {
+          categorys.push(category.category_id)
+          listCateShow.push(category)
         }
       }
 
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, categorys);
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow);
+      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, categorys)
+      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow)
     },
 
-    [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({
-      state,
-      commit
-    }, category) {
-      const categorys = state.info.categorys;
-      const listCateShow = state.listCategorysDisplay;
+    [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({ state, commit, }, category) {
+      const categorys = state.info.categorys
+      const listCateShow = state.listCategorysDisplay
 
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, _.remove(categorys, function(cateId) {
-        return (cateId - category.category_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, _.remove(listCateShow, function(item) {
-        return (item.category_id - category.category_id !== 0);
-      }));
+      commit(
+        INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
+        _.remove(categorys, function(cateId) {
+          return cateId - category.category_id !== 0
+        })
+      )
+      commit(
+        INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST,
+        _.remove(listCateShow, function(item) {
+          return item.category_id - category.category_id !== 0
+        })
+      )
     },
 
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    [ACTION_SET_IMAGE]({ commit, }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile)
     },
 
-    [ACTION_ADD_INFO_TO_RELATED_LIST]({
-      state,
-      commit
-    }, related) {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
+    [ACTION_ADD_INFO_TO_RELATED_LIST]({ state, commit, }, related) {
+      const relateds = state.info.relateds
+      const listRelatedShow = state.listRelatedsDisplay
 
-      if (typeof related === "object" && Object.keys(related).length) {
-        if ((relateds.indexOf(related.information_id) === -1) && (parseInt(related.information_id) > 0)) {
-          relateds.push(related.information_id);
-          listRelatedShow.push(related);
+      if (typeof related === 'object' && Object.keys(related).length) {
+        if (
+          relateds.indexOf(related.information_id) === -1 &&
+                    parseInt(related.information_id) > 0
+        ) {
+          relateds.push(related.information_id)
+          listRelatedShow.push(related)
         }
       }
 
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, relateds);
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, listRelatedShow);
+      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, relateds)
+      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, listRelatedShow)
+    },
+    [ACTION_REMOVE_INFO_TO_RELATED_LIST]({ state, commit, }, related) {
+      const relateds = state.info.relateds
+      const listRelatedShow = state.listRelatedsDisplay
+
+      commit(
+        INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
+        _.remove(relateds, function(infoId) {
+          return infoId - related.information_id !== 0
+        })
+      )
+      commit(
+        INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
+        _.remove(listRelatedShow, function(item) {
+          return item.information_id - related.information_id !== 0
+        })
+      )
     },
 
-    [ACTION_REMOVE_INFO_TO_RELATED_LIST]({
-      state,
-      commit
-    }, related) {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, _.remove(relateds, function(infoId) {
-        return (infoId - related.information_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, _.remove(listRelatedShow, function(item) {
-        return (item.information_id - related.information_id !== 0);
-      }));
-    },
-
-    [ACTION_GET_DROPDOWN_RELATED_LIST]({
-      commit
-    }, filterName) {
+    [ACTION_GET_DROPDOWN_RELATED_LIST]({ commit, }, filterName) {
       const params = {
-        filter_name: filterName
+        filter_name: filterName,
       }
       apiGetDropdownInfos(
         (result) => {
-          commit(INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS, 'Success');
+          commit(INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS, 'Success')
 
-          commit(INFOS_FORM_SET_DROPDOWN_RELATED_LIST, result);
+          commit(INFOS_FORM_SET_DROPDOWN_RELATED_LIST, result)
         },
         (errors) => {
-          commit(INFOS_FORM_GET_DROPDOWN_RELATED_FAILED, 'Failed');
+          commit(INFOS_FORM_GET_DROPDOWN_RELATED_FAILED, 'Failed')
+          commit(SET_ERROR, errors)
         },
         params
-      );
+      )
     },
 
-    [ACTION_SELECT_DROPDOWN_RELATED_INFO]({
-      commit
-    }, information) {
-      commit(INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED, information);
+    [ACTION_SELECT_DROPDOWN_RELATED_INFO]({ commit, }, information) {
+      commit(INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED, information)
     },
 
-     [ACTION_RESET_NOTIFICATION_INFO]({
-      commit
-    }, values) {
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
       commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values)
     },
-  }
+  },
 }

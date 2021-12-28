@@ -1,33 +1,25 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiInsertInfoGiaoXu,
-} from 'api@admin/giaoxu';
-import {
-  apiGetGiaoHatInfos,
-} from 'api@admin/giaohat';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiInsertInfoGiaoXu, } from 'api@admin/giaoxu'
+import { apiGetGiaoHatInfos, } from 'api@admin/giaohat'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
   INFOS_MODAL_INSERT_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
+  SET_ERROR,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
   INFOS_FORM_SET_MAIN_IMAGE,
   INFOS_FORM_SET_DROPDOWN_RELATED_LIST,
-  INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS,
-  INFOS_FORM_GET_DROPDOWN_RELATED_FAILED,
   INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED,
   INFOS_GET_INFO_LIST_FAILED,
-} from '../types/mutation-types';
+} from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
-  ACTION_INSERT_INFO,
   ACTION_INSERT_INFO_BACK,
   ACTION_SET_IMAGE,
   ACTION_RESET_NOTIFICATION_INFO,
-  ACTION_GET_INFO_LIST
-} from '../types/action-types';
+} from '../types/action-types'
 
 const defaultState = () => {
   return {
@@ -35,8 +27,8 @@ const defaultState = () => {
     action: null,
     classShow: 'modal fade',
     styleCss: '',
-		info: {
-			image: '',
+    info: {
+      image: '',
       date_available: null,
       dia_chi: '',
       dien_thoai: '',
@@ -59,12 +51,12 @@ const defaultState = () => {
     dropdownsRelateds: [],
     infoRelated: {
       information_id: 0,
-      name: ''
+      name: '',
     },
     infoId: 0,
     loading: false,
     insertSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -91,24 +83,17 @@ export default {
       return state.errors.length
     },
     isGiaoHat(state) {
-      return state.listGiaoHat;
-    }
+      return state.listGiaoHat
+    },
   },
 
   mutations: {
     [INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED](state, payload) {
-      state.infoRelated = payload;
+      state.infoRelated = payload
     },
 
     [INFOS_FORM_SET_DROPDOWN_RELATED_LIST](state, payload) {
-      state.dropdownsRelateds = payload;
-    },
-
-    [INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS](state, payload) {
-
-    },
-    [INFOS_FORM_GET_DROPDOWN_RELATED_FAILED](state, payload) {
-
+      state.dropdownsRelateds = payload
     },
 
     [INFOS_MODAL_SET_LOADING](state, payload) {
@@ -123,7 +108,7 @@ export default {
       state.insertSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
     },
 
@@ -140,11 +125,11 @@ export default {
     },
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
+      state.info.image = payload
+      state.isImgChange = true
     },
     INFO_GIAO_HAT(state, payload) {
-      state.listGiaoHat = payload;
+      state.listGiaoHat = payload
     },
     [INFOS_GET_INFO_LIST_FAILED](state, payload) {
       state.isGetInfoList = payload
@@ -153,10 +138,10 @@ export default {
 
   actions: {
     // GET LIST GIAO HAT
-    ACTION_GET_LIST_GIAO_HAT({ commit }, params) {
+    ACTION_GET_LIST_GIAO_HAT({ commit, }, params) {
       apiGetGiaoHatInfos(
         (infos) => {
-          commit('INFO_GIAO_HAT', infos.data.results);
+          commit('INFO_GIAO_HAT', infos.data.results)
         },
         (errors) => {
           commit(INFOS_GET_INFO_LIST_FAILED, errors)
@@ -166,59 +151,70 @@ export default {
     },
 
     // GET ACTION LOADING PAGE
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
 
     // ACTION INSERT INFO GIAO XU
-    ACTION_INSERT_INFO_GIAOXU({
-      dispatch,
-      commit
-    }, info) {
+    ACTION_INSERT_INFO_GIAOXU({ dispatch, commit, }, info) {
       apiInsertInfoGiaoXu(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          dispatch(ACTION_SET_LOADING, false);
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            dispatch(ACTION_SET_LOADING, false)
+          }
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          dispatch(ACTION_SET_LOADING, false);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          dispatch(ACTION_SET_LOADING, false)
+          commit(SET_ERROR, errors)
         }
       )
     },
 
-    [ACTION_INSERT_INFO_BACK]({
-      dispatch,
-      commit
-    }, info) {
+    [ACTION_INSERT_INFO_BACK]({ dispatch, commit, }, info) {
       apiInsertInfoGiaoXu(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          dispatch('ACTION_RELOAD_GET_INFO_LIST_GIAO_XU', 'page', {
-            root: true
-          });
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            dispatch(
+              'ACTION_RELOAD_GET_INFO_LIST_GIAO_XU',
+              'page',
+              {
+                root: true,
+              }
+            )
+          }
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    [ACTION_SET_IMAGE]({ commit, }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile)
     },
 
-    [ACTION_RESET_NOTIFICATION_INFO]({ commit }, values) {
-      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values);
-    }
-  }
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
+      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values)
+    },
+  },
 }

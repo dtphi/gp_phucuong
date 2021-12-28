@@ -1,19 +1,17 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiUpdateInfo
-} from 'api@admin/linhmucbangcap';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiUpdateInfo, } from 'api@admin/linhmucbangcap'
 import {
   INFOS_MODAL_SET_INFO,
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
   INFOS_MODAL_UPDATE_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
-} from '../types/mutation-types';
+  SET_ERROR,
+} from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
-} from '../types/action-types';
+} from '../types/action-types'
 
 const defaultState = () => {
   return {
@@ -21,7 +19,7 @@ const defaultState = () => {
     loading: false,
     updateSuccess: false,
     info: {},
-    errors: []
+    errors: [],
   }
 }
 
@@ -47,7 +45,6 @@ export default {
   },
 
   mutations: {
-
     [INFOS_MODAL_SET_INFO](state, payload) {
       state.info = payload
     },
@@ -64,44 +61,44 @@ export default {
       state.updateSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
     },
   },
 
   actions: {
-
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
 
-    [ACTION_UPDATE_INFO]({
-      dispatch,
-      commit
-    }, info) {
-      dispatch(ACTION_SET_LOADING, true);
-      
-      apiUpdateInfo(info,
-        (result) => {
-          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-          commit(INFOS_MODAL_SET_INFO, info);
+    [ACTION_UPDATE_INFO]({ dispatch, commit, }, info) {
+      dispatch(ACTION_SET_LOADING, true)
 
-          dispatch(ACTION_SET_LOADING, false);
+      apiUpdateInfo(
+        info,
+        (result) => {
+          if (result) {
+            commit(
+              INFOS_MODAL_UPDATE_INFO_SUCCESS,
+              AppConfig.comUpdateNoSuccess
+            )
+            commit(INFOS_MODAL_SET_INFO, info)
+          }
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
-
-          dispatch(ACTION_SET_LOADING, false);
+          commit(
+            INFOS_MODAL_UPDATE_INFO_FAILED,
+            AppConfig.comUpdateNoFail
+          )
+          commit(SET_ERROR, errors)
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_RESET_NOTIFICATION_INFO]({
-      commit
-    }, values) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values)
     },
-  }
+  },
 }

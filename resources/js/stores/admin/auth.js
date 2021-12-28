@@ -1,30 +1,31 @@
-import axios from 'axios';
+import axios from 'axios'
 import {
-  fn_get_base_api_url
-} from '@app/api/utils/fn-helper';
+  fn_get_base_api_url,
+} from '@app/api/utils/fn-helper'
 import {
   AUTH_SET_AUTHENTICATED,
   AUTH_SET_USER,
-  AUTH_SET_ERROR
-} from './types/mutation-types';
+  AUTH_SET_ERROR,
+} from './types/mutation-types'
 import {
   API_AUTH_SANCTUM_CSRF_COOKIE,
   API_AUTH_LOGIN,
   API_AUTH_LOGOUT,
-  API_AUTH_USER
-} from './types/api-paths';
+  API_AUTH_USER,
+} from './types/api-paths'
+import { fnCheckProp, } from '@app/common/util'
 
 const options = {
   init: 'init',
   login: 'login',
-  logout: 'logout'
-};
+  logout: 'logout',
+}
 import {
-  config
-} from '@app/common/config';
+  config,
+} from '@app/common/config'
 
-const linhMucExpectSignIn = localStorage.getItem(config.adminRoute.storageLinhMucExpectSignInKey);
-const linhMucExpectSignInPhone = localStorage.getItem(config.adminRoute.storageLinhMucExpectSignInPhoneKey);
+const linhMucExpectSignIn = localStorage.getItem(config.adminRoute.storageLinhMucExpectSignInKey)
+const linhMucExpectSignInPhone = localStorage.getItem(config.adminRoute.storageLinhMucExpectSignInPhoneKey)
 
 export default {
   namespaced: true,
@@ -36,7 +37,7 @@ export default {
     redirectPhoneLoginUrl: window.location.origin + config.slashDir + config.adminRoute.redirectPhoneLoginUrl,
     linhMucExpectSignIn: linhMucExpectSignIn,
     linhMucExpectSignInPhone: linhMucExpectSignInPhone,
-    errors: []
+    errors: [],
   },
   getters: {
     authenticated(state) {
@@ -50,7 +51,7 @@ export default {
     },
     isError(state) {
       return state.errors.length
-    }
+    },
   },
 
   mutations: {
@@ -64,60 +65,62 @@ export default {
 
     [AUTH_SET_ERROR](state, value) {
       state.errors = value
-    }
+    },
   },
 
   actions: {
     async signIn({
-      dispatch
+      dispatch,
     }, credentials) {
-      await axios.get(fn_get_base_api_url(API_AUTH_SANCTUM_CSRF_COOKIE));
-      await axios.post(fn_get_base_api_url(API_AUTH_LOGIN), credentials);
+      await axios.get(fn_get_base_api_url(API_AUTH_SANCTUM_CSRF_COOKIE))
+      await axios.post(fn_get_base_api_url(API_AUTH_LOGIN), credentials)
 
       return dispatch('admin', {
-        type: options.login
+        type: options.login,
       })
     },
 
     async signOut({
-      dispatch
+      dispatch,
     }) {
       await axios.post(fn_get_base_api_url(API_AUTH_LOGOUT))
 
       return dispatch('admin', {
-        type: options.logout
-      });
+        type: options.logout,
+      })
     },
 
     admin({
-      commit
+      commit,
     }, options) {
       return axios.get(fn_get_base_api_url(API_AUTH_USER)).then((response) => {
-        commit(AUTH_SET_AUTHENTICATED, true);
-        commit(AUTH_SET_USER, response.data);
-        commit(AUTH_SET_ERROR, []);
+        commit(AUTH_SET_AUTHENTICATED, true)
+        commit(AUTH_SET_USER, response.data)
+        commit(AUTH_SET_ERROR, [])
       }).catch((error) => {
-        commit(AUTH_SET_AUTHENTICATED, false);
-        commit(AUTH_SET_USER, null);
+        if (error) {
+          commit(AUTH_SET_AUTHENTICATED, false)
+          commit(AUTH_SET_USER, null)
+        }
         if (typeof options === 'object') {
-          const type = options.hasOwnProperty('type');
+          const type = fnCheckProp(options, 'type')
           type ? ((options.type === 'login') ? commit(AUTH_SET_ERROR, [{
-            msgCommon: 'Login failed!'
-          }]) : null) : null;
+            msgCommon: 'Login failed!',
+          }]) : null) : null
         }
       })
     },
 
     redirectLoginSuccess({
-      state
+      state,
     }) {
-      window.location.href = state.redirectUrl;
+      window.location.href = state.redirectUrl
     },
 
     redirectLogoutSuccess({
-      state
+      state,
     }) {
-      window.location.href = state.redirectLogoutUrl;
-    }
-  }
+      window.location.href = state.redirectLogoutUrl
+    },
+  },
 }

@@ -1,26 +1,22 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiInsertInfo
-} from 'api@admin/linhmucvanthu';
-import {
-  MODULE_MODULE_VAN_THU,
-} from '../types/module-types';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiInsertInfo, } from 'api@admin/linhmucvanthu'
+import { MODULE_MODULE_VAN_THU, } from '../types/module-types'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
   INFOS_MODAL_INSERT_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
+  SET_ERROR,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_SET_MAIN_IMAGE,
-} from '../types/mutation-types';
+} from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
   ACTION_RELOAD_GET_INFO_LIST,
   ACTION_INSERT_INFO_BACK,
   ACTION_SET_IMAGE,
-} from '../types/action-types';
+} from '../types/action-types'
 
 const defaultState = () => {
   return {
@@ -43,23 +39,23 @@ const defaultState = () => {
       noi_rua_toi: '',
       ngay_rua_toi: null,
       noi_them_suc: '',
-      ngay_them_suc:null,
-      tieu_chung_vien:null,
-      ngay_tieu_chung_vien:null,
-      dai_chung_vien:null,
-      ngay_dai_chung_vien:null,
-      so_cmnd:null,
-      noicap_cmnd:'',
-      ngay_cap_cmnd:null,
-      trieu_dong:null,
-      ten_dong_id:'',
+      ngay_them_suc: null,
+      tieu_chung_vien: null,
+      ngay_tieu_chung_vien: null,
+      dai_chung_vien: null,
+      ngay_dai_chung_vien: null,
+      so_cmnd: null,
+      noicap_cmnd: '',
+      ngay_cap_cmnd: null,
+      trieu_dong: null,
+      ten_dong_id: '',
       ten_dong_name: '',
-      ngay_trieu_dong:null,
-      ngay_khan:null,
-      ngay_rip:null,
-      rip_giao_xu_id:null,
+      ngay_trieu_dong: null,
+      ngay_khan: null,
+      ngay_rip: null,
+      rip_giao_xu_id: null,
       rip_giaoxu_name: '',
-      rip_ghi_chu:'',
+      rip_ghi_chu: '',
       ghi_chu: '',
       active: 1,
 
@@ -72,7 +68,7 @@ const defaultState = () => {
     infoId: 0,
     loading: false,
     insertSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -97,7 +93,7 @@ export default {
     },
     isError(state) {
       return state.errors.length
-    }
+    },
   },
 
   mutations: {
@@ -113,7 +109,7 @@ export default {
       state.updateSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
     },
 
@@ -126,65 +122,76 @@ export default {
     },
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
-    }
+      state.info.image = payload
+      state.isImgChange = true
+    },
   },
 
   actions: {
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
 
-    [ACTION_INSERT_INFO]({
-      dispatch,
-      commit
-    }, info) {
+    [ACTION_INSERT_INFO]({ dispatch, commit, }, info) {
       apiInsertInfo(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          commit(INFOS_MODAL_SET_ERROR, []);
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            commit(SET_ERROR, [])
+          }
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_INSERT_INFO_BACK]({
-      dispatch,
-      commit
-    }, info) {
+    [ACTION_INSERT_INFO_BACK]({ dispatch, commit, }, info) {
       apiInsertInfo(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-
-          dispatch(MODULE_MODULE_VAN_THU + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
-            root: true
-          });
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            dispatch(
+              MODULE_MODULE_VAN_THU +
+                                '_' +
+                                ACTION_RELOAD_GET_INFO_LIST,
+              'page',
+              {
+                root: true,
+              }
+            )
+          }
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
-    }
-  }
+    [ACTION_SET_IMAGE]({ commit, }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile)
+    },
+  },
 }

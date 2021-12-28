@@ -1,10 +1,6 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiInsertInfo,
-} from 'api@admin/thanh';
-import {
-  MODULE_MODULE_THANH,
-} from '../types/module-types';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiInsertInfo, } from 'api@admin/thanh'
+import { MODULE_MODULE_THANH, } from '../types/module-types'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -15,17 +11,15 @@ import {
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
   INFOS_FORM_SET_MAIN_IMAGE,
   INFOS_FORM_SET_DROPDOWN_RELATED_LIST,
-  INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS,
-  INFOS_FORM_GET_DROPDOWN_RELATED_FAILED,
   INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED,
-} from '../types/mutation-types';
+} from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
   ACTION_RELOAD_GET_INFO_LIST,
   ACTION_INSERT_INFO_BACK,
   ACTION_SET_IMAGE,
-} from '../types/action-types';
+} from '../types/action-types'
 
 const defaultState = () => {
   return {
@@ -34,7 +28,7 @@ const defaultState = () => {
     classShow: 'modal fade',
     styleCss: '',
     info: {
-      image: "",
+      image: '',
       date_available: null,
       sort_order: 1,
       status: 1,
@@ -58,12 +52,12 @@ const defaultState = () => {
     dropdownsRelateds: [],
     infoRelated: {
       information_id: 0,
-      name: ''
+      name: '',
     },
     infoId: 0,
     loading: false,
     insertSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -88,23 +82,16 @@ export default {
     },
     isError(state) {
       return state.errors.length
-    }
+    },
   },
 
   mutations: {
     [INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED](state, payload) {
-      state.infoRelated = payload;
+      state.infoRelated = payload
     },
 
     [INFOS_FORM_SET_DROPDOWN_RELATED_LIST](state, payload) {
-      state.dropdownsRelateds = payload;
-    },
-
-    [INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS](state, payload) {
-
-    },
-    [INFOS_FORM_GET_DROPDOWN_RELATED_FAILED](state, payload) {
-
+      state.dropdownsRelateds = payload
     },
 
     [INFOS_MODAL_SET_LOADING](state, payload) {
@@ -136,65 +123,75 @@ export default {
     },
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
-    }
+      state.info.image = payload
+      state.isImgChange = true
+    },
   },
 
   actions: {
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
 
-    [ACTION_INSERT_INFO]({
-      dispatch,
-      commit
-    }, info) {
+    [ACTION_INSERT_INFO]({ dispatch, commit, }, info) {
       apiInsertInfo(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          commit(INFOS_MODAL_SET_ERROR, []);
-
-          dispatch(ACTION_SET_LOADING, false);
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            commit(INFOS_MODAL_SET_ERROR, [])
+          }
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(INFOS_MODAL_SET_ERROR, errors)
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_INSERT_INFO_BACK]({
-      dispatch,
-      commit
-    }, info) {
+    [ACTION_INSERT_INFO_BACK]({ dispatch, commit, }, info) {
       apiInsertInfo(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-
-          dispatch(MODULE_MODULE_THANH + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
-            root: true
-          });
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            dispatch(
+              MODULE_MODULE_THANH +
+                                '_' +
+                                ACTION_RELOAD_GET_INFO_LIST,
+              'page',
+              {
+                root: true,
+              }
+            )
+          }
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(INFOS_MODAL_SET_ERROR, errors)
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    [ACTION_SET_IMAGE]({ commit, }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile)
     },
-  }
+  },
 }

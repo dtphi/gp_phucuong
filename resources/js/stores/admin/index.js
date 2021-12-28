@@ -1,49 +1,49 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import auth from './auth'
+import layout from './layout'
+import dashboard from './dashboad'
+import user from './users'
+import info from './infos'
+import news_category from './categories'
+import app_module from './modules'
+import linh_muc from './linhmucs'
+import bang_cap from './linhmucbangcaps'
+import chuc_thanh from './linhmucchucthanhs'
+import van_thu from './linhmucvanthus'
+import thuyen_chuyen from './linhmucthuyenchuyens'
+import giao_phan from './giaophans'
+import giao_hat from './giaohats'
+import giao_xu from './giaoxus'
+import giao_diem from './giaodiems'
+import cong_doan_tu_si from './congdoantusis'
+import dong from './dongs'
+import co_so from './cosos'
+import ban_chuyen_trach from './banchuyentrachs'
+import thanh from './thanhs'
+import chuc_vu from './chucvus'
+import le_chinh from './lechinhs'
+import restrict_ip from './restrictips'
+import albums from './albums'
+import group_albums from './groupalbums'
+import danhmuc_giaophan from './giaophandanhmucs'
+import tintuc_giaophan from './giaophantintucs'
+import createLogger from '../../plugins/logger'
+import { fnCheckProp, } from '@app/common/util'
 
-import auth from './auth';
-import layout from './layout';
-import dashboard from './dashboad';
-import user from './users';
-import info from './infos';
-import news_category from './categories';
-import app_module from './modules';
-import linh_muc from './linhmucs';
-import bang_cap from './linhmucbangcaps';
-import chuc_thanh from './linhmucchucthanhs';
-import van_thu from './linhmucvanthus';
-import thuyen_chuyen from './linhmucthuyenchuyens';
-import giao_phan from './giaophans';
-import giao_hat from './giaohats';
-import giao_xu from './giaoxus';
-import giao_diem from './giaodiems';
-import cong_doan_tu_si from './congdoantusis';
-import dong from './dongs';
-import co_so from './cosos';
-import ban_chuyen_trach from './banchuyentrachs';
-import thanh from './thanhs';
-import chuc_vu from './chucvus';
-import le_chinh from './lechinhs';
-import restrict_ip from './restrictips';
-import albums from './albums';
-import group_albums from './groupalbums';
-import danhmuc_giaophan from './giaophandanhmucs';
-import tintuc_giaophan from './giaophantintucs';
-import createLogger from '../../plugins/logger';
 
+Vue.use(Vuex)
 
-Vue.use(Vuex);
-
-const debug = process.env.NODE_ENV === 'debuger';
+const debug = process.env.NODE_ENV === 'debuger'
 
 const fnIsObject = (obj) => {
-  if (typeof obj !== "undefined" &&
-    typeof obj === "object" &&
+  if (typeof obj !== 'undefined' &&
+    typeof obj === 'object' &&
     Object.keys(obj).length) {
-    return true;
+    return true
   }
 
-  return false;
+  return false
 }
 
 const defaultState = () => {
@@ -54,27 +54,27 @@ const defaultState = () => {
     perPage: 15,
     moduleActive: {
       name: '',
-      actionList: ''
+      actionList: '',
     },
     logo: '/front/img/logo.png',
     collectionData: {
       current_page: 1,
       from: 0,
       to: 0,
-      total: 0
-    }
+      total: 0,
+    },
   }
 }
 
 export default new Vuex.Store({
   state: {
-    cfApp: defaultState()
+    cfApp: defaultState(),
   },
   getters: {
     resourcePaginationData(state) {
       return {
         links: state.cfApp.links,
-        meta: state.cfApp.meta
+        meta: state.cfApp.meta,
       }
     },
     collectionPaginationData(state) {
@@ -82,65 +82,65 @@ export default new Vuex.Store({
         current_page: 1,
         from: 0,
         to: 0,
-        total: 0
-      };
+        total: 0,
+      }
       if (fnIsObject(state.cfApp.collectionData)) {
-        return state.cfApp.collectionData;
+        return state.cfApp.collectionData
       }
 
-      return colData;
+      return colData
     },
     isNotEmptyList(state) {
       if (fnIsObject(state.cfApp.meta) &&
-        state.cfApp.meta.hasOwnProperty('total')) {
-        return (parseInt(state.cfApp.meta.total) > 0);
+        fnCheckProp(state.cfApp.meta, 'total')) {
+        return (parseInt(state.cfApp.meta.total) > 0)
       }
 
-      return false;
+      return false
     },
     moduleNameActive(state) {
-      let mName = '';
+      let mName = ''
       if (fnIsObject(state.cfApp.moduleActive) &&
-        state.cfApp.moduleActive.hasOwnProperty('name')) {
-        mName = state.cfApp.moduleActive.name;
+        fnCheckProp(state.cfApp.moduleActive, 'name')) {
+        mName = state.cfApp.moduleActive.name
       }
 
-      return mName;
+      return mName
     },
     moduleActionListActive(state) {
-      let mAction = '';
+      let mAction = ''
       if (fnIsObject(state.cfApp.moduleActive) &&
-        state.cfApp.moduleActive.hasOwnProperty('actionList')) {
-        mAction = state.cfApp.moduleActive.actionList;
+        fnCheckProp(state.cfApp.moduleActive, 'actionList')) {
+        mAction = state.cfApp.moduleActive.actionList
       }
 
-      return mAction;
-    }
+      return mAction
+    },
   },
   mutations: {
     configApp(state, configs) {
       if (fnIsObject(configs.links)) {
-        state.cfApp.links = configs.links;
+        state.cfApp.links = configs.links
       }
       if (fnIsObject(configs.meta)) {
-        state.cfApp.meta = configs.meta;
+        state.cfApp.meta = configs.meta
       }
       if (fnIsObject(configs.moduleActive)) {
-        state.cfApp.moduleActive = configs.moduleActive;
+        state.cfApp.moduleActive = configs.moduleActive
       }
       if (fnIsObject(configs.collectionData)) {
-        state.cfApp.collectionData = configs.collectionData;
+        state.cfApp.collectionData = configs.collectionData
       }
-    }
+    },
   },
   actions: {
     setConfigApp({
-      commit
+      commit,
     }, configs) {
-      const links = (configs.hasOwnProperty('links')) ? configs.links : undefined;
-      const meta = (configs.hasOwnProperty('meta')) ? configs.meta : undefined;
-      const moduleActive = (configs.hasOwnProperty('moduleActive')) ? configs.moduleActive : undefined;
-      const collectionData = (configs.hasOwnProperty('collectionData')) ? configs.collectionData : undefined;
+      const links = (fnCheckProp(configs, 'links')) ? configs.links : undefined
+      const meta = (fnCheckProp(configs, 'meta')) ? configs.meta : undefined
+      const moduleActive = (fnCheckProp(configs, 'moduleActive')) ? configs.moduleActive : undefined
+      const collectionData = (fnCheckProp(configs, 'collectionData')) ? configs.collectionData : undefined
 
       var _configs = {
         ...defaultState(),
@@ -148,12 +148,12 @@ export default new Vuex.Store({
           links: links,
           meta: meta,
           moduleActive: moduleActive,
-          collectionData: collectionData
-        }
-      };
+          collectionData: collectionData,
+        },
+      }
 
-      commit('configApp', _configs);
-    }
+      commit('configApp', _configs)
+    },
   },
   modules: {
     auth,
@@ -183,8 +183,8 @@ export default new Vuex.Store({
     tintuc_giaophan,
     restrict_ip,
     albums,
-    group_albums
+    group_albums,
   },
   strict: debug,
-  plugins: debug ? [createLogger()] : []
-});
+  plugins: debug ? [createLogger()] : [],
+})

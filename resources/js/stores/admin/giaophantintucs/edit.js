@@ -1,23 +1,19 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiGetInfoById,
-  apiUpdateInfo
-} from 'api@admin/giaophantintuc';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiGetInfoById, apiUpdateInfo, } from 'api@admin/giaophantintuc'
 import {
   INFOS_MODAL_SET_INFO_ID,
-  INFOS_MODAL_SET_INFO_ID_SUCCESS,
   INFOS_MODAL_SET_INFO_ID_FAILED,
   INFOS_MODAL_SET_INFO,
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
   INFOS_MODAL_UPDATE_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
+  SET_ERROR,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
-  INFOS_FORM_SET_MAIN_IMAGE
-} from '../types/mutation-types';
+  INFOS_FORM_SET_MAIN_IMAGE,
+} from '../types/mutation-types'
 import {
   ACTION_GET_INFO_BY_ID,
   ACTION_SET_LOADING,
@@ -27,12 +23,8 @@ import {
   ACTION_ADD_INFO_TO_CATEGORY_LIST,
   ACTION_REMOVE_INFO_TO_CATEGORY_LIST,
   ACTION_SET_IMAGE,
-  ACTION_ADD_INFO_TO_RELATED_LIST,
-  ACTION_REMOVE_INFO_TO_RELATED_LIST,
-} from '../types/action-types';
-import {
-  config
-} from '@app/api/admin/config';
+} from '../types/action-types'
+import { config, } from '@app/api/admin/config'
 
 const defaultState = () => {
   return {
@@ -40,15 +32,15 @@ const defaultState = () => {
     isExistInfo: config.existStatus.checking,
     info: {
       image: {
-        basename: "",
-        dirname: "",
-        extension: "",
-        filename: "",
-        path: "",
+        basename: '',
+        dirname: '',
+        extension: '',
+        filename: '',
+        path: '',
         size: 0,
-        thumb: "", //url thumb
+        thumb: '', //url thumb
         timestamp: null,
-        type: null
+        type: null,
       },
       date_available: null,
       sort_order: 0,
@@ -73,7 +65,7 @@ const defaultState = () => {
     infoId: 0,
     loading: false,
     updateSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -97,21 +89,22 @@ export default {
       return state.errors.length
     },
     isNotExistValidate(state) {
-      if (state.isExistInfo !== config.existStatus.checking ||
-        state.isExistInfo !== config.existStatus.exist) {
-        return false;
+      if (
+        state.isExistInfo !== config.existStatus.checking ||
+                state.isExistInfo !== config.existStatus.exist
+      ) {
+        return false
       }
 
-      return true;
-    }
+      return true
+    },
   },
 
   mutations: {
-
     [INFOS_MODAL_SET_INFO_ID](state, payload) {
       if (payload) {
-        state.infoId = payload;
-        state.isExistInfo = config.existStatus.exist;
+        state.infoId = payload
+        state.isExistInfo = config.existStatus.exist
       }
     },
 
@@ -135,7 +128,7 @@ export default {
       state.updateSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
     },
 
@@ -156,141 +149,116 @@ export default {
     },
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
-    }
+      state.info.image = payload
+      state.isImgChange = true
+    },
   },
 
   actions: {
-    update_special_carousel({state}, specialCarousel) {
-      state.info.special_carousels = specialCarousel;
+    update_special_carousel({ state, }, specialCarousel) {
+      state.info.special_carousels = specialCarousel
     },
 
-    [ACTION_SHOW_MODAL_EDIT]({
-      dispatch,
-    }, infoId) {
-      dispatch(ACTION_GET_INFO_BY_ID, infoId);
+    [ACTION_SHOW_MODAL_EDIT]({ dispatch, }, infoId) {
+      dispatch(ACTION_GET_INFO_BY_ID, infoId)
     },
 
-    [ACTION_GET_INFO_BY_ID]({
-      dispatch,
-      commit
-    }, infoId) {
-      dispatch(ACTION_SET_LOADING, true);
+    [ACTION_GET_INFO_BY_ID]({ dispatch, commit, }, infoId) {
+      dispatch(ACTION_SET_LOADING, true)
       apiGetInfoById(
         infoId,
         (result) => {
-          console.log(result.data,'result data', infoId, 'infoID');
-          commit(INFOS_MODAL_SET_INFO_ID, infoId);
-          commit(INFOS_MODAL_SET_INFO, result.data);
-          commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, result.data.category_display_list);
+          commit(INFOS_MODAL_SET_INFO_ID, infoId)
+          commit(INFOS_MODAL_SET_INFO, result.data)
+          commit(
+            INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST,
+            result.data.category_display_list
+          )
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_MODAL_SET_INFO_ID_FAILED, Object.values(errors))
+          commit(
+            INFOS_MODAL_SET_INFO_ID_FAILED,
+            Object.values(errors)
+          )
 
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      );
-    },
-
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
-    },
-
-    [ACTION_UPDATE_INFO]({
-      dispatch,
-      commit
-    }, info) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '');
-      apiUpdateInfo(info,
-        (result) => {
-          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-
-          dispatch(ACTION_SET_LOADING, false);
-          dispatch(ACTION_GET_INFO_BY_ID, info.information_id);
-        },
-        (errors) => {
-          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail)
-
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_RESET_NOTIFICATION_INFO]({
-      commit
-    }, values) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
 
-    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({
-      commit,
-      state
-    }, category) {
-      const categorys = state.info.categorys;
-      const listCateShow = state.listCategorysDisplay;
+    [ACTION_UPDATE_INFO]({ dispatch, commit, }, info) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '')
+      apiUpdateInfo(
+        info,
+        (result) => {
+          if (result) {
+            commit(
+              INFOS_MODAL_UPDATE_INFO_SUCCESS,
+              AppConfig.comUpdateNoSuccess
+            )
+          }
+          dispatch(ACTION_SET_LOADING, false)
+          dispatch(ACTION_GET_INFO_BY_ID, info.information_id)
+        },
+        (errors) => {
+          commit(
+            INFOS_MODAL_UPDATE_INFO_FAILED,
+            AppConfig.comUpdateNoFail
+          )
+          commit(SET_ERROR, errors)
+          dispatch(ACTION_SET_LOADING, false)
+        }
+      )
+    },
 
-      if (typeof category === "object" && Object.keys(category).length) {
-        if ((categorys.indexOf(category.category_id) === -1) && (parseInt(category.category_id) > 0)) {
-          categorys.push(category.category_id);
-          listCateShow.push(category);
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values)
+    },
+
+    [ACTION_ADD_INFO_TO_CATEGORY_LIST]({ commit, state, }, category) {
+      const categorys = state.info.categorys
+      const listCateShow = state.listCategorysDisplay
+
+      if (typeof category === 'object' && Object.keys(category).length) {
+        if (
+          categorys.indexOf(category.category_id) === -1 &&
+                    parseInt(category.category_id) > 0
+        ) {
+          categorys.push(category.category_id)
+          listCateShow.push(category)
         }
       }
 
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, categorys);
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow);
+      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, categorys)
+      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow)
     },
 
-    [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({
-      state,
-      commit
-    }, category) {
-      const categorys = state.info.categorys;
-      const listCateShow = state.listCategorysDisplay;
+    [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({ state, commit, }, category) {
+      const categorys = state.info.categorys
+      const listCateShow = state.listCategorysDisplay
 
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, _.remove(categorys, function(cateId) {
-        return (cateId - category.category_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, _.remove(listCateShow, function(item) {
-        return (item.category_id - category.category_id !== 0);
-      }));
+      commit(
+        INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
+        _.remove(categorys, function(cateId) {
+          return cateId - category.category_id !== 0
+        })
+      )
+      commit(
+        INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST,
+        _.remove(listCateShow, function(item) {
+          return item.category_id - category.category_id !== 0
+        })
+      )
     },
 
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    [ACTION_SET_IMAGE]({ commit, }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile)
     },
-
-    [ACTION_ADD_INFO_TO_RELATED_LIST]() {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      if (typeof related === "object" && Object.keys(related).length) {
-        if ((relateds.indexOf(related.information_id) === -1) && (parseInt(related.information_id) > 0)) {
-          relateds.push(related.information_id);
-          listRelatedShow.push(related);
-        }
-      }
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, relateds);
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, listRelatedShow);
-    },
-
-    [ACTION_REMOVE_INFO_TO_RELATED_LIST]() {
-      const relateds = state.info.relateds;
-      const listRelatedShow = state.listRelatedsDisplay;
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, _.remove(relateds, function(infoId) {
-        return (infoId - related.information_id !== 0);
-      }));
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, _.remove(listRelatedShow, function(item) {
-        return (item.information_id - related.information_id !== 0);
-      }));
-    },
-  }
+  },
 }

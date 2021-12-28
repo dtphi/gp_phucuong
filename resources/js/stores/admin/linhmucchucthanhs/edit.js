@@ -1,7 +1,5 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiUpdateInfo
-} from 'api@admin/linhmucchucthanh';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiUpdateInfo, apiGetInfoById, } from 'api@admin/linhmucchucthanh'
 import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_FAILED,
@@ -9,17 +7,15 @@ import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
   INFOS_MODAL_UPDATE_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
-} from '../types/mutation-types';
+  SET_ERROR,
+} from '../types/mutation-types'
 import {
   ACTION_GET_INFO_BY_ID,
   ACTION_SET_LOADING,
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
-} from '../types/action-types';
-import {
-  config
-} from '@app/api/admin/config';
+} from '../types/action-types'
+import { config, } from '@app/api/admin/config'
 
 const defaultState = () => {
   return {
@@ -28,7 +24,7 @@ const defaultState = () => {
     infoId: 0,
     loading: false,
     updateSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -52,21 +48,22 @@ export default {
       return state.errors.length
     },
     isNotExistValidate(state) {
-      if (state.isExistInfo !== config.existStatus.checking ||
-        state.isExistInfo !== config.existStatus.exist) {
-        return false;
+      if (
+        state.isExistInfo !== config.existStatus.checking ||
+                state.isExistInfo !== config.existStatus.exist
+      ) {
+        return false
       }
 
-      return true;
-    }
+      return true
+    },
   },
 
   mutations: {
-
     [INFOS_MODAL_SET_INFO_ID](state, payload) {
       if (payload) {
-        state.infoId = payload;
-        state.isExistInfo = config.existStatus.exist;
+        state.infoId = payload
+        state.isExistInfo = config.existStatus.exist
       }
     },
 
@@ -90,65 +87,65 @@ export default {
       state.updateSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
-    }
+    },
   },
 
   actions: {
-
-    [ACTION_GET_INFO_BY_ID]({
-      dispatch,
-      commit
-    }, infoId) {
-      dispatch(ACTION_SET_LOADING, true);
+    [ACTION_GET_INFO_BY_ID]({ dispatch, commit, }, infoId) {
+      dispatch(ACTION_SET_LOADING, true)
       apiGetInfoById(
         infoId,
         (result) => {
-          commit(INFOS_MODAL_SET_INFO_ID, infoId);
-          commit(INFOS_MODAL_SET_INFO, result.data);
+          commit(INFOS_MODAL_SET_INFO_ID, infoId)
+          commit(INFOS_MODAL_SET_INFO, result.data)
 
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_MODAL_SET_INFO_ID_FAILED, Object.values(errors))
+          commit(
+            INFOS_MODAL_SET_INFO_ID_FAILED,
+            Object.values(errors)
+          )
 
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      );
-    },
-
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
-    },
-
-    [ACTION_UPDATE_INFO]({
-      dispatch,
-      commit
-    }, info) {
-      dispatch(ACTION_SET_LOADING, true);
-      
-      apiUpdateInfo(info,
-        (result) => {
-          commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-          commit(INFOS_MODAL_SET_INFO, info);
-
-          dispatch(ACTION_SET_LOADING, false);
-        },
-        (errors) => {
-          commit(INFOS_MODAL_UPDATE_INFO_FAILED, AppConfig.comUpdateNoFail);
-
-          dispatch(ACTION_SET_LOADING, false);
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_RESET_NOTIFICATION_INFO]({
-      commit
-    }, values) {
-      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
-  }
+
+    [ACTION_UPDATE_INFO]({ dispatch, commit, }, info) {
+      dispatch(ACTION_SET_LOADING, true)
+
+      apiUpdateInfo(
+        info,
+        (result) => {
+          if (result) {
+            commit(
+              INFOS_MODAL_UPDATE_INFO_SUCCESS,
+              AppConfig.comUpdateNoSuccess
+            )
+            commit(INFOS_MODAL_SET_INFO, info)
+          }
+          dispatch(ACTION_SET_LOADING, false)
+        },
+        (errors) => {
+          commit(
+            INFOS_MODAL_UPDATE_INFO_FAILED,
+            AppConfig.comUpdateNoFail
+          )
+          commit(SET_ERROR, errors)
+          dispatch(ACTION_SET_LOADING, false)
+        }
+      )
+    },
+
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
+      commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values)
+    },
+  },
 }

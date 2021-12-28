@@ -1,28 +1,22 @@
-import AppConfig from 'api@admin/constants/app-config';
+import AppConfig from 'api@admin/constants/app-config'
 
-import {
-  apiInsertInfo,
-} from 'api@admin/giaohat';
-import {
-  apiGetLinhMucInfos,
-} from 'api@admin/linhmuc';
-import {
-  MODULE_MODULE_GIAO_HAT,
-} from '../types/module-types';
+import { apiInsertInfo, } from 'api@admin/giaohat'
+import { apiGetLinhMucInfos, } from 'api@admin/linhmuc'
+import { MODULE_MODULE_GIAO_HAT, } from '../types/module-types'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
   INFOS_MODAL_INSERT_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
+  SET_ERROR,
   INFOS_FORM_SET_MAIN_IMAGE,
-} from '../types/mutation-types';
+} from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
   ACTION_INSERT_INFO_BACK,
   ACTION_RESET_NOTIFICATION_INFO,
-  ACTION_RELOAD_GET_INFO_LIST
-} from '../types/action-types';
+  ACTION_RELOAD_GET_INFO_LIST,
+} from '../types/action-types'
 
 const defaultState = () => {
   return {
@@ -46,12 +40,12 @@ const defaultState = () => {
     dropdownsRelateds: [],
     infoRelated: {
       information_id: 0,
-      name: ''
+      name: '',
     },
     infoId: 0,
     loading: false,
     insertSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -81,8 +75,8 @@ export default {
       return state.errors.length
     },
     isLinhMuc(state) {
-      return state.linhMuc;
-    }
+      return state.linhMuc
+    },
   },
 
   mutations: {
@@ -98,89 +92,93 @@ export default {
       state.insertSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
     },
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
+      state.info.image = payload
+      state.isImgChange = true
     },
     INFO_LINH_MUC(state, payload) {
-      state.linhMuc = payload;
-    }
+      state.linhMuc = payload
+    },
   },
 
   actions: {
     /* GET LIST LINH MUC */
-    action_get_list_linh_muc({
-      commit
-    }, params) {
+    action_get_list_linh_muc({ commit, }, params) {
       apiGetLinhMucInfos(
         (infos) => {
-          console.log(infos.data.results, ' action_get_list_linh_muc test')
-          commit('INFO_LINH_MUC', infos.data.results);
-          var pagination = {
-            current_page: 1,
-            total: 0
-          };
-          if (infos.data.hasOwnProperty('pagination')) {
-            pagination = infos.data.pagination;
+          commit('INFO_LINH_MUC', infos.data.results)
+        },
+        (errors) => {
+          commit(SET_ERROR, errors)
+        },
+        params
+      )
+    },
+
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
+    },
+
+    [ACTION_INSERT_INFO]({ dispatch, commit, }, info) {
+      apiInsertInfo(
+        info,
+        (result) => {
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            commit(SET_ERROR, [])
+          }
+          dispatch(ACTION_SET_LOADING, false)
+        },
+        (errors) => {
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
+          dispatch(ACTION_SET_LOADING, false)
+        }
+      )
+    },
+
+    [ACTION_INSERT_INFO_BACK]({ dispatch, commit, }, info) {
+      apiInsertInfo(
+        info,
+        (result) => {
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            dispatch(
+              MODULE_MODULE_GIAO_HAT +
+                                '_' +
+                                ACTION_RELOAD_GET_INFO_LIST,
+              'page',
+              {
+                root: true,
+              }
+            )
           }
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, errors)
-        },
-        params
-      );
-    },
-
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
-    },
-
-    [ACTION_INSERT_INFO]({
-      dispatch,
-      commit
-    }, info) {
-      apiInsertInfo(
-        info,
-        (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          commit(INFOS_MODAL_SET_ERROR, []);
-          dispatch(ACTION_SET_LOADING, false);
-        },
-        (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
-          dispatch(ACTION_SET_LOADING, false);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
-
-    [ACTION_INSERT_INFO_BACK]({
-      dispatch,
-      commit
-    }, info) {
-      apiInsertInfo(
-        info,
-        (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          dispatch(MODULE_MODULE_GIAO_HAT + '_' + ACTION_RELOAD_GET_INFO_LIST, 'page', {
-            root: true
-          });
-        },
-        (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          commit(INFOS_MODAL_SET_ERROR, errors);
-          dispatch(ACTION_SET_LOADING, false);
-        }
-      )
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
+      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values)
     },
-    [ACTION_RESET_NOTIFICATION_INFO]({ commit }, values) {
-      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values);
-    }
-  }
+  },
 }
