@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import InfoList from "./HatCongDoanTuSiGiaoPhans/InfoList";
+import InfoList from './HatCongDoanTuSiGiaoPhans/InfoList'
 
 export default {
-  name: "TabHatCongDoanTSGiaoPhan",
+  name: 'TabHatCongDoanTSGiaoPhan',
   components: {
     InfoList,
   },
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       giao_phan_hat_congdoantusis: [],
-    };
+    }
   },
-};
+}
 </script>

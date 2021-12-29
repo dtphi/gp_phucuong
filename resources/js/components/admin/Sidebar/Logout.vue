@@ -10,27 +10,27 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, } from 'vuex'
 
 export default {
-  name: "LogoutSideBar",
+  name: 'LogoutSideBar',
   computed: {
-    ...mapGetters("auth", ["authenticated"]),
+    ...mapGetters('auth', ['authenticated']),
   },
   methods: {
     ...mapActions({
-      signOut: "auth/signOut",
-      redirectLogout: "auth/redirectLogoutSuccess",
+      signOut: 'auth/signOut',
+      redirectLogout: 'auth/redirectLogoutSuccess',
     }),
     async _submit() {
-      await this.signOut();
+      await this.signOut()
       if (!this.authenticated) {
-        this.redirectLogout();
+        this.redirectLogout()
       }
     },
     _logout() {
-      this._submit();
+      this._submit()
     },
   },
-};
+}
 </script>

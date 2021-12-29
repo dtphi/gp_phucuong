@@ -21,17 +21,17 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
-import { MODULE_MODULE_GROUP_ALBUMS_EDIT } from "store@admin/types/module-types";
+import { mapState, mapGetters, mapActions, } from 'vuex'
+import { MODULE_MODULE_GROUP_ALBUMS_EDIT, } from 'store@admin/types/module-types'
 import {
   ACTION_SET_LOADING,
   ACTION_UPDATE_INFO,
   ACTION_UPDATE_INFO_BACK,
-} from "store@admin/types/action-types";
-import TabGeneral from "./edits/TabGeneral";
+} from 'store@admin/types/action-types'
+import TabGeneral from './edits/TabGeneral'
 
 export default {
-  name: "FormGroupAlbumsEdit",
+  name: 'FormGroupAlbumsEdit',
   components: {
     TabGeneral,
   },
@@ -39,30 +39,30 @@ export default {
     return {
       fullPage: false,
       file: null,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_GROUP_ALBUMS_EDIT, {
       loading: (state) => state.loading,
       info:(state) => state.info.data,
     }),
-    ...mapGetters(MODULE_MODULE_GROUP_ALBUMS_EDIT, ["info"]),
+    ...mapGetters(MODULE_MODULE_GROUP_ALBUMS_EDIT, ['info']),
   },
   methods: {
     ...mapActions(MODULE_MODULE_GROUP_ALBUMS_EDIT, [
       ACTION_SET_LOADING,
       ACTION_UPDATE_INFO,
-      ACTION_UPDATE_INFO_BACK,
+      ACTION_UPDATE_INFO_BACK
     ]),
     _submitInfo() {
-      this[ACTION_UPDATE_INFO](this.info);
+      this[ACTION_UPDATE_INFO](this.info)
     },
     _submitInfoBack() {
-      this[ACTION_UPDATE_INFO_BACK](this.info);
+      this[ACTION_UPDATE_INFO_BACK](this.info)
     },
   },
   setting: {
-    tab_general_title: "Tổng quan",
+    tab_general_title: 'Tổng quan',
   },
-};
+}
 </script>

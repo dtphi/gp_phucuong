@@ -106,12 +106,12 @@
 </template>
 
 <script>
-import { config } from "@app/common/config";
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
+import { config, } from '@app/common/config'
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoItem",
+  name: 'TheInfoItem',
   props: {
     item: {
       default: {},
@@ -120,40 +120,41 @@ export default {
   data() {
     return {
       isEdit: false,
-    };
+    }
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeChucThanh", "addChucThanhs"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeChucThanh', 'addChucThanhs']),
     _removeItem() {
       this.removeChucThanh({
-        action: "removeChucThanh",
+        action: 'removeChucThanh',
         item: this.item,
-      });
+      })
     },
     _openEditForm() {
-      this.isEdit = !this.isEdit;
+      this.isEdit = !this.isEdit
     },
     _updateChucThanhForm() {
       if (this.item.id) {
         this.addChucThanhs({
           action: 'create.update.chuc.thanh.db',
-          info: this.item
-        });
+          info: this.item,
+        })
       }
     },
     _getChucThanhText() {
-      let chucThanh = "Pho tế";
-      if (this.item.chuc_thanh_id == 2) chucThanh = "Linh mục";
-      if (this.item.chuc_thanh_id == 3) chucThanh = "Giám mục";
-      return chucThanh;
+      let chucThanh = 'Pho tế'
+      if (this.item.chuc_thanh_id == 2) chucThanh = 'Linh mục'
+      if (this.item.chuc_thanh_id == 3) chucThanh = 'Giám mục'
+      
+      return chucThanh
     },
     _getStatus() {
-      return this.item.active == 1 ? "Xảy ra" : "Ẩn";
+      return this.item.active == 1 ? 'Xảy ra' : 'Ẩn'
     },
   },
   setting: {
     cf: config,
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

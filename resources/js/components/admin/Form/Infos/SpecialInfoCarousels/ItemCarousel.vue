@@ -59,34 +59,34 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_MODULE_SPECIAL_INFO_CAROUSEL
-    } from 'store@admin/types/module-types';
+import {
+  mapActions,
+} from 'vuex'
+import {
+  MODULE_MODULE_SPECIAL_INFO_CAROUSEL,
+} from 'store@admin/types/module-types'
 
-    export default {
-        name: 'TheItemCarousel',
-        props: {
-            banner: {
-                default: {}
-            }
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
-                'specialInfoCarouselRemove'
-            ]),
-            _getImgUrl() {
-                return '/Image/NewPicture/'+this.banner.image;
-            },
-            _removeBanner() {
-                this.specialInfoCarouselRemove(this.banner);
-            }
-        },
-        setting: {
-            image_title: 'Banner',
-            image_url_title: 'Url hình'
-        }
-    };
+export default {
+  name: 'TheItemCarousel',
+  props: {
+    banner: {
+      default: {},
+    },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [
+      'specialInfoCarouselRemove'
+    ]),
+    _getImgUrl() {
+      return '/Image/NewPicture/'+this.banner.image
+    },
+    _removeBanner() {
+      this.specialInfoCarouselRemove(this.banner)
+    },
+  },
+  setting: {
+    image_title: 'Banner',
+    image_url_title: 'Url hình',
+  },
+}
 </script>

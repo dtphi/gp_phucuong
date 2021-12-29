@@ -93,11 +93,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoItem",
+  name: 'TheInfoItem',
   props: {
     item: {
       default: {},
@@ -106,38 +106,39 @@ export default {
   data() {
     return {
       isEdit: false,
-    };
+    }
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeBangCap", "addBangCaps"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeBangCap', 'addBangCaps']),
     _removeItem() {
       this.removeBangCap({
-        action: "",
+        action: '',
         item: this.item,
-      });
+      })
     },
     _openEditForm() {
-      this.isEdit = !this.isEdit;
+      this.isEdit = !this.isEdit
     },
     _updateBangCapForm() {
       if (this.item.id) {
         this.addBangCaps({
           action: 'create.update.bang.cap.db',
-          info: this.item
-        });
+          info: this.item,
+        })
       }
     },
     _getLoaiText(item) {
-      let loaiBang = "Loại 1";
-      if (item.type == 1) loaiBang = "Loại 2";
-      return loaiBang;
+      let loaiBang = 'Loại 1'
+      if (item.type == 1) loaiBang = 'Loại 2'
+      
+      return loaiBang
     },
     _getStatus(item) {
-      return item.active == 1 ? "Xảy ra" : "Ẩn";
+      return item.active == 1 ? 'Xảy ra' : 'Ẩn'
     },
   },
   setting: {
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

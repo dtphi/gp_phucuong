@@ -66,32 +66,32 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   props: {
     item: {
       default: {},
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeVanThu"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeVanThu']),
     _removeItem() {
       this.removeVanThu({
-        action: "removeVanThu",
+        action: 'removeVanThu',
         item: this.item,
-      });
+      })
     },
     _addVanThuForm() {
       if (this.item.id) {
         this.addVanThus({
           action: 'create.update.van.thu.db',
-          info: this.item
-        });
+          info: this.item,
+        })
       }
     },
-  }
-};
+  },
+}
 </script>

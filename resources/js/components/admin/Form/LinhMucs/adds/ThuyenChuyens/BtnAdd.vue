@@ -13,24 +13,24 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_ADD } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_ADD, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheButtonAdd",
+  name: 'TheButtonAdd',
   props: {
     moduleKey: {
-      default: "",
+      default: '',
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_ADD, ["addThuyenChuyen"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_ADD, ['addThuyenChuyen']),
 
     _addInfo() {
       this.addThuyenChuyen({
-        action: "addThuyenChuyen",
-      });
+        action: 'addThuyenChuyen',
+      })
     },
   },
-};
+}
 </script>

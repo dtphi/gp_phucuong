@@ -34,14 +34,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, } from 'vuex'
 import {
   MODULE_MODULE_LINH_MUC,
   MODULE_MODULE_GIAO_PHAN_EDIT,
-} from "store@admin/types/module-types";
+} from 'store@admin/types/module-types'
 
 export default {
-  name: "DongAutocomplete",
+  name: 'DongAutocomplete',
   props: {
     dong: {
       default: null,
@@ -49,51 +49,51 @@ export default {
   },
   data() {
     return {
-      dropdownStyle: "display: none;",
+      dropdownStyle: 'display: none;',
       isSearch: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_LINH_MUC, {
       dropdowns: (state) => state.dropdownDongs,
     }),
-    ...mapState(MODULE_MODULE_GIAO_PHAN_EDIT, ["info"]),
+    ...mapState(MODULE_MODULE_GIAO_PHAN_EDIT, ['info']),
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC, ["ACTION_GET_DROPDOWN_DONG_LIST"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC, ['ACTION_GET_DROPDOWN_DONG_LIST']),
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "ACTION_UPDATE_DROPDOWN_DONG_LIST",
+      'ACTION_UPDATE_DROPDOWN_DONG_LIST'
     ]),
     _searchCategories() {
-      const query = this.query;
+      const query = this.query
       if (query && query.length) {
-        this.ACTION_GET_DROPDOWN_DONG_LIST(query);
+        this.ACTION_GET_DROPDOWN_DONG_LIST(query)
       }
     },
     _focusParentCategory() {
       if (this.dropdowns.length == 0) {
-        this.ACTION_GET_DROPDOWN_DONG_LIST("");
+        this.ACTION_GET_DROPDOWN_DONG_LIST('')
       }
     },
     _closeDropdown() {
-      this.isSearch = !this.isSearch;
-      this._focusParentCategory();
+      this.isSearch = !this.isSearch
+      this._focusParentCategory()
     },
     _addInfoToCategory(infoCategory) {
-      const _self = this;
+      const _self = this
       const isExistDong = _.find(_self.info.giao_phan_dongs, {
         dong_id: infoCategory.id,
-      });
+      })
 
       if (isExistDong === undefined) {
         this.ACTION_UPDATE_DROPDOWN_DONG_LIST({
           dong: _self.dong,
           dongInfo: infoCategory,
-        });
+        })
       }
 
-      this._closeDropdown();
+      this._closeDropdown()
     },
-  }
-};
+  },
+}
 </script>

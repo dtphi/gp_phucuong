@@ -1,14 +1,14 @@
 <template>
   <tr>
     <td class="text-center">
-        <input type="checkbox"
-                :id="`info_select_id_${item.id}`"
-                v-model="item.isCheck">
+      <input
+        type="checkbox"
+        :id="`info_select_id_${item.id}`"
+        v-model="item.isCheck"
+      />
     </td>
     <td class="text-center">
-      <info-dong-autocomplete
-        :dong="item"
-      ></info-dong-autocomplete>
+      <info-dong-autocomplete :dong="item"></info-dong-autocomplete>
     </td>
     <td>
       <select v-model="item.active" id="input-info-active" class="form-control">
@@ -46,15 +46,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import InfoDongAutocomplete from "../Groups/InfoDongAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   components: {
-    BtnAdd,
     InfoDongAutocomplete,
   },
   props: {
@@ -68,28 +66,31 @@ export default {
         return null
       }
 
-      return 'Chọn dòng';
-    }
+      return 'Chọn dòng'
+    },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeDongGiaoPhan", "ACTION_UPDATE_DROPDOWN_DONG_LIST"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
+      'removeDongGiaoPhan',
+      'ACTION_UPDATE_DROPDOWN_DONG_LIST'
+    ]),
     _removeItem() {
       this.removeDongGiaoPhan({
-        action: "removeDongGiaoPhan",
+        action: 'removeDongGiaoPhan',
         item: this.item,
-      });
+      })
     },
     _addDongForm() {
       if (this.item.dong_id) {
         this.ACTION_UPDATE_DROPDOWN_DONG_LIST({
           action: 'create.update.dong.db',
-          dong: this.item
-        });
+          dong: this.item,
+        })
       }
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

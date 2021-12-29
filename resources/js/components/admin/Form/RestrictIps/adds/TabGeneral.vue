@@ -42,15 +42,15 @@
 </template>
 
 <script>
-import { config } from "@app/common/config";
-import { extend } from 'vee-validate';
-import { regex } from 'vee-validate/dist/rules';
+import { config, } from '@app/common/config'
+import { extend, } from 'vee-validate'
+import { regex, } from 'vee-validate/dist/rules'
 extend('regex', {
-    ...regex,
-    message: 'IP Invalid',
+  ...regex,
+  message: 'IP Invalid',
 })
 export default {
-  name: "TabGeneralForm",
+  name: 'TabGeneralForm',
   props: {
     groupData: {
       type: Object,
@@ -62,7 +62,7 @@ export default {
   },
   setting: {
     cf: config,
-    name_txt: "IP",
+    name_txt: 'IP',
   },
-};
+}
 </script>

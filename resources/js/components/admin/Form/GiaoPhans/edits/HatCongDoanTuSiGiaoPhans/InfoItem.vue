@@ -69,13 +69,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import InfoCongDoanTuSiAutocomplete from "../Groups/InfoCongDoanTuSiAutocomplete";
+import { mapActions, } from 'vuex'
+import BtnAdd from './BtnAdd'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import InfoCongDoanTuSiAutocomplete from '../Groups/InfoCongDoanTuSiAutocomplete'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
     InfoCongDoanTuSiAutocomplete,
@@ -91,35 +91,35 @@ export default {
   data() {
     return {
       isEdit: false,
-    };
+    }
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "removeHatCongDoanTuSiGiaoPhan","ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST"
+      'removeHatCongDoanTuSiGiaoPhan', 'ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST'
     ]),
     _removeItem() {
       this.removeHatCongDoanTuSiGiaoPhan({
-        action: "removeHatCongDoanTuSiGiaoPhan",
+        action: 'removeHatCongDoanTuSiGiaoPhan',
         giaoHat: this.hat,
         congDoanTuSi: this.item,
-      });
+      })
     },
     _openEditForm() {
-      this.isEdit = !this.isEdit;
+      this.isEdit = !this.isEdit
     },
     _updateCongdtsForm() {
       this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
         action: 'create.update.hat.congdts.db',
         hat: this.hat,
-        hatCongDts: this.item
-      });
+        hatCongDts: this.item,
+      })
     },
     _getStatus() {
-      return this.item.active == 1 ? "Xảy ra" : "Ẩn";
+      return this.item.active == 1 ? 'Xảy ra' : 'Ẩn'
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

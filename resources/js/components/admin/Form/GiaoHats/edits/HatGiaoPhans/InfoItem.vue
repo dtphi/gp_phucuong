@@ -28,38 +28,38 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_MODULE_GIAO_PHAN_EDIT
-    } from 'store@admin/types/module-types';
-    import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete';
+import {
+  mapActions,
+} from 'vuex'
+import {
+  MODULE_MODULE_GIAO_PHAN_EDIT,
+} from 'store@admin/types/module-types'
+import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete'
 
-    export default {
-        name: 'TheInfoItem',
-        components: {
-            InfoGiaoHatAutocomplete,
-        },
-        props: {
-            item: {
-                default: {}
-            }
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-                'removeHatGiaoPhan'
-            ]),
-            _removeItem() {
-                this.removeHatGiaoPhan({
-                    action: 'removeHatGiaoPhan',
-                    item: this.item
-                });
-            }
-        },
-        setting: {
-            info_title: 'Tiêu đề',
-            info_url_title: 'Url tiêu đề',
-        }
-    };
+export default {
+  name: 'TheInfoItem',
+  components: {
+    InfoGiaoHatAutocomplete,
+  },
+  props: {
+    item: {
+      default: {},
+    },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
+      'removeHatGiaoPhan'
+    ]),
+    _removeItem() {
+      this.removeHatGiaoPhan({
+        action: 'removeHatGiaoPhan',
+        item: this.item,
+      })
+    },
+  },
+  setting: {
+    info_title: 'Tiêu đề',
+    info_url_title: 'Url tiêu đề',
+  },
+}
 </script>

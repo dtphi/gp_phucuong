@@ -37,14 +37,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, } from 'vuex'
 import {
   MODULE_MODULE_LINH_MUC,
   MODULE_MODULE_GIAO_PHAN_EDIT,
-} from "store@admin/types/module-types";
+} from 'store@admin/types/module-types'
 
 export default {
-  name: "GiaoXuAutocomplete",
+  name: 'GiaoXuAutocomplete',
   props: {
     coso: {
       default: null,
@@ -52,53 +52,53 @@ export default {
   },
   data() {
     return {
-      dropdownStyle: "display: none;",
+      dropdownStyle: 'display: none;',
       isSearch: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_LINH_MUC, {
       dropdowns: (state) => state.dropdownCoSoGiaoPhans,
     }),
-    ...mapState(MODULE_MODULE_GIAO_PHAN_EDIT, ["info"]),
+    ...mapState(MODULE_MODULE_GIAO_PHAN_EDIT, ['info']),
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC, [
-      "ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST",
+      'ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST'
     ]),
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "ACTION_UPDATE_DROPDOWN_COSO_LIST",
+      'ACTION_UPDATE_DROPDOWN_COSO_LIST'
     ]),
     _searchCategories() {
-      const query = this.query;
+      const query = this.query
       if (query && query.length) {
-        this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST(query);
+        this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST(query)
       }
     },
     _focusParentCategory() {
       if (this.dropdowns.length == 0) {
-        this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST("");
+        this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST('')
       }
     },
     _closeDropdown() {
-      this.isSearch = !this.isSearch;
-      this._focusParentCategory();
+      this.isSearch = !this.isSearch
+      this._focusParentCategory()
     },
     _addInfoToCategory(infoCategory) {
-      const _self = this;
+      const _self = this
       const isExist = _.find(_self.info.giao_phan_cosos, {
         co_so_giao_phan_id: infoCategory.id,
-      });
+      })
 
       if (isExist === undefined) {
         this.ACTION_UPDATE_DROPDOWN_COSO_LIST({
           coso: _self.coso,
           cosoInfo: infoCategory,
-        });
+        })
       }
 
-      this._closeDropdown();
+      this._closeDropdown()
     },
-  }
-};
+  },
+}
 </script>

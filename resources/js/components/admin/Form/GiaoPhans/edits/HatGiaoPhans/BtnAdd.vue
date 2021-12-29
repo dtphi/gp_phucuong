@@ -13,21 +13,21 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheButtonAdd",
+  name: 'TheButtonAdd',
   props: {
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["addHatGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ['addHatGiaoPhan']),
 
     _addInfo() {
       this.addHatGiaoPhan({
-        action: "addHatGiaoPhan",
-      });
+        action: 'addHatGiaoPhan',
+      })
     },
   },
-};
+}
 </script>

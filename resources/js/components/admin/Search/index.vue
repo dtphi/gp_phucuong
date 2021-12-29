@@ -23,13 +23,13 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-import { MODULE_MODULE_RESTRICT_IP } from "store@admin/types/module-types";
+import { mapMutations, } from 'vuex'
+import { MODULE_MODULE_RESTRICT_IP, } from 'store@admin/types/module-types'
 import {
   INFOS_SET_INFO_LIST,
-} from "store@admin/types/mutation-types";
+} from 'store@admin/types/mutation-types'
 export default {
-  name: "ListSearch",
+  name: 'ListSearch',
   data() {
     return {
       query: '',
@@ -37,24 +37,24 @@ export default {
   },
   watch: {
     query: {
-      handler: _.debounce(function () {
-          this.getResults()
-      }, 500)
-    }
+      handler: _.debounce(function() {
+        this.getResults()
+      }, 500),
+    },
   },
   methods: {
     ...mapMutations(MODULE_MODULE_RESTRICT_IP, {
-       'setResIp': INFOS_SET_INFO_LIST,
+      'setResIp': INFOS_SET_INFO_LIST,
     }),
     getResults() {
-        axios.get('/api/search-ips', { params: { query: this.query } })
-                .then(res => { console.log(res.data.data.results, 'res');
-                  console.log(this);
-                  this.setResIp(res.data.data.results) ; })
-                .catch(error => { console.log(error); })
-      }
-  }
-};
+      axios.get('/api/search-ips', { params: { query: this.query, }, })
+        .then(res => { console.log(res.data.data.results, 'res')
+          console.log(this)
+          this.setResIp(res.data.data.results)  })
+        .catch(error => { console.log(error) })
+    },
+  },
+}
 </script>
 <style scoped>
   .btn-search {

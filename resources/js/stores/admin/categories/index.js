@@ -113,7 +113,6 @@ export default {
             NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_SUCCESS,
             'Success'
           )
-
           commit(NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST, result)
         },
         (errors) => {
@@ -129,7 +128,6 @@ export default {
 
     [ACTION_GET_NEWS_GROUP_LIST]({ dispatch, commit, }, params) {
       dispatch(ACTION_SET_LOADING, true)
-
       apiGetNewsGroups(
         (newsGroups) => {
           commit(

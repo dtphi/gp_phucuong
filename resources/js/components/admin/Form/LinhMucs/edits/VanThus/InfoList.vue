@@ -51,16 +51,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
-import BtnAdd from "./BtnAdd";
-import BtnAddSelect from "./BtnAddSelect";
-import BtnRemoveSelect from "./BtnRemoveSelect";
-import InfoItem from "./InfoItem";
-import InfoNewItem from "./InfoNewItem";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
+import BtnAdd from './BtnAdd'
+import BtnAddSelect from './BtnAddSelect'
+import BtnRemoveSelect from './BtnRemoveSelect'
+import InfoItem from './InfoItem'
+import InfoNewItem from './InfoNewItem'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
     BtnAddSelect,
@@ -74,13 +74,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["checkAllVanThu"]),
-    _checkAllVanThu (event) {
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['checkAllVanThu']),
+    _checkAllVanThu(event) {
       this.checkAllVanThu(event.target.checked)
-    }
+    },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

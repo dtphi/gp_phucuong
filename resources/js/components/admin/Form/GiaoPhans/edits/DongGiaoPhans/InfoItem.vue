@@ -1,12 +1,16 @@
 <template>
   <tr>
     <td class="text-center">
-        <input type="checkbox"
-                :id="`info_select_id_${item.id}`"
-                v-model="item.isCheck">
+      <input
+        type="checkbox"
+        :id="`info_select_id_${item.id}`"
+        v-model="item.isCheck"
+      />
     </td>
     <td>
-      <a :href="item.hrefDong"><span v-show="!isEdit">{{ item.dongName }}</span></a>
+      <a :href="item.hrefDong"
+        ><span v-show="!isEdit">{{ item.dongName }}</span></a
+      >
       <info-dong-autocomplete
         v-show="isEdit"
         :dong="item"
@@ -68,15 +72,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import InfoDongAutocomplete from "../Groups/InfoDongAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
-    BtnAdd,
     InfoDongAutocomplete,
   },
   props: {
@@ -87,33 +89,36 @@ export default {
   data() {
     return {
       isEdit: false,
-    };
+    }
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeDongGiaoPhan","ACTION_UPDATE_DROPDOWN_DONG_LIST"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
+      'removeDongGiaoPhan',
+      'ACTION_UPDATE_DROPDOWN_DONG_LIST'
+    ]),
     _removeItem() {
       this.removeDongGiaoPhan({
-        action: "removeDongGiaoPhan",
+        action: 'removeDongGiaoPhan',
         item: this.item,
-      });
+      })
     },
     _openEditForm() {
-      this.isEdit = !this.isEdit;
+      this.isEdit = !this.isEdit
     },
     _updateDongForm() {
       if (this.item.dong_id) {
         this.ACTION_UPDATE_DROPDOWN_DONG_LIST({
           action: 'create.update.dong.db',
-          dong: this.item
-        });
+          dong: this.item,
+        })
       }
     },
     _getStatus() {
-      return this.item.active == 1 ? "Xảy ra" : "Ẩn";
+      return this.item.active == 1 ? 'Xảy ra' : 'Ẩn'
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

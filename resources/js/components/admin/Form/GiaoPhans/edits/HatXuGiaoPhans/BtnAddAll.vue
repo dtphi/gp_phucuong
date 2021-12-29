@@ -11,18 +11,18 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheButtonAdd",
+  name: 'TheButtonAdd',
   props: {
     giaoHat: {
       default: null,
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["addHatXuGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ['addHatXuGiaoPhan']),
 
     _addInfo() {
       /*this.addHatXuGiaoPhan({
@@ -31,5 +31,5 @@ export default {
       });*/
     },
   },
-};
+}
 </script>

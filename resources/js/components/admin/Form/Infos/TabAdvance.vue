@@ -72,47 +72,47 @@
 </template>
 
 <script>
-    import {
-        mapState,
-        mapGetters,
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_NEWS_CATEGORY,
-        MODULE_NEWS_CATEGORY_ADD,
-        MODULE_INFO_ADD
-    } from 'store@admin/types/module-types';
-    import InfoDateAvailable from './Datapicker/InfoDateAvailable';
+import {
+  mapState,
+  mapGetters,
+  mapActions,
+} from 'vuex'
+import {
+  MODULE_NEWS_CATEGORY,
+  MODULE_NEWS_CATEGORY_ADD,
+  MODULE_INFO_ADD,
+} from 'store@admin/types/module-types'
+import InfoDateAvailable from './Datapicker/InfoDateAvailable'
 
-    export default {
-        name: 'TabAdvanceForm',
-        components: {
-            InfoDateAvailable
-        },
-        props: {
-            groupData: {
-                type: Object
-            }
-        },
-        computed: {
-            ...mapState(MODULE_NEWS_CATEGORY,
-                [
-                    'newsGroups'
-                ]),
-            ...mapState(MODULE_INFO_ADD,
-                [
-                    'albumDropdowns'
-                ]),
-            ...mapGetters(MODULE_NEWS_CATEGORY, ['loading']),
-            ...mapGetters(MODULE_NEWS_CATEGORY_ADD, ['isOpen']),
-        },
-        methods: {
-            ...mapActions(MODULE_INFO_ADD, ['ACTION_GET_DROPDOWN_ALBUM_LIST'])
-        },
-        mounted() {
-            this.ACTION_GET_DROPDOWN_ALBUM_LIST({
-                action: 'info.album.dropdown'
-            });
-        }
-    };
+export default {
+  name: 'TabAdvanceForm',
+  components: {
+    InfoDateAvailable,
+  },
+  props: {
+    groupData: {
+      type: Object,
+    },
+  },
+  computed: {
+    ...mapState(MODULE_NEWS_CATEGORY,
+      [
+        'newsGroups'
+      ]),
+    ...mapState(MODULE_INFO_ADD,
+      [
+        'albumDropdowns'
+      ]),
+    ...mapGetters(MODULE_NEWS_CATEGORY, ['loading']),
+    ...mapGetters(MODULE_NEWS_CATEGORY_ADD, ['isOpen']),
+  },
+  methods: {
+    ...mapActions(MODULE_INFO_ADD, ['ACTION_GET_DROPDOWN_ALBUM_LIST']),
+  },
+  mounted() {
+    this.ACTION_GET_DROPDOWN_ALBUM_LIST({
+      action: 'info.album.dropdown',
+    })
+  },
+}
 </script>

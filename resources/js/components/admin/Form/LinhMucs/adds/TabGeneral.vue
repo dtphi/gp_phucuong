@@ -344,15 +344,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_ADD } from "store@admin/types/module-types";
-import linhMucMix from "@app/mixins/admin/linhmuc";
-import InfoGiaoXuAutocomplete from "../Groups/InfoGiaoXuAutocomplete";
-import InfoTenThanhAutocomplete from "../Groups/InfoTenThanhAutocomplete";
-import InfoDongAutocomplete from "../Groups/InfoDongAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_ADD, } from 'store@admin/types/module-types'
+import linhMucMix from '@app/mixins/admin/linhmuc'
+import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete'
+import InfoTenThanhAutocomplete from '../Groups/InfoTenThanhAutocomplete'
+import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete'
 
 export default {
-  name: "TabGeneralForm",
+  name: 'TabGeneralForm',
   mixins: [linhMucMix.tabData],
   components: {
     InfoGiaoXuAutocomplete,
@@ -361,11 +361,11 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
-      "ACTION_UPDATE_DROPDOWN_GIAO_XU",
-      "ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU",
-      "ACTION_UPDATE_DROPDOWN_DONG",
-      "ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST",
+      'ACTION_UPDATE_DROPDOWN_GIAO_XU',
+      'ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU',
+      'ACTION_UPDATE_DROPDOWN_DONG',
+      'ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST'
     ]),
   },
-};
+}
 </script>

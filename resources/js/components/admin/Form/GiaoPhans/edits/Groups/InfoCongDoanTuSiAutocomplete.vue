@@ -37,14 +37,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, } from 'vuex'
 import {
   MODULE_MODULE_GIAO_PHAN,
   MODULE_MODULE_GIAO_PHAN_EDIT,
-} from "store@admin/types/module-types";
+} from 'store@admin/types/module-types'
 
 export default {
-  name: "CongDoanTuSiAutocomplete",
+  name: 'CongDoanTuSiAutocomplete',
   props: {
     hat: {
       default: null,
@@ -55,56 +55,56 @@ export default {
   },
   data() {
     return {
-      dropdownStyle: "display: none;",
+      dropdownStyle: 'display: none;',
       isSearch: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_GIAO_PHAN, {
       dropdowns: (state) => state.dropdownCongDoanTuSis,
     }),
-    ...mapState(MODULE_MODULE_GIAO_PHAN_EDIT, ["info"]),
+    ...mapState(MODULE_MODULE_GIAO_PHAN_EDIT, ['info']),
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN, [
-      "ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST",
+      'ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST'
     ]),
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST",
+      'ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST'
     ]),
     _searchCategories() {
-      const query = this.query;
+      const query = this.query
       if (query && query.length) {
-        this.ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST(query);
+        this.ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST(query)
       }
     },
     _focusParentCategory() {
       if (this.dropdowns.length == 0) {
-        this.ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST("");
+        this.ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST('')
       }
     },
     _closeDropdown() {
-      this.isSearch = !this.isSearch;
-      this._focusParentCategory();
+      this.isSearch = !this.isSearch
+      this._focusParentCategory()
     },
     _addInfoToCategory(infoCategory) {
-      const _self = this;
-      const id = infoCategory.id;
+      const _self = this
+      const id = infoCategory.id
 
       const isExistHatCongDts = _.find(_self.info.giao_phan_hats, {
-        cong_doan_tu_sis: [{ cong_doan_tu_si_id: id }],
-      });
+        cong_doan_tu_sis: [{ cong_doan_tu_si_id: id, }],
+      })
 
       if (isExistHatCongDts === undefined) {
         this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
           hat: _self.hat,
           hatCongDts: _self.hatCongDts,
           hatCongDtsInfo: infoCategory,
-        });
+        })
       }
 
-      this._closeDropdown();
+      this._closeDropdown()
     },
   },
-};
+}
 </script>

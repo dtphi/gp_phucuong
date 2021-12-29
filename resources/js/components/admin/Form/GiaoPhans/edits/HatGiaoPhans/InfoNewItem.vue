@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import InfoGiaoHatAutocomplete from "../Groups/InfoGiaoHatAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   components: {
     InfoGiaoHatAutocomplete,
   },
@@ -61,9 +61,9 @@ export default {
       default: {},
     },
   },
-  data () {
+  data() {
     return {
-      error_giao_hat_select: null
+      error_giao_hat_select: null,
     }
   },
   computed: {
@@ -72,25 +72,25 @@ export default {
         return null
       }
 
-      return 'Chọn giáo hạt';
-    }
+      return 'Chọn giáo hạt'
+    },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan", "ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ['removeHatGiaoPhan', 'ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST']),
     _removeItem() {
       this.removeHatGiaoPhan({
-        action: "removeHatGiaoPhan",
+        action: 'removeHatGiaoPhan',
         item: this.item,
-      });
+      })
     },
     _addHatForm() {
       if (this.item.giao_hat_id) {
         this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({
           action: 'create.update.hat.db',
-          hat: this.item
-        });
+          hat: this.item,
+        })
       }
     },
-  }
-};
+  },
+}
 </script>

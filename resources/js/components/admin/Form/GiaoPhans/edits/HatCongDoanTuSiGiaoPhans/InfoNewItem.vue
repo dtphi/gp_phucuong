@@ -1,9 +1,11 @@
 <template>
   <tr>
     <td class="text-center">
-        <input type="checkbox"
-                :id="`info_select_id_${item.id}`"
-                v-model="item.isCheck">
+      <input
+        type="checkbox"
+        :id="`info_select_id_${item.id}`"
+        v-model="item.isCheck"
+      />
     </td>
     <td class="text-center">
       <info-cong-doan-tu-si-autocomplete
@@ -19,7 +21,8 @@
       </select>
     </td>
     <td class="text-right">
-      <button v-show="hat.giao_hat_id && hat.isEdit"
+      <button
+        v-show="hat.giao_hat_id && hat.isEdit"
         @click="_addCongdtsForm()"
         type="button"
         data-toggle="tooltip"
@@ -48,15 +51,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import InfoCongDoanTuSiAutocomplete from "../Groups/InfoCongDoanTuSiAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import InfoCongDoanTuSiAutocomplete from '../Groups/InfoCongDoanTuSiAutocomplete'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   components: {
-    BtnAdd,
     InfoCongDoanTuSiAutocomplete,
   },
   props: {
@@ -73,33 +74,33 @@ export default {
         return null
       }
 
-      return 'Chọn công đoàn tu sĩ';
-    }
+      return 'Chọn công đoàn tu sĩ'
+    },
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "removeHatCongDoanTuSiGiaoPhan","ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST"
+      'removeHatCongDoanTuSiGiaoPhan',
+      'ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST'
     ]),
     _removeItem() {
       this.removeHatCongDoanTuSiGiaoPhan({
-        action: "removeHatCongDoanTuSiGiaoPhan",
+        action: 'removeHatCongDoanTuSiGiaoPhan',
         giaoHat: this.hat,
         congDoanTuSi: this.item,
-      });
+      })
     },
     _addCongdtsForm() {
-      if (this.item.cong_doan_tu_si_id 
-        && this.hat.giao_hat_id) {
-          this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
-            action: 'create.update.hat.congdts.db',
-            hat: this.hat,
-            hatCongDts: this.item
-          });
+      if (this.item.cong_doan_tu_si_id && this.hat.giao_hat_id) {
+        this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_CONGDTS_LIST({
+          action: 'create.update.hat.congdts.db',
+          hat: this.hat,
+          hatCongDts: this.item,
+        })
       }
     },
   },
   setting: {
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

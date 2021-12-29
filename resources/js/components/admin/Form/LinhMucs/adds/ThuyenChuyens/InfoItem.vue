@@ -159,22 +159,20 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import linhMucMix from "@app/mixins/admin/linhmuc";
-import { MODULE_MODULE_LINH_MUC_ADD } from "store@admin/types/module-types";
-import InfoGiaoXuAutocomplete from "../../Groups/InfoGiaoXuAutocomplete";
-import InfoChucVuAutocomplete from "../../Groups/InfoChucVuAutocomplete";
-import InfoDucChaAutocomplete from "../../Groups/InfoDucChaAutocomplete";
-import InfoCoSoGiaoPhanAutocomplete from "../../Groups/InfoCoSoGiaoPhanAutocomplete";
-import InfoDongAutocomplete from "../../Groups/InfoDongAutocomplete";
-import InfoBanChuyenTrachAutocomplete from "../../Groups/InfoBanChuyenTrachAutocomplete";
+import { mapActions, } from 'vuex'
+import linhMucMix from '@app/mixins/admin/linhmuc'
+import { MODULE_MODULE_LINH_MUC_ADD, } from 'store@admin/types/module-types'
+import InfoGiaoXuAutocomplete from '../../Groups/InfoGiaoXuAutocomplete'
+import InfoChucVuAutocomplete from '../../Groups/InfoChucVuAutocomplete'
+import InfoDucChaAutocomplete from '../../Groups/InfoDucChaAutocomplete'
+import InfoCoSoGiaoPhanAutocomplete from '../../Groups/InfoCoSoGiaoPhanAutocomplete'
+import InfoDongAutocomplete from '../../Groups/InfoDongAutocomplete'
+import InfoBanChuyenTrachAutocomplete from '../../Groups/InfoBanChuyenTrachAutocomplete'
 
 export default {
-  name: "TheInfoItem",
+  name: 'TheInfoItem',
   mixins: [linhMucMix.tabData],
   components: {
-    BtnAdd,
     InfoGiaoXuAutocomplete,
     InfoChucVuAutocomplete,
     InfoDucChaAutocomplete,
@@ -189,19 +187,19 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
-      "removeThuyenChuyen",
-      "ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU",
-      "ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU",
-      "ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA",
-      "ACTION_UPDATE_DROPDOWN_TO_CHUC_VU",
-      "ACTION_UPDATE_DROPDOWN_TO_GIAO_XU",
-      "ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN",
-      "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG",
-      "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH",
+      'removeThuyenChuyen',
+      'ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU',
+      'ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU',
+      'ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA',
+      'ACTION_UPDATE_DROPDOWN_TO_CHUC_VU',
+      'ACTION_UPDATE_DROPDOWN_TO_GIAO_XU',
+      'ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN',
+      'ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG',
+      'ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH'
     ]),
   },
   setting: {
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

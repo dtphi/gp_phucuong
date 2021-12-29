@@ -11,30 +11,30 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_MODULE_GIAO_PHAN_ADD
-    } from 'store@admin/types/module-types';
+import {
+  mapActions,
+} from 'vuex'
+import {
+  MODULE_MODULE_GIAO_PHAN_ADD,
+} from 'store@admin/types/module-types'
 
-    export default {
-        name: 'TheButtonAdd',
-        props: {
-            moduleKey: {
-                default: ''
-            }
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-                'addHatGiaoPhan'
-            ]),
+export default {
+  name: 'TheButtonAdd',
+  props: {
+    moduleKey: {
+      default: '',
+    },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+      'addHatGiaoPhan'
+    ]),
 
-            _addInfo() {
-                this.addHatGiaoPhan({
-                    action: 'addHatGiaoPhan'
-                });
-            }
-        },
-    };
+    _addInfo() {
+      this.addHatGiaoPhan({
+        action: 'addHatGiaoPhan',
+      })
+    },
+  },
+}
 </script>

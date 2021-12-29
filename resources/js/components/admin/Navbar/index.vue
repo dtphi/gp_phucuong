@@ -112,14 +112,11 @@
 </template>
 
 <script>
-    import {
-        mapState
-    } from 'vuex';
-    import LoginUser from '../Profile';
-    import AllSearch from '../Search/AllSearch';
+import LoginUser from '../Profile'
+import AllSearch from '../Search/AllSearch'
 
-    export default {
-        name: 'Navbar',
-        components: {LoginUser, AllSearch}
-    };
+export default {
+  name: 'AdminNavbar',
+  components: { LoginUser, AllSearch, },
+}
 </script>

@@ -18,17 +18,17 @@
 </template>
 
 <script>
-import TabGeneral from "./adds/TabGeneral";
-import { mapState, mapGetters, mapActions } from "vuex";
-import { MODULE_MODULE_GROUP_ALBUMS_ADD } from "store@admin/types/module-types";
+import TabGeneral from './adds/TabGeneral'
+import { mapState, mapGetters, mapActions, } from 'vuex'
+import { MODULE_MODULE_GROUP_ALBUMS_ADD, } from 'store@admin/types/module-types'
 import {
   ACTION_SET_LOADING,
   ACTION_INSERT_INFO,
   ACTION_INSERT_INFO_BACK,
-} from "store@admin/types/action-types";
+} from 'store@admin/types/action-types'
 
 export default {
-  name: "FormGroupAlbumsAdd",
+  name: 'FormGroupAlbumsAdd',
   components: {
     TabGeneral,
   },
@@ -36,30 +36,30 @@ export default {
     return {
       fullPage: false,
       file: null,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_GROUP_ALBUMS_ADD, {
       loading: (state) => state.loading,
     }),
-    ...mapGetters(MODULE_MODULE_GROUP_ALBUMS_ADD, ["info"]),
+    ...mapGetters(MODULE_MODULE_GROUP_ALBUMS_ADD, ['info']),
   },
   methods: {
     ...mapActions(MODULE_MODULE_GROUP_ALBUMS_ADD, [
       ACTION_SET_LOADING,
       ACTION_INSERT_INFO,
-      ACTION_INSERT_INFO_BACK,
+      ACTION_INSERT_INFO_BACK
     ]),
     _submitInfo() {
-      this[ACTION_INSERT_INFO](this.info);
+      this[ACTION_INSERT_INFO](this.info)
     },
     _submitInfoBack() {
-      this[ACTION_INSERT_INFO_BACK](this.info);
+      this[ACTION_INSERT_INFO_BACK](this.info)
     },
   },
   setting: {
-    tab_general_title: "Tổng quan",
-    isForm: "add",
+    tab_general_title: 'Tổng quan',
+    isForm: 'add',
   },
-};
+}
 </script>

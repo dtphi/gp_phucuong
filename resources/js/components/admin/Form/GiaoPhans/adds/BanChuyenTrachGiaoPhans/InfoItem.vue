@@ -39,12 +39,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_ADD } from "store@admin/types/module-types";
-import InfoBanChuyenTrachAutocomplete from "../Groups/InfoBanChuyenTrachAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_ADD, } from 'store@admin/types/module-types'
+import InfoBanChuyenTrachAutocomplete from '../Groups/InfoBanChuyenTrachAutocomplete'
 
 export default {
-  name: "TheInfoItem",
+  name: 'TheInfoItem',
   components: {
     InfoBanChuyenTrachAutocomplete,
   },
@@ -55,17 +55,17 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-      "removeBanChuyenTrachGiaoPhan",
+      'removeBanChuyenTrachGiaoPhan'
     ]),
     _removeItem() {
       this.removeBanChuyenTrachGiaoPhan({
-        action: "removeBanChuyenTrachGiaoPhan",
+        action: 'removeBanChuyenTrachGiaoPhan',
         item: this.item,
-      });
+      })
     },
   },
   setting: {
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

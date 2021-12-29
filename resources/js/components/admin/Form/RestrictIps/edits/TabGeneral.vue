@@ -42,18 +42,18 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { config } from "@app/common/config";
-import { MODULE_MODULE_RESTRICT_IP_EDIT } from "store@admin/types/module-types";
-import { extend } from 'vee-validate';
-import { regex } from 'vee-validate/dist/rules';
+import { mapState, } from 'vuex'
+import { config, } from '@app/common/config'
+import { MODULE_MODULE_RESTRICT_IP_EDIT, } from 'store@admin/types/module-types'
+import { extend, } from 'vee-validate'
+import { regex, } from 'vee-validate/dist/rules'
 extend('regex', {
-    ...regex,
-    message: 'IP Invalid',
+  ...regex,
+  message: 'IP Invalid',
 })
 
 export default {
-  name: "TabGeneralForm",
+  name: 'TabGeneralForm',
   data() {
     return {
     }
@@ -63,12 +63,12 @@ export default {
       groupData: (state) => state.info.data || {},
     }),
     _errors() {
-      return this.errors.length;
+      return this.errors.length
     },
   },
   setting: {
     cf: config,
-    name_txt: "IP",
+    name_txt: 'IP',
   },
-};
+}
 </script>

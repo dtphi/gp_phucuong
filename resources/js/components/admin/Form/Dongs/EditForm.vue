@@ -18,17 +18,18 @@
 </template>
 
 <script>
-import { EventBus } from "@app/api/utils/event-bus";
-import { mapState, mapGetters, mapActions } from "vuex";
-import { MODULE_MODULE_DONG_EDIT } from "store@admin/types/module-types";
+import { EventBus, } from '@app/api/utils/event-bus'
+import { mapState, mapGetters, mapActions, } from 'vuex'
+import { MODULE_MODULE_DONG_EDIT, } from 'store@admin/types/module-types'
 import {
   ACTION_SET_LOADING,
   ACTION_SET_IMAGE,
-} from "store@admin/types/action-types";
-import TabGeneral from "./edits/TabGeneral";
+} from 'store@admin/types/action-types'
+import TabGeneral from './edits/TabGeneral'
+import { fnCheckProp, } from '@app/common/util'
 
 export default {
-  name: "FormDongEdit",
+  name: 'FormDongEdit',
   components: {
     TabGeneral,
   },
@@ -36,76 +37,76 @@ export default {
     return {
       fullPage: false,
       file: null,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_DONG_EDIT, {
       loading: (state) => state.loading,
       info: (state) => {
-        return state.info;
+        return state.info
       },
     }),
-    ...mapGetters(MODULE_MODULE_DONG_EDIT, ["info"]),
+    ...mapGetters(MODULE_MODULE_DONG_EDIT, ['info']),
   },
   created() {
     this.ACTION_GET_LIST_GIAO_PHAN({
       perPage: -1,
-    });
+    })
   },
   mounted() {
-    const _self = this;
-    EventBus.$on("on-selected-image", (imgItem) => {
-      _self.$data.file = imgItem;
-      _self._selectMainImg(imgItem);
-    });
+    const _self = this
+    EventBus.$on('on-selected-image', (imgItem) => {
+      _self.$data.file = imgItem
+      _self._selectMainImg(imgItem)
+    })
   },
   methods: {
     ...mapActions(MODULE_MODULE_DONG_EDIT, [
       ACTION_SET_LOADING,
       ACTION_SET_IMAGE,
-      "ACTION_UPDATE_INFO_DONG",
-      "ACTION_UPDATE_INFO_DONG_BACK",
-      "ACTION_GET_LIST_GIAO_PHAN",
+      'ACTION_UPDATE_INFO_DONG',
+      'ACTION_UPDATE_INFO_DONG_BACK',
+      'ACTION_GET_LIST_GIAO_PHAN'
     ]),
     _submitInfo() {
-      this.ACTION_UPDATE_INFO_DONG(this.info);
+      this.ACTION_UPDATE_INFO_DONG(this.info)
     },
     _submitInfoBack() {
-      this.ACTION_UPDATE_INFO_DONG_BACK(this.info);
+      this.ACTION_UPDATE_INFO_DONG_BACK(this.info)
     },
     _selectMainImg(file) {
       const image = {
-        basename: "",
-        dirname: "",
-        extension: "",
-        filename: "",
-        path: "",
+        basename: '',
+        dirname: '',
+        extension: '',
+        filename: '',
+        path: '',
         size: 0,
-        thumb: "",
-        timestamp: "",
-        type: "",
-      };
-      if (typeof file === "object") {
-        let selected = image;
+        thumb: '',
+        timestamp: '',
+        type: '',
+      }
+      if (typeof file === 'object') {
+        let selected = image
 
-        if (file.hasOwnProperty("selected") && file.selected) {
-          selected = file.selected;
+        if (fnCheckProp(file, 'selected') && file.selected) {
+          selected = file.selected
         }
 
-        this[ACTION_SET_IMAGE](selected);
+        this[ACTION_SET_IMAGE](selected)
       }
     },
   },
   setting: {
-    tab_general_title: "Tổng quan",
-    tab_mo_rong_title: "Mở rộng",
-    tab_bang_cap_title: "Bằng Cấp",
-    tab_chuc_thanh_title: "Chức Thánh",
-    tab_thuyen_chuyen_title: "Thuyên Chuyển",
-    tab_van_thu_title: "Văn Thư",
-    tab_special_info_title: "Slide tin tức tiêu điểm",
-    error_msg_system: "Lỗi hệ thống !",
-    isForm: "edit",
+    tab_general_title: 'Tổng quan',
+    tab_mo_rong_title: 'Mở rộng',
+    tab_bang_cap_title: 'Bằng Cấp',
+    tab_chuc_thanh_title: 'Chức Thánh',
+    tab_thuyen_chuyen_title: 'Thuyên Chuyển',
+    tab_van_thu_title: 'Văn Thư',
+    tab_special_info_title: 'Slide tin tức tiêu điểm',
+    error_msg_system: 'Lỗi hệ thống !',
+    isForm: 'edit',
   },
-};
+}
 </script>

@@ -32,21 +32,21 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC } from "store@admin/types/module-types";
+import { mapState, mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC, } from 'store@admin/types/module-types'
 
 export default {
-  name: "InfoTenThanhAutocomplete",
+  name: 'InfoTenThanhAutocomplete',
   props: {
     tenThanh: {
-      default: "",
+      default: '',
     },
   },
   data() {
     return {
-      dropdownStyle: "display: none;",
+      dropdownStyle: 'display: none;',
       isSearch: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_LINH_MUC, {
@@ -55,27 +55,27 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC, [
-      "ACTION_GET_DROPDOWN_TEN_THANH_LIST",
+      'ACTION_GET_DROPDOWN_TEN_THANH_LIST'
     ]),
     _searchCategories() {
-      const query = this.query;
+      const query = this.query
       if (query && query.length) {
-        this.ACTION_GET_DROPDOWN_TEN_THANH_LIST(query);
+        this.ACTION_GET_DROPDOWN_TEN_THANH_LIST(query)
       }
     },
     _focusParentCategory() {
       if (this.dropdowns.length == 0) {
-        this.ACTION_GET_DROPDOWN_TEN_THANH_LIST("");
+        this.ACTION_GET_DROPDOWN_TEN_THANH_LIST('')
       }
     },
     _closeDropdown() {
-      this.isSearch = !this.isSearch;
-      this._focusParentCategory();
+      this.isSearch = !this.isSearch
+      this._focusParentCategory()
     },
     _addInfoToCategory(infoCategory) {
-      this.$emit("on-select-ten-thanh", infoCategory);
-      this._closeDropdown();
+      this.$emit('on-select-ten-thanh', infoCategory)
+      this._closeDropdown()
     },
-  }
-};
+  },
+}
 </script>

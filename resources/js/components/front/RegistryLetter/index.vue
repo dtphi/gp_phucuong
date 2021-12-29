@@ -24,7 +24,6 @@
               placeholder="Enter your e-mail address"
               v-model="subscribe.email"
             />
-            
           </validation-provider>
           <!-- Submit from -->
           <button class="btn" type="button" @click="_submitInfo">
@@ -38,27 +37,24 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
-import Vue from 'vue';
-import Notifications from 'vue-notification';
-Vue.use(Notifications);
-import {
-  ValidationObserver,
-  ValidationProvider
-} from 'vee-validate';
-Vue.component('ValidationObserver', ValidationObserver);
-Vue.component('ValidationProvider', ValidationProvider);
-import { MODULE_SUBSCRIBE } from "store@front/types/module-types";
-import { setInteractionMode } from 'vee-validate';
+import { mapState, mapGetters, mapActions, } from 'vuex'
+import Vue from 'vue'
+import Notifications from 'vue-notification'
+Vue.use(Notifications)
+import { ValidationObserver, ValidationProvider, } from 'vee-validate'
+Vue.component('ValidationObserver', ValidationObserver)
+Vue.component('ValidationProvider', ValidationProvider)
+import { MODULE_SUBSCRIBE, } from 'store@front/types/module-types'
+import { setInteractionMode, } from 'vee-validate'
 setInteractionMode('passive')
 
 export default {
-  name: "RegistryLetter",
+  name: 'RegistryLetter',
   data() {
     return {
       text_notification: '',
       fullPage: false,
-    };
+    }
   },
   // loading vs errors trong stata
   computed: {
@@ -66,50 +62,51 @@ export default {
       loading: (state) => state.loading,
       errors: (state) => state.errors,
     }),
-    ...mapGetters(MODULE_SUBSCRIBE, ["subscribe", "loading", 'insertSuccess']),
+    ...mapGetters(MODULE_SUBSCRIBE, ['subscribe', 'loading', 'insertSuccess']),
     _errors() {
-      return this.errors.length;
+      return this.errors.length
     },
   },
   watch: {
-    'insertSuccess'(newValue) {
-      if (typeof newValue == "boolean") {
-        if(newValue){
-          this.$refs.observerNewEmail.reset();
-          this._notificationUpdate('Đã đăng ký nhận tin thành công!', 'success');
+    insertSuccess(newValue) {
+      if (typeof newValue == 'boolean') {
+        if (newValue) {
+          this.$refs.observerNewEmail.reset()
+          this._notificationUpdate('Đã đăng ký nhận tin thành công!', 'success')
         } else {
-          this._notificationUpdate('Email nhận tin chưa hợp lệ!', 'error');
+          this._notificationUpdate('Email nhận tin chưa hợp lệ!', 'error')
         }
       }
     },
   },
   methods: {
     ...mapActions(MODULE_SUBSCRIBE, [
-      "ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER",
-      "RESET_NOTIFICATION"
+      'ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER',
+      'RESET_NOTIFICATION'
     ]),
     _errorToArrs() {
-      const errs = [];
+      const errs = []
       if (
         this.errors.length &&
-        typeof this.errors[0].messages !== "undefined"
+        typeof this.errors[0].messages !== 'undefined'
       ) {
-        errs.push("Email đã được đăng kí!");
+        errs.push('Email đã được đăng kí!')
       }
       if (Object.entries(errs).length === 0 && this.errors.length) {
-        errs.push(this.$options.setting.error_msg_system);
+        errs.push(this.$options.setting.error_msg_system)
       }
-      return errs;
+
+      return errs
     },
     async _submitInfo() {
-      const _self = this;
+      const _self = this
       await _self.$refs.observerNewEmail.validate().then((isValid) => {
         if (isValid) {
-          _self.ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER(_self.subscribe);
+          _self.ACTION_SUBSCRIBE_REGISTRY_TO_NEWSLETTER(_self.subscribe)
         } else {
-          _self._notificationUpdate('Email nhận tin chưa hợp lệ!', 'error');
+          _self._notificationUpdate('Email nhận tin chưa hợp lệ!', 'error')
         }
-      });
+      })
     },
     _notificationUpdate(msg, type) {
       this.$notify({
@@ -117,24 +114,22 @@ export default {
         type: type,
         title: msg,
         text: this.text_notification,
-      });
-      this.RESET_NOTIFICATION(null);
-    }
+      })
+      this.RESET_NOTIFICATION(null)
+    },
   },
   setting: {
-    error_msg_system: "Lỗi hệ thống !",
-    groupNotify: 'add_email'
+    error_msg_system: 'Lỗi hệ thống !',
+    groupNotify: 'add_email',
   },
-};
+}
 </script>
 <style>
 .form-input {
   width: 100%;
   border-radius: 4px;
-  outline:0;
-  background-color: #CCCCCC;
+  outline: 0;
+  background-color: #cccccc;
   padding: 5px;
 }
 </style>
-
-

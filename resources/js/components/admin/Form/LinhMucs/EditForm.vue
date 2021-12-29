@@ -85,22 +85,23 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
+import { mapState, mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 import {
   ACTION_INSERT_INFO,
   ACTION_INSERT_INFO_BACK,
-  ACTION_SET_IMAGE
-} from "store@admin/types/action-types";
-import TabGeneral from "./edits/TabGeneral";
-import TabMoRong from "./edits/TabMoRong";
-import TabBangCap from "./edits/TabBangCap";
-import TabChucThanh from "./edits/TabChucThanh";
-import TabVanThu from "./edits/TabVanThu";
-import TabThuyenChuyen from "./edits/TabThuyenChuyen";
+  ACTION_SET_IMAGE,
+} from 'store@admin/types/action-types'
+import TabGeneral from './edits/TabGeneral'
+import TabMoRong from './edits/TabMoRong'
+import TabBangCap from './edits/TabBangCap'
+import TabChucThanh from './edits/TabChucThanh'
+import TabVanThu from './edits/TabVanThu'
+import TabThuyenChuyen from './edits/TabThuyenChuyen'
+import { fnCheckProp, } from '@app/common/util'
 
 export default {
-  name: "FormEdit",
+  name: 'FormEdit',
   components: {
     TabGeneral,
     TabMoRong,
@@ -111,38 +112,39 @@ export default {
   },
   data() {
     const mm = new MM({
-        el: '#modal-general-info-manager',
-        api: {
-            baseUrl: window.origin + '/api/mmedia',
-            listUrl: 'list',
-            uploadUrl: 'upload',
-        },
-        onSelect: function (fi) {
-            if (typeof fi === "object") {
-                if (fi.hasOwnProperty('selected') && fi.selected) {
-                    const pathImg = 'Image/NewPicture/';
+      el: '#modal-general-info-manager',
+      api: {
+        baseUrl: window.origin + '/api/mmedia',
+        listUrl: 'list',
+        uploadUrl: 'upload',
+      },
+      onSelect: function(fi) {
+        if (typeof fi === 'object') {
+          if (fnCheckProp(fi, 'selected') && fi.selected) {
+            const pathImg = 'Image/NewPicture/'
 
-                    if (fi.selected.hasOwnProperty('path')) {
-                        if (this._selfCom.fn) {
-                            this._selfCom.fn(pathImg + fi.selected.path, fi.selected);
-                        } else {
-                          if (typeof this._selfCom[ACTION_SET_IMAGE] == "function"){
-                            this._selfCom[ACTION_SET_IMAGE](pathImg + fi.selected.path);
-                          }
-                        }
-
-                        document.getElementById('media-file-manager-content').style = "display:none";
-                    }
+            if (fnCheckProp(fi.selected, 'path')) {
+              if (this._selfCom.fn) {
+                this._selfCom.fn(pathImg + fi.selected.path, fi.selected)
+              } else {
+                if (typeof this._selfCom[ACTION_SET_IMAGE] == 'function') {
+                  this._selfCom[ACTION_SET_IMAGE](pathImg + fi.selected.path)
                 }
+              }
+
+              document.getElementById('media-file-manager-content').style =
+                'display:none'
             }
-        },
-        _selfCom: null
+          }
+        }
+      },
+      _selfCom: null,
     })
-    
+
     return {
       fullPage: false,
-      mm: mm
-    };
+      mm: mm,
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
@@ -156,22 +158,22 @@ export default {
       ACTION_INSERT_INFO_BACK
     ]),
     _submitInfo() {
-      this[ACTION_INSERT_INFO](this.info);
+      this[ACTION_INSERT_INFO](this.info)
     },
     _submitInfoBack() {
-      this[ACTION_INSERT_INFO_BACK](this.info);
+      this[ACTION_INSERT_INFO_BACK](this.info)
     },
   },
   setting: {
-    tab_general_title: "Tổng quan",
-    tab_mo_rong_title: "Mở rộng",
-    tab_bang_cap_title: "Bằng Cấp",
-    tab_chuc_thanh_title: "Chức Thánh",
-    tab_thuyen_chuyen_title: "Thuyên Chuyển",
-    tab_van_thu_title: "Văn Thư",
-    tab_special_info_title: "Slide tin tức tiêu điểm",
-    error_msg_system: "Lỗi hệ thống !",
-    isForm: "edit",
-  }
-};
+    tab_general_title: 'Tổng quan',
+    tab_mo_rong_title: 'Mở rộng',
+    tab_bang_cap_title: 'Bằng Cấp',
+    tab_chuc_thanh_title: 'Chức Thánh',
+    tab_thuyen_chuyen_title: 'Thuyên Chuyển',
+    tab_van_thu_title: 'Văn Thư',
+    tab_special_info_title: 'Slide tin tức tiêu điểm',
+    error_msg_system: 'Lỗi hệ thống !',
+    isForm: 'edit',
+  },
+}
 </script>

@@ -209,16 +209,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
-import { ACTION_SET_IMAGE } from "store@admin/types/action-types";
-import linhMucMix from "@app/mixins/admin/linhmuc";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
+import { ACTION_SET_IMAGE, } from 'store@admin/types/action-types'
+import linhMucMix from '@app/mixins/admin/linhmuc'
 
 export default {
-  name: "TabMoRongForm",
+  name: 'TabMoRongForm',
   mixins: [linhMucMix.tabData],
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [ ACTION_SET_IMAGE ])
-  }
-};
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [ ACTION_SET_IMAGE ]),
+  },
+}
 </script>

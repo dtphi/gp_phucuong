@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { MODULE_AUTH } from "store@admin/types/module-types";
-import Logout from "../Sidebar/Logout";
+import { mapState, } from 'vuex'
+import { MODULE_AUTH, } from 'store@admin/types/module-types'
+import Logout from '../Sidebar/Logout'
 
 export default {
-  name: "UserLogin",
+  name: 'UserLogin',
   components: {
     Logout,
   },
@@ -33,5 +33,5 @@ export default {
       user: (state) => state.user,
     }),
   },
-};
+}
 </script>

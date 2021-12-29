@@ -282,38 +282,38 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { MODULE_AUTH } from "store@admin/types/module-types";
-import { fn_get_admin_base_url } from "@app/api/utils/fn-helper";
-import {unserialize} from 'php-serialize';
+import { mapState, } from 'vuex'
+import { MODULE_AUTH, } from 'store@admin/types/module-types'
+import { fn_get_admin_base_url, } from '@app/api/utils/fn-helper'
+import { unserialize, } from 'php-serialize'
 
 export default {
-  name: "LeftSideBar",
+  name: 'LeftSideBar',
   computed: {
     ...mapState(MODULE_AUTH, {
-        user: (state) => state.user,
-        userPhone: (state) => state.linhMucExpectSignInPhone
+      user: (state) => state.user,
+      userPhone: (state) => state.linhMucExpectSignInPhone,
     }),
     navStyle() {
       return {
-        'min-height':innerHeight + 'px'
+        'min-height':innerHeight + 'px',
       }
     },
     ulMenu() {
       return {
         'height': '530px',
         'overflow-x': 'hidden',
-        'overflow-y': 'scroll'
+        'overflow-y': 'scroll',
       }
-    }
+    },
   },
   methods: {
     _renderMenu() {
-      const self = this;
-      const rules = unserialize(this.user.ruleSelect);
-      let menuHtml = '';
+      const self = this
+      const rules = unserialize(this.user.ruleSelect)
+      let menuHtml = ''
 
-      Object.entries(rules).forEach(function(item){
+      Object.entries(rules).forEach(function(item) {
         if (item[1].abilities.list) {
           const links = self._getRuleHref(item[0])
           menuHtml += '<li><a href=\'' + links.href + '\'>'
@@ -321,88 +321,88 @@ export default {
         }
       })
 
-      return menuHtml;
+      return menuHtml
     },
     _getHref(path) {
-      return fn_get_admin_base_url() + "/" + path;
+      return fn_get_admin_base_url() + '/' + path
     },
     _getRuleHref(ruleKey) {
-      const links = this.$options.setting.permisstionGroupTexts[ruleKey];
+      const links = this.$options.setting.permisstionGroupTexts[ruleKey]
 
       return {
-        href: fn_get_admin_base_url() + "/" + links.path, 
-        name: links.name 
+        href: fn_get_admin_base_url() + '/' + links.path, 
+        name: links.name, 
       }
-    }
+    },
   },
   setting: {
     permisstionGroupTexts: {
-        setting: { name: 'Cài đặt', path: 'system' },
-        thanh: { name: 'Thánh', path: 'thanhs' },
-        news_group: { name: 'Tin tức Danh mục', path: 'news-categories' },
-        linh_muc_van_thu: { name: 'Văn thư', path: 'van-thus' },
-        linh_muc_thuyen_chuyen: { name: 'Thuyên chuyển', path: 'thuyen-chuyens' },
-        linh_muc_bang_cap: { name: 'Bằng cấp', path: 'bang-caps' },
-        linh_muc_chuc_thanh: {name: 'Chức thánh', path: 'chuc-thanhs' },
-        linh_muc: { name: 'Linh mục', path: 'linh-mucs'},
-        le_chinh: { name: 'Lễ chính', path: 'le-chinhs' },
-        chuc_vu: { name: 'Chức vụ', path: 'chuc-vus' },
-        giao_phan: { name: 'Giáo phận', path: 'giao-phans' },
-        giao_phan_news_group: { name: 'Giáo phận Danh mục', path: 'giao-phan/danh-mucs' },
-        giao_phan_news: { name: 'Giáo phận Tin tức', path: 'giao-phan/tin-tucs' },
-        giao_hat: { name: 'Giáo hạt', path: 'giao-hats' },
-        giao_xu: { name: 'Giáo xứ', path: 'giao-xus' },
-        giao_diem: { name: 'Giáo điểm', path: 'giao-diems' },
-        giao_phan_co_so: { name: 'Cơ sở', path: 'co-so-giao-phans' },
-        cong_doan_tu_si: { name: 'Công đoàn tu sĩ', path: 'cong-doan-tu-sis' },
-        dong: { name: 'Dòng', path: 'dongs' },
-        tin_tuc: { name: 'Tin tức', path: 'informations' },
-        slide_info_specials: { name: 'Slide tiêu điểm', path: 'slide-info-specials' },
-        album_group: { name: 'Danh mục Album', path: 'group-albums' },
-        album: { name: 'Album', path: 'albums' }
+      setting: { name: 'Cài đặt', path: 'system', },
+      thanh: { name: 'Thánh', path: 'thanhs', },
+      news_group: { name: 'Tin tức Danh mục', path: 'news-categories', },
+      linh_muc_van_thu: { name: 'Văn thư', path: 'van-thus', },
+      linh_muc_thuyen_chuyen: { name: 'Thuyên chuyển', path: 'thuyen-chuyens', },
+      linh_muc_bang_cap: { name: 'Bằng cấp', path: 'bang-caps', },
+      linh_muc_chuc_thanh: { name: 'Chức thánh', path: 'chuc-thanhs', },
+      linh_muc: { name: 'Linh mục', path: 'linh-mucs', },
+      le_chinh: { name: 'Lễ chính', path: 'le-chinhs', },
+      chuc_vu: { name: 'Chức vụ', path: 'chuc-vus', },
+      giao_phan: { name: 'Giáo phận', path: 'giao-phans', },
+      giao_phan_news_group: { name: 'Giáo phận Danh mục', path: 'giao-phan/danh-mucs', },
+      giao_phan_news: { name: 'Giáo phận Tin tức', path: 'giao-phan/tin-tucs', },
+      giao_hat: { name: 'Giáo hạt', path: 'giao-hats', },
+      giao_xu: { name: 'Giáo xứ', path: 'giao-xus', },
+      giao_diem: { name: 'Giáo điểm', path: 'giao-diems', },
+      giao_phan_co_so: { name: 'Cơ sở', path: 'co-so-giao-phans', },
+      cong_doan_tu_si: { name: 'Công đoàn tu sĩ', path: 'cong-doan-tu-sis', },
+      dong: { name: 'Dòng', path: 'dongs', },
+      tin_tuc: { name: 'Tin tức', path: 'informations', },
+      slide_info_specials: { name: 'Slide tiêu điểm', path: 'slide-info-specials', },
+      album_group: { name: 'Danh mục Album', path: 'group-albums', },
+      album: { name: 'Album', path: 'albums', },
     },
-    dashboards_title: "Quản trị",
-    users_title: "Người dùng",
-    category_root_title: "Tin Tức",
-    category_sub_cate_info_title: "Danh mục",
-    category_sub_info_title: "Tin tức",
-    category_sub_image_title: "Hình ảnh",
-    module_title: "Mở rộng",
-    module_category_left_side_bar: "Danh mục trái",
-    module_category_icon_side_bar: "Danh mục Icon",
-    module_home_banner: "Banner trang chủ",
-    module_thong_bao: "Danh mục thông báo",
-    module_loi_chua: "Danh mục Lời Chúa",
-    module_tin_giao_hoi_viet_nam: "Tin giáo hội việt nam",
-    module_tin_giao_hoi: "Tin giáo hội",
-    module_tin_giao_phan: "Tin giáo phận",
-    module_van_kien: "Văn kiện",
-    module_noi_bat: "Nổi bật",
-    system_root_title: "Hệ thống",
-    sytem_title: "Cài đặt",
-    linhmucs_title: "Linh mục",
-    linhmuc_bangcaps_title: "Bằng cấp",
-    linhmuc_chucthanhs_title: "Chức thánh",
-    linhmuc_vanthus_title: "Văn thư",
-    linhmuc_thuyenchuyens_title: "Thuyên chuyển",
-    slide_info_special_title: "Slide tiêu điểm",
-    giaophans_title: "Giáo phận",
-    giaohats_title: "Giáo hạt",
-    giaoxus_title: "Giáo xứ",
-    giaodiems_title: "Giáo điểm",
-    co_so_giao_phans_title: "Cơ sở giáo phận",
-    cong_doan_tu_sis_title: "Công đoàn tu sĩ",
-    dongs_title: "Dòng",
-    thanhs_title: "Thánh",
-    chuc_vus_title: "Chức vụ",
-    le_chinhs_title: "Lễ chính",
-    giaophan_tintucs_title: "Giáo phận tin tức",
-    restrict_ips_title: "Restrict ip",
-    album_root_title: "Album hình ảnh",
-    group_albums_title: "Nhóm Album",
-    albums_title: "Album"
+    dashboards_title: 'Quản trị',
+    users_title: 'Người dùng',
+    category_root_title: 'Tin Tức',
+    category_sub_cate_info_title: 'Danh mục',
+    category_sub_info_title: 'Tin tức',
+    category_sub_image_title: 'Hình ảnh',
+    module_title: 'Mở rộng',
+    module_category_left_side_bar: 'Danh mục trái',
+    module_category_icon_side_bar: 'Danh mục Icon',
+    module_home_banner: 'Banner trang chủ',
+    module_thong_bao: 'Danh mục thông báo',
+    module_loi_chua: 'Danh mục Lời Chúa',
+    module_tin_giao_hoi_viet_nam: 'Tin giáo hội việt nam',
+    module_tin_giao_hoi: 'Tin giáo hội',
+    module_tin_giao_phan: 'Tin giáo phận',
+    module_van_kien: 'Văn kiện',
+    module_noi_bat: 'Nổi bật',
+    system_root_title: 'Hệ thống',
+    sytem_title: 'Cài đặt',
+    linhmucs_title: 'Linh mục',
+    linhmuc_bangcaps_title: 'Bằng cấp',
+    linhmuc_chucthanhs_title: 'Chức thánh',
+    linhmuc_vanthus_title: 'Văn thư',
+    linhmuc_thuyenchuyens_title: 'Thuyên chuyển',
+    slide_info_special_title: 'Slide tiêu điểm',
+    giaophans_title: 'Giáo phận',
+    giaohats_title: 'Giáo hạt',
+    giaoxus_title: 'Giáo xứ',
+    giaodiems_title: 'Giáo điểm',
+    co_so_giao_phans_title: 'Cơ sở giáo phận',
+    cong_doan_tu_sis_title: 'Công đoàn tu sĩ',
+    dongs_title: 'Dòng',
+    thanhs_title: 'Thánh',
+    chuc_vus_title: 'Chức vụ',
+    le_chinhs_title: 'Lễ chính',
+    giaophan_tintucs_title: 'Giáo phận tin tức',
+    restrict_ips_title: 'Restrict ip',
+    album_root_title: 'Album hình ảnh',
+    group_albums_title: 'Nhóm Album',
+    albums_title: 'Album',
   },
-};
+}
 </script>
 
 <style lang="scss">

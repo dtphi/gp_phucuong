@@ -74,35 +74,35 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   props: {
     item: {
       default: {},
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeBangCap","addBangCaps"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeBangCap', 'addBangCaps']),
     _removeItem() {
       this.removeBangCap({
-        action: "",
+        action: '',
         item: this.item,
-      });
+      })
     },
     _addBangCapForm() {
       if (this.item.id) {
         this.addBangCaps({
           action: 'create.update.bang.cap.db',
-          info: this.item
-        });
+          info: this.item,
+        })
       }
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

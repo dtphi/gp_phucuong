@@ -62,12 +62,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { config } from "@app/common/config";
-import { MODULE_MODULE_GROUP_ALBUMS_EDIT } from "store@admin/types/module-types";
+import { mapState, } from 'vuex'
+import { config, } from '@app/common/config'
+import { MODULE_MODULE_GROUP_ALBUMS_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TabGeneralForm",
+  name: 'TabGeneralForm',
   data() {
     return {
     }
@@ -77,12 +77,12 @@ export default {
       groupData: (state) => state.info.data || {},
     }),
     _errors() {
-      return this.errors.length;
+      return this.errors.length
     },
   },
   setting: {
     cf: config,
-    name_txt: "Group Name",
+    name_txt: 'Group Name',
   },
-};
+}
 </script>

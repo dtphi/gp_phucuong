@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN } from "store@admin/types/module-types";
+import { mapState, mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN, } from 'store@admin/types/module-types'
 
 export default {
-  name: "DongAutocomplete",
+  name: 'DongAutocomplete',
   props: {
     categoryId: {
       default: null,
@@ -53,9 +53,9 @@ export default {
   },
   data() {
     return {
-      dropdownStyle: "display: none;",
-      query: "",
-    };
+      dropdownStyle: 'display: none;',
+      query: '',
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_GIAO_PHAN, {
@@ -64,30 +64,30 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN, [
-      "ACTION_GET_DROPDOWN_GIAO_DIEM_LIST",
+      'ACTION_GET_DROPDOWN_GIAO_DIEM_LIST'
     ]),
     _searchCategories() {
-      const query = this.query;
+      const query = this.query
       if (query && query.length) {
-        this.ACTION_GET_DROPDOWN_GIAO_DIEM_LIST(query);
+        this.ACTION_GET_DROPDOWN_GIAO_DIEM_LIST(query)
       }
     },
     _focusParentCategory() {
       if (this.dropdowns.length == 0) {
-        this.ACTION_GET_DROPDOWN_GIAO_DIEM_LIST("");
-        this.$data.dropdownStyle = "display:block";
+        this.ACTION_GET_DROPDOWN_GIAO_DIEM_LIST('')
+        this.$data.dropdownStyle = 'display:block'
       } else {
-        this.$data.dropdownStyle = "display:block";
+        this.$data.dropdownStyle = 'display:block'
       }
     },
     _closeDropdown() {
-      this.$data.dropdownStyle = "display:none";
+      this.$data.dropdownStyle = 'display:none'
     },
     _addInfoToCategory(infoCategory) {
-      this.query = infoCategory.name;
-      this.$emit("on-select-giao-xu", infoCategory);
-      this._closeDropdown();
+      this.query = infoCategory.name
+      this.$emit('on-select-giao-xu', infoCategory)
+      this._closeDropdown()
     },
   },
-};
+}
 </script>

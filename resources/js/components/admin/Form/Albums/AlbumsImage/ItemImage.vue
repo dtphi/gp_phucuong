@@ -59,34 +59,34 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_MODULE_ALBUMS_ADD
-    } from 'store@admin/types/module-types';
+import {
+  mapActions,
+} from 'vuex'
+import {
+  MODULE_MODULE_ALBUMS_ADD,
+} from 'store@admin/types/module-types'
 
-    export default {
-        name: 'TheItemAlbumsImage',
-        props: {
-            banner: {
-                default: {}
-            }
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_ALBUMS_ADD, [
-                'removeInfoAlbumsImage'
-            ]),
-            _getImgUrl() {
-                return '/Image/NewPicture/'+this.banner.image;
-            },
-            _removeBanner() {
-                this.removeInfoAlbumsImage(this.banner);
-            }
-        },
-        setting: {
-            image_title: 'Banner',
-            image_url_title: 'Url hình'
-        }
-    };
+export default {
+  name: 'TheItemAlbumsImage',
+  props: {
+    banner: {
+      default: {},
+    },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_ALBUMS_ADD, [
+      'removeInfoAlbumsImage'
+    ]),
+    _getImgUrl() {
+      return '/Image/NewPicture/'+this.banner.image
+    },
+    _removeBanner() {
+      this.removeInfoAlbumsImage(this.banner)
+    },
+  },
+  setting: {
+    image_title: 'Banner',
+    image_url_title: 'Url hình',
+  },
+}
 </script>

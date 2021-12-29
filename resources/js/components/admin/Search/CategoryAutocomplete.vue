@@ -47,18 +47,17 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
-import TheDropdownCategory from "./TheDropdownCategory";
+import { mapGetters, mapActions, mapState, } from 'vuex'
+import TheDropdownCategory from './TheDropdownCategory'
 import {
   MODULE_NEWS_CATEGORY,
   MODULE_NEWS_CATEGORY_ADD,
-} from "store@admin/types/module-types";
-import { ACTION_GET_DROPDOWN_CATEGORY_LIST } from "store@admin/types/action-types";
-import lodash from "lodash";
+} from 'store@admin/types/module-types'
+import { ACTION_GET_DROPDOWN_CATEGORY_LIST, } from 'store@admin/types/action-types'
 
 export default {
-  name: "CategoryAutocomplete",
-  components: { TheDropdownCategory },
+  name: 'CategoryAutocomplete',
+  components: { TheDropdownCategory, },
   props: {
     categoryId: {
       default: 0,
@@ -66,45 +65,45 @@ export default {
   },
   data() {
     return {
-      dropdownStyle: "display: none;",
+      dropdownStyle: 'display: none;',
       itemNone: {
         category_id: 0,
-        category_name: " --- Chọn --- ",
+        category_name: ' --- Chọn --- ',
         sort_order: 0,
       },
-    };
+    }
   },
   computed: {
-    ...mapState(MODULE_NEWS_CATEGORY, ["dropdownCategories"]),
-    ...mapGetters(MODULE_NEWS_CATEGORY_ADD, ["newsGroupAdd"]),
+    ...mapState(MODULE_NEWS_CATEGORY, ['dropdownCategories']),
+    ...mapGetters(MODULE_NEWS_CATEGORY_ADD, ['newsGroupAdd']),
   },
   watch: {
-    "newsGroupAdd.nameQuery": {
-      handler: _.debounce(function () {
-        this._searchProducts();
+    'newsGroupAdd.nameQuery': {
+      handler: _.debounce(function() {
+        this._searchProducts()
       }, 100),
     },
   },
   methods: {
     ...mapActions(MODULE_NEWS_CATEGORY, [ACTION_GET_DROPDOWN_CATEGORY_LIST]),
     _searchProducts() {
-      const query = this.newsGroupAdd.nameQuery;
+      const query = this.newsGroupAdd.nameQuery
       if (query && query.length) {
-        this[ACTION_GET_DROPDOWN_CATEGORY_LIST]("");
+        this[ACTION_GET_DROPDOWN_CATEGORY_LIST]('')
       }
     },
     _focusParentCategory() {
-      this[ACTION_GET_DROPDOWN_CATEGORY_LIST]("");
-      this.$data.dropdownStyle = "display:block";
+      this[ACTION_GET_DROPDOWN_CATEGORY_LIST]('')
+      this.$data.dropdownStyle = 'display:block'
     },
     _closeDropdown() {
-      this.$data.dropdownStyle = "display:none";
+      this.$data.dropdownStyle = 'display:none'
     },
   },
   setting: {
-    paren_category_txt: "Danh mục tin tức cha",
+    paren_category_txt: 'Danh mục tin tức cha',
   },
-};
+}
 </script>
 
 <style type="text/css" lang="css" scoped>

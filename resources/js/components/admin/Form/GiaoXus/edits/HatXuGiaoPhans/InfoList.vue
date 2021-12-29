@@ -30,25 +30,25 @@
 </template>
 
 <script>
-    import BtnAdd from './BtnAdd';
-    import InfoItem from './InfoItem';
+import BtnAdd from './BtnAdd'
+import InfoItem from './InfoItem'
 
-    export default {
-        name: 'TheInfoList',
-        components: {
-            BtnAdd,
-            InfoItem
-        },
-        props: {
-            lists: {
-                default: {}
-            }
-        },
-        setting: {
-            info_title: 'Tiêu đề',
-            info_url_title: 'Url tiêu đề',
-            info_author_titile: 'Tác giả',
-            info_sort_order_title: 'Sắp xếp',
-        }
-    };
+export default {
+  name: 'TheInfoList',
+  components: {
+    BtnAdd,
+    InfoItem,
+  },
+  props: {
+    lists: {
+      default: {},
+    },
+  },
+  setting: {
+    info_title: 'Tiêu đề',
+    info_url_title: 'Url tiêu đề',
+    info_author_titile: 'Tác giả',
+    info_sort_order_title: 'Sắp xếp',
+  },
+}
 </script>

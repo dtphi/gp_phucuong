@@ -29,9 +29,9 @@
                                 <div class="form-horizontal">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-																    			<div id="modal-media-info-manager"></div>
-																    			<input type="hidden" class="form-control" id="multi-file-input" disabled>
-																    		</div>
+                                          <div id="modal-media-info-manager"></div>
+                                          <input type="hidden" class="form-control" id="multi-file-input" disabled>
+                                        </div>
                                     </div>
                                 </div>
                             </template>
@@ -50,119 +50,110 @@
 </template>
 
 <script>
-    import {
-        mapGetters,
-        mapState,
-        mapActions
-    } from 'vuex';
-    import {
-        MODULE_USER_MODAL
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_CLOSE_MODAL,
-        ACTION_INSERT_USER
-    } from 'store@admin/types/action-types';
-    import { MM } from '@app/tools/mm/dist/mm.min';
-    import { EventBus } from '@app/api/utils/event-bus';
+import {
+  mapGetters,
+  mapState,
+  mapActions,
+} from 'vuex'
+import {
+  MODULE_USER_MODAL,
+} from 'store@admin/types/module-types'
+import {
+  ACTION_CLOSE_MODAL,
+  ACTION_INSERT_USER,
+} from 'store@admin/types/action-types'
+import { MM, } from '@app/tools/mm/dist/mm.min'
+import { EventBus, } from '@app/api/utils/event-bus'
 
-    export default {
-        name: 'UserAddForm',
-        data() {
-            return {
-                fullPage: false,
-                mediaMM : null
-            };
-        },
-        computed: {
-            ...mapState(MODULE_USER_MODAL, {
-                loading: state => state.loading,
-                errors: state => state.errors
-            }),
-            ...mapGetters(MODULE_USER_MODAL, [
-                'classShow',
-                'styleCss',
-                'user',
-            ]),
-            _errors() {
-                return this.errors.length;
-            }
-        },
-        mounted () {
-            const self = this;
+export default {
+  name: 'UserAddForm',
+  data() {
+    return {
+      fullPage: false,
+      mediaMM : null,
+    }
+  },
+  computed: {
+    ...mapState(MODULE_USER_MODAL, {
+      loading: state => state.loading,
+      errors: state => state.errors,
+    }),
+    ...mapGetters(MODULE_USER_MODAL, [
+      'classShow',
+      'styleCss',
+      'user'
+    ]),
+    _errors() {
+      return this.errors.length
+    },
+  },
+  mounted() {
+    const self = this
 
-            this.mediaMM = new MM({
-                el: '#modal-media-info-manager',
-                api: {
-                    baseUrl: window.origin + '/api/mmedia',
-                    listUrl: 'list',
-                    downloadUrl: 'download',  // optional
-                    uploadUrl: 'upload',      // optional
-                    deleteUrl: 'delete'       // optional
-                },
-                input: {
-                	el: '#multi-file-input',
-						        multiple: true
-								},
-                onSelect : function(event) {
-                    self._changeImage(event);
-                }
-            });
-            console.log(this)
-            this._close()
-        },
+    this.mediaMM = new MM({
+      el: '#modal-media-info-manager',
+      api: {
+        baseUrl: window.origin + '/api/mmedia',
+        listUrl: 'list',
+        downloadUrl: 'download',  // optional
+        uploadUrl: 'upload',      // optional
+        deleteUrl: 'delete',       // optional
+      },
+      input: {
+        el: '#multi-file-input',
+        multiple: true,
+      },
+      onSelect : function(event) {
+        self._changeImage(event)
+      },
+    })
+    console.log(this)
+    this._close()
+  },
+  methods: {
+    ...mapActions(MODULE_USER_MODAL, [
+      ACTION_CLOSE_MODAL,
+      ACTION_INSERT_USER
+    ]),
+    _changeImage(fi) {
+      EventBus.$emit('on-multi-selected-image', fi)
+    },
+    async _resetModal() {
+      requestAnimationFrame(() => {
+        this.$refs.observerUser.reset()
+      })
+    },
+    _isShowBody() {
+      return (this.user != null)
+    },
+    _close() {
+      this[ACTION_CLOSE_MODAL]()
+    },
+    _errorToArrs() {
+      let errs = []
+      if (this.errors.length && typeof this.errors[0].messages !== 'undefined') {
+        errs = Object.values(this.errors[0].messages)
+      }
+      if (Object.entries(errs).length === 0 && this.errors.length) {
+        errs.push(this.$options.setting.error_msg_system)
+      }
 
-        methods: {
-            ...mapActions(MODULE_USER_MODAL, [
-                ACTION_CLOSE_MODAL,
-                ACTION_INSERT_USER
-            ]),
-
-            _changeImage(fi) {
-            	console.log(fi)
-                EventBus.$emit('on-multi-selected-image', fi)
-            },
-
-            async _resetModal() {
-                requestAnimationFrame(() => {
-                    this.$refs.observerUser.reset()
-                });
-            },
-
-            _isShowBody() {
-                return (this.user != null)
-            },
-
-            _close() {
-                this[ACTION_CLOSE_MODAL]()
-            },
-
-            _errorToArrs() {
-                let errs = [];
-                if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
-                    errs = Object.values(this.errors[0].messages);
-                }
-
-                if (Object.entries(errs).length === 0 && this.errors.length) {
-                    errs.push(this.$options.setting.error_msg_system);
-                }
-
-                return errs;
-            },
-
-            async _submitUser() {
-                const _self = this;
-                await _self.$refs.observerUser.validate().then((isValid) => {
-                    if (isValid) {
-                        _self[ACTION_INSERT_USER](_self.user);
-                        _self._resetModal();
-                    }
-                })
-            }
-        },
-        setting: {
-            btnCancelTxt: 'Thoát',
-            modal_title: 'Thêm hình ảnh bổ sung',
-            error_msg_system: 'Lỗi hệ thống !'
+      return errs
+    },
+    async _submitUser() {
+      const _self = this
+      await _self.$refs.observerUser.validate().then((isValid) => {
+        if (isValid) {
+          _self[ACTION_INSERT_USER](_self.user)
+          _self._resetModal()
         }
-    };
+      })
+    },
+  },
+  setting: {
+    btnCancelTxt: 'Thoát',
+    modal_title: 'Thêm hình ảnh bổ sung',
+    error_msg_system: 'Lỗi hệ thống !',
+  },
+}
 </script>

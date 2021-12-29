@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_DANHMUC_GIAOPHAN_ADD } from "store@admin/types/module-types";
-import { ACTION_SELECT_DROPDOWN_PARENT_CATEGORY } from "store@admin/types/action-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_DANHMUC_GIAOPHAN_ADD, } from 'store@admin/types/module-types'
+import { ACTION_SELECT_DROPDOWN_PARENT_CATEGORY, } from 'store@admin/types/action-types'
 
 export default {
-  name: "TheDropdownCategory",
+  name: 'TheDropdownCategory',
   props: {
     category: {
       default: {},
@@ -22,11 +22,11 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_DANHMUC_GIAOPHAN_ADD, [
-      ACTION_SELECT_DROPDOWN_PARENT_CATEGORY,
+      ACTION_SELECT_DROPDOWN_PARENT_CATEGORY
     ]),
     _selectParentCategory() {
-      this[ACTION_SELECT_DROPDOWN_PARENT_CATEGORY](this.category);
+      this[ACTION_SELECT_DROPDOWN_PARENT_CATEGORY](this.category)
     },
-  }
-};
+  },
+}
 </script>

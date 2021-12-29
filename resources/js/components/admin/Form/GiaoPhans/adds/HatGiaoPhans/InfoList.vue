@@ -31,13 +31,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_GIAO_PHAN_ADD } from "store@admin/types/module-types";
-import InfoItem from "./InfoItem";
+import { mapActions, } from 'vuex'
+import BtnAdd from './BtnAdd'
+import { MODULE_MODULE_GIAO_PHAN_ADD, } from 'store@admin/types/module-types'
+import InfoItem from './InfoItem'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
     InfoItem,
@@ -48,16 +48,16 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, ["removeHatGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, ['removeHatGiaoPhan']),
     _removeItem(item) {
       this.removeHatGiaoPhan({
-        action: "removeHatGiaoPhan",
+        action: 'removeHatGiaoPhan',
         item: item,
-      });
+      })
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

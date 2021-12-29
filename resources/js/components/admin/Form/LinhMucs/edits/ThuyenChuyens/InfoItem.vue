@@ -1,14 +1,12 @@
 <template>
   <tbody>
-    <tr 
-      v-if="item.isEdit"
-      key="thuyen-chuyen-title"
-    >
+    <tr v-if="item.isEdit" key="thuyen-chuyen-title">
       <td class="text-center">
-        <input 
+        <input
           type="checkbox"
           :id="`info_select_id_${item.id}`"
-          v-model="item.isCheck">
+          v-model="item.isCheck"
+        />
       </td>
       <td>{{ item.fromgiaoxuName }}</td>
       <td>{{ item.label_from_date }}</td>
@@ -17,7 +15,7 @@
       <td>{{ item.label_to_date }}</td>
       <td>{{ item.chucvuName }}</td>
       <td>{{ item.ducchaName }}</td>
-      
+
       <td class="text-right">
         <button
           @click="_openEditForm"
@@ -48,10 +46,7 @@
         </button>
       </td>
     </tr>
-    <tr 
-      v-if="item.isEdit"
-      key="thuyen-chuyen-edit"
-      >
+    <tr v-if="item.isEdit" key="thuyen-chuyen-edit">
       <td rowspan="15"></td>
       <td colspan="7" v-show="isEdit">
         <table class="table table-striped table-bordered table-hover">
@@ -160,7 +155,9 @@
               <td class="text-left">Ban chuyên trách</td>
               <td colspan="4">
                 <info-ban-chuyen-trach-autocomplete
-                  @on-select-ban-chuyen-trach="_selectThuyenChuyenBanChuyenTrach"
+                  @on-select-ban-chuyen-trach="
+                    _selectThuyenChuyenBanChuyenTrach
+                  "
                   :name="item.banchuyentrachName"
                   :key="`ban_chuyen_trach_${item.id}`"
                 ></info-ban-chuyen-trach-autocomplete>
@@ -214,7 +211,7 @@
               <td>{{ $options.setting.info_action_title }}</td>
               <td colspan="4" class="text-right">
                 <button
-                  @click="_updateThuyenChuyenForm(item)"
+                  @click="_updateThuyenChuyenForm()"
                   type="button"
                   data-toggle="tooltip"
                   title="Cập nhật thuyên chuyển"
@@ -252,20 +249,17 @@
         </table>
       </td>
     </tr>
-    <tr 
-      v-else
-      key="thuyen-chuyen-new"
-      >
+    <tr v-else key="thuyen-chuyen-new">
       <td rowspan="15">
-        <input 
+        <input
           type="checkbox"
           :id="`info_select_id_${item.id}`"
-          v-model="item.isCheck">
+          v-model="item.isCheck"
+        />
       </td>
       <td colspan="7">
         <table class="table table-striped table-bordered table-hover">
-          <info-new-item 
-            :item="item"></info-new-item>
+          <info-new-item :item="item"></info-new-item>
         </table>
       </td>
     </tr>
@@ -273,23 +267,21 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import linhMucMix from "@app/mixins/admin/linhmuc";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
-import InfoGiaoXuAutocomplete from "../../Groups/InfoGiaoXuAutocomplete";
-import InfoChucVuAutocomplete from "../../Groups/InfoChucVuAutocomplete";
-import InfoDucChaAutocomplete from "../../Groups/InfoDucChaAutocomplete";
-import InfoCoSoGiaoPhanAutocomplete from "../../Groups/InfoCoSoGiaoPhanAutocomplete";
-import InfoDongAutocomplete from "../../Groups/InfoDongAutocomplete";
-import InfoBanChuyenTrachAutocomplete from "../../Groups/InfoBanChuyenTrachAutocomplete";
-import InfoNewItem from "./InfoNewItem";
+import { mapActions, } from 'vuex'
+import linhMucMix from '@app/mixins/admin/linhmuc'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
+import InfoGiaoXuAutocomplete from '../../Groups/InfoGiaoXuAutocomplete'
+import InfoChucVuAutocomplete from '../../Groups/InfoChucVuAutocomplete'
+import InfoDucChaAutocomplete from '../../Groups/InfoDucChaAutocomplete'
+import InfoCoSoGiaoPhanAutocomplete from '../../Groups/InfoCoSoGiaoPhanAutocomplete'
+import InfoDongAutocomplete from '../../Groups/InfoDongAutocomplete'
+import InfoBanChuyenTrachAutocomplete from '../../Groups/InfoBanChuyenTrachAutocomplete'
+import InfoNewItem from './InfoNewItem'
 
 export default {
-  name: "TheInfoItem",
+  name: 'TheInfoItem',
   mixins: [linhMucMix.tabData],
   components: {
-    BtnAdd,
     InfoGiaoXuAutocomplete,
     InfoChucVuAutocomplete,
     InfoDucChaAutocomplete,
@@ -306,35 +298,36 @@ export default {
   data() {
     return {
       isEdit: false,
-    };
+    }
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-      "removeThuyenChuyen",
-      "ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU",
-      "ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU",
-      "ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA",
-      "ACTION_UPDATE_DROPDOWN_TO_CHUC_VU",
-      "ACTION_UPDATE_DROPDOWN_TO_GIAO_XU",
-      "ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN",
-      "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG",
-      "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH",
-      "addThuyenChuyen"
+      'removeThuyenChuyen',
+      'ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU',
+      'ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU',
+      'ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA',
+      'ACTION_UPDATE_DROPDOWN_TO_CHUC_VU',
+      'ACTION_UPDATE_DROPDOWN_TO_GIAO_XU',
+      'ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN',
+      'ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG',
+      'ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH',
+      'addThuyenChuyen'
     ]),
     _openEditForm() {
-      this.isEdit = !this.isEdit;
+      this.isEdit = !this.isEdit
     },
-    _updateThuyenChuyenForm(item) {
-      if (this.item.id) {
+    _updateThuyenChuyenForm() {
+      const id = this.item?.id
+      if (id) {
         this.addThuyenChuyen({
           action: 'create.update.thuyen.chuyen.db',
-          info: this.item
-        });
+          info: this.item,
+        })
       }
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>
