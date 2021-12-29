@@ -10,8 +10,9 @@ import {
 extend('url', {
   validate: (value) => {
     if (value) {
-      return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
+      return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value)
     }
+    
     return false
   },
   message: 'This value must be a valid URL',
@@ -39,6 +40,7 @@ extend('requiredPassword', {
 extend('minLength', {
   validate(value, args) {
     const length = value.length
+    
     return length >= args.min
   },
   params: ['min'],
@@ -48,11 +50,11 @@ export default {
   data: () => {
     return {
       isToggle: false,
-      clientsTestimonialsPage: 4
+      clientsTestimonialsPage: 4,
     }
   },
   methods: {
-    _winClientsTestimonialsPage () {
+    _winClientsTestimonialsPage() {
       setInterval(() => {
         var w = window.innerWidth
         if (w < 768) {
@@ -72,6 +74,7 @@ export default {
     generateUUID() {
       var d = new Date().getTime()
       var d2 = (performance && performance.now && (performance.now() * 1000)) || 0
+      
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16
         if (d > 0) {
@@ -81,12 +84,14 @@ export default {
           r = (d2 + r) % 16 | 0
           d2 = Math.floor(d2 / 16)
         }
+        
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
       })
     },
     joinNameArray(nameArray) {
       if (nameArray.length) {
         let result = nameArray.map(val => val.name)
+        
         return result.join(', ')
       } else {
         return ''
@@ -94,18 +99,19 @@ export default {
     },
     appendOverLay() {
       var elem = document.createElement('div')
-      elem.setAttribute("id", "overLay")
+      elem.setAttribute('id', 'overLay')
       elem.style.cssText = 'display: block'
       document.body.appendChild(elem)
     },
     removeOverLay() {
-      if (document.getElementById("overLay")) {
-        document.getElementById("overLay").remove()
+      if (document.getElementById('overLay')) {
+        document.getElementById('overLay').remove()
       }
     },
     decodeHtml(html) {
-      let txt = document.createElement("textarea")
+      let txt = document.createElement('textarea')
       txt.innerHTML = html
+      
       return txt.value
     },
     toggleHtml() {
@@ -114,6 +120,7 @@ export default {
       } else {
         this.isToggle = true
       }
+      
       return this.isToggle
     },
     toggleRadioCheckbox(sender) {
@@ -126,27 +133,29 @@ export default {
           field.checked = false
         }
       }
+      
       return parseInt(el.value)
     },
     getStatusClass(status) {
-      if (status == 1) {
-        return [this.$options.css.showClass, this.$options.css.notShowClass]
-      } else {
+      if (status !== 1) {
         return [this.$options.css.notShowClass, this.$options.css.showClass]
       }
+      
       return [this.$options.css.showClass, this.$options.css.notShowClass]
     },
     addSelect(data) {
       data['index'] = this.generateUUID()
       data['id'] = data['index']
+      
       return data
     },
     getImgUrl(url) {
       if (url) {
         return url
       }
+      
       return 'https://placehold.jp/100x100.png'
-    }
+    },
   },
   css: {
     menuOpen: 'is-open',

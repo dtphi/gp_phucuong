@@ -33,11 +33,12 @@ export function deepCopy(obj, cache = []) {
   // because we want to refer it in recursive deepCopy
   cache.push({
     original: obj,
-    copy
+    copy,
   })
   Object.keys(obj).forEach(key => {
     copy[key] = deepCopy(obj[key], cache)
   })
+  
   return copy
 }
 /**
@@ -64,8 +65,9 @@ export function fnIsObject(obj) {
   if (typeof obj !== 'undefined' &&
     typeof obj === 'object' &&
     Object.keys(obj).length) {
-     return true
+    return true
   }
+  
   return false
 }
 export function fnCheckProp(obj, prop) {

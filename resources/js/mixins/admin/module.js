@@ -1,5 +1,6 @@
 import { mapGetters, } from 'vuex'
 import { MODULE_MODULE_APP, } from 'store@admin/types/module-types'
+import { fnCheckProp, } from '@app/common/util'
 
 export default {
   props: {
@@ -15,14 +16,15 @@ export default {
   computed: {
     ...mapGetters(MODULE_MODULE_APP, ['texts']),
     $_module_errors() {
-      if (this.hasOwnProperty('errors')) {
+      if (fnCheckProp(this, 'errors')) {
         return this.errors.length
       }
+      
       return 0
     },
   },
   watch: {
-    'updateSuccess'(newValue, oldValue) {
+    'updateSuccess'(newValue) {
       if (newValue) {
         this.$_module_notificationUpdate(newValue)
       }
@@ -35,12 +37,13 @@ export default {
     },
     $_module_errorToArrs() {
       let errs = []
-      if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
+      if (this.errors.length && typeof this.errors[0].messages !== 'undefined') {
         errs = Object.values(this.errors[0].messages)
       }
       if (Object.entries(errs).length === 0 && this.errors.length) {
         errs.push(this.$options.setting.error_msg_system)
       }
+      
       return errs
     },
     $_module_submitInfo() {

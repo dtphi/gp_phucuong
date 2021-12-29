@@ -1,21 +1,23 @@
 import { extend, } from 'vee-validate'
-import { required, max, email, numeric } from 'vee-validate/dist/rules'
+import { required, max, email, numeric, } from 'vee-validate/dist/rules'
 
 extend('url', {
   validate: (value) => {
     if (value) {
-      return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value);
+      return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(value)
     }
+    
     return false
   },
   message: 'This value must be a valid URL',
 })
 extend('extPdf', {
-  validate: (val, args) => {
+  validate: (val) => {
     var exts = val[0].type.split('/')
     if (exts.slice(-1)[0] == 'pdf') {
       return true
     }
+    
     return false
   },
   message: 'This field must be a valid pdf',
@@ -47,6 +49,7 @@ extend('requiredPassword', {
 extend('minLength', {
   validate(value, args) {
     const length = value.length
+    
     return length >= args.min
   },
   params: ['min'],
@@ -62,21 +65,24 @@ export default {
     generateUUID() {
       var d = new Date().getTime()
       var d2 = (performance && performance.now && (performance.now()*1000)) || 0
+      
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16
-        if(d > 0){
+        if(d > 0) {
           r = (d + r)%16 | 0
           d = Math.floor(d/16)
         } else {
           r = (d2 + r)%16 | 0
           d2 = Math.floor(d2/16)
         }
+        
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
       })
     },
     joinNameArray(nameArray) {
       if(nameArray.length) {
         let result = nameArray.map(val => val.name)
+        
         return result.join(', ')
       } else {
         return ''
@@ -84,9 +90,9 @@ export default {
     },
     appendOverLay() {
       var elem = document.createElement('div')
-          elem.setAttribute('id', 'overLay')
-          elem.style.cssText = 'display: block'
-          document.body.appendChild(elem)
+      elem.setAttribute('id', 'overLay')
+      elem.style.cssText = 'display: block'
+      document.body.appendChild(elem)
     },
     removeOverLay() {
       if (document.getElementById('overLay')) {
@@ -96,6 +102,7 @@ export default {
     decodeHtml(html) {
       let txt = document.createElement('textarea')
       txt.innerHTML = html
+      
       return txt.value
     },
     toggleHtml() {
@@ -104,6 +111,7 @@ export default {
       } else {
         this.isToggle = true
       }
+      
       return this.isToggle
     },
     toggleRadioCheckbox(sender) {
@@ -116,27 +124,29 @@ export default {
           field.checked=false
         }
       }
+      
       return parseInt(el.value)
     },
     getStatusClass(status) {
-      if (status == 1) {
-        return [this.$options.css.showClass, this.$options.css.notShowClass]
-      } else {
+      if (status !== 1) {
         return [this.$options.css.notShowClass, this.$options.css.showClass]
       }
+      
       return [this.$options.css.showClass, this.$options.css.notShowClass]
     },
     addSelect(data) {
       data['index'] = this.generateUUID()
       data['id'] = data['index']
+      
       return data
     },
     getImgUrl(url) {
       if (url) {
         return url
       }
+      
       return 'https://placehold.jp/100x100.png'
-    }
+    },
   },
   css: {
     menuOpen: 'is-open',
@@ -153,7 +163,7 @@ export default {
   },
   contains: {
     fullTimes: ['専任', '兼任'],
-    achivementType:[{ id:1, type:'個⼈成果', },{ id:2, type:'チー ム成果', }],
+    achivementType:[{ id:1, type:'個⼈成果', }, { id:2, type:'チー ム成果', }],
     achivementTypes: ['', '個⼈成果', 'チー ム成果'],
     statusType: [{ id:1, type: '非公開', }, { id: 2, type: '公開', }],
     statusTypes: ['', '非公開', '公開'],

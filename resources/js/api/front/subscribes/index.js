@@ -12,8 +12,8 @@ import {
  * @param  {[type]} errResole   [description]
  * @return {[type]}             [description]
  */
- export const apiEmailSubscribe = (newEmailSub, resolve, errResole) => {
-  return axios.post( fn_get_base_api_url(API_EMAIL_SUBSCRIBE), newEmailSub)
+export const apiEmailSubscribe = (newEmailSub, resolve, errResole) => {
+  return axios.post(fn_get_base_api_url(API_EMAIL_SUBSCRIBE), newEmailSub)
     .then((response) => {
       if (response.status === 200) {
         var json = {}

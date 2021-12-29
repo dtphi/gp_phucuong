@@ -11,8 +11,8 @@ import {
  */
 export const apiGetSettingByCode = (resolve, errResole, params) => {
   axios.get(fn_get_base_api_url('/api/app/get-data-module'), {
-      params: params,
-    })
+    params: params,
+  })
     .then((response) => {
       if (response.status === 200) {
         var json = {}

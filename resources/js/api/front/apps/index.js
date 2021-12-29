@@ -7,15 +7,15 @@ import {
 
 export const apiGetSettings = (resolve, errResole, params) => {
   return axios.get(fn_get_base_api_url(API_APP_SETTING), {
-      params: params
-    })
+    params: params,
+  })
     .then((response) => {
       if (response.status === 200) {
         resolve(response.data)
       } else {
         errResole([{
           status: response.status,
-          msg: 'error test'
+          msg: 'error test',
         }])
       }
     })

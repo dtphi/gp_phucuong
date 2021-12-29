@@ -36,5 +36,5 @@ export const config = {
     storageLinhMucExpectSignInPhoneKey: 'linhMuc.expectSignInPhone',
     history: true,
     mode: 'history',
-  }
+  },
 }

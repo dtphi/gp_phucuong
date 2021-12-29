@@ -8,10 +8,10 @@ import {
   fn_get_tinymce_langs_url,
   fn_get_href_base_url,
 } from '@app/api/utils/fn-helper'
-import {
+/*import {
   ACTION_SET_IMAGE,
   ACTION_RESET_NOTIFICATION_INFO,
-} from 'store@admin/types/action-types'
+} from 'store@admin/types/action-types'*/
 
 export default {
   form: {
@@ -27,7 +27,7 @@ export default {
     computed: {
       _errors() {
         return this.errors.length
-      }
+      },
     },
     watch: {
       'insertSuccess'(newValue) {
@@ -50,6 +50,7 @@ export default {
         if (Object.entries(errs).length === 0 && this.errors.length) {
           errs.push(this.$options.setting.error_msg_system)
         }
+        
         return errs
       },
       _submitInfo() {
@@ -86,6 +87,7 @@ export default {
     },
     data() {
       const _self = this
+      
       return {
         fn: null,
         mm: null,
@@ -123,8 +125,9 @@ export default {
         if (this.generalData.image != '') {
           return fn_get_href_base_url(this.generalData.image)
         }
+        
         return '/images/no-photo.jpg'
-      }
+      },
     },
     watch: {
       'generalData': {
@@ -134,6 +137,7 @@ export default {
           if (newValue && Object.keys(newValue).length) {
             newValue.ghi_chu = (newValue.ghi_chu === null) ? '' : newValue.ghi_chu
             newValue.rip_ghi_chu = (newValue.rip_ghi_chu === null) ? '' : newValue.rip_ghi_chu
+            
             return newValue
           }
         },
