@@ -116,11 +116,8 @@ export default {
               INFOS_MODAL_INSERT_INFO_SUCCESS,
               AppConfig.comInsertNoSuccess
             )
-
             dispatch(
-              MODULE_MODULE_GROUP_ALBUMS +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_GROUP_ALBUMS}_${ACTION_RELOAD_GET_INFO_LIST}`,
               'page',
               {
                 root: true,

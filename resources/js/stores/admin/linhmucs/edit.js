@@ -516,7 +516,7 @@ export default {
               INFOS_MODAL_INSERT_INFO_SUCCESS,
               AppConfig.comInsertNoSuccess
             )
-            dispatch('ACTION_RELOAD_INFO_LIST', 'page', {
+            dispatch('MODULE_LINH_MUC_ACTION_RELOAD_INFO_LIST', 'page', {
               root: true,
             })
           }

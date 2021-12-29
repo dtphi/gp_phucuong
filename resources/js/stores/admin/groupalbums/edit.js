@@ -175,9 +175,7 @@ export default {
             )
             dispatch(ACTION_GET_INFO_BY_ID, info.data.id)
             dispatch(
-              MODULE_MODULE_GROUP_ALBUMS +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_GROUP_ALBUMS}_${ACTION_RELOAD_GET_INFO_LIST}`,
               'page',
               {
                 root: true,

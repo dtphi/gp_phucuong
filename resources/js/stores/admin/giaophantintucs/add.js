@@ -198,9 +198,7 @@ export default {
             )
 
             dispatch(
-              MODULE_MODULE_TINTUC_GIAOPHAN +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_TINTUC_GIAOPHAN}_${ACTION_RELOAD_GET_INFO_LIST}`,
               'page',
               {
                 root: true,

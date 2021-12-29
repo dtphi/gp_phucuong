@@ -3,6 +3,7 @@ import {
   apiUpdateInfo,
   apiInsertInfo,
 } from 'api@admin/information'
+import { MODULE_INFO, } from '../types/module-types'
 import {
   INFOS_MODAL_SET_OPEN_MODAL,
   INFOS_MODAL_SET_CLOSE_MODAL,
@@ -192,7 +193,7 @@ export default {
           if (result) {
             commit(INFOS_MODAL_INSERT_INFO_SUCCESS, true)
 
-            dispatch(ACTION_RELOAD_GET_INFO_LIST, null, {
+            dispatch(`${MODULE_INFO}_${ACTION_RELOAD_GET_INFO_LIST}`, null, {
               root: true,
             })
           }
@@ -214,7 +215,7 @@ export default {
           if (result) {
             commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, true)
 
-            dispatch(ACTION_RELOAD_GET_INFO_LIST, null, {
+            dispatch(`${MODULE_INFO}_${ACTION_RELOAD_GET_INFO_LIST}`, null, {
               root: true,
             })
           }

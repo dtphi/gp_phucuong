@@ -194,9 +194,7 @@ export default {
             commit(INFOS_MODAL_INSERT_INFO_SUCCESS, true)
 
             dispatch(
-              MODULE_MODULE_TINTUC_GIAOPHAN +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_TINTUC_GIAOPHAN}_${ACTION_RELOAD_GET_INFO_LIST}`,
               null,
               {
                 root: true,
@@ -222,9 +220,7 @@ export default {
             commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, true)
 
             dispatch(
-              MODULE_MODULE_TINTUC_GIAOPHAN +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_TINTUC_GIAOPHAN}_${ACTION_RELOAD_GET_INFO_LIST}`,
               null,
               {
                 root: true,

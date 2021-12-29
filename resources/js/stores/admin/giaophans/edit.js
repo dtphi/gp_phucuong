@@ -767,7 +767,7 @@ export default {
               INFOS_MODAL_INSERT_INFO_SUCCESS,
               AppConfig.comUpdateNoSuccess
             )
-            dispatch('ACTION_RELOAD_INFO_LIST', 'page', {
+            dispatch('MODULE_GIAO_PHAN_ACTION_RELOAD_INFO_LIST', 'page', {
               root: true,
             })
           }

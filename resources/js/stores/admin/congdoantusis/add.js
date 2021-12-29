@@ -143,9 +143,7 @@ export default {
               AppConfig.comInsertNoSuccess
             )
             dispatch(
-              MODULE_MODULE_CONG_DOAN_TU_SI +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_CONG_DOAN_TU_SI}_${ACTION_RELOAD_GET_INFO_LIST}`,
               'page',
               {
                 root: true,

@@ -204,9 +204,7 @@ export default {
               AppConfig.comInsertNoSuccess
             )
             dispatch(
-              MODULE_MODULE_ALBUMS +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_ALBUMS}_${ACTION_RELOAD_GET_INFO_LIST}`,
               'page',
               {
                 root: true,

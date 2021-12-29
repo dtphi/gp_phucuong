@@ -143,9 +143,7 @@ export default {
               AppConfig.comInsertNoSuccess
             )
             dispatch(
-              MODULE_MODULE_CO_SO +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_CO_SO}_${ACTION_RELOAD_GET_INFO_LIST}`,
               'page',
               {
                 root: true,

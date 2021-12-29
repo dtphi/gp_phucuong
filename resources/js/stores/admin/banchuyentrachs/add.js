@@ -143,9 +143,7 @@ export default {
               AppConfig.comInsertNoSuccess
             )
             dispatch(
-              MODULE_MODULE_BAN_CHUYEN_TRACH +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_BAN_CHUYEN_TRACH}_${ACTION_RELOAD_GET_INFO_LIST}`,
               'page',
               {
                 root: true,

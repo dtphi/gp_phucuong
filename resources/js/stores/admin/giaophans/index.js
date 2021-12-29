@@ -230,7 +230,7 @@ export default {
         }
       )
     },
-    ACTION_RELOAD_INFO_LIST: {
+    MODULE_GIAO_PHAN_ACTION_RELOAD_INFO_LIST: {
       root: true,
       handler() {
         return fn_redirect_url('admin/giao-phans')

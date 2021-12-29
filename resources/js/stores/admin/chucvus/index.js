@@ -188,7 +188,7 @@ export default {
       )
     },
 
-    [MODULE_MODULE_CHUC_VU + '_' + ACTION_RELOAD_GET_INFO_LIST]: {
+    [`${MODULE_MODULE_CHUC_VU}_${ACTION_RELOAD_GET_INFO_LIST}`]: {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {

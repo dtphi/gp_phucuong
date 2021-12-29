@@ -195,7 +195,7 @@ export default {
       )
     },
 
-    [MODULE_MODULE_VAN_THU + '_' + ACTION_RELOAD_GET_INFO_LIST]: {
+    [`${MODULE_MODULE_VAN_THU}_${ACTION_RELOAD_GET_INFO_LIST}`]: {
       root: true,
       handler(namespacedContext, payload) {
         if (isNaN(payload)) {

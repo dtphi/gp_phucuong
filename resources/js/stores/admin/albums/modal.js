@@ -188,9 +188,7 @@ export default {
           if (result) {
             commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, true)
             dispatch(
-              MODULE_MODULE_ALBUMS +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_ALBUMS}_${ACTION_RELOAD_GET_INFO_LIST}`,
               null,
               {
                 root: true,

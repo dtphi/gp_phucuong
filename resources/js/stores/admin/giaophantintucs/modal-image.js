@@ -1,5 +1,6 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { apiInsertUser, } from 'api@admin/user'
+import { MODULE_MODULE_TINTUC_GIAOPHAN, } from '../types/module-types'
 import {
   USERS_MODAL_SET_OPEN_MODAL,
   USERS_MODAL_SET_CLOSE_MODAL,
@@ -16,8 +17,8 @@ import {
   ACTION_CLOSE_MODAL,
   ACTION_IS_OPEN_MODAL,
   ACTION_INSERT_USER,
-  ACTION_RELOAD_GET_USER_LIST,
   ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_RELOAD_GET_INFO_LIST,
 } from '../types/action-types'
 
 const defaultState = () => {
@@ -144,7 +145,7 @@ export default {
               AppConfig.comInsertNoSuccess
             )
 
-            dispatch(ACTION_RELOAD_GET_USER_LIST, null, {
+            dispatch(`${MODULE_MODULE_TINTUC_GIAOPHAN}_${ACTION_RELOAD_GET_INFO_LIST}`, null, {
               root: true,
             })
           }

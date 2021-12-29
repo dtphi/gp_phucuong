@@ -311,7 +311,7 @@ export default {
         }
       )
     },
-    ACTION_RELOAD_INFO_LIST: {
+    MODULE_LINH_MUC_ACTION_RELOAD_INFO_LIST: {
       root: true,
       handler() {
         return fn_redirect_url('admin/linh-mucs')

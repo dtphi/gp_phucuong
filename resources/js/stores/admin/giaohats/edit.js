@@ -184,9 +184,7 @@ export default {
             )
             dispatch(ACTION_GET_INFO_BY_ID, info.id)
             dispatch(
-              MODULE_MODULE_GIAO_HAT +
-                                '_' +
-                                ACTION_RELOAD_GET_INFO_LIST,
+              `${MODULE_MODULE_GIAO_HAT}_${ACTION_RELOAD_GET_INFO_LIST}`,
               'page',
               {
                 root: true,
