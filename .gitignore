@@ -23,7 +23,7 @@ yarn-error.log
 composer.lock
 package-lock.json
 /public/fonts/vendor
-src
+/src
 Image
 webpack.a*
 webpack.f*
