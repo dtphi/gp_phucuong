@@ -18,8 +18,6 @@ import {
   NEWSGROUPS_GROUP_DELETE_BY_ID,
   SET_ERROR,
   NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST,
-  NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_SUCCESS,
-  NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_FAILED,
 } from '../types/mutation-types'
 import {
   ACTION_GET_NEWS_GROUP_LIST,
@@ -109,17 +107,9 @@ export default {
       }
       apiGetDropdownCategories(
         (result) => {
-          commit(
-            NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_SUCCESS,
-            'Success'
-          )
           commit(NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST, result)
         },
         (errors) => {
-          commit(
-            NEWSGROUPS_FORM_GET_DROPDOWN_CATEGORY_FAILED,
-            'Failed'
-          )
           commit(SET_ERROR, errors)
         },
         params

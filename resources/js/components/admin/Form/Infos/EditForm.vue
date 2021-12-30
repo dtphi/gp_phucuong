@@ -78,7 +78,7 @@
 
 <script>
 import TabSpecialInfoCarousel from './TabSpecialInfoCarousel'
-import { EventBus, } from '@app/api/utils/event-bus'
+import { OnSelectedImage, } from '@app/api/utils/event-bus'
 import { mapState, mapGetters, mapActions, } from 'vuex'
 import {
   MODULE_INFO_EDIT,
@@ -93,7 +93,7 @@ import TabGeneral from './TabGeneral'
 import TabAdvance from './TabAdvance'
 import TabLink from './TabLink'
 import TabMediaManager from './TabImage'
-import { fnCheckProp, } from '@app/common/util'
+import { fnCheckImgSelect, } from '@app/common/util'
 
 export default {
   name: 'InformationEditForm',
@@ -123,47 +123,45 @@ export default {
       }
     },
   },
-  mounted() {
-    const _self = this
-    EventBus.$on('on-selected-image', (imgItem) => {
-      _self.$data.file = imgItem
-      _self._selectMainImg(imgItem)
+  created() {
+    OnSelectedImage((imgItem) => {
+      this.$data.file = imgItem
+      this._selectMainImg(imgItem)
     })
   },
   methods: {
     ...mapActions(MODULE_MODULE_SPECIAL_INFO_CAROUSEL, [ACTION_GET_SETTING]),
     ...mapActions(MODULE_INFO_EDIT, [ACTION_UPDATE_INFO, ACTION_SET_IMAGE]),
+    _getInfo() {
+      return this.$deep(this.info)
+    },
     _submitInfo() {
-      const _self = this
-      _self[ACTION_UPDATE_INFO](_self.info)
+      this[ACTION_UPDATE_INFO](this._getInfo())
     },
     _selectMainImg(file) {
-      const image = {
-        basename: '',
-        dirname: '',
-        extension: '',
-        filename: '',
-        path: '',
-        size: 0,
-        thumb: '',
-        timestamp: '',
-        type: '',
-      }
       if (typeof file === 'object') {
-        let selected = image
-
-        if (fnCheckProp(file, 'selected') && file.selected) {
-          selected = file.selected
-        }
-
-        this[ACTION_SET_IMAGE](selected)
+        this[ACTION_SET_IMAGE](
+          fnCheckImgSelect(file) ? file.selected : this.$options.setting.imgObj
+        )
       }
     },
     _setInfoCarousel() {
-      this[ACTION_GET_SETTING](this.info.special_carousels)
+      const carousel = this.$deep(this.info.special_carousels)
+      this[ACTION_GET_SETTING](carousel)
     },
   },
   setting: {
+    imgObj: {
+      basename: '',
+      dirname: '',
+      extension: '',
+      filename: '',
+      path: '',
+      size: 0,
+      thumb: '',
+      timestamp: '',
+      type: '',
+    },
     btnSubmitTxt: 'Update',
     tab_general_title: 'Tổng quan',
     tab_advance_title: 'Mở rộng',

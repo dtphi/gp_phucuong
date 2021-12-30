@@ -14,7 +14,7 @@ export default {
   methods: {
     _close() {
       this.$parent.toggle()
-    }
-  }
+    },
+  },
 }
 </script>

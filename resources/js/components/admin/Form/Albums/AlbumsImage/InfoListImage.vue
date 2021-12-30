@@ -53,9 +53,11 @@ export default {
   },
   methods: {
     _changeAlbumsImage(fi) {
-      fnCheckImgPath(fi)?this.$emit('select-multiple-banner-img', {
-        filePath: fi.selected.path,
-      }): ''
+      fnCheckImgPath(fi)
+        ? this.$emit('select-multiple-banner-img', {
+          filePath: fi.selected.path,
+        })
+        : ''
     },
   },
   setting: {

@@ -28,7 +28,8 @@ export default {
     ]),
     _selectParentCategory() {
       this.isSelected = true
-      this[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](this.category)
+      const cate = this.$deep(this.category)
+      this[ACTION_SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY](cate)
     },
   },
   setting: {

@@ -12,8 +12,6 @@ import {
   NEWSGROUPS_MODAL_SET_LOADING,
   NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_SUCCESS,
   NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED,
-  NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED,
-  NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS,
   SET_ERROR,
 } from '../types/mutation-types'
 import {
@@ -150,14 +148,13 @@ export default {
         apiGetGiaoPhanDanhMucsById(
           newsGroupId,
           (result) => {
-            commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS, true)
             commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP, result.data)
 
             dispatch(ACTION_SET_LOADING, false)
             dispatch(ACTION_IS_OPEN_MODAL, true)
           },
           (errors) => {
-            commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED, errors)
+            commit(SET_ERROR, errors)
 
             dispatch(ACTION_SET_LOADING, false)
           }

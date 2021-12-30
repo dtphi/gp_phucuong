@@ -50,7 +50,6 @@ export default {
   },
   created() {
     this.action_get_list_linh_muc()
-    console.log(this.action_get_list_linh_muc())
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_HAT_ADD, [

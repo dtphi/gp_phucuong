@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted() {
-    this.mediaMM = new MM({
+    this.$data.mediaMM = new MM({
       el: '#media-info-manager_',
       api: config.mm.api,
       input: {

@@ -12,8 +12,6 @@ import {
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
   INFOS_FORM_SET_MAIN_IMAGE,
   INFOS_FORM_SET_DROPDOWN_RELATED_LIST,
-  INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS,
-  INFOS_FORM_GET_DROPDOWN_RELATED_FAILED,
   INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED,
 } from '../types/mutation-types'
 import {
@@ -299,12 +297,9 @@ export default {
       }
       apiGetDropdownInfos(
         (result) => {
-          commit(INFOS_FORM_GET_DROPDOWN_RELATED_SUCCESS, 'Success')
-
           commit(INFOS_FORM_SET_DROPDOWN_RELATED_LIST, result)
         },
         (errors) => {
-          commit(INFOS_FORM_GET_DROPDOWN_RELATED_FAILED, 'Failed')
           commit(SET_ERROR, errors)
         },
         params

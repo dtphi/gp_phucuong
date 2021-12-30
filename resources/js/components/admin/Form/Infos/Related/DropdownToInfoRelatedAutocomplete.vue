@@ -22,6 +22,5 @@ export default {
       this[ACTION_SELECT_DROPDOWN_RELATED_INFO](this.information)
     },
   },
-  setting: {},
 }
 </script>

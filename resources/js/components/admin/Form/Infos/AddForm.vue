@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { EventBus, } from '@app/api/utils/event-bus'
+import { OnSelectedImage, } from '@app/api/utils/event-bus'
 import { mapState, mapGetters, mapActions, } from 'vuex'
 import { MODULE_INFO_ADD, } from 'store@admin/types/module-types'
 import {
@@ -91,7 +91,7 @@ import TabAdvance from './TabAdvance'
 import TabLink from './TabLink'
 import TabMediaManager from './TabImage'
 import TabSpecialInfoCarousel from './TabSpecialInfoCarousel'
-import { fnCheckProp, } from '@app/common/util'
+import { fnCheckImgSelect, } from '@app/common/util'
 
 export default {
   name: 'FormAdd',
@@ -114,11 +114,10 @@ export default {
     }),
     ...mapGetters(MODULE_INFO_ADD, ['info']),
   },
-  mounted() {
-    const _self = this
-    EventBus.$on('on-selected-image', (imgItem) => {
-      _self.$data.file = imgItem
-      _self._selectMainImg(imgItem)
+  created() {
+    OnSelectedImage((imgItem) => {
+      this.$data.file = imgItem
+      this._selectMainImg(imgItem)
     })
   },
   methods: {
@@ -128,36 +127,35 @@ export default {
       ACTION_INSERT_INFO_BACK,
       ACTION_SET_IMAGE
     ]),
+    _getInfo() {
+      return this.$deep(this.info)
+    },
     _submitInfo() {
-      this[ACTION_INSERT_INFO](this.info)
+      this[ACTION_INSERT_INFO](this._getInfo())
     },
     _submitInfoBack() {
-      this[ACTION_INSERT_INFO_BACK](this.info)
+      this[ACTION_INSERT_INFO_BACK](this._getInfo())
     },
     _selectMainImg(file) {
-      const image = {
-        basename: '',
-        dirname: '',
-        extension: '',
-        filename: '',
-        path: '',
-        size: 0,
-        thumb: '',
-        timestamp: '',
-        type: '',
-      }
       if (typeof file === 'object') {
-        let selected = image
-
-        if (fnCheckProp(file, 'selected') && file.selected) {
-          selected = file.selected
-        }
-
-        this[ACTION_SET_IMAGE](selected)
+        this[ACTION_SET_IMAGE](
+          fnCheckImgSelect(file) ? file.selected : this.$options.setting.imgObj
+        )
       }
     },
   },
   setting: {
+    imgObj: {
+      basename: '',
+      dirname: '',
+      extension: '',
+      filename: '',
+      path: '',
+      size: 0,
+      thumb: '',
+      timestamp: '',
+      type: '',
+    },
     tab_general_title: 'Tổng quan',
     tab_advance_title: 'Mở rộng',
     tab_link_title: 'Liên kết',

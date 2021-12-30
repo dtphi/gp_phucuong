@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       query: '',
+      errors: null,
     }
   },
   watch: {
@@ -48,10 +49,9 @@ export default {
     }),
     getResults() {
       axios.get('/api/search-ips', { params: { query: this.query, }, })
-        .then(res => { console.log(res.data.data.results, 'res')
-          console.log(this)
+        .then(res => {
           this.setResIp(res.data.data.results)  })
-        .catch(error => { console.log(error) })
+        .catch(error => { this.$data.errors = error })
     },
   },
 }

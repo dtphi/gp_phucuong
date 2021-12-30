@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import '../../plugins/filter'
 import moment from 'moment'
 window.moment = moment
 window.moment.locale('vi')

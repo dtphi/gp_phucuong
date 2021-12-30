@@ -55,18 +55,17 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
 
-    export default {
-        name: 'Home',
-        data() {
-            return {
-                form: {
-                    email: null,
-                    password: null
-                },
-                systemError: null
-            };
-        }
-    };
+export default {
+  name: 'HomeDefault',
+  data() {
+    return {
+      form: {
+        email: null,
+        password: null,
+      },
+      systemError: null,
+    }
+  },
+}
 </script>

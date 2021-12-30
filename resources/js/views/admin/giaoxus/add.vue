@@ -92,7 +92,6 @@ export default {
   watch: {
     insertSuccess(newValue) {
       if (newValue) {
-        console.log('Insert Giao Xu success')
         this._notificationUpdate(newValue)
       }
     },

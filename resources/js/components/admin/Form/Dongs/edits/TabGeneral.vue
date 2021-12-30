@@ -300,8 +300,6 @@ export default {
   computed: {
     ...mapState(MODULE_MODULE_DONG_EDIT, {
       groupData: (state) => {
-        console.log(state.info)
-
         return state.info || {}
       },
       isGiaoPhan: (state) => {

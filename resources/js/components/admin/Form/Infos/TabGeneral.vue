@@ -156,8 +156,8 @@
 
 <script>
 import tinymce from 'vue-tinymce-editor'
-import { fn_get_tinymce_langs_url, } from '@app/api/utils/fn-helper'
-import { fnCheckProp, } from '@app/common/util'
+import { fnCheckImgPath, } from '@app/common/util'
+import { config, } from '@app/common/config'
 
 export default {
   name: 'TabGeneralForm',
@@ -170,101 +170,36 @@ export default {
     },
   },
   data() {
-    const _self = this
+    const elFileContent = document.getElementById('media-file-manager-content')
+    const mm = new MM({
+      el: '#modal-general-info-manager',
+      api: config.mm.api,
+      onSelect: (fi) => {
+        if (typeof fi === 'object') {
+          if (fnCheckImgPath(fi)) {
+            this.fn(`/Image/NewPicture/${fi.selected.path}`, fi.selected)
+            elFileContent.style = this.$options.setting.cssDisplayNone
+          }
+        }
+      },
+    })
 
     return {
-      editor: null,
       fn: null,
-      mm: new MM({
-        el: '#modal-general-info-manager',
-        api: {
-          baseUrl: window.origin + '/api/mmedia',
-          listUrl: 'list',
-          uploadUrl: 'upload', // optional
-        },
-        onSelect: function(fi) {
-          if (typeof fi === 'object') {
-            if (fnCheckProp(fi, 'selected') && fi.selected) {
-              if (fnCheckProp(fi.selected, 'path')) {
-                _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected)
-                document.getElementById('media-file-manager-content').style =
-                  'display:none'
-              }
-            }
-          }
-        },
-      }),
+      mm: mm,
       options: {
-        language_url: fn_get_tinymce_langs_url('vi_VN'),
-        height: '500',
-        //toolbar_mode: 'sliding',
-        //image_caption: true,
-        //image_list: [],
-        //image_advtab: false,
-        image_prepend_url: window.origin + '/',
-        //images_upload_url: window.origin + '/api/mmedia/upload',
-        /*images_upload_handler: function(editor) {
-                        console.log(editor.filename());
-                    },*/
-        referrer_policy: 'strict-origin-when-cross-origin',
-
-        /*init_instance_callback: function(editor) {
-                        _self.editor = editor;
-                    },*/
-        //importcss_append: true,
-        /* Show button select image */
-        file_picker_callback: function(callback, value, meta) {
-          if (meta.filetype === 'file') {
-            _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
-          }
-
-          if (meta.filetype === 'image') {
-            if (_self.mm == null) {
-              _self.mm = new MM({
-                el: '#modal-general-info-manager',
-                api: {
-                  baseUrl: window.origin + '/api/mmedia',
-                  listUrl: 'list',
-                  uploadUrl: 'upload', // optional
-                },
-                onSelect: function(fi) {
-                  if (typeof fi === 'object') {
-                    if (fnCheckProp(fi, 'selected') && fi.selected) {
-                      if (fnCheckProp(fi.selected, 'path')) {
-                        _self.fn(
-                          'Image/NewPicture/' + fi.selected.path,
-                          fi.selected
-                        )
-                        document.getElementById(
-                          'media-file-manager-content'
-                        ).style = 'display:none'
-                      }
-                    }
-                  }
-                },
-              })
-
-              document.getElementById('media-file-manager-content').style =
-                'display:block'
-            } else {
-              _self.fn = callback
-              document.getElementById('media-file-manager-content').style =
-                'display:block'
-            }
-          }
-
-          if (meta.filetype === 'media') {
-            _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
+        language_url: config.mm.languageUrl,
+        height: config.mm.height,
+        image_prepend_url: config.mm.imagePrependUrl,
+        referrer_policy: config.mm.referrerPolicy,
+        file_picker_callback: (callback, value, meta) => {
+          if (config.mm.fileTypes.includes(meta.filetype)) {
+            this.fn = callback
+            elFileContent.style = this.$options.setting.cssDisplay
           }
         },
-        toolbar2:
-          'undo redo | styleselect | fontsizeselect | fontselect | image ',
-        font_formats:
-          'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
+        toolbar2: config.mm.toolbar2,
+        font_formats: config.mm.fontFormats,
       },
     }
   },
@@ -273,15 +208,17 @@ export default {
       immediate: true,
       deep: true,
       handler(newValue) {
-        if (Object.keys(newValue).length) {
-          return (newValue.context =
-            newValue.context === null ? '' : newValue.context)
+        if (newValue?.context === 'undefined') {
+          newValue.context = ''
         }
+        
+        return newValue
       },
     },
   },
-  methods: {},
   setting: {
+    cssDisplay: 'display:block',
+    cssDisplayNone: 'display:none',
     name_txt: 'Tên',
     info_sort_description_txt: 'Mô tả',
     info_description_txt: 'Nội dung',

@@ -175,7 +175,6 @@ export default {
         _self.newsData.newsgroup_id = groupItem.id
         _self.newsData.newsgroupname = groupItem.newsgroupname
       }
-      console.log(`Oh, that's nice. It's gotten ${groupItem.id} clicks! :)`)
     })
 
     EventBus.$on('on-selected-image', (imgItem) => {

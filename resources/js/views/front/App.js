@@ -5,7 +5,7 @@ require('./assets/font.awsome.icon')
 import 'bootstrap/dist/css/bootstrap.css'
 import {
   BootstrapVue,
-  BootstrapVueIcons
+  BootstrapVueIcons,
 } from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)

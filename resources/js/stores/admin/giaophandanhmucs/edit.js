@@ -14,8 +14,6 @@ import {
   NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_SUCCESS,
   NEWSGROUPS_MODAL_INSERT_NEWS_GROUP_FAILED,
   NEWSGROUPS_MODAL_UPDATE_NEWS_GROUP_FAILED,
-  NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED,
-  NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS,
   SET_ERROR,
   SELECT_DROPDOWN_PARENT_CATEGORY,
   SELECT_DROPDOWN_INFO_TO_PARENT_CATEGORY,
@@ -200,7 +198,6 @@ export default {
         apiGetGiaoPhanDanhMucsById(
           newsGroupId,
           (result) => {
-            commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_SUCCESS, true)
             commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP, result.data)
             commit(SELECT_DROPDOWN_PARENT_CATEGORY, {
               name: result.data.path,
@@ -211,8 +208,7 @@ export default {
             dispatch(ACTION_IS_OPEN_MODAL, true)
           },
           (errors) => {
-            commit(NEWSGROUPS_MODAL_SET_NEWS_GROUP_FAILED, errors)
-
+            commit(SET_ERROR, errors)
             dispatch(ACTION_SET_LOADING, false)
           }
         )

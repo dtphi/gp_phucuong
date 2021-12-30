@@ -67,7 +67,7 @@ export default {
         HelpAbout,
         { text: '', },
         { height: 'auto', },
-        {isToggle: true, },
+        { isToggle: true, },
         { 'before-close': () => {}, }
       )
     },

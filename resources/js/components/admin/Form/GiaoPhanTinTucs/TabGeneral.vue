@@ -197,22 +197,8 @@ export default {
       options: {
         language_url: fn_get_tinymce_langs_url('vi_VN'),
         height: '500',
-        //toolbar_mode: 'sliding',
-        //image_caption: true,
-        //image_list: [],
-        //image_advtab: false,
         image_prepend_url: window.origin + '/',
-        //images_upload_url: window.origin + '/api/mmedia/upload',
-        /*images_upload_handler: function(editor) {
-                        console.log(editor.filename());
-                    },*/
         referrer_policy: 'strict-origin-when-cross-origin',
-
-        /*init_instance_callback: function(editor) {
-                        _self.editor = editor;
-                    },*/
-        //importcss_append: true,
-        /* Show button select image */
         file_picker_callback: function(callback, value, meta) {
           if (meta.filetype === 'file') {
             _self.fn = callback

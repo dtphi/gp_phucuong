@@ -70,6 +70,7 @@ export default new Vuex.Store({
         Array.isArray(state.cfApp.setting.navMainLists)) {
         menus.children = { ...state.cfApp.setting.navMainLists, }
       }
+      
       return menus
     },
     pageLists(state) {
@@ -86,6 +87,7 @@ export default new Vuex.Store({
       if (fnIsObject(state.paginationRoot.collectionData)) {
         return state.paginationRoot.collectionData
       }
+      
       return colData
     },
     isNotEmptyList(state) {
@@ -93,6 +95,7 @@ export default new Vuex.Store({
         fnCheckProp(state.paginationRoot.meta, 'total')) {
         return (parseInt(state.paginationRoot.meta.total) > 0)
       }
+      
       return false
     },
     moduleNameActive(state) {
@@ -101,6 +104,7 @@ export default new Vuex.Store({
         fnCheckProp(state.paginationRoot.moduleActive, 'name')) {
         mName = state.paginationRoot.moduleActive.name
       }
+      
       return mName
     },
     moduleActionListActive(state) {
@@ -108,6 +112,7 @@ export default new Vuex.Store({
       if (fnIsObject(state.paginationRoot.moduleActive) && fnCheckProp(state.paginationRoot.moduleActive, 'actionList')) {
         mAction = state.paginationRoot.moduleActive.actionList
       }
+      
       return mAction
     },
     isScreen414(state) {
@@ -206,8 +211,8 @@ export default new Vuex.Store({
       }
     },
   },
-	modules: {
-		linhmuc,
+  modules: {
+    linhmuc,
     giaoxu,
     home,
     video,

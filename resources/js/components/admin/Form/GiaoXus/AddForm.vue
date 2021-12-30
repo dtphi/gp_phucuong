@@ -54,11 +54,9 @@ export default {
 
             if (fnCheckProp(fi.selected, 'path')) {
               if (this._selfCom.fn) {
-                console.log(this._selfCom.fn, '_selfCom')
                 this._selfCom.fn(pathImg + fi.selected.path, fi.selected)
               } else {
                 if (typeof this._selfCom[ACTION_SET_IMAGE] == 'function') {
-                  console.log(this._selfCom, '123')
                   this._selfCom[ACTION_SET_IMAGE](pathImg + fi.selected.path)
                 }
               }

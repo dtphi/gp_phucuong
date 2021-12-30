@@ -1,11 +1,28 @@
 const envBuild = process.env.NODE_ENV
 const pathArray = (envBuild === 'production') ? process.env.MIX_APP_ADMIN_API_ROUTE_LOGIN.split(',') : []
 const _adminPathName = (envBuild === 'production') ? pathArray[0] : 'adminlocal'
+
+let baseUrl = window.origin
+if (envBuild == 'server-dev') {
+  baseUrl = 'http://haydesachnoipodcast.com'
+} else if(envBuild == 'production') {
+  baseUrl = 'http://localhost:8000'
+}
+
+const existStatus = {
+  checking: 'checking',
+  exist: 'exit',
+  notExist: 'notExist',
+}
+
 import {
   fn_get_tinymce_langs_url,
 } from '@app/api/utils/fn-helper'
 
 export const config = {
+  site_name: 'GP-PhuCuong',
+  baseUrl: baseUrl,
+  existStatus: existStatus,
   site_name: 'GP-PhuCuong',
   carouselLimit: 5,
   chucThanhs: ['--Chọn chức thánh--', 'Phó Tế', 'Linh Mục', 'Giám Mục'],
@@ -48,7 +65,7 @@ export const config = {
       uploadUrl: 'upload',
       deleteUrl: 'delete',
     },
-    fileTypes: ['file','image', 'media'],
+    fileTypes: ['file', 'image', 'media'],
     imagePrependUrl: window.origin + '/',
     languageUrl: fn_get_tinymce_langs_url('vi_VN'),
     height: '500',

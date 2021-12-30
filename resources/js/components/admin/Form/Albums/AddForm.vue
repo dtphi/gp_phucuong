@@ -95,11 +95,14 @@ export default {
       ACTION_GET_INFO_LIST,
       'ACTION_GET_LIST_GROUP_ALBUMS'
     ]),
+    _getInfo() {
+      return this.$$deep(this.info)
+    },
     _submitInfo() {
-      this[ACTION_INSERT_INFO](this.info)
+      this[ACTION_INSERT_INFO](this._getInfo())
     },
     _submitInfoBack() {
-      this[ACTION_INSERT_INFO_BACK](this.info)
+      this[ACTION_INSERT_INFO_BACK](this._getInfo())
     },
     _selectMainImg(file) {
       if (typeof file === 'object') {

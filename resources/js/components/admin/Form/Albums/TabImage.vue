@@ -67,8 +67,6 @@ export default {
     },
   },
   mounted() {
-    const self = this
-
     this.mediaMM = new MM({
       el: '#media-info-manager',
       api: config.mm.api,
@@ -76,8 +74,8 @@ export default {
         el: '#file-input',
         multiple: false,
       },
-      onSelect: function(event) {
-        self._changeImage(event)
+      onSelect: (event) => {
+        this._changeImage(event)
       },
     })
   },

@@ -37,7 +37,7 @@ import { mapGetters, } from 'vuex'
 import { MODULE_MODULE_SPECIAL_INFO_CAROUSEL, } from 'store@admin/types/module-types'
 import ItemCarousel from './ItemCarousel'
 import InfoMediaManage from '../Images/InfoImage'
-import { fnCheckProp, } from '@app/common/util'
+import { fnCheckImgPath, } from '@app/common/util'
 
 export default {
   name: 'TheInfoListCarousel',
@@ -53,16 +53,11 @@ export default {
   },
   methods: {
     _changeCarouselImage(fi) {
-      const _self = this
-      if (typeof fi === 'object') {
-        if (fnCheckProp(fi, 'selected') && fi.selected) {
-          if (fnCheckProp(fi.selected, 'path')) {
-            _self.$emit('select-multiple-banner-img', {
-              filePath: fi.selected.path,
-            })
-          }
-        }
-      }
+      fnCheckImgPath(fi)
+        ? this.$emit('select-multiple-banner-img', {
+          filePath: fi.selected.path,
+        })
+        : ''
     },
   },
   setting: {

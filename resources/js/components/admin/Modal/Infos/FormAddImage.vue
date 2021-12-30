@@ -107,7 +107,6 @@ export default {
         self._changeImage(event)
       },
     })
-    console.log(this)
     this._close()
   },
   methods: {

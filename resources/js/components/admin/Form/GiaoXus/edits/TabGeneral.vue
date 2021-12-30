@@ -360,12 +360,9 @@ export default {
   computed: {
     ...mapState(MODULE_MODULE_GIAO_XU_EDIT, {
       isGiaoHat: (state) => {
-        console.log(state.listGiaoHat, 'listGiaoHat')
-
         return state.listGiaoHat
       },
       _getImageAvatar() {
-        console.log(this.groupData.image, 'image')
         if (this.groupData.image != '') {
           return fn_get_href_base_url(this.groupData.image)
         }

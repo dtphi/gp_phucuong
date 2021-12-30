@@ -93,7 +93,7 @@ export default {
   },
   data() {
     return {
-      dropdownStyle: 'display: none;',
+      dropdownStyle: this.$options.setting.cssDisplayNone,
       itemNone: {
         information_id: 0,
         name: ' --- Chọn --- ',
@@ -110,13 +110,13 @@ export default {
   },
   watch: {
     query: {
-      handler: _.debounce(function() {
+      handler: _.debounce(() => {
         this._searchRelateds()
       }, 100),
     },
     infoRelated: {
-      handler: function() {
-        this._addInfoToRelated(this.infoRelated)
+      handler: function(val) {
+        this._addInfoToRelated(val)
       },
     },
   },
@@ -126,24 +126,27 @@ export default {
       ACTION_ADD_INFO_TO_RELATED_LIST
     ]),
     _searchRelateds() {
-      const query = this.query
-      if (query && query.length) {
+      const query = this.query?.length
+      if (query && (parseInt(query) > 0)) {
         this[ACTION_GET_DROPDOWN_RELATED_LIST](query)
       }
     },
     _focusRelatedInfo() {
       const query = this.query
       this[ACTION_GET_DROPDOWN_RELATED_LIST](query)
-      this.$data.dropdownStyle = 'display:block'
+      this.$data.dropdownStyle = this.$options.setting.cssDisplay
     },
     _closeDropdown() {
-      this.$data.dropdownStyle = 'display:none'
+      this.$data.dropdownStyle = this.$options.setting.cssDisplayNone
     },
     _addInfoToRelated(info) {
+      info = this.$deep(info)
       this[ACTION_ADD_INFO_TO_RELATED_LIST](info)
     },
   },
   setting: {
+    cssDisplay: 'display:block;',
+    cssDisplayNone: 'display:none;',
     paren_category_txt: 'Tin tức liên hệ',
   },
 }

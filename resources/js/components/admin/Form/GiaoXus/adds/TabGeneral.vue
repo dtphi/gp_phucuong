@@ -324,8 +324,6 @@ export default {
   computed: {
     ...mapState(MODULE_MODULE_GIAO_XU_ADD, {
       isGiaoHat: (state) => {
-        console.log(state.listGiaoHat, 'giao_hat')
-
         return state.listGiaoHat
       },
     }),

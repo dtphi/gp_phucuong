@@ -9,7 +9,6 @@ import {
   INFOS_MODAL_INSERT_INFO_FAILED,
   SET_ERROR,
   INFOS_FORM_SET_MAIN_IMAGE,
-  INFOS_GET_INFO_LIST_FAILED,
   MODULE_UPDATE_SET_KEYS_DATA,
 } from '../types/mutation-types'
 import {
@@ -160,7 +159,7 @@ export default {
           commit('INFO_GROUP_ALBUMS', infos.data.results)
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+          commit(SET_ERROR, errors)
         },
         params
       )

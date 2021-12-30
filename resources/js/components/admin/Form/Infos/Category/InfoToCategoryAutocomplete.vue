@@ -117,13 +117,13 @@ export default {
   },
   watch: {
     query: {
-      handler: _.debounce(function() {
+      handler: _.debounce(() => {
         this._searchCategories()
       }, 100),
     },
     infoCategory: {
-      handler: function() {
-        this._addInfoToCategory(this.infoCategory)
+      handler: function(val) {
+        this._addInfoToCategory(val)
       },
     },
   },
@@ -131,24 +131,27 @@ export default {
     ...mapActions(MODULE_NEWS_CATEGORY, [ACTION_GET_DROPDOWN_CATEGORY_LIST]),
     ...mapActions(MODULE_INFO_ADD, [ACTION_ADD_INFO_TO_CATEGORY_LIST]),
     _searchCategories() {
-      const query = this.query
-      if (query && query.length) {
+      const query = this.query?.length
+      if (query && (parseInt(query) > 0)) {
         this[ACTION_GET_DROPDOWN_CATEGORY_LIST](query)
       }
     },
     _focusParentCategory() {
       const query = this.query
       this[ACTION_GET_DROPDOWN_CATEGORY_LIST](query)
-      this.$data.dropdownStyle = 'display:block'
+      this.$data.dropdownStyle = this.$options.setting.cssDisplay
     },
     _closeDropdown() {
-      this.$data.dropdownStyle = 'display:none'
+      this.$data.dropdownStyle = this.$options.setting.cssDisplayNone
     },
-    _addInfoToCategory(infoCategory) {
-      this[ACTION_ADD_INFO_TO_CATEGORY_LIST](infoCategory)
+    _addInfoToCategory(category) {
+      const cate = this.$deep(category)
+      this[ACTION_ADD_INFO_TO_CATEGORY_LIST](cate)
     },
   },
   setting: {
+    cssDisplay: 'display:block',
+    cssDisplayNone: 'display:none',
     paren_category_txt: 'Danh mục tin tức cha',
   },
 }

@@ -76,10 +76,12 @@ export function fnCheckProp(obj, prop) {
 export function fnCheckImgSelect(file) {
   const selected = file?.selected
   const isType = typeof selected
-  return (isType === 'undefined' || selected === null && isType !== 'object' ) ? null: selected
+  
+  return (isType === 'undefined' || selected === null && isType !== 'object') ? null: selected
 }
 export function fnCheckImgPath(file) {
   const path = file?.selected?.path
   const isType = typeof path
+  
   return (isType === 'undefined' || isType !== 'string') ? null: path
 }

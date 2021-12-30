@@ -153,8 +153,6 @@ export default {
   computed: {
     ...mapState(MODULE_MODULE_GIAO_HAT_ADD, {
       isLinhMuc: (state) => {
-        console.log(state.linhMuc, 'lich muc test')
-
         return state.linhMuc
       },
     }),
