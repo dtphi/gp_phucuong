@@ -27,6 +27,7 @@
                     type="text"
                     class="form-control"
                     id="file-input"
+                    :value="_getImgUrl()"
                     disabled
                   />
                 </td>
@@ -42,9 +43,10 @@
 <script>
 require('@app/tools/mm/dist/style.css')
 import { MM, } from '@app/tools/mm/dist/mm.min'
-import { EventBus, } from '@app/api/utils/event-bus'
+import { EmitOnSelectedImage, } from '@app/api/utils/event-bus'
 import { fn_get_base_url_image, } from '@app/api/utils/fn-helper'
-import { fnCheckProp, } from '@app/common/util'
+import { fnCheckImgSelect, } from '@app/common/util'
+import { config, } from '@app/common/config'
 
 export default {
   name: 'TabImageForm',
@@ -69,13 +71,7 @@ export default {
 
     this.mediaMM = new MM({
       el: '#media-info-manager',
-      api: {
-        baseUrl: window.origin + '/api/mmedia',
-        listUrl: 'list',
-        downloadUrl: 'download', // optional
-        uploadUrl: 'upload', // optional
-        deleteUrl: 'delete', // optional
-      },
+      api: config.mm.api,
       input: {
         el: '#file-input',
         multiple: false,
@@ -87,18 +83,12 @@ export default {
   },
   methods: {
     _changeImage(fi) {
-      if (typeof fi === 'object') {
-        if (fnCheckProp(fi, 'selected')) {
-          EventBus.$emit('on-selected-image', fi)
-        }
-      }
+      fnCheckImgSelect(fi) ? EmitOnSelectedImage(fi): ''
     },
     _getImgUrl() {
-      if (this.groupData.image.thumb && this.groupData.image.thumb.length) {
-        return this.groupData.image.thumb
-      } else {
-        return fn_get_base_url_image()
-      }
+      const thumb = this.groupData?.image?.thumb
+      
+      return (typeof thumb !== 'string') ? fn_get_base_url_image(): thumb
     },
     _isEditForm() {
       return Object.keys(this.groupData).length

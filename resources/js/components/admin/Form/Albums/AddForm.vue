@@ -46,9 +46,9 @@ import TabGeneral from './adds/TabGeneral'
 import { mapState, mapGetters, mapActions, } from 'vuex'
 import { MODULE_MODULE_ALBUMS_ADD, } from 'store@admin/types/module-types'
 import TabAlbumsImage from './TabAlbumsImage'
-import { EventBus, } from '@app/api/utils/event-bus'
+import { OnSelectedImage, } from '@app/api/utils/event-bus'
 import TabMediaManager from './TabImage'
-import { fnCheckProp, } from '@app/common/util'
+import { fnCheckImgSelect, } from '@app/common/util'
 
 import {
   ACTION_SET_LOADING,
@@ -77,17 +77,13 @@ export default {
     }),
     ...mapGetters(MODULE_MODULE_ALBUMS_ADD, ['info']),
   },
-  /* Create list group albums */
   created() {
     this.ACTION_GET_LIST_GROUP_ALBUMS({
       perPage: -1,
     })
-  },
-  mounted() {
-    const _self = this
-    EventBus.$on('on-selected-image', (imgItem) => {
-      _self.$data.file = imgItem
-      _self._selectMainImg(imgItem)
+    OnSelectedImage((imgItem) => {
+      this.$data.file = imgItem
+      this._selectMainImg(imgItem)
     })
   },
   methods: {
@@ -106,28 +102,25 @@ export default {
       this[ACTION_INSERT_INFO_BACK](this.info)
     },
     _selectMainImg(file) {
-      const image = {
-        basename: '',
-        dirname: '',
-        extension: '',
-        filename: '',
-        path: '',
-        size: 0,
-        thumb: '',
-        timestamp: '',
-        type: '',
-      }
       if (typeof file === 'object') {
-        let selected = image
-
-        if (fnCheckProp(file, 'selected') && file.selected) {
-          selected = file.selected
-        }
-        this[ACTION_SET_IMAGE](selected)
+        this[ACTION_SET_IMAGE](
+          fnCheckImgSelect(file) ? file.selected : this.$options.setting.imgObj
+        )
       }
     },
   },
   setting: {
+    imgObj: {
+      basename: '',
+      dirname: '',
+      extension: '',
+      filename: '',
+      path: '',
+      size: 0,
+      thumb: '',
+      timestamp: '',
+      type: '',
+    },
     tab_general_title: 'Tổng quan',
     tab_mo_rong_title: 'Mở rộng',
     tab_bang_cap_title: 'Bằng Cấp',

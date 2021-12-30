@@ -1,6 +1,9 @@
 const envBuild = process.env.NODE_ENV
 const pathArray = (envBuild === 'production') ? process.env.MIX_APP_ADMIN_API_ROUTE_LOGIN.split(',') : []
 const _adminPathName = (envBuild === 'production') ? pathArray[0] : 'adminlocal'
+import {
+  fn_get_tinymce_langs_url,
+} from '@app/api/utils/fn-helper'
 
 export const config = {
   site_name: 'GP-PhuCuong',
@@ -36,5 +39,21 @@ export const config = {
     storageLinhMucExpectSignInPhoneKey: 'linhMuc.expectSignInPhone',
     history: true,
     mode: 'history',
+  },
+  mm: {
+    api: {
+      baseUrl: `${window.origin}/api/mmedia`,
+      listUrl: 'list',
+      downloadUrl: 'download',
+      uploadUrl: 'upload',
+      deleteUrl: 'delete',
+    },
+    fileTypes: ['file','image', 'media'],
+    imagePrependUrl: window.origin + '/',
+    languageUrl: fn_get_tinymce_langs_url('vi_VN'),
+    height: '500',
+    referrerPolicy: 'strict-origin-when-cross-origin',
+    toolbar2: 'undo redo | styleselect | fontsizeselect | fontselect | image ',
+    fontFormats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
   },
 }

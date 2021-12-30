@@ -12,8 +12,5 @@
 export default {
   name: 'MainFooter',
   components: {},
-  mounted() {
-    console.log('footer mounted')
-  },
 }
 </script>

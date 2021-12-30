@@ -13,8 +13,9 @@
 <script>
 require('@app/tools/mm/dist/style.css')
 import { MM, } from '@app/tools/mm/dist/mm.min'
-import { EventBus, } from '@app/api/utils/event-bus'
-import { fnCheckProp, } from '@app/common/util'
+import { EmitOnSelectInfoMediaImg, } from '@app/api/utils/event-bus'
+import { config, } from '@app/common/config'
+import { fnCheckImgPath, } from '@app/common/util'
 
 export default {
   name: 'TheMediaManage',
@@ -22,15 +23,7 @@ export default {
     selectedImage: {
       type: Function,
       default: function(fi) {
-        if (typeof fi === 'object') {
-          if (fnCheckProp(fi, 'selected') && fi.selected) {
-            if (fnCheckProp(fi.selected, 'path')) {
-              EventBus.$emit('select-info-media-img', {
-                filePath: fi.selected.path,
-              })
-            }
-          }
-        }
+        fnCheckImgPath(fi)?EmitOnSelectInfoMediaImg({ filePath: fi.selected.path, }): ''
       },
     },
   },
@@ -40,23 +33,15 @@ export default {
     }
   },
   mounted() {
-    const self = this
-
     this.mediaMM = new MM({
       el: '#media-info-manager_',
-      api: {
-        baseUrl: window.origin + '/api/mmedia',
-        listUrl: 'list',
-        downloadUrl: 'download',
-        uploadUrl: 'upload',
-        deleteUrl: 'delete',
-      },
+      api: config.mm.api,
       input: {
         el: '#file-media-info-input',
         multiple: false,
       },
-      onSelect: function(event) {
-        self._changeImage(event)
+      onSelect: (event) => {
+        this._changeImage(event)
       },
     })
   },

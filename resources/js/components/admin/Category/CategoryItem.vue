@@ -23,6 +23,5 @@ export default {
       this[ACTION_REMOVE_INFO_TO_CATEGORY_LIST](this.infoToCategory)
     },
   },
-  setting: {},
 }
 </script>

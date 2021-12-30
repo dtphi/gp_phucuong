@@ -82,7 +82,7 @@
           v-slot="{ errors }"
         >
           <input
-            type="text"
+            type="number"
             v-model="groupData.sort_id"
             name="sort_order"
             placeholder="Thứ tự hiển thị"
@@ -101,7 +101,6 @@
 import { mapState, } from 'vuex'
 import { config, } from '@app/common/config'
 import {
-  fn_get_tinymce_langs_url,
   fn_get_href_base_url,
 } from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_ALBUMS_ADD, } from 'store@admin/types/module-types'
@@ -132,37 +131,25 @@ export default {
   },
   data() {
     const _self = this
+    const elFileContent = document.getElementById('media-file-manager-content')
 
     return {
       fn: null,
       mm: null,
       options: {
-        language_url: fn_get_tinymce_langs_url('vi_VN'),
-        height: '500',
-        image_prepend_url: window.origin + '/',
+        language_url: config.mm.languageUrl,
+        height: config.mm.height,
+        image_prepend_url: config.mm.imagePrependUrl,
         file_picker_callback: function(callback, value, meta) {
           _self.media.options._selfCom = _self
-          if (meta.filetype === 'file') {
+          if (config.mm.fileTypes.includes(meta.filetype)) {
             _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
-          }
-          if (meta.filetype === 'image') {
-            _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
-          }
-          if (meta.filetype === 'media') {
-            _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
+            elFileContent.style = _self.$options.setting.cssDisplay
           }
         },
-        referrer_policy: 'strict-origin-when-cross-origin',
-        toolbar2:
-          'undo redo | styleselect | fontsizeselect | fontselect | image ',
-        font_formats:
-          'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
+        referrer_policy: config.mm.referrerPolicy,
+        toolbar2: config.mm.toolbar2,
+        font_formats: config.mm.fontFormats,
       },
     }
   },
@@ -171,18 +158,16 @@ export default {
       immediate: true,
       deep: true,
       handler(newValue) {
-        if (newValue && Object.keys(newValue).length) {
-          newValue.albums_name =
-            newValue.albums_name === null ? '' : newValue.albums_name
-
-          return newValue
+        if (typeof newValue?.albums_name === 'undefined') {
+          newValue.albums_name = ''
         }
+        
+        return newValue
       },
     },
   },
   setting: {
-    cf: config,
+    cssDisplay: 'display:block',
   },
-  methods: {},
 }
 </script>

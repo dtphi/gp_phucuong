@@ -35,7 +35,6 @@ export default {
       }
     },
     _routeTo(index) {
-      /*watch: {'$route' () {this._updateBreadcrumbs()}}*/
       if (this.breadcrumbs[index].linkName) {
         this.$router.push(this.breadcrumbs[index].linkName)
       }
