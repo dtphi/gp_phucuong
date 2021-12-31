@@ -1,19 +1,25 @@
 const envBuild = process.env.NODE_ENV
+const adminLocalPrefix = 'adminlocal'
 const pathArray = (envBuild === 'production') ? process.env.MIX_APP_ADMIN_API_ROUTE_LOGIN.split(',') : []
-const _adminPathName = (envBuild === 'production') ? pathArray[0] : 'adminlocal'
+const _adminPathName = (envBuild === 'production') ? pathArray[0] : adminLocalPrefix
 
 let baseUrl = window.origin
 if (envBuild == 'server-dev') {
   baseUrl = 'http://haydesachnoipodcast.com'
 } else if(envBuild == 'production') {
-  baseUrl = 'http://localhost:8000'
+  baseUrl = process.env.MIX_APP_URL
 }
 
+const langCode = 'vi_VN'
 const existStatus = {
   checking: 'checking',
   exist: 'exit',
   notExist: 'notExist',
 }
+const fileTypes = ['file', 'image', 'media']
+const referrerPolicy = 'strict-origin-when-cross-origin'
+const toolbar2 = 'undo redo | styleselect | fontsizeselect | fontselect | image '
+const fontFormats = 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats'
 
 import {
   fn_get_tinymce_langs_url,
@@ -57,20 +63,41 @@ export const config = {
     history: true,
     mode: 'history',
   },
+  dirImage: 'Image/NewPicture',
   mm: {
     api: {
-      baseUrl: `${window.origin}/api/mmedia`,
+      baseUrl: `${baseUrl}/api/mmedia`,
       listUrl: 'list',
       downloadUrl: 'download',
       uploadUrl: 'upload',
       deleteUrl: 'delete',
     },
-    fileTypes: ['file', 'image', 'media'],
-    imagePrependUrl: window.origin + '/',
-    languageUrl: fn_get_tinymce_langs_url('vi_VN'),
+    fileTypes: fileTypes,
+    imagePrependUrl: `${baseUrl}/`,
+    languageUrl: fn_get_tinymce_langs_url(langCode),
     height: '500',
-    referrerPolicy: 'strict-origin-when-cross-origin',
-    toolbar2: 'undo redo | styleselect | fontsizeselect | fontselect | image ',
-    fontFormats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
+    referrerPolicy: referrerPolicy,
+    toolbar2: toolbar2,
+    fontFormats: fontFormats,
   },
+  tinymce: {
+    options: (resolve) => {
+      return {
+        relative_urls: false,
+        remove_script_host: false,
+        document_base_url: `${baseUrl}/`,
+        language_url: fn_get_tinymce_langs_url(langCode),
+        height: '500',
+        image_prepend_url: `${baseUrl}/`,
+        referrer_policy: referrerPolicy,
+        file_picker_callback: (callback, value, meta) => {
+          if (fileTypes.includes(meta.filetype)) {
+            resolve(callback)
+          }
+        },
+        toolbar2: toolbar2,
+        fontFormats: fontFormats
+      }
+    }
+  }
 }

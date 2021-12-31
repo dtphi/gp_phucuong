@@ -177,7 +177,7 @@ export default {
       onSelect: (fi) => {
         if (typeof fi === 'object') {
           if (fnCheckImgPath(fi)) {
-            this.fn(`/Image/NewPicture/${fi.selected.path}`, fi.selected)
+            this.fn(`/${config.dirImage}/${fi.selected.path}`, fi.selected)
             elFileContent.style = this.$options.setting.cssDisplayNone
           }
         }
@@ -187,20 +187,10 @@ export default {
     return {
       fn: null,
       mm: mm,
-      options: {
-        language_url: config.mm.languageUrl,
-        height: config.mm.height,
-        image_prepend_url: config.mm.imagePrependUrl,
-        referrer_policy: config.mm.referrerPolicy,
-        file_picker_callback: (callback, value, meta) => {
-          if (config.mm.fileTypes.includes(meta.filetype)) {
-            this.fn = callback
-            elFileContent.style = this.$options.setting.cssDisplay
-          }
-        },
-        toolbar2: config.mm.toolbar2,
-        font_formats: config.mm.fontFormats,
-      },
+      options: config.tinymce.options((callback) => {
+        this.fn = callback
+        elFileContent.style = this.$options.setting.cssDisplay
+      }),
     }
   },
   watch: {
@@ -208,8 +198,9 @@ export default {
       immediate: true,
       deep: true,
       handler(newValue) {
-        if (newValue?.context === 'undefined') {
-          newValue.context = ''
+        if (newValue?.context === 'undefined'
+          || newValue?.context === null) {
+          return (newValue.context = null)
         }
         
         return newValue
@@ -228,6 +219,5 @@ export default {
     info_tag_txt: 'Tags',
     info_tag_tooltip_txt: 'Ngăn cách bởi dấu phẩy',
   },
-  mounted() {},
 }
 </script>
