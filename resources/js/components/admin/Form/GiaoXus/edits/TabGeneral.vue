@@ -302,7 +302,6 @@ import { mapState, mapActions, } from 'vuex'
 import { config, } from '@app/common/config'
 import tinymce from 'vue-tinymce-editor'
 import {
-  fn_get_tinymce_langs_url,
   fn_get_href_base_url,
 } from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
@@ -322,39 +321,17 @@ export default {
     },
   },
   data() {
-    const _self = this
+    const elFileContent = document.getElementById('media-file-manager-content')
+    const options = config.tinymce.options((callback) => {
+      this.fn = callback
+      elFileContent.style = this.$options.setting.cssDisplay
+    })
+    this.media.options._selfCom = this
 
     return {
       fn: null,
       mm: null,
-      options: {
-        language_url: fn_get_tinymce_langs_url('vi_VN'),
-        height: '200',
-        image_prepend_url: window.origin + '/',
-        file_picker_callback: function(callback, value, meta) {
-          _self.media.options._selfCom = _self
-          if (meta.filetype === 'file') {
-            _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
-          }
-          if (meta.filetype === 'image') {
-            _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
-          }
-          if (meta.filetype === 'media') {
-            _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
-          }
-        },
-        referrer_policy: 'strict-origin-when-cross-origin',
-        toolbar2:
-          'undo redo | styleselect | fontsizeselect | fontselect | image ',
-        font_formats:
-          'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
-      },
+      options: options,
     }
   },
   computed: {
@@ -371,7 +348,7 @@ export default {
       },
     }),
     _errors() {
-      return this.errors.length
+      return this.errors?.length
     },
   },
   watch: {
@@ -389,18 +366,18 @@ export default {
       },
     },
   },
-  setting: {
-    cf: config,
-  },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [ACTION_SET_IMAGE]),
     _selectImage() {
       this.fn = null
       this.media.options._selfCom = null
       this.media.options._selfCom = this
-      document.getElementById('media-file-manager-content').style =
-        'display:block'
+      document.getElementById('media-file-manager-content')
+        .style = this.$options.setting.cssDisplay
     },
+  },
+  setting: {
+    cssDisplay: 'display: block;',
   },
 }
 </script>

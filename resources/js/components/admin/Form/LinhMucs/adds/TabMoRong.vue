@@ -213,10 +213,25 @@ import { mapActions, } from 'vuex'
 import { MODULE_MODULE_LINH_MUC_ADD, } from 'store@admin/types/module-types'
 import { ACTION_SET_IMAGE, } from 'store@admin/types/action-types'
 import linhMucMix from '@app/mixins/admin/linhmuc'
+import {
+  config,
+} from '@app/common/config'
 
 export default {
   name: 'TabMoRongForm',
   mixins: [linhMucMix.tabData],
+  data() {
+    const elFileContent = document.getElementById('media-file-manager-content')
+    const options = config.tinymce.options((callback) => {
+      this.media.options._selfCom = this
+      this.fn = callback
+      elFileContent.style = this.$options.setting.cssDisplayNone
+    })
+    
+    return {
+      options: options
+    }
+  },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [ACTION_SET_IMAGE]),
   },

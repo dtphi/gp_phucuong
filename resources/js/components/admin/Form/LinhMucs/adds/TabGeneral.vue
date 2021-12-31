@@ -350,6 +350,9 @@ import linhMucMix from '@app/mixins/admin/linhmuc'
 import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete'
 import InfoTenThanhAutocomplete from '../Groups/InfoTenThanhAutocomplete'
 import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete'
+import {
+  config,
+} from '@app/common/config'
 
 export default {
   name: 'TabGeneralForm',
@@ -358,6 +361,18 @@ export default {
     InfoGiaoXuAutocomplete,
     InfoTenThanhAutocomplete,
     InfoDongAutocomplete,
+  },
+  data() {
+    const elFileContent = document.getElementById('media-file-manager-content')
+    const options = config.tinymce.options((callback) => {
+      this.media.options._selfCom = this
+      this.fn = callback
+      elFileContent.style = this.$options.setting.cssDisplayNone
+    })
+    
+    return {
+      options: options
+    }
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [

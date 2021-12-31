@@ -183,14 +183,15 @@ export default {
         }
       },
     })
+    const options = config.tinymce.options((callback) => {
+      this.fn = callback
+      elFileContent.style = this.$options.setting.cssDisplay
+    })
 
     return {
       fn: null,
       mm: mm,
-      options: config.tinymce.options((callback) => {
-        this.fn = callback
-        elFileContent.style = this.$options.setting.cssDisplay
-      }),
+      options: options,
     }
   },
   watch: {
