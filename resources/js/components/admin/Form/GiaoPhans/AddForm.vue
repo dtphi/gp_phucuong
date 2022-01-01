@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import { EventBus, } from '@app/api/utils/event-bus'
+import { OnSelectedImage, } from '@app/api/utils/event-bus'
 import { mapState, mapGetters, mapActions, } from 'vuex'
 import { MODULE_MODULE_GIAO_PHAN_ADD, } from 'store@admin/types/module-types'
 import {
@@ -140,11 +140,10 @@ export default {
     }),
     ...mapGetters(MODULE_MODULE_GIAO_PHAN_ADD, ['info']),
   },
-  mounted() {
-    const _self = this
-    EventBus.$on('on-selected-image', (imgItem) => {
-      _self.$data.file = imgItem
-      _self._selectMainImg(imgItem)
+  created() {
+    OnSelectedImage((imgItem) => {
+      this.$data.file = imgItem
+      this._selectMainImg(imgItem)
     })
   },
   methods: {

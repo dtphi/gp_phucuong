@@ -237,8 +237,8 @@ export default {
   },
   computed: {
     _getImageAvatar() {
-      if (this.groupData.image != '' && this.groupData.image) {
-        return `/${this.groupData.image}`
+      if (this.groupData?.image != '' && this.groupData?.image) {
+        return this.groupData.image
       }
 
       return '/images/no-photo.jpg'

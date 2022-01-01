@@ -386,6 +386,34 @@ export default {
 
       state.moduleData.keys.push(state.module_noi_bat_banner_formats)
     },
+
+    MODULE_NOI_BAT_SACH_NOI_PUSH_UPDATE_VALUE(state, payload) {
+      state.module_noi_bat_sach_nois.value.push(payload)
+    },
+    MODULE_NOI_BAT_SACH_NOI_UPDATE_VALUE(state, payload) {
+      state.module_noi_bat_sach_nois.value = payload
+    },
+
+    MODULE_NOI_BAT_YOUTUBES_PUSH_UPDATE_VALUE(state, payload) {
+      state.module_noi_bat_youtubes.value.push(payload)
+    },
+    MODULE_NOI_BAT_YOUTUBES_UPDATE_VALUE(state, payload) {
+      state.module_noi_bat_youtubes.value = payload
+    },
+
+    MODULE_NOI_BAT_HANH_CAC_THANH_PUSH_UPDATE_VALUE(state, payload) {
+      state.module_noi_bat_hanh_cac_thanhs.value.push(payload)
+    },
+    MODULE_NOI_BAT_HANH_CAC_THANH_UPDATE_VALUE(state, payload) {
+      state.module_noi_bat_hanh_cac_thanhs.value = payload
+    },
+
+    MODULE_NOI_BAT_BANNER_PUSH_UPDATE_VALUE(state, payload) {
+      state.module_noi_bat_banners.value.push(payload)
+    },
+    MODULE_NOI_BAT_BANNER_UPDATE_VALUE(state, payload) {
+      state.module_noi_bat_banners.value = payload
+    }
   },
 
   actions: {
@@ -419,8 +447,8 @@ export default {
         }
       )
     },
-    module_noi_bat_sach_nois({ state, }) {
-      state.module_noi_bat_sach_nois.value.push({
+    module_noi_bat_sach_nois({ commit, }) {
+      commit('MODULE_NOI_BAT_SACH_NOI_PUSH_UPDATE_VALUE', {
         id: uuidv4(),
         status: 1,
         open: 0,
@@ -430,21 +458,21 @@ export default {
         sort_order: 0,
       })
     },
-    module_noi_bat_sach_nois_action_remove({ state, }, params) {
+    module_noi_bat_sach_nois_action_remove({ state, commit, }, params) {
       let sachnois = state.module_noi_bat_sach_nois.value
       const data = params.item
 
       if (state.module_noi_bat_sach_nois.value.length > 1) {
-        state.module_noi_bat_sach_nois.value = _.remove(
+        commit('MODULE_NOI_BAT_SACH_NOI_UPDATE_VALUE', _.remove(
           sachnois,
           function(item) {
             return !(item.id == data.id)
           }
-        )
+        ))
       }
     },
-    module_noi_bat_youtubes({ state, }) {
-      state.module_noi_bat_youtubes.value.push({
+    module_noi_bat_youtubes({ commit, }) {
+      commit('MODULE_NOI_BAT_YOUTUBES_PUSH_UPDATE_VALUE', {
         id: uuidv4(),
         status: 1,
         title: '',
@@ -454,21 +482,21 @@ export default {
         sort_order: 0,
       })
     },
-    module_noi_bat_youtubes_action_remove({ state, }, params) {
+    module_noi_bat_youtubes_action_remove({ state, commit, }, params) {
       let youtubes = state.module_noi_bat_youtubes.value
       const data = params.item
 
       if (state.module_noi_bat_youtubes.value.length > 1) {
-        state.module_noi_bat_youtubes.value = _.remove(
+        commit('MODULE_NOI_BAT_YOUTUBES_UPDATE_VALUE', _.remove(
           youtubes,
           function(item) {
             return !(item.id == data.id)
           }
-        )
+        ))
       }
     },
-    module_noi_bat_hanh_cac_thanhs({ state, }) {
-      state.module_noi_bat_hanh_cac_thanhs.value.push({
+    module_noi_bat_hanh_cac_thanhs({ commit, }) {
+      commit('MODULE_NOI_BAT_HANH_CAC_THANH_PUSH_UPDATE_VALUE', {
         id: uuidv4(),
         status: 1,
         title: '',
@@ -478,20 +506,20 @@ export default {
         sort_order: 0,
       })
     },
-    module_noi_bat_hanh_cac_thanhs_action_remove({ state, }, params) {
+    module_noi_bat_hanh_cac_thanhs_action_remove({ state, commit, }, params) {
       let hanhCacThanhs = state.module_noi_bat_hanh_cac_thanhs.value
       const data = params.item
 
       if (state.module_noi_bat_hanh_cac_thanhs.value.length > 1) {
-        state.module_noi_bat_hanh_cac_thanhs.value = _.remove(
+        commit('MODULE_NOI_BAT_HANH_CAC_THANH_UPDATE_VALUE', _.remove(
           hanhCacThanhs,
           function(item) {
             return !(item.id == data.id)
           }
-        )
+        ))
       }
     },
-    module_noi_bat_banners({ state, }, value) {
+    module_noi_bat_banners({ commit, }, value) {
       const data = {
         id: uuidv4(),
         title: '',
@@ -502,18 +530,18 @@ export default {
         width: 700,
         height: 150,
       }
-      state.module_noi_bat_banners.value.push(data)
+      commit('MODULE_NOI_BAT_BANNER_PUSH_UPDATE_VALUE', data)
     },
-    module_noi_bat_banners_action_remove({ state, }, banner) {
+    module_noi_bat_banners_action_remove({ state, commit, }, banner) {
       let banners = state.module_noi_bat_banners.value
 
       if (state.module_noi_bat_banners.value.length > 1) {
-        state.module_noi_bat_banners.value = _.remove(
+        commit('MODULE_NOI_BAT_BANNER_UPDATE_VALUE', _.remove(
           banners,
-          function(item) {
+          function (item) {
             return !(item.id == banner.id)
           }
-        )
+        ))
       }
     },
     [ACTION_GET_SETTING]({ dispatch, state, commit, }) {

@@ -434,6 +434,8 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_GET_SETTING,
 } from 'store@admin/types/action-types'
+import { fnCheckImgPath, } from '@app/common/util'
+import { config, } from '@app/common/config'
 
 export default {
   name: 'HomeBannerPage',
@@ -444,28 +446,19 @@ export default {
   data() {
     const mm = new MM({
       el: '#modal-general-info-manager',
-      api: {
-        baseUrl: window.origin + '/api/mmedia',
-        listUrl: 'list',
-        uploadUrl: 'upload',
-      },
+      api: config.mm.api,
       onSelect: (fi) => {
-        if (typeof fi === 'object') {
-          if (Object.keys(fi)[0] === 'selected' && fi['selected']) {
-            const pathImg = 'Image/NewPicture/'
-            if ((String(fi.selected['path']) !== 'undefined') && (String(fi.selected['path']).length > 3)) {
-              this.mm.options._selfCom.media.path = pathImg + fi.selected.path
-              if (this.mm.options._selfCom.fn) {
-                this.mm.options._selfCom.fn(this.mm.options._selfCom.media, fi.selected)
-              } else {
-                if (typeof this.mm.options._selfCom.moduleSetImage == 'function') {
-                  this.mm.options._selfCom.moduleSetImage(this.mm.options._selfCom.media)
-                }
-              }
-              document.getElementById('media-file-manager-content').style =
-                'display:none'
+        const pathImg = 'Image/NewPicture/'
+        if (fnCheckImgPath(fi)) {
+          this.mm.options._selfCom.media.path = pathImg + fi.selected.path
+          if (this.mm.options._selfCom.fn) {
+            this.mm.options._selfCom.fn(this.mm.options._selfCom.media, fi.selected)
+          } else {
+            if (typeof this.mm.options._selfCom.moduleSetImage == 'function') {
+              this.mm.options._selfCom.moduleSetImage(this.mm.options._selfCom.media)
             }
           }
+          document.getElementById('media-file-manager-content').style = 'display:none'
         }
       },
       _selfCom: this,
