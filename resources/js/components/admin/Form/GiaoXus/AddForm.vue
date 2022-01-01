@@ -14,7 +14,6 @@
         <tab-general
           role="tabpanel"
           class="tab-pane active"
-          :group-data="info"
           :media="mm"
         ></tab-general>
       </div>

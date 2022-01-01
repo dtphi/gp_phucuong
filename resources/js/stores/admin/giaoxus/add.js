@@ -19,6 +19,7 @@ import {
   ACTION_SET_IMAGE,
   ACTION_RESET_NOTIFICATION_INFO,
 } from '../types/action-types'
+import { getField, updateField } from 'vuex-map-fields'
 
 const defaultState = () => {
   return {
@@ -27,6 +28,7 @@ const defaultState = () => {
     classShow: 'modal fade',
     styleCss: '',
     info: {
+      name: '',
       image: '',
       date_available: null,
       dia_chi: '',
@@ -84,6 +86,9 @@ export default {
     isGiaoHat(state) {
       return state.listGiaoHat
     },
+    getInfoField(state) {
+      return getField(state.info)
+    },
   },
 
   mutations: {
@@ -129,6 +134,9 @@ export default {
     },
     INFO_GIAO_HAT(state, payload) {
       state.listGiaoHat = payload
+    },
+    updateInfoField(state, field) {
+      return updateField(state.info, field)
     },
   },
 

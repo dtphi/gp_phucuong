@@ -24,6 +24,7 @@ import {
   ACTION_SET_IMAGE,
 } from '../types/action-types'
 import { config, } from '@app/api/admin/config'
+import { getField, updateField } from 'vuex-map-fields'
 
 const defaultState = () => {
   return {
@@ -88,6 +89,9 @@ export default {
     isGiaoHat(state) {
       return state.listGiaoHat
     },
+    getInfoField(state) {
+      return getField(state.info)
+    },
   },
 
   mutations: {
@@ -140,6 +144,9 @@ export default {
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload
       state.isImgChange = true
+    },
+    updateInfoField(state, field) {
+      return updateField(state.info, field)
     },
   },
 

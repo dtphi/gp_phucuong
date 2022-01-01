@@ -33,7 +33,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="groupData.name"
+            v-model="name"
             type="text"
             id="input-info-name"
             class="form-control"
@@ -55,7 +55,7 @@
           rules="max:50"
           v-slot="{ errors }"
         >
-          <select v-model="groupData.giao_hat_id" class="form-control">
+          <select v-model="giao_hat_id" class="form-control">
             <option
               v-for="item in isGiaoHat"
               v-bind:value="item.id"
@@ -80,7 +80,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="groupData.dia_chi"
+            v-model="dia_chi"
             type="text"
             id="input-info-diachi"
             class="form-control"
@@ -102,7 +102,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="groupData.dien_thoai"
+            v-model="dien_thoai"
             type="text"
             id="input-info-dien-thoai"
             class="form-control"
@@ -122,7 +122,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="groupData.email"
+            v-model="email"
             type="email"
             id="input-info-email"
             class="form-control"
@@ -143,11 +143,7 @@
           rules="max:255"
           v-slot="{ errors }"
         >
-          <select
-            v-model="groupData.active"
-            id="input-info-active"
-            class="form-control"
-          >
+          <select v-model="active" id="input-info-active" class="form-control">
             <option value="1" selected="selected">Xảy ra</option>
             <option value="0">Ẩn</option>
           </select>
@@ -168,7 +164,7 @@
         >
           <input
             type="text"
-            v-model="groupData.dan_so"
+            v-model="dan_so"
             placeholder="Dân số"
             id="input-info-danso"
             class="form-control"
@@ -190,7 +186,7 @@
         >
           <input
             type="text"
-            v-model="groupData.so_tin_huu"
+            v-model="so_tin_huu"
             placeholder="Số tín hữu"
             id="input-info-sotinhuu"
             class="form-control"
@@ -208,23 +204,23 @@
         <tinymce
           id="input-info-gio-le"
           :other_options="options"
-          v-model="groupData.gio_le"
+          v-model="gio_le"
         >
         </tinymce>
       </div>
     </div>
     <!-- Viet -->
-    <div class="form-group required">
+    <div class="form-group">
       <label class="col-sm-2 control-label" for="input-info-viet">Việt</label>
       <div class="col-sm-10">
         <validation-provider
           name="info_viet"
-          rules="required|max:191"
+          rules="max:191"
           v-slot="{ errors }"
         >
           <input
             type="text"
-            v-model="groupData.viet"
+            v-model="viet"
             placeholder="Việt"
             id="input-info-viet"
             class="form-control"
@@ -234,17 +230,17 @@
       </div>
     </div>
     <!-- Latin -->
-    <div class="form-group required">
+    <div class="form-group">
       <label class="col-sm-2 control-label" for="input-info-latin">Latin</label>
       <div class="col-sm-10">
         <validation-provider
           name="info_latin"
-          rules="required|max:191"
+          rules="max:191"
           v-slot="{ errors }"
         >
           <input
             type="text"
-            v-model="groupData.latin"
+            v-model="latin"
             placeholder="Latin"
             id="input-info-latin"
             class="form-control"
@@ -254,38 +250,31 @@
       </div>
     </div>
     <!-- Nội dung -->
-    <div class="form-group required">
+    <div class="form-group">
       <label class="col-sm-2 control-label" for="input-info-noi-dung"
         >Nội dung</label
       >
       <div class="col-sm-10">
-        <validation-provider
-          name="info_noi_dung"
-          rules="required"
-          v-slot="{ errors }"
+        <tinymce
+          id="input-info-noi-dung"
+          :other_options="options"
+          v-model="noi_dung"
         >
-          <tinymce
-            id="input-info-noi-dung"
-            :other_options="options"
-            v-model="groupData.noi_dung"
-          >
-          </tinymce>
-          <span class="cms-text-red">{{ errors[0] }}</span>
-        </validation-provider>
+        </tinymce>
       </div>
     </div>
     <!-- Type -->
-    <div class="form-group required">
+    <div class="form-group">
       <label class="col-sm-2 control-label" for="input-info-type">Type</label>
       <div class="col-sm-10">
         <validation-provider
           name="info_type"
-          rules="required|max:255"
+          rules="max:255"
           v-slot="{ errors }"
         >
           <input
             type="text"
-            v-model="groupData.type"
+            v-model="type"
             placeholder="Type"
             id="input-info-type"
             class="form-control"
@@ -300,12 +289,16 @@
 <script>
 import { mapState, mapActions, } from 'vuex'
 import { config, } from '@app/common/config'
-import {
-  fn_get_href_base_url,
-} from '@app/api/utils/fn-helper'
+import { fn_get_href_base_url, } from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_GIAO_XU_ADD, } from 'store@admin/types/module-types'
 import tinymce from 'vue-tinymce-editor'
 import { ACTION_SET_IMAGE, } from 'store@admin/types/action-types'
+import { createHelpers, } from 'vuex-map-fields'
+
+const { mapFields, } = createHelpers({
+  getterType: 'giao_xu/add/getInfoField',
+  mutationType: 'giao_xu/add/updateInfoField',
+})
 
 export default {
   name: 'TabGeneralForm',
@@ -313,18 +306,31 @@ export default {
     tinymce,
   },
   props: {
-    groupData: {
-      type: Object,
-    },
     media: {
       type: Object,
     },
   },
   computed: {
+    ...mapFields([
+      'name', 
+      'giao_hat_id',
+      'gio_le',
+      'noi_dung',
+      'dia_chi',
+      'dien_thoai',
+      'email',
+      'active',
+      'dan_so',
+      'so_tin_huu',
+      'viet',
+      'latin',
+      'type'
+    ]),
     ...mapState(MODULE_MODULE_GIAO_XU_ADD, {
       isGiaoHat: (state) => {
         return state.listGiaoHat
       },
+      groupData: state => state.info,
     }),
     _getImageAvatar() {
       if (this.groupData.image != '') {
@@ -354,11 +360,12 @@ export default {
       this.fn = null
       this.media.options._selfCom = null
       this.media.options._selfCom = this
-      document.getElementById('media-file-manager-content').style = this.$options.setting.cssDisplay
+      document.getElementById('media-file-manager-content').style =
+        this.$options.setting.cssDisplay
     },
   },
   setting: {
-    cssDisplay: 'display: block;'
-  }
+    cssDisplay: 'display: block;',
+  },
 }
 </script>
