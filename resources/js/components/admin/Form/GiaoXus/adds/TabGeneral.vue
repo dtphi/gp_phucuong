@@ -348,21 +348,6 @@ export default {
       options: options,
     }
   },
-  watch: {
-    groupData: {
-      immediate: true,
-      deep: true,
-      handler(newValue) {
-        if (newValue && Object.keys(newValue).length) {
-          newValue.gio_le = newValue.gio_le === null ? '' : newValue.gio_le
-          newValue.noi_dung =
-            newValue.noi_dung === null ? '' : newValue.noi_dung
-
-          return newValue
-        }
-      },
-    },
-  },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_ADD, [ACTION_SET_IMAGE]),
     _selectImage() {

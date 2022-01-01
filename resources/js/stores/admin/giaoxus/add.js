@@ -12,7 +12,6 @@ import {
   INFOS_FORM_SET_MAIN_IMAGE,
   INFOS_FORM_SET_DROPDOWN_RELATED_LIST,
   INFOS_FORM_SELECT_DROPDOWN_INFO_TO_RELATED,
-  INFOS_GET_INFO_LIST_FAILED,
 } from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
@@ -39,7 +38,7 @@ const defaultState = () => {
       gio_le: '',
       viet: null,
       latin: null,
-      noi_dung: null,
+      noi_dung: '',
       type: 'giaoxu',
       giao_hat_id: null,
     },
@@ -131,9 +130,6 @@ export default {
     INFO_GIAO_HAT(state, payload) {
       state.listGiaoHat = payload
     },
-    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
-      state.isGetInfoList = payload
-    },
   },
 
   actions: {
@@ -144,7 +140,7 @@ export default {
           commit('INFO_GIAO_HAT', infos.data.results)
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+          commit(SET_ERROR, errors)
         },
         params
       )

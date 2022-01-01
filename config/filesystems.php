@@ -69,4 +69,6 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    'ignores' => ['.DS_Store', '.DS_STORE', '.ds_store']
+
 ];

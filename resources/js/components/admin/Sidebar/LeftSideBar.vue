@@ -310,11 +310,11 @@ export default {
   methods: {
     _renderMenu() {
       const self = this
-      const rules = unserialize(this.user.ruleSelect)
+      const rules = (this.user?.ruleSelect) ? unserialize(this.user.ruleSelect) : []
       let menuHtml = ''
 
       Object.entries(rules).forEach(function(item) {
-        if (item[1].abilities.list) {
+        if (item[1]?.abilities?.list) {
           const links = self._getRuleHref(item[0])
           menuHtml += '<li><a href=\'' + links.href + '\'>'
           menuHtml += '<span>' + links.name + '</span></a></li>'

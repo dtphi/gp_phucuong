@@ -34,7 +34,7 @@ import { fnCheckProp, } from '@app/common/util'
 
 Vue.use(Vuex)
 
-const debug = process.env.NODE_ENV === 'debuger'
+const debug = 'debuger, development'.includes(process.env.NODE_ENV)
 
 const fnIsObject = (obj) => {
   if (typeof obj !== 'undefined' &&

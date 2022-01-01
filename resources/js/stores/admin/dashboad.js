@@ -7,7 +7,6 @@ import { apiGetLinhMucInfos, } from 'api@admin/linhmuc'
 import {
   INFOS_SET_INFO_LIST,
   INFOS_GET_INFO_LIST_SUCCESS,
-  INFOS_GET_INFO_LIST_FAILED,
   INFOS_SET_LOADING,
   SET_ERROR,
   NEWSGROUPS_GET_NEWS_GROUP_LIST_SUCCESS,
@@ -50,9 +49,6 @@ export default {
       state.isGetInfoList = payload
     },
 
-    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
-      state.isGetInfoList = payload
-    },
     [INFOS_SET_LOADING](state, payload) {
       state.loading = payload
     },
@@ -193,7 +189,7 @@ export default {
           dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+          commit(SET_ERROR, errors)
 
           dispatch(ACTION_SET_LOADING, false)
         },

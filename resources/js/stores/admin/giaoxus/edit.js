@@ -12,7 +12,6 @@ import {
   INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
-  INFOS_GET_INFO_LIST_FAILED,
   INFOS_FORM_SET_MAIN_IMAGE,
 } from '../types/mutation-types'
 import {
@@ -138,9 +137,6 @@ export default {
     INFO_GIAO_HAT(state, payload) {
       state.listGiaoHat = payload
     },
-    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
-      state.isGetInfoList = payload
-    },
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload
       state.isImgChange = true
@@ -155,7 +151,7 @@ export default {
           commit('INFO_GIAO_HAT', infos.data.results)
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+          commit(SET_ERROR, errors)
         },
         params
       )

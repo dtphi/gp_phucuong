@@ -7,7 +7,6 @@ import {
   INFOS_MODAL_INSERT_INFO_FAILED,
   SET_ERROR,
   INFOS_FORM_SET_MAIN_IMAGE,
-  INFOS_GET_INFO_LIST_FAILED,
 } from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
@@ -105,9 +104,6 @@ export default {
     INFO_GIAO_PHAN(state, payload) {
       state.listGiaoPhan = payload
     },
-    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
-      state.isGetInfoList = payload
-    },
   },
 
   actions: {
@@ -118,7 +114,7 @@ export default {
           commit('INFO_GIAO_PHAN', infos.data.results)
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+          commit(SET_ERROR, errors)
         },
         params
       )
