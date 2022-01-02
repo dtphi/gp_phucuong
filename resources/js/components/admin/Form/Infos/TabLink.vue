@@ -27,9 +27,6 @@ export default {
       type: String,
       default: '',
     },
-    groupData: {
-      type: Object,
-    },
   },
   computed: {
     _isAdd() {

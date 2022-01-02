@@ -28,6 +28,7 @@ import {
   ACTION_GET_DROPDOWN_RELATED_LIST,
   ACTION_SELECT_DROPDOWN_RELATED_INFO,
 } from '../types/action-types'
+import { getField, updateField } from 'vuex-map-fields'
 
 const defaultState = () => {
   return {
@@ -103,6 +104,9 @@ export default {
     isError(state) {
       return state.errors.length
     },
+    getInfoField(state) {
+      return getField(state.info)
+    },
   },
 
   mutations: {
@@ -152,6 +156,19 @@ export default {
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
       state.info.image = payload
       state.isImgChange = true
+    },
+
+    INFOS_FORM_ADD_INFO_PUSH_UPDATE_CATEGORY_LIST(state, payload) {
+      state.info.categorys.push(payload.category_id)
+      state.listCategorysDisplay.push(payload)
+    },
+    INFOS_FORM_ADD_INFO_PUSH_UPDATE_RELATED_LIST(state, payload) {
+      state.info.relateds.push(payload.information_id)
+      state.listRelatedsDisplay.push(payload)
+    },
+
+    updateInfoField(state, field) {
+      return updateField(state.info, field)
     },
   },
 
@@ -219,20 +236,15 @@ export default {
 
     [ACTION_ADD_INFO_TO_CATEGORY_LIST]({ commit, state, }, category) {
       const categorys = state.info.categorys
-      const listCateShow = state.listCategorysDisplay
 
       if (typeof category === 'object' && Object.keys(category).length) {
         if (
           categorys.indexOf(category.category_id) === -1 &&
                     parseInt(category.category_id) > 0
         ) {
-          categorys.push(category.category_id)
-          listCateShow.push(category)
+          commit('INFOS_FORM_ADD_INFO_PUSH_UPDATE_CATEGORY_LIST', category)
         }
       }
-
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_LIST, categorys)
-      commit(INFOS_FORM_ADD_INFO_TO_CATEGORY_DISPLAY_LIST, listCateShow)
     },
 
     [ACTION_REMOVE_INFO_TO_CATEGORY_LIST]({ state, commit, }, category) {
@@ -259,20 +271,15 @@ export default {
 
     [ACTION_ADD_INFO_TO_RELATED_LIST]({ state, commit, }, related) {
       const relateds = state.info.relateds
-      const listRelatedShow = state.listRelatedsDisplay
 
       if (typeof related === 'object' && Object.keys(related).length) {
         if (
           relateds.indexOf(related.information_id) === -1 &&
                     parseInt(related.information_id) > 0
         ) {
-          relateds.push(related.information_id)
-          listRelatedShow.push(related)
+          commit('INFOS_FORM_ADD_INFO_PUSH_UPDATE_RELATED_LIST', related)
         }
       }
-
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_LIST, relateds)
-      commit(INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST, listRelatedShow)
     },
 
     [ACTION_REMOVE_INFO_TO_RELATED_LIST]({ state, commit, }, related) {

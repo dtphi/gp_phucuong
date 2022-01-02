@@ -66,29 +66,34 @@ export default {
     [MODULE_UPDATE_SET_KEYS_DATA](state, payload) {
       state.specialInfoCarousel.value = payload
     },
+    MODULE_SPECIAL_INFO_CAROUSEL_UPDATE(state, payload) {
+      state.specialInfoCarousel.value = payload
+    },
+    MODULE_SPECIAL_INFO_CAROUSEL_PUSH_UPDATE(state, payload) {
+      state.specialInfoCarousel.value.push(payload)
+    }
   },
 
   actions: {
-    pushSpecialInfoCarousel({ state, }, value) {
-      const data = {
+    pushSpecialInfoCarousel({ commit, }, value) {
+      commit('MODULE_SPECIAL_INFO_CAROUSEL_PUSH_UPDATE', {
         id: uuidv4(),
         status: 1,
         open: 0,
         image: value.filePath,
         width: 700,
         height: 450,
-      }
-      state.specialInfoCarousel.value.push(data)
+      })
     },
-    specialInfoCarouselRemove({ state, }, banner) {
+    specialInfoCarouselRemove({ state, commit }, banner) {
       let banners = state.specialInfoCarousel.value
       if (state.specialInfoCarousel.value.length > 1) {
-        state.specialInfoCarousel.value = _.remove(
+        commit('MODULE_SPECIAL_INFO_CAROUSEL_UPDATE', _.remove(
           banners,
           function(item) {
             return !(item.id == banner.id)
           }
-        )
+        ))
       }
     },
     [ACTION_GET_SETTING]({ commit, }, specialCarousels) {

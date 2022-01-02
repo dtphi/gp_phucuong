@@ -11,13 +11,12 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.name"
+            v-model="name"
             type="text"
             id="input-info-name"
             class="form-control"
             :placeholder="$options.setting.name_txt"
           />
-
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -34,11 +33,10 @@
         >
           <textarea
             id="input-info-sort-description"
-            v-model="generalData.sort_description"
+            v-model="sort_description"
             class="form-control"
             :placeholder="$options.setting.info_sort_description_txt"
           ></textarea>
-
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -56,9 +54,8 @@
           <tinymce
             id="input-info-description"
             :other_options="options"
-            v-model="generalData.description"
+            v-model="description"
           ></tinymce>
-
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -75,11 +72,10 @@
         >
           <input
             id="input-info-meta-title"
-            v-model="generalData.meta_title"
+            v-model="meta_title"
             class="form-control"
             :placeholder="$options.setting.info_meta_title_txt"
           />
-
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -96,11 +92,10 @@
         >
           <textarea
             id="input-info-meta-description"
-            v-model="generalData.meta_description"
+            v-model="meta_description"
             class="form-control"
             :placeholder="$options.setting.info_meta_description_txt"
           ></textarea>
-
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -117,11 +112,10 @@
         >
           <textarea
             id="input-info-meta-keyword"
-            v-model="generalData.meta_keyword"
+            v-model="meta_keyword"
             class="form-control"
             :placeholder="$options.setting.info_key_word_txt"
           ></textarea>
-
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -142,11 +136,10 @@
         >
           <input
             id="input-info-tag"
-            v-model="generalData.tag"
+            v-model="tag"
             class="form-control"
             :placeholder="$options.setting.info_tag_txt"
           />
-
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -156,8 +149,14 @@
 
 <script>
 import tinymce from 'vue-tinymce-editor'
-import { fnCheckImgPath, } from '@app/common/util'
 import { config, } from '@app/common/config'
+import { MODULE_INFO_ADD, } from 'store@admin/types/module-types'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_INFORMATIONS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_INFO_ADD}/getInfoField`,
+  mutationType: `${MODULE_INFO_ADD}/updateInfoField`,
+})
 
 export default {
   name: 'TabGeneralForm',
@@ -165,47 +164,46 @@ export default {
     tinymce,
   },
   props: {
-    generalData: {
+    media: {
       type: Object,
+    },
+    mmSelected: {
+      default() {
+        return {}
+      },
+    },
+    mmPath: {
+      type: String,
+      default() {
+        return ''
+      },
     },
   },
   data() {
     const elFileContent = document.getElementById('media-file-manager-content')
-    const mm = new MM({
-      el: '#modal-general-info-manager',
-      api: config.mm.api,
-      onSelect: (fi) => {
-        if (typeof fi === 'object') {
-          if (fnCheckImgPath(fi)) {
-            this.fn(`/${config.dirImage}/${fi.selected.path}`, fi.selected)
-            elFileContent.style = this.$options.setting.cssDisplayNone
-          }
-        }
-      },
-    })
     const options = config.tinymce.options((callback) => {
       this.fn = callback
       elFileContent.style = this.$options.setting.cssDisplay
     })
-
+    
     return {
       fn: null,
-      mm: mm,
       options: options,
     }
   },
+  computed: {
+    ...mapFields(MAP_PC_INFORMATIONS),
+  },
   watch: {
-    generalData: {
-      immediate: true,
-      deep: true,
-      handler(newValue) {
-        if (newValue?.context === 'undefined'
-          || newValue?.context === null) {
-          return (newValue.context = null)
-        }
-        
-        return newValue
-      },
+    mmPath(val) {
+      this._updateImageField(val)
+    },
+  },
+  methods: {
+    _updateImageField(path) {
+      if (typeof this.fn === 'function') {
+        this.fn(path, this.mmSelected)
+      }
     },
   },
   setting: {

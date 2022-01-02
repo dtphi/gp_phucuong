@@ -22,7 +22,7 @@
         >
           <input
             type="text"
-            v-model="groupData.sort_order"
+            v-model="sort_order"
             name="sort_order"
             placeholder="Thứ tự hiển thị"
             id="input-info-sort-order"
@@ -39,7 +39,7 @@
       >
       <div class="col-sm-10">
         <select
-          v-model="groupData.information_type"
+          v-model="information_type"
           id="input-info-type"
           class="form-control"
         >
@@ -54,7 +54,7 @@
       >
       <div class="col-sm-10">
         <select
-          v-model="groupData.status"
+          v-model="status"
           id="input-info-status"
           class="form-control"
         >
@@ -69,12 +69,11 @@
       >
       <div class="col-sm-10">
         <select
-          v-model="groupData.album"
+          v-model="album"
           id="input-info-album"
           class="form-control"
         >
           <option value="0" selected="selected">-- Chọn Album --</option>
-
           <option
             v-for="album in albumDropdowns"
             :key="album.album_id"
@@ -96,6 +95,12 @@ import {
   MODULE_INFO_ADD,
 } from 'store@admin/types/module-types'
 import InfoDateAvailable from './Datapicker/InfoDateAvailable'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_INFORMATIONS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_INFO_ADD}/getInfoField`,
+  mutationType: `${MODULE_INFO_ADD}/updateInfoField`,
+})
 
 export default {
   name: 'TabAdvanceForm',
@@ -108,6 +113,7 @@ export default {
     },
   },
   computed: {
+    ...mapFields(MAP_PC_INFORMATIONS),
     ...mapState(MODULE_NEWS_CATEGORY, ['newsGroups']),
     ...mapState(MODULE_INFO_ADD, ['albumDropdowns']),
     ...mapGetters(MODULE_NEWS_CATEGORY, ['loading']),

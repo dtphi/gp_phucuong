@@ -37,6 +37,9 @@
           role="tabpanel"
           class="tab-pane active"
           :general-data="info"
+          :media="mm"
+          :mmSelected="selected"
+          :mmPath="imgSelected"
         ></tab-general>
       </div>
 
@@ -93,7 +96,8 @@ import TabGeneral from './TabGeneral'
 import TabAdvance from './TabAdvance'
 import TabLink from './TabLink'
 import TabMediaManager from './TabImage'
-import { fnCheckImgSelect, } from '@app/common/util'
+import { fnCheckImgSelect, fnCheckImgPath, } from '@app/common/util'
+import { config, } from '@app/common/config'
 
 export default {
   name: 'InformationEditForm',
@@ -105,9 +109,25 @@ export default {
     TabLink,
   },
   data() {
+    const mm = new MM({
+      el: '#modal-general-info-manager',
+      api: config.mm.api,
+      onSelect: (fi) => {
+        if (fnCheckImgPath(fi, 'path')) {
+          this.$data.imgSelected = `/${config.dirImage}/${fi.selected.path}`
+          this.$data.selected = fi.selected
+          document.getElementById('media-file-manager-content').style =
+            'display:none'
+        }
+      },
+    })
+    
     return {
       fullPage: false,
       file: null,
+      mm: mm,
+      selected: null,
+      imgSelected: '',
     }
   },
   computed: {
