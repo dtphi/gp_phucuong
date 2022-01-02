@@ -17,7 +17,7 @@
       <div class="col-sm-3">
         <div class="file animated fadeIn" style="height: 61px">
           <div class="file-preview">
-            <img :src="_getImageAvatar" class="thumb" />
+            <img :src="_image" class="thumb" />
           </div>
         </div>
       </div>
@@ -309,8 +309,8 @@ import { ACTION_SET_IMAGE, } from 'store@admin/types/action-types'
 import { createHelpers, } from 'vuex-map-fields'
 
 const { mapFields, } = createHelpers({
-  getterType: 'giao_xu/edit/getInfoField',
-  mutationType: 'giao_xu/edit/updateInfoField',
+  getterType: `${MODULE_MODULE_GIAO_XU_EDIT}/getInfoField`,
+  mutationType: `${MODULE_MODULE_GIAO_XU_EDIT}/updateInfoField`,
 })
 
 export default {
@@ -322,6 +322,17 @@ export default {
     media: {
       type: Object,
     },
+    mmSelected: {
+      default() {
+        return {}
+      },
+    },
+    mmPath: {
+      type: String,
+      default() {
+        return ''
+      },
+    },
   },
   data() {
     const elFileContent = document.getElementById('media-file-manager-content')
@@ -329,17 +340,21 @@ export default {
       this.fn = callback
       elFileContent.style = this.$options.setting.cssDisplay
     })
-    this.media.options._selfCom = this
 
     return {
       fn: null,
-      mm: null,
       options: options,
     }
   },
+  watch: {
+    mmPath(val) {
+      this._updateImageField(val)
+    },
+  },
   computed: {
     ...mapFields([
-      'name', 
+      'image',
+      'name',
       'giao_hat_id',
       'gio_le',
       'noi_dung',
@@ -360,12 +375,8 @@ export default {
       groupData: state => state.info,
       
     }),
-    _getImageAvatar() {
-      if (this.groupData.image != '') {
-        return fn_get_href_base_url(this.groupData.image)
-      }
-
-      return '/images/no-photo.jpg'
+    _image() {
+      return fn_get_href_base_url(this.groupData?.image ? this.groupData.image :this.mmPath)
     },
     _errors() {
       return this.errors?.length
@@ -375,10 +386,15 @@ export default {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [ACTION_SET_IMAGE]),
     _selectImage() {
       this.fn = null
-      this.media.options._selfCom = null
-      this.media.options._selfCom = this
       document.getElementById('media-file-manager-content')
         .style = this.$options.setting.cssDisplay
+    },
+    _updateImageField(path) {
+      if (typeof this.fn === 'function') {
+        this.fn(path, this.mmSelected)
+      } else {
+        this[ACTION_SET_IMAGE](path)
+      }
     },
   },
   setting: {

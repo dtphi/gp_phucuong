@@ -12,9 +12,12 @@
     <div class="tab-content">
       <div class="tab-pane active" id="tab-general">
         <tab-general
+          ref="tabGeneral"
           role="tabpanel"
           class="tab-panel active"
           :media="mm"
+          :mmSelected="selected"
+          :mmPath="imgSelected"
         ></tab-general>
       </div>
     </div>
@@ -28,10 +31,10 @@ import TabGeneral from './edits/TabGeneral'
 import {
   ACTION_SET_LOADING,
   ACTION_UPDATE_INFO,
-  ACTION_SET_IMAGE,
   ACTION_UPDATE_INFO_BACK,
 } from 'store@admin/types/action-types'
-import { fnCheckProp, } from '@app/common/util'
+import { fnCheckImgPath, } from '@app/common/util'
+import { config, } from '@app/common/config'
 
 export default {
   name: 'FormGiaoXuEdit',
@@ -41,37 +44,22 @@ export default {
   data() {
     const mm = new MM({
       el: '#modal-general-info-manager',
-      api: {
-        baseUrl: window.origin + '/api/mmedia',
-        listUrl: 'list',
-        uploadUrl: 'upload',
-      },
-      onSelect: function(fi) {
-        if (typeof fi === 'object') {
-          if (fnCheckProp(fi, 'selected') && fi.selected) {
-            const pathImg = 'Image/NewPicture/'
-
-            if (fnCheckProp(fi.selected, 'path')) {
-              if (this._selfCom.fn) {
-                this._selfCom.fn(pathImg + fi.selected.path, fi.selected)
-              } else {
-                if (typeof this._selfCom[ACTION_SET_IMAGE] == 'function') {
-                  this._selfCom[ACTION_SET_IMAGE](pathImg + fi.selected.path)
-                }
-              }
-
-              document.getElementById('media-file-manager-content').style =
-                'display:none'
-            }
-          }
+      api: config.mm.api,
+      onSelect: (fi) => {
+        if (fnCheckImgPath(fi, 'path')) {
+          this.$data.imgSelected = `/${config.dirImage}/${fi.selected.path}`
+          this.$data.selected = fi.selected
+          document.getElementById('media-file-manager-content').style =
+            'display:none'
         }
       },
-      _selfCom: null,
     })
 
     return {
       fullPage: false,
       mm: mm,
+      selected: null,
+      imgSelected: ''
     }
   },
   computed: {

@@ -16,7 +16,7 @@
       <div class="col-sm-3">
         <div class="file animated fadeIn" style="height: 61px">
           <div class="file-preview">
-            <img :src="_getImageAvatar" class="thumb" />
+            <img :src="_image" class="thumb" />
           </div>
         </div>
       </div>
@@ -296,8 +296,8 @@ import { ACTION_SET_IMAGE, } from 'store@admin/types/action-types'
 import { createHelpers, } from 'vuex-map-fields'
 
 const { mapFields, } = createHelpers({
-  getterType: 'giao_xu/add/getInfoField',
-  mutationType: 'giao_xu/add/updateInfoField',
+  getterType: `${MODULE_MODULE_GIAO_XU_ADD}/getInfoField`,
+  mutationType: `${MODULE_MODULE_GIAO_XU_ADD}/updateInfoField`,
 })
 
 export default {
@@ -309,9 +309,21 @@ export default {
     media: {
       type: Object,
     },
+    mmSelected: {
+      default() {
+        return {}
+      },
+    },
+    mmPath: {
+      type: String,
+      default() {
+        return ''
+      },
+    },
   },
   computed: {
     ...mapFields([
+      'image',
       'name', 
       'giao_hat_id',
       'gio_le',
@@ -332,12 +344,13 @@ export default {
       },
       groupData: state => state.info,
     }),
-    _getImageAvatar() {
-      if (this.groupData.image != '') {
-        return fn_get_href_base_url(this.groupData.image)
-      }
-
-      return '/images/no-photo.jpg'
+    _image() {
+      return fn_get_href_base_url(this.mmPath?.length ? this.mmPath: '/images/no-photo.jpg')
+    },
+  },
+  watch: {
+    mmPath(val) {
+      this._updateImageField(val)
     },
   },
   data() {
@@ -346,11 +359,9 @@ export default {
       this.fn = callback
       elFileContent.style = this.$options.setting.cssDisplay
     })
-    this.media.options._selfCom = this
 
     return {
       fn: null,
-      mm: null,
       options: options,
     }
   },
@@ -358,10 +369,15 @@ export default {
     ...mapActions(MODULE_MODULE_GIAO_XU_ADD, [ACTION_SET_IMAGE]),
     _selectImage() {
       this.fn = null
-      this.media.options._selfCom = null
-      this.media.options._selfCom = this
       document.getElementById('media-file-manager-content').style =
         this.$options.setting.cssDisplay
+    },
+    _updateImageField(path) {
+      if (typeof this.fn === 'function') {
+        this.fn(path, this.mmSelected)
+      } else {
+        this[ACTION_SET_IMAGE](path)
+      }
     },
   },
   setting: {
