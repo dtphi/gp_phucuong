@@ -307,7 +307,7 @@ import {
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
 import { ACTION_SET_IMAGE, } from 'store@admin/types/action-types'
 import { createHelpers, } from 'vuex-map-fields'
-
+import { MAP_PC_GIAO_XUS, } from 'store@admin/types/model-map-fields'
 const { mapFields, } = createHelpers({
   getterType: `${MODULE_MODULE_GIAO_XU_EDIT}/getInfoField`,
   mutationType: `${MODULE_MODULE_GIAO_XU_EDIT}/updateInfoField`,
@@ -352,22 +352,7 @@ export default {
     },
   },
   computed: {
-    ...mapFields([
-      'image',
-      'name',
-      'giao_hat_id',
-      'gio_le',
-      'noi_dung',
-      'dia_chi',
-      'dien_thoai',
-      'email',
-      'active',
-      'dan_so',
-      'so_tin_huu',
-      'viet',
-      'latin',
-      'type'
-    ]),
+    ...mapFields(MAP_PC_GIAO_XUS),
     ...mapState(MODULE_MODULE_GIAO_XU_EDIT, {
       isGiaoHat: (state) => {
         return state.listGiaoHat
