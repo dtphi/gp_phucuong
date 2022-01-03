@@ -14,14 +14,14 @@
           aria-relevant="additions removals"
         >
           <b-card
-            v-for="tag in _tags"
-            :key="tag"
-            :id="`my-custom-tags-tag_${tag.replace(/\s/g, '_')}_`"
+            v-for="(tag, idx) in _tags"
+            :key="idx"
+            :id="`${idx}-tags-tag_${tag.name.replace(/\s/g, '_')}_`"
             tag="li"
             class="mt-1 mr-1"
             body-class="py-1 text-nowrap"
           >
-            <a href="javascript:void(0)">{{ tag }}</a>
+            <a :href="tag.href">{{ tag.name }}</a>
           </b-card>
         </ul>
       </b-form-tags>
@@ -31,12 +31,11 @@
 </template>
 
 <script>
-import { mapState, mapGetters, } from 'vuex'
-import { MODULE_MODULE_VAN_KIEN, } from 'store@front/types/module-types'
+import { mapState, } from 'vuex'
 import {
   fn_get_href_base_url,
-  fn_change_to_slug,
 } from '@app/api/utils/fn-helper'
+import { config, } from '@app/common/config'
 
 export default {
   name: 'ModuleTag',
@@ -49,25 +48,26 @@ export default {
     ...mapState({
       infoLasteds: state => state.cfApp.setting.infoLasteds,
     }),
-    ...mapGetters(MODULE_MODULE_VAN_KIEN, ['settingCategory', 'pageLists']),
     _tags() {
       let tags = []
       _.cloneDeep(this.infoLasteds).forEach(element => {
         if (element?.tag?.length) {
-          tags = tags.concat(element.tag)
+          const mapObjs = _.map(element.tag, function(item) {
+            item = {
+              'href': fn_get_href_base_url(`tin-tuc/chi-tiet/${element.name_slug}`),
+              'name': item
+            }
+            return item
+          })
+          if (tags.length > config.tagLimit) {
+            return tags
+          }
+          tags = tags.concat(mapObjs)
         }
-        tags = [...new Set(tags)]
+        // create unique array
+        //tags = [...new Set(tags)]
       });
       return  tags
-    },
-  },
-  methods: {
-    _getHref(info) {
-      if ((String(info['name_slug']) !== 'undefined') && (String(info['name_slug']).length > 5)) {
-        return fn_get_href_base_url(`tin-tuc/chi-tiet/${info.name_slug}`)
-      } else {
-        return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(info.name)}`)
-      }
     },
   },
 }

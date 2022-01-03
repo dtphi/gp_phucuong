@@ -99,5 +99,6 @@ export const config = {
         fontFormats: fontFormats
       }
     }
-  }
+  },
+  tagLimit: 15
 }

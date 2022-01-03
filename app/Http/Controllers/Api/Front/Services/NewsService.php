@@ -37,6 +37,7 @@ final class NewsService extends Service implements NewsModel
                 'image'            => $result->image,
                 'viewed'           => $result->viewed,
                 'vote'             => $result->vote,
+                'tag'              => (!empty($result->tag)) ? explode(',', $result->tag) : [],
                 'albums'           => $result->arr_album_list,
                 'related_category' => !empty($result->arr_category_list) ? $result->arr_category_list[0] : null
             ];
