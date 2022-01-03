@@ -445,7 +445,8 @@ class NewsController extends Controller
                         'name_slug'        => $info->name_slug,
                         'sort_name'        => Str::substr($info->name, 0, 28),
                         'viewed'           => $info->viewed,
-                        'vote'             => $info->vote
+                        'vote'             => $info->vote,
+                        'tag'              => $info->tag
                     ];
                 }
             }

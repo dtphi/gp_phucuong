@@ -12,7 +12,7 @@
                     :active.sync="loading"
                     :is-full-page="fullPage"></loading-over-lay>
             </template>-->
-          <template v-slot:column_right>
+          <template #column_right>
             <social-network></social-network>
             <div class="box-social">
               <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
@@ -33,7 +33,7 @@
                     indicators
                   >
                     <b-carousel-slide>
-                      <template v-slot:img>
+                      <template #img>
                         <img
                           class="d-block img-fluid w-100"
                           style="width: 100%; height: 150px !important"
@@ -42,7 +42,7 @@
                       </template>
                     </b-carousel-slide>
                     <b-carousel-slide>
-                      <template v-slot:img>
+                      <template #img>
                         <img
                           class="d-block img-fluid w-100"
                           style="width: 100%; height: 150px !important"
@@ -58,8 +58,11 @@
         </content-top>
         <main-content v-if="_isContentMain"> </main-content>
         <content-bottom v-if="_isContentBottom">
-          <template v-slot:before>
+          <template #before>
             <module-page-banner-list></module-page-banner-list>
+          </template>
+          <template #bottom>
+            <module-tag></module-tag>
           </template>
         </content-bottom>
       </div>
@@ -78,6 +81,7 @@ import SocialNetwork from './components/TheSocialNetwork'
 import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
 import MainContent from 'com@front/Common/MainContent'
 import ModulePageBannerList from 'v@front/modules/page_banner_lists'
+import ModuleTag from 'v@front/modules/tags'
 
 export default {
   name: 'InfoPage',
@@ -89,6 +93,7 @@ export default {
     SocialNetwork,
     MainContent,
     ModulePageBannerList,
+    ModuleTag,
   },
   data() {
     return {

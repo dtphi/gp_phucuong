@@ -162,7 +162,8 @@ class Service implements BaseModel
 				'name',
 				'name_slug',
 				'viewed',
-				'vote'
+				'vote',
+				'tag'
 			]
 		)
 			->leftJoin(
