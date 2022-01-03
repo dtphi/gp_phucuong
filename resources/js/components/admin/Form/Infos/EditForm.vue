@@ -92,8 +92,8 @@ import {
   ACTION_SET_IMAGE,
   ACTION_GET_SETTING,
 } from 'store@admin/types/action-types'
-import TabGeneral from './TabGeneral'
-import TabAdvance from './TabAdvance'
+import TabGeneral from './TabGeneralEdit'
+import TabAdvance from './TabAdvanceEdit'
 import TabLink from './TabLink'
 import TabMediaManager from './TabImage'
 import { fnCheckImgSelect, fnCheckImgPath, } from '@app/common/util'

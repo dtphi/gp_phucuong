@@ -1,5 +1,5 @@
 import AppConfig from 'api@admin/constants/app-config'
-import { apiGetInfoById, apiUpdateInfo, } from 'api@admin/information'
+import { apiGetInfoById, apiUpdateInfo, apiGetDropdownInfos, } from 'api@admin/information'
 import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_FAILED,
@@ -65,6 +65,7 @@ const defaultState = () => {
     isImgChange: false,
     listCategorysDisplay: [],
     listRelatedsDisplay: [],
+    albumDropdowns: [],
     infoId: 0,
     loading: false,
     updateSuccess: false,
@@ -108,6 +109,9 @@ export default {
   },
 
   mutations: {
+    INFOS_FORM_SET_DROPDOWN_ALBUMS_LIST(state, payload) {
+      state.albumDropdowns = payload
+    },
     [INFOS_MODAL_SET_INFO_ID](state, payload) {
       if (payload) {
         state.infoId = payload
@@ -303,6 +307,21 @@ export default {
         _.remove(listRelatedShow, (item) => {
           return item.information_id - related.information_id !== 0
         })
+      )
+    },
+
+    ACTION_GET_DROPDOWN_ALBUM_LIST({ commit, }, filters) {
+      const params = {
+        ...filters,
+      }
+      apiGetDropdownInfos(
+        (result) => {
+          commit('INFOS_FORM_SET_DROPDOWN_ALBUMS_LIST', result)
+        },
+        (errors) => {
+          commit(SET_ERROR, errors)
+        },
+        params
       )
     },
   },
