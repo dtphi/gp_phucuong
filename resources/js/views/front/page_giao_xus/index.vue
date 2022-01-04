@@ -13,7 +13,7 @@
                     :active.sync="loading"
                     :is-full-page="fullPage"></loading-over-lay>
             </template> -->
-          <template v-slot:column_right>
+          <template #column_right>
             <social-network></social-network>
             <div class="box-social">
               <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
@@ -21,12 +21,12 @@
           </template>
         </content-top>
         <main-content v-if="_isContentMain">
-          <!--<template v-slot:before_column_both>
+          <!--<template #before_column_both>
                 <div class="col-mobile col-12">
                     <module-page-banner-list></module-page-banner-list>
                 </div>
             </template>-->
-          <template v-slot:bottom>
+          <template #bottom>
             <div class="list-danh-muc w-100">
               <h2 class="title-linh-muc text-center">
                 Danh sách giáo xứ giáo phận phú cường

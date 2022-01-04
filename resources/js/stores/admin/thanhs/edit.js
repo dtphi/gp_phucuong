@@ -7,7 +7,6 @@ import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
   INFOS_MODAL_UPDATE_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
   SET_ERROR,
 } from '../types/mutation-types'
 import {
@@ -18,6 +17,7 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
 } from '../types/action-types'
 import { config, } from '@app/api/admin/config'
+import { getField, updateField } from 'vuex-map-fields'
 
 const defaultState = () => {
   return {
@@ -66,6 +66,9 @@ export default {
 
       return true
     },
+    getInfoField(state) {
+      return getField(state.info)
+    },
   },
 
   mutations: {
@@ -96,8 +99,11 @@ export default {
       state.updateSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
+    },
+    updateInfoField(state, field) {
+      return updateField(state.info, field)
     },
   },
 

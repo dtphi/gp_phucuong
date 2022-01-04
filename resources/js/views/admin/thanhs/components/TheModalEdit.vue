@@ -19,7 +19,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.name"
+                v-model="name"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -39,7 +39,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.latin"
+                v-model="latin"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -56,7 +56,7 @@
             <cms-date-picker
               value-type="format"
               format="YYYY-MM-DD"
-              v-model="info.bon_mang"
+              v-model="bon_mang"
               type="date"
             ></cms-date-picker>
           </div>
@@ -71,7 +71,7 @@
               rules="max:200"
               v-slot="{ errors }"
             >
-              <textarea class="form-control" v-model="info.ghi_chu"></textarea>
+              <textarea class="form-control" v-model="ghi_chu"></textarea>
               <span class="cms-text-red">{{ errors[0] }}</span>
             </validation-provider>
           </div>
@@ -86,7 +86,7 @@
               rules="max:200"
               v-slot="{ errors }"
             >
-              <textarea class="form-control" v-model="info.cuoc_doi"></textarea>
+              <textarea class="form-control" v-model="cuoc_doi"></textarea>
               <span class="cms-text-red">{{ errors[0] }}</span>
             </validation-provider>
           </div>
@@ -96,9 +96,9 @@
             >Trạng thái</label
           >
           <div class="col-sm-10">
-            <select class="form-control" v-model="info.active">
-              <option value="1" :selected="info.active == 1">Xảy ra</option>
-              <option value="0" :selected="info.active == 0">Ẩn</option>
+            <select class="form-control" v-model="active">
+              <option value="1" :selected="active == 1">Xảy ra</option>
+              <option value="0" :selected="active == 0">Ẩn</option>
             </select>
           </div>
         </div>
@@ -130,26 +130,23 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_THANHS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_MODULE_THANH_EDIT}/getInfoField`,
+  mutationType: `${MODULE_MODULE_THANH_EDIT}/updateInfoField`,
+})
 
 export default {
   name: 'TheModalEdit',
-  props: {
-    info: {
-      type: Object,
-      require: true,
-      validator: value => {
-        return value.id && Number.isInteger(value.id)
-      },
-    },
-  },
   data() {
     return {
       fullPage: false,
     }
   },
   computed: {
-    ...mapState(MODULE_MODULE_THANH_EDIT, ['loading', 'updateSuccess']),
+    ...mapFields(MAP_PC_THANHS),
+    ...mapState(MODULE_MODULE_THANH_EDIT, ['info', 'loading', 'updateSuccess']),
   },
   watch: {
     updateSuccess(newValue) {
@@ -180,7 +177,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     list_title: 'Danh sách Linh mục',
   },
 }

@@ -35,3 +35,12 @@ export const MAP_PC_INFORMATIONS = [
   'downloads',
   'special_carousels'
 ]
+
+export const MAP_PC_THANHS = [
+  'name',
+  'latin',
+  'bon_mang',
+  'ghi_chu',
+  'cuoc_doi',
+  'active'
+]

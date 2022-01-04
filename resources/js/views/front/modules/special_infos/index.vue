@@ -7,7 +7,7 @@
     indicators
   >
     <b-carousel-slide v-for="(item, index) in _getInfoCarousel" :key="index">
-      <template v-slot:img>
+      <template #img>
         <img
           @click="_redirectUrl(item)"
           class="d-block img-fluid w-100"

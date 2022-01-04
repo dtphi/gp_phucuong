@@ -13,7 +13,7 @@
               :is-full-page="fullPage"
             ></loading-over-lay>
           </template>
-          <template v-slot:column_right>
+          <template #column_right>
             <social-network></social-network>
             <div class="box-social">
               <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
@@ -21,7 +21,7 @@
           </template>
         </content-top>
         <main-content v-if="_isContentMain">
-          <template v-slot:before>
+          <template #before>
             <!-- Html linh mục detail -->
             <div class="col-mobile col-12">
               <div class="detail-linh-muc w-100">

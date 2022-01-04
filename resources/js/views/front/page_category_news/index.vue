@@ -29,7 +29,7 @@
             </template>
           </div>
           <paginate></paginate>
-          <template v-slot:column_right>
+          <template #column_right>
             <social-network></social-network>
             <!--<div class="box-social">
                 <tab-info-viewed-and-popular></tab-info-viewed-and-popular>

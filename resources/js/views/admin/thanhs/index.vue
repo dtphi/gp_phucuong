@@ -61,9 +61,6 @@
     </div>
     <modal name="modal-thanh-edit" :height="455" :click-to-close="false">
       <the-modal-edit
-        v-if="_infoUpdate.id"
-        :info="_infoUpdate"
-        :info-id="_infoUpdate.id"
         @update-info-success="_updateInfoList"
       ></the-modal-edit>
     </modal>
@@ -100,7 +97,6 @@ export default {
     return {
       fullPage: false,
       isResource: false,
-      infoUpdate: {},
       curInfo: {},
     }
   },
@@ -124,9 +120,6 @@ export default {
     _notEmpty() {
       return this.isNotEmptyList
     },
-    _infoUpdate() {
-      return this.infoUpdate
-    },
   },
   methods: {
     ...mapActions(MODULE_MODULE_THANH, {
@@ -138,7 +131,6 @@ export default {
     },
     _showModalEdit(info) {
       this.curInfo = info
-      this.infoUpdate = { ...info, }
       this.$modal.show('modal-thanh-edit')
     },
     _updateInfoList() {
