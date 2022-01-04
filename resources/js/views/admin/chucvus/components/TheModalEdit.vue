@@ -19,7 +19,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.name"
+                v-model="name"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -38,7 +38,7 @@
               rules="max:200"
               v-slot="{ errors }"
             >
-              <select class="form-control" v-model="info.type_giao_xu">
+              <select class="form-control" v-model="type_giao_xu">
                 <option
                   :selected="item.type_giao_xu == idx"
                   :value="idx ? idx : ''"
@@ -63,7 +63,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.sort_id"
+                v-model="sort_id"
                 type="number"
                 id="input-info-name"
                 class="form-control"
@@ -78,11 +78,11 @@
           >
           <div class="col-sm-10">
             <validation-provider
-              name="info_ghi_chu"
+              name="info_vtbn"
               rules="max:200"
               v-slot="{ errors }"
             >
-              <textarea class="form-control" v-model="info.ghi_chu"></textarea>
+              <textarea class="form-control" v-model="vtbn"></textarea>
               <span class="cms-text-red">{{ errors[0] }}</span>
             </validation-provider>
           </div>
@@ -92,9 +92,9 @@
             >Trạng thái</label
           >
           <div class="col-sm-10">
-            <select class="form-control" v-model="info.active">
-              <option value="1" :selected="info.active == 1">Xảy ra</option>
-              <option value="0" :selected="info.active == 0">Ẩn</option>
+            <select class="form-control" v-model="active">
+              <option value="1" :selected="active == 1">Xảy ra</option>
+              <option value="0" :selected="active == 0">Ẩn</option>
             </select>
           </div>
         </div>
@@ -127,25 +127,23 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
 import { config, } from '@app/common/config'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_CHUC_VUS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_MODULE_CHUC_VU_EDIT}/getInfoField`,
+  mutationType: `${MODULE_MODULE_CHUC_VU_EDIT}/updateInfoField`,
+})
 
 export default {
   name: 'TheModalEdit',
-  props: {
-    info: {
-      type: Object,
-      require: true,
-      validator: function(value) {
-        return value.id && Number.isInteger(value.id)
-      },
-    },
-  },
   data() {
     return {
       fullPage: false,
     }
   },
   computed: {
-    ...mapState(MODULE_MODULE_CHUC_VU_EDIT, ['loading', 'updateSuccess']),
+    ...mapFields(MAP_PC_CHUC_VUS),
+    ...mapState(MODULE_MODULE_CHUC_VU_EDIT, ['info', 'loading', 'updateSuccess']),
   },
   watch: {
     updateSuccess(newValue) {

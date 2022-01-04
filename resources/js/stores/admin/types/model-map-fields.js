@@ -1,4 +1,5 @@
 export const MAP_PC_GIAO_XUS = [
+  'id',
   'image',
   'name',
   'giao_hat_id',
@@ -37,10 +38,21 @@ export const MAP_PC_INFORMATIONS = [
 ]
 
 export const MAP_PC_THANHS = [
+  'id',
   'name',
   'latin',
   'bon_mang',
   'ghi_chu',
   'cuoc_doi',
+  'active'
+]
+
+export const MAP_PC_CHUC_VUS = [
+  'id',
+  'name',
+  'type_giao_xu',
+  'sort_id',
+  'vtbn',
+  'ghi_chu',
   'active'
 ]
