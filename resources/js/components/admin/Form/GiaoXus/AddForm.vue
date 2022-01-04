@@ -60,7 +60,7 @@ export default {
       file: null,
       mm: mm,
       selected: null,
-      imgSelected: ''
+      imgSelected: '',
     }
   },
   computed: {

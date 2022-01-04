@@ -7,10 +7,9 @@ import tinymce from 'vue-tinymce-editor'
 import {
   fn_get_href_base_url,
 } from '@app/api/utils/fn-helper'
-/*import {
+import {
   ACTION_SET_IMAGE,
-  ACTION_RESET_NOTIFICATION_INFO,
-} from 'store@admin/types/action-types'*/
+} from 'store@admin/types/action-types'
 
 export default {
   form: {
@@ -80,20 +79,28 @@ export default {
       generalData: {
         type: Object,
       },
-      media: {
-        type: Object,
+      mmSelected: {
+        default() {
+          return {}
+        },
+      },
+      mmPath: {
+        type: String,
+        default() {
+          return ''
+        },
       },
     },
     data() {
       const elFileContent = document.getElementById('media-file-manager-content')
       const options = config.tinymce.options((callback) => {
         this.fn = callback
-        elFileContent.style = this.$options.setting.cssDisplayNone
+        elFileContent.style = this.$options.setting.cssDisplay
       })
       
       return {
         fn: null,
-        mm: null,
+        options: options,
         ten_thanh_linh_muc: 'ten_thanh_linh_muc',
         giao_xu_linh_muc: 'giao_xu_linh_muc',
         giao_xu_rip: 'giao_xu_rip',
@@ -122,6 +129,9 @@ export default {
           }
         },
       },
+      mmPath(val) {
+        this._updateImageField(val)
+      },
     },
     methods: {
       _selectGiaoXu(giaoxu) {
@@ -141,9 +151,8 @@ export default {
       },
       _selectImage() {
         this.fn = null
-        this.media.options._selfCom = null
-        this.media.options._selfCom = this
-        document.getElementById('media-file-manager-content').style = 'display:block'
+        document.getElementById('media-file-manager-content')
+          .style = this.$options.setting.cssDisplay
       },
       _selectGeneralTenThanh(thanh) {
         this.ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST({
@@ -203,6 +212,13 @@ export default {
           banChuyenTrach: banchuyentrach,
           thuyenChuyen: this.item,
         })
+      },
+      _updateImageField(path) {
+        if (typeof this.fn === 'function') {
+          this.fn(path, this.mmSelected)
+        } else {
+          this[ACTION_SET_IMAGE](path)
+        }
       },
     },
     setting: {

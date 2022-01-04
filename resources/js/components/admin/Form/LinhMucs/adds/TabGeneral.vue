@@ -3,14 +3,14 @@
     <div>
       <info-ten-thanh-autocomplete
         @on-select-ten-thanh="_selectGeneralTenThanh"
-        :ten-thanh="generalData.ten_thanh_name"
+        :ten-thanh="ten_thanh_name"
         :key="ten_thanh_linh_muc"
       ></info-ten-thanh-autocomplete>
     </div>
     <div>
       <info-giao-xu-autocomplete
         @on-select-giao-xu="_selectGiaoXu"
-        :name="generalData.giao_xu_name"
+        :name="giao_xu_name"
         :key="giao_xu_linh_muc"
       ></info-giao-xu-autocomplete>
     </div>
@@ -25,7 +25,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.ten"
+            v-model="ten"
             type="text"
             id="input-info-name"
             class="form-control"
@@ -44,7 +44,7 @@
           <cms-date-picker
             value-type="format"
             format="YYYY-MM-DD"
-            v-model="generalData.ngay_thang_nam_sinh"
+            v-model="ngay_thang_nam_sinh"
             type="date"
           ></cms-date-picker>
       </div>
@@ -61,7 +61,7 @@
         >
           <textarea
             id="input-info-noi-sinh"
-            v-model="generalData.noi_sinh"
+            v-model="noi_sinh"
             class="form-control"
             placeholder="Nơi sinh"
           ></textarea>
@@ -81,7 +81,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.ho_ten_cha"
+            v-model="ho_ten_cha"
             type="text"
             id="input-info-ho-ten-cha"
             class="form-control"
@@ -103,7 +103,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.ho_ten_me"
+            v-model="ho_ten_me"
             type="text"
             id="input-info-ho-ten-me"
             class="form-control"
@@ -125,7 +125,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.noi_rua_toi"
+            v-model="noi_rua_toi"
             type="text"
             id="input-info-noi-rua-toi"
             class="form-control"
@@ -144,7 +144,7 @@
           <cms-date-picker
             value-type="format"
             format="YYYY-MM-DD"
-            v-model="generalData.ngay_rua_toi"
+            v-model="ngay_rua_toi"
             type="date"
           ></cms-date-picker>
       </div>
@@ -160,7 +160,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.noi_them_suc"
+            v-model="noi_them_suc"
             type="text"
             id="input-info-noi-them-suc"
             class="form-control"
@@ -179,7 +179,7 @@
         <cms-date-picker
           value-type="format"
           format="YYYY-MM-DD"
-          v-model="generalData.ngay_them_suc"
+          v-model="ngay_them_suc"
           type="date"
         ></cms-date-picker>
       </div>
@@ -195,7 +195,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.tieu_chung_vien"
+            v-model="tieu_chung_vien"
             type="text"
             id="input-info-tieu-chung-vien"
             class="form-control"
@@ -216,7 +216,7 @@
         <cms-date-picker
           value-type="format"
           format="YYYY-MM-DD"
-          v-model="generalData.ngay_tieu_chung_vien"
+          v-model="ngay_tieu_chung_vien"
           type="date"
         ></cms-date-picker>
       </div>
@@ -232,7 +232,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.dai_chung_vien"
+            v-model="dai_chung_vien"
             type="text"
             id="input-info-dai-chung-vien"
             class="form-control"
@@ -251,7 +251,7 @@
         <cms-date-picker
           value-type="format"
           format="YYYY-MM-DD"
-          v-model="generalData.ngay_dai_chung_vien"
+          v-model="ngay_dai_chung_vien"
           type="date"
         ></cms-date-picker>
       </div>
@@ -264,10 +264,10 @@
           <select
             class="form-control"
             id="input-info-trieu-dong"
-            v-model="generalData.trieu_dong"
+            v-model="trieu_dong"
           >
             <option
-              :selected="generalData.trieu_dong == idx ? 'selected' : ''"
+              :selected="trieu_dong == idx ? 'selected' : ''"
               :value="idx"
               v-for="(item, idx) in $options.setting.cf.trieuDongs"
               :key="idx"
@@ -280,7 +280,7 @@
     <div class="form-group">
       <info-dong-autocomplete
         @on-select-dong="_selectDong"
-        :name="generalData.ten_dong_name"
+        :name="ten_dong_name"
         :key="ten_dong_linh_muc"
       ></info-dong-autocomplete>
     </div>
@@ -292,7 +292,7 @@
         <cms-date-picker
           value-type="format"
           format="YYYY-MM-DD"
-          v-model="generalData.ngay_trieu_dong"
+          v-model="ngay_trieu_dong"
           type="date"
         ></cms-date-picker>
       </div>
@@ -303,7 +303,7 @@
       >
       <div class="col-sm-10">
         <cms-date-picker
-          v-model="generalData.ngay_khan"
+          v-model="ngay_khan"
           type="datetime"
         ></cms-date-picker>
       </div>
@@ -316,7 +316,7 @@
         <cms-date-picker
           value-type="format"
           format="YYYY-MM-DD"
-          v-model="generalData.ngay_rip"
+          v-model="ngay_rip"
           type="date"
         ></cms-date-picker>
       </div>
@@ -324,7 +324,7 @@
     <div>
       <info-giao-xu-autocomplete
         @on-select-giao-xu="_selectRipGiaoXu"
-        :name="generalData.rip_giaoxu_name"
+        :name="rip_giaoxu_name"
         :key="giao_xu_rip"
       ></info-giao-xu-autocomplete>
     </div>
@@ -336,7 +336,7 @@
         <tinymce
           id="input-rip-ghi-chu"
           :other_options="options"
-          v-model="generalData.rip_ghi_chu"
+          v-model="rip_ghi_chu"
         ></tinymce>
       </div>
     </div>
@@ -346,13 +346,19 @@
 <script>
 import { mapActions, } from 'vuex'
 import { MODULE_MODULE_LINH_MUC_ADD, } from 'store@admin/types/module-types'
+import {
+  ACTION_SET_IMAGE,
+} from 'store@admin/types/action-types'
 import linhMucMix from '@app/mixins/admin/linhmuc'
 import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete'
 import InfoTenThanhAutocomplete from '../Groups/InfoTenThanhAutocomplete'
 import InfoDongAutocomplete from '../Groups/InfoDongAutocomplete'
-import {
-  config,
-} from '@app/common/config'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_LINHMUCS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_MODULE_LINH_MUC_ADD}/getInfoField`,
+  mutationType: `${MODULE_MODULE_LINH_MUC_ADD}/updateInfoField`,
+})
 
 export default {
   name: 'TabGeneralForm',
@@ -362,20 +368,12 @@ export default {
     InfoTenThanhAutocomplete,
     InfoDongAutocomplete,
   },
-  data() {
-    const elFileContent = document.getElementById('media-file-manager-content')
-    const options = config.tinymce.options((callback) => {
-      this.media.options._selfCom = this
-      this.fn = callback
-      elFileContent.style = this.$options.setting.cssDisplayNone
-    })
-    
-    return {
-      options: options
-    }
+  computed: {
+    ...mapFields(MAP_PC_LINHMUCS),
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_ADD, [
+      ACTION_SET_IMAGE,
       'ACTION_UPDATE_DROPDOWN_GIAO_XU',
       'ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU',
       'ACTION_UPDATE_DROPDOWN_DONG',

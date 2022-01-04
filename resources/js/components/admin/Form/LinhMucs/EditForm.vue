@@ -41,7 +41,8 @@
           role="tabpanel"
           class="tab-pane active"
           :general-data="info"
-          :media="mm"
+          :mmSelected="selected"
+          :mmPath="imgSelected"
         ></tab-general>
       </div>
       <div class="tab-pane" id="tab-mo-rong">
@@ -49,7 +50,8 @@
           role="tabpanel"
           class="tab-pane"
           :general-data="info"
-          :media="mm"
+          :mmSelected="selected"
+          :mmPath="imgSelected"
         ></tab-mo-rong>
       </div>
       <div class="tab-pane" id="tab-bang-cap">
@@ -90,7 +92,6 @@ import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 import {
   ACTION_INSERT_INFO,
   ACTION_INSERT_INFO_BACK,
-  ACTION_SET_IMAGE,
 } from 'store@admin/types/action-types'
 import TabGeneral from './edits/TabGeneral'
 import TabMoRong from './edits/TabMoRong'
@@ -98,7 +99,8 @@ import TabBangCap from './edits/TabBangCap'
 import TabChucThanh from './edits/TabChucThanh'
 import TabVanThu from './edits/TabVanThu'
 import TabThuyenChuyen from './edits/TabThuyenChuyen'
-import { fnCheckProp, } from '@app/common/util'
+import { fnCheckImgPath, } from '@app/common/util'
+import { config, } from '@app/common/config'
 
 export default {
   name: 'FormEdit',
@@ -113,37 +115,22 @@ export default {
   data() {
     const mm = new MM({
       el: '#modal-general-info-manager',
-      api: {
-        baseUrl: window.origin + '/api/mmedia',
-        listUrl: 'list',
-        uploadUrl: 'upload',
-      },
-      onSelect: function(fi) {
-        if (typeof fi === 'object') {
-          if (fnCheckProp(fi, 'selected') && fi.selected) {
-            const pathImg = 'Image/NewPicture/'
-
-            if (fnCheckProp(fi.selected, 'path')) {
-              if (this._selfCom.fn) {
-                this._selfCom.fn(pathImg + fi.selected.path, fi.selected)
-              } else {
-                if (typeof this._selfCom[ACTION_SET_IMAGE] == 'function') {
-                  this._selfCom[ACTION_SET_IMAGE](pathImg + fi.selected.path)
-                }
-              }
-
-              document.getElementById('media-file-manager-content').style =
-                'display:none'
-            }
-          }
+      api: config.mm.api,
+      onSelect: (fi) => {
+        if (fnCheckImgPath(fi, 'path')) {
+          this.$data.imgSelected = `/${config.dirImage}/${fi.selected.path}`
+          this.$data.selected = fi.selected
+          document.getElementById('media-file-manager-content').style =
+            'display:none'
         }
       },
-      _selfCom: null,
     })
 
     return {
       fullPage: false,
       mm: mm,
+      selected: null,
+      imgSelected: '',
     }
   },
   computed: {

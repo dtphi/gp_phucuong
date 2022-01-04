@@ -59,7 +59,7 @@ export default {
       fullPage: false,
       mm: mm,
       selected: null,
-      imgSelected: ''
+      imgSelected: '',
     }
   },
   computed: {

@@ -17,6 +17,7 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
 } from '../types/action-types'
 import { fnCheckProp, } from '@app/common/util'
+import { getField, updateField } from 'vuex-map-fields'
 
 const defaultState = () => {
   return {
@@ -59,7 +60,6 @@ const defaultState = () => {
       password: '',
       sort_id: 0,
       active: 1,
-
       bang_caps: [],
       chuc_thanhs: [],
       thuyen_chuyens: [],
@@ -91,6 +91,9 @@ export default {
     isError(state) {
       return state.errors.length
     },
+    getInfoField(state) {
+      return getField(state.info)
+    },
   },
 
   mutations: {
@@ -113,6 +116,23 @@ export default {
     update_bang_cap(state, payload) {
       state.info.bang_caps = payload
     },
+    INFO_UPDATE_DONG(state, payload) {
+      state.info.ten_dong_id = payload.dong.id
+      state.info.ten_dong_name = payload.dong.name
+    },
+    INFO_UPDATE_DROPDOWN_RIP_GIAO_XU(state, payload) {
+      state.info.rip_giao_xu_id = payload.giaoXu.id
+      state.info.rip_giaoxu_name = payload.giaoXu.name
+    },
+    INFO_UPDATE_DROPDOWN_GIAO_XU(state, payload) {
+      state.info.giao_xu_id = payload.giaoXu.id
+      state.info.giao_xu_name = payload.giaoXu.name
+    },
+    INFO_UPDATE_DROPDOWN_TEN_THANH_LIST(state, payload) {
+      state.info.ten_thanh_id = payload.tenThanh.id
+      state.info.ten_thanh_name = payload.tenThanh.name
+    },
+
     [INFOS_MODAL_SET_LOADING](state, payload) {
       state.loading = payload
     },
@@ -132,33 +152,32 @@ export default {
     LINH_MUCS_SET_INFO(state, payload) {
       state.info = payload
     },
+    updateInfoField(state, field) {
+      return updateField(state.info, field)
+    },
   },
 
   actions: {
-    ACTION_UPDATE_DROPDOWN_DONG({ state, }, params) {
-      state.info.ten_dong_id = params.dong.id
-      state.info.ten_dong_name = params.dong.name
+    ACTION_UPDATE_DROPDOWN_DONG({ commit, }, params) {
+      commit('INFO_UPDATE_DONG', params)
     },
-    ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU({ state, }, params) {
-      state.info.rip_giao_xu_id = params.giaoXu.id
-      state.info.rip_giaoxu_name = params.giaoXu.name
+    ACTION_UPDATE_DROPDOWN_RIP_GIAO_XU({ commit, }, params) {
+      commit('INFO_UPDATE_DROPDOWN_RIP_GIAO_XU', params)
     },
-    ACTION_UPDATE_DROPDOWN_GIAO_XU({ state, }, params) {
-      state.info.giao_xu_id = params.giaoXu.id
-      state.info.giao_xu_name = params.giaoXu.name
+    ACTION_UPDATE_DROPDOWN_GIAO_XU({ commit, }, params) {
+      commit('INFO_UPDATE_DROPDOWN_GIAO_XU', params)
     },
-    ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST({ state, }, params) {
-      state.info.ten_thanh_id = params.tenThanh.id
-      state.info.ten_thanh_name = params.tenThanh.name
+    ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST({ commit, }, params) {
+      commit('INFO_UPDATE_DROPDOWN_TEN_THANH_LIST', params)
     },
     addBangCaps({ dispatch, state, commit, }, params) {
-      let bangCaps = state.info.bang_caps
+      let bangCaps = _.cloneDeep(state.info.bang_caps)
       if (
         fnCheckProp(params, 'action') &&
                 fnCheckProp(params, 'info') &&
                 params.action === 'create.update.bang.cap.db'
       ) {
-        let bangCap = params.info
+        let bangCap = _.cloneDeep(params.info)
         dispatch(ACTION_SET_LOADING, true)
         //implement
         bangCap['linhMucId'] = state.info.id
@@ -216,13 +235,13 @@ export default {
       })
     },
     addChucThanhs({ dispatch, commit, state, }, params) {
-      let chucThanhs = state.info.chuc_thanhs
+      let chucThanhs = _.cloneDeep(state.info.chuc_thanhs)
       if (
         fnCheckProp(params, 'action') &&
                 fnCheckProp(params, 'info') &&
                 params.action === 'create.update.chuc.thanh.db'
       ) {
-        let chucThanh = params.info
+        let chucThanh = _.cloneDeep(params.info)
         dispatch(ACTION_SET_LOADING, true)
         //implement
         chucThanh['linhMucId'] = state.info.id
@@ -282,13 +301,13 @@ export default {
       })
     },
     addVanThus({ dispatch, commit, state, }, params) {
-      let vanThus = state.info.van_thus
+      let vanThus = _.cloneDeep(state.info.van_thus)
       if (
         fnCheckProp(params, 'action') &&
                 fnCheckProp(params, 'info') &&
                 params.action === 'create.update.van.thu.db'
       ) {
-        let vanThu = params.info
+        let vanThu = _.cloneDeep(params.info)
         dispatch(ACTION_SET_LOADING, true)
         //implement
         vanThu['linhMucId'] = state.info.id
@@ -351,61 +370,61 @@ export default {
       { commit, },
       params
     ) {
-      let thuyenChuyen = params.thuyenChuyen
+      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
       thuyenChuyen.banchuyentrachName = params.banChuyenTrach.name
       thuyenChuyen.ban_chuyen_trach_id = params.banChuyenTrach.id
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
     ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG({ commit, }, params) {
-      let thuyenChuyen = params.thuyenChuyen
+      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
       thuyenChuyen.dongName = params.dong.name
       thuyenChuyen.dong_id = params.dong.id
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
     ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN({ commit, }, params) {
-      let thuyenChuyen = params.thuyenChuyen
+      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
       thuyenChuyen.cosogpName = params.coso.name
       thuyenChuyen.co_so_gp_id = params.coso.id
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
     ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU({ commit, }, params) {
-      let thuyenChuyen = params.thuyenChuyen
+      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
       thuyenChuyen.fromgiaoxuName = params.giaoXu.name
       thuyenChuyen.from_giao_xu_id = params.giaoXu.id
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
     ACTION_UPDATE_DROPDOWN_TO_GIAO_XU({ commit, }, params) {
-      let thuyenChuyen = params.thuyenChuyen
+      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
       thuyenChuyen.giaoxuName = params.giaoXu.name
       thuyenChuyen.giao_xu_id = params.giaoXu.id
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
     ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU({ commit, }, params) {
-      let thuyenChuyen = params.thuyenChuyen
+      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
       thuyenChuyen.fromchucvuName = params.chucVu.name
       thuyenChuyen.from_chuc_vu_id = params.chucVu.id
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
     ACTION_UPDATE_DROPDOWN_TO_CHUC_VU({ commit, }, params) {
-      let thuyenChuyen = params.thuyenChuyen
+      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
       thuyenChuyen.chucvuName = params.chucVu.name
       thuyenChuyen.chuc_vu_id = params.chucVu.id
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
     ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA({ commit, }, params) {
-      let thuyenChuyen = params.thuyenChuyen
+      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
       thuyenChuyen.ducchaName = params.ducCha.name
       thuyenChuyen.duc_cha_id = params.ducCha.id
       commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
     },
     addThuyenChuyen({ dispatch, commit, state, }, params) {
-      let thuyenChuyens = state.info.thuyen_chuyens
+      let thuyenChuyens = _.cloneDeep(state.info.thuyen_chuyens)
       if (
         fnCheckProp(params, 'action') &&
                 fnCheckProp(params, 'info') &&
                 params.action === 'create.update.thuyen.chuyen.db'
       ) {
-        let thuyenChuyen = params.info
+        let thuyenChuyen = _.cloneDeep(params.info)
         dispatch(ACTION_SET_LOADING, true)
         //implement
         thuyenChuyen['linhMucId'] = state.info.id
