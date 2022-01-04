@@ -2,7 +2,6 @@ import AppConfig from 'api@admin/constants/app-config'
 import { apiGetInfoById, apiUpdateInfo, } from 'api@admin/congdoantusi'
 import {
   INFOS_MODAL_SET_INFO_ID,
-  INFOS_MODAL_SET_INFO_ID_FAILED,
   INFOS_MODAL_SET_INFO,
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_UPDATE_INFO_SUCCESS,
@@ -17,6 +16,7 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
 } from '../types/action-types'
 import { config, } from '@app/api/admin/config'
+import { getField, updateField } from 'vuex-map-fields'
 
 const defaultState = () => {
   return {
@@ -64,6 +64,9 @@ export default {
 
       return true
     },
+    getInfoField(state) {
+      return getField(state.info)
+    },
   },
 
   mutations: {
@@ -72,10 +75,6 @@ export default {
         state.infoId = payload
         state.isExistInfo = config.existStatus.exist
       }
-    },
-
-    [INFOS_MODAL_SET_INFO_ID_FAILED](state, payload) {
-      state.errors = payload
     },
 
     [INFOS_MODAL_SET_INFO](state, payload) {
@@ -97,6 +96,10 @@ export default {
     [SET_ERROR](state, payload) {
       state.errors = payload
     },
+
+    updateInfoField(state, field) {
+      return updateField(state.info, field)
+    },
   },
 
   actions: {
@@ -116,7 +119,7 @@ export default {
         },
         (errors) => {
           commit(
-            INFOS_MODAL_SET_INFO_ID_FAILED,
+            SET_ERROR,
             Object.values(errors)
           )
 

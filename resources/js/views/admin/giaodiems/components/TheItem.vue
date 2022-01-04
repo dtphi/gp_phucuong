@@ -34,9 +34,12 @@
 import { mapState, } from 'vuex'
 import BtnDelete from './TheBtnDelete'
 import {
-  fn_get_base_url_image,
   fn_format_dd_mm_yyyy,
 } from '@app/api/utils/fn-helper'
+import { MODULE_MODULE_GIAO_DIEM_EDIT, } from 'store@admin/types/module-types'
+import {
+  INFOS_MODAL_SET_INFO,
+} from 'store@admin/types/mutation-types'
 
 export default {
   name: 'TheItem',
@@ -60,9 +63,6 @@ export default {
     }),
   },
   methods: {
-    _getImgUrl() {
-      return fn_get_base_url_image(this.info.image)
-    },
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from)
     },
@@ -70,7 +70,10 @@ export default {
       return fn_format_dd_mm_yyyy(date)
     },
     _showModal() {
-      this.$emit('show-modal-edit', this.info)
+      if (this.info?.id) {
+        this.$emit('show-modal-edit', this.info)
+      }
+      this.$store.commit(`${MODULE_MODULE_GIAO_DIEM_EDIT}/${INFOS_MODAL_SET_INFO}`, this.info)
     },
   },
 }

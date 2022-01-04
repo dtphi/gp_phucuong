@@ -61,9 +61,6 @@
       :click-to-close="false"
     >
       <the-modal-edit
-        v-if="_infoUpdate.id"
-        :info="_infoUpdate"
-        :info-id="_infoUpdate.id"
         @update-info-success="_updateInfoList"
       ></the-modal-edit>
     </modal>
@@ -78,7 +75,6 @@ import TheHeaderPage from './components/TheHeaderPage'
 import Paginate from 'com@admin/Pagination'
 import {
   MODULE_MODULE_CONG_DOAN_TU_SI,
-  MODULE_MODULE_CONG_DOAN_TU_SI_EDIT,
 } from 'store@admin/types/module-types'
 import {
   ACTION_GET_INFO_LIST,
@@ -100,8 +96,6 @@ export default {
     return {
       fullPage: false,
       isResource: false,
-      infoUpdate: {},
-      curInfo: {},
     }
   },
   watch: {
@@ -121,15 +115,11 @@ export default {
       'loading',
       'isDelete'
     ]),
-    ...mapState(MODULE_MODULE_CONG_DOAN_TU_SI_EDIT, ['info']),
     _infoList() {
       return this.infos
     },
     _notEmpty() {
       return this.isNotEmptyList
-    },
-    _infoUpdate() {
-      return this.infoUpdate
     },
   },
   methods: {
@@ -140,17 +130,10 @@ export default {
     _showModalAdd() {
       this.$modal.show('modal-cong-doan-tu-si-add')
     },
-    _showModalEdit(info) {
-      this.curInfo = info
-      this.infoUpdate = { ...info, }
+    _showModalEdit() {
       this.$modal.show('modal-cong-doan-tu-si-edit')
     },
     _updateInfoList() {
-      this.curInfo.name = this.info.name
-      this.curInfo.dia_chi = this.info.dia_chi
-      this.curInfo.dien_thoai = this.info.dien_thoai
-      this.curInfo.ghi_chu = this.info.ghi_chu
-      this.curInfo.active = this.info.active
       this.$modal.hide('modal-cong-doan-tu-si-edit')
     },
     _notificationUpdate(notification) {

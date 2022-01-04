@@ -11,11 +11,11 @@
     <div class="panel-body">
       <form class="form-horizontal">
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label for="input-giao-hat-name" class="col-sm-2 control-label"
             >Giáo hạt</label
           >
           <div class="col-sm-10">
-            {{ info.ten_linh_muc }}
+            {{ giao_hat_id }}
           </div>
         </div>
         <div class="form-group">
@@ -29,7 +29,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.nguoi_thu_phong"
+                v-model="name"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -39,19 +39,19 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label for="input-info-dia-chi" class="col-sm-2 control-label"
             >Địa chỉ</label
           >
           <div class="col-sm-10">
             <validation-provider
-              name="info_name"
+              name="info_dia_chi"
               rules="max:255"
               v-slot="{ errors }"
             >
               <input
-                v-model="info.noi_thu_phong"
+                v-model="dia_chi"
                 type="text"
-                id="input-info-name"
+                id="input-info-dia-chi"
                 class="form-control"
               />
               <span class="cms-text-red">{{ errors[0] }}</span>
@@ -59,19 +59,19 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label for="input-info-phone" class="col-sm-2 control-label"
             >Điện thoại</label
           >
           <div class="col-sm-10">
             <validation-provider
-              name="info_name"
+              name="info_phone"
               rules="max:255"
               v-slot="{ errors }"
             >
               <input
-                v-model="info.noi_thu_phong"
+                v-model="dien_thoai"
                 type="text"
-                id="input-info-name"
+                id="input-info-phone"
                 class="form-control"
               />
               <span class="cms-text-red">{{ errors[0] }}</span>
@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label for="input-info-ghi-chu" class="col-sm-2 control-label"
             >Ghi chú</label
           >
           <div class="col-sm-10">
@@ -88,19 +88,19 @@
               rules="max:200"
               v-slot="{ errors }"
             >
-              <textarea class="form-control" v-model="info.ghi_chu"></textarea>
+              <textarea class="form-control" v-model="ghi_chu"></textarea>
               <span class="cms-text-red">{{ errors[0] }}</span>
             </validation-provider>
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label for="input-info-active" class="col-sm-2 control-label"
             >Trạng thái</label
           >
           <div class="col-sm-10">
-            <select class="form-control" v-model="info.active">
-              <option value="1" :selected="info.active == 1">Xảy ra</option>
-              <option value="0" :selected="info.active == 0">Ẩn</option>
+            <select class="form-control" v-model="active">
+              <option value="1" :selected="active == 1">Xảy ra</option>
+              <option value="0" :selected="active == 0">Ẩn</option>
             </select>
           </div>
         </div>
@@ -132,26 +132,24 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_CONG_DOAN_TU_SIS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_MODULE_CONG_DOAN_TU_SI_EDIT}/getInfoField`,
+  mutationType: `${MODULE_MODULE_CONG_DOAN_TU_SI_EDIT}/updateInfoField`,
+})
 
 export default {
   name: 'TheModalEdit',
-  props: {
-    info: {
-      type: Object,
-      require: true,
-      validator: function(value) {
-        return value.id && Number.isInteger(value.id)
-      },
-    },
-  },
   data() {
     return {
       fullPage: false,
     }
   },
   computed: {
+    ...mapFields(MAP_PC_CONG_DOAN_TU_SIS),
     ...mapState(MODULE_MODULE_CONG_DOAN_TU_SI_EDIT, [
+      'info',
       'loading',
       'updateSuccess'
     ]),
@@ -185,7 +183,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     list_title: 'Danh sách Linh mục',
   },
 }

@@ -17,6 +17,7 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
 } from '../types/action-types'
 import { config, } from '@app/api/admin/config'
+import { getField, updateField } from 'vuex-map-fields'
 
 const defaultState = () => {
   return {
@@ -64,6 +65,9 @@ export default {
 
       return true
     },
+    getInfoField(state) {
+      return getField(state.info)
+    },
   },
 
   mutations: {
@@ -96,6 +100,9 @@ export default {
 
     [SET_ERROR](state, payload) {
       state.errors = payload
+    },
+    updateInfoField(state, field) {
+      return updateField(state.info, field)
     },
   },
 

@@ -17,7 +17,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.code"
+                v-model="code"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -38,7 +38,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.name"
+                v-model="name"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -76,25 +76,23 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_LE_CHINHS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_MODULE_LE_CHINH_EDIT}/getInfoField`,
+  mutationType: `${MODULE_MODULE_LE_CHINH_EDIT}/updateInfoField`,
+})
 
 export default {
   name: 'TheModalEdit',
-  props: {
-    info: {
-      type: Object,
-      require: true,
-      validator: value => {
-        return value.id && Number.isInteger(value.id)
-      },
-    },
-  },
   data() {
     return {
       fullPage: false,
     }
   },
   computed: {
-    ...mapState(MODULE_MODULE_LE_CHINH_EDIT, ['loading', 'updateSuccess']),
+    ...mapFields(MAP_PC_LE_CHINHS),
+    ...mapState(MODULE_MODULE_LE_CHINH_EDIT, ['info', 'loading', 'updateSuccess']),
   },
   watch: {
     updateSuccess(newValue) {

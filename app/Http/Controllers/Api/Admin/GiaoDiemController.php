@@ -61,7 +61,7 @@ class GiaoDiemController extends ApiController
                     'name'       => $info->name,
                     'dia_chi'    => $info->dia_chi,
                     'sort_id'    => $info->sort_id,
-                    'ghichu'     => $info->ghichu,
+                    'ghi_chu'     => $info->ghi_chu,
                     'active'     => $info->active,
                     'active_text'     => $info->active?'Xảy ra':'Ẩn',
                     'updatetime' => $info->updatetime

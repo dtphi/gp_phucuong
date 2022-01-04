@@ -175,26 +175,24 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_CO_SO_GIAO_PHANS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_MODULE_CO_SO_EDIT}/getInfoField`,
+  mutationType: `${MODULE_MODULE_CO_SO_EDIT}/updateInfoField`,
+})
 import { config, } from '@app/common/config'
 
 export default {
   name: 'TheModalEdit',
-  props: {
-    info: {
-      type: Object,
-      require: true,
-      validator: function(value) {
-        return value.id && Number.isInteger(value.id)
-      },
-    },
-  },
   data() {
     return {
       fullPage: false,
     }
   },
   computed: {
-    ...mapState(MODULE_MODULE_CO_SO_EDIT, ['loading', 'updateSuccess']),
+    ...mapFields(MAP_PC_CO_SO_GIAO_PHANS),
+    ...mapState(MODULE_MODULE_CO_SO_EDIT, ['info', 'loading', 'updateSuccess']),
   },
   watch: {
     updateSuccess(newValue) {

@@ -59,9 +59,6 @@
     </div>
     <modal name="modal-co-so-edit" :height="455" :click-to-close="false">
       <the-modal-edit
-        v-if="_infoUpdate.id"
-        :info="_infoUpdate"
-        :info-id="_infoUpdate.id"
         @update-info-success="_updateInfoList"
       ></the-modal-edit>
     </modal>
@@ -76,7 +73,6 @@ import TheHeaderPage from './components/TheHeaderPage'
 import Paginate from 'com@admin/Pagination'
 import {
   MODULE_MODULE_CO_SO,
-  MODULE_MODULE_CO_SO_EDIT,
 } from 'store@admin/types/module-types'
 import {
   ACTION_GET_INFO_LIST,
@@ -98,8 +94,6 @@ export default {
     return {
       fullPage: false,
       isResource: false,
-      infoUpdate: {},
-      curInfo: {},
     }
   },
   watch: {
@@ -115,15 +109,11 @@ export default {
     }),
     ...mapGetters(['isNotEmptyList']),
     ...mapState(MODULE_MODULE_CO_SO, ['infos', 'loading', 'isDelete']),
-    ...mapState(MODULE_MODULE_CO_SO_EDIT, ['info']),
     _infoList() {
       return this.infos
     },
     _notEmpty() {
       return this.isNotEmptyList
-    },
-    _infoUpdate() {
-      return this.infoUpdate
     },
   },
   methods: {
@@ -134,19 +124,10 @@ export default {
     _showModalAdd() {
       this.$modal.show('modal-co-so-add')
     },
-    _showModalEdit(info) {
-      this.curInfo = info
-      this.infoUpdate = { ...info, }
+    _showModalEdit() {
       this.$modal.show('modal-co-so-edit')
     },
     _updateInfoList() {
-      this.curInfo.name = this.info.name
-      this.curInfo.dia_chi = this.info.dia_chi
-      this.curInfo.email = this.info.email
-      this.curInfo.dien_thoai = this.info.dien_thoai
-      this.curInfo.fax = this.info.fax
-      this.curInfo.website = this.info.website
-      this.curInfo.active = this.info.active
       this.$modal.hide('modal-cong-doan-tu-si-edit')
     },
     _notificationUpdate(notification) {
