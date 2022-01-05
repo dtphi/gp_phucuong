@@ -224,6 +224,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
         $model = new GiaoXu();
 
         $query = $model->select()
+            ->where('type', 'giaoxu')
             ->orderBy('name', 'DESC');
 
         return $query->get();

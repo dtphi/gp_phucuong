@@ -192,7 +192,9 @@ class Service implements BaseModel
 
 	public function apiGetGiaoXuList($data = array(), $limit = 5)
 	{
-		$query = $this->modelGiaoXu->select()->orderByDesc('id');
+		$query = $this->modelGiaoXu->select()
+		->where('type', 'giaoxu')
+		->orderByDesc('id');
     
     return $query->paginate($limit);
 	}
@@ -394,12 +396,12 @@ class Service implements BaseModel
 
   public function apiGetListGiaoXu($request) { // List Giao Xu By Id
       if($request->input('params') == null) {
-          $list_giaoxu = $this->modelGiaoXu->query()->name($request)->paginate(5);
+          $list_giaoxu = $this->modelGiaoXu->where('type', 'giaoxu')->query()->name($request)->paginate(5);
       } else if ($request->input('query') == null) {
-          $list_giaoxu = $this->modelGiaoXu->where('giao_hat_id', $request->input())->paginate(5);
+          $list_giaoxu = $this->modelGiaoXu->where('type', 'giaoxu')->where('giao_hat_id', $request->input())->paginate(5);
       } else {
-          $list_giaoxu_query = $this->modelGiaoXu->query()->name($request)->orderBy('id', 'ASC')->pluck('id')->toArray();
-          $list_giaoxu_params = $this->modelGiaoXu->where('giao_hat_id', $request->input('params'))->pluck('id')->toArray();
+          $list_giaoxu_query = $this->modelGiaoXu->where('type', 'giaoxu')->query()->name($request)->orderBy('id', 'ASC')->pluck('id')->toArray();
+          $list_giaoxu_params = $this->modelGiaoXu->where('type', 'giaoxu')->where('giao_hat_id', $request->input('params'))->pluck('id')->toArray();
           $list_giaoxu_merge = array_unique(array_merge($list_giaoxu_query, $list_giaoxu_params));
           $list_giaoxu = $this->modelGiaoXu->select()->whereIn('id', $list_giaoxu_merge)->orderBy('id', 'ASC')->paginate(5);
       }
