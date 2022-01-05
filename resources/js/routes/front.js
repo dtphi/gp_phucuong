@@ -15,7 +15,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_news'),
+      component: () => import('v@front/page_news'),
       name: 'home-page',
       meta: {
         auth: false,
@@ -26,7 +26,7 @@ routeEnv = {
       },
     }, {
       path: 'trang-chu',
-      component: () => import ('v@front/page_news'),
+      component: () => import('v@front/page_news'),
       name: 'home-page1',
       meta: {
         auth: false,
@@ -44,7 +44,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_category_news'),
+      component: () => import('v@front/page_category_news'),
       name: 'news-category-all-page',
       meta: {
         auth: false,
@@ -62,7 +62,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_category_news'),
+      component: () => import('v@front/page_category_news'),
       name: 'news-category-page',
       meta: {
         auth: false,
@@ -80,7 +80,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_category_news'),
+      component: () => import('v@front/page_category_news'),
       name: 'news-category_1-page',
       meta: {
         auth: false,
@@ -98,7 +98,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_category_news'),
+      component: () => import('v@front/page_category_news'),
       name: 'news-category_2-page',
       meta: {
         auth: false,
@@ -116,7 +116,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_category_news'),
+      component: () => import('v@front/page_category_news'),
       name: 'news-category_3-page',
       meta: {
         auth: false,
@@ -134,7 +134,7 @@ routeEnv = {
     },
     children: [{
       path: 'xem-nhieu',
-      component: () => import ('v@front/page_news_populars'),
+      component: () => import('v@front/page_news_populars'),
       name: 'news-popular-page',
       meta: {
         auth: false,
@@ -146,7 +146,7 @@ routeEnv = {
     }, {
       path: 'chi-tiet/:slug',
       component: () =>
-        import ('v@front/page_news_details'),
+        import('v@front/page_news_details'),
       name: 'news-slug-detail-page',
       meta: {
         auth: false,
@@ -154,6 +154,18 @@ routeEnv = {
         layout: MainLayout,
         role: 'guest',
         layout_content: {},
+      },
+    }, {
+      path: 'tags/:slug',
+      component: () => import('v@front/page_news_tags'),
+      name: 'news-tag-page',
+      meta: {
+        auth: false,
+        header: 'News Page',
+        layout: MainLayout,
+        role: 'guest',
+        layout_content: {},
+        network: network,
       },
     }],
   }, {
@@ -163,7 +175,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_videos'),
+      component: () => import('v@front/page_videos'),
       name: 'video-page',
       meta: {
         auth: false,
@@ -174,7 +186,7 @@ routeEnv = {
       },
     }, {
       path: 'chi-tiet/:slug',
-      component: () => import ('v@front/page_video_details'),
+      component: () => import('v@front/page_video_details'),
       name: 'video-detail-page',
       meta: {
         auth: false,
@@ -191,7 +203,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_linh_mucs'),
+      component: () => import('v@front/page_linh_mucs'),
       name: 'linh-muc-page',
       meta: {
         auth: false,
@@ -202,7 +214,7 @@ routeEnv = {
       },
     }, {
       path: 'chi-tiet/:linhMucId',
-      component: () => import ('v@front/page_linh_muc_details'),
+      component: () => import('v@front/page_linh_muc_details'),
       name: 'linh-muc-detail-page',
       meta: {
         auth: false,
@@ -219,7 +231,7 @@ routeEnv = {
     },
     children: [{
       path: '',
-      component: () => import ('v@front/page_giao_xus'),
+      component: () => import('v@front/page_giao_xus'),
       name: 'giao-xu-page',
       meta: {
         auth: false,
@@ -230,7 +242,7 @@ routeEnv = {
       },
     }, {
       path: 'chi-tiet/:giaoXuId',
-      component: () => import ('v@front/page_giao_xu_details'),
+      component: () => import('v@front/page_giao_xu_details'),
       name: 'giao-xu-detail-page',
       meta: {
         auth: false,

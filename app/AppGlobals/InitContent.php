@@ -46,6 +46,9 @@ final class InitContent
         if ($request->is('tin-tuc*')) {
             $flag = 'tin-tuc';
         }
+        if ($request->is('tin-tuc/tags*')) {
+            $flag = 'danh-muc-tin';
+        }
         if ($request->is('video*')) {
             $flag = 'video';
         }

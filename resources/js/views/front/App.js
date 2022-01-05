@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import '../../plugins/filter'
 // font.awsome.icon
 require('./assets/font.awsome.icon')
 /* Add BootstrapVue */

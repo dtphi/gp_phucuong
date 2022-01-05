@@ -13,6 +13,8 @@
     <div class="text-detail" v-html="pageLists.description"></div>
 
     <hr />
+    <info-tag :info="pageLists"></info-tag>
+    <hr />
 
     <h4 v-if="Object.keys(_getAlbums).length" class="tit-detail">ALBUM HÌNH</h4>
     <div class="docs-galley mb-3" style="position: relative">
@@ -34,12 +36,14 @@
 <script>
 import { mapGetters, } from 'vuex'
 import ImgFooter from 'v@front/assets/img/image_footer.jpg'
+import InfoTag from 'com@front/Common/InfoTag'
 import { MODULE_INFO_DETAIL, } from '@app/stores/front/types/module-types'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'viewerjs'
 
 export default {
   name: 'ContentLeft',
+  components: { InfoTag },
   data() {
     return {
       imgFooter: ImgFooter,
