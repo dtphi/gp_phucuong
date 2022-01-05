@@ -29,6 +29,7 @@ const defaultState = () => {
     styleCss: '',
     info: {
       name: '',
+      ngay_thanh_lap: null,
       image: '',
       date_available: null,
       dia_chi: '',

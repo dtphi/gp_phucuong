@@ -46,7 +46,7 @@
                   dateString="#"
                   :category="`Ngày thành lập`"
                   title="."
-                  :description="info.ngay_thanh_lap"
+                  :description="$helper.fn_format_dd_mm_yyyy(info.ngay_thanh_lap)"
                   icon="home"
                 />
                 <vue-timeline-update
@@ -158,6 +158,7 @@ import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
 import MainContent from 'com@front/Common/MainContent'
 import Vue from 'vue'
 import vuetimeline from '@growthbunker/vuetimeline'
+import { fn_format_dd_mm_yyyy, } from '@app/api/utils/fn-helper'
 Vue.use(vuetimeline)
 
 export default {

@@ -585,7 +585,7 @@ class ApiController extends Controller
 				'img_chanh_xu' => $imgChanhXu,
 				'pho_xu' => $namePhoXu,
 				'img_pho_xu' => $imgPhoXu,
-				'ngay_thanh_lap' => $emptyStr,
+				'ngay_thanh_lap' => !empty($info->ngay_thanh_lap) ? $info->ngay_thanh_lap : $emptyStr,
 				'bon_mang' => $emptyStr
 			];
 		}

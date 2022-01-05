@@ -32,6 +32,8 @@ const defaultState = () => {
     isExistInfo: config.existStatus.checking,
     info: {
       image: '',
+      name: '',
+      ngay_thanh_lap: null,
       date_available: null,
       dia_chi: '',
       dien_thoai: '',

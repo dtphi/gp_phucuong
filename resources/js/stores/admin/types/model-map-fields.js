@@ -2,6 +2,7 @@ export const MAP_PC_GIAO_XUS = [
   'id',
   'image',
   'name',
+  'ngay_thanh_lap',
   'giao_hat_id',
   'gio_le',
   'noi_dung',

@@ -44,6 +44,27 @@
         </validation-provider>
       </div>
     </div>
+    <div class="form-group">
+      <label for="input-ngay-thanh-lap" class="col-sm-2 control-label"
+        >Ngày thành lập</label
+      >
+      <div class="col-sm-10">
+        <validation-provider
+          name="info_ngay_thanh_lap"
+          rules="max:50"
+          v-slot="{ errors }"
+        >
+        <cms-date-picker
+          value-type="format"
+          format="YYYY-MM-DD"
+          v-model="ngay_thanh_lap"
+          id="input-ngay-thanh-lap"
+          type="date"
+        ></cms-date-picker>
+          <span class="cms-text-red">{{ errors[0] }}</span>
+        </validation-provider>
+      </div>
+    </div>
     <!-- Giáo xứ thuộc giáo hạt -->
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-info-giaohat"

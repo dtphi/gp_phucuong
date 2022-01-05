@@ -33,6 +33,7 @@ class GiaoXu extends BaseModel
 
   protected $fillable = [
     'name',
+    'ngay_thanh_lap',
     'giao_hat_id',
     'dia_chi',
     'dien_thoai',
