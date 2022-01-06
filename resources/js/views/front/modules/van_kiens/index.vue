@@ -23,6 +23,7 @@
         </p>
       </b-col>
     </b-row>
+    <module-album></module-album>
   </div>
 </template>
 
@@ -34,10 +35,11 @@ import {
   fn_get_href_base_url,
   fn_change_to_slug,
 } from '@app/api/utils/fn-helper'
+import ModuleAlbum from 'v@front/modules/albums'
 
 export default {
   name: 'ModuleVanKien',
-  components: {},
+  components: { ModuleAlbum, },
   data() {
     return {
       fullPage: true,

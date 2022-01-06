@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Api\Front\Services\Service;
 use App\Http\Controllers\Api\Front\Services\SettingService;
+use App\Models\Albums;
 use GrahamCampbell\ResultType\Result;
 
 class ApiController extends Controller
@@ -316,11 +317,41 @@ class ApiController extends Controller
 
 			$data['infoLasteds']  = $this->getLastedInfoList($request);
 			$data['infoPopulars'] = $this->getPopularList($request);
+			$data['lastAlbum'] = $this->getLastImageListAlbums();
 		} catch (HandlerMsgCommon $e) {
 			throw $e->render();
 		}
 
 		return response()->json($data);
+	}
+
+	public function getLastImageListAlbums()
+	{
+			$lastAlbum = Albums::where('status', 1)->orderByDesc('id')->first();
+			$value = ($lastAlbum) ? $lastAlbum->image : '';
+
+			$value = !empty($value) ? unserialize($value): [];
+			if (!empty($value)) {
+					$sort = array_column($value, 'width');
+					array_multisort($sort, SORT_ASC, $value);
+			}
+
+			$albums = [];
+			if (!empty($value)) {
+					foreach ($value as $key => $img) {
+							if ($img['status']) {
+									$tmp = $img;
+									$tmp['width'] = (int)$img['width'];
+									$tmp['image'] = url('/Image/NewPicture/' . $img['image']);
+									$tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280, 280));
+									$albums[$key] = $tmp;
+							} else {
+									unset($value[$key]);
+							}
+					}
+			}
+
+			return $albums;
 	}
 
 	protected function _getModules(&$request)

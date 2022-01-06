@@ -6,9 +6,11 @@ use DB;
 use App\Models\GiaoXu;
 use App\Models\GiaoPhan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GiaoHat extends BaseModel
 { 
+  use SoftDeletes;
     /**
      * 
      * @var string

@@ -61,9 +61,6 @@
           <template #before>
             <module-page-banner-list></module-page-banner-list>
           </template>
-          <template #bottom>
-            <module-tag></module-tag>
-          </template>
         </content-bottom>
       </div>
     </div>
@@ -81,7 +78,6 @@ import SocialNetwork from './components/TheSocialNetwork'
 import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
 import MainContent from 'com@front/Common/MainContent'
 import ModulePageBannerList from 'v@front/modules/page_banner_lists'
-import ModuleTag from 'v@front/modules/tags'
 
 export default {
   name: 'InfoPage',
@@ -93,7 +89,6 @@ export default {
     SocialNetwork,
     MainContent,
     ModulePageBannerList,
-    ModuleTag,
   },
   data() {
     return {

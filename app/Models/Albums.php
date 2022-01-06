@@ -7,10 +7,11 @@ use App\Models\BaseModel;
 use App\Models\GroupAlbums;
 use App\Http\Common\Tables;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Albums extends BaseModel
 {
-  use HasFactory;
+  use HasFactory, SoftDeletes;
 
   protected $table = DB_PREFIX . 'albums';
 

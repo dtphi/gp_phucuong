@@ -14,14 +14,16 @@
         width="640"
       ></iframe>
     </div>
+    <module-tag-right></module-tag-right>
   </div>
 </template>
 
 <script>
+import ModuleTagRight from '../tags/right'
 
 export default {
   name: 'ModuleHanhCacThanh',
-  components: {},
+  components: { ModuleTagRight, },
   data() {
     return {}
   },

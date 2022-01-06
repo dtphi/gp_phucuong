@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GiaoXu extends BaseModel
 {
+  use SoftDeletes;
+  
 	public function giaoHat()
 	{
 		return $this->hasOne(GiaoHat::class, $this->primaryKey, 'giao_hat_id');
