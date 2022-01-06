@@ -3,7 +3,7 @@
     <h4 class="tit-common mb-3"><b-icon icon="tag-fill"></b-icon>Tags</h4>
     <b-form-tags no-outer-focus class="mb-2 cms-form-control">
       <ul
-        id="my-custom-tags-list"
+        id="my-custom-tags-list" style="width:100%; font-size:13px;"
         class="list-unstyled d-inline-flex flex-wrap mb-0"
         aria-live="polite"
         aria-atomic="false"
