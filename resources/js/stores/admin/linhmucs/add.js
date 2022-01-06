@@ -97,23 +97,76 @@ export default {
   },
 
   mutations: {
+    UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH(state, payload) {
+      state.thuyenChuyen = payload.thuyenChuyen
+      state.thuyenChuyen.banchuyentrachName = payload.banChuyenTrach.name
+      state.thuyenChuyen.ban_chuyen_trach_id = payload.banChuyenTrach.id
+    },
+    UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG(state, payload) {
+      state.thuyenChuyen = payload.thuyenChuyen
+      state.thuyenChuyen.dongName = payload.dong.name
+      state.thuyenChuyen.dong_id = payload.dong.id
+    },
+    UPDATE_DROPDOWN_CO_SO_GIAO_PHAN(state, payload) {
+      state.thuyenChuyen = payload.thuyenChuyen
+      state.thuyenChuyen.cosogpName = payload.coso.name
+      state.thuyenChuyen.co_so_gp_id = payload.coso.id
+    },
+    UPDATE_DROPDOWN_FROM_GIAO_XU(state, payload) {
+      state.thuyenChuyen = payload.thuyenChuyen
+      state.thuyenChuyen.fromgiaoxuName = payload.giaoXu.name
+      state.thuyenChuyen.from_giao_xu_id = payload.giaoXu.id
+    },
+    UPDATE_DROPDOWN_TO_GIAO_XU(state, payload) {
+      state.thuyenChuyen = payload.thuyenChuyen
+      state.thuyenChuyen.giaoxuName = payload.giaoXu.name
+      state.thuyenChuyen.giao_xu_id = payload.giaoXu.id
+    },
+    UPDATE_DROPDOWN_FROM_CHUC_VU(state, payload) {
+      state.thuyenChuyen = payload.thuyenChuyen
+      state.thuyenChuyen.fromchucvuName = payload.chucVu.name
+      state.thuyenChuyen.from_chuc_vu_id = payload.chucVu.id
+    },
+    UPDATE_DROPDOWN_TO_CHUC_VU(state, payload) {
+      state.thuyenChuyen = payload.thuyenChuyen
+      state.thuyenChuyen.chucvuName = payload.chucVu.name
+      state.thuyenChuyen.chuc_vu_id = payload.chucVu.id
+    },
+    UPDATE_DROPDOWN_FROM_DUC_CHA(state, payload) {
+      state.thuyenChuyen = payload.thuyenChuyen
+      state.thuyenChuyen.ducchaName = payload.ducCha.name
+      state.thuyenChuyen.duc_cha_id = payload.ducCha.id
+    },
     update_dropdown_thuyen_chuyen(state, payload) {
+      const thuyenChuyen = (payload) ? payload : state.thuyenChuyen
       _.forEach(state.info.thuyen_chuyens, function(item, idx) {
-        if (fnCheckProp(item, 'id') && item.id == payload.id) {
-          state.info.thuyen_chuyens[idx] = payload
+        if (fnCheckProp(item, 'id') && item.id == thuyenChuyen.id) {
+          state.info.thuyen_chuyens[idx] = thuyenChuyen
         }
       })
     },
     update_thuyen_chuyen(state, payload) {
+      state.info.thuyen_chuyens.push(payload)
+    },
+    update_thuyen_chuyen_remove(state, payload) {
       state.info.thuyen_chuyens = payload
     },
     update_van_thu(state, payload) {
+      state.info.van_thus.push(payload)
+    },
+    update_van_thu_remove(state, payload) {
       state.info.van_thus = payload
     },
     update_chuc_thanh(state, payload) {
+      state.info.chuc_thanhs.push(payload)
+    },
+    update_chuc_thanh_remove(state, payload) {
       state.info.chuc_thanhs = payload
     },
     update_bang_cap(state, payload) {
+      state.info.bang_caps.push(payload)
+    },
+    update_bang_cap_remove(state, payload) {
       state.info.bang_caps = payload
     },
     INFO_UPDATE_DONG(state, payload) {
@@ -167,29 +220,26 @@ export default {
       commit('INFO_UPDATE_DROPDOWN_TEN_THANH_LIST', params)
     },
     addBangCaps({ state, commit, }) {
-      let bangCaps = _.cloneDeep(state.info.bang_caps)
-      bangCaps.push({
+      commit('update_bang_cap', {
         id: uuidv4(),
         name: '',
         type: 0,
         ghi_chu: '',
         active: 1,
       })
-      commit('update_bang_cap', bangCaps)
     },
     removeBangCap({ commit, state, }, params) {
       let bangCaps = state.info.bang_caps
       const data = params.item
       commit(
-        'update_bang_cap',
+        'update_bang_cap_remove',
         _.remove(bangCaps, (item) => {
           return !(item.id == data.id)
         })
       )
     },
     addChucThanhs({ commit, state, }) {
-      let chucThanhs = _.cloneDeep(state.info.chuc_thanhs)
-      chucThanhs.push({
+      commit('update_chuc_thanh', {
         id: uuidv4(),
         chuc_thanh_id: 1,
         ngay_thang_nam_chuc_thanh: null,
@@ -198,21 +248,19 @@ export default {
         ghi_chu: '',
         active: 1,
       })
-      commit('update_chuc_thanh', chucThanhs)
     },
     removeChucThanh({ commit, state, }, params) {
       let chucThanhs = state.info.chuc_thanhs
       const data = params.item
       commit(
-        'update_chuc_thanh',
+        'update_chuc_thanh_remove',
         _.remove(chucThanhs, (item) => {
           return !(item.id == data.id)
         })
       )
     },
     addVanThus({ commit, state, }) {
-      let vanThus = _.cloneDeep(state.info.van_thus)
-      vanThus.push({
+      commit('update_van_thu', {
         id: uuidv4(),
         parent_id: 0,
         title: null,
@@ -220,73 +268,20 @@ export default {
         ghi_chu: '',
         active: 1,
       })
-      commit('update_van_thu', vanThus)
     },
     removeVanThu({ commit, state, }, params) {
       let vanThus = state.info.van_thus
       const data = params.item
 
       commit(
-        'update_van_thu',
+        'update_van_thu_remove',
         _.remove(vanThus, (item) => {
           return !(item.id == data.id)
         })
       )
     },
-    ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH(
-      { commit, },
-      params
-    ) {
-      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
-      thuyenChuyen.banchuyentrachName = params.banChuyenTrach.name
-      thuyenChuyen.ban_chuyen_trach_id = params.banChuyenTrach.id
-      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
-    },
-    ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG({ commit, }, params) {
-      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
-      thuyenChuyen.dongName = params.dong.name
-      thuyenChuyen.dong_id = params.dong.id
-      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
-    },
-    ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN({ commit, }, params) {
-      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
-      thuyenChuyen.cosogpName = params.coso.name
-      thuyenChuyen.co_so_gp_id = params.coso.id
-      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
-    },
-    ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU({ commit, }, params) {
-      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
-      thuyenChuyen.fromgiaoxuName = params.giaoXu.name
-      thuyenChuyen.from_giao_xu_id = params.giaoXu.id
-      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
-    },
-    ACTION_UPDATE_DROPDOWN_TO_GIAO_XU({ commit, }, params) {
-      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
-      thuyenChuyen.giaoxuName = params.giaoXu.name
-      thuyenChuyen.giao_xu_id = params.giaoXu.id
-      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
-    },
-    ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU({ commit, }, params) {
-      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
-      thuyenChuyen.fromchucvuName = params.chucVu.name
-      thuyenChuyen.from_chuc_vu_id = params.chucVu.id
-      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
-    },
-    ACTION_UPDATE_DROPDOWN_TO_CHUC_VU({ commit, }, params) {
-      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
-      thuyenChuyen.chucvuName = params.chucVu.name
-      thuyenChuyen.chuc_vu_id = params.chucVu.id
-      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
-    },
-    ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA({ commit, }, params) {
-      let thuyenChuyen = _.cloneDeep(params.thuyenChuyen)
-      thuyenChuyen.ducchaName = params.ducCha.name
-      thuyenChuyen.duc_cha_id = params.ducCha.id
-      commit('update_dropdown_thuyen_chuyen', thuyenChuyen)
-    },
-    addThuyenChuyen({ commit, state, }) {
-      let thuyenChuyens = _.cloneDeep(state.info.thuyen_chuyens)
-      thuyenChuyens.push({
+    addThuyenChuyen({ commit, }) {
+      commit('update_thuyen_chuyen', {
         id: uuidv4(),
         from_giao_xu_id: null,
         fromgiaoxuName: '',
@@ -311,17 +306,51 @@ export default {
         ghi_chu: '',
         active: 1,
       })
-      commit('update_thuyen_chuyen', thuyenChuyens)
     },
     removeThuyenChuyen({ commit, state, }, params) {
-      let thuyenChuyens = _.cloneDeep(state.info.thuyen_chuyens)
+      let thuyenChuyens = state.info.thuyen_chuyens
       const data = params.item
       commit(
-        'update_thuyen_chuyen',
+        'update_thuyen_chuyen_remove',
         _.remove(thuyenChuyens, (item) => {
           return !(item.id == data.id)
         })
       )
+    },
+    ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH(
+      { commit, },
+      params
+    ) {
+      commit('UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH', params)
+      commit('update_dropdown_thuyen_chuyen')
+    },
+    ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG({ commit, }, params) {
+      commit('UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG', params)
+      commit('update_dropdown_thuyen_chuyen')
+    },
+    ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN({ commit, }, params) {
+      commit('UPDATE_DROPDOWN_CO_SO_GIAO_PHAN', params)
+      commit('update_dropdown_thuyen_chuyen')
+    },
+    ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU({ commit, }, params) {
+      commit('UPDATE_DROPDOWN_FROM_GIAO_XU', params)
+      commit('update_dropdown_thuyen_chuyen')
+    },
+    ACTION_UPDATE_DROPDOWN_TO_GIAO_XU({ commit, }, params) {
+      commit('UPDATE_DROPDOWN_TO_GIAO_XU', params)
+      commit('update_dropdown_thuyen_chuyen')
+    },
+    ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU({ commit, }, params) {
+      commit('UPDATE_DROPDOWN_FROM_CHUC_VU', params)
+      commit('update_dropdown_thuyen_chuyen')
+    },
+    ACTION_UPDATE_DROPDOWN_TO_CHUC_VU({ commit, }, params) {
+      commit('UPDATE_DROPDOWN_TO_CHUC_VU', params)
+      commit('update_dropdown_thuyen_chuyen')
+    },
+    ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA({ commit, }, params) {
+      commit('UPDATE_DROPDOWN_FROM_DUC_CHA', params)
+      commit('update_dropdown_thuyen_chuyen')
     },
     [ACTION_SET_LOADING]({ commit, }, isLoading) {
       commit(INFOS_MODAL_SET_LOADING, isLoading)

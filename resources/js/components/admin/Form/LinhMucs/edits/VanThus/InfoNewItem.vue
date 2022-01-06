@@ -77,7 +77,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeVanThu']),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeVanThu', 'addVanThus']),
     _removeItem() {
       this.removeVanThu({
         action: 'removeVanThu',
