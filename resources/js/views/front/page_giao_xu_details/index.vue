@@ -158,7 +158,6 @@ import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
 import MainContent from 'com@front/Common/MainContent'
 import Vue from 'vue'
 import vuetimeline from '@growthbunker/vuetimeline'
-import { fn_format_dd_mm_yyyy, } from '@app/api/utils/fn-helper'
 Vue.use(vuetimeline)
 
 export default {

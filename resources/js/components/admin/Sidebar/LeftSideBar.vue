@@ -319,6 +319,7 @@ export default {
     navStyle() {
       return {
         'min-height':innerHeight + 'px',
+        'background-color': '#122934',
       }
     },
     ulMenu() {

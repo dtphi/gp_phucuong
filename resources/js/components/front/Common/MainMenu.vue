@@ -3,11 +3,9 @@
     <div class="fz-0" :class="isFixed?'container':''">
       <nav id="nav">
         <ul class="menu-pc nav-menu">
-          <nav-main-item
-            :group="$options.setting.menuHome"
-            :link="$options.setting.menuHome.link"
-            activeClass="active"
-          ></nav-main-item>
+          <li class="active">
+            <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
+          </li>
           <nav-tree
             v-for="(itemMenu, idx) in _menuLists"
             :item="itemMenu"
@@ -16,17 +14,20 @@
         </ul>
 
         <ul class="menu-sp nav-menu">
-          <nav-main-mobile-item
-            :group="$options.setting.menuHome"
-            :link="$options.setting.menuHome.link"
-            activeClass="active"
-          >
+          <li class="active">
+            <a href="/"><i class="fa fa-home" aria-hidden="true"></i>
+              <!--<div class="icon-nav">
+                <input type="text" placeholder="search"/>
+              </div>-->
+            </a>
+          
             <div class="hambuger" @click="isHiddenMenu = !isHiddenMenu">
+              
               <div class="bar1"></div>
               <div class="bar2"></div>
               <div class="bar3"></div>
             </div>
-          </nav-main-mobile-item>
+          </li>
 
           <div v-show="isHiddenMenu" class="dropdown">
             <mobile-nav-tree
@@ -37,9 +38,9 @@
           </div>
         </ul>
       </nav>
-      <div class="icon-nav" v-show="!isFixed">
+      <div class="icon-nav" :class="isFixed?'sp-icon-nav':''">
         <p>
-          <i class="person fas">&#xf406;</i>
+          <a href="/linhmucadmin?linhmucId"><i class="person fas">&#xf406;</i></a>
         </p>
         <p>
           <i class="search fas">&#xf002;</i>
