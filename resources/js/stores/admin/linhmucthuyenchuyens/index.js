@@ -4,6 +4,7 @@ import {
   apiGetInfoById,
   apiGetInfos,
   apiDeleteInfo,
+  apiChangeStatus,
 } from 'api@admin/linhmucthuyenchuyen'
 import { MODULE_MODULE_THUYEN_CHUYEN, } from '../types/module-types'
 import {
@@ -27,6 +28,7 @@ import {
   ACTION_RELOAD_GET_INFO_LIST,
   ACTION_SET_LOADING,
   ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_CHANGE_STATUS,
 } from '../types/action-types'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 import { config, } from '@app/common/config'
@@ -211,6 +213,12 @@ export default {
 
     [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
       commit(MODULE_UPDATE_SETTING_SUCCESS, values)
+    },
+
+    [ACTION_CHANGE_STATUS]({ commit, }, info) {
+      apiChangeStatus(info, (errors) => {
+        commit(SET_ERROR, errors)
+      })
     },
   },
 

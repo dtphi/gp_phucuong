@@ -37,6 +37,9 @@ class GiaoPhanHatXu extends BaseModel
     }
 
     public function getNameAttribute($value) {
+        if(!$this->giaoXu) {
+            return null;
+        }
         return $this->giaoXu->name;
     }
 

@@ -58,6 +58,7 @@ class LinhmucThuyenchuyen extends BaseModel
         'duc_cha_id',
         'to_date',
         'chuc_vu_id',
+        'chuc_vu_active',
         'giao_xu_id',
         'co_so_gp_id',
         'dong_id',

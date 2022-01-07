@@ -76,6 +76,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('linh-muc-chuc-thanhs', 'LinhMucChucThanhController');
     Route::apiResource('linh-muc-van-thus', 'LinhMucVanThuController');
     Route::apiResource('linh-muc-thuyen-chuyens', 'LinhMucThuyenChuyenController');
+    Route::post('change-status-thuyen-chuyens','LinhMucThuyenChuyenController@changeStatus');
 
     Route::apiResource('giao-phans', 'GiaoPhanController');
     Route::apiResource('giao-hats', 'GiaoHatController');
