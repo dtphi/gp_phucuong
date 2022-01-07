@@ -102,7 +102,7 @@ class CategoryPath extends BaseModel
 				return DB::delete("delete from `" . Tables::$category_paths . "` where " . Tables::$category_paths . ".path_id = '" . (int)$pathId . "'");
 			}
 		}
-		public static function fcUpdateLevelByCateId($cateId = null, $level)
+		public static function fcUpdateLevelByCateId($cateId = null, $level = 1)
 		{
 			(int)$result = $level - 1;
 			if ($cateId) {

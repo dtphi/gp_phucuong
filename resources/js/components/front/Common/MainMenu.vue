@@ -37,7 +37,7 @@
           </div>
         </ul>
       </nav>
-      <div class="icon-nav">
+      <div class="icon-nav" v-show="!isFixed">
         <p>
           <i class="person fas">&#xf406;</i>
         </p>

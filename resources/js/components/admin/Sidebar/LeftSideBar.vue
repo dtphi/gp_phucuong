@@ -26,7 +26,9 @@
             <i class="fa fa-home fa-fw"></i>
             <span>{{ $options.setting.giaophans_title }}</span></a
           >
-          <ul class="collapse">
+          <ul class="collapse" :class="_getCollapseIn([
+            'giao-phans', 'giao-hats', 'giao-xus', 'giao-diems', 'co-so-giao-phans', 'cong-doan-tu-sis', 'dongs'
+          ])">
             <li>
               <a :href="_getHref('giao-phans')">
                 <span>{{ $options.setting.giaophans_title }}</span></a
@@ -70,7 +72,9 @@
             <i class="fa fa-newspaper-o fa-fw"></i>
             <span>{{ $options.setting.giaophan_tintucs_title }}</span></a
           >
-          <ul class="collapse">
+          <ul class="collapse" :class="_getCollapseIn([
+            'giao-phan/danh-mucs', 'giao-phan/tin-tucs'
+          ])">
             <li>
               <a :href="_getHref('giao-phan/danh-mucs')">
                 <span>{{ $options.setting.category_sub_cate_info_title }}</span></a
@@ -88,7 +92,9 @@
             <i class="fa fa-user fa-fw"></i>
             <span>{{ $options.setting.linhmucs_title }}</span></a
           >
-          <ul class="collapse">
+          <ul class="collapse" :class="_getCollapseIn([
+            'linh-mucs', 'bang-caps', 'chuc-thanhs', 'van-thus', 'thuyen-chuyens', 'chuc-vus', 'le-chinhs', 'thanhs'
+          ])">
             <li>
               <a :href="_getHref('linh-mucs')">
                 <span>{{ $options.setting.linhmucs_title }}</span></a
@@ -136,7 +142,9 @@
             <i class="fa fa-user fa-fw"></i>
             <span>{{ $options.setting.users_title }}</span></a
           >
-          <ul class="collapse">
+          <ul class="collapse" :class="_getCollapseIn([
+            'users'
+          ])">
             <li>
               <a :href="_getHref('users')">
                 <span>{{ $options.setting.users_title }}</span></a
@@ -149,7 +157,9 @@
             <i class="fa fa-tags fa-fw"></i>
             <span>{{ $options.setting.category_root_title }}</span></a
           >
-          <ul class="collapse">
+          <ul class="collapse" :class="_getCollapseIn([
+            'news-categories', 'informations', 'slide-info-specials'
+          ])">
             <li>
               <a :href="_getHref('news-categories')">{{
                 $options.setting.category_sub_cate_info_title
@@ -172,7 +182,7 @@
             <i class="fa fa-tags fa-fw"></i>
             <span>{{ $options.setting.album_root_title }}</span></a
           >
-          <ul class="collapse">
+          <ul class="collapse" :class="_getCollapseIn(['group-albums', 'albums'])">
             <li>
               <a :href="_getHref('group-albums')">{{
                 $options.setting.group_albums_title
@@ -197,7 +207,11 @@
             <i class="fa fa-puzzle-piece fw"></i>
             <span>{{ $options.setting.module_title }}</span></a
           >
-          <ul class="collapse">
+          <ul class="collapse" :class="_getCollapseIn([
+            'module-loi-chuas', 'module-category-left-side-bars', 'module-home-banners',
+            'module-category-icon-side-bars', 'module-thong-baos', 'module-tin-giao-hoi-viet-nams',
+            'module-tin-giao-hois', 'module-tin-giao-phans', 'module-van-kiens', 'module-noi-bats'
+          ])">
             <li>
               <a :href="_getHref('module-loi-chuas')">{{
                 $options.setting.module_loi_chua
@@ -255,7 +269,9 @@
             <i class="fa fa-cog fw"></i>
             <span>{{ $options.setting.system_root_title }}</span></a
           >
-          <ul class="collapse">
+          <ul class="collapse" :class="_getCollapseIn([
+            'system', 'restrict-ips'
+          ])">
             <li>
               <a :href="_getHref('system')">{{ $options.setting.sytem_title }}</a>
             </li>
@@ -286,9 +302,15 @@ import { mapState, } from 'vuex'
 import { MODULE_AUTH, } from 'store@admin/types/module-types'
 import { fn_get_admin_base_url, } from '@app/api/utils/fn-helper'
 import { unserialize, } from 'php-serialize'
+import { config, } from '@app/common/config'
 
 export default {
   name: 'LeftSideBar',
+  data() {
+    return {
+      collapseIn: ''
+    }
+  },
   computed: {
     ...mapState(MODULE_AUTH, {
       user: (state) => state.user,
@@ -305,6 +327,9 @@ export default {
         'overflow-x': 'hidden',
         'overflow-y': 'scroll',
       }
+    },
+    subCollapse() {
+      return this.collapseIn
     },
   },
   methods: {
@@ -333,6 +358,10 @@ export default {
         href: fn_get_admin_base_url() + '/' + links.path, 
         name: links.name, 
       }
+    },
+    _getCollapseIn(groupPath) {
+      let regex = this.$route.path.replace(`/${config.adminPrefix}/`, '').split('/')
+      return groupPath.includes(regex[0]) ? ' in': ''
     },
   },
   setting: {
@@ -433,5 +462,9 @@ export default {
 
   ::-webkit-scrollbar-thumb:hover {
     background-color: #595a5a;
+  }
+
+  li.active.open {
+    background-color: red !important;
   }
 </style>
