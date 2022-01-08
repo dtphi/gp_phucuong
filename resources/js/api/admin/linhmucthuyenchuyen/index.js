@@ -4,6 +4,7 @@ import {
 } from '@app/api/utils/fn-helper'
 import {
   API_LINH_MUC_THUYEN_CHUYENS_RESOURCE,
+  API_CHANGE_STATUS_LINH_MUC_THUYEN_CHUYEN
 } from 'store@admin/types/api-paths'
 
 /**
@@ -143,3 +144,23 @@ export const apiDeleteInfo = (infoId, resolve, errResole) => {
     })
     .catch(errors => errResole(errors))
 }
+
+/* CHANGE STATUS */
+export const apiChangeStatus = (info, resolve, errResole) => {
+  return axios.post(fn_get_base_api_url(API_CHANGE_STATUS_LINH_MUC_THUYEN_CHUYEN), info)
+    .then((response) => {
+      if (response.status === 200) {
+        var json = {}
+        json['data'] = response.data
+        json['status'] = 1000
+        resolve(json)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => errResole(errors)) //apiChangeStatus
+}
+

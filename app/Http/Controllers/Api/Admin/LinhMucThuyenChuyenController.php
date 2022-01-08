@@ -66,6 +66,7 @@ class LinhMucThuyenChuyenController extends ApiController
                     'ducchaName' => $info->ten_duc_cha,
                     'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"d-m-Y"):'',
                     'chucvuName' => $info->ten_to_chuc_vu,
+                    'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
                     'giaoxuName' => $info->ten_to_giao_xu,
                     'cosogpName' => $info->ten_co_so,
                     'dongName' => $info->ten_dong,
@@ -74,7 +75,8 @@ class LinhMucThuyenChuyenController extends ApiController
                     'quoc_gia' => $info->quoc_gia,
                     'ghi_chu' => $info->ghi_chu,
                     'active' => $info->active,
-                    'active_text' => $info->active?'Xảy ra':'Ẩn'
+                    'active_text' => $info->active?'Xảy ra':'Ẩn',
+                    'chucvu_active' => $info->chuc_vu_active
                 ];
             }
 
@@ -210,4 +212,12 @@ class LinhMucThuyenChuyenController extends ApiController
 
         return $this->respondBadRequest();
     }
+
+    public function changeStatus(Request $request) {
+        $formData = $request->all();
+        if ($result = $this->thuyenChuyenSv->apiChangeStatus($formData)) {
+            return $this->respondUpdated($result);
+        }
+        return $this->respondBadRequest();
+      }
 }
