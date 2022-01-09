@@ -18,16 +18,17 @@
     <td class="text-left">{{ info.ducchaName }}</td>
     <td class="text-left">
       <a :href="info.giao_xu_url">{{ info.giaoxuName }}</a>
-      </td>
+    </td>
     <td class="text-left">{{ info.label_to_date }}</td>
     <td class="text-left">
       {{ info.chucvuName }}
-      <button @click="changeStatus">
+    </td>
+    <td class="text-left">
+      <div @click="changeStatus" style="cursor: pointer;">
         <i v-if="info.chucvu_active == 1" class="fa fa-check-circle btn_blue"></i>
         <i v-else class="fa fa-minus-circle btn_red"></i>
-      </button>
+      </div>
     </td>
-    <td class="text-center">{{ info.ghi_chu }}</td>
     <td class="text-right">
       <a
         href="javascript:void(0);"
@@ -45,10 +46,6 @@
 <script>
 import { mapState, mapActions} from 'vuex'
 import BtnDelete from './TheBtnDelete'
-import {
-  fn_get_base_url_image,
-  fn_format_dd_mm_yyyy,
-} from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_THUYEN_CHUYEN, } from 'store@admin/types/module-types'
 import { ACTION_CHANGE_STATUS, } from 'store@admin/types/action-types'
 
@@ -77,14 +74,8 @@ export default {
     ...mapActions(MODULE_MODULE_THUYEN_CHUYEN, {
       changeStatusItem: ACTION_CHANGE_STATUS,
     }),
-    _getImgUrl() {
-      return fn_get_base_url_image(this.info.image)
-    },
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from)
-    },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date)
     },
     _showModal() {
       this.$emit('show-modal-edit', this.info)

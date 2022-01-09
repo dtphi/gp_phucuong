@@ -40,8 +40,7 @@
                           Đến giáo xứ
                         </th>
                         <th style="width: 200px" class="text-left">Đến ngày</th>
-                        <th style="width: 100px" class="text-left">Chức vụ</th>
-                        <th>Ghi chú</th>
+                        <th style="width: 200px" class="text-left" colspan="2">Chức vụ</th>
                         <th style="width: 100px" class="text-right">Action</th>
                       </tr>
                     </thead>
