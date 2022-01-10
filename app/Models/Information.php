@@ -228,9 +228,17 @@ class Information extends BaseModel
      */
     public function getTagAttribute($value)
     {
+        $arrTags = [];
         $value = ($this->infoDes) ? $this->infoDes->tag : '';
+        if (!empty($value)) {
+            $collection = Tag::whereIn('id', explode('|', $value))
+                ->get();
+            foreach ($collection as $tag) {
+                $arrTags[] = $tag->name;
+            }
+        }
 
-        return $value;
+        return implode(',', $arrTags);
     }
 
     /**

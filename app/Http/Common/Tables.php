@@ -32,6 +32,7 @@ final class Tables
     public static $information_carousel = DB_PREFIX . 'information_corousels';
 
     public static $settings = DB_PREFIX . 'settings';
+    public static $tags = DB_PREFIX . 'tags';
 
     public static $linhmucs = DB_PREFIX . 'linhmucs';
     public static $linhmuc_bangcaps = DB_PREFIX . 'linhmuc_bangcaps';
