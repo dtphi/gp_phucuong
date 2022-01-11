@@ -5,6 +5,7 @@ namespace App\Models;
 use DB;
 use App\Models\GiaoHat;
 use App\Http\Common\Tables;
+use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucThuyenChuyenModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -24,8 +25,12 @@ class GiaoXu extends BaseModel
 
   public function linhmucs()
 	{
-		return $this->hasMany(LinhMuc::class, 'giao_xu_id');
+		  return $this->hasMany(LinhMuc::class, 'giao_xu_id');
 	}
+
+  public function linhmucthuyenchuyens() {
+      return $this->hasMany(LinhMucThuyenChuyen::class, 'giao_xu_id');
+  }
 
 
   /**

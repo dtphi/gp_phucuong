@@ -61,6 +61,9 @@
                               <span
                                 >Giờ lễ: <span v-html="info.gio_le"></span
                               ></span>
+                              <span v-for="(info_linhmuc, idx) in info.duong_nhiem" :key="idx + '*'">
+                                  <a :href="info_linhmuc.hrefLinhMuc">{{info_linhmuc.chuc_vu}} - {{info_linhmuc.ten_duong_nhiem}}</a>
+                              </span>
                               <span>Địa chỉ: {{ info.dia_chi }}</span>
                               <span>Email: {{ info.email }}</span>
                             </div>
@@ -170,6 +173,9 @@
                                   <span
                                     >Giờ lễ: <span v-html="info.gio_le"></span
                                   ></span>
+                                  <span v-for="(info_linhmuc, idx) in info.duong_nhiem" :key="idx + '#'">
+                                    <a :href="info_linhmuc.hrefLinhMuc">{{info_linhmuc.chuc_vu}} - {{info_linhmuc.ten_duong_nhiem}}</a>
+                                  </span>
                                   <span>Địa chỉ: {{ info.dia_chi }}</span>
                                   <span>Email: {{ info.email }}</span>
                                 </div>

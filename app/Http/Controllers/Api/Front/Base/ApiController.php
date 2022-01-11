@@ -529,6 +529,14 @@ class ApiController extends Controller
 			$pagination = $this->_getTextPagination($collections);
 
 			foreach ($collections as $key => $info) {
+				$duong_nhiem = [];
+				foreach($info->linhmucthuyenchuyens as $key => $value) {
+					$duong_nhiem[] = [
+						'ten_duong_nhiem' => $value->linhMuc->ten,
+						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
+						'chuc_vu' => $value->chucVu->name,
+					];
+				}
 				$results[] = [
 					'id' => (int) $info->id,
 					'name' => $info->name,
@@ -540,9 +548,9 @@ class ApiController extends Controller
 					'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
 					'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
 					'dan_so' => $info->dan_so ?? "Chưa cập nhật",
+					'duong_nhiem' => $duong_nhiem
 				];
 			}
-
 			$json = [
 				'data' => [
 					'results'    => $results,
@@ -574,8 +582,11 @@ class ApiController extends Controller
 		$linhMucPhoXu = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
 		$arrLmIds = [];
 		foreach ($linhMucs as $linhMuc) {
+			$url_linhmuc = url('linh-muc/chi-tiet/' . $linhMuc->linh_muc_id);
+			$from = \Carbon\Carbon::parse($linhMuc->from_date)->year ?? $emptyStr;
+			$to = \Carbon\Carbon::parse($linhMuc->to_date)->year ?? $emptyStr;
 			if (!in_array($linhMuc->linh_muc_id, $arrLmIds)) {
-				$linhMucTienNhiem[] = $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc;
+				$linhMucTienNhiem[] = '<a style="color: black !important;cursor:pointer" href="'. $url_linhmuc .'">' . $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc . ' (' . $from . '-' . $to . ')</a>';
 			}
 			array_push($arrLmIds, $linhMuc->linh_muc_id);
 		}
@@ -611,15 +622,16 @@ class ApiController extends Controller
 				'dia_chi' => html_entity_decode($info->dia_chi) ?? $emptyStr,
 				'dien_thoai' => $info->dien_thoai ?? $emptyStr,
 				'email' => $info->email ?? $emptyStr,
-				'linh_muc_tien_nhiem' => implode('<br>',$linhMucTienNhiem),
+				'linh_muc_tien_nhiem' => implode('<br>', $linhMucTienNhiem),
 				'chanh_xu' => $nameChanhXu,
 				'img_chanh_xu' => $imgChanhXu,
 				'pho_xu' => $namePhoXu,
 				'img_pho_xu' => $imgPhoXu,
 				'ngay_thanh_lap' => !empty($info->ngay_thanh_lap) ? $info->ngay_thanh_lap : $emptyStr,
-				'bon_mang' => $emptyStr
+
 			];
 		}
+		// dd($json, 'json');
 		return $json;
 	}
 
@@ -818,26 +830,59 @@ class ApiController extends Controller
       if ($request->input('page')) {
         $page = $request->input('page');
       }
-
       try {
         $results = [];
-        $collections = $this->sv->apiGetListGiaoXu($request);
+        $collections = $this->sv->apiGetListGiaoXu($request, $limit = 5);
         $pagination = $this->_getTextPagination($collections);
-
-        foreach ($collections as $key => $info) {     
-            $results[] = [
-              'id' => (int) $info->id,
-              'name' => $info->name,
-              'hrefDetail' => url('giao-xu/chi-tiet/' . $info->id),
-              'image'	=> !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
-              'gio_le' => html_entity_decode($info->gio_le) ?? "Chưa cập nhật",
-              'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
-              'email' => $info->email ?? "Chưa cập nhật",
-              'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
-              'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
-              'dan_so' => $info->dan_so ?? "Chưa cập nhật",
-            ];
-        } 
+		if($request->input('query') == null) {
+			foreach($collections as $key => $info) {
+				$duong_nhiem = [];
+				foreach($info->giaoXu->linhmucthuyenchuyens as $key => $value) {
+					$duong_nhiem[] = [
+						'ten_duong_nhiem' => $value->linhMuc->ten,
+						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
+						'chuc_vu' => $value->chucVu->name,
+					];
+				}
+				$results[] = [
+					'id' => (int) $info->giaoXu->id,
+					'name' => $info->giaoXu->name,
+					'hrefDetail' => url('giao-xu/chi-tiet/' . $info->giaoXu->id),
+					'image'	=> !empty($info->giaoXu->image) ? url($info->giaoXu->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+					'gio_le' => html_entity_decode($info->giaoXu->gio_le) ?? "Chưa cập nhật",
+					'dia_chi' => html_entity_decode($info->giaoXu->dia_chi) ?? "Chưa cập nhật",
+					'email' => $info->giaoXu->email ?? "Chưa cập nhật",
+					'dien_thoai' => $info->giaoXu->dien_thoai ?? "Chưa cập nhật",
+					'so_tin_huu' => $info->giaoXu->so_tin_huu ?? "Chưa cập nhật",
+					'dan_so' => $info->giaoXu->dan_so ?? "Chưa cập nhật",
+					'duong_nhiem' => $duong_nhiem
+				];
+			}
+		} else {
+			foreach ($collections as $key => $info) {
+				$duong_nhiem = [];
+				foreach($info->linhmucthuyenchuyens as $key => $value) {
+					$duong_nhiem[] = [
+						'ten_duong_nhiem' => $value->linhMuc->ten,
+						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
+						'chuc_vu' => $value->chucVu->name,
+					];
+				}
+				$results[] = [
+					'id' => (int) $info->id,
+					'name' => $info->name,
+					'hrefDetail' => url('giao-xu/chi-tiet/' . $info->id),
+					'image'	=> !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+					'gio_le' => html_entity_decode($info->gio_le) ?? "Chưa cập nhật",
+					'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
+					'email' => $info->email ?? "Chưa cập nhật",
+					'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
+					'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
+					'dan_so' => $info->dan_so ?? "Chưa cập nhật",
+					'duong_nhiem' => $duong_nhiem
+				];
+			}
+		}
         $json = [
           'data' => [
             'results'    => $results,
