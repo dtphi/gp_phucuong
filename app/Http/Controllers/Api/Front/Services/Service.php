@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Front\Services;
 
 use DB;
 use App\Models\Thanh;
+use App\Models\ChucVu;
 use App\Models\GiaoXu;
 use App\Models\GiaoHat;
 use App\Models\Linhmuc;
@@ -12,13 +13,13 @@ use App\Models\GiaoPhan;
 use App\Http\Common\Tables;
 use App\Models\GiaoPhanHat;
 use App\Models\Information;
+use App\Models\GiaoPhanHatXu;
 use App\Models\LinhmucVanthu;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
 use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
-use App\Models\ChucVu;
 
 class Service implements BaseModel
 {
@@ -39,10 +40,11 @@ class Service implements BaseModel
 		$this->modelGiaoXu   = new GiaoXu();
 		$this->modelLinhMuc = new Linhmuc();
 		$this->modelLinhMucChucThanh = new LinhMucChucThanh();
-    $this->modelGiaoPhan = new GiaoPhan();
-    $this->modelGiaoHat = new GiaoHat();
-    $this->modelChucVu = new ChucVu();
-    $this->modelLinhMucThuyenChuyen = new LinhmucThuyenchuyen();
+		$this->modelGiaoPhan = new GiaoPhan();
+		$this->modelGiaoHat = new GiaoHat();
+		$this->modelChucVu = new ChucVu();
+		$this->modelLinhMucThuyenChuyen = new LinhmucThuyenchuyen();
+		$this->modelPhanHatXu = new GiaoPhanHatXu();
 	}
 
 	/**
@@ -192,11 +194,11 @@ class Service implements BaseModel
 
 	public function apiGetGiaoXuList($data = array(), $limit = 5)
 	{
-		$query = $this->modelGiaoXu->select()
-		->where('type', 'giaoxu')
-		->orderByDesc('id');
-    
-    return $query->paginate($limit);
+		$query = $this->modelGiaoXu->with(['linhmucthuyenchuyens' => function($q) { 
+			$q->where('chuc_vu_active', 1)->select('linh_muc_id', 'chuc_vu_id','giao_xu_id')->with('linhMuc', 'chucVu')->orderBy('chuc_vu_id', 'asc');
+		}]);
+
+		return $query->paginate($limit);
 	}
 
 	public function apiGetDetailGiaoXu($id) 
@@ -207,7 +209,7 @@ class Service implements BaseModel
 	public function apiGetLinhMucListByGiaoXuId($giaoXuId = null)
 	{
 		$linhMucs = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
-		->get();
+		->orderBy('from_date', 'asc')->get();
 
 		return $linhMucs;
 	}
@@ -384,6 +386,7 @@ class Service implements BaseModel
 	}
 
   public function apiGetListGiaoHat($params) { // List Giao Hat apiGetListGiaoXu
+
       if($params != -1){
           $id_giaophan = $this->modelGiaoPhan->find($params);
           $giao_hats = $id_giaophan->hats->load('giaohats');
@@ -394,19 +397,27 @@ class Service implements BaseModel
       return $giao_hats;
   }
 
-  public function apiGetListGiaoXu($request) { // List Giao Xu By Id
+  public function apiGetListGiaoXu($request, $limit = 5) { // List Giao Xu By Id
       if($request->input('params') == null) {
-          $list_giaoxu = $this->modelGiaoXu->where('type', 'giaoxu')->query()->name($request)->paginate(5);
+          $list_giaoxu = $this->modelGiaoXu->where('type', 'giaoxu')->name($request)->with(['linhmucthuyenchuyens' => function($q) {
+			$q->where('chuc_vu_active', 1)->select('linh_muc_id', 'chuc_vu_id','giao_xu_id')->with('linhMuc', 'chucVu')->orderBy('chuc_vu_id', 'asc');
+		  }]);
+
       } else if ($request->input('query') == null) {
-          $list_giaoxu = $this->modelGiaoXu->where('type', 'giaoxu')->where('giao_hat_id', $request->input())->paginate(5);
+		    $list_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', 1)->with(['giaoXu.linhmucthuyenchuyens' => function($q) {
+			  $q->where('chuc_vu_active', 1)->select('linh_muc_id', 'chuc_vu_id','giao_xu_id')->with('linhMuc', 'chucVu')->orderBy('chuc_vu_id', 'asc');
+		  }]);
+
       } else {
-          $list_giaoxu_query = $this->modelGiaoXu->where('type', 'giaoxu')->query()->name($request)->orderBy('id', 'ASC')->pluck('id')->toArray();
-          $list_giaoxu_params = $this->modelGiaoXu->where('type', 'giaoxu')->where('giao_hat_id', $request->input('params'))->pluck('id')->toArray();
+          $list_giaoxu_query = $this->modelGiaoXu->where('type', 'giaoxu')->name($request)->orderBy('id', 'ASC')->pluck('id')->toArray();
+        	$list_giaoxu_params = $this->modelPhanHatXu->where('giao_hat_id', $request->input('params'))->pluck('giao_xu_id')->toArray();
           $list_giaoxu_merge = array_unique(array_merge($list_giaoxu_query, $list_giaoxu_params));
-          $list_giaoxu = $this->modelGiaoXu->select()->whereIn('id', $list_giaoxu_merge)->orderBy('id', 'ASC')->paginate(5);
+
+          $list_giaoxu = $this->modelGiaoXu->select()->whereIn('id', $list_giaoxu_merge)->orderBy('id', 'ASC')->with(['linhmucthuyenchuyens' => function($q){
+            $q->where('chuc_vu_active', 1)->select('linh_muc_id', 'chuc_vu_id','giao_xu_id')->with('linhMuc', 'chucVu')->orderBy('chuc_vu_id', 'asc');
+          }]);
       }
-      
-      return $list_giaoxu;
+      return $list_giaoxu->paginate($limit);
   }
 
   public function apiGetListChucVu() { // List Giao Phan
