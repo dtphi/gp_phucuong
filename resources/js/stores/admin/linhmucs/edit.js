@@ -60,10 +60,13 @@ const defaultState = () => {
       password: '',
       sort_id: 0,
       active: 1,
+      bo_nhiem: null,
       bang_caps: [],
       chuc_thanhs: [],
       thuyen_chuyens: [],
       van_thus: [],
+      bo_nhiems: [],
+      action: '',
     },
     thuyenChuyen: null,
     isImgChange: true,
@@ -166,6 +169,14 @@ export default {
     },
     update_bang_cap(state, payload) {
       state.info.bang_caps.push(payload)
+    },
+    update_bo_nhiem(state, payload) {
+      state.info.bo_nhiem = payload
+      state.info.action = 'add.bo.nhiem'
+    },
+    update_bo_nhiem_remove(state, payload) {
+      state.info.bo_nhiem = payload
+      state.info.action = 'remove.bo.nhiem'
     },
     update_bang_cap_remove(state, payload) {
       state.info.bang_caps = payload
@@ -493,6 +504,21 @@ export default {
           return isCheck
         })
       })
+    },
+    async addBoNhiem({ commit, dispatch, state, }, boNhiem) {
+      await commit('update_bo_nhiem', {
+        id: uuidv4(),
+        ...boNhiem.data,
+      })
+      dispatch(ACTION_INSERT_INFO, state.info)
+    },
+    async removeBoNhiem({ commit, dispatch, state, }, params) {
+      const data = params.item
+      await commit(
+        'update_bo_nhiem_remove',
+        data
+      )
+      dispatch(ACTION_INSERT_INFO, state.info)
     },
     ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH(
       { commit, },

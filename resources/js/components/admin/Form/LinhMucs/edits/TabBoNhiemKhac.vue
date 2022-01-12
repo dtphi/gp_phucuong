@@ -19,7 +19,6 @@
 import InfoList from './BoNhiemKhacs/InfoList'
 import BtnAdd from './BoNhiemKhacs/BtnAdd'
 import ModalBoNhiemKhac from './Modals/TheModalBoNhiemKhac'
-
 export default {
   name: 'TabBoNhiemKhacForm',
   components: {

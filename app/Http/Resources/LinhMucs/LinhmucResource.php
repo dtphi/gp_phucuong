@@ -43,7 +43,8 @@ class LinhmucResource extends JsonResource
                 'bang_caps'                  => $res->arr_bang_cap_list,
                 'chuc_thanhs'                => $res->arr_chuc_thanh_list,
                 'thuyen_chuyens'             => $res->arr_thuyen_chuyen_list,
-                'van_thus'                   => $res->arr_van_thu_list
+                'van_thus'                   => $res->arr_van_thu_list,
+                'bo_nhiems'                  => $res->arr_bo_nhiem_list
             ]);
         }
 
