@@ -77,6 +77,10 @@ class NewsController extends Controller
         if ($request->query('renderType')) {
             $params['renderType'] = $request->query('renderType');
         }
+        $params['news_group_type'] = '';
+        if ($request->query('news_group_type')) {
+            $params['news_group_type'] = $request->query('news_group_type');
+        }
 
         $widthThumbInfoList  = 184;
         $heightThumbInfoList = 120;

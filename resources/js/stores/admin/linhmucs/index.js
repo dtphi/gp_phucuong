@@ -30,6 +30,7 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
 } from '../types/action-types'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
+import { config, } from '@app/common/config'
 import { fnCheckProp, } from '@app/common/util'
 
 const defaultState = () => {
@@ -314,7 +315,9 @@ export default {
     MODULE_LINH_MUC_ACTION_RELOAD_INFO_LIST: {
       root: true,
       handler() {
-        return fn_redirect_url('admin/linh-mucs')
+        return fn_redirect_url(
+          `/${config.adminPrefix}/linh-mucs`
+        )
       },
     },
     [ACTION_SET_LOADING]({ commit, }, isLoading) {

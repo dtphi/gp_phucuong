@@ -64,6 +64,7 @@ const defaultState = () => {
       chuc_thanhs: [],
       thuyen_chuyens: [],
       van_thus: [],
+      bo_nhiems: [],
     },
     isImgChange: true,
     loading: false,
@@ -151,6 +152,12 @@ export default {
     update_thuyen_chuyen_remove(state, payload) {
       state.info.thuyen_chuyens = payload
     },
+    update_bo_nhiem(state, payload) {
+      state.info.bo_nhiems.push(payload)
+    },
+    update_bo_nhiem_remove(state, payload) {
+      state.info.bo_nhiems = payload
+    },
     update_van_thu(state, payload) {
       state.info.van_thus.push(payload)
     },
@@ -219,7 +226,7 @@ export default {
     ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST({ commit, }, params) {
       commit('INFO_UPDATE_DROPDOWN_TEN_THANH_LIST', params)
     },
-    addBangCaps({ state, commit, }) {
+    addBangCaps({ commit, }) {
       commit('update_bang_cap', {
         id: uuidv4(),
         name: '',
@@ -238,7 +245,7 @@ export default {
         })
       )
     },
-    addChucThanhs({ commit, state, }) {
+    addChucThanhs({ commit, }) {
       commit('update_chuc_thanh', {
         id: uuidv4(),
         chuc_thanh_id: 1,
@@ -259,7 +266,7 @@ export default {
         })
       )
     },
-    addVanThus({ commit, state, }) {
+    addVanThus({ commit, }) {
       commit('update_van_thu', {
         id: uuidv4(),
         parent_id: 0,
@@ -313,6 +320,22 @@ export default {
       commit(
         'update_thuyen_chuyen_remove',
         _.remove(thuyenChuyens, (item) => {
+          return !(item.id == data.id)
+        })
+      )
+    },
+    addBoNhiem({ commit, }, boNhiem) {
+      commit('update_bo_nhiem', {
+        id: uuidv4(),
+        ...boNhiem.data,
+      })
+    },
+    removeBoNhiem({ commit, state, }, params) {
+      let boNhiems = state.info.bo_nhiems
+      const data = params.item
+      commit(
+        'update_bo_nhiem_remove',
+        _.remove(boNhiems, (item) => {
           return !(item.id == data.id)
         })
       )
@@ -388,7 +411,7 @@ export default {
               INFOS_MODAL_INSERT_INFO_SUCCESS,
               AppConfig.comInsertNoSuccess
             )
-            dispatch('ACTION_RELOAD_INFO_LIST', 'page', {
+            dispatch('MODULE_LINH_MUC_ACTION_RELOAD_INFO_LIST', 'page', {
               root: true,
             })
           }

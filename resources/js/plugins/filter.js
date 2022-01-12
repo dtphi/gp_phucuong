@@ -2,6 +2,7 @@ import Vue from 'vue'
 import AppConfig from '@app/api/admin/constants/app-config'
 import clonedeep from 'lodash/cloneDeep'
 import moment from 'moment'
+import _ from 'lodash'
 
 /**
  * Global prototype vuejs
@@ -28,7 +29,12 @@ const helper = {
     }
     
     return ''
-  }
+  },
+  fn_split_date_time: (strDate) => {
+    if (strDate.length) {
+      return _.split(strDate, '-')
+    }
+  },
 }
 Vue.prototype.$helper = helper
 /**

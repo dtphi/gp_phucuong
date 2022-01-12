@@ -34,6 +34,11 @@
           $options.setting.tab_thuyen_chuyen_title
         }}</a>
       </li>
+      <li>
+        <a href="#tab-bo-nhiem-khac" data-toggle="tab">{{
+          $options.setting.tab_bo_nhiem_khac_title
+        }}</a>
+      </li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="tab-general">
@@ -82,6 +87,13 @@
           :group-data="info"
         ></tab-thuyen-chuyen>
       </div>
+      <div class="tab-pane" id="tab-bo-nhiem-khac">
+        <tab-bo-nhiem-khac
+          role="tabpanel"
+          class="tab-pane"
+          :group-data="info"
+        ></tab-bo-nhiem-khac>
+      </div>
     </div>
   </form>
 </template>
@@ -99,6 +111,7 @@ import TabBangCap from './adds/TabBangCap'
 import TabChucThanh from './adds/TabChucThanh'
 import TabVanThu from './adds/TabVanThu'
 import TabThuyenChuyen from './adds/TabThuyenChuyen'
+import TabBoNhiemKhac from './adds/TabBoNhiemKhac'
 import { fnCheckImgPath, } from '@app/common/util'
 import { config, } from '@app/common/config'
 
@@ -111,6 +124,7 @@ export default {
     TabChucThanh,
     TabVanThu,
     TabThuyenChuyen,
+    TabBoNhiemKhac,
   },
   data() {
     const mm = new MM({
@@ -159,6 +173,7 @@ export default {
     tab_chuc_thanh_title: 'Chức Thánh',
     tab_thuyen_chuyen_title: 'Thuyên Chuyển',
     tab_van_thu_title: 'Văn Thư',
+    tab_bo_nhiem_khac_title: 'Bổ Nhiệm Khác',
     error_msg_system: 'Lỗi hệ thống !',
   },
 }

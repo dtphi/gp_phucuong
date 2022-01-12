@@ -16,6 +16,7 @@ use App\Models\Dong;
 use App\Models\GiaoXu;
 use App\Models\Linhmuc;
 use App\Models\LinhmucBangcap;
+use App\Models\LinhmucBoNhiem;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
 use App\Models\LinhmucVanthu;
@@ -147,6 +148,15 @@ final class LinhMucService implements BaseModel, LinhMucModel
                 foreach ($data['van_thus'] as $vanThu) {
                     LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'],
                         $vanThu['ghi_chu']);
+                }
+            }
+
+            if (isset($data['bo_nhiems']) && !empty($data['bo_nhiems'])) {
+                foreach ($data['bo_nhiems'] as $boNhiem) {
+                    LinhmucBoNhiem::insertByLinhmucId($linhmucId, $boNhiem['chuc_vu_id'], $boNhiem['cong_viec'],
+                        $boNhiem['cong_viec_tu_ngay'], $boNhiem['cong_viec_tu_thang'], $boNhiem['cong_viec_tu_nam'],
+                        $boNhiem['cong_viec_den_ngay'], $boNhiem['cong_viec_den_thang'], $boNhiem['cong_viec_den_nam'],
+                        $boNhiem['active']);
                 }
             }
         } else {
