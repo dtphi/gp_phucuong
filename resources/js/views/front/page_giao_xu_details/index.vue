@@ -31,7 +31,7 @@
             <img style="width: 100%; margin-bottom: 15px" v-lazy="info.image" />
             <!-- Latest update -->
             <div class="row">
-              <div class="col-lg-6 col-md-12 col-xs-12">
+              <div class="col-lg-12 col-md-12 col-xs-12">
                 <vue-timeline-update
                   :date="new Date()"
                   dateString="#"
@@ -43,20 +43,22 @@
                 />
                 <vue-timeline-update
                   :date="new Date()"
+                  dateString="-"
+                  :category="`Linh mục phó xứ`"
+                  title="."
+                  :thumbnail="info.img_pho_xu"
+                  :description="`<div>${info.pho_xu}</div>`"
+                  icon="account_circle"
+                />
+                <vue-timeline-update
+                  :date="new Date()"
                   dateString="#"
                   :category="`Ngày thành lập`"
                   title="."
                   :description="$helper.fn_format_dd_mm_yyyy(info.ngay_thanh_lap)"
                   icon="home"
                 />
-                <vue-timeline-update
-                  :date="new Date()"
-                  dateString="#"
-                  :category="`Bổn mạng`"
-                  title="."
-                  :description="info.bon_mang"
-                  icon="accessibility"
-                />
+                
                 <vue-timeline-update
                   :date="new Date()"
                   dateString="#"
@@ -107,15 +109,6 @@
                 />
               </div>
               <div class="col-lg-6 col-md-12 col-xs-12">
-                <vue-timeline-update
-                  :date="new Date()"
-                  dateString="-"
-                  :category="`Linh mục phó xứ`"
-                  title="."
-                  :thumbnail="info.img_pho_xu"
-                  :description="`<div>${info.pho_xu}</div>`"
-                  icon="account_circle"
-                />
                 <vue-timeline-update
                   :date="new Date()"
                   dateString="-"
