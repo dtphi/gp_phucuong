@@ -101,7 +101,47 @@ final class LinhMucService implements BaseModel, LinhMucModel
     public function apiGetLinhmucs($data = array(), $limit = 15)
     {
         $query = $this->model->select()
-            ->orderBy('id', 'DESC');
+            ->orderByDesc('updated_at');
+
+        if (!empty($data['s_name'])) {
+            $name = '%' . $data['s_name'] . '%';
+            $query->where('ten', 'like', $name);
+        }
+        if (!empty($data['s_phone'])) {
+            $phone = '%' . $data['s_phone'] . '%';
+            $query->where('phone', 'like', $phone);
+        }
+        if (!empty($data['s_ngay_sinh'])) {
+            $arrNs = explode('-', $data['s_ngay_sinh']);
+            $ngaySinh = '%' . $arrNs[2] . '-' . $arrNs[1] . '-' . $arrNs[0] . '%';
+            $query->where('ngay_thang_nam_sinh', 'like', $ngaySinh);
+        }
+        if (!empty($data['s_email'])) {
+            $email = '%' . $data['s_email'] . '%';
+            $query->where('email', 'like', $email);
+        }
+        if (!empty($data['s_noi_sinh'])) {
+            $noiSinh = '%' . $data['s_noi_sinh'] . '%';
+            $query->where('noi_sinh', 'like', $noiSinh);
+        }
+        if (!empty($data['s_noi_rua_toi'])) {
+            $noiRuaToi = '%' . $data['s_noi_rua_toi'] . '%';
+            $query->where('noi_rua_toi', 'like', $noiRuaToi);
+        }
+        if (!empty($data['s_noi_them_suc'])) {
+            $noiThemSuc = '%' . $data['s_noi_them_suc'] . '%';
+            $query->where('noi_them_suc', 'like', $noiThemSuc);
+        }
+        if (!empty($data['s_cmnd'])) {
+            $cmnd = '%' . $data['s_cmnd'] . '%';
+            $query->where('so_cmnd', 'like', $cmnd);
+        }
+        if (!is_null($data['s_trieu_dong']) && $data['s_trieu_dong'] >= 0) {
+            $query->where('trieu_dong', $data['s_trieu_dong']);
+        }
+        if (!is_null($data['s_active']) && $data['s_active'] >= 0) {
+            $query->where('active', $data['s_active']);
+        }
 
         return $query;
     }

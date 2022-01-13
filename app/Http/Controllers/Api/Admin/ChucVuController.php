@@ -49,7 +49,7 @@ class ChucVuController extends ApiController
         }
         $data['s_name'] = $request->query('name');
         $data['s_type_giao_xu'] = $request->query('type_giao_xu');
-        $data['s_active'] = ($request->query('active') >= 0) ? $request->query('active') : -1;
+        $data['s_active'] = $request->query('active');
 
         try {
             $limit       = $this->_getPerPage();

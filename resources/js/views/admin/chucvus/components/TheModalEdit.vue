@@ -179,7 +179,6 @@ export default {
     },
     async _submitUpdate() {
       await this[ACTION_UPDATE_INFO](this.info)
-      this.ACTION_RESET_INFO_ITEM()
     },
     _notificationUpdate(notification) {
       if (notification.type == 'success') {

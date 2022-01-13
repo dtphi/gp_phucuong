@@ -66,15 +66,23 @@ class LinhMucController extends ApiController
         if ($request->query('page')) {
             $page = $request->query('page');
         }
+        $data['s_name'] = $request->query('name');
+        $data['s_phone'] = $request->query('phone');
+        $data['s_email'] = $request->query('email');
+        $data['s_ngay_sinh'] = $request->query('ngay_sinh');
+        $data['s_trieu_dong'] = $request->query('trieu_dong');
+        $data['s_noi_sinh'] = $request->query('noi_sinh');
+        $data['s_noi_rua_toi'] = $request->query('noi_rua_toi');
+        $data['s_noi_them_suc'] = $request->query('noi_them_suc');
+        $data['s_cmnd'] = $request->query('cmnd');
+        $data['s_active'] = $request->query('active');
+
         try {
             $limit       = $this->_getPerPage();
             $collections = $this->linhMucSv->apiGetList($data, $limit);
           
             $pagination  = $this->_getTextPagination($collections);
             $results     = [];
-          
-            
-
             
             foreach ($collections as $key => $info) {
                 $staticImgThum = self::$thumImgNo;

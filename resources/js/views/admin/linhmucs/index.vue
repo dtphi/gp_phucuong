@@ -7,6 +7,56 @@
           <h3 class="panel-title">
             <i class="fa fa-list"></i> {{ $options.setting.list_title }}
           </h3>
+          <div class="row cms-panel-search">
+            <div class="col-sm-2">
+              <input class="form-control" type="text" placeholder="Tên linh mục" v-model="searchs.name"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" type="text" placeholder="Phone" v-model="searchs.phone"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" type="text" placeholder="Email" v-model="searchs.email"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" type="text" placeholder="Ngày sinh" v-model="searchs.ngay_sinh"/>
+            </div>
+            <div class="col-sm-2">
+              <select class="form-control" v-model="searchs.trieu_dong">
+                <option value="-1"></option>
+                <option
+                  :value="idx"
+                  v-for="(item, idx) in $cmsCfg.trieuDongs"
+                  :key="idx"
+                >
+                  {{ item }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-2 text-right">
+              <button class="btn btn-primary" @click="_searchList"><i class="fa fa-search"></i>Tìm kiếm</button>
+            </div>
+          </div>
+          <div class="row cms-panel-search">
+            <div class="col-sm-2">
+              <input class="form-control" type="text" placeholder="Nơi sinh" v-model="searchs.noi_sinh"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" type="text" placeholder="Nơi rửa tội" v-model="searchs.noi_rua_toi"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" type="text" placeholder="Nơi thêm sức" v-model="searchs.noi_them_suc"/>
+            </div>
+            <div class="col-sm-2">
+              <input class="form-control" type="text" placeholder="Số Cmnd" v-model="searchs.cmnd"/>
+            </div>
+            <div class="col-sm-2">
+              <select class="form-control" v-model="searchs.active">
+                <option value="-1"></option>
+                <option value="1" >Xảy ra</option>
+                <option value="0" >Ẩn</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div class="panel-body">
           <div id="form-category">
@@ -87,6 +137,18 @@ export default {
     return {
       fullPage: false,
       isResource: false,
+      searchs: {
+        name: '',
+        phone: '',
+        email: '',
+        ngay_sinh: '',
+        trieu_dong: -1,
+        noi_sinh: '',
+        noi_rua_toi: '',
+        noi_them_suc: '',
+        cmnd: '',
+        active: -1,
+      }
     }
   },
   watch: {
@@ -98,7 +160,7 @@ export default {
   },
   computed: {
     ...mapState({
-      perPage: state => state.cfApp.perPage,
+      rootData: (state) => state.cfApp,
     }),
     ...mapGetters(['isNotEmptyList']),
     ...mapState(MODULE_MODULE_LINH_MUC, ['infos', 'loading', 'updateSuccess']),
@@ -123,10 +185,18 @@ export default {
       this.$notify(notification)
       this.resetNotification()
     },
+    _searchList() {
+      const params = {
+        ...this.searchs,
+        perPage: this.rootData.perPage,
+      }
+      this.$store.dispatch('updateSearch', params)
+      this.getInfoList(params)
+    }
   },
   mounted() {
     const params = {
-      perPage: this.perPage,
+      perPage: this.rootData.perPage,
     }
     this.getInfoList(params)
   },
@@ -135,3 +205,9 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+.cms-panel-search {
+  margin-bottom: 5px;
+}
+</style>
