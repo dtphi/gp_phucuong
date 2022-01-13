@@ -19,7 +19,7 @@ export const apiGetInfoById = (infoId, resolve, errResole) => {
     .then((response) => {
       if (response.status === 200) {
         var json = {}
-        json['data'] = response.data.information
+        json['data'] = response.data.chuc_vu
         json['status'] = 1000
         resolve(json)
       } else {

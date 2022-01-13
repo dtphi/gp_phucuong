@@ -11,12 +11,9 @@
     </td>
     <td class="text-left">{{ info.name }}</td>
     <td>
-      <div v-html="info.type_giao_xu"></div>
+      {{ $cmsCfg.loaiChucVus[info.type_giao_xu] }}
     </td>
     <td class="text-center">{{ info.sort_id }}</td>
-    <td class="text-left">
-      <div v-html="info.vtbn"></div>
-    </td>
     <td class="text-center">{{ info.active_text }}</td>
     <td class="text-right">
       <a
@@ -33,7 +30,7 @@
 </template>
 
 <script>
-import { mapState, } from 'vuex'
+import { mapActions, mapState, } from 'vuex'
 import BtnDelete from './TheBtnDelete'
 import {
   fn_get_base_url_image,
@@ -41,8 +38,8 @@ import {
 } from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_CHUC_VU_EDIT, } from 'store@admin/types/module-types'
 import {
-  INFOS_MODAL_SET_INFO,
-} from 'store@admin/types/mutation-types'
+  ACTION_GET_INFO_BY_ID,
+} from 'store@admin/types/action-types'
 
 export default {
   name: 'TheItem',
@@ -66,6 +63,7 @@ export default {
     }),
   },
   methods: {
+    ...mapActions(MODULE_MODULE_CHUC_VU_EDIT, [ACTION_GET_INFO_BY_ID]),
     _getImgUrl() {
       return fn_get_base_url_image(this.info.image)
     },
@@ -75,11 +73,11 @@ export default {
     _formatDate(date) {
       return fn_format_dd_mm_yyyy(date)
     },
-    _showModal() {
+    async _showModal() {
       if (this.info?.id) {
-        this.$emit('show-modal-edit', this.info)
+        await this[ACTION_GET_INFO_BY_ID](this.info.id)
+        this.$emit('show-modal-edit')
       }
-      this.$store.commit(`${MODULE_MODULE_CHUC_VU_EDIT}/${INFOS_MODAL_SET_INFO}`, this.info)
     },
   },
 }

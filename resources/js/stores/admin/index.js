@@ -63,6 +63,7 @@ const defaultState = () => {
       to: 0,
       total: 0,
     },
+    searchs: {}
   }
 }
 
@@ -132,6 +133,9 @@ export default new Vuex.Store({
         state.cfApp.collectionData = configs.collectionData
       }
     },
+    updateSearchData(state, payload) {
+      state.cfApp.searchs = payload
+    },
   },
   actions: {
     setConfigApp({
@@ -153,6 +157,9 @@ export default new Vuex.Store({
       }
 
       commit('configApp', _configs)
+    },
+    updateSearch({ commit, }, searchs) {
+      commit('updateSearchData', searchs)
     },
   },
   modules: {

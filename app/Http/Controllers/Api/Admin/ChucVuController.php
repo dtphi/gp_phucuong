@@ -47,6 +47,10 @@ class ChucVuController extends ApiController
         if ($request->query('page')) {
             $page = $request->query('page');
         }
+        $data['s_name'] = $request->query('name');
+        $data['s_type_giao_xu'] = $request->query('type_giao_xu');
+        $data['s_active'] = ($request->query('active') >= 0) ? $request->query('active') : -1;
+
         try {
             $limit       = $this->_getPerPage();
             $collections = $this->thanhSv->apiGetList($data, $limit);
@@ -160,7 +164,7 @@ class ChucVuController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->thanhSv->apiInsert($formData)) {
+        if ($result = $this->thanhSv->apiInsertOrUpdate($formData)) {
             return $this->respondUpdated($result);
         }
 

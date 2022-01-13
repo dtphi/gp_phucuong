@@ -3,7 +3,9 @@ import AppConfig from '@app/api/admin/constants/app-config'
 import clonedeep from 'lodash/cloneDeep'
 import moment from 'moment'
 import _ from 'lodash'
+import { config, } from '@app/common/config'
 
+Vue.prototype.$cmsCfg = config
 /**
  * Global prototype vuejs
  */

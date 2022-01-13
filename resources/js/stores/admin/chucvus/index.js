@@ -143,33 +143,24 @@ export default {
       dispatch(ACTION_SET_LOADING, false)
     },
 
-    async [ACTION_DELETE_INFO_BY_ID]({ state, dispatch, commit, }, infoId) {
-      let getId = null
-      if (typeof state.infoDelete === 'object') {
-        if (fnCheckProp(state.infoDelete, 'information_id')) {
-          getId = parseInt(state.infoDelete.information_id)
-        }
-      }
+    async [ACTION_DELETE_INFO_BY_ID]({ dispatch, commit, }, infoId) {
       const deleteId = parseInt(infoId)
-
-      if (getId === deleteId) {
-        await apiDeleteInfo(
-          deleteId,
-          (infos) => {
-            if (infos) {
-              commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
-              dispatch(ACTION_GET_INFO_LIST)
-              commit(INFOS_INFO_DELETE_BY_ID, null)
-            }
-          },
-          (errors) => {
-            commit(INFOS_DELETE_INFO_BY_ID_FAILED, false)
-            if (errors) {
-              commit(SET_ERROR, errors)
-            }
+      await apiDeleteInfo(
+        deleteId,
+        (infos) => {
+          if (infos) {
+            commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
+            dispatch(ACTION_GET_INFO_LIST)
+            commit(INFOS_INFO_DELETE_BY_ID, null)
           }
-        )
-      }
+        },
+        (errors) => {
+          commit(INFOS_DELETE_INFO_BY_ID_FAILED, false)
+          if (errors) {
+            commit(SET_ERROR, errors)
+          }
+        }
+      )
     },
 
     [ACTION_SET_INFO_DELETE_BY_ID]({ commit, }, infoId) {

@@ -1,15 +1,11 @@
 <template>
-  <div class="panel panel-default" style="height: 100%; overflow: auto">
-    <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-edit"></i>Cập nhật chức vụ</h3>
-      <div slot="top-right" class="pull-right">
-        <button @click="_hideModalEdit">❌</button>
-      </div>
-    </div>
-    <div class="panel-body">
-      <form class="form-horizontal">
+  <the-modal-resizable
+    :title="$options.setting.modal_title"
+    :modal-name="$options.setting.modal_name"
+  >
+    <template #cms_modal_form_group>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label class="col-sm-2 control-label"
             >Tên chức vụ</label
           >
           <div class="col-sm-10">
@@ -21,7 +17,6 @@
               <input
                 v-model="name"
                 type="text"
-                id="input-info-name"
                 class="form-control"
               />
               <span class="cms-text-red">{{ errors[0] }}</span>
@@ -29,7 +24,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label class="col-sm-2 control-label"
             >Loại chức vụ</label
           >
           <div class="col-sm-10">
@@ -41,8 +36,8 @@
               <select class="form-control" v-model="type_giao_xu">
                 <option
                   :selected="item.type_giao_xu == idx"
-                  :value="idx ? idx : ''"
-                  v-for="(item, idx) in $options.setting.cf.loaiChucVus"
+                  :value="idx"
+                  v-for="(item, idx) in $cmsCfg.loaiChucVus"
                   :key="idx"
                 >
                   {{ item }}
@@ -53,19 +48,18 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label class="col-sm-2 control-label"
             >Sắp xếp</label
           >
           <div class="col-sm-10">
             <validation-provider
-              name="info_name"
+              name="info_sap_xep"
               rules="max:255"
               v-slot="{ errors }"
             >
               <input
                 v-model="sort_id"
                 type="number"
-                id="input-info-name"
                 class="form-control"
               />
               <span class="cms-text-red">{{ errors[0] }}</span>
@@ -73,22 +67,19 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label class="col-sm-2 control-label"
             >Văn thư bổ nhiệm</label
           >
           <div class="col-sm-10">
-            <validation-provider
-              name="info_vtbn"
-              rules="max:200"
-              v-slot="{ errors }"
-            >
-              <textarea class="form-control" v-model="vtbn"></textarea>
-              <span class="cms-text-red">{{ errors[0] }}</span>
-            </validation-provider>
+            <tinymce
+              :id="`input-van-thu-bo-nhiem-edit-${id}`"
+              :other_options="options"
+              v-model="vtbn"
+            ></tinymce>
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
+          <label class="col-sm-2 control-label"
             >Trạng thái</label
           >
           <div class="col-sm-10">
@@ -98,13 +89,11 @@
             </select>
           </div>
         </div>
-      </form>
-    </div>
-    <div class="container-fluid">
-      <div class="pull-right">
+    </template>
+    <template #cms_modal_btn_group>
         <input
           type="button"
-          value="Hủy"
+          value="Đóng"
           class="btn btn-default"
           @click="_hideModalEdit"
         />
@@ -114,9 +103,8 @@
           class="btn btn-primary"
           @click.prevent="_submitUpdate"
         />
-      </div>
-    </div>
-  </div>
+    </template>
+  </the-modal-resizable>
 </template>
 
 <script>
@@ -133,12 +121,40 @@ const { mapFields, } = createHelpers({
   getterType: `${MODULE_MODULE_CHUC_VU_EDIT}/getInfoField`,
   mutationType: `${MODULE_MODULE_CHUC_VU_EDIT}/updateInfoField`,
 })
+import TheModalResizable from 'com@admin/Modal/TheModalResizable'
+import tinymce from 'vue-tinymce-editor'
+import { fnCheckImgPath, } from '@app/common/util'
 
 export default {
   name: 'TheModalEdit',
+  components: {
+    tinymce,
+    TheModalResizable,
+  },
   data() {
+    const elFileContent = document.getElementById('media-file-manager-content')
+    const mm = new MM({
+      el: '#modal-general-info-manager',
+      api: config.mm.api,
+      onSelect: (fi) => {
+        if (typeof fi === 'object') {
+          if (fnCheckImgPath(fi)) {
+            this.fn(`/${config.dirImage}/${fi.selected.path}`, fi.selected)
+            elFileContent.style = this.$options.setting.cssDisplayNone
+          }
+        }
+      },
+    })
+    const options = config.tinymce.options((callback) => {
+      this.fn = callback
+      elFileContent.style = this.$options.setting.cssDisplay
+    })
+
     return {
       fullPage: false,
+      fn: null,
+      mm: mm,
+      options: options,
     }
   },
   computed: {
@@ -155,15 +171,15 @@ export default {
   methods: {
     ...mapActions(MODULE_MODULE_CHUC_VU_EDIT, [
       ACTION_UPDATE_INFO,
-      ACTION_RESET_NOTIFICATION_INFO
+      ACTION_RESET_NOTIFICATION_INFO,
+      'ACTION_RESET_INFO_ITEM'
     ]),
     _hideModalEdit() {
       this.$modal.hide('modal-chuc-vu-edit')
     },
-    _submitUpdate() {
-      this[ACTION_UPDATE_INFO](this.info)
-      
-      return 0
+    async _submitUpdate() {
+      await this[ACTION_UPDATE_INFO](this.info)
+      this.ACTION_RESET_INFO_ITEM()
     },
     _notificationUpdate(notification) {
       if (notification.type == 'success') {
@@ -174,8 +190,8 @@ export default {
     },
   },
   setting: {
-    cf: config,
-    list_title: 'Danh sách Linh mục',
+    modal_title: 'Thêm Chức Vụ',
+    modal_name: 'modal-chuc-vu-edit',
   },
 }
 </script>

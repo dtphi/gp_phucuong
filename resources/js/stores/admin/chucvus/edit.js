@@ -26,7 +26,7 @@ const defaultState = () => {
       vtbn: '',
       id: null,
       name: '',
-      sort_id: '',
+      sort_id: 0,
       type_giao_xu: 0,
     },
     infoId: 0,
@@ -156,6 +156,11 @@ export default {
           dispatch(ACTION_SET_LOADING, false)
         }
       )
+    },
+
+    ACTION_RESET_INFO_ITEM({ commit, }) {
+      const stateData = defaultState()
+      commit(INFOS_MODAL_SET_INFO, stateData.info)
     },
 
     [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {

@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { mapGetters, } from 'vuex'
+import { mapGetters, mapState, } from 'vuex'
 import ResourcePagination from './ResourcePagination'
 import CollectionPagination from './CollectionPagination'
 
@@ -75,6 +75,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      searchs: (state) => state.cfApp.searchs,
+    }),
     _isResource() {
       return this.isResource
     },
@@ -116,6 +119,7 @@ export default {
       const actionName =
         _self.moduleNameActive + '/' + _self.moduleActionListActive
       _self.$store.dispatch(actionName, {
+        ...this.searchs,
         perPage: _self.collectionPaginationData.per_page,
         page: page,
       })
@@ -136,6 +140,7 @@ export default {
       const actionName =
         _self.moduleNameActive + '/' + _self.moduleActionListActive
       _self.$store.dispatch(actionName, {
+        ...this.searchs,
         perPage: _self.resourcePaginationData.meta.per_page,
         page: page,
       })
