@@ -26,8 +26,12 @@
       <h1>{{ $options.setting.title }}</h1>
       <breadcrumb></breadcrumb>
       <ul class="cms-breadcrumb">
-        <li>
-          <perpage></perpage>
+        <li v-if="giaoHatLists">
+            <model-select
+              :options="giaoHatLists"
+              v-model="giaoHat"
+              placeholder="Chọn Giáo Hạt"
+            ></model-select>
         </li>
         <li>
           <list-search></list-search>
@@ -44,9 +48,9 @@ import Perpage from 'com@admin/Pagination/SelectPerpage'
 import ListSearch from 'com@admin/Search'
 import Breadcrumb from 'com@admin/Breadcrumb'
 import { MODULE_MODULE_GIAO_XU, } from 'store@admin/types/module-types'
-import { ACTION_GET_INFO_LIST, } from 'store@admin/types/action-types'
+import { ACTION_GET_INFO_LIST, ACTION_GET_INFO_BY_ID, ACTION_GET_LIST_GIAO_HAT } from 'store@admin/types/action-types'
 import { config, } from '@app/common/config'
-
+import { ModelSelect } from 'vue-search-select'
 export default {
   name: 'GiaoXuHeaderPage',
   components: {
@@ -54,21 +58,43 @@ export default {
     Perpage,
     ListSearch,
     Breadcrumb,
+    ModelSelect,
+  },
+  data() {
+    return {
+      giaoHat: '',
+      id_refresh: -1,
+    }
+  },
+  watch: {
+    giaoHat() {
+      this.getInfoList({idGiaoHat: this.giaoHat});
+    }
   },
   computed: {
     ...mapState({
       perPage: state => state.cfApp.perPage,
     }),
+    ...mapState(MODULE_MODULE_GIAO_XU, {
+      giaoHatLists: state => state.giaoHatLists,
+      idGiaoHat: state => state.idGiaoHat,
+    })
+  },
+  created() {
+    this.getListGiaoHat();
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU, {
       getInfoList: ACTION_GET_INFO_LIST,
+      getGiaoXuByGiaoHat: ACTION_GET_INFO_BY_ID,
+      getListGiaoHat: ACTION_GET_LIST_GIAO_HAT,
     }),
     _pushAddPage() {
       this.$router.push(`/${config.adminPrefix}/giao-xus/add`)
     },
     _refreshList() {
-      this.getInfoList()
+      this.giaoHat = ''
+      this.getInfoList({idGiaoHat: this.id_refresh})
     },
   },
   setting: {

@@ -56,6 +56,8 @@ export const ACTION_GET_DROPDOWN_LIST = 'getDropdownList'
 export const ACTION_INSERT_SETTING = 'insertSetting'
 export const ACTION_GET_SETTING = 'getSetting'
 export const ACTION_GET_CATEGORY_LIST_BY_IDS = 'getCategoryListByIds'
+export const ACTION_GET_LIST_GIAO_HAT = 'getListGiaoHat'
 
 export const ACTION_MODULE_UPDATE_RESET_SETTING_CATEGORY_VALUE_DATA =
     'moduleUpdateResetSettingCategoryValueData'
+

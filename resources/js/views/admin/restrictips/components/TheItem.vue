@@ -11,10 +11,8 @@
     </td>
     <td class="text-left">{{ info.ip }}</td>
     <td class="text-left">
-      <button @click="changeStatus">
-        <i v-if="info.active == 1" class="fa fa-check-circle btn_blue"></i>
-        <i v-else class="fa fa-minus-circle btn_red"></i>
-      </button>
+      <toggle-button v-if="info.active == 1" :value="switchValue" @change="changeToggleSwitch($event)"/>
+      <toggle-button v-else :value="!switchValue" @change="changeToggleSwitch($event)"/>
     </td>
     <td class="text-right">
       <btn-edit :info-id="info.id" :href-edit="info.hrefDetail"></btn-edit>
@@ -45,7 +43,9 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      switchValue: true,
+    }
   },
   computed: {
     ...mapState({
@@ -60,26 +60,22 @@ export default {
     ...mapActions(MODULE_MODULE_RESTRICT_IP, {
       changeStatusItem: ACTION_CHANGE_STATUS,
     }),
-    changeStatus() {
-      if (this.info.active == 1) {
-        this.info.active = 0
-      } else {
-        this.info.active = 1
-      }
-      this.changeStatusItem({
+
+    changeToggleSwitch($event) {
+      if($event.value == true) {
+          this.changeStatusItem({
+          id: this.info.id,
+          status: 1,
+          perPage: this.perPage,
+        });
+      }else {
+        this.changeStatusItem({
         id: this.info.id,
-        status: this.info.active,
+        status: 0,
         perPage: this.perPage,
-      })
+      });
+      }  
     },
-  },
+  }
 }
 </script>
-<style scoped>
-.btn_blue {
-  color: blue;
-}
-.btn_red {
-  color: red;
-}
-</style>
