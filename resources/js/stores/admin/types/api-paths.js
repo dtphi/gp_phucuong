@@ -25,5 +25,6 @@ export const API_DONGS_RESOURCE = '/api/dongs';
 export const API_THANHS_RESOURCE = '/api/thanhs';
 export const API_CHUCVUS_RESOURCE = '/api/chuc-vus';
 export const API_LECHINHS_RESOURCE = '/api/le-chinhs';
+export const API_NGAYLES_RESOURCE = '/api/ngay-les';
 export const API_DANHMUCS_GIAOPHAN_RESOURCE = '/api/giao-phan/danh-mucs';
 export const API_TINTUCS_GIAOPHAN_RESOURCE = '/api/giao-phan/tin-tucs';

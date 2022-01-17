@@ -24,6 +24,7 @@ import ban_chuyen_trach from './banchuyentrachs';
 import thanh from './thanhs';
 import chuc_vu from './chucvus';
 import le_chinh from './lechinhs';
+import ngay_le from './ngayles';
 import danhmuc_giaophan from './giaophandanhmucs';
 import tintuc_giaophan from './giaophantintucs';
 import createLogger from '../../plugins/logger';
@@ -175,6 +176,7 @@ export default new Vuex.Store({
     thanh,
     chuc_vu,
     le_chinh,
+    ngay_le,
     danhmuc_giaophan,
     tintuc_giaophan
   },
