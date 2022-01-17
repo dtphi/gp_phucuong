@@ -99,7 +99,8 @@
                   icon="group"
                 />
               </div>
-              <vue-timeline-update v-if="info.pho_xu"
+              <div class="col-lg-6 col-md-12 col-xs-12">
+                <vue-timeline-update v-if="info.pho_xu"
                   :date="new Date()"
                   dateString="-"
                   :category="`Linh mục phó xứ`"
@@ -108,7 +109,6 @@
                   :description="`<div>${info.pho_xu}</div>`"
                   icon="account_circle"
                 />
-              <div class="col-lg-6 col-md-12 col-xs-12">
                 <vue-timeline-update
                   :date="new Date()"
                   dateString="-"
