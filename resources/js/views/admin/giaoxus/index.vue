@@ -95,7 +95,7 @@ export default {
       perPage: state => state.cfApp.perPage,
     }),
     ...mapGetters(['isNotEmptyList']),
-    ...mapState(MODULE_MODULE_GIAO_XU, ['infos', 'loading', 'updateSuccess']),
+    ...mapState(MODULE_MODULE_GIAO_XU, ['infos', 'loading', 'updateSuccess','idGiaoHat']),
     _infoList() {
       return this.infos
     },
@@ -119,10 +119,10 @@ export default {
     },
   },
   mounted() {
-    const params = {
-      perPage: this.perPage,
-    }
-    this.getInfoList(params)
+    // const params = {
+    //   perPage: this.perPage,
+    // }
+    this.getInfoList({perPage: this.perPage, idGiaoHat: this.idGiaoHat})
   },
   setting: {
     list_title: 'Danh sách Giáo Xứ',

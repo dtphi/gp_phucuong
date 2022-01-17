@@ -22,12 +22,8 @@
     <td class="text-left">{{ info.label_to_date }}</td>
     <td class="text-left">
       {{ info.chucvuName }}
-    </td>
-    <td class="text-left">
-      <div @click="changeStatus" style="cursor: pointer;">
-        <i v-if="info.chucvu_active == 1" class="fa fa-check-circle btn_blue"></i>
-        <i v-else class="fa fa-minus-circle btn_red"></i>
-      </div>
+      <toggle-button v-if="info.chucvu_active == 1" :value="switchValue" @change="changeStatusChucVu($event)"/>
+      <toggle-button v-else :value="!switchValue" @change="changeStatusChucVu($event)"/>
     </td>
     <td class="text-right">
       <a
@@ -63,7 +59,9 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      switchValue: true,
+    }
   },
   computed: {
     ...mapState({
@@ -80,27 +78,23 @@ export default {
     _showModal() {
       this.$emit('show-modal-edit', this.info)
     },
-    changeStatus() {
-      if (this.info.chucvu_active == 1) {
-        this.info.chucvu_active = 0
-      } else {
-        this.info.chucvu_active = 1
-      }
-      this.changeStatusItem({
+    changeStatusChucVu($event) {
+      if($event.value == true) {
+          this.changeStatusItem({
+          id: this.info.id,
+          status: 1,
+          perPage: this.perPage,
+        });
+      }else {
+        this.changeStatusItem({
         id: this.info.id,
-        status: this.info.chucvu_active,
+        status: 0,
         perPage: this.perPage,
-      })
+      });
+      }  
     },
   },
 }
 </script>
-<style scoped>
-.btn_blue {
-  color: blue;
-}
-.btn_red {
-  color: red;
-}
-</style>
+
 
