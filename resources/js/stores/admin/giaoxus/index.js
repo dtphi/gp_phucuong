@@ -131,7 +131,7 @@ export default {
 
   actions: {
     async [ACTION_GET_INFO_LIST]({ dispatch, commit, }, params) {
-      // dispatch(ACTION_SET_LOADING, true)
+      dispatch(ACTION_SET_LOADING, true)
       await apiGetGiaoXuInfos(
         (infos) => {
           commit('SET_ID_GIAO_HAT', params.idGiaoHat);
@@ -181,7 +181,6 @@ export default {
       dispatch(ACTION_SET_LOADING, true)
       apiGetGiaoXuByIdGiaohat(
       (response) => {
-        console.log(response.data.pagination, '21');
         commit(INFOS_SET_INFO_LIST, response.data.results)
         commit(INFOS_GET_INFO_LIST_SUCCESS, true)
 
@@ -189,7 +188,6 @@ export default {
           current_page: 1,
           total: 0,
         }
-
         if (fnCheckProp(response.data.pagination, 'pagination')) {
           pagination = response.data.pagination
         }
@@ -200,15 +198,12 @@ export default {
           },
           collectionData: pagination,
         }
-        console.log(configs, 'test');
-
         dispatch('setConfigApp', configs, {
           root: true,
         })
         },
         (errors) => {
           commit(INFOS_GET_INFO_LIST_FAILED, errors)
-          console.log('123')
         },
         infoId
       )
