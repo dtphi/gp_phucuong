@@ -596,18 +596,22 @@ class ApiController extends Controller
 
 		$imgChanhXu = '';
 		$nameChanhXu = '';
+		$fromDateChanhXu = $emptyStr;
+		$emailChanhXu = $emptyStr;
 		if ($linhMucChanhXu) {
 			$nameChanhXu = isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.' - '.$linhMucChanhXu->ten_linh_muc:$emptyStr;
 			$imgChanhXu = isset($linhMucChanhXu->linhMuc->image) ? url($linhMucChanhXu->linhMuc->image) : url('images/linh-muc.jpg');
-			$fromDateChanhXu = \Carbon\Carbon::parse($linhMucChanhXu->from_date)->format('d-m-Y');
+			$fromDateChanhXu = isset($linhMucChanhXu->from_date) ? \Carbon\Carbon::parse($linhMucChanhXu->from_date)->format('d-m-Y') : $emptyStr;
 			$emailChanhXu = isset($linhMucChanhXu->email) ? $linhMucChanhXu->email : $emptyStr;
 		}
 		$imgPhoXu = '';
 		$namePhoXu = '';
+		$fromDatePhoXu = $emptyStr;
+		$emailPhoXu = $emptyStr;
 		if ($linhMucPhoXu){
 			$namePhoXu = isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.' - '.$linhMucPhoXu->ten_linh_muc:$emptyStr;
 			$imgPhoXu = isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg');
-			$fromDatePhoXu = \Carbon\Carbon::parse($linhMucPhoXu->from_date)->format('d-m-Y');
+			$fromDatePhoXu = isset($linhMucPhoXu->from_date) ? \Carbon\Carbon::parse($linhMucPhoXu->from_date)->format('d-m-Y') : $emptyStr;
 			$emailPhoXu = isset($linhMucPhoXu->email) ? $linhMucPhoXu->email : $emptyStr;
 		}
 		$json['results'] = [];

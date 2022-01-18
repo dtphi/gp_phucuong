@@ -48,9 +48,9 @@
                 <h4>Email: {{info.email_chanh}}</h4>
               </div>  
             </div>
-            <div class="row"> 
+            <div class="row" v-if="info.pho_xu"> 
               <div class="col-sm">
-                  <vue-timeline-update v-if="info.pho_xu"
+                  <vue-timeline-update 
                   :date="new Date()"
                   dateString="-"
                   :category="`Linh mục phó xứ`"
