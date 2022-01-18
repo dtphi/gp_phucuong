@@ -20,10 +20,10 @@
       <a :href="info.giao_xu_url">{{ info.giaoxuName }}</a>
     </td>
     <td class="text-left">{{ info.label_to_date }}</td>
-    <td class="text-left">
-      {{ info.chucvuName }}
-      <toggle-button v-if="info.chucvu_active == 1" :value="switchValue" @change="changeStatusChucVu($event)"/>
-      <toggle-button v-else :value="!switchValue" @change="changeStatusChucVu($event)"/>
+    <td class="text-text">
+      <p class="text-center flex">{{ info.chucvuName }}</p> 
+      <toggle-button class="switch-btn-center" v-if="info.chucvu_active == 1" :value="switchValue" @change="changeStatusChucVu($event)"/>
+      <toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="changeStatusChucVu($event)"/>
     </td>
     <td class="text-right">
       <a
@@ -96,5 +96,10 @@ export default {
   },
 }
 </script>
+<style>
+  .switch-btn-center {
+      padding-left: 30px;
+  }
+</style>
 
 
