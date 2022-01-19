@@ -91,6 +91,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('thanhs', 'ThanhController');
     Route::apiResource('chuc-vus', 'ChucVuController');
     Route::apiResource('le-chinhs', 'LeChinhController');
+    Route::apiResource('ngay-les', 'NgayLeController');
     Route::apiResource('giao-phan/danh-mucs', 'GiaoPhanDanhMucController');
     Route::get('/danh-mucs/dropdowns', 'GiaoPhanDanhMucController@dropdown');
     Route::apiResource('giao-phan/tin-tucs', 'GiaoPhanTinTucController');

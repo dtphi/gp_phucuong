@@ -45,6 +45,7 @@ export const MODULE_MODULE_THUYEN_CHUYEN = 'thuyen_chuyen'
 export const MODULE_MODULE_THUYEN_CHUYEN_ADD = 'thuyen_chuyen/add'
 export const MODULE_MODULE_THUYEN_CHUYEN_EDIT = 'thuyen_chuyen/edit'
 
+
 export const MODULE_MODULE_GIAO_PHAN = 'giao_phan'
 export const MODULE_MODULE_GIAO_PHAN_ADD = 'giao_phan/add'
 export const MODULE_MODULE_GIAO_PHAN_EDIT = 'giao_phan/edit'
@@ -78,6 +79,9 @@ export const MODULE_MODULE_CHUC_VU_EDIT = 'chuc_vu/edit'
 export const MODULE_MODULE_LE_CHINH = 'le_chinh'
 export const MODULE_MODULE_LE_CHINH_ADD = 'le_chinh/add'
 export const MODULE_MODULE_LE_CHINH_EDIT = 'le_chinh/edit'
+export const MODULE_MODULE_NGAY_LE = 'ngay_le';
+export const MODULE_MODULE_NGAY_LE_ADD = 'ngay_le/add';
+export const MODULE_MODULE_NGAY_LE_EDIT = 'ngay_le/edit';
 export const MODULE_MODULE_DANHMUC_GIAOPHAN = 'danhmuc_giaophan'
 export const MODULE_MODULE_DANHMUC_GIAOPHAN_ADD = 'danhmuc_giaophan/add'
 export const MODULE_MODULE_DANHMUC_GIAOPHAN_EDIT = 'danhmuc_giaophan/edit'
