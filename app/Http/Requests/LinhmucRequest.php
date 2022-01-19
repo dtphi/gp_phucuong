@@ -198,6 +198,7 @@ class LinhmucRequest extends BaseRequest
         }
         $formData['van_thus'] = isset($formData['van_thus']) ? $formData['van_thus'] : [];
         $formData['bo_nhiems'] = isset($formData['bo_nhiems']) ? $formData['bo_nhiems'] : [];
+        $formData['lm_thuyen_chuyens'] = isset($formData['lm_thuyen_chuyens']) ? $formData['lm_thuyen_chuyens'] : [];
         $formData['action'] = isset($formData['action']) ? $formData['action'] : '';
 
         $this->merge($formData);

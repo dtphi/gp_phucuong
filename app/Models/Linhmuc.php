@@ -106,7 +106,18 @@ class Linhmuc extends BaseModel
 
     public function boNhiems()
     {
-        return $this->hasMany(LinhmucBoNhiem::class, 'linh_muc_id')->orderBy('cong_viec_den_nam');
+        return $this->hasMany(LinhmucBoNhiem::class, 'linh_muc_id')
+            ->orderByDesc('cong_viec_den_nam')
+            ->orderByDesc('cong_viec_den_thang')
+            ->orderByDesc('cong_viec_den_ngay');
+    }
+
+    public function lmThuyenChuyens()
+    {
+        return $this->hasMany(LinhmucGpThuyenChuyen::class, 'linh_muc_id')
+            ->orderByDesc('dia_diem_den_nam')
+            ->orderByDesc('dia_diem_den_thang')
+            ->orderByDesc('dia_diem_den_ngay');
     }
 
     public function getTenThanhAttribute($value)
@@ -265,6 +276,32 @@ class Linhmuc extends BaseModel
                     'cong_viec_den_thang'      => $boNhiem->cong_viec_den_thang,
                     'cong_viec_den_nam'      => $boNhiem->cong_viec_den_nam,
                     'active' => $boNhiem->active
+                ];
+            }
+        }
+
+        return $value;
+    }
+
+    public function getArrLmThuyenChuyenListAttribute($value)
+    {
+        $value = [];
+        if ($this->lmThuyenChuyens) {
+            foreach ($this->lmThuyenChuyens as $thuyenCh) {
+                $value[] = [
+                    'id' => (int)$thuyenCh->id,
+                    'chuc_vu_id' => $thuyenCh->chuc_vu_id,
+                    'chucVuName' => $thuyenCh->ten_chuc_vu,
+                    'dia_diem_id' => $thuyenCh->dia_diem_id,
+                    'diaDiemName' => $thuyenCh->ten_dia_diem,
+                    'dia_diem_loai' => $thuyenCh->dia_diem_loai,
+                    'dia_diem_tu_ngay'      => $thuyenCh->dia_diem_tu_ngay,
+                    'dia_diem_tu_thang'      => $thuyenCh->dia_diem_tu_thang,
+                    'dia_diem_tu_nam'      => $thuyenCh->dia_diem_tu_nam,
+                    'dia_diem_den_ngay'      => $thuyenCh->dia_diem_den_ngay,
+                    'dia_diem_den_thang'      => $thuyenCh->dia_diem_den_thang,
+                    'dia_diem_den_nam'      => $thuyenCh->dia_diem_den_nam,
+                    'active' => $thuyenCh->active
                 ];
             }
         }

@@ -44,7 +44,8 @@ class LinhmucResource extends JsonResource
                 'chuc_thanhs'                => $res->arr_chuc_thanh_list,
                 'thuyen_chuyens'             => $res->arr_thuyen_chuyen_list,
                 'van_thus'                   => $res->arr_van_thu_list,
-                'bo_nhiems'                  => $res->arr_bo_nhiem_list
+                'bo_nhiems'                  => $res->arr_bo_nhiem_list,
+                'lm_thuyen_chuyens'          => $res->arr_lm_thuyen_chuyen_list,
             ]);
         }
 

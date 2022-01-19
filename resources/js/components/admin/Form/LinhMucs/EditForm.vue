@@ -39,6 +39,11 @@
           $options.setting.tab_bo_nhiem_khac_title
         }}</a>
       </li>
+      <li>
+        <a href="#tab-gp-thuyen-chuyen" data-toggle="tab">{{
+          $options.setting.tab_gp_thuyen_chuyen_title
+        }}</a>
+      </li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="tab-general">
@@ -92,7 +97,16 @@
           role="tabpanel"
           class="tab-pane"
           :group-data="info"
+          :type-chuc-vu="$options.setting.typeBoNhiem"
         ></tab-bo-nhiem-khac>
+      </div>
+      <div class="tab-pane" id="tab-gp-thuyen-chuyen">
+        <tab-lm-thuyen-chuyen
+          role="tabpanel"
+          class="tab-pane"
+          :group-data="info"
+          :type-chuc-vu="$options.setting.typeThuyenChuyen"
+        ></tab-lm-thuyen-chuyen>
       </div>
     </div>
   </form>
@@ -111,6 +125,7 @@ import TabBangCap from './edits/TabBangCap'
 import TabChucThanh from './edits/TabChucThanh'
 import TabVanThu from './edits/TabVanThu'
 import TabThuyenChuyen from './edits/TabThuyenChuyen'
+import TabLmThuyenChuyen from './edits/TabLmThuyenChuyen'
 import TabBoNhiemKhac from './edits/TabBoNhiemKhac'
 import { fnCheckImgPath, } from '@app/common/util'
 import { config, } from '@app/common/config'
@@ -124,6 +139,7 @@ export default {
     TabChucThanh,
     TabVanThu,
     TabThuyenChuyen,
+    TabLmThuyenChuyen,
     TabBoNhiemKhac,
   },
   data() {
@@ -166,11 +182,15 @@ export default {
     },
   },
   setting: {
+    typeBoNhiem: 1,
+    typeThuyenChuyen: 0,
+    typeKhac: 2,
     tab_general_title: 'Tổng quan',
     tab_mo_rong_title: 'Mở rộng',
     tab_bang_cap_title: 'Bằng Cấp',
     tab_chuc_thanh_title: 'Chức Thánh',
     tab_thuyen_chuyen_title: 'Thuyên Chuyển',
+    tab_gp_thuyen_chuyen_title: 'LM.Thuyên Chuyển',
     tab_van_thu_title: 'Văn Thư',
     tab_special_info_title: 'Slide tin tức tiêu điểm',
     tab_bo_nhiem_khac_title: 'Bổ Nhiệm Khác',

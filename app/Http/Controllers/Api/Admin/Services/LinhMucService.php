@@ -18,6 +18,7 @@ use App\Models\Linhmuc;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucBoNhiem;
 use App\Models\LinhmucChucthanh;
+use App\Models\LinhmucGpThuyenChuyen;
 use App\Models\LinhmucThuyenchuyen;
 use App\Models\LinhmucVanthu;
 use App\Models\Thanh;
@@ -223,6 +224,19 @@ final class LinhMucService implements BaseModel, LinhMucModel
         LinhmucBoNhiem::fcDeleteById($linhmucId, $boNhiem['id']);
     }
 
+    private function _addLmThuyenChuyen($linhmucId, $model)
+    {
+        LinhmucGpThuyenChuyen::insertByLinhmucId($linhmucId, $model['chuc_vu_id'], $model['dia_diem_id'], $model['dia_diem_loai'],
+            $model['dia_diem_tu_ngay'], $model['dia_diem_tu_thang'], $model['dia_diem_tu_nam'],
+            $model['dia_diem_den_ngay'], $model['dia_diem_den_thang'], $model['dia_diem_den_nam'],
+            $model['active']);
+    }
+
+    private function _removeLmThuyenChuyen($linhmucId, $model)
+    {
+        LinhmucGpThuyenChuyen::fcDeleteById($linhmucId, $model['id']);
+    }
+
     private function _updateLinhMuc($model, $data)
     {
         $linhmucId = $model->id;
@@ -276,6 +290,10 @@ final class LinhMucService implements BaseModel, LinhMucModel
             $this->_addBoNhiem($data['id'], $data['bo_nhiem']);
         } elseif ($data['action'] == 'remove.bo.nhiem') {
             $this->_removeBoNhiem($data['id'], $data['bo_nhiem']);
+        } elseif ($data['action'] == 'add.lm.thuyen.chuyen') {
+            $this->_addLmThuyenChuyen($data['id'], $data['lm_thuyen_chuyen']);
+        } elseif ($data['action'] == 'remove.lm.thuyen.chuyen') {
+            $this->_removeLmThuyenChuyen($data['id'], $data['lm_thuyen_chuyen']);
         } else {
             $model->fill($data);
             if ($model->save()) {

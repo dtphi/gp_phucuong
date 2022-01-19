@@ -11,7 +11,7 @@
           <td class="text-center">CÔNG VIỆC</td>
           <td class="text-center">TỪ <br> (ngày tháng năm)</td>
           <td class="text-center">ĐẾN <br> (ngày tháng năm)</td>
-          <td calss="text-center">{{ $options.setting.info_action_title }}</td>
+          <td class="text-center">{{ $options.setting.info_action_title }}</td>
         </tr>
       </thead>
       <tbody>
@@ -24,10 +24,10 @@
             {{ item.cong_viec }}
           </td>
           <td class="text-right">
-            {{ item.cong_viec_tu_ngay }}/{{ item.cong_viec_tu_thang }}/{{ item.cong_viec_tu_nam }}
+            {{ _getTuNgay(item) }}
           </td>
           <td class="text-right">
-            {{ item.cong_viec_den_ngay }}/{{ item.cong_viec_den_thang }}/{{ item.cong_viec_den_nam }}
+            {{ _getDenNgay(item) }}
           </td>
           <td>
             <button
@@ -87,6 +87,14 @@ export default {
           item: item,
         })
       }
+    },
+    _getTuNgay(item) {
+      let ngay = `${item.cong_viec_tu_ngay}/${item.cong_viec_tu_thang}/${item.cong_viec_tu_nam}`
+      return ngay.replaceAll('null/', '').replaceAll('null', '')
+    },
+    _getDenNgay(item) {
+      let ngay = `${item.cong_viec_den_ngay}/${item.cong_viec_den_thang}/${item.cong_viec_den_nam}`
+      return ngay.replaceAll('null/', '').replaceAll('null', '')
     },
   },
   setting: {

@@ -10,6 +10,7 @@
             @on-select-chuc-vu="_selectThuyenChuyenFromChucVu"
             :name="chucVuName"
             :key="$options.setting.keyChucVu"
+            :type-chuc-vu="typeChucVu"
           ></info-chuc-vu-autocomplete>
         </div>
       </div>
@@ -158,6 +159,13 @@ export default {
   components: {
     TheModalResizable,
     InfoChucVuAutocomplete,
+  },
+  props: {
+    typeChucVu: {
+      default() {
+        return 0
+      } 
+    },
   },
   data() {
     return boNhiem

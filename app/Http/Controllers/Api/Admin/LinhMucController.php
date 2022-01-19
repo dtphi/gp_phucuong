@@ -334,6 +334,7 @@ class LinhMucController extends ApiController
             $collections[] = [
                 'id'   => $value->id,
                 'name' => $value->name,
+                'type' => $value->type_giao_xu
             ];
         }
 

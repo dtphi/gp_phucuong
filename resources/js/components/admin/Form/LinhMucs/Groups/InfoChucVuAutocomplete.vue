@@ -15,12 +15,22 @@
         placeholder="Chọn chức vụ"
         class="form-control"
       />
+      <select class="cms-btn-input-right" style="right:54px; border: 1px solid #ddd;" v-model="typeFilter">
+        <option
+          :selected="typeChucVu == idx"
+          :value="idx"
+          v-for="(item, idx) in $cmsCfg.loaiChucVus"
+          :key="idx"
+        >
+          {{ item }}
+        </option>
+      </select>
       <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
         <i class="fa" :class="isSearch ? 'fa-search' : 'fa-close'"></i>
       </span>
       <ul v-show="!isSearch" class="dropdown-menu cms-ul-cate-dropdown">
         <li
-          v-for="(item, idx) in dropdowns"
+          v-for="(item, idx) in _chucVus"
           :key="idx"
           @click="_addInfoToCategory(item)"
         >
@@ -38,12 +48,18 @@ import { MODULE_MODULE_LINH_MUC, } from 'store@admin/types/module-types'
 export default {
   name: 'InfoChucVuAutocomplete',
   props: {
+    typeChucVu: {
+      default() {
+        return 0
+      } 
+    },
     name: {
       default: null,
     },
   },
   data() {
     return {
+      typeFilter: this.typeChucVu,
       dropdownStyle: 'display: none;',
       isSearch: true,
     }
@@ -52,6 +68,9 @@ export default {
     ...mapState(MODULE_MODULE_LINH_MUC, {
       dropdowns: (state) => state.dropdownChucVus,
     }),
+    _chucVus() {
+      return _.filter(this.dropdowns, {type: this.typeFilter})
+    },
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC, ['ACTION_GET_DROPDOWN_CHUC_VU_LIST']),

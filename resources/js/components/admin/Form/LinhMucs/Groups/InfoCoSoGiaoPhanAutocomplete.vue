@@ -16,12 +16,20 @@
         id="input-parent-co-so-giao-phan-name"
         class="form-control"
       />
+      <input
+        autocomplete="off"
+        @keyup="_keyUpName"
+        v-model="searchName"
+        type="text"
+        placeholder="Search tên"
+        class="cms-btn-input-right" style="right:54px; border: 1px solid #ddd;width: 100px;"
+      />
       <span class="btn btn-default cms-btn-input-right" @click="_closeDropdown">
         <i class="fa" :class="isSearch ? 'fa-search' : 'fa-close'"></i>
       </span>
       <ul v-show="!isSearch" class="dropdown-menu cms-ul-cate-dropdown">
         <li
-          v-for="(item, idx) in dropdowns"
+          v-for="(item, idx) in _cosos"
           :key="idx"
           @click="_addInfoToCategory(item)"
         >
@@ -47,19 +55,29 @@ export default {
     return {
       dropdownStyle: 'display: none;',
       isSearch: true,
+      searchName: '',
     }
   },
   computed: {
     ...mapState(MODULE_MODULE_LINH_MUC, {
       dropdowns: (state) => state.dropdownCoSoGiaoPhans,
     }),
+    _cosos() {
+      if (this.searchName) {
+        return _.filter(this.dropdowns, (obj) => {
+          return obj.name.indexOf(this.searchName) !== -1
+        })
+      }
+
+      return this.dropdowns
+    },
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC, [
       'ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST'
     ]),
     _searchCategories() {
-      const query = this.query
+      const query = this.query; console.log(query)
       if (query && query.length) {
         this.ACTION_GET_DROPDOWN_CO_SO_GIAO_PHAN_LIST(query)
       }
@@ -76,6 +94,9 @@ export default {
     _addInfoToCategory(infoCategory) {
       this.$emit('on-select-co-so-giao-phan', infoCategory)
       this._closeDropdown()
+    },
+    _keyUpName(evt) {
+      this.$data.searchName = evt.target.value
     },
   },
 }

@@ -61,11 +61,13 @@ const defaultState = () => {
       sort_id: 0,
       active: 1,
       bo_nhiem: null,
+      lm_thuyen_chuyen: null,
       bang_caps: [],
       chuc_thanhs: [],
       thuyen_chuyens: [],
       van_thus: [],
       bo_nhiems: [],
+      lm_thuyen_chuyens: [],
       action: '',
     },
     thuyenChuyen: null,
@@ -177,6 +179,14 @@ export default {
     update_bo_nhiem_remove(state, payload) {
       state.info.bo_nhiem = payload
       state.info.action = 'remove.bo.nhiem'
+    },
+    update_lm_thuyen_chuyen(state, payload) {
+      state.info.lm_thuyen_chuyen = payload
+      state.info.action = 'add.lm.thuyen.chuyen'
+    },
+    update_lm_thuyen_chuyen_remove(state, payload) {
+      state.info.lm_thuyen_chuyen = payload
+      state.info.action = 'remove.lm.thuyen.chuyen'
     },
     update_bang_cap_remove(state, payload) {
       state.info.bang_caps = payload
@@ -516,6 +526,21 @@ export default {
       const data = params.item
       await commit(
         'update_bo_nhiem_remove',
+        data
+      )
+      dispatch(ACTION_INSERT_INFO, state.info)
+    },
+    async addLmThuyenChuyen({ commit, dispatch, state, }, lmThuyenChuyen) {
+      await commit('update_lm_thuyen_chuyen', {
+        id: uuidv4(),
+        ...lmThuyenChuyen.data,
+      })
+      dispatch(ACTION_INSERT_INFO, state.info)
+    },
+    async removeLmThuyenChuyen({ commit, dispatch, state, }, params) {
+      const data = params.item
+      await commit(
+        'update_lm_thuyen_chuyen_remove',
         data
       )
       dispatch(ACTION_INSERT_INFO, state.info)

@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <modal-bo-nhiem-khac></modal-bo-nhiem-khac>
+    <modal-bo-nhiem-khac :type-chuc-vu="typeChucVu"></modal-bo-nhiem-khac>
   </div>
 </template>
 
@@ -27,6 +27,11 @@ export default {
     ModalBoNhiemKhac,
   },
   props: {
+    typeChucVu: {
+      default() {
+        return 1
+      } 
+    },
     groupData: {
       type: Object,
     },
