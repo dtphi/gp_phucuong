@@ -112,22 +112,22 @@ class LinhmucGpThuyenChuyen extends BaseModel
         {
             case 1:
                 {
-                    $value = $this->ten_giao_xu;
+                    $value = 'Giáo Xứ ' . $this->ten_giao_xu;
                     break;
                 }
             case 2:
                 {
-                    $value = $this->ten_co_so;
+                    $value = 'Cơ Sở Giáo Phận ' . $this->ten_co_so;
                     break;
                 }
             case 3:
                 {
-                    $value = $this->ten_dong;
+                    $value = 'Dòng ' . $this->ten_dong;
                     break;
                 }
             case 4:
                 {
-                    $value = $this->ten_ban_chuyen_trach;
+                    $value = 'Ban Chuyên Trach ' . $this->ten_ban_chuyen_trach;
                     break;
                 }
         }

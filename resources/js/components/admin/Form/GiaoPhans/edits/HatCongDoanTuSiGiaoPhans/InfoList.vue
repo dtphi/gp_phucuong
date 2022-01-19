@@ -7,9 +7,11 @@
     >
       <thead>
         <tr>
-          <td colspan="4" class="text-center">Giáo Hat: {{ item.hatName }}</td>
+          <td colspan="5" class="text-center" 
+           :id="`link-giao-hat-cong-doan-${item.id}`">Giáo Hat: {{ item.hatName }} : {{ Object.keys(item.cong_doan_tu_sis).length }} Công đoàn tu sĩ</td>
         </tr>
         <tr>
+          <td>TT</td>
           <td style="width: 5%;" class="text-center">
             <input type="checkbox"
                     onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
@@ -25,6 +27,7 @@
         <info-item
           v-if="congDts.isEdit"
           key="hat-cong-dts-giao-phan-edit"
+          :no="(idx+1)"
           :hat="item"
           :item="congDts"
         ></info-item>

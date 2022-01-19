@@ -1,5 +1,6 @@
 <template>
   <tr>
+    <td>{{ no }}</td>
     <td class="text-center">
       <input
         type="checkbox"
@@ -83,6 +84,11 @@ export default {
     InfoGiaoXuAutocomplete,
   },
   props: {
+    no: {
+      default() {
+        return 0
+      }
+    },
     hat: {
       default: {},
     },

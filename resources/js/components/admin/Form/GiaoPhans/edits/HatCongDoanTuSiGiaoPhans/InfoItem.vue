@@ -1,5 +1,6 @@
 <template>
   <tr>
+    <td>{{ no }}</td>
     <td class="text-center">
         <input type="checkbox"
                 :id="`info_select_id_${item.id}`"
@@ -81,6 +82,11 @@ export default {
     InfoCongDoanTuSiAutocomplete,
   },
   props: {
+    no: {
+      default() {
+        return 0
+      }
+    },
     hat: {
       default: {},
     },
