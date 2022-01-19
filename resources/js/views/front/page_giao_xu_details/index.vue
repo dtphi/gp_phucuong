@@ -30,27 +30,45 @@
             <h2>Giáo xứ {{ info.name }}</h2>
             <img style="width: 100%; margin-bottom: 15px" v-lazy="info.image" />
             <!-- Latest update -->
-            <div class="row">
-              <div class="col-lg-12 col-md-12 col-xs-12">
-                <vue-timeline-update
+            <div class="row"> 
+              <div class="col-lg-6">
+                  <vue-timeline-update
                   :date="new Date()"
                   dateString="#"
                   :category="`Linh mục chánh xứ`"
                   title="."
                   :thumbnail="info.img_chanh_xu"
-                  :description="`<div>${info.chanh_xu}</div>`"
                   icon="account_circle"
                 />
-                <vue-timeline-update
+              </div>
+              <div class="col-lg-6">
+                <br><br>
+                <h4>{{info.chanh_xu}}</h4>
+                <h4>Nhậm chức: {{info.from_date_chanh}}</h4>
+                <h4>Email: {{info.email_chanh}}</h4>
+              </div>  
+            </div>
+            <div class="row" v-for="(info, idx) in info.arr_pho_xu" :key="idx"> 
+              <div class="col-sm">
+                  <vue-timeline-update 
                   :date="new Date()"
                   dateString="-"
                   :category="`Linh mục phó xứ`"
                   title="."
                   :thumbnail="info.img_pho_xu"
-                  :description="`<div>${info.pho_xu}</div>`"
                   icon="account_circle"
                 />
-                <vue-timeline-update
+              </div>
+              <div class="col-sm">
+                <br><br>
+                <h4>{{info.pho_xu}}</h4>
+                <h4>Nhậm chức: {{info.from_date_pho}}</h4>
+                <h4>Email: {{info.email_pho}}</h4>
+              </div>  
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-xs-12">
+                <vue-timeline-update v-if="info.ngay_thanh_lap"
                   :date="new Date()"
                   dateString="#"
                   :category="`Ngày thành lập`"
@@ -58,8 +76,7 @@
                   :description="$helper.fn_format_dd_mm_yyyy(info.ngay_thanh_lap)"
                   icon="home"
                 />
-                
-                <vue-timeline-update
+                <vue-timeline-update v-if="info.so_tin_huu"
                   :date="new Date()"
                   dateString="#"
                   :category="`Giáo dân: ${info.so_tin_huu}`"
@@ -67,7 +84,7 @@
                   :description="info.dan_so"
                   icon="people"
                 />
-                <vue-timeline-update
+                <vue-timeline-update v-if="info.gio_le"
                   :date="new Date()"
                   dateString="#"
                   category="Giờ cử hành thánh lễ"
@@ -75,7 +92,7 @@
                   :description="info.gio_le"
                   icon="schedule"
                 />
-                <vue-timeline-update
+                <vue-timeline-update v-if="info.dia_chi"
                   :date="new Date()"
                   dateString="#"
                   category="Địa chỉ giáo xứ"
@@ -83,7 +100,7 @@
                   :description="info.dia_chi"
                   icon="room"
                 />
-                <vue-timeline-update
+                <vue-timeline-update v-if="info.dien_thoai"
                   :date="new Date()"
                   dateString="#"
                   category="Điện thoại"
@@ -91,7 +108,7 @@
                   :description="info.dien_thoai"
                   icon="phone"
                 />
-                <vue-timeline-update
+                <vue-timeline-update v-if="info.email"
                   :date="new Date()"
                   dateString="#"
                   category="E-mail"
@@ -99,7 +116,7 @@
                   :description="info.email"
                   icon="markunread"
                 />
-                <vue-timeline-update
+                <vue-timeline-update v-if="info.linh_muc_tien_nhiem"
                   :date="new Date()"
                   dateString="#"
                   category="Linh mục tiền nhiệm"
@@ -109,7 +126,7 @@
                 />
               </div>
               <div class="col-lg-6 col-md-12 col-xs-12">
-                <vue-timeline-update
+                <vue-timeline-update v-if="info.sub_noi_dung"
                   :date="new Date()"
                   dateString="-"
                   category="Lịch sử giáo xứ"

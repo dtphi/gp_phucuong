@@ -41,6 +41,7 @@ final class Tables
     public static $linhmuc_thuyenchuyens = DB_PREFIX . 'linhmuc_thuyenchuyens';
     public static $linhmuc_gp_thuyenchuyens = DB_PREFIX . 'linhmuc_gp_thuyenchuyens';
     public static $linhmuc_bonhiems = DB_PREFIX . 'linhmuc_bonhiems';
+    public static $ngay_les = DB_PREFIX . 'ngay_les';
 
     public static $giaophans = DB_PREFIX . 'giaophans';
     public static $giaophan_hats = DB_PREFIX . 'giaophan_hats';
@@ -180,6 +181,8 @@ final class Tables
     public static $giaoDiemAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_GIAO_DIEM;
     const PREFIX_ALLOW_LE_CHINH = 'le.chinh';
     public static $leChinhAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_LE_CHINH;
+    const PREFIX_ALLOW_NGAY_LE = 'ngay.le';
+    public static $ngayLeAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_NGAY_LE;
     const PREFIX_ALLOW_THANH = 'thanh';
     public static $thanhAccessName = self::PREFIX_ACCESS_NAME . self::PREFIX_ALLOW_THANH;
     const PREFIX_ALLOW_CHUC_VU = 'chuc.vu';
@@ -220,8 +223,8 @@ final class Tables
         'slide_info_specials' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
         'album_group' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
         'album' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
+        'ngay_le' => ['abilities' => self::RULE_ACTION_SELECT, 'all' => false],
     ];
-
     const NETWORK_TARGET = ['facebook', 'twitter', 'linkedin', 'reddit'];
 }
 //dd(serialize(Tables::RULE_SELECT));

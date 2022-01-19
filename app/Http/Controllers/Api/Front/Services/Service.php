@@ -226,8 +226,9 @@ class Service implements BaseModel
 	public function apiGetLinhMucPhoXuByGiaoXuId($giaoXuId = null) {
 		$linhMuc = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
 		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', 4)
-		->orderByDesc('from_date')
-		->first();
+		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_active', 1)
+		->orderByDesc('from_date')->limit(3)
+		->get();
 
 		return $linhMuc;
 	}
@@ -404,7 +405,7 @@ class Service implements BaseModel
 		  }]);
 
       } else if ($request->input('query') == null) {
-		    $list_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', 1)->with(['giaoXu.linhmucthuyenchuyens' => function($q) {
+		    $list_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', $request->input('params'))->with(['giaoXu.linhmucthuyenchuyens' => function($q) {
 			  $q->where('chuc_vu_active', 1)->select('linh_muc_id', 'chuc_vu_id','giao_xu_id')->with('linhMuc', 'chucVu')->orderBy('chuc_vu_id', 'asc');
 		  }]);
 
@@ -420,7 +421,7 @@ class Service implements BaseModel
       return $list_giaoxu->paginate($limit);
   }
 
-  public function apiGetListChucVu() { // List Giao Phan
+  public function apiGetListChucVu() { 
     $query = $this->modelChucVu->select('id', 'name')
             ->orderBy('id', 'ASC')->get();
     return $query;

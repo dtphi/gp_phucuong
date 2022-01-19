@@ -81,6 +81,9 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('giao-phans', 'GiaoPhanController');
     Route::apiResource('giao-hats', 'GiaoHatController');
     Route::apiResource('giao-xus', 'GiaoXuController');
+    Route::get('giao-hats-by-giao-xus', 'GiaoXuController@listGiaoHats');
+    Route::get('giao-xus-by-id-giao-hat/{id}', 'GiaoXuController@listGiaoXuByIdGiaoHat');
+
     Route::apiResource('giao-diems', 'GiaoDiemController');
     Route::apiResource('cong-doan-tu-sis', 'CongDoanTuSiController');
     Route::apiResource('co-sos', 'CoSoController');
@@ -88,19 +91,20 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('thanhs', 'ThanhController');
     Route::apiResource('chuc-vus', 'ChucVuController');
     Route::apiResource('le-chinhs', 'LeChinhController');
+    Route::apiResource('ngay-les', 'NgayLeController');
     Route::apiResource('giao-phan/danh-mucs', 'GiaoPhanDanhMucController');
     Route::get('/danh-mucs/dropdowns', 'GiaoPhanDanhMucController@dropdown');
     Route::apiResource('giao-phan/tin-tucs', 'GiaoPhanTinTucController');
     Route::get('/tin-tucs/dropdowns', 'GiaoPhanTinTucController@dropdown');
-    Route::apiResource('restrict-ips', 'RestrictIpController'); //RestrictIpController
+    Route::apiResource('restrict-ips', 'RestrictIpController');
     Route::get('search-ips','RestrictIpController@search');
     Route::post('change-status-ips','RestrictIpController@changeStatus');
 
     Route::apiResource('albums', 'AlbumsController'); //AlbumsController
     Route::get('search-albums','AlbumsController@search');
     Route::post('change-status-albums','AlbumsController@changeStatus');
-    
-    Route::apiResource('group-albums', 'GroupAlbumsController'); //GroupAlbumsController
+
+    Route::apiResource('group-albums', 'GroupAlbumsController'); //GroupAlbumsController 
     Route::get('search-group-albums','GroupAlbumsController@search');
     Route::post('change-status-group-albums','GroupAlbumsController@changeStatus');
 

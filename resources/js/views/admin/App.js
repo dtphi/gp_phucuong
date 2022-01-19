@@ -68,3 +68,7 @@ Vue.use(Notifications)
 import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/index.css'
 Vue.component('CmsDatePicker', DatePicker)
+
+
+import { ToggleButton } from 'vue-js-toggle-button'
+Vue.component('ToggleButton', ToggleButton)

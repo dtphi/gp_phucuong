@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Api\Admin\Services;
 
+use DB;
+use App\Models\GiaoXu;
+use App\Models\GiaoHat;
+use App\Http\Common\Tables;
+use App\Models\GiaoPhanHatXu;
+use App\Http\Resources\GiaoXus\GiaoXuResource;
+use App\Http\Resources\GiaoXus\GiaoXuCollection;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoXuModel;
-use App\Http\Resources\GiaoXus\GiaoXuCollection;
-use App\Http\Resources\GiaoXus\GiaoXuResource;
-use App\Models\GiaoXu;
-use App\Http\Common\Tables;
-use DB;
 
 final class GiaoXuService implements BaseModel, GiaoXuModel
 {
@@ -24,6 +26,8 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
   public function __construct()
   {
     $this->model    = new GiaoXu();
+    $this->modelGiaoHat = new GiaoHat();
+    $this->modelPhanHatXu = new GiaoPhanHatXu();
   }
 
   public function apiGetList(array $options = [], $limit = 5)
@@ -87,9 +91,13 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 
   public function apiGetGiaoXus($data = array(), $limit = 5)
   {
-    $query = $this->model->select()
+    if($data['idGiaoHat'] == 0 || $data['idGiaoHat'] == -1) {
+      $query = $this->model->select()
       ->where('type', 'giaoxu')
       ->orderByDesc('id');
+    }else {
+      $query = $this->modelPhanHatXu->where('giao_hat_id', $data['idGiaoHat'])->with(['giaoXu']);
+    }
 
     return $query;
   }
@@ -104,5 +112,16 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
     }
     DB::commit();
     return $this->model;
+  }
+
+  public function apiGetListGiaoHat() {
+    $query = $this->modelGiaoHat->select()
+            ->orderBy('id', 'ASC')->get();
+    return $query;
+  }
+
+  public function apiGetListByIdGiaoHat($id = null, $limit) {
+      $query = $this->modelPhanHatXu->where('giao_hat_id', $id)->with(['giaoXu']);
+      return $query->paginate($limit);
   }
 }

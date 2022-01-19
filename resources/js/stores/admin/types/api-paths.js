@@ -26,6 +26,7 @@ export const API_DONGS_RESOURCE = '/api/dongs'
 export const API_THANHS_RESOURCE = '/api/thanhs'
 export const API_CHUCVUS_RESOURCE = '/api/chuc-vus'
 export const API_LECHINHS_RESOURCE = '/api/le-chinhs'
+export const API_NGAYLES_RESOURCE = '/api/ngay-les';
 export const API_DANHMUCS_GIAOPHAN_RESOURCE = '/api/giao-phan/danh-mucs'
 export const API_TINTUCS_GIAOPHAN_RESOURCE = '/api/giao-phan/tin-tucs'
 export const API_RESTRICT_IPS_RESOURCE = '/api/restrict-ips'
@@ -41,3 +42,5 @@ export const API_GROUP_ALBUMS_SEARCH_RESOURCE = '/api/search-group-albums'
 export const API_CHANGE_STATUS_GROUP_ALBUMS = '/api/change-status-group-albums'
 
 export const API_CHANGE_STATUS_LINH_MUC_THUYEN_CHUYEN = '/api/change-status-thuyen-chuyens'
+export const API_GIAO_HATS_BY_GIAO_XUS_RESOURCE = '/api/giao-hats-by-giao-xus'
+export const API_GIAO_XUS_BY_ID_GIAO_HAT = '/api/giao-xus-by-id-giao-hat'

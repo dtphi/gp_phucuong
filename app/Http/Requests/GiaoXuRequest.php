@@ -53,7 +53,8 @@ class GiaoXuRequest extends BaseRequest
     public function validationData()
     {
         $formData = $this->all();
-
+ 
+        $formData['idGiaoHat'] = isset($formData['idGiaoHat']) ? $formData['idGiaoHat'] : 0;
         $formData['name']             = isset($formData['name']) ? $formData['name'] : null;
         $formData['giao_hat_id']             = isset($formData['giao_hat_id']) ? $formData['giao_hat_id'] : null;
         $formData['dia_chi']             = isset($formData['dia_chi']) ? $formData['dia_chi'] : null;

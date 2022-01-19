@@ -576,10 +576,11 @@ class ApiController extends Controller
 		$info = $this->sv->apiGetDetailGiaoXu($giaoXuId);
 		$linhMucs = $this->sv->apiGetLinhMucListByGiaoXuId($giaoXuId);
 		$emptyStr = 'Chưa cập nhật';
+		$emptyItem = null;
 
 		$linhMucTienNhiem = [];
 		$linhMucChanhXu = $this->sv->apiGetLinhMucChanhXuByGiaoXuId($giaoXuId);
-		$linhMucPhoXu = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
+		$linhMucPhoXus = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
 		$arrLmIds = [];
 		foreach ($linhMucs as $linhMuc) {
 			$url_linhmuc = url('linh-muc/chi-tiet/' . $linhMuc->linh_muc_id);
@@ -595,15 +596,24 @@ class ApiController extends Controller
 
 		$imgChanhXu = '';
 		$nameChanhXu = '';
+		$fromDateChanhXu = $emptyStr;
+		$emailChanhXu = $emptyStr;
 		if ($linhMucChanhXu) {
-			$nameChanhXu = isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.'-'.$linhMucChanhXu->ten_linh_muc:$emptyStr;
+			$nameChanhXu = isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.' - '.$linhMucChanhXu->ten_linh_muc:$emptyStr;
 			$imgChanhXu = isset($linhMucChanhXu->linhMuc->image) ? url($linhMucChanhXu->linhMuc->image) : url('images/linh-muc.jpg');
+			$fromDateChanhXu = isset($linhMucChanhXu->from_date) ? \Carbon\Carbon::parse($linhMucChanhXu->from_date)->format('d-m-Y') : $emptyStr;
+			$emailChanhXu = isset($linhMucChanhXu->email) ? $linhMucChanhXu->email : $emptyStr;
 		}
-		$imgPhoXu = '';
-		$namePhoXu = '';
-		if ($linhMucPhoXu){
-			$namePhoXu = isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.'-'.$linhMucPhoXu->ten_linh_muc:$emptyStr;
-			$imgPhoXu = isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg');
+		$arr_pho_xu = [];
+		if ($linhMucPhoXus){
+			foreach($linhMucPhoXus as $linhMucPhoXu) {
+				$arr_pho_xu[] = [
+					'pho_xu' => isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.' - '.$linhMucPhoXu->ten_linh_muc:$emptyStr,
+					'img_pho_xu' => isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg'),
+					'email_pho' => isset($linhMucPhoXu->email) ? $linhMucPhoXu->email : $emptyStr,
+					'from_date_pho' => isset($linhMucPhoXu->from_date) ? \Carbon\Carbon::parse($linhMucPhoXu->from_date)->format('d-m-Y') : $emptyStr,
+				];
+			}
 		}
 		$json['results'] = [];
 		if ($info) {
@@ -616,22 +626,21 @@ class ApiController extends Controller
 				'image' => !empty($info->image) ? url($info->image): url($defaultImage),
 				'noi_dung' => html_entity_decode($info->noi_dung),
 				'sub_noi_dung' => $subNoiDung,
-				'so_tin_huu' => $info->so_tin_huu ?? $emptyStr,
-				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? $emptyStr,
-				'gio_le' => html_entity_decode($info->gio_le)?? $emptyStr,
-				'dia_chi' => html_entity_decode($info->dia_chi) ?? $emptyStr,
-				'dien_thoai' => $info->dien_thoai ?? $emptyStr,
-				'email' => $info->email ?? $emptyStr,
+				'so_tin_huu' => $info->so_tin_huu ?? $emptyItem,
+				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? $emptyItem,
+				'gio_le' => html_entity_decode($info->gio_le)?? $emptyItem,
+				'dia_chi' => html_entity_decode($info->dia_chi) ?? $emptyItem,
+				'dien_thoai' => $info->dien_thoai ?? $emptyItem,
+				'email' => $info->email ?? $emptyItem,
 				'linh_muc_tien_nhiem' => implode('<br>', $linhMucTienNhiem),
 				'chanh_xu' => $nameChanhXu,
 				'img_chanh_xu' => $imgChanhXu,
-				'pho_xu' => $namePhoXu,
-				'img_pho_xu' => $imgPhoXu,
-				'ngay_thanh_lap' => !empty($info->ngay_thanh_lap) ? $info->ngay_thanh_lap : $emptyStr,
-
+				'ngay_thanh_lap' => !empty($info->ngay_thanh_lap) ? $info->ngay_thanh_lap : $emptyItem,
+				'from_date_chanh' => $fromDateChanhXu,
+				'email_chanh' => $emailChanhXu,
+				'arr_pho_xu' => $arr_pho_xu,
 			];
 		}
-		// dd($json, 'json');
 		return $json;
 	}
 

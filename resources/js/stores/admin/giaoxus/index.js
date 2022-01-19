@@ -4,6 +4,8 @@ import {
   apiGetInfoGiaoXuById,
   apiGetGiaoXuInfos,
   apiDeleteInfo,
+  apiGetInfoGiaoHat,
+  apiGetGiaoXuByIdGiaohat,
 } from 'api@admin/giaoxu'
 import { MODULE_MODULE_GIAO_XU, } from '../types/module-types'
 import {
@@ -26,6 +28,8 @@ import {
   ACTION_SET_INFO_DELETE_BY_ID,
   ACTION_SET_LOADING,
   ACTION_RESET_NOTIFICATION_INFO,
+  ACTION_GET_INFO_BY_ID,
+  ACTION_GET_LIST_GIAO_HAT
 } from '../types/action-types'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 import { config, } from '@app/common/config'
@@ -41,6 +45,8 @@ const defaultState = () => {
     loading: false,
     updateSuccess: false,
     errors: [],
+    giaoHatLists: [],
+    idGiaoHat: 0,
   }
 }
 
@@ -60,6 +66,12 @@ export default {
     isError(state) {
       return state.errors.length
     },
+    giaoHatLists(state) {
+      return state.giaoHatLists
+    },
+    idGiaoHat(state) {
+      return state.idGiaoHat
+    }
   },
 
   mutations: {
@@ -109,6 +121,12 @@ export default {
     [SET_ERROR](state, payload) {
       state.errors = payload
     },
+    GIAO_HAT_LISTS(state, payload) {
+      state.giaoHatLists = payload
+    },
+    SET_ID_GIAO_HAT(state, payload) {
+      state.idGiaoHat = payload;
+    }
   },
 
   actions: {
@@ -116,6 +134,7 @@ export default {
       dispatch(ACTION_SET_LOADING, true)
       await apiGetGiaoXuInfos(
         (infos) => {
+          commit('SET_ID_GIAO_HAT', params.idGiaoHat);
           commit(INFOS_SET_INFO_LIST, infos.data.results)
           commit(INFOS_GET_INFO_LIST_SUCCESS, true)
 
@@ -142,6 +161,51 @@ export default {
           commit(INFOS_GET_INFO_LIST_FAILED, errors)
         },
         params
+      )
+      dispatch(ACTION_SET_LOADING, false)
+    },
+
+    [ACTION_GET_LIST_GIAO_HAT] ({commit}) {
+      apiGetInfoGiaoHat(
+      (response) => {
+        commit('GIAO_HAT_LISTS', response.data.results)
+        commit(INFOS_GET_INFO_LIST_SUCCESS, true)
+      },
+      (errors) => {
+        commit(INFOS_GET_INFO_LIST_FAILED, errors)
+        },
+      )
+    },
+
+    [ACTION_GET_INFO_BY_ID]({commit, dispatch}, infoId) {
+      dispatch(ACTION_SET_LOADING, true)
+      apiGetGiaoXuByIdGiaohat(
+      (response) => {
+        commit(INFOS_SET_INFO_LIST, response.data.results)
+        commit(INFOS_GET_INFO_LIST_SUCCESS, true)
+
+        var pagination = {
+          current_page: 1,
+          total: 0,
+        }
+        if (fnCheckProp(response.data.pagination, 'pagination')) {
+          pagination = response.data.pagination
+        }
+        var configs = {
+          moduleActive: {
+            name: MODULE_MODULE_GIAO_XU,
+            actionList: ACTION_GET_INFO_BY_ID,
+          },
+          collectionData: pagination,
+        }
+        dispatch('setConfigApp', configs, {
+          root: true,
+        })
+        },
+        (errors) => {
+          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+        },
+        infoId
       )
       dispatch(ACTION_SET_LOADING, false)
     },
