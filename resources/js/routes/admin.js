@@ -1,7 +1,5 @@
 import AuthLayout from 'v@admin/layouts/auth'
 import Login from 'v@admin/auth/Login'
-
-/*default layout*/
 import DefaultLayout from 'v@admin/layouts/default'
 import LinhMucPage from 'v@admin/linhmucs'
 import LinhMucBangCapPage from 'v@admin/linhmucbangcaps'
@@ -29,6 +27,7 @@ import GiaoPhanCatesPage from 'v@admin/giaophancates'
 import RestrictIpsPage from 'v@admin/restrictips'
 import AlbumsPage from 'v@admin/albums'
 import GroupAlbumsPage from 'v@admin/groupalbums'
+import NgayLePage from 'v@admin/ngayles';
 
 import {
   config,
@@ -1400,6 +1399,32 @@ export default [{
         },
       },
     }],
-  }],
+  },  {
+    path: 'ngay-les',
+    component: {
+        render: c => c('router-view')
+    },
+    children: [{
+        path: '',
+        component: NgayLePage,
+        name: 'admin.ngay.le.list',
+        meta: {
+            layout: DefaultLayout,
+            auth: true,
+            breadcrumbs: [{
+                name: 'Quản trị',
+                linkName: 'admin.dashboards',
+                linkPath: '/dashboards'
+            }, {
+                name: 'Ngày Lễ'
+            }],
+            header: 'Danh sách Ngày lễ',
+            role: 'admin',
+            title: 'Ngày Lễ | ' + config.site_name,
+            show: {
+                footer: true
+            }
+        }
+    },]
+},],
 }]
-  
