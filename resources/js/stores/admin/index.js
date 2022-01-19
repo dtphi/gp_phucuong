@@ -25,39 +25,12 @@ import chuc_vu from './chucvus'
 import le_chinh from './lechinhs'
 import restrict_ip from './restrictips'
 import albums from './albums'
+import ngay_le from './ngayles';
 import group_albums from './groupalbums'
 import danhmuc_giaophan from './giaophandanhmucs'
 import tintuc_giaophan from './giaophantintucs'
 import createLogger from '../../plugins/logger'
 import { fnCheckProp, } from '@app/common/util'
-
-import auth from './auth';
-import layout from './layout';
-import dashboard from './dashboad';
-import user from './users';
-import info from './infos';
-import news_category from './categories';
-import app_module from './modules';
-import linh_muc from './linhmucs';
-import bang_cap from './linhmucbangcaps';
-import chuc_thanh from './linhmucchucthanhs';
-import van_thu from './linhmucvanthus';
-import thuyen_chuyen from './linhmucthuyenchuyens';
-import giao_phan from './giaophans';
-import giao_hat from './giaohats';
-import giao_xu from './giaoxus';
-import giao_diem from './giaodiems';
-import cong_doan_tu_si from './congdoantusis';
-import dong from './dongs';
-import co_so from './cosos';
-import ban_chuyen_trach from './banchuyentrachs';
-import thanh from './thanhs';
-import chuc_vu from './chucvus';
-import le_chinh from './lechinhs';
-import ngay_le from './ngayles';
-import danhmuc_giaophan from './giaophandanhmucs';
-import tintuc_giaophan from './giaophantintucs';
-import createLogger from '../../plugins/logger';
 
 Vue.use(Vuex)
 
