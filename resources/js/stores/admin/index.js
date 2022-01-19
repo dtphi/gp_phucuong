@@ -25,12 +25,12 @@ import chuc_vu from './chucvus'
 import le_chinh from './lechinhs'
 import restrict_ip from './restrictips'
 import albums from './albums'
+import ngay_le from './ngayles';
 import group_albums from './groupalbums'
 import danhmuc_giaophan from './giaophandanhmucs'
 import tintuc_giaophan from './giaophantintucs'
 import createLogger from '../../plugins/logger'
 import { fnCheckProp, } from '@app/common/util'
-
 
 Vue.use(Vuex)
 
@@ -186,6 +186,7 @@ export default new Vuex.Store({
     thanh,
     chuc_vu,
     le_chinh,
+    ngay_le,
     danhmuc_giaophan,
     tintuc_giaophan,
     restrict_ip,

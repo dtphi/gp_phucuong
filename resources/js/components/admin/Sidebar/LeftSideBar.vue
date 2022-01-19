@@ -131,6 +131,11 @@
               >
             </li>
             <li>
+            <a :href="_getHref('ngay-les')">
+              <span>{{ $options.setting.ngay_les_title }}</span></a
+            >
+          </li>
+            <li>
               <a :href="_getHref('thanhs')">
                 <span>{{ $options.setting.thanhs_title }}</span></a
               >
@@ -426,6 +431,7 @@ export default {
     thanhs_title: 'Thánh',
     chuc_vus_title: 'Chức vụ',
     le_chinhs_title: 'Lễ chính',
+    ngay_les_title: "Ngày lễ",
     giaophan_tintucs_title: 'Giáo phận tin tức',
     restrict_ips_title: 'Restrict ip',
     album_root_title: 'Album hình ảnh',
