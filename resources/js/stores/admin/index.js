@@ -25,7 +25,7 @@ import chuc_vu from './chucvus'
 import le_chinh from './lechinhs'
 import restrict_ip from './restrictips'
 import albums from './albums'
-import ngay_le from './ngayles';
+import ngay_le from './ngayles'
 import group_albums from './groupalbums'
 import danhmuc_giaophan from './giaophandanhmucs'
 import tintuc_giaophan from './giaophantintucs'
