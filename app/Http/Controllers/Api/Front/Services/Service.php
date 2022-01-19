@@ -226,7 +226,7 @@ class Service implements BaseModel
 	public function apiGetLinhMucPhoXuByGiaoXuId($giaoXuId = null) {
 		$linhMuc = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
 		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', 4)
-		->where(Tables::$linhmuc_thuyenchuyens . 'chuc_vu_active', 1)
+		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_active', 1)
 		->orderByDesc('from_date')->limit(3)
 		->get();
 
@@ -421,7 +421,7 @@ class Service implements BaseModel
       return $list_giaoxu->paginate($limit);
   }
 
-  public function apiGetListChucVu() { // List Giao Phan
+  public function apiGetListChucVu() { 
     $query = $this->modelChucVu->select('id', 'name')
             ->orderBy('id', 'ASC')->get();
     return $query;
