@@ -14,8 +14,12 @@ use App\Models\InformationRelated;
 use App\Models\InformationToCategory;
 use App\Models\InformationToDownload;
 use App\Models\InformationCarousel;
+use App\Models\Albums;
+use App\Models\Tag;
 use DB;
 use Illuminate\Support\Str;
+use Auth;
+use yii\debug\models\search\Log;
 
 final class InformationService implements BaseModel, InformationModel
 {
@@ -29,6 +33,8 @@ final class InformationService implements BaseModel, InformationModel
      */
     private $modelDes = null;
 
+    private $modelAlbum = null;
+
     /**
      * @author : dtphi .
      * AdminService constructor.
@@ -37,6 +43,7 @@ final class InformationService implements BaseModel, InformationModel
     {
         $this->model    = new Information();
         $this->modelDes = new InformationDescription();
+        $this->modelAlbum = new Albums();
     }
 
     /**
@@ -142,7 +149,7 @@ final class InformationService implements BaseModel, InformationModel
             }
             $this->model->name_slug = Str::slug($data['name'] . ' ' . $infoId);
             $this->model->save();
-
+            $data['tag'] = $this->_getTagIds($data['tag']);
             InformationDescription::insertByInfoId($infoId, $data['name'], htmlentities($data['description']),
                 $data['tag'],
                 $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
@@ -152,6 +159,10 @@ final class InformationService implements BaseModel, InformationModel
                     InformationImage::insertByInfoId($infoId, $information_image['image'],
                         $information_image['sort_order']);
                 }
+            }
+
+            if (isset($data['album'])) {
+                InformationImage::insertAlbumByInfoId($infoId, $data['album']);
             }
 
             if (isset($data['downloads']) && !empty($data['downloads'])) {
@@ -202,6 +213,29 @@ final class InformationService implements BaseModel, InformationModel
         return $this->model;
     }
 
+    private function _getTagIds($tag = '') 
+    {
+        $tagIds = [];
+        if (!empty($tag)) {
+            $arrTags = explode(',', $tag);
+            foreach ($arrTags as $tag) {
+                $tagSlug = Str::slug($tag);
+                $model = Tag::updateOrCreate(
+                    ['name_slug' => $tagSlug],
+                    [
+                        'name' => $tag, 
+                        'update_user' => Auth::user()->id
+                    ]
+                );
+                if ($model) {
+                    $tagIds[] = $model->id;
+                }
+            }
+        }
+
+        return implode('|',$tagIds);
+    }
+
     /**
      * @author : dtphi .
      * @param null $infoId
@@ -240,6 +274,7 @@ final class InformationService implements BaseModel, InformationModel
             $model->name_slug = Str::slug($model->name . ' ' . $infoId);
             $model->save();
 
+            $data['tag'] = $this->_getTagIds($data['tag']);
             $modelDes = $model->infoDes;
             if ($modelDes) {
                 $dataDes = [
@@ -261,6 +296,10 @@ final class InformationService implements BaseModel, InformationModel
                     InformationImage::insertByInfoId($infoId, $information_image['image'],
                         $information_image['sort_order']);
                 }
+            }
+
+            if (isset($data['album'])) {
+                InformationImage::insertAlbumByInfoId($infoId, $data['album']);
             }
 
             InformationToDownload::fcDeleteByInfoId($infoId);
@@ -365,6 +404,15 @@ final class InformationService implements BaseModel, InformationModel
         }
 
         return $query;
+    }
+
+    public function apiGetAlbumList($data = array())
+    {
+        $query = $this->modelAlbum->select()
+                ->where('status', 1)
+                ->orderByDesc('updated_at', 'DESC');
+
+        return $query->get();
     }
 
     /**

@@ -35,10 +35,11 @@ class NewsGroupController extends ApiController
      * @param newsGpSv $newsGpSv
      * @param array $middleware
      */
-    public function __construct(NewsGroupRequest $request, newsGpSv $newsGpSv, array $middleware = [])
+    public function __construct(newsGpSv $newsGpSv, array $middleware = [])
     {
         $this->newsGpSv = $newsGpSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new NewsGroupRequest);
     }
 
     /**

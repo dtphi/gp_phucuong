@@ -50,7 +50,6 @@
               <i class="fa fa-pencil"></i>{{ $options.setting.frm_title }}
             </h3>
           </div>
-
           <div class="panel-body">
             <info-add-form ref="formAddGiaoXu"></info-add-form>
           </div>
@@ -61,16 +60,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-
-import Breadcrumb from "com@admin/Breadcrumb";
-import TheBtnBackListPage from "./components/TheBtnBackListPage";
-import InfoAddForm from "com@admin/Form/GiaoXus/AddForm";
-import { MODULE_MODULE_GIAO_XU_ADD } from "store@admin/types/module-types";
-import { ACTION_RESET_NOTIFICATION_INFO } from "store@admin/types/action-types";
+import { mapState, mapActions, } from 'vuex'
+import Breadcrumb from 'com@admin/Breadcrumb'
+import TheBtnBackListPage from './components/TheBtnBackListPage'
+import InfoAddForm from 'com@admin/Form/GiaoXus/AddForm'
+import { MODULE_MODULE_GIAO_XU_ADD, } from 'store@admin/types/module-types'
+import { ACTION_RESET_NOTIFICATION_INFO, } from 'store@admin/types/action-types'
 
 export default {
-  name: "GiaoXuAdd",
+  name: 'GiaoXuAdd',
   components: {
     Breadcrumb,
     TheBtnBackListPage,
@@ -79,70 +77,65 @@ export default {
   data() {
     return {
       fullPage: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_GIAO_XU_ADD, {
-      loading: (state) => state.loading,
-      errors: (state) => state.errors,
-      insertSuccess: (state) => state.insertSuccess,
+      loading: state => state.loading,
+      errors: state => state.errors,
+      insertSuccess: state => state.insertSuccess,
     }),
     _errors() {
-      return this.errors.length;
+      return this.errors.length
     },
   },
   watch: {
-    insertSuccess(newValue, oldValue) {
+    insertSuccess(newValue) {
       if (newValue) {
-        console.log('Insert Giao Xu success');
-        this._notificationUpdate(newValue);
+        this._notificationUpdate(newValue)
       }
     },
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_ADD, [ACTION_RESET_NOTIFICATION_INFO]),
     _errorToArrs() {
-      let errs = [];
+      let errs = []
       if (
         this.errors.length &&
-        typeof this.errors[0].messages !== "undefined"
+        typeof this.errors[0].messages !== 'undefined'
       ) {
-        errs = Object.values(this.errors[0].messages);
+        errs = Object.values(this.errors[0].messages)
       }
-
       if (Object.entries(errs).length === 0 && this.errors.length) {
-        errs.push(this.$options.setting.error_msg_system);
+        errs.push(this.$options.setting.error_msg_system)
       }
-
-      return errs;
+      
+      return errs
     },
     _submitInfo() {
-      const _self = this;
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formAddGiaoXu._submitInfo();
+          this.$refs.formAddGiaoXu._submitInfo()
         }
-      });
+      })
     },
     _submitInfoBack() {
-      const _self = this;
-
-      _self.$refs.observerInfo.validate().then((isValid) => {
+      this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
-          _self.$refs.formAddGiaoXu._submitInfoBack();
+          this.$refs.formAddGiaoXu._submitInfoBack()
         }
-      });
+      })
     },
     _notificationUpdate(notification) {
-      this.$notify(notification);
-      this[ACTION_RESET_NOTIFICATION_INFO]("");
+      this.$notify(notification)
+      this[ACTION_RESET_NOTIFICATION_INFO]('')
     },
   },
   setting: {
-    panel_title: "Giáo Xứ",
-    frm_title: "Thêm Giáo Xứ",
-    btn_save_txt: "Lưu",
-    btn_save_back_txt: "Lưu trở về danh sách",
+    panel_title: 'Giáo Xứ',
+    frm_title: 'Thêm Giáo Xứ',
+    btn_save_txt: 'Lưu',
+    btn_save_back_txt: 'Lưu trở về danh sách',
   },
-};
+}
 </script>

@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import InfoList from "./ChucThanhs/InfoList";
+import InfoList from './ChucThanhs/InfoList'
 
 export default {
-  name: "TabChucThanhForm",
+  name: 'TabChucThanhForm',
   components: {
     InfoList,
   },
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       chuc_thanhs: [],
-    };
+    }
   },
-};
+}
 </script>

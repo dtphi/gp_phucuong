@@ -1,7 +1,7 @@
 <template>
   <aside class="main-sidebar elevation-4">
     <a href="http://haydesachnoipodcast.com" class="brand-link">
-      <logo class="brand-image"></logo>
+      <app-logo class="brand-image"></app-logo>
       <span class="brand-text font-weight-bold">Giáo Phận</span>
     </a>
     <div class="sidebar">
@@ -40,7 +40,7 @@
             iconName="file"
             :active-item="activeItem"
           />
-          <logout v-if="authenticated" />
+          <app-logout v-if="authenticated" />
         </ul>
       </nav>
     </div>
@@ -48,42 +48,42 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
-import Logout from "./Logout";
-import NavLink from "./NavLink";
-import { MODULE_AUTH, MODULE_LAYOUT } from "store@admin/types/module-types";
-import Logo from "com@admin/Logo";
+import { mapState, mapGetters, mapActions, } from 'vuex'
+import AppLogout from './Logout'
+import NavLink from './NavLink'
+import { MODULE_AUTH, MODULE_LAYOUT, } from 'store@admin/types/module-types'
+import AppLogo from 'com@admin/Logo'
 
 export default {
-  name: "Sidebar",
+  name: 'SidebarMain',
   components: {
-    Logo,
-    Logout,
+    AppLogo,
+    AppLogout,
     NavLink,
   },
   computed: {
-    ...mapGetters(MODULE_AUTH, ["authenticated"]),
+    ...mapGetters(MODULE_AUTH, ['authenticated']),
     ...mapState(MODULE_LAYOUT, {
       sidebarStatic: (state) => state.sidebarStatic,
       sidebarOpened: (state) => !state.sidebarClose,
       activeItem: (state) => state.sidebarActiveElement,
     }),
-    ...mapState(["cfApp"]),
+    ...mapState(['cfApp']),
   },
   methods: {
-    ...mapActions(MODULE_LAYOUT, ["changeSidebarActive", "switchSidebar"]),
+    ...mapActions(MODULE_LAYOUT, ['changeSidebarActive', 'switchSidebar']),
     setActiveByRoute() {
-      const paths = this.$route.fullPath.split("/admin");
-      var pathActive = paths.pop();
+      const paths = this.$route.fullPath.split('/admin')
+      var pathActive = paths.pop()
 
-      if (pathActive === "/news") {
-        pathActive = "/infomations";
+      if (pathActive === '/news') {
+        pathActive = '/infomations'
       }
-      this.changeSidebarActive(pathActive);
+      this.changeSidebarActive(pathActive)
     },
   },
   created() {
-    this.setActiveByRoute();
+    this.setActiveByRoute()
   },
-};
+}
 </script>

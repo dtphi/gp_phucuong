@@ -24,7 +24,7 @@
       </div>
     </div>
     <!-- Giáo xứ thuộc giáo phận -->
-    <div class="form-group required">
+    <!--<div class="form-group required">
       <label class="col-sm-2 control-label" for="input-info-giaophan"
         >Thuộc giáo phận</label
       >
@@ -46,7 +46,7 @@
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
-    </div>
+    </div>-->
     <!-- Địa chỉ-->
     <div class="form-group">
       <label for="input-info-dia-chi" class="col-sm-2 control-label"
@@ -200,17 +200,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { config } from "@app/common/config";
-import { fn_get_tinymce_langs_url } from "@app/api/utils/fn-helper";
-import { MODULE_MODULE_DONG_ADD } from "store@admin/types/module-types";
-import tinymce from "vue-tinymce-editor";
+import { mapState, } from 'vuex'
+import { config, } from '@app/common/config'
+import { fn_get_tinymce_langs_url, } from '@app/api/utils/fn-helper'
+import { MODULE_MODULE_DONG_ADD, } from 'store@admin/types/module-types'
+import { fnCheckProp, } from '@app/common/util'
 
 export default {
-  name: "TabGeneralFormAddDong",
-  components: {
-    tinymce
-  },
+  name: 'TabGeneralFormAddDong',
   props: {
     groupData: {
       type: Object,
@@ -218,108 +215,108 @@ export default {
   },
   computed: {
     ...mapState(MODULE_MODULE_DONG_ADD, {
-      groupData: (state) => state.info.data || {},
       isGiaoPhan: (state) => {
-        return state.listGiaoPhan;
+        return state.listGiaoPhan
       },
     }),
   },
   data() {
-    const _self = this;
+    const _self = this
+
     return {
       editor: null,
       fn: null,
       mm: new MM({
-        el: "#modal-general-info-manager",
+        el: '#modal-general-info-manager',
         api: {
-          baseUrl: window.origin + "/api/mmedia",
-          listUrl: "list",
-          uploadUrl: "upload",
+          baseUrl: window.origin + '/api/mmedia',
+          listUrl: 'list',
+          uploadUrl: 'upload',
         },
-        onSelect: function (fi) {
-          if (typeof fi === "object") {
-            if (fi.hasOwnProperty("selected") && fi.selected) {
-              if (fi.selected.hasOwnProperty("path")) {
+        onSelect: function(fi) {
+          if (typeof fi === 'object') {
+            if (fnCheckProp(fi, 'selected') && fi.selected) {
+              if (fnCheckProp(fi.selected, 'path')) {
                 if (_self.fn) {
-                  _self.fn("Image/NewPicture/" + fi.selected.path, fi.selected);
+                  _self.fn('Image/NewPicture/' + fi.selected.path, fi.selected)
                 }
-                document.getElementById("media-file-manager-content").style =
-                  "display:none";
+                document.getElementById('media-file-manager-content').style =
+                  'display:none'
               }
             }
           }
         },
       }),
       options: {
-        language_url: fn_get_tinymce_langs_url("vi_VN"),
-        height: "200",
-        image_prepend_url: window.origin + "/",
-        referrer_policy: "strict-origin-when-cross-origin",
-        file_picker_callback: function (callback, value, meta) {
-          if (meta.filetype === "file") {
-            _self.fn = callback;
-            document.getElementById("media-file-manager-content").style =
-              "display:block";
+        language_url: fn_get_tinymce_langs_url('vi_VN'),
+        height: '200',
+        image_prepend_url: window.origin + '/',
+        referrer_policy: 'strict-origin-when-cross-origin',
+        file_picker_callback: function(callback, value, meta) {
+          if (meta.filetype === 'file') {
+            _self.fn = callback
+            document.getElementById('media-file-manager-content').style =
+              'display:block'
           }
 
-          if (meta.filetype === "image") {
+          if (meta.filetype === 'image') {
             if (_self.mm == null) {
               _self.mm = new MM({
-                el: "#modal-general-info-manager",
+                el: '#modal-general-info-manager',
                 api: {
-                  baseUrl: window.origin + "/api/mmedia",
-                  listUrl: "list",
-                  uploadUrl: "upload",
+                  baseUrl: window.origin + '/api/mmedia',
+                  listUrl: 'list',
+                  uploadUrl: 'upload',
                 },
-                onSelect: function (fi) {
-                  if (typeof fi === "object") {
-                    if (fi.hasOwnProperty("selected") && fi.selected) {
-                      if (fi.selected.hasOwnProperty("path")) {
+                onSelect: function(fi) {
+                  if (typeof fi === 'object') {
+                    if (fnCheckProp(fi, 'selected') && fi.selected) {
+                      if (fnCheckProp(fi.selected, 'path')) {
                         if (_self.fn) {
                           _self.fn(
-                            "Image/NewPicture/" + fi.selected.path,
+                            'Image/NewPicture/' + fi.selected.path,
                             fi.selected
-                          );
+                          )
                         }
                         document.getElementById(
-                          "media-file-manager-content"
-                        ).style = "display:none";
+                          'media-file-manager-content'
+                        ).style = 'display:none'
                       }
                     }
                   }
                 },
-              });
+              })
 
-              document.getElementById("media-file-manager-content").style =
-                "display:block";
+              document.getElementById('media-file-manager-content').style =
+                'display:block'
             } else {
-              _self.fn = callback;
-              document.getElementById("media-file-manager-content").style =
-                "display:block";
+              _self.fn = callback
+              document.getElementById('media-file-manager-content').style =
+                'display:block'
             }
           }
 
-          if (meta.filetype === "media") {
-            _self.fn = callback;
-            document.getElementById("media-file-manager-content").style =
-              "display:block";
+          if (meta.filetype === 'media') {
+            _self.fn = callback
+            document.getElementById('media-file-manager-content').style =
+              'display:block'
           }
         },
         toolbar2:
-          "undo redo | styleselect | fontsizeselect | fontselect | image ",
+          'undo redo | styleselect | fontsizeselect | fontselect | image ',
         font_formats:
-          "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
+          'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
       },
-    };
+    }
   },
   watch: {
     groupData: {
       immediate: true,
       deep: true,
-      handler(newValue, oldValue) {
+      handler(newValue) {
         if (Object.keys(newValue).length) {
           return (newValue.khuvuc =
-            newValue.khuvuc === null ? "" : newValue.khuvuc);
+            newValue.khuvuc === null ? '' : newValue.khuvuc)
         }
       },
     },
@@ -327,5 +324,5 @@ export default {
   setting: {
     cf: config,
   },
-};
+}
 </script>

@@ -139,7 +139,7 @@
       <td>{{ $options.setting.info_action_title }}</td>
       <td class="text-right">
         <button
-          @click="_addThuyenChuyenForm(item)"
+          @click="_addThuyenChuyenForm()"
           type="button"
           data-toggle="tooltip"
           title="Cập nhật thuyên chuyển"
@@ -168,22 +168,20 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import linhMucMix from "@app/mixins/admin/linhmuc";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
-import InfoGiaoXuAutocomplete from "../../Groups/InfoGiaoXuAutocomplete";
-import InfoChucVuAutocomplete from "../../Groups/InfoChucVuAutocomplete";
-import InfoDucChaAutocomplete from "../../Groups/InfoDucChaAutocomplete";
-import InfoCoSoGiaoPhanAutocomplete from "../../Groups/InfoCoSoGiaoPhanAutocomplete";
-import InfoDongAutocomplete from "../../Groups/InfoDongAutocomplete";
-import InfoBanChuyenTrachAutocomplete from "../../Groups/InfoBanChuyenTrachAutocomplete";
+import { mapActions, } from 'vuex'
+import linhMucMix from '@app/mixins/admin/linhmuc'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
+import InfoGiaoXuAutocomplete from '../../Groups/InfoGiaoXuAutocomplete'
+import InfoChucVuAutocomplete from '../../Groups/InfoChucVuAutocomplete'
+import InfoDucChaAutocomplete from '../../Groups/InfoDucChaAutocomplete'
+import InfoCoSoGiaoPhanAutocomplete from '../../Groups/InfoCoSoGiaoPhanAutocomplete'
+import InfoDongAutocomplete from '../../Groups/InfoDongAutocomplete'
+import InfoBanChuyenTrachAutocomplete from '../../Groups/InfoBanChuyenTrachAutocomplete'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   mixins: [linhMucMix.tabData],
   components: {
-    BtnAdd,
     InfoGiaoXuAutocomplete,
     InfoChucVuAutocomplete,
     InfoDucChaAutocomplete,
@@ -198,28 +196,29 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
-      "removeThuyenChuyen",
-      "ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU",
-      "ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU",
-      "ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA",
-      "ACTION_UPDATE_DROPDOWN_TO_CHUC_VU",
-      "ACTION_UPDATE_DROPDOWN_TO_GIAO_XU",
-      "ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN",
-      "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG",
-      "ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH",
-      "addThuyenChuyen"
+      'removeThuyenChuyen',
+      'ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU',
+      'ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU',
+      'ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA',
+      'ACTION_UPDATE_DROPDOWN_TO_CHUC_VU',
+      'ACTION_UPDATE_DROPDOWN_TO_GIAO_XU',
+      'ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN',
+      'ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG',
+      'ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH',
+      'addThuyenChuyen'
     ]),
-    _addThuyenChuyenForm(item) {
-      if (this.item.id) {
+    _addThuyenChuyenForm() {
+      const id = this.item?.id
+      if (id) {
         this.addThuyenChuyen({
           action: 'create.update.thuyen.chuyen.db',
-          info: this.item
-        });
+          info: this.item,
+        })
       }
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

@@ -88,11 +88,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoItem",
+  name: 'TheInfoItem',
   props: {
     item: {
       default: {},
@@ -101,36 +101,36 @@ export default {
   data() {
     return {
       isEdit: false,
-    };
+    }
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeVanThu", "addVanThus"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeVanThu', 'addVanThus']),
     _removeItem() {
       this.removeVanThu({
-        action: "removeVanThu",
+        action: 'removeVanThu',
         item: this.item,
-      });
+      })
     },
     _openEditForm() {
-      this.isEdit = !this.isEdit;
+      this.isEdit = !this.isEdit
     },
     _updateVanThuForm() {
       if (this.item.id) {
         this.addVanThus({
           action: 'create.update.van.thu.db',
-          info: this.item
-        });
+          info: this.item,
+        })
       }
     },
     _getTypeText() {
-      return this.item.type == 0 ? "Dir" : "File";
+      return this.item.type == 0 ? 'Dir' : 'File'
     },
     _getStatus() {
-      return this.item.active == 1 ? "Xảy ra" : "Ẩn";
+      return this.item.active == 1 ? 'Xảy ra' : 'Ẩn'
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

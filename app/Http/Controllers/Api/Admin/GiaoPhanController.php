@@ -29,10 +29,11 @@ class GiaoPhanController extends ApiController
      * @param GphSv $gphSv
      * @param array $middleware
      */
-    public function __construct(GiaoPhanRequest $request, GphSv $gphSv, array $middleware = [])
+    public function __construct(GphSv $gphSv, array $middleware = [])
     {
         $this->gphSv = $gphSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new GiaoPhanRequest);
     }
 
     /**

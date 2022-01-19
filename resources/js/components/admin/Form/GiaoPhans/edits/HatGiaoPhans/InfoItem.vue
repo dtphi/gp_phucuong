@@ -68,12 +68,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import InfoGiaoHatAutocomplete from "../Groups/InfoGiaoHatAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete'
 
 export default {
-  name: "TheInfoItem",
+  name: 'TheInfoItem',
   components: {
     InfoGiaoHatAutocomplete,
   },
@@ -85,30 +85,30 @@ export default {
   data() {
     return {
       isEdit: false,
-    };
+    }
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan", "ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ['removeHatGiaoPhan', 'ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST']),
     _removeItem() {
       this.removeHatGiaoPhan({
-        action: "removeHatGiaoPhan",
+        action: 'removeHatGiaoPhan',
         item: this.item,
-      });
+      })
     },
     _openEditForm() {
-      this.isEdit = !this.isEdit;
+      this.isEdit = !this.isEdit
     },
     _updateHatForm() {
       if (this.item.giao_hat_id) {
         this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_LIST({
           action: 'create.update.hat.db',
-          hat: this.item
-        });
+          hat: this.item,
+        })
       }
     },
     _getStatus() {
-      return this.item.active == 1 ? "Xảy ra" : "Ẩn";
+      return this.item.active == 1 ? 'Xảy ra' : 'Ẩn'
     },
-  }
-};
+  },
+}
 </script>

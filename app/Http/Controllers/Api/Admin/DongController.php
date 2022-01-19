@@ -29,10 +29,11 @@ class DongController extends ApiController
    * @param DongSv $dongSv
    * @param array $middleware
    */
-  public function __construct(DongRequest $request, DongSv $dongSv, array $middleware = [])
+  public function __construct(DongSv $dongSv, array $middleware = [])
   {
     $this->dongSv = $dongSv;
     parent::__construct($middleware);
+    $this->_initAuthor(new DongRequest);
   }
 
   /**
@@ -176,7 +177,6 @@ class DongController extends ApiController
   {
     $formData = $request->all();
     if ($result = $this->dongSv->apiUpdate($model, $formData)) {
-      dd($result);
       return $this->respondUpdated($result);
     }
 

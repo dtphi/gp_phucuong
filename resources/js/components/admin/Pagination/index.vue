@@ -50,12 +50,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import ResourcePagination from "./ResourcePagination";
-import CollectionPagination from "./CollectionPagination";
+import { mapGetters, mapState, } from 'vuex'
+import ResourcePagination from './ResourcePagination'
+import CollectionPagination from './CollectionPagination'
 
 export default {
-  name: "Pagination",
+  name: 'AdminPagination',
   props: {
     isResource: {
       type: Boolean,
@@ -70,80 +70,89 @@ export default {
     return {
       limit: 5,
       showDisabled: true,
-      size: "default",
-      align: "right",
-    };
+      size: 'default',
+      align: 'right',
+    }
   },
   computed: {
+    ...mapState({
+      searchs: (state) => state.cfApp.searchs,
+    }),
     _isResource() {
-      return this.isResource;
+      return this.isResource
     },
     ...mapGetters([
-      "collectionPaginationData",
-      "resourcePaginationData",
-      "moduleNameActive",
-      "moduleActionListActive",
+      'collectionPaginationData',
+      'resourcePaginationData',
+      'moduleNameActive',
+      'moduleActionListActive'
     ]),
     _resourceData() {
-      return this.resourcePaginationData;
+      return this.resourcePaginationData
     },
     _collectionData() {
-      return this.collectionPaginationData;
+      return this.collectionPaginationData
     },
   },
   methods: {
     _paginationMsg(from, to, total) {
-      var textShow = "Hiển thị 0 đến 0 của 0";
-      if (typeof from !== "undefined" && typeof from !== null) {
-        textShow = `Hiển thị ${from} đến ${to} của ${total}`;
+      var textShow = 'Hiển thị 0 đến 0 của 0'
+      const isFrom = typeof from
+      if (isFrom !== 'undefined' && isFrom !== null) {
+        textShow = `Hiển thị ${from} đến ${to} của ${total}`
       }
-      return textShow;
+      
+      return textShow
     },
     _getTextPaginationCollection() {
-      const from = this.collectionPaginationData.from;
-      const to = this.collectionPaginationData.to;
-      const total = this.collectionPaginationData.total;
-      return this._paginationMsg(from, to, total);
+      const from = this.collectionPaginationData.from
+      const to = this.collectionPaginationData.to
+      const total = this.collectionPaginationData.total
+      
+      return this._paginationMsg(from, to, total)
     },
     _getCollectionResults(page) {
-      const _self = this;
+      const _self = this
       if (!page) {
-        page = 1;
+        page = 1
       }
       const actionName =
-        _self.moduleNameActive + "/" + _self.moduleActionListActive;
+        _self.moduleNameActive + '/' + _self.moduleActionListActive
       _self.$store.dispatch(actionName, {
+        ...this.searchs,
         perPage: _self.collectionPaginationData.per_page,
         page: page,
-      });
+      })
     },
     _getTextPagination() {
       //console.log(`I ${'>:D<'} C#`)
-      const from = this.resourcePaginationData.meta.from;
-      const to = this.resourcePaginationData.meta.to;
-      const total = this.resourcePaginationData.meta.total;
-      return this._paginationMsg(from, to, total);
+      const from = this.resourcePaginationData.meta.from
+      const to = this.resourcePaginationData.meta.to
+      const total = this.resourcePaginationData.meta.total
+      
+      return this._paginationMsg(from, to, total)
     },
     _getResourceResults(page) {
-      const _self = this;
+      const _self = this
       if (!page) {
-        page = 1;
+        page = 1
       }
       const actionName =
-        _self.moduleNameActive + "/" + _self.moduleActionListActive;
+        _self.moduleNameActive + '/' + _self.moduleActionListActive
       _self.$store.dispatch(actionName, {
+        ...this.searchs,
         perPage: _self.resourcePaginationData.meta.per_page,
         page: page,
-      });
+      })
     },
   },
   watch: {
     limit(newVal) {
-      this.limit = parseInt(newVal);
+      this.limit = parseInt(newVal)
       if (this.limit < 0) {
-        this.limit = 0;
+        this.limit = 0
       }
     },
   },
-};
+}
 </script>

@@ -79,12 +79,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_LINH_MUC_ADD } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import BtnAdd from './BtnAdd'
+import { MODULE_MODULE_LINH_MUC_ADD, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
   },
@@ -95,16 +95,16 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_ADD, ["removeVanThu"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_ADD, ['removeVanThu']),
     _removeItem(item) {
       this.removeVanThu({
-        action: "removeVanThu",
+        action: 'removeVanThu',
         item: item,
-      });
+      })
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

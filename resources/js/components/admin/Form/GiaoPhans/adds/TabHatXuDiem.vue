@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_ADD } from "store@admin/types/module-types";
-import InfoList from "./HatXuDiemGiaoPhans/InfoList";
+import { mapGetters, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_ADD, } from 'store@admin/types/module-types'
+import InfoList from './HatXuDiemGiaoPhans/InfoList'
 
 export default {
-  name: "TabHatXuDiemForm",
+  name: 'TabHatXuDiemForm',
   components: {
     InfoList,
   },
@@ -24,12 +24,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(MODULE_MODULE_GIAO_PHAN_ADD, ["giaoXus"]),
+    ...mapGetters(MODULE_MODULE_GIAO_PHAN_ADD, ['giaoXus']),
   },
   data() {
     return {
       giao_phan_hat_xu_diems: [],
-    };
+    }
   },
-};
+}
 </script>

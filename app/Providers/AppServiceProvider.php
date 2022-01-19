@@ -7,6 +7,8 @@ use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\URL;
 use App\Models\PersonalAccessToken;
 use Illuminate\Support\Facades\Response;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,38 @@ class AppServiceProvider extends ServiceProvider
 
     /*=====================Front end======================== .*/
     $this->__bindFrontService();
+
+    if (config('app.env') !== 'production' && !empty(config('excel'))) {
+      $this->__exportRegistry();
+    }
+  }
+
+  private function __exportRegistry()
+  {
+    \Maatwebsite\Excel\Writer::macro('setCreator', function (\Maatwebsite\Excel\Writer $writer, string $creator) {
+      $writer->getDelegate()->getProperties()->setCreator($creator);
+    });
+    \Maatwebsite\Excel\Sheet::macro('setOrientation', function (\Maatwebsite\Excel\Sheet $sheet, $orientation) {
+        $sheet->getDelegate()->getPageSetup()->setOrientation($orientation);
+    });
+    \Maatwebsite\Excel\Sheet::macro('styleCells', function (\Maatwebsite\Excel\Sheet $sheet, string $cellRange, array $style) {
+      //dd(get_class_methods($sheet->getDelegate()));
+      $sheetDelegate = $sheet->getDelegate();
+      $sheetDelegate->setCodeName('Log');
+      //dd(get_class_methods($sheetDelegate->getDefaultColumnDimension()));
+      $sheetDelegate->getDefaultRowDimension()->setRowHeight(18);
+      $sheetDelegate->getDefaultColumnDimension()->setWidth(4);
+      $sheetDelegate->getParent()->getDefaultStyle()->getBorders()->applyFromArray([
+          'borders' => [
+              'allBorders' => [
+                  'borderStyle' =>  Border::BORDER_THIN,
+                  'color' => ['argb' => Color::COLOR_RED]
+              ]
+          ]
+      ]);
+      //dd($sheetDelegate->getHighestRowAndColumn());
+      $sheetDelegate->getStyle($cellRange)->applyFromArray($style);
+    });
   }
 
   /**
@@ -128,6 +162,18 @@ class AppServiceProvider extends ServiceProvider
     $this->app->bind(
       \App\Http\Controllers\Api\Admin\Services\Contracts\GiaoPhanTinTucModel::class,
       \App\Http\Controllers\Api\Admin\Services\GiaoPhanTinTucService::class,
+    );
+    $this->app->bind(
+      \App\Http\Controllers\Api\Admin\Services\Contracts\RestrictIpModel::class,
+      \App\Http\Controllers\Api\Admin\Services\RestrictIpService::class,
+    );
+    $this->app->bind(
+      \App\Http\Controllers\Api\Admin\Services\Contracts\AlbumsModel::class,
+      \App\Http\Controllers\Api\Admin\Services\AlbumsService::class,
+    );
+    $this->app->bind(
+      \App\Http\Controllers\Api\Admin\Services\Contracts\GroupAlbumsModel::class,
+      \App\Http\Controllers\Api\Admin\Services\GroupAlbumsService::class,
     );
     $this->app->bind(
       \App\Http\Controllers\Api\Admin\Services\Contracts\NgayLeModel::class,

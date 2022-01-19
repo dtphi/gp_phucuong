@@ -1,14 +1,12 @@
-import adds from './add';
-import edits from './edit';
+import adds from './add'
+import edits from './edit'
 import {
   apiGetInfoById,
   apiGetGiaoPhanInfos,
   apiDeleteInfo,
-  apiGetDropdownCategories
-} from 'api@admin/giaophan';
-import {
-  MODULE_MODULE_GIAO_PHAN,
-} from '../types/module-types';
+  apiGetDropdownCategories,
+} from 'api@admin/giaophan'
+import { MODULE_MODULE_GIAO_PHAN, } from '../types/module-types'
 import {
   INFOS_SET_LOADING,
   INFOS_GET_INFO_LIST_SUCCESS,
@@ -19,20 +17,18 @@ import {
   INFOS_INFO_DELETE_BY_ID,
   INFOS_SET_INFO_DELETE_BY_ID_FAILED,
   INFOS_SET_INFO_DELETE_BY_ID_SUCCESS,
-  INFOS_SET_ERROR,
+  SET_ERROR,
   MODULE_UPDATE_SETTING_SUCCESS,
-} from '../types/mutation-types';
+} from '../types/mutation-types'
 import {
   ACTION_GET_INFO_LIST,
   ACTION_DELETE_INFO_BY_ID,
   ACTION_SET_INFO_DELETE_BY_ID,
   ACTION_SET_LOADING,
-  ACTION_SEARCH_ALL,
-  ACTION_RESET_NOTIFICATION_INFO
-} from '../types/action-types';
-import {
-  fn_redirect_url
-} from '@app/api/utils/fn-helper';
+  ACTION_RESET_NOTIFICATION_INFO,
+} from '../types/action-types'
+import { fn_redirect_url, } from '@app/api/utils/fn-helper'
+import { fnCheckProp, } from '@app/common/util'
 
 const defaultState = () => {
   return {
@@ -41,12 +37,12 @@ const defaultState = () => {
     infoDelete: null,
     isDelete: false,
     isList: false,
-    dropdownGiaoHats:[],
-    dropdownGiaoDiems:[],
-    dropdownCongDoanTuSis:[],
+    dropdownGiaoHats: [],
+    dropdownGiaoDiems: [],
+    dropdownCongDoanTuSis: [],
     loading: false,
     updateSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -65,21 +61,21 @@ export default {
     },
     isError(state) {
       return state.errors.length
-    }
+    },
   },
 
   mutations: {
     SET_DROPDOWN_CONG_DOAN_TU_SI_LIST(state, payload) {
-      state.dropdownCongDoanTuSis = payload;
+      state.dropdownCongDoanTuSis = payload
     },
     SET_DROPDOWN_GIAO_DIEM_LIST(state, payload) {
-      state.dropdownGiaoDiems = payload;
+      state.dropdownGiaoDiems = payload
     },
     SET_DROPDOWN_GIAO_HAT_LIST(state, payload) {
-      state.dropdownGiaoHats = payload;
+      state.dropdownGiaoHats = payload
     },
-    [MODULE_UPDATE_SETTING_SUCCESS](state,payload) {
-      state.updateSuccess = payload;
+    [MODULE_UPDATE_SETTING_SUCCESS](state, payload) {
+      state.updateSuccess = payload
     },
     [INFOS_SET_INFO_LIST](state, payload) {
       state.infos = payload
@@ -88,10 +84,10 @@ export default {
       state.infoDelete = payload
     },
     [INFOS_SET_INFO_DELETE_BY_ID_FAILED](state, payload) {
-      state.isDelete = payload;
+      state.isDelete = payload
     },
     [INFOS_SET_INFO_DELETE_BY_ID_SUCCESS](state, payload) {
-      state.isDelete = payload;
+      state.isDelete = payload
     },
     [INFOS_GET_INFO_LIST_SUCCESS](state, payload) {
       state.isList = payload
@@ -103,169 +99,152 @@ export default {
       state.isDelete = payload
     },
     [INFOS_DELETE_INFO_BY_ID_FAILED](state, payload) {
-      state.isDelete = false;
-      state.errors = payload;
+      state.isDelete = false
+      state.errors = payload
     },
     [INFOS_SET_LOADING](state, payload) {
       state.loading = payload
     },
-    [INFOS_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
-    }
+    },
   },
 
   actions: {
-    ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST({
-      commit
-    }, filterName) {
+    ACTION_GET_DROPDOWN_CONG_DOAN_TU_SI_LIST({ commit, }, filterName) {
       const params = {
         filter_name: filterName,
-        action: 'dropdown.cong.doan.tu.si'
+        action: 'dropdown.cong.doan.tu.si',
       }
       apiGetDropdownCategories(
         (result) => {
-          commit('SET_DROPDOWN_CONG_DOAN_TU_SI_LIST', result);
+          commit('SET_DROPDOWN_CONG_DOAN_TU_SI_LIST', result)
         },
         (errors) => {
-          console.log(errors);
+          commit(SET_ERROR, errors)
         },
         params
-      );
+      )
     },
-    ACTION_GET_DROPDOWN_GIAO_DIEM_LIST({
-      commit
-    }, filterName) {
+    ACTION_GET_DROPDOWN_GIAO_DIEM_LIST({ commit, }, filterName) {
       const params = {
         filter_name: filterName,
-        action: 'dropdown.giao.diem'
+        action: 'dropdown.giao.diem',
       }
       apiGetDropdownCategories(
         (result) => {
-          commit('SET_DROPDOWN_GIAO_DIEM_LIST', result);
+          commit('SET_DROPDOWN_GIAO_DIEM_LIST', result)
         },
         (errors) => {
-          console.log(errors);
+          commit(SET_ERROR, errors)
         },
         params
-      );
+      )
     },
-    ACTION_GET_DROPDOWN_GIAO_HAT_LIST({
-      commit
-    }, filterName) {
+    ACTION_GET_DROPDOWN_GIAO_HAT_LIST({ commit, }, filterName) {
       const params = {
         filter_name: filterName,
-        action: 'dropdown.giao.hat'
+        action: 'dropdown.giao.hat',
       }
       apiGetDropdownCategories(
         (result) => {
-          commit('SET_DROPDOWN_GIAO_HAT_LIST', result);
+          commit('SET_DROPDOWN_GIAO_HAT_LIST', result)
         },
         (errors) => {
-          console.log(errors);
+          commit(SET_ERROR, errors)
         },
         params
-      );
+      )
     },
-    async [ACTION_GET_INFO_LIST]({
-      dispatch,
-      commit
-    }, params) {
-      dispatch(ACTION_SET_LOADING, true);
+    async [ACTION_GET_INFO_LIST]({ dispatch, commit, }, params) {
+      dispatch(ACTION_SET_LOADING, true)
       await apiGetGiaoPhanInfos(
         (infos) => {
-          commit(INFOS_SET_INFO_LIST, infos.data.results);
+          commit(INFOS_SET_INFO_LIST, infos.data.results)
           commit(INFOS_GET_INFO_LIST_SUCCESS, true)
           var pagination = {
             current_page: 1,
-            total: 0
-          };
-          if (infos.data.hasOwnProperty('pagination')) {
-            pagination = infos.data.pagination;
+            total: 0,
+          }
+          if (fnCheckProp(infos.data, 'pagination')) {
+            pagination = infos.data.pagination
           }
           var configs = {
             moduleActive: {
               name: MODULE_MODULE_GIAO_PHAN,
-              actionList: ACTION_GET_INFO_LIST
+              actionList: ACTION_GET_INFO_LIST,
             },
-            collectionData: pagination
-          };
+            collectionData: pagination,
+          }
           dispatch('setConfigApp', configs, {
-            root: true
-          });
-          dispatch(ACTION_SET_LOADING, false);
+            root: true,
+          })
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, errors);
-          dispatch(ACTION_SET_LOADING, false);
+          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+          dispatch(ACTION_SET_LOADING, false)
         },
         params
-      );
+      )
     },
-    async [ACTION_DELETE_INFO_BY_ID]({
-      state,
-      dispatch,
-      commit
-    }, infoId) {
-      let getId = null;
-      if (typeof state.infoDelete === "object") {
-        if (state.infoDelete.hasOwnProperty('information_id')) {
-          getId = parseInt(state.infoDelete.information_id);
+    async [ACTION_DELETE_INFO_BY_ID]({ state, dispatch, commit, }, infoId) {
+      let getId = null
+      if (typeof state.infoDelete === 'object') {
+        if (fnCheckProp(state.infoDelete, 'information_id')) {
+          getId = parseInt(state.infoDelete.information_id)
         }
       }
-      const deleteId = parseInt(infoId);
+      const deleteId = parseInt(infoId)
       if (getId === deleteId) {
         await apiDeleteInfo(
           deleteId,
           (infos) => {
-            commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true);
-            dispatch(ACTION_GET_INFO_LIST);
-            commit(INFOS_INFO_DELETE_BY_ID, null);
+            if (infos) {
+              commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
+              dispatch(ACTION_GET_INFO_LIST)
+              commit(INFOS_INFO_DELETE_BY_ID, null)
+            }
           },
           (errors) => {
-            commit(INFOS_DELETE_INFO_BY_ID_FAILED, false);
+            commit(INFOS_DELETE_INFO_BY_ID_FAILED, false)
             if (errors) {
-              commit(INFOS_SET_ERROR, errors);
+              commit(SET_ERROR, errors)
             }
           }
-        );
+        )
       }
     },
-    [ACTION_SET_INFO_DELETE_BY_ID]({
-      commit
-    }, infoId) {
+    [ACTION_SET_INFO_DELETE_BY_ID]({ commit, }, infoId) {
       apiGetInfoById(
         infoId,
         (result) => {
-          commit(INFOS_INFO_DELETE_BY_ID, result.data);
-          commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, true);
+          commit(INFOS_INFO_DELETE_BY_ID, result.data)
+          commit(INFOS_SET_INFO_DELETE_BY_ID_SUCCESS, true)
         },
         (errors) => {
-          commit(INFOS_SET_INFO_DELETE_BY_ID_FAILED, false);
+          commit(INFOS_SET_INFO_DELETE_BY_ID_FAILED, false)
           if (errors) {
-            commit(INFOS_SET_ERROR, errors);
+            commit(SET_ERROR, errors)
           }
         }
-      );
+      )
     },
-    ACTION_RELOAD_INFO_LIST: {
+    MODULE_GIAO_PHAN_ACTION_RELOAD_INFO_LIST: {
       root: true,
-      handler(namespacedContext, payload) {
-        return fn_redirect_url('admin/giao-phans');
-      }
+      handler() {
+        return fn_redirect_url('admin/giao-phans')
+      },
     },
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_SET_LOADING, isLoading);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_SET_LOADING, isLoading)
     },
-    [ACTION_RESET_NOTIFICATION_INFO]({
-      commit
-    }, values) {
-      commit(MODULE_UPDATE_SETTING_SUCCESS, values);
-    }
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
+      commit(MODULE_UPDATE_SETTING_SUCCESS, values)
+    },
   },
   modules: {
     add: adds,
-    edit: edits
-  }
+    edit: edits,
+  },
 }

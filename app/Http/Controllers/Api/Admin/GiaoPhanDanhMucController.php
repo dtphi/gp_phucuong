@@ -18,11 +18,12 @@ class GiaoPhanDanhMucController extends ApiController
 
   private $gpdmSv = null;
 
-  public function __construct(GiaoPhanDanhMucRequest $request, gpdmSv $gpdmSv, array $middleware = [])
+  public function __construct(gpdmSv $gpdmSv, array $middleware = [])
   {
 
     $this->gpdmSv = $gpdmSv;
     parent::__construct($middleware);
+    $this->_initAuthor(new GiaoPhanDanhMucRequest);
   }
   /**
    * Display a listing of the resource.

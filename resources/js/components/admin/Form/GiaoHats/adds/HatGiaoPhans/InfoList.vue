@@ -26,46 +26,46 @@
 </template>
 
 <script>
-    import {
-        mapActions
-    } from 'vuex';
-    import BtnAdd from './BtnAdd';
-    import {
-        MODULE_MODULE_GIAO_PHAN_ADD
-    } from 'store@admin/types/module-types';
-    import InfoItem from './InfoItem';
+import {
+  mapActions,
+} from 'vuex'
+import BtnAdd from './BtnAdd'
+import {
+  MODULE_MODULE_GIAO_PHAN_ADD,
+} from 'store@admin/types/module-types'
+import InfoItem from './InfoItem'
 
-    export default {
-        name: 'TheInfoList',
-        components: {
-            BtnAdd,
-            InfoItem
-        },
-        props: {
-            lists: {
-                default: {}
-            }
-        },
-        methods: {
-            ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-                'removeHatGiaoPhan'
-            ]),
-            _removeItem(item) {
-                this.removeHatGiaoPhan({
-                    action: 'removeHatGiaoPhan',
-                    item: item
-                });
-            }
-        },
-        setting: {
-            info_title: 'Tiêu đề',
-            info_url_title: 'Url tiêu đề',
-            info_author_titile: 'Tác giả',
-            info_sort_order_title: 'Sắp xếp',
+export default {
+  name: 'TheInfoList',
+  components: {
+    BtnAdd,
+    InfoItem,
+  },
+  props: {
+    lists: {
+      default: {},
+    },
+  },
+  methods: {
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
+      'removeHatGiaoPhan'
+    ]),
+    _removeItem(item) {
+      this.removeHatGiaoPhan({
+        action: 'removeHatGiaoPhan',
+        item: item,
+      })
+    },
+  },
+  setting: {
+    info_title: 'Tiêu đề',
+    info_url_title: 'Url tiêu đề',
+    info_author_titile: 'Tác giả',
+    info_sort_order_title: 'Sắp xếp',
             
-            info_action_title: 'Thực hiện',
-            btn_image_sub_remove_txt: 'Xóa',
-            btn_image_sub_add_txt: 'Thêm hình ảnh'
-        }
-    };
+    info_action_title: 'Thực hiện',
+    btn_image_sub_remove_txt: 'Xóa',
+    btn_image_sub_add_txt: 'Thêm hình ảnh',
+  },
+}
 </script>

@@ -1,29 +1,31 @@
 <template>
-    <button @click="_redirectUrl()"
-            data-toggle="tooltip" title=""
-            class="btn btn-primary"
-            data-original-title="Thêm Linh Muc">
-        <i class="fa fa-plus"></i>
-    </button>
+  <button
+    @click="_redirectUrl()"
+    data-toggle="tooltip"
+    title=""
+    class="btn btn-primary"
+    data-original-title="Thêm Linh Muc"
+  >
+    <i class="fa fa-plus"></i>
+  </button>
 </template>
 
 <script>
-    import {
-        fn_redirect_url
-    } from '@app/api/utils/fn-helper';
+import { fn_redirect_url, } from '@app/api/utils/fn-helper'
+import { config, } from '@app/common/config'
 
-    export default {
-        name: 'TheButtonAdd',
-        props: {
-            isRedirect: {
-                type: Boolean,
-                default: true
-            }
-        },
-        methods: {
-            _redirectUrl() {
-                return fn_redirect_url('admin/linh-mucs/add');
-            }
-        }
-    };
+export default {
+  name: 'TheButtonAdd',
+  props: {
+    isRedirect: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  methods: {
+    _redirectUrl() {
+      return fn_redirect_url(`${config.adminPrefix}/linh-mucs/add`)
+    },
+  },
+}
 </script>

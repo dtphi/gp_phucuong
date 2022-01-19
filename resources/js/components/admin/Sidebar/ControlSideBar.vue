@@ -5,6 +5,6 @@
 
 <script>
 export default {
-  name: "ControlSideBar",
-};
+  name: 'ControlSideBar',
+}
 </script>

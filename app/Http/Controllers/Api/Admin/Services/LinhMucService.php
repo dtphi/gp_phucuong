@@ -16,6 +16,7 @@ use App\Models\Dong;
 use App\Models\GiaoXu;
 use App\Models\Linhmuc;
 use App\Models\LinhmucBangcap;
+use App\Models\LinhmucBoNhiem;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
 use App\Models\LinhmucVanthu;
@@ -100,7 +101,47 @@ final class LinhMucService implements BaseModel, LinhMucModel
     public function apiGetLinhmucs($data = array(), $limit = 15)
     {
         $query = $this->model->select()
-            ->orderBy('id', 'DESC');
+            ->orderByDesc('updated_at');
+
+        if (!empty($data['s_name'])) {
+            $name = '%' . $data['s_name'] . '%';
+            $query->where('ten', 'like', $name);
+        }
+        if (!empty($data['s_phone'])) {
+            $phone = '%' . $data['s_phone'] . '%';
+            $query->where('phone', 'like', $phone);
+        }
+        if (!empty($data['s_ngay_sinh'])) {
+            $arrNs = explode('-', $data['s_ngay_sinh']);
+            $ngaySinh = '%' . $arrNs[2] . '-' . $arrNs[1] . '-' . $arrNs[0] . '%';
+            $query->where('ngay_thang_nam_sinh', 'like', $ngaySinh);
+        }
+        if (!empty($data['s_email'])) {
+            $email = '%' . $data['s_email'] . '%';
+            $query->where('email', 'like', $email);
+        }
+        if (!empty($data['s_noi_sinh'])) {
+            $noiSinh = '%' . $data['s_noi_sinh'] . '%';
+            $query->where('noi_sinh', 'like', $noiSinh);
+        }
+        if (!empty($data['s_noi_rua_toi'])) {
+            $noiRuaToi = '%' . $data['s_noi_rua_toi'] . '%';
+            $query->where('noi_rua_toi', 'like', $noiRuaToi);
+        }
+        if (!empty($data['s_noi_them_suc'])) {
+            $noiThemSuc = '%' . $data['s_noi_them_suc'] . '%';
+            $query->where('noi_them_suc', 'like', $noiThemSuc);
+        }
+        if (!empty($data['s_cmnd'])) {
+            $cmnd = '%' . $data['s_cmnd'] . '%';
+            $query->where('so_cmnd', 'like', $cmnd);
+        }
+        if (!is_null($data['s_trieu_dong']) && $data['s_trieu_dong'] >= 0) {
+            $query->where('trieu_dong', $data['s_trieu_dong']);
+        }
+        if (!is_null($data['s_active']) && $data['s_active'] >= 0) {
+            $query->where('active', $data['s_active']);
+        }
 
         return $query;
     }
@@ -149,6 +190,15 @@ final class LinhMucService implements BaseModel, LinhMucModel
                         $vanThu['ghi_chu']);
                 }
             }
+
+            if (isset($data['bo_nhiems']) && !empty($data['bo_nhiems'])) {
+                foreach ($data['bo_nhiems'] as $boNhiem) {
+                    LinhmucBoNhiem::insertByLinhmucId($linhmucId, $boNhiem['chuc_vu_id'], $boNhiem['cong_viec'],
+                        $boNhiem['cong_viec_tu_ngay'], $boNhiem['cong_viec_tu_thang'], $boNhiem['cong_viec_tu_nam'],
+                        $boNhiem['cong_viec_den_ngay'], $boNhiem['cong_viec_den_thang'], $boNhiem['cong_viec_den_nam'],
+                        $boNhiem['active']);
+                }
+            }
         } else {
             DB::rollBack();
 
@@ -160,58 +210,81 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return $this->model;
     }
 
+    private function _addBoNhiem($linhmucId, $boNhiem)
+    {
+        LinhmucBoNhiem::insertByLinhmucId($linhmucId, $boNhiem['chuc_vu_id'], $boNhiem['cong_viec'],
+            $boNhiem['cong_viec_tu_ngay'], $boNhiem['cong_viec_tu_thang'], $boNhiem['cong_viec_tu_nam'],
+            $boNhiem['cong_viec_den_ngay'], $boNhiem['cong_viec_den_thang'], $boNhiem['cong_viec_den_nam'],
+            $boNhiem['active']);
+    }
+
+    private function _removeBoNhiem($linhmucId, $boNhiem)
+    {
+        LinhmucBoNhiem::fcDeleteById($linhmucId, $boNhiem['id']);
+    }
+
+    private function _updateLinhMuc($model, $data)
+    {
+        $linhmucId = $model->id;
+
+        LinhmucBangcap::fcDeleteByLinhmucId($linhmucId);
+        if (isset($data['bang_caps']) && !empty($data['bang_caps'])) {
+            foreach ($data['bang_caps'] as $bangcap) {
+                LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'], $bangcap['type'],
+                    $bangcap['ghi_chu'], $bangcap['active']);
+            }
+        }
+
+        LinhmucChucthanh::fcDeleteByLinhmucId($linhmucId);
+        if (isset($data['chuc_thanhs']) && !empty($data['chuc_thanhs'])) {
+            foreach ($data['chuc_thanhs'] as $chucThanh) {
+                LinhmucChucthanh::insertByLinhmucId($linhmucId, $chucThanh['chuc_thanh_id'],
+                    $chucThanh['ngay_thang_nam_chuc_thanh'], $chucThanh['noi_thu_phong'],
+                    $chucThanh['nguoi_thu_phong'],
+                    $chucThanh['active'], $chucThanh['ghi_chu']);
+            }
+        }
+
+        LinhmucThuyenchuyen::fcDeleteByLinhmucId($linhmucId);
+        if (isset($data['thuyen_chuyens']) && !empty($data['thuyen_chuyens'])) {
+            foreach ($data['thuyen_chuyens'] as $thCh) {
+                LinhmucThuyenchuyen::insertByLinhmucId($linhmucId, $thCh['from_giao_xu_id'],
+                    $thCh['from_chuc_vu_id'], $thCh['from_date'], $thCh['duc_cha_id'], $thCh['to_date'],
+                    $thCh['chuc_vu_id'], $thCh['giao_xu_id'], $thCh['co_so_gp_id'], $thCh['dong_id'],
+                    $thCh['ban_chuyen_trach_id'], $thCh['du_hoc'], $thCh['quoc_gia'], $thCh['active'],
+                    $thCh['ghi_chu']);
+            }
+        }
+
+        LinhmucVanthu::fcDeleteByLinhmucId($linhmucId);
+        if (isset($data['van_thus']) && !empty($data['van_thus'])) {
+            foreach ($data['van_thus'] as $vanThu) {
+                LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'],
+                    $vanThu['ghi_chu']);
+            }
+        }
+    }
+
     public function apiUpdate($model, $data = [])
     {
         /**
          * Save user with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
-
-        $model->fill($data);
-
-        if ($model->save()) {
-            $linhmucId = $model->id;
-
-            LinhmucBangcap::fcDeleteByLinhmucId($linhmucId);
-            if (isset($data['bang_caps']) && !empty($data['bang_caps'])) {
-                foreach ($data['bang_caps'] as $bangcap) {
-                    LinhmucBangcap::insertByLinhmucId($linhmucId, $bangcap['name'], $bangcap['type'],
-                        $bangcap['ghi_chu'], $bangcap['active']);
-                }
-            }
-
-            LinhmucChucthanh::fcDeleteByLinhmucId($linhmucId);
-            if (isset($data['chuc_thanhs']) && !empty($data['chuc_thanhs'])) {
-                foreach ($data['chuc_thanhs'] as $chucThanh) {
-                    LinhmucChucthanh::insertByLinhmucId($linhmucId, $chucThanh['chuc_thanh_id'],
-                        $chucThanh['ngay_thang_nam_chuc_thanh'], $chucThanh['noi_thu_phong'],
-                        $chucThanh['nguoi_thu_phong'],
-                        $chucThanh['active'], $chucThanh['ghi_chu']);
-                }
-            }
-
-            LinhmucThuyenchuyen::fcDeleteByLinhmucId($linhmucId);
-            if (isset($data['thuyen_chuyens']) && !empty($data['thuyen_chuyens'])) {
-                foreach ($data['thuyen_chuyens'] as $thCh) {
-                    LinhmucThuyenchuyen::insertByLinhmucId($linhmucId, $thCh['from_giao_xu_id'],
-                        $thCh['from_chuc_vu_id'], $thCh['from_date'], $thCh['duc_cha_id'], $thCh['to_date'],
-                        $thCh['chuc_vu_id'], $thCh['giao_xu_id'], $thCh['co_so_gp_id'], $thCh['dong_id'],
-                        $thCh['ban_chuyen_trach_id'], $thCh['du_hoc'], $thCh['quoc_gia'], $thCh['active'],
-                        $thCh['ghi_chu']);
-                }
-            }
-
-            LinhmucVanthu::fcDeleteByLinhmucId($linhmucId);
-            if (isset($data['van_thus']) && !empty($data['van_thus'])) {
-                foreach ($data['van_thus'] as $vanThu) {
-                    LinhmucVanthu::insertByLinhmucId($linhmucId, $vanThu['title'], $vanThu['type'], $vanThu['active'],
-                        $vanThu['ghi_chu']);
-                }
-            }
+        
+        if ($data['action'] == 'add.bo.nhiem') {
+            $this->_addBoNhiem($data['id'], $data['bo_nhiem']);
+        } elseif ($data['action'] == 'remove.bo.nhiem') {
+            $this->_removeBoNhiem($data['id'], $data['bo_nhiem']);
         } else {
-            DB::rollBack();
+            $model->fill($data);
+            if ($model->save()) {
+                $this->_updateLinhMuc($model, $data);
+            } else {
+                DB::rollBack();
 
-            return false;
+                return false;
+            }
         }
 
         DB::commit();
@@ -224,6 +297,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
         $model = new GiaoXu();
 
         $query = $model->select()
+            ->where('type', 'giaoxu')
             ->orderBy('name', 'DESC');
 
         return $query->get();

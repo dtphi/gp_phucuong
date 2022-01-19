@@ -93,6 +93,7 @@ final class DongService implements BaseModel, DongModel
 
     return $query;
   }
+  
   // update dong
   public function apiUpdate($model, $data = [])
   {

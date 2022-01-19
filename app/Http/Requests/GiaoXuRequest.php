@@ -53,14 +53,15 @@ class GiaoXuRequest extends BaseRequest
     public function validationData()
     {
         $formData = $this->all();
-
+ 
+        $formData['idGiaoHat'] = isset($formData['idGiaoHat']) ? $formData['idGiaoHat'] : 0;
         $formData['name']             = isset($formData['name']) ? $formData['name'] : null;
         $formData['giao_hat_id']             = isset($formData['giao_hat_id']) ? $formData['giao_hat_id'] : null;
         $formData['dia_chi']             = isset($formData['dia_chi']) ? $formData['dia_chi'] : null;
         $formData['dien_thoai']             = isset($formData['dien_thoai']) ? $formData['dien_thoai'] : null;
         $formData['email']             = isset($formData['email']) ? $formData['email'] : null;
-				
-				$formData['image']         = isset($formData['image']) ? $formData['image'] : null;
+        $formData['ngay_thanh_lap']  = isset($formData['ngay_thanh_lap']) ? $formData['ngay_thanh_lap'] : null;
+		$formData['image']         = isset($formData['image']) ? $formData['image'] : null;
         $formData['dan_so']           = isset($formData['dan_so']) ? $formData['dan_so'] : null;
         $formData['so_tin_huu']           = isset($formData['so_tin_huu']) ? $formData['so_tin_huu'] : null;
         $formData['gio_le']           = isset($formData['gio_le']) ? $formData['gio_le'] : null;

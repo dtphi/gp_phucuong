@@ -30,7 +30,7 @@ class CheckApp
         $servicesValid = [];
         if (fn_is_prod_env()) {
             $services = [
-                'firebasephone' => (int)$request->get('firebasephone'),
+                'firebasephone' => $request->get('firebasephone'),
                 'firebase_phone_auth' => $firebasePhoneAuthNameKey
             ];
             $servicesValid = ['firebasephone' => 'required|string|same:firebase_phone_auth'];

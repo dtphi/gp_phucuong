@@ -9,7 +9,7 @@ class ChucVuResource extends JsonResource
     /**
      * @var string
      */
-    public static $wrap = 'thanh';
+    public static $wrap = 'chuc_vu';
 
     /**
      * Transform the resource into an array.

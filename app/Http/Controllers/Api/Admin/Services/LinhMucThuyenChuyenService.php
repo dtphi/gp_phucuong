@@ -98,4 +98,19 @@ final class LinhMucThuyenChuyenService implements BaseModel, LinhMucThuyenChuyen
 
         return $query;
     }
+
+    public function apiChangeStatus($data = [])
+    {
+        $id = $data['id'];
+        $data['chuc_vu_active'] = (int)$data['status'];
+        $this->model = $this->model->findOrFail($id);
+        $this->model->fill($data);
+        DB::beginTransaction();
+        if (!$this->model->save()) {
+            DB::rollBack();
+            return false;
+        }
+        DB::commit();
+        return $this->model;
+    }
 }

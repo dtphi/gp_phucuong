@@ -41,6 +41,7 @@ class BaseRequest extends FormRequest
      */
     protected function failedAuthorization()
     {
-        throw new AccessDeniedCommon();
+        http_response_code(500);
+        exit;
     }
 }

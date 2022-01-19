@@ -96,13 +96,13 @@
 </template>
 
 <script>
-import { config } from "@app/common/config";
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_LINH_MUC_ADD } from "store@admin/types/module-types";
+import { config, } from '@app/common/config'
+import { mapActions, } from 'vuex'
+import BtnAdd from './BtnAdd'
+import { MODULE_MODULE_LINH_MUC_ADD, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
   },
@@ -113,17 +113,17 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_ADD, ["removeChucThanh"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_ADD, ['removeChucThanh']),
     _removeItem(item) {
       this.removeChucThanh({
-        action: "removeChucThanh",
+        action: 'removeChucThanh',
         item: item,
-      });
+      })
     },
   },
   setting: {
     cf: config,
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

@@ -39,15 +39,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import BtnAdd from "./BtnAdd";
-import BtnAddAll from "./BtnAddAll";
-import InfoItem from "./InfoItem";
-import InfoNewItem from "./InfoNewItem";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import BtnAdd from './BtnAdd'
+import BtnAddAll from './BtnAddAll'
+import InfoItem from './InfoItem'
+import InfoNewItem from './InfoNewItem'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
     BtnAddAll,
@@ -60,13 +60,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["checkAllBanChuyenTrach"]),
-    _checkAllBanChuyenTrach (event) {
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ['checkAllBanChuyenTrach']),
+    _checkAllBanChuyenTrach(event) {
       this.checkAllBanChuyenTrach(event.target.checked)
-    }
+    },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

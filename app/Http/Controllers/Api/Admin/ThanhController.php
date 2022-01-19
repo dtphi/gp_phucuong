@@ -29,10 +29,11 @@ class ThanhController extends ApiController
      * @param ThanhSv $thanhSv
      * @param array $middleware
      */
-    public function __construct(ThanhRequest $request, ThanhSv $thanhSv, array $middleware = [])
+    public function __construct(ThanhSv $thanhSv, array $middleware = [])
     {
         $this->thanhSv = $thanhSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new ThanhRequest);
     }
 
     /**

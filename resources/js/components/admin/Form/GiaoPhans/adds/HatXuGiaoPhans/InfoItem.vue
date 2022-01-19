@@ -40,15 +40,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_GIAO_PHAN_ADD } from "store@admin/types/module-types";
-import InfoGiaoXuAutocomplete from "../Groups/InfoGiaoXuAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_ADD, } from 'store@admin/types/module-types'
+import InfoGiaoXuAutocomplete from '../Groups/InfoGiaoXuAutocomplete'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
-    BtnAdd,
     InfoGiaoXuAutocomplete,
   },
   props: {
@@ -61,17 +59,17 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, ["removeHatXuGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, ['removeHatXuGiaoPhan']),
     _removeItem() {
       this.removeHatXuGiaoPhan({
-        action: "removeHatXuGiaoPhan",
+        action: 'removeHatXuGiaoPhan',
         giaoHat: this.hat,
         giaoXu: this.item,
-      });
+      })
     },
   },
   setting: {
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

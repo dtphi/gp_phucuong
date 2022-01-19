@@ -13,25 +13,25 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheButtonAdd",
+  name: 'TheButtonAdd',
   props: {
     giaoHat: {
       default: null,
-    }
+    },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["addHatCongDoanTuSiGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ['addHatCongDoanTuSiGiaoPhan']),
 
     _addInfo() {
       this.addHatCongDoanTuSiGiaoPhan({
-        action: "addHatCongDoanTuSiGiaoPhan",
+        action: 'addHatCongDoanTuSiGiaoPhan',
         giaoHat: this.giaoHat,
-      });
+      })
     },
   },
-};
+}
 </script>

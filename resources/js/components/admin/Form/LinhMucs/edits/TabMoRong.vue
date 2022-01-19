@@ -7,7 +7,7 @@
       <div class="col-sm-10">
         <label>Là đức cha</label>
         <input
-          v-model="generalData.is_duc_cha"
+          v-model="is_duc_cha"
           type="checkbox"
           id="input-info-duc-cha"
           class="form-control"
@@ -46,7 +46,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.phone"
+            v-model="phone"
             type="text"
             id="input-info-so-dien-thoai"
             class="form-control"
@@ -67,7 +67,7 @@
         >
           <input
             autocomplete="off"
-            v-model="generalData.email"
+            v-model="email"
             type="text"
             id="input-info-email"
             class="form-control"
@@ -90,7 +90,7 @@
         >
           <input
             autocomplete="off"
-            v-model="generalData.password"
+            v-model="password"
             type="password"
             id="input-info-pass"
             class="form-control"
@@ -112,7 +112,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.so_cmnd"
+            v-model="so_cmnd"
             type="text"
             id="input-info-so-cmnd"
             class="form-control"
@@ -134,7 +134,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.noi_cap_cmnd"
+            v-model="noi_cap_cmnd"
             type="text"
             id="input-info-noicap-cmnd"
             class="form-control"
@@ -153,7 +153,7 @@
         <cms-date-picker
           value-type="format"
           format="YYYY-MM-DD"
-          v-model="generalData.ngay_cap_cmnd"
+          v-model="ngay_cap_cmnd"
           type="date"
         ></cms-date-picker>
       </div>
@@ -166,7 +166,7 @@
         <tinymce
           id="input-ghi-chu"
           :other_options="options"
-          v-model="generalData.ghi_chu"
+          v-model="ghi_chu"
         ></tinymce>
       </div>
     </div>
@@ -179,7 +179,7 @@
           v-slot="{ errors }"
         >
           <input
-            v-model="generalData.sort_id"
+            v-model="sort_id"
             type="text"
             id="input-info-sort"
             class="form-control"
@@ -196,12 +196,12 @@
       >
       <div class="col-sm-10">
         <select
-          v-model="generalData.active"
+          v-model="active"
           id="input-info-active"
           class="form-control"
         >
-          <option value="1" :selected="generalData.active == 1">Xảy ra</option>
-          <option value="0" :selected="generalData.active == 0">Ẩn</option>
+          <option value="1" :selected="active == 1">Xảy ra</option>
+          <option value="0" :selected="active == 0">Ẩn</option>
         </select>
       </div>
     </div>
@@ -209,16 +209,25 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
-import { ACTION_SET_IMAGE } from "store@admin/types/action-types";
-import linhMucMix from "@app/mixins/admin/linhmuc";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
+import { ACTION_SET_IMAGE, } from 'store@admin/types/action-types'
+import linhMucMix from '@app/mixins/admin/linhmuc'
+import { createHelpers, } from 'vuex-map-fields'
+import { MAP_PC_LINHMUCS, } from 'store@admin/types/model-map-fields'
+const { mapFields, } = createHelpers({
+  getterType: `${MODULE_MODULE_LINH_MUC_EDIT}/getInfoField`,
+  mutationType: `${MODULE_MODULE_LINH_MUC_EDIT}/updateInfoField`,
+})
 
 export default {
-  name: "TabMoRongForm",
+  name: 'TabMoRongForm',
   mixins: [linhMucMix.tabData],
+  computed: {
+    ...mapFields(MAP_PC_LINHMUCS),
+  },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [ ACTION_SET_IMAGE ])
-  }
-};
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [ ACTION_SET_IMAGE ]),
+  },
+}
 </script>

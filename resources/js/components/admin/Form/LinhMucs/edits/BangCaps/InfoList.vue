@@ -53,16 +53,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import BtnAddSelect from "./BtnAddSelect";
-import BtnRemoveSelect from "./BtnRemoveSelect";
-import InfoItem from "./InfoItem";
-import InfoNewItem from "./InfoNewItem";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import BtnAdd from './BtnAdd'
+import BtnAddSelect from './BtnAddSelect'
+import BtnRemoveSelect from './BtnRemoveSelect'
+import InfoItem from './InfoItem'
+import InfoNewItem from './InfoNewItem'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
     BtnAddSelect,
@@ -76,13 +76,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["checkAllBangCap"]),
-    _checkAllBangCap (event) {
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['checkAllBangCap']),
+    _checkAllBangCap(event) {
       this.checkAllBangCap(event.target.checked)
-    }
+    },
   },
   setting: {
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

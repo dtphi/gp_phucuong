@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Common\Tables;
+use App\Http\Controllers\Api\Admin\Base\ApiController;
 use DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -58,7 +59,16 @@ class Information extends BaseModel
      */
     public function images()
     {
-        return $this->hasMany(InformationImage::class, $this->primaryKey);
+        return $this->hasMany(InformationImage::class, $this->primaryKey)->whereNull('album_id');
+    }
+
+    /**
+     * @author : dtphi .
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function albumImages()
+    {
+        return $this->hasMany(InformationImage::class, $this->primaryKey)->where('album_id', '>', 0);
     }
 
     /**
@@ -70,14 +80,14 @@ class Information extends BaseModel
         return $this->hasOne(InformationCarousel::class, $this->primaryKey);
     }
 
-		public static function fcDeleteByInfoId($infoId = null)
-		{
-			$infoId = (int)$infoId;
+    public static function fcDeleteByInfoId($infoId = null)
+    {
+        $infoId = (int)$infoId;
 
-			if ($infoId) {
-				return DB::delete("delete from " . Tables::$informations . " where information_id = '" . $infoId . "'");
-			}
-		}
+        if ($infoId) {
+            return DB::delete("delete from " . Tables::$informations . " where information_id = '" . $infoId . "'");
+        }
+    }
     /**
      * @author : dtphi .
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -95,6 +105,10 @@ class Information extends BaseModel
     public function getImageAttribute($value)
     {
         $imgThumb = $value;
+        if (is_null($imgThumb)) {
+            $value = ApiController::$thumImgNo;
+            $imgThumb = $value;
+        }
         if (isset($this->image_thumb)
             && $this->image_thumb
             && file_exists(public_path('/.tmb' . $this->image_thumb))) {
@@ -214,9 +228,17 @@ class Information extends BaseModel
      */
     public function getTagAttribute($value)
     {
+        $arrTags = [];
         $value = ($this->infoDes) ? $this->infoDes->tag : '';
+        if (!empty($value)) {
+            $collection = Tag::whereIn('id', explode('|', $value))
+                ->get();
+            foreach ($collection as $tag) {
+                $arrTags[] = $tag->name;
+            }
+        }
 
-        return $value;
+        return implode(',', $arrTags);
     }
 
     /**
@@ -273,6 +295,28 @@ class Information extends BaseModel
                 $value[] = [
                     'image'      => $image->image,
                     'sort_order' => (int)$image->sort_order
+                ];
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * @author : dtphi .
+     * @param $value
+     * @return array
+     */
+    public function getArrAlbumListAttribute($value)
+    {
+        $value = [];
+        if ($this->albumImages) {
+            foreach ($this->albumImages as $image) {
+                $value[] = [
+                    'album_id' => $image->album_id,
+                    'name' => $image->album_name,
+                    'image_origin' => $image->image_origin,
+                    'images'      => $image->arr_image_list
                 ];
             }
         }

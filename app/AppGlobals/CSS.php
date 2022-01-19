@@ -4,6 +4,7 @@
  */
 namespace App\AppGlobals;
 
+use App\Exports\TestArrayExport;
 use Request;
 
 final class CSS
@@ -41,6 +42,20 @@ final class CSS
         // true or false;
         $this->cssSetting['isFireBaseAuth'] = fn_is_prod_env();
         $this->cssSetting['isInternalLogin'] = fn_is_internal_admin_login();
+
+        if (fn_is_prod_env()) {
+            $this->cssSetting['pageDir'] = config('app.is_mix') ? mix('js/admin-' . config('app.api_name_key') . '.js'): asset('js/admin-' . config('app.api_name_key') . '.js');
+        } else if(fn_is_stg_env()) {
+            $this->cssSetting['pageDir'] = config('app.is_mix') ? mix('js/stg/app-admin.js'): asset('js/stg/app-admin.js');
+        } else {
+            $this->cssSetting['pageDir'] = config('app.is_mix') ? mix('js/stg/app-admin.js'): asset('js/app-admin.js');
+        }
+
+        if ($request->get('action') == 'view.screen.log') {
+            $jsonLog = new TestArrayExport();
+            $content = $jsonLog->__readLogFile();
+            $this->cssSetting['jsonLog'] = $jsonLog->getTableHtmlVs2($content);
+        }
     }
 
     /**
@@ -130,48 +145,7 @@ final class CSS
      */
     public function init()
     {
-        /*$optionClass = 'hold-transition login-page';
-        $cssStype    = $this->mapCss();
-        $scripts     = '';
-
-        if (Request::is('admin/test')) {
-            $cssStype    = $this->mapCssTest();
-            $scripts     = $this->mapScriptTest();
-            $optionClass = '';
-        }
-
-        if (Request::is('admin/dashboard')) {
-            $cssStype    = $this->mapCssTest();
-            $scripts     = $this->mapScriptTest();
-            $optionClass = '';
-        }
-
-        if (Request::is('admin/user*')) {
-            $cssStype    = $this->mapCssUser();
-            $scripts     = $this->mapScriptUser();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/news*') && !Request::is('*-groups*')) {
-            $cssStype    = $this->mapCssUser();
-            $scripts     = $this->mapScriptNews();
-            $scripts     .= $this->mapScriptFileManager();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/news-groups*')) {
-            $cssStype    = $this->mapCssNewsGroups();
-            $scripts     = $this->mapScriptNewsGroups();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-        } elseif (Request::is('admin/filemanagers*')) {
-            $cssStype    = $this->mapCss();
-            $scripts     = $this->mapScriptFileManager();
-            $optionClass = 'hold-transition sidebar-mini layout-fixed';
-
-            return [
-                $this->mapCss(),
-                $this->mapScriptFileManager(),
-                ''
-            ];
-        }*/
-
-        if (Request::is('admin/filemanagers*')) {
+        if (Request::is('admin/filemanagers*') || Request::is('adminlocal/filemanagers*')) {
             $cssStype    = $this->mapCss();
             $scripts     = $this->mapScriptFileManager();
             $scripts     .= "<script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
@@ -210,8 +184,8 @@ final class CSS
         $output = '';
         /*<!-- jQuery -->*/
         $output .= "<script src='/administrator/javascript/jquery/jquery-2.1.1.min.js'></script>\n";
-        $output .= "<script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
-        $output .= "<script src='/administrator/javascript/bootstrap/js/bootstrap.min.js'></script>\n";
+        $output .= "    <script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
+        $output .= "    <script src='/administrator/javascript/bootstrap/js/bootstrap.min.js'></script>\n";
 
         return $output;
     }
@@ -269,7 +243,6 @@ final class CSS
     {
         $output = '';
         /*<!-- jQuery and jQuery UI (REQUIRED) -->*/
-
         $output .= "<script src='/packages/barryvdh/elfinder/jquery-1.11.0/jquery.min.js'></script>\n";
         $output .= "<script src='/packages/barryvdh/elfinder/jqueryui-1.10.4/jquery-ui.min.js'></script>\n";
         /*<!-- elFinder CSS (REQUIRED) -->*/

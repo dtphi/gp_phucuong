@@ -31,8 +31,10 @@
                         </th>
                         <th style="width: 20%" class="text-left">Tên</th>
                         <th style="width: 10%" class="text-left">Địa chỉ</th>
-                        <th style="width: 10%" class="text-left">Hình ảnh</th>
-                        <th style="width: 10%" class="text-center">Trạng thái</th>
+                        <th style="width: 10%" class="text-center">Hình ảnh</th>
+                        <th style="width: 10%" class="text-center">
+                          Trạng thái
+                        </th>
                         <th style="width: 20%" class="text-center">Giờ lễ</th>
                         <th style="width: 10%" class="text-right">Action</th>
                       </tr>
@@ -49,7 +51,6 @@
                 </div>
               </template>
             </div>
-
             <paginate :is-resource="isResource"></paginate>
           </div>
         </div>
@@ -59,21 +60,19 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
-import Item from "./components/TheItem";
-import TheHeaderPage from "./components/TheHeaderPage";
-import Breadcrumb from "com@admin/Breadcrumb";
-import Paginate from "com@admin/Pagination";
-import { MODULE_MODULE_GIAO_XU } from "store@admin/types/module-types";
+import { mapState, mapGetters, mapActions, } from 'vuex'
+import Item from './components/TheItem'
+import TheHeaderPage from './components/TheHeaderPage'
+import Paginate from 'com@admin/Pagination'
+import { MODULE_MODULE_GIAO_XU, } from 'store@admin/types/module-types'
 import {
   ACTION_GET_INFO_LIST,
   ACTION_RESET_NOTIFICATION_INFO,
-} from "store@admin/types/action-types";
+} from 'store@admin/types/action-types'
 
 export default {
-  name: "ListGiaoXu",
+  name: 'ListGiaoXu',
   components: {
-    Breadcrumb,
     TheHeaderPage,
     Item,
     Paginate,
@@ -82,51 +81,51 @@ export default {
     return {
       fullPage: false,
       isResource: false,
-    };
+    }
   },
   watch: {
-    updateSuccess(newValue, oldValue) {
+    updateSuccess(newValue) {
       if (newValue) {
-        this._notificationUpdate(newValue);
+        this._notificationUpdate(newValue)
       }
     },
   },
   computed: {
     ...mapState({
-      perPage: (state) => state.cfApp.perPage,
+      perPage: state => state.cfApp.perPage,
     }),
-    ...mapGetters(["isNotEmptyList"]),
-    ...mapState(MODULE_MODULE_GIAO_XU, ["infos", "loading", "updateSuccess"]),
+    ...mapGetters(['isNotEmptyList']),
+    ...mapState(MODULE_MODULE_GIAO_XU, ['infos', 'loading', 'updateSuccess','idGiaoHat']),
     _infoList() {
-      return this.infos;
+      return this.infos
     },
     _notEmpty() {
-      return this.isNotEmptyList;
+      return this.isNotEmptyList
     },
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU, {
-       'getInfoList': ACTION_GET_INFO_LIST,
-       'resetNotification': ACTION_RESET_NOTIFICATION_INFO,
+      getInfoList: ACTION_GET_INFO_LIST,
+      resetNotification: ACTION_RESET_NOTIFICATION_INFO,
     }),
     _submitAction(event) {
       this[event.target.value]({
         action: event.target.value,
-      });
+      })
     },
     _notificationUpdate(notification) {
-      this.$notify(notification);
-      this.resetNotification();
+      this.$notify(notification)
+      this.resetNotification()
     },
   },
   mounted() {
-    const params = {
-      perPage: this.perPage,
-    };
-    this.getInfoList(params);
+    // const params = {
+    //   perPage: this.perPage,
+    // }
+    this.getInfoList({perPage: this.perPage, idGiaoHat: this.idGiaoHat})
   },
   setting: {
-    list_title: "Danh sách Giáo Xứ",
+    list_title: 'Danh sách Giáo Xứ',
   },
-};
+}
 </script>

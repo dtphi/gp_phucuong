@@ -104,6 +104,11 @@ class Linhmuc extends BaseModel
         return $this->hasMany(LinhmucThuyenchuyen::class, 'linh_muc_id')->orderBy('from_date');
     }
 
+    public function boNhiems()
+    {
+        return $this->hasMany(LinhmucBoNhiem::class, 'linh_muc_id')->orderBy('cong_viec_den_nam');
+    }
+
     public function getTenThanhAttribute($value)
     {
         $value = ($this->thanh) ? $this->thanh->name : '';
@@ -242,4 +247,32 @@ class Linhmuc extends BaseModel
 
         return $value;
     }
+
+    public function getArrBoNhiemListAttribute($value)
+    {
+        $value = [];
+        if ($this->boNhiems) {
+            foreach ($this->boNhiems as $boNhiem) {
+                $value[] = [
+                    'id' => (int)$boNhiem->id,
+                    'chuc_vu_id' => $boNhiem->chuc_vu_id,
+                    'chucVuName' => $boNhiem->ten_chuc_vu,
+                    'cong_viec' => $boNhiem->cong_viec,
+                    'cong_viec_tu_ngay'      => $boNhiem->cong_viec_tu_ngay,
+                    'cong_viec_tu_thang'      => $boNhiem->cong_viec_tu_thang,
+                    'cong_viec_tu_nam'      => $boNhiem->cong_viec_tu_nam,
+                    'cong_viec_den_ngay'      => $boNhiem->cong_viec_den_ngay,
+                    'cong_viec_den_thang'      => $boNhiem->cong_viec_den_thang,
+                    'cong_viec_den_nam'      => $boNhiem->cong_viec_den_nam,
+                    'active' => $boNhiem->active
+                ];
+            }
+        }
+
+        return $value;
+    }
+
+    public function scopeName($query, $request) {
+      return  $query->where('ten', 'LIKE', '%' . $request->input('query') . '%');
+  }
 }

@@ -5,9 +5,10 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
 use Log;
+use Closure;
+use App\Models\RestrictIp;
+use Illuminate\Http\Request;
 
 class RestrictIpAddressMiddleware
 {
@@ -24,10 +25,10 @@ class RestrictIpAddressMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $this->getIps();
-
+        $clientIp = $request->ip();
+        $this->getIps($clientIp);
         if (!empty($this->__restrictedIp)) {
-            if (in_array($request->ip(), $this->__restrictedIp)) {
+            if (in_array($clientIp, $this->__restrictedIp)) {
                 return $next($request);
             }
 
@@ -43,11 +44,24 @@ class RestrictIpAddressMiddleware
     /**
      * get sec ips
      */
-    public function getIps()
+    public function getIps($dbClientIp = null)
     {
         $ips = config('app.sec_ips');
+        
         if (!empty($ips)) {
             $this->__restrictedIp = explode(',', $ips);
         }
+
+        $model = null;
+        if ($dbClientIp) {
+            $model = RestrictIp::where('ip', '=', $dbClientIp)
+            ->where('active', '1')->first();
+        }
+        
+        if ($model && isset($model->ip)) {
+            array_push($this->__restrictedIp, $model->ip);
+        }
+       
+        return $ips; 
     }
 }

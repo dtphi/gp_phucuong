@@ -30,10 +30,11 @@ class LinhMucVanThuController extends ApiController
      * @param LinhMucVanThuSv $vanThuSv
      * @param array $middleware
      */
-    public function __construct(LinhMucVanThuRequest $request, LinhMucVanThuSv $vanThuSv, array $middleware = [])
+    public function __construct(LinhMucVanThuSv $vanThuSv, array $middleware = [])
     {
         $this->vanThuSv = $vanThuSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new LinhMucVanThuRequest);
     }
 
     /**

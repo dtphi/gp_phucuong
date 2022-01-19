@@ -43,15 +43,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import BtnAdd from "./BtnAdd";
-import BtnAddAll from "./BtnAllSave";
-import InfoItem from "./InfoItem";
-import InfoNewItem from "./InfoNewItem";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import BtnAdd from './BtnAdd'
+import BtnAddAll from './BtnAllSave'
+import InfoItem from './InfoItem'
+import InfoNewItem from './InfoNewItem'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
     BtnAddAll,
@@ -64,19 +64,19 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeHatGiaoPhan","checkAllHat"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ['removeHatGiaoPhan', 'checkAllHat']),
     _removeItem(item) {
       this.removeHatGiaoPhan({
-        action: "removeHatGiaoPhan",
+        action: 'removeHatGiaoPhan',
         item: item,
-      });
+      })
     },
-    _checkAllHat (event) {
+    _checkAllHat(event) {
       this.checkAllHat(event.target.checked)
-    }
+    },
   },
   setting: {
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

@@ -103,6 +103,6 @@
             </component>
         </div>
         <!-- Scripts -->
-        <script src="{{ mix('js/app-front.js') }}" async></script>
+        <script src="{{ $data->settings['pageDir'] }}" async></script>
     </body>
 </html>

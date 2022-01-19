@@ -21,19 +21,19 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { ACTION_SEARCH_ALL } from "store@admin/types/action-types";
+import { mapGetters, } from 'vuex'
+import { ACTION_SEARCH_ALL, } from 'store@admin/types/action-types'
 
 export default {
-  name: "AllSearch",
+  name: 'AllSearch',
   components: {},
   data() {
     return {
-      query: "",
-    };
+      query: '',
+    }
   },
   computed: {
-    ...mapGetters(["moduleNameActive", "moduleActionListActive"]),
+    ...mapGetters(['moduleNameActive', 'moduleActionListActive']),
   },
   watch: {
     /*query: {
@@ -46,15 +46,15 @@ export default {
     searchProducts() {
       if (this.query && this.query.length) {
         this.$store.dispatch(
-          this.moduleNameActive + "/" + ACTION_SEARCH_ALL,
+          this.moduleNameActive + '/' + ACTION_SEARCH_ALL,
           this.query
-        );
+        )
       } else {
         this.$store.dispatch(
-          this.moduleNameActive + "/" + this.moduleActionListActive
-        );
+          this.moduleNameActive + '/' + this.moduleActionListActive
+        )
       }
     },
   },
-};
+}
 </script>

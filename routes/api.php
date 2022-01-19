@@ -32,10 +32,15 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::get('/app/info/get-special-information', 'NewsController@showSpecialModuleList');
     Route::get('/app/get-data-module', 'ModuleController@showDataList');
     Route::get('/app/get-data-giao-xu', 'Base\ApiController@getGiaoXuList');
+    Route::get('/app/get-data-giao-phan', 'Base\ApiController@getGiaoPhanList');
+    Route::post('/app/get-data-giao-hat', 'Base\ApiController@getGiaoHatList');
+    Route::post('/app/get-data-giao-xu-by-id', 'Base\ApiController@getGiaoXuListById');
     Route::get('/app/get-data-giao-xu/{id}', 'Base\ApiController@getGiaoXuDetail');
 		Route::get('/app/get-data-linh-muc', 'Base\ApiController@getLinhMucList');
+    Route::get('/app/get-data-chuc-vu', 'Base\ApiController@getChucVuList');
+    Route::post('/app/get-data-linh-muc-by-id', 'Base\ApiController@getLinhMucListById');
 		Route::get('/app/get-detail-linh-muc/{id}', 'Base\ApiController@getLinhMucDetail');
-    Route::apiResource('/email_sub/create', 'EmailController');
+    Route::apiResource('/email_sub/create', 'EmailController'); 
   });
 
 Route::namespace('App\Http\Controllers\Api\Admin')
@@ -46,7 +51,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
 });
 
 Route::namespace('App\Http\Controllers\Api\Admin')
-  ->middleware(['auth:sanctum', 'secip'])
+  ->middleware(['app.version', 'auth:sanctum', 'secip'])
   ->group(function () { 
     Route::get('/user', function (Request $request) {
       $user = $request->user();
@@ -71,10 +76,14 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('linh-muc-chuc-thanhs', 'LinhMucChucThanhController');
     Route::apiResource('linh-muc-van-thus', 'LinhMucVanThuController');
     Route::apiResource('linh-muc-thuyen-chuyens', 'LinhMucThuyenChuyenController');
+    Route::post('change-status-thuyen-chuyens','LinhMucThuyenChuyenController@changeStatus');
 
     Route::apiResource('giao-phans', 'GiaoPhanController');
     Route::apiResource('giao-hats', 'GiaoHatController');
     Route::apiResource('giao-xus', 'GiaoXuController');
+    Route::get('giao-hats-by-giao-xus', 'GiaoXuController@listGiaoHats');
+    Route::get('giao-xus-by-id-giao-hat/{id}', 'GiaoXuController@listGiaoXuByIdGiaoHat');
+
     Route::apiResource('giao-diems', 'GiaoDiemController');
     Route::apiResource('cong-doan-tu-sis', 'CongDoanTuSiController');
     Route::apiResource('co-sos', 'CoSoController');
@@ -87,7 +96,17 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::get('/danh-mucs/dropdowns', 'GiaoPhanDanhMucController@dropdown');
     Route::apiResource('giao-phan/tin-tucs', 'GiaoPhanTinTucController');
     Route::get('/tin-tucs/dropdowns', 'GiaoPhanTinTucController@dropdown');
+    Route::apiResource('restrict-ips', 'RestrictIpController');
+    Route::get('search-ips','RestrictIpController@search');
+    Route::post('change-status-ips','RestrictIpController@changeStatus');
 
+    Route::apiResource('albums', 'AlbumsController'); //AlbumsController
+    Route::get('search-albums','AlbumsController@search');
+    Route::post('change-status-albums','AlbumsController@changeStatus');
+
+    Route::apiResource('group-albums', 'GroupAlbumsController'); //GroupAlbumsController 
+    Route::get('search-group-albums','GroupAlbumsController@search');
+    Route::post('change-status-group-albums','GroupAlbumsController@changeStatus');
 
     Route::any('/mmedia/{any}', function () {
     });

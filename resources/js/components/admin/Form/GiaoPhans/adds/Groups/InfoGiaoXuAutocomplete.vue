@@ -34,14 +34,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, } from 'vuex'
 import {
   MODULE_MODULE_LINH_MUC,
   MODULE_MODULE_GIAO_PHAN_ADD,
-} from "store@admin/types/module-types";
+} from 'store@admin/types/module-types'
 
 export default {
-  name: "GiaoXuAutocomplete",
+  name: 'GiaoXuAutocomplete',
   props: {
     hat: {
       default: null,
@@ -52,52 +52,52 @@ export default {
   },
   data() {
     return {
-      dropdownStyle: "display: none;",
+      dropdownStyle: 'display: none;',
       isSearch: true,
-    };
+    }
   },
   computed: {
     ...mapState(MODULE_MODULE_LINH_MUC, {
       dropdowns: (state) => state.dropdownGiaoXus,
     }),
-    ...mapState(MODULE_MODULE_GIAO_PHAN_ADD, ["info"]),
+    ...mapState(MODULE_MODULE_GIAO_PHAN_ADD, ['info']),
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC, ["ACTION_GET_DROPDOWN_GIAO_XU_LIST"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC, ['ACTION_GET_DROPDOWN_GIAO_XU_LIST']),
     ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, [
-      "ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST",
+      'ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST'
     ]),
     _searchCategories() {
-      const query = this.query;
+      const query = this.query
       if (query && query.length) {
-        this.ACTION_GET_DROPDOWN_GIAO_XU_LIST(query);
+        this.ACTION_GET_DROPDOWN_GIAO_XU_LIST(query)
       }
     },
     _focusParentCategory() {
       if (this.dropdowns.length == 0) {
-        this.ACTION_GET_DROPDOWN_GIAO_XU_LIST("");
+        this.ACTION_GET_DROPDOWN_GIAO_XU_LIST('')
       }
     },
     _closeDropdown() {
-      this.isSearch = !this.isSearch;
-      this._focusParentCategory();
+      this.isSearch = !this.isSearch
+      this._focusParentCategory()
     },
     _addInfoToCategory(infoCategory) {
-      const _self = this;
+      const _self = this
       const isExistHatXu = _.find(_self.info.giao_phan_hats, {
-        giao_xus: [{ giao_xu_id: infoCategory.id }],
-      });
+        giao_xus: [{ giao_xu_id: infoCategory.id, }],
+      })
 
       if (isExistHatXu === undefined) {
         this.ACTION_UPDATE_DROPDOWN_GIAO_HAT_XU_LIST({
           hat: _self.hat,
           hatXu: _self.hatXu,
           hatXuInfo: infoCategory,
-        });
+        })
       }
 
-      this._closeDropdown();
+      this._closeDropdown()
     },
-  }
-};
+  },
+}
 </script>

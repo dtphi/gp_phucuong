@@ -108,97 +108,91 @@
 </template>
 
 <script>
-    import {
-        mapGetters,
-        mapState,
-        mapActions
-    } from 'vuex';
-    import {email} from 'vee-validate/dist/rules';
-    import {
-        MODULE_USER_MODAL
-    } from 'store@admin/types/module-types';
-    import {
-        ACTION_CLOSE_MODAL,
-        ACTION_INSERT_USER
-    } from 'store@admin/types/action-types';
+import {
+  mapGetters,
+  mapState,
+  mapActions,
+} from 'vuex'
+import {
+  MODULE_USER_MODAL,
+} from 'store@admin/types/module-types'
+import {
+  ACTION_CLOSE_MODAL,
+  ACTION_INSERT_USER,
+} from 'store@admin/types/action-types'
 
-    export default {
-        name: 'UserAddForm',
-        data() {
-            return {
-                fullPage: false
-            };
-        },
-        computed: {
-            ...mapState(MODULE_USER_MODAL, {
-                loading: state => state.loading,
-                errors: state => state.errors
-            }),
-            ...mapGetters(MODULE_USER_MODAL, [
-                'classShow',
-                'styleCss',
-                'user',
-            ]),
-            _errors() {
-                return this.errors.length;
-            }
-        },
-        mounted() {
-            this._close()
-        },
-        methods: {
-            ...mapActions(MODULE_USER_MODAL, [
-                ACTION_CLOSE_MODAL,
-                ACTION_INSERT_USER
-            ]),
+export default {
+  name: 'UserAddForm',
+  data() {
+    return {
+      fullPage: false,
+    }
+  },
+  computed: {
+    ...mapState(MODULE_USER_MODAL, {
+      loading: state => state.loading,
+      errors: state => state.errors,
+    }),
+    ...mapGetters(MODULE_USER_MODAL, [
+      'classShow',
+      'styleCss',
+      'user'
+    ]),
+    _errors() {
+      return this.errors.length
+    },
+  },
+  mounted() {
+    this._close()
+  },
+  methods: {
+    ...mapActions(MODULE_USER_MODAL, [
+      ACTION_CLOSE_MODAL,
+      ACTION_INSERT_USER
+    ]),
+    async _resetModal() {
+      requestAnimationFrame(() => {
+        this.$refs.observerUser.reset()
+      })
+    },
+    _isShowBody() {
+      return (this.user != null)
+    },
+    _close() {
+      this[ACTION_CLOSE_MODAL]()
+    },
+    _errorToArrs() {
+      let errs = []
+      if (this.errors.length && typeof this.errors[0].messages !== 'undefined') {
+        errs = Object.values(this.errors[0].messages)
+      }
 
-            async _resetModal() {
-                requestAnimationFrame(() => {
-                    this.$refs.observerUser.reset()
-                });
-            },
+      if (Object.entries(errs).length === 0 && this.errors.length) {
+        errs.push(this.$options.setting.error_msg_system)
+      }
 
-            _isShowBody() {
-                return (this.user != null)
-            },
-
-            _close() {
-                this[ACTION_CLOSE_MODAL]()
-            },
-
-            _errorToArrs() {
-                let errs = [];
-                if (this.errors.length && typeof this.errors[0].messages !== "undefined") {
-                    errs = Object.values(this.errors[0].messages);
-                }
-
-                if (Object.entries(errs).length === 0 && this.errors.length) {
-                    errs.push(this.$options.setting.error_msg_system);
-                }
-
-                return errs;
-            },
-
-            async _submitUser() {
-                const _self = this;
-                await _self.$refs.observerUser.validate().then((isValid) => {
-                    if (isValid) {
-                        _self[ACTION_INSERT_USER](_self.user);
-                        _self._resetModal();
-                    }
-                })
-            }
-        },
-        setting: {
-            btnCancelTxt: 'Thoát',
-            passwordTxt: 'Password',
-            emailTxt: 'Email',
-            nameTxt: 'Họ tên',
-            actionName: 'add',
-            isAddFrom: true,
-            modal_title: 'Thêm người dùng',
-            btnSubmitTxt: 'Lưu',
-            error_msg_system: 'Lỗi hệ thống !'
+      return errs
+    },
+    async _submitUser() {
+      const _self = this
+      await _self.$refs.observerUser.validate().then((isValid) => {
+        if (isValid) {
+          _self[ACTION_INSERT_USER](_self.user)
+          _self._resetModal()
         }
-    };
+      })
+    },
+  },
+  setting: {
+    btnCancelTxt: 'Thoát',
+    passwordTxt: 'Password',
+    emailTxt: 'Email',
+    nameTxt: 'Họ tên',
+    actionName: 'add',
+    isAddFrom: true,
+    modal_title: 'Thêm người dùng',
+    btnSubmitTxt: 'Lưu',
+    error_msg_system: 'Lỗi hệ thống !',
+  },
+}
 </script>

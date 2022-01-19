@@ -5,12 +5,12 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex';
+import { mapState, } from 'vuex'
 
-    export default {
-        name: 'Logo',
-        computed: {
-        	...mapState(['cfApp'])
-        }
-    };
+export default {
+  name: 'AdminLogo',
+  computed: {
+    ...mapState(['cfApp']),
+  },
+}
 </script>

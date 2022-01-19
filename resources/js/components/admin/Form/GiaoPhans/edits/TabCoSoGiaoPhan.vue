@@ -9,22 +9,22 @@
 </template>
 
 <script>
-    import InfoList from './CoSoGiaoPhans/InfoList';
+import InfoList from './CoSoGiaoPhans/InfoList'
 
-    export default {
-        name: 'TabCoSoGiaoPhan',
-        components: {
-            InfoList
-        },
-        props: {
-            groupData: {
-                type: Object
-            }
-        },
-        data() {
-            return {
-                giao_phan_cosos: []
-            }
-        },
-    };
+export default {
+  name: 'TabCoSoGiaoPhan',
+  components: {
+    InfoList,
+  },
+  props: {
+    groupData: {
+      type: Object,
+    },
+  },
+  data() {
+    return {
+      giao_phan_cosos: [],
+    }
+  },
+}
 </script>

@@ -1,0 +1,139 @@
+export const MAP_PC_GIAO_XUS = [
+  'id',
+  'image',
+  'name',
+  'ngay_thanh_lap',
+  'giao_hat_id',
+  'gio_le',
+  'noi_dung',
+  'dia_chi',
+  'dien_thoai',
+  'email',
+  'active',
+  'dan_so',
+  'so_tin_huu',
+  'viet',
+  'latin',
+  'type'
+]
+export const MAP_PC_INFORMATIONS = [
+  'album',
+  'image',
+  'date_available',
+  'sort_order',
+  'status',
+  'name',
+  'meta_title',
+  'sort_description',
+  'information_type',
+  'description',
+  'tag',
+  'meta_description',
+  'meta_keyword',
+  'multi_images',
+  'relateds',
+  'categorys',
+  'downloads',
+  'special_carousels'
+]
+export const MAP_PC_THANHS = [
+  'id',
+  'name',
+  'latin',
+  'bon_mang',
+  'ghi_chu',
+  'cuoc_doi',
+  'active'
+]
+export const MAP_PC_CHUC_VUS = [
+  'id',
+  'name',
+  'type_giao_xu',
+  'sort_id',
+  'vtbn',
+  'ghi_chu',
+  'active'
+]
+export const MAP_PC_CONG_DOAN_TU_SIS = [
+  'id',
+  'giao_hat_id',
+  'name',
+  'dia_chi',
+  'dien_thoai',
+  'ghi_chu',
+  'active'
+]
+export const MAP_PC_CO_SO_GIAO_PHANS = [
+  'id',
+  'name',
+  'dia_chi',
+  'email',
+  'dien_thoai',
+  'fax',
+  'website',
+  'active'
+]
+export const MAP_PC_LE_CHINHS = [
+  'id',
+  'code',
+  'name'
+]
+export const MAP_PC_GIAO_DIEMS = [
+  'id',
+  'name',
+  'dia_chi',
+  'sort_id',
+  'ghi_chu',
+  'active'
+]
+export const MAP_PC_LINHMUCS = [
+  'id',
+  'ten_thanh_id',
+  'ten_thanh_name',
+  'ten',
+  'ngay_thang_nam_sinh',
+  'lable_ngay_thang_nam_sinh',
+  'noi_sinh',
+  'giao_xu_id',
+  'giao_xu_name',
+  'ho_ten_cha',
+  'ho_ten_me',
+  'noi_rua_toi',
+  'ngay_rua_toi',
+  'lable_ngay_rua_toi',
+  'noi_them_suc',
+  'ngay_them_suc',
+  'lable_ngay_them_suc',
+  'tieu_chung_vien',
+  'ngay_tieu_chung_vien',
+  'lable_ngay_tieu_chung_vien',
+  'dai_chung_vien',
+  'ngay_dai_chung_vien',
+  'lable_ngay_dai_chung_vien',
+  'image',
+  'so_cmnd',
+  'ngay_cap_cmnd',
+  'noi_cap_cmnd',
+  'code',
+  'phone',
+  'email',
+  'password',
+  'flag_user',
+  'trieu_dong',
+  'ten_dong_id',
+  'ten_dong_name',
+  'ngay_trieu_dong',
+  'lable_ngay_trieu_dong',
+  'ngay_khan',
+  'lable_ngay_khan',
+  'ngay_rip',
+  'lable_ngay_rip',
+  'rip_giao_xu_id',
+  'rip_giaoxu_name',
+  'rip_ghi_chu',
+  'ghi_chu',
+  'is_duc_cha',
+  'uuid',
+  'sort_id',
+  'active'
+]

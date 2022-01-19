@@ -89,12 +89,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import BtnAdd from "./BtnAdd";
-import { MODULE_MODULE_LINH_MUC_ADD } from "store@admin/types/module-types";
+import { mapActions, } from 'vuex'
+import BtnAdd from './BtnAdd'
+import { MODULE_MODULE_LINH_MUC_ADD, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
   },
@@ -104,16 +104,16 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_ADD, ["removeBangCap"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_ADD, ['removeBangCap']),
     _removeItem(item) {
       this.removeBangCap({
-        action: "",
+        action: '',
         item: item,
-      });
+      })
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

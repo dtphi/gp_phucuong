@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import InfoList from "./VanThus/InfoList";
+import InfoList from './VanThus/InfoList'
 
 export default {
-  name: "TabVanThuForm",
+  name: 'TabVanThuForm',
   components: {
     InfoList,
   },
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       van_thus: [],
-    };
+    }
   },
-};
+}
 </script>

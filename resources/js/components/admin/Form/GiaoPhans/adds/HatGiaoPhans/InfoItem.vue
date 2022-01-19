@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_ADD } from "store@admin/types/module-types";
-import InfoGiaoHatAutocomplete from "../Groups/InfoGiaoHatAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_ADD, } from 'store@admin/types/module-types'
+import InfoGiaoHatAutocomplete from '../Groups/InfoGiaoHatAutocomplete'
 
 export default {
-  name: "TheInfoItem",
+  name: 'TheInfoItem',
   components: {
     InfoGiaoHatAutocomplete,
   },
@@ -48,13 +48,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, ["removeHatGiaoPhan"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_ADD, ['removeHatGiaoPhan']),
     _removeItem() {
       this.removeHatGiaoPhan({
-        action: "removeHatGiaoPhan",
+        action: 'removeHatGiaoPhan',
         item: this.item,
-      });
+      })
     },
-  }
-};
+  },
+}
 </script>

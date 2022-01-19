@@ -28,10 +28,11 @@ class ChucVuController extends ApiController
      * @param ChucVuSv $thanhSv
      * @param array $middleware
      */
-    public function __construct(ChucVuRequest $request, ChucVuSv $thanhSv, array $middleware = [])
+    public function __construct(ChucVuSv $thanhSv, array $middleware = [])
     {
         $this->thanhSv = $thanhSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new ChucVuRequest);
     }
 
     /**
@@ -46,6 +47,10 @@ class ChucVuController extends ApiController
         if ($request->query('page')) {
             $page = $request->query('page');
         }
+        $data['s_name'] = $request->query('name');
+        $data['s_type_giao_xu'] = $request->query('type_giao_xu');
+        $data['s_active'] = $request->query('active');
+
         try {
             $limit       = $this->_getPerPage();
             $collections = $this->thanhSv->apiGetList($data, $limit);
@@ -159,7 +164,7 @@ class ChucVuController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->thanhSv->apiInsert($formData)) {
+        if ($result = $this->thanhSv->apiInsertOrUpdate($formData)) {
             return $this->respondUpdated($result);
         }
 

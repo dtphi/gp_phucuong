@@ -29,10 +29,11 @@ class GiaoHatController extends ApiController
      * @param GhSv $ghSv
      * @param array $middleware
      */
-    public function __construct(GiaoHatRequest $request, GhSv $ghSv, array $middleware = [])
+    public function __construct(GhSv $ghSv, array $middleware = [])
     {
         $this->ghSv = $ghSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new GiaoHatRequest);
     }
 
     /**
@@ -58,9 +59,9 @@ class GiaoHatController extends ApiController
                 $results[] = [
                     'id' => (int)$info->id,
                     'name'           => $info->name,
-                    'khuvuc'         => $info->khuvuc,
-                    'nguoiquanhat'   => $info->nguoiquanhat,
-                    'phanloai'    => $info->phanloai,
+                    'khuvuc'         => $info->khu_vuc,
+                    'nguoiquanhat'   => $info->nguoi_quan_hat,
+                    'phanloai'    => $info->phan_loai,
                     'active'     => $info->active,
                     'sort_id' => $info->sort_id
                 ];

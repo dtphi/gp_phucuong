@@ -37,6 +37,8 @@ final class NewsService extends Service implements NewsModel
                 'image'            => $result->image,
                 'viewed'           => $result->viewed,
                 'vote'             => $result->vote,
+                'tag'              => (!empty($result->tag)) ? explode(',', $result->tag) : [],
+                'albums'           => $result->arr_album_list,
                 'related_category' => !empty($result->arr_category_list) ? $result->arr_category_list[0] : null
             ];
         } else {
@@ -98,6 +100,9 @@ final class NewsService extends Service implements NewsModel
         if (isset($data['infoType'])) {
             $infoType = (int)$data['infoType'];
         }
+        if (!empty($data['news_group_type'])) {
+            return $this->_apiGetTagInfoList($data);
+        }
 
         $query = DB::table(Tables::$information_to_categorys)->select([
             'category_id',
@@ -126,6 +131,37 @@ final class NewsService extends Service implements NewsModel
                 $query->where('information_type', '=', $infoType);
             }
         }
+
+        $limit = 20;
+        if (isset($data['limit'])) {
+            $limit = (int)$data['limit'];
+        }
+
+        $query->orderByDesc('sort_order');
+        $query->orderByDesc('date_available');
+
+        return $query->paginate($limit);
+    }
+
+    public function _apiGetTagInfoList($data = array())
+    {
+        $query = DB::table(Tables::$information_to_categorys)->select([
+            'category_id',
+            'date_available',
+            'sort_description',
+            'image',
+            Tables::$informations . '.information_id',
+            'information_type',
+            'name',
+            'name_slug',
+            'viewed',
+            'vote'
+        ])
+            ->leftJoin(Tables::$informations, Tables::$information_to_categorys . '.information_id', '=',
+                Tables::$informations . '.information_id')
+            ->leftJoin(Tables::$information_descriptions, Tables::$informations . '.information_id', '=',
+                Tables::$information_descriptions . '.information_id')
+            ->where('status', '=', '1');
 
         $limit = 20;
         if (isset($data['limit'])) {

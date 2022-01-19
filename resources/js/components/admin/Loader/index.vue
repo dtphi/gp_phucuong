@@ -6,9 +6,9 @@
 <script>
 
 export default {
-  name: 'Loader',
+  name: 'AdminLoader',
   props: {
-    size: {type: Number, default: 21}
-  }
+    size: { type: Number, default: 21, },
+  },
 }
 </script>

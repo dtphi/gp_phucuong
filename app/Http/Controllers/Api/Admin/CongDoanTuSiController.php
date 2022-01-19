@@ -29,10 +29,11 @@ class CongDoanTuSiController extends ApiController
      * @param CdtsSv $cdtsSv
      * @param array $middleware
      */
-    public function __construct(CongDoanTuSiRequest $request, CdtsSv $cdtsSv, array $middleware = [])
+    public function __construct(CdtsSv $cdtsSv, array $middleware = [])
     {
         $this->cdtsSv = $cdtsSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new CongDoanTuSiRequest);
     }
 
     /**

@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import InfoList from "./BangCaps/InfoList";
+import InfoList from './BangCaps/InfoList'
 
 export default {
-  name: "TabBangCapForm",
+  name: 'TabBangCapForm',
   components: {
     InfoList,
   },
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       bang_caps: [],
-    };
+    }
   },
-};
+}
 </script>

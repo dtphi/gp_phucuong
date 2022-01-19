@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import InfoBanChuyenTrachAutocomplete from "../Groups/InfoBanChuyenTrachAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import InfoBanChuyenTrachAutocomplete from '../Groups/InfoBanChuyenTrachAutocomplete'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   components: {
     InfoBanChuyenTrachAutocomplete,
   },
@@ -67,30 +67,30 @@ export default {
         return null
       }
 
-      return 'Chọn ban chuyên trách';
-    }
+      return 'Chọn ban chuyên trách'
+    },
   },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, [
-      "removeBanChuyenTrachGiaoPhan","ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST"
+      'removeBanChuyenTrachGiaoPhan', 'ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST'
     ]),
     _removeItem() {
       this.removeBanChuyenTrachGiaoPhan({
-        action: "removeBanChuyenTrachGiaoPhan",
+        action: 'removeBanChuyenTrachGiaoPhan',
         item: this.item,
-      });
+      })
     },
     _addBanChuyenTrachForm() {
       if (this.item.ban_chuyen_trach_id) {
         this.ACTION_UPDATE_DROPDOWN_BANCHUYENTRACH_LIST({
           action: 'create.update.ban.chuyen.trach.db',
-          banChuyenTrach: this.item
-        });
+          banChuyenTrach: this.item,
+        })
       }
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

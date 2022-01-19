@@ -10,20 +10,20 @@
 
 <script>
 
-    export default {
-        name: 'TabSettingForm',
+export default {
+  name: 'TabSettingForm',
 
-        props: {
-            settingData: {
-                type: Object
-            }
-        },
+  props: {
+    settingData: {
+      type: Object,
+    },
+  },
 
-        mounted () {
-        },
+  mounted() {
+  },
 
-        methods: {},
+  methods: {},
 
-        setting: {}
-    };
+  setting: {},
+}
 </script>

@@ -20,6 +20,11 @@ class LinhmucThuyenchuyen extends BaseModel
         return $this->belongsTo(Linhmuc::class);
     }
 
+    public function linhmucs()
+    {
+        return $this->belongsTo(Linhmuc::class, 'linh_muc_id');
+    }
+
     public function getTenThanhAttribute($value)
     {
         $value = ($this->linhMuc) ? $this->linhMuc->ten_thanh : '';
@@ -53,6 +58,7 @@ class LinhmucThuyenchuyen extends BaseModel
         'duc_cha_id',
         'to_date',
         'chuc_vu_id',
+        'chuc_vu_active',
         'giao_xu_id',
         'co_so_gp_id',
         'dong_id',

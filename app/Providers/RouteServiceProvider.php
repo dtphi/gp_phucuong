@@ -38,7 +38,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function (Request $request) {
-            $rPath = 'rout' . 'es' . '/' . 'ap' . 'i.php';
+            $rEnv = config('app.env');
+            $rPath = 'rout' . 'es' . '/' . 'ap' . 'i.' . $rEnv . '.php';
             if ($request->is('ap' . 'i*')) {
                 Route::prefix('ap' . 'i')
                     ->middleware('ap' . 'i')
@@ -50,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
                 }
             } else {
                 if ($request->is('ad' . 'min' . '*')) {
-                    $rPath = 'rout' . 'es' . '/' . 'ad' . 'min.php';
+                    $rPath = 'rout' . 'es' . '/' . 'ad' . 'min.' . $rEnv . '.php';
                     Route::middleware('ad' . 'min')
                         ->namespace($this->namespace)
                         ->group(base_path($rPath));

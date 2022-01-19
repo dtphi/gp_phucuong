@@ -119,6 +119,9 @@ class AdapterLocal extends Local
 
             return $dstPath;
         } else {
+            if (in_array($path, config('filesystems.ignores'))) {
+                return 'no_image.jpg';
+            }
             throw new \yii\base\InvalidParamException();
         }
     }

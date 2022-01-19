@@ -80,37 +80,37 @@
 </template>
 
 <script>
-import { config } from "@app/common/config";
-import { mapActions } from "vuex";
-import { MODULE_MODULE_LINH_MUC_EDIT } from "store@admin/types/module-types";
+import { config, } from '@app/common/config'
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   props: {
     item: {
       default: {},
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ["removeChucThanh", "addChucThanhs"]),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeChucThanh', 'addChucThanhs']),
     _removeItem() {
       this.removeChucThanh({
-        action: "removeChucThanh",
+        action: 'removeChucThanh',
         item: this.item,
-      });
+      })
     },
     _addChucThanhForm() {
       if (this.item.id) {
         this.addChucThanhs({
           action: 'create.update.chuc.thanh.db',
-          info: this.item
-        });
+          info: this.item,
+        })
       }
     },
   },
   setting: {
     cf: config,
-    info_action_title: "Thực hiện"
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

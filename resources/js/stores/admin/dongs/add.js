@@ -1,21 +1,18 @@
-import AppConfig from 'api@admin/constants/app-config';
-import {
-  apiInsertInfoDong,
-} from 'api@admin/dong';
-import { apiGetGiaoPhanInfos } from 'api@admin/giaophan';
+import AppConfig from 'api@admin/constants/app-config'
+import { apiInsertInfoDong, } from 'api@admin/dong'
+import { apiGetGiaoPhanInfos, } from 'api@admin/giaophan'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
   INFOS_MODAL_INSERT_INFO_FAILED,
-  INFOS_MODAL_SET_ERROR,
+  SET_ERROR,
   INFOS_FORM_SET_MAIN_IMAGE,
-  INFOS_GET_INFO_LIST_FAILED,
-} from '../types/mutation-types';
+} from '../types/mutation-types'
 import {
   ACTION_SET_LOADING,
   ACTION_SET_IMAGE,
-  ACTION_RESET_NOTIFICATION_INFO
-} from '../types/action-types';
+  ACTION_RESET_NOTIFICATION_INFO,
+} from '../types/action-types'
 
 const defaultState = () => {
   return {
@@ -44,12 +41,12 @@ const defaultState = () => {
     isGetInfoList: null,
     infoRelated: {
       information_id: 0,
-      name: ''
+      name: '',
     },
     infoId: 0,
     loading: false,
     insertSuccess: false,
-    errors: []
+    errors: [],
   }
 }
 
@@ -76,15 +73,14 @@ export default {
       return state.errors.length
     },
     isGiaoPhan(state) {
-      return state.listGiaoPhan;
+      return state.listGiaoPhan
     },
     insertSuccess(state) {
-      return state.insertSuccess;
-    }
+      return state.insertSuccess
+    },
   },
 
   mutations: {
-
     [INFOS_MODAL_SET_LOADING](state, payload) {
       state.loading = payload
     },
@@ -97,86 +93,91 @@ export default {
       state.insertSuccess = payload
     },
 
-    [INFOS_MODAL_SET_ERROR](state, payload) {
+    [SET_ERROR](state, payload) {
       state.errors = payload
     },
 
     [INFOS_FORM_SET_MAIN_IMAGE](state, payload) {
-      state.info.image = payload;
-      state.isImgChange = true;
+      state.info.image = payload
+      state.isImgChange = true
     },
     INFO_GIAO_PHAN(state, payload) {
-      state.listGiaoPhan = payload;
-    },
-    [INFOS_GET_INFO_LIST_FAILED](state, payload) {
-      state.isGetInfoList = payload
+      state.listGiaoPhan = payload
     },
   },
 
   actions: {
-    // action get list giao phan 
-    ACTION_GET_LIST_GIAO_PHAN({ commit }, params) {
+    // action get list giao phan
+    ACTION_GET_LIST_GIAO_PHAN({ commit, }, params) {
       apiGetGiaoPhanInfos(
         (infos) => {
-          commit('INFO_GIAO_PHAN', infos.data.results);
+          commit('INFO_GIAO_PHAN', infos.data.results)
         },
         (errors) => {
-          commit(INFOS_GET_INFO_LIST_FAILED, errors)
+          commit(SET_ERROR, errors)
         },
         params
       )
     },
 
-    [ACTION_SET_LOADING]({
-      commit
-    }, isLoading) {
-      commit(INFOS_MODAL_SET_LOADING, isLoading);
+    [ACTION_SET_LOADING]({ commit, }, isLoading) {
+      commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
 
-    ACTION_INSERT_INFO_DONG({
-      dispatch,
-      commit
-    }, info) {
+    ACTION_INSERT_INFO_DONG({ dispatch, commit, }, info) {
       apiInsertInfoDong(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          dispatch(ACTION_SET_LOADING, false);
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+          }
+          dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          dispatch(ACTION_SET_LOADING, false);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    ACTION_INSERT_INFO_DONG_BACK({
-      dispatch,
-      commit
-    }, info) {
+    ACTION_INSERT_INFO_DONG_BACK({ dispatch, commit, }, info) {
       apiInsertInfoDong(
         info,
         (result) => {
-          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comInsertNoSuccess);
-          dispatch('ACTION_RELOAD_GET_INFO_LIST_DONG', 'page', {
-            root: true
-          });
+          if (result) {
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            dispatch('ACTION_RELOAD_GET_INFO_LIST_DONG', 'page', {
+              root: true,
+            })
+          }
         },
         (errors) => {
-          commit(INFOS_MODAL_INSERT_INFO_FAILED, AppConfig.comInsertNoFail);
-          dispatch(ACTION_SET_LOADING, false);
+          commit(
+            INFOS_MODAL_INSERT_INFO_FAILED,
+            AppConfig.comInsertNoFail
+          )
+          commit(SET_ERROR, errors)
+          dispatch(ACTION_SET_LOADING, false)
         }
       )
     },
 
-    [ACTION_SET_IMAGE]({
-      commit
-    }, imgFile) {
-      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile);
+    [ACTION_SET_IMAGE]({ commit, }, imgFile) {
+      commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile)
     },
 
-    [ACTION_RESET_NOTIFICATION_INFO]({ commit }, values) {
-      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values);
-    }
-  }
+    [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
+      commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values)
+    },
+  },
 }

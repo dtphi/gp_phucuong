@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import BtnAdd from "./BtnAdd";
-import InfoItem from "./InfoItem";
+import BtnAdd from './BtnAdd'
+import InfoItem from './InfoItem'
 
 export default {
-  name: "TheInfoList",
+  name: 'TheInfoList',
   components: {
     BtnAdd,
     InfoItem,
@@ -48,6 +48,6 @@ export default {
     lists: {
       default: {},
     },
-  }
-};
+  },
+}
 </script>

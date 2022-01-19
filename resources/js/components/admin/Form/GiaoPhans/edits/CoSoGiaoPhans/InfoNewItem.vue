@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { MODULE_MODULE_GIAO_PHAN_EDIT } from "store@admin/types/module-types";
-import InfoCoSoGiaoPhanAutocomplete from "../Groups/InfoCoSoGiaoPhanAutocomplete";
+import { mapActions, } from 'vuex'
+import { MODULE_MODULE_GIAO_PHAN_EDIT, } from 'store@admin/types/module-types'
+import InfoCoSoGiaoPhanAutocomplete from '../Groups/InfoCoSoGiaoPhanAutocomplete'
 
 export default {
-  name: "TheInfoNewItem",
+  name: 'TheInfoNewItem',
   components: {
     InfoCoSoGiaoPhanAutocomplete,
   },
@@ -67,28 +67,28 @@ export default {
         return null
       }
 
-      return 'Chọn cơ sở';
-    }
+      return 'Chọn cơ sở'
+    },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ["removeCoSoGiaoPhan", "ACTION_UPDATE_DROPDOWN_COSO_LIST"]),
+    ...mapActions(MODULE_MODULE_GIAO_PHAN_EDIT, ['removeCoSoGiaoPhan', 'ACTION_UPDATE_DROPDOWN_COSO_LIST']),
     _removeItem() {
       this.removeCoSoGiaoPhan({
-        action: "removeCoSoGiaoPhan",
+        action: 'removeCoSoGiaoPhan',
         item: this.item,
-      });
+      })
     },
     _addCoSoForm() {
       if (this.item.co_so_giao_phan_id) {
         this.ACTION_UPDATE_DROPDOWN_COSO_LIST({
           action: 'create.update.co.so.db',
-          coso: this.item
-        });
+          coso: this.item,
+        })
       }
     },
   },
   setting: {
-    info_action_title: "Thực hiện",
+    info_action_title: 'Thực hiện',
   },
-};
+}
 </script>

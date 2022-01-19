@@ -31,10 +31,11 @@ class AdminController extends ApiController
      * @param AdminSv $adSv
      * @param array $middleware
      */
-    public function __construct(AdminRequest $request, AdminSv $adSv, array $middleware = [])
+    public function __construct(AdminSv $adSv, array $middleware = [])
     {
         $this->adSv = $adSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new AdminRequest);
     }
 
     /**

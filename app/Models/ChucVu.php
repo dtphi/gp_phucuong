@@ -19,4 +19,18 @@ class ChucVu extends BaseModel
         'active',
         'update_user'
     ];
+
+    public function getVtbnAttribute($value)
+    {
+        return htmlspecialchars_decode($value);
+    }
+
+    public static function fcDeleteById($id = null)
+    {
+        $id = (int)$id;
+
+        if ($id) {
+            return DB::delete("delete from " . Tables::$chuc_vus . " where id = '" . $id . "'");
+        }
+    }
 }

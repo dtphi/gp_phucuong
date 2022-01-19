@@ -17,8 +17,6 @@
       }"
       v-if="computed.total > computed.perPage"
       slot-scope="{
-        data,
-        limit,
         showDisabled,
         size,
         align,
@@ -82,10 +80,10 @@
 </template>
 
 <script>
-import RenderPagination from "./RenderPagination.vue";
+import RenderPagination from './RenderPagination.vue'
 
 export default {
-  name: "CollectionPagination",
+  name: 'CollectionPagination',
   components: {
     RenderPagination,
   },
@@ -104,24 +102,24 @@ export default {
     },
     size: {
       type: String,
-      default: "default",
+      default: 'default',
       validator: (value) => {
-        return ["small", "default", "large"].indexOf(value) !== -1;
+        return ['small', 'default', 'large'].indexOf(value) !== -1
       },
     },
     align: {
       type: String,
-      default: "left",
+      default: 'left',
       validator: (value) => {
-        return ["left", "center", "right"].indexOf(value) !== -1;
+        return ['left', 'center', 'right'].indexOf(value) !== -1
       },
     },
   },
 
   methods: {
     onPaginationChangePage(page) {
-      this.$emit("pagination-change-page", page);
+      this.$emit('pagination-change-page', page)
     },
   },
-};
+}
 </script>

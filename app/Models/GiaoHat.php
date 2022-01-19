@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Http\Common\Tables;
 use DB;
+use App\Models\GiaoXu;
+use App\Models\GiaoPhan;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GiaoHat extends BaseModel
-{
-    use SoftDeletes;
-
+{ 
+  use SoftDeletes;
     /**
+     * 
      * @var string
      */
     protected $table = DB_PREFIX . 'giao_hats';
@@ -19,14 +20,18 @@ class GiaoHat extends BaseModel
 
     protected $fillable = [
       'name',
-      'khuvuc',
-      'nguoiquanhat',
+      'khu_vuc',
+      'nguoi_quan_hat',
       'sort_id',
       'active',
-      'updateuser',
-      'updatetime',
+      'update_user',
       'create_at',
       'update_at',
       'delete_at',
     ];
+
+    public function giaoxus()
+	{
+		return $this->hasMany(GiaoXu::class);
+	}
 }

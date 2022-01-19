@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import InfoList from "./BanChuyenTrachGiaoPhans/InfoList";
+import InfoList from './BanChuyenTrachGiaoPhans/InfoList'
 
 export default {
-  name: "TabBanChuyenTrach",
+  name: 'TabBanChuyenTrach',
   components: {
     InfoList,
   },
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       giao_phan_banchuyentrachs: [],
-    };
+    }
   },
-};
+}
 </script>

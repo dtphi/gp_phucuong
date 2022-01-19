@@ -9,22 +9,22 @@
 </template>
 
 <script>
-    import InfoList from './HatCongDoanTuSiGiaoPhans/InfoList';
+import InfoList from './HatCongDoanTuSiGiaoPhans/InfoList'
 
-    export default {
-        name: 'TabHatCongDoanTSGiaoPhan',
-        components: {
-            InfoList
-        },
-        props: {
-            groupData: {
-                type: Object
-            }
-        },
-        data() {
-            return {
-                giao_phan_hat_congdoantusis: []
-            }
-        },
-    };
+export default {
+  name: 'TabHatCongDoanTSGiaoPhan',
+  components: {
+    InfoList,
+  },
+  props: {
+    groupData: {
+      type: Object,
+    },
+  },
+  data() {
+    return {
+      giao_phan_hat_congdoantusis: [],
+    }
+  },
+}
 </script>

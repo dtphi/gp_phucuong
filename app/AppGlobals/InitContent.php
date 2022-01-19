@@ -36,6 +36,7 @@ final class InitContent
     {
         $request = request();
         $flag    = '';
+        
         if ($request->is('/') || $request->is('trang-chu*')) {
             $flag = 'trang-chu';
         }
@@ -44,6 +45,9 @@ final class InitContent
         }
         if ($request->is('tin-tuc*')) {
             $flag = 'tin-tuc';
+        }
+        if ($request->is('tin-tuc/tags*')) {
+            $flag = 'danh-muc-tin';
         }
         if ($request->is('video*')) {
             $flag = 'video';
@@ -186,6 +190,21 @@ final class InitContent
             $this->settings['page'] = $layout;
         } else {
             $this->settings['page'] = [];
+        }
+
+        $this->settings['isMix'] = config('app.is_mix');
+
+        if ($request->is('linhmucadmin*')) {
+            $this->settings['isLinhMucAdmin'] = true;
+            $this->settings['viewTemplate'] = 'adminlinhmuc-' . config('app.env');
+        }
+        
+        if (fn_is_prod_env()) {
+            $this->settings['pageDir'] = config('app.is_mix') ? mix('js/front-' . config('app.api_name_key') . '.js'): asset('js/front-' . config('app.api_name_key') . '.js');
+        } else if(fn_is_stg_env()) {
+            $this->settings['pageDir'] = config('app.is_mix') ? mix('js/stg/app-front.js'): asset('js/stg/app-front.js');
+        } else {
+            $this->settings['pageDir'] = config('app.is_mix') ? mix('js/stg/app-front.js'): asset('js/app-front.js');
         }
     }
 

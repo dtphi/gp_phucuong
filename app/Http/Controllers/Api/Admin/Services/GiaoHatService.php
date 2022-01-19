@@ -36,7 +36,6 @@ final class GiaoHatService implements BaseModel, GiaoHatModel
         }
     }
 
-
     public function apiGetResourceCollection(array $options = [], $limit = 5)
     {
         // TODO: Implement apiGetResourceCollection() method.

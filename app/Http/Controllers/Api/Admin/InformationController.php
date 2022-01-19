@@ -29,10 +29,11 @@ class InformationController extends ApiController
      * @param InfoSv $infoSv
      * @param array $middleware
      */
-    public function __construct(InformationRequest $request, InfoSv $infoSv, array $middleware = [])
+    public function __construct(InfoSv $infoSv, array $middleware = [])
     {
         $this->infoSv = $infoSv;
         parent::__construct($middleware);
+        $this->_initAuthor(new InformationRequest);
     }
 
     /**
@@ -47,11 +48,10 @@ class InformationController extends ApiController
         if ($request->query('page')) {
             $page = $request->query('page');
         }
-        try {
+      try {
             $limit       = $this->_getPerPage();
             $collections = $this->infoSv->apiGetList($data, $limit);
             
-
             if (isset($data['infoType']) && $data['infoType'] == 'module_special_info') {
                 $pagination = [];
             } else {
@@ -59,8 +59,8 @@ class InformationController extends ApiController
             }
 
             $results = [];
-            $staticImgThum = self::$thumImgNo;
             foreach ($collections as $key => $info) {
+              $staticImgThum = self::$thumImgNo;
                 $realPath = public_path($info->image['path']);
                 if (file_exists($realPath) && (false !== realpath($realPath)) && !empty($info->image['path'])) {
                     $staticImgThum = $info->image['path'];
@@ -103,6 +103,7 @@ class InformationController extends ApiController
     {
         try {
             $json = $this->infoSv->apiGetResourceDetail($id);
+            
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
@@ -222,6 +223,10 @@ class InformationController extends ApiController
     {
         $data = $request->all();
 
+        if (isset($data['action']) && $data['action'] === 'info.album.dropdown') {
+            return $this->_getAlbumDropdown($data);
+        }
+
         $results     = $this->infoSv->apiGetList($data);
         $collections = [];
 
@@ -229,6 +234,26 @@ class InformationController extends ApiController
             $collections[] = [
                 'information_id' => $value->information_id,
                 'name'           => $value->name,
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+    /**
+     * @author : dtphi .
+     * @param Request $request
+     * @return mixed
+     */
+    public function _getAlbumDropdown($data = [])
+    {
+        $results     = $this->infoSv->apiGetAlbumList($data);
+        $collections = [];
+
+        foreach ($results as $value) {
+            $collections[] = [
+                'album_id' => $value->id,
+                'name'     => $value->albums_name,
             ];
         }
 

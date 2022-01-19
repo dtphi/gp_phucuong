@@ -16,6 +16,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Api\Front\Services\Service;
 use App\Http\Controllers\Api\Front\Services\SettingService;
+use App\Models\Albums;
+use GrahamCampbell\ResultType\Result;
 
 class ApiController extends Controller
 {
@@ -315,11 +317,41 @@ class ApiController extends Controller
 
 			$data['infoLasteds']  = $this->getLastedInfoList($request);
 			$data['infoPopulars'] = $this->getPopularList($request);
+			$data['lastAlbum'] = $this->getLastImageListAlbums();
 		} catch (HandlerMsgCommon $e) {
 			throw $e->render();
 		}
 
 		return response()->json($data);
+	}
+
+	public function getLastImageListAlbums()
+	{
+			$lastAlbum = Albums::where('status', 1)->orderByDesc('id')->first();
+			$value = ($lastAlbum) ? $lastAlbum->image : '';
+
+			$value = !empty($value) ? unserialize($value): [];
+			if (!empty($value)) {
+					$sort = array_column($value, 'width');
+					array_multisort($sort, SORT_ASC, $value);
+			}
+
+			$albums = [];
+			if (!empty($value)) {
+					foreach ($value as $key => $img) {
+							if ($img['status']) {
+									$tmp = $img;
+									$tmp['width'] = (int)$img['width'];
+									$tmp['image'] = url('/Image/NewPicture/' . $img['image']);
+									$tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280, 280));
+									$albums[$key] = $tmp;
+							} else {
+									unset($value[$key]);
+							}
+					}
+			}
+
+			return $albums;
 	}
 
 	protected function _getModules(&$request)
@@ -402,7 +434,8 @@ class ApiController extends Controller
 						'name_slug'        => $info->name_slug,
 						'sort_name'        => Str::substr($info->name, 0, 28),
 						'viewed'           => $info->viewed,
-						'vote'             => $info->vote
+						'vote'             => $info->vote,
+						'tag'              => (!empty($info->tag)) ? explode(',', $info->tag): []
 					];
 				}
 			}
@@ -496,6 +529,14 @@ class ApiController extends Controller
 			$pagination = $this->_getTextPagination($collections);
 
 			foreach ($collections as $key => $info) {
+				$duong_nhiem = [];
+				foreach($info->linhmucthuyenchuyens as $key => $value) {
+					$duong_nhiem[] = [
+						'ten_duong_nhiem' => $value->linhMuc->ten,
+						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
+						'chuc_vu' => $value->chucVu->name,
+					];
+				}
 				$results[] = [
 					'id' => (int) $info->id,
 					'name' => $info->name,
@@ -507,9 +548,9 @@ class ApiController extends Controller
 					'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
 					'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
 					'dan_so' => $info->dan_so ?? "Chưa cập nhật",
+					'duong_nhiem' => $duong_nhiem
 				];
 			}
-
 			$json = [
 				'data' => [
 					'results'    => $results,
@@ -535,14 +576,18 @@ class ApiController extends Controller
 		$info = $this->sv->apiGetDetailGiaoXu($giaoXuId);
 		$linhMucs = $this->sv->apiGetLinhMucListByGiaoXuId($giaoXuId);
 		$emptyStr = 'Chưa cập nhật';
+		$emptyItem = null;
 
 		$linhMucTienNhiem = [];
 		$linhMucChanhXu = $this->sv->apiGetLinhMucChanhXuByGiaoXuId($giaoXuId);
-		$linhMucPhoXu = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
+		$linhMucPhoXus = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
 		$arrLmIds = [];
 		foreach ($linhMucs as $linhMuc) {
+			$url_linhmuc = url('linh-muc/chi-tiet/' . $linhMuc->linh_muc_id);
+			$from = \Carbon\Carbon::parse($linhMuc->from_date)->year ?? $emptyStr;
+			$to = \Carbon\Carbon::parse($linhMuc->to_date)->year ?? $emptyStr;
 			if (!in_array($linhMuc->linh_muc_id, $arrLmIds)) {
-				$linhMucTienNhiem[] = $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc;
+				$linhMucTienNhiem[] = '<a style="color: black !important;cursor:pointer" href="'. $url_linhmuc .'">' . $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc . ' (' . $from . '-' . $to . ')</a>';
 			}
 			array_push($arrLmIds, $linhMuc->linh_muc_id);
 		}
@@ -551,15 +596,24 @@ class ApiController extends Controller
 
 		$imgChanhXu = '';
 		$nameChanhXu = '';
+		$fromDateChanhXu = $emptyStr;
+		$emailChanhXu = $emptyStr;
 		if ($linhMucChanhXu) {
-			$nameChanhXu = isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.'-'.$linhMucChanhXu->ten_linh_muc:$emptyStr;
+			$nameChanhXu = isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.' - '.$linhMucChanhXu->ten_linh_muc:$emptyStr;
 			$imgChanhXu = isset($linhMucChanhXu->linhMuc->image) ? url($linhMucChanhXu->linhMuc->image) : url('images/linh-muc.jpg');
+			$fromDateChanhXu = isset($linhMucChanhXu->from_date) ? \Carbon\Carbon::parse($linhMucChanhXu->from_date)->format('d-m-Y') : $emptyStr;
+			$emailChanhXu = isset($linhMucChanhXu->email) ? $linhMucChanhXu->email : $emptyStr;
 		}
-		$imgPhoXu = '';
-		$namePhoXu = '';
-		if ($linhMucPhoXu){
-			$namePhoXu = isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.'-'.$linhMucPhoXu->ten_linh_muc:$emptyStr;
-			$imgPhoXu = isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg');
+		$arr_pho_xu = [];
+		if ($linhMucPhoXus){
+			foreach($linhMucPhoXus as $linhMucPhoXu) {
+				$arr_pho_xu[] = [
+					'pho_xu' => isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.' - '.$linhMucPhoXu->ten_linh_muc:$emptyStr,
+					'img_pho_xu' => isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg'),
+					'email_pho' => isset($linhMucPhoXu->email) ? $linhMucPhoXu->email : $emptyStr,
+					'from_date_pho' => isset($linhMucPhoXu->from_date) ? \Carbon\Carbon::parse($linhMucPhoXu->from_date)->format('d-m-Y') : $emptyStr,
+				];
+			}
 		}
 		$json['results'] = [];
 		if ($info) {
@@ -572,19 +626,19 @@ class ApiController extends Controller
 				'image' => !empty($info->image) ? url($info->image): url($defaultImage),
 				'noi_dung' => html_entity_decode($info->noi_dung),
 				'sub_noi_dung' => $subNoiDung,
-				'so_tin_huu' => $info->so_tin_huu ?? $emptyStr,
-				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? $emptyStr,
-				'gio_le' => html_entity_decode($info->gio_le)?? $emptyStr,
-				'dia_chi' => html_entity_decode($info->dia_chi) ?? $emptyStr,
-				'dien_thoai' => $info->dien_thoai ?? $emptyStr,
-				'email' => $info->email ?? $emptyStr,
-				'linh_muc_tien_nhiem' => implode('<br>',$linhMucTienNhiem),
+				'so_tin_huu' => $info->so_tin_huu ?? $emptyItem,
+				'dan_so' => 'Dân số giáo xứ: ' .  $info->dan_so ?? $emptyItem,
+				'gio_le' => html_entity_decode($info->gio_le)?? $emptyItem,
+				'dia_chi' => html_entity_decode($info->dia_chi) ?? $emptyItem,
+				'dien_thoai' => $info->dien_thoai ?? $emptyItem,
+				'email' => $info->email ?? $emptyItem,
+				'linh_muc_tien_nhiem' => implode('<br>', $linhMucTienNhiem),
 				'chanh_xu' => $nameChanhXu,
 				'img_chanh_xu' => $imgChanhXu,
-				'pho_xu' => $namePhoXu,
-				'img_pho_xu' => $imgPhoXu,
-				'ngay_thanh_lap' => $emptyStr,
-				'bon_mang' => $emptyStr
+				'ngay_thanh_lap' => !empty($info->ngay_thanh_lap) ? $info->ngay_thanh_lap : $emptyItem,
+				'from_date_chanh' => $fromDateChanhXu,
+				'email_chanh' => $emailChanhXu,
+				'arr_pho_xu' => $arr_pho_xu,
 			];
 		}
 		return $json;
@@ -673,6 +727,7 @@ class ApiController extends Controller
 		} catch (HandlerMsgCommon $e) {
 			throw $e->render();
 		}
+ 
 		$json = [
 			'data' => [
 				'results'    => $results,
@@ -722,4 +777,321 @@ class ApiController extends Controller
 		}
 		return  $results;
 	}
-}
+
+  public function getGiaoPhanList(Request $request)
+  {
+      try {
+          $results = [];
+          $collections = $this->sv->apiGetListGiaoPhan();
+          foreach ($collections as $key => $info) {
+              $results[] = [
+                'value' => $info->id,
+                'text' => $info->name
+              ];
+          } 
+          $json = [
+            'data' => [
+              'results'    => $results,
+            ]
+          ];
+        } catch (HandlerMsgCommon $e) {
+          $json = [
+            'data' => [
+              'results'   => [],
+              'msg'       => $e->render()
+            ]
+          ];
+      }
+
+      return $this->respondWithCollectionPagination($json);
+  }
+
+  public function getGiaoHatList(Request $request) {
+    try {
+      $results = [];
+      $collections = $this->sv->apiGetListGiaoHat($request->params);
+      foreach ($collections as $key => $info) {
+          $results[] = [
+            'value' => $info->id,
+            'text' => $info->name
+          ];
+      } 
+      $json = [
+        'data' => [
+          'results'    => $results,
+        ]
+      ];
+    } catch (HandlerMsgCommon $e) {
+      $json = [
+        'data' => [
+          'results'   => [],
+          'msg'       => $e->render()
+        ]
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($json);
+  }
+
+  public function getGiaoXuListById(Request $request) 
+  {
+      $page = 1;
+      if ($request->input('page')) {
+        $page = $request->input('page');
+      }
+      try {
+        $results = [];
+        $collections = $this->sv->apiGetListGiaoXu($request, $limit = 5);
+        $pagination = $this->_getTextPagination($collections);
+		if($request->input('query') == null) {
+			foreach($collections as $key => $info) {
+				$duong_nhiem = [];
+				foreach($info->giaoXu->linhmucthuyenchuyens as $key => $value) {
+					$duong_nhiem[] = [
+						'ten_duong_nhiem' => $value->linhMuc->ten,
+						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
+						'chuc_vu' => $value->chucVu->name,
+					];
+				}
+				$results[] = [
+					'id' => (int) $info->giaoXu->id,
+					'name' => $info->giaoXu->name,
+					'hrefDetail' => url('giao-xu/chi-tiet/' . $info->giaoXu->id),
+					'image'	=> !empty($info->giaoXu->image) ? url($info->giaoXu->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+					'gio_le' => html_entity_decode($info->giaoXu->gio_le) ?? "Chưa cập nhật",
+					'dia_chi' => html_entity_decode($info->giaoXu->dia_chi) ?? "Chưa cập nhật",
+					'email' => $info->giaoXu->email ?? "Chưa cập nhật",
+					'dien_thoai' => $info->giaoXu->dien_thoai ?? "Chưa cập nhật",
+					'so_tin_huu' => $info->giaoXu->so_tin_huu ?? "Chưa cập nhật",
+					'dan_so' => $info->giaoXu->dan_so ?? "Chưa cập nhật",
+					'duong_nhiem' => $duong_nhiem
+				];
+			}
+		} else {
+			foreach ($collections as $key => $info) {
+				$duong_nhiem = [];
+				foreach($info->linhmucthuyenchuyens as $key => $value) {
+					$duong_nhiem[] = [
+						'ten_duong_nhiem' => $value->linhMuc->ten,
+						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
+						'chuc_vu' => $value->chucVu->name,
+					];
+				}
+				$results[] = [
+					'id' => (int) $info->id,
+					'name' => $info->name,
+					'hrefDetail' => url('giao-xu/chi-tiet/' . $info->id),
+					'image'	=> !empty($info->image) ? url($info->image): url('Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png'),
+					'gio_le' => html_entity_decode($info->gio_le) ?? "Chưa cập nhật",
+					'dia_chi' => html_entity_decode($info->dia_chi) ?? "Chưa cập nhật",
+					'email' => $info->email ?? "Chưa cập nhật",
+					'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
+					'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
+					'dan_so' => $info->dan_so ?? "Chưa cập nhật",
+					'duong_nhiem' => $duong_nhiem
+				];
+			}
+		}
+        $json = [
+          'data' => [
+            'results'    => $results,
+            'pagination' => $pagination,
+            'page'       => $page
+          ]
+        ];
+      } catch (HandlerMsgCommon $e) {
+        $json = [
+          'data' => [
+            'results'    => [],
+            'pagination' => [],
+            'msg'       => $e->render()
+          ]
+        ];
+      }
+
+      return $this->respondWithCollectionPagination($json);
+  }
+
+  public function getChucVuList(Request $request) 
+  {
+      try {
+        $results = [];
+        $collections = $this->sv->apiGetListChucVu();
+        foreach ($collections as $key => $info) {
+            $results[] = [
+              'value' => $info->id,
+              'text' => $info->name
+            ];
+        } 
+        $json = [
+          'data' => [
+            'results'    => $results,
+          ]
+        ];
+      } catch (HandlerMsgCommon $e) {
+        $json = [
+          'data' => [
+            'results'   => [],
+            'msg'       => $e->render()
+          ]
+        ];
+      }
+
+      return $this->respondWithCollectionPagination($json);
+  }
+
+  public function getLinhMucListById(Request $request) 
+  {     
+      if ($request->input('page')) {
+        $page = $request->input('page');
+      }
+
+      try {
+        $collections = $this->sv->apiGetListLinhMucById($request);
+        $pagination = $this->_getTextPagination($collections);
+        $results = [];
+        $emptyStr = 'Chưa cập nhật';
+
+        foreach ($collections as $key => $info) {
+          $giaoHatHienTai = '';
+          $chucVuHienTai = '';
+          $giaoXuHienTai = !empty($info->arr_thuyen_chuyen_list)?$info->arr_thuyen_chuyen_list:'';
+          $chucThanhs = !empty($info->arr_chuc_thanh_list)?$info->arr_chuc_thanh_list:'';
+          
+          if (empty($giaoXuHienTai)) {
+            $giaoXuHienTai = $info->ten_giao_xu;
+            $hrefGx = ($info->giao_xu_id) ? url('giao-xu/chi-tiet/' . $info->giao_xu_id): "javascript:void(0);";
+            $giaoHatHienTai = $info->ten_hat_xu;
+          } else {
+            $giaoXu = end($giaoXuHienTai);
+            $hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']): "javascript:void(0);";
+            $giaoXuHienTai = $giaoXu['giaoxuName'];
+            $chucVuHienTai = $giaoXu['chucvuName'];
+            $giaoHatHienTai = $giaoXu['giaoHatName'];
+          }
+
+          $ngayNhanChucThanhHienTai = '';
+          $tenChucThanh = '';
+          if (empty($chucThanhs)) {
+            $ngayNhanChucThanhHienTai = $emptyStr;
+          } else {
+            $chucThanhs = end($chucThanhs);
+            $ngayNhanChucThanhHienTai = $chucThanhs['label_ngay_thang_nam_chuc_thanh'];
+            $tenChucThanh = Tables::$chucThanhs[$chucThanhs['chuc_thanh_id']];
+          }
+          
+          $results[] = [
+            'id' => (int) $info->id,
+            'ten' => $info->ten,
+            'chucThanhName' => $tenChucThanh,
+            'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? $emptyStr,
+            'image'	=> !empty($info->image) ? url($info->image): url('images/linh-muc.jpg'),
+            'href_giaoxu' => $hrefGx,
+            'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai: $emptyStr,
+            'dia_chi' => $info->dia_chi ?? $emptyStr,
+            'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+            'ten_thanh' => $info->ten_thanh ?? $emptyStr,
+            'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
+            'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+            'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
+          ];
+        }
+
+        $json = [
+          'data' => [
+            'results'    => $results,
+            'pagination' => $pagination,
+            'page'       => $page
+          ]
+        ];
+
+      } catch (HandlerMsgCommon $e) {
+        $json = [
+          'data' => [
+            'results'    => [],
+            'pagination' => [],
+            'msg'       => $e->render()
+          ]
+        ];
+      }
+      
+      return $this->respondWithCollectionPagination($json);
+  }
+
+    public function getLinhMucListSearch(Request $request) 
+    {     
+        if ($request->query('page')) {
+          $page = $request->query('page');
+        }
+        
+        try {
+          $collections = $this->sv->apiGetListLinhMucSearch($request);
+          $pagination = $this->_getTextPagination($collections);
+          $results = [];
+          $staticImgThum = self::$thumImgNo;
+          $emptyStr = 'Chưa cập nhật';
+          foreach ($collections as $key => $info) {
+            $giaoHatHienTai = '';
+            $chucVuHienTai = '';
+            $giaoXuHienTai = !empty($info->arr_thuyen_chuyen_list)?$info->arr_thuyen_chuyen_list:'';
+            $chucThanhs = !empty($info->arr_chuc_thanh_list)?$info->arr_chuc_thanh_list:'';
+            
+            if (empty($giaoXuHienTai)) {
+              $giaoXuHienTai = $info->ten_giao_xu;
+              $hrefGx = ($info->giao_xu_id) ? url('giao-xu/chi-tiet/' . $info->giao_xu_id): "javascript:void(0);";
+              $giaoHatHienTai = $info->ten_hat_xu;
+            } else {
+              $giaoXu = end($giaoXuHienTai);
+              $hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']): "javascript:void(0);";
+              $giaoXuHienTai = $giaoXu['giaoxuName'];
+              $chucVuHienTai = $giaoXu['chucvuName'];
+              $giaoHatHienTai = $giaoXu['giaoHatName'];
+            }
+    
+            $ngayNhanChucThanhHienTai = '';
+            $tenChucThanh = '';
+            if (empty($chucThanhs)) {
+              $ngayNhanChucThanhHienTai = $emptyStr;
+            } else {
+              $chucThanhs = end($chucThanhs);
+              $ngayNhanChucThanhHienTai = $chucThanhs['label_ngay_thang_nam_chuc_thanh'];
+              $tenChucThanh = Tables::$chucThanhs[$chucThanhs['chuc_thanh_id']];
+            }
+            
+            $results[] = [
+              'id' => (int) $info->id,
+              'ten' => $info->ten,
+              'chucThanhName' => $tenChucThanh,
+              'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? $emptyStr,
+              'image'	=> !empty($info->image) ? url($info->image): url('images/linh-muc.jpg'),
+              'href_giaoxu' => $hrefGx,
+              'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai: $emptyStr,
+              'dia_chi' => $info->dia_chi ?? $emptyStr,
+              'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+              'ten_thanh' => $info->ten_thanh ?? $emptyStr,
+              'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
+              'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+              'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
+            ];
+          }
+
+          $json = [
+            'data' => [
+              'results'    => $results,
+              'pagination' => $pagination,
+              'page'       => $page
+            ]
+          ];
+        } catch (HandlerMsgCommon $e) {
+            $json = [
+            'data' => [
+              'results'    => [],
+              'pagination' => [],
+              'msg'       => $e->render()
+            ]
+          ];
+        }
+    
+        return $this->respondWithCollectionPagination($json);
+    }
+} 

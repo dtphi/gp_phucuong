@@ -77,6 +77,10 @@ class NewsController extends Controller
         if ($request->query('renderType')) {
             $params['renderType'] = $request->query('renderType');
         }
+        $params['news_group_type'] = '';
+        if ($request->query('news_group_type')) {
+            $params['news_group_type'] = $request->query('news_group_type');
+        }
 
         $widthThumbInfoList  = 184;
         $heightThumbInfoList = 120;
@@ -369,6 +373,22 @@ class NewsController extends Controller
             $this->newsSv->apiUpdateViewed($params['information_id']);
 
             $json['results']                  = $this->newsSv->apiGetInfo($params['information_id']);
+            $albums = !empty($json['results']['albums']) ? $json['results']['albums']: [];
+         
+            if (!empty($albums)) {
+                foreach ($albums[0]['images'] as $key => $img) {
+                    if ($img['status']) {
+                        $tmp = $img;
+                        $tmp['width'] = (int)$img['width'];
+                        $tmp['image'] = url('/Image/NewPicture/' . $img['image']);
+                        $tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280, 280));
+                        $json['results']['albums'][0]['images'][$key] = $tmp;
+                    } else {
+                        unset($json['results']['albums'][0]['images'][$key]);
+                    }
+                }
+            }
+        
             $json['result_category_relateds'] = $json['results']['related_category'];
         }
 
@@ -429,7 +449,8 @@ class NewsController extends Controller
                         'name_slug'        => $info->name_slug,
                         'sort_name'        => Str::substr($info->name, 0, 28),
                         'viewed'           => $info->viewed,
-                        'vote'             => $info->vote
+                        'vote'             => $info->vote,
+                        'tag'              => $info->tag
                     ];
                 }
             }
