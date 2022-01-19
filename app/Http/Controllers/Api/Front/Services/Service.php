@@ -226,7 +226,8 @@ class Service implements BaseModel
 	public function apiGetLinhMucPhoXuByGiaoXuId($giaoXuId = null) {
 		$linhMuc = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
 		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', 4)
-		->orderByDesc('from_date')
+		->where(Tables::$linhmuc_thuyenchuyens . 'chuc_vu_active', 1)
+		->orderByDesc('from_date')->limit(3)
 		->get();
 
 		return $linhMuc;
