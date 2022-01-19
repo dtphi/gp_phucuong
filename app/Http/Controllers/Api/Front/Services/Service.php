@@ -404,7 +404,7 @@ class Service implements BaseModel
 		  }]);
 
       } else if ($request->input('query') == null) {
-		    $list_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', 1)->with(['giaoXu.linhmucthuyenchuyens' => function($q) {
+		    $list_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', $request->input('params'))->with(['giaoXu.linhmucthuyenchuyens' => function($q) {
 			  $q->where('chuc_vu_active', 1)->select('linh_muc_id', 'chuc_vu_id','giao_xu_id')->with('linhMuc', 'chucVu')->orderBy('chuc_vu_id', 'asc');
 		  }]);
 
