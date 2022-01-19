@@ -48,7 +48,7 @@
                 <h4>Email: {{info.email_chanh}}</h4>
               </div>  
             </div>
-            <div class="row" v-if="info.pho_xu"> 
+            <div class="row" v-for="(info, idx) in info.arr_pho_xu" :key="idx"> 
               <div class="col-sm">
                   <vue-timeline-update 
                   :date="new Date()"
