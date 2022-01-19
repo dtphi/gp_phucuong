@@ -580,7 +580,7 @@ class ApiController extends Controller
 
 		$linhMucTienNhiem = [];
 		$linhMucChanhXu = $this->sv->apiGetLinhMucChanhXuByGiaoXuId($giaoXuId);
-		$linhMucPhoXu = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
+		$linhMucPhoXus = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
 		$arrLmIds = [];
 		foreach ($linhMucs as $linhMuc) {
 			$url_linhmuc = url('linh-muc/chi-tiet/' . $linhMuc->linh_muc_id);
@@ -604,15 +604,16 @@ class ApiController extends Controller
 			$fromDateChanhXu = isset($linhMucChanhXu->from_date) ? \Carbon\Carbon::parse($linhMucChanhXu->from_date)->format('d-m-Y') : $emptyStr;
 			$emailChanhXu = isset($linhMucChanhXu->email) ? $linhMucChanhXu->email : $emptyStr;
 		}
-		$imgPhoXu = '';
-		$namePhoXu = '';
-		$fromDatePhoXu = $emptyStr;
-		$emailPhoXu = $emptyStr;
-		if ($linhMucPhoXu){
-			$namePhoXu = isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.' - '.$linhMucPhoXu->ten_linh_muc:$emptyStr;
-			$imgPhoXu = isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg');
-			$fromDatePhoXu = isset($linhMucPhoXu->from_date) ? \Carbon\Carbon::parse($linhMucPhoXu->from_date)->format('d-m-Y') : $emptyStr;
-			$emailPhoXu = isset($linhMucPhoXu->email) ? $linhMucPhoXu->email : $emptyStr;
+		$arr_pho_xu = [];
+		if ($linhMucPhoXus){
+			foreach($linhMucPhoXus as $linhMucPhoXu) {
+				$arr_pho_xu[] = [
+					'pho_xu' => isset($linhMucPhoXu->ten_thanh)?$linhMucPhoXu->ten_thanh.' - '.$linhMucPhoXu->ten_linh_muc:$emptyStr,
+					'img_pho_xu' => isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg'),
+					'email_pho' => isset($linhMucPhoXu->email) ? $linhMucPhoXu->email : $emptyStr,
+					'from_date_pho' => isset($linhMucPhoXu->from_date) ? \Carbon\Carbon::parse($linhMucPhoXu->from_date)->format('d-m-Y') : $emptyStr,
+				];
+			}
 		}
 		$json['results'] = [];
 		if ($info) {
@@ -634,13 +635,10 @@ class ApiController extends Controller
 				'linh_muc_tien_nhiem' => implode('<br>', $linhMucTienNhiem),
 				'chanh_xu' => $nameChanhXu,
 				'img_chanh_xu' => $imgChanhXu,
-				'pho_xu' => $namePhoXu,
-				'img_pho_xu' => $imgPhoXu,
 				'ngay_thanh_lap' => !empty($info->ngay_thanh_lap) ? $info->ngay_thanh_lap : $emptyItem,
 				'from_date_chanh' => $fromDateChanhXu,
-				'from_date_pho' => $fromDatePhoXu,
 				'email_chanh' => $emailChanhXu,
-				'email_pho' => $emailPhoXu,
+				'arr_pho_xu' => $arr_pho_xu,
 			];
 		}
 		return $json;
