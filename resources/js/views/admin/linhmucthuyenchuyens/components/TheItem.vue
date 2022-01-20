@@ -21,7 +21,7 @@
     </td>
     <td class="text-left">{{ info.label_to_date }}</td>
     <td class="text-text">
-      <p class="text-center flex">{{ info.chucvuName }}</p> 
+      <p class="text-center">{{ info.chucvuName }}</p> 
       <toggle-button class="switch-btn-center" v-if="info.chucvu_active == 1" :value="switchValue" @change="changeStatusChucVu($event)"/>
       <toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="changeStatusChucVu($event)"/>
     </td>
@@ -97,9 +97,6 @@ export default {
 }
 </script>
 <style>
-  .switch-btn-center {
-      padding-left: 30px;
-  }
 </style>
 
 

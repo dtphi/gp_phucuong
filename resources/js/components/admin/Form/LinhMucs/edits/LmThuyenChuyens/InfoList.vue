@@ -18,7 +18,11 @@
         <tr v-for="(item, idx) in lists" :key="idx">
           <td>{{ (idx+1) }}</td>
           <td>
-            {{ item.chucVuName }}
+            <p class="text-center">{{ item.chucVuName}}</p>
+						<div class="text-center">
+							<toggle-button class="switch-btn-center" v-if="item.active == 1" :value="switchValue" @change="changeStatusChucVu($event)"/>
+      				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="changeStatusChucVu($event)"/>
+						</div>	
           </td>
           <td>
             {{ item.diaDiemName }}
@@ -77,8 +81,13 @@ export default {
       },
     },
   },
+	data() {
+		return {
+			switchValue: true,
+		}
+	},
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeLmThuyenChuyen']),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeLmThuyenChuyen', 'updateActive']),
     _removeItem(item) {
       const isDl = confirm('Tiếp tục xóa linh mục thuyên chuyển')
       if (isDl) {
@@ -95,6 +104,21 @@ export default {
     _getDenNgay(item) {
       let ngay = `${item.dia_diem_den_ngay}/${item.dia_diem_den_thang}/${item.dia_diem_den_nam}`
       return ngay.replaceAll('null/', '').replaceAll('null', '')
+    },
+		changeStatusChucVu($event) {
+      if($event.value == true) {
+          this.changeStatusItem({
+          id: this.info.id,
+          status: 1,
+          perPage: this.perPage,
+        });
+      }else {
+        this.changeStatusItem({
+        id: this.info.id,
+        status: 0,
+        perPage: this.perPage,
+      });
+      }  
     },
   },
   setting: {
