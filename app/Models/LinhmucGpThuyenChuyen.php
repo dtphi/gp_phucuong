@@ -127,7 +127,7 @@ class LinhmucGpThuyenChuyen extends BaseModel
                 }
             case 4:
                 {
-                    $value = 'Ban Chuyên Trach ' . $this->ten_ban_chuyen_trach;
+                    $value = 'Ban Chuyên Trách ' . $this->ten_ban_chuyen_trach;
                     break;
                 }
         }

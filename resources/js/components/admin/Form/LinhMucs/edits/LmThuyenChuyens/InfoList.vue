@@ -18,7 +18,11 @@
         <tr v-for="(item, idx) in lists" :key="idx">
           <td>{{ (idx+1) }}</td>
           <td>
-            {{ item.chucVuName }}
+            <p class="text-center">{{ item.chucVuName}}</p>
+						<div class="text-center">
+							<toggle-button class="switch-btn-center" v-if="item.active == 1" :value="switchValue" @change="changeActiveLmThuyenChuyen($event, item)"/>
+      				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="changeActiveLmThuyenChuyen($event, item)"/>
+						</div>	
           </td>
           <td>
             {{ item.diaDiemName }}
@@ -77,8 +81,13 @@ export default {
       },
     },
   },
+	data() {	
+		return {
+			switchValue: true,
+		}
+	},
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeLmThuyenChuyen']),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeLmThuyenChuyen', 'updateActiveLmThuyenChuyen']),
     _removeItem(item) {
       const isDl = confirm('Tiếp tục xóa linh mục thuyên chuyển')
       if (isDl) {
@@ -95,6 +104,12 @@ export default {
     _getDenNgay(item) {
       let ngay = `${item.dia_diem_den_ngay}/${item.dia_diem_den_thang}/${item.dia_diem_den_nam}`
       return ngay.replaceAll('null/', '').replaceAll('null', '')
+    },
+		changeActiveLmThuyenChuyen($event, item) {
+          this.updateActiveLmThuyenChuyen({
+						item: item,
+						action: 'update.active.lm.thuyen.chuyen'
+        });
     },
   },
   setting: {

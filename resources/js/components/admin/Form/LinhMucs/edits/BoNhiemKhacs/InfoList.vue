@@ -18,7 +18,11 @@
         <tr v-for="(item, idx) in lists" :key="idx">
           <td>{{ (idx+1) }}</td>
           <td>
-            {{ item.chucVuName }}
+            <p class="text-center">{{ item.chucVuName}}</p>
+						<div class="text-center">
+							<toggle-button class="switch-btn-center" v-if="item.active == 1" :value="switchValue" @change="changeActiveBoNhiem($event, item)"/>
+      				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="changeActiveBoNhiem($event, item)"/>
+						</div>
           </td>
           <td>
             {{ item.cong_viec }}
@@ -77,8 +81,13 @@ export default {
       },
     },
   },
+	data() {
+		return {
+			switchValue: true,
+		}
+	},
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeBoNhiem']),
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeBoNhiem', 'updateActiveBoNhiem']),
     _removeItem(item) {
       const isDl = confirm('Tiếp tục xóa bổ nhiệm')
       if (isDl) {
@@ -95,6 +104,12 @@ export default {
     _getDenNgay(item) {
       let ngay = `${item.cong_viec_den_ngay}/${item.cong_viec_den_thang}/${item.cong_viec_den_nam}`
       return ngay.replaceAll('null/', '').replaceAll('null', '')
+    },
+		changeActiveBoNhiem($event, item) {
+			this.updateActiveBoNhiem({
+				action: 'update_active_bo_nhiem',
+				item: item,
+			});
     },
   },
   setting: {

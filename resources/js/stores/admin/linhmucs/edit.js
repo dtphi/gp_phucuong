@@ -1,6 +1,6 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { v4 as uuidv4, } from 'uuid'
-import { apiUpdateInfo, apiGetInfoById, } from 'api@admin/linhmuc'
+import { apiUpdateInfo, apiGetInfoById} from 'api@admin/linhmuc'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -15,6 +15,7 @@ import {
   ACTION_SET_IMAGE,
   ACTION_GET_INFO_BY_ID,
   ACTION_RESET_NOTIFICATION_INFO,
+	ACTION_CHANGE_STATUS
 } from '../types/action-types'
 import { fnCheckProp, } from '@app/common/util'
 import { getField, updateField } from 'vuex-map-fields'
@@ -176,6 +177,10 @@ export default {
       state.info.bo_nhiem = payload
       state.info.action = 'add.bo.nhiem'
     },
+		update_active_bo_nhiem(state, payload) {
+      state.info.bo_nhiem = payload
+      state.info.action = 'update.active.bo.nhiem'
+    },
     update_bo_nhiem_remove(state, payload) {
       state.info.bo_nhiem = payload
       state.info.action = 'remove.bo.nhiem'
@@ -183,6 +188,10 @@ export default {
     update_lm_thuyen_chuyen(state, payload) {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'add.lm.thuyen.chuyen'
+    },
+		update_active_lm_thuyen_chuyen(state, payload) {
+      state.info.lm_thuyen_chuyen = payload
+      state.info.action = 'update.active.lm.thuyen.chuyen'
     },
     update_lm_thuyen_chuyen_remove(state, payload) {
       state.info.lm_thuyen_chuyen = payload
@@ -522,6 +531,11 @@ export default {
       })
       dispatch(ACTION_INSERT_INFO, state.info)
     },
+		async updateActiveBoNhiem({ commit, state, dispatch }, info ) {
+			const data = info.item.id
+			await commit('update_active_bo_nhiem', data)
+			dispatch(ACTION_CHANGE_STATUS, state.info)
+    },
     async removeBoNhiem({ commit, dispatch, state, }, params) {
       const data = params.item
       await commit(
@@ -536,6 +550,11 @@ export default {
         ...lmThuyenChuyen.data,
       })
       dispatch(ACTION_INSERT_INFO, state.info)
+    },
+		async updateActiveLmThuyenChuyen({ commit, state, dispatch }, info ) {
+			const data = info.item.id
+			await commit('update_active_lm_thuyen_chuyen', data)
+			dispatch(ACTION_CHANGE_STATUS, state.info)
     },
     async removeLmThuyenChuyen({ commit, dispatch, state, }, params) {
       const data = params.item
@@ -582,6 +601,19 @@ export default {
     },
     [ACTION_SET_LOADING]({ commit, }, isLoading) {
       commit(INFOS_MODAL_SET_LOADING, isLoading)
+    },
+		[ACTION_CHANGE_STATUS]({ commit, }, info) {
+      apiUpdateInfo(
+        info,
+        (result) => {
+          if (result) {
+            commit(SET_ERROR, [])
+          }
+        },
+        (errors) => {
+          commit(SET_ERROR, errors)
+        }
+      )
     },
     [ACTION_INSERT_INFO]({ dispatch, commit, }, info) {
       dispatch(ACTION_SET_LOADING, true)

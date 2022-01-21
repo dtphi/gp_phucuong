@@ -100,11 +100,11 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::get('search-ips','RestrictIpController@search');
     Route::post('change-status-ips','RestrictIpController@changeStatus');
 
-    Route::apiResource('albums', 'AlbumsController'); //AlbumsController
+    Route::apiResource('albums', 'AlbumsController'); 
     Route::get('search-albums','AlbumsController@search');
     Route::post('change-status-albums','AlbumsController@changeStatus');
 
-    Route::apiResource('group-albums', 'GroupAlbumsController'); //GroupAlbumsController 
+    Route::apiResource('group-albums', 'GroupAlbumsController'); 
     Route::get('search-group-albums','GroupAlbumsController@search');
     Route::post('change-status-group-albums','GroupAlbumsController@changeStatus');
 

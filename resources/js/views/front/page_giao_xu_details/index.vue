@@ -30,8 +30,8 @@
             <h2>Giáo xứ {{ info.name }}</h2>
             <img style="width: 100%; margin-bottom: 15px" v-lazy="info.image" />
             <!-- Latest update -->
-            <div class="row"> 
-              <div class="col-lg-6">
+            <div class="row align-items-center"> 
+              <div class="col-sm-6">
                   <vue-timeline-update
                   :date="new Date()"
                   dateString="#"
@@ -41,8 +41,7 @@
                   icon="account_circle"
                 />
               </div>
-              <div class="col-lg-6">
-                <br><br>
+              <div class="col-sm-6">
                 <h4>{{info.chanh_xu}}</h4>
                 <h4>Nhậm chức: {{info.from_date_chanh}}</h4>
                 <h4>Email: {{info.email_chanh}}</h4>

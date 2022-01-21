@@ -183,7 +183,7 @@ class LinhMucController extends ApiController
             try {
                 $json = $this->linhMucSv->apiUpdateVanThu($data);
             } catch (HandlerMsgCommon $e) {
-                throw $e->render();
+                throw $e->render(); 
             }
     
             return $json;
@@ -195,7 +195,19 @@ class LinhMucController extends ApiController
             }
     
             return $json;
-        }
+        }elseif ($action == 'update.active.bo.nhiem') {
+						try {
+							  $json = $this->linhMucSv->apiUpdateActiveBoNhiem($data['bo_nhiem']);
+						} catch (HandlerMsgCommon $e) {
+								 throw $e->render();
+						}
+				}elseif($action == 'update.active.lm.thuyen.chuyen'){
+					try {
+						  $json = $this->linhMucSv->apiUpdateActiveLmThuyenChuyen($data['lm_thuyen_chuyen']);
+					} catch (HandlerMsgCommon $e) {
+							throw $e->render();
+					}
+				}
 
         try {
             $model = $this->linhMucSv->apiGetDetail($id);
