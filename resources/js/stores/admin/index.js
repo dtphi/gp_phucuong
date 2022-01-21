@@ -12,7 +12,6 @@ import bang_cap from './linhmucbangcaps'
 import chuc_thanh from './linhmucchucthanhs'
 import van_thu from './linhmucvanthus'
 import thuyen_chuyen from './linhmucthuyenchuyens'
-import gp_thuyen_chuyen from './linhmucgpthuyenchuyens'
 import giao_phan from './giaophans'
 import giao_hat from './giaohats'
 import giao_xu from './giaoxus'
@@ -193,7 +192,6 @@ export default new Vuex.Store({
     restrict_ip,
     albums,
     group_albums,
-		gp_thuyen_chuyen
   },
   strict: debug,
   plugins: debug ? [createLogger()] : [],

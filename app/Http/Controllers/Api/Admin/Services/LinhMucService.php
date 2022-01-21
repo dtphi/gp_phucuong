@@ -38,6 +38,8 @@ final class LinhMucService implements BaseModel, LinhMucModel
     public function __construct()
     {
         $this->model = new Linhmuc();
+				$this->modelBoNhiem = new LinhmucBoNhiem();
+				$this->modelLmGpThuyenChuyen = new LinhmucGpThuyenChuyen();
     }
 
     public function apiGetList(array $options = [], $limit = 15)
@@ -461,4 +463,36 @@ final class LinhMucService implements BaseModel, LinhMucModel
 
         return new LinhMucThuyenChuyenCollection(LinhMucThuyenChuyen::where('linh_muc_id', $data['linhMucId'])->get());
     }
+
+		public function apiUpdateActiveBoNhiem($id_bo_nhiem) {
+				$this->modelBoNhiem = $this->modelBoNhiem->findOrFail($id_bo_nhiem);
+				if($this->modelBoNhiem->active == 1) {
+					$this->modelBoNhiem->active = 0;
+				}else {
+					$this->modelBoNhiem->active = 1;
+				}
+				DB::beginTransaction();
+				if (!$this->modelBoNhiem->save()) {
+						DB::rollBack();
+						return false;
+				}
+				DB::commit();
+				return $this->modelBoNhiem;
+		}
+
+		public function apiUpdateActiveLmThuyenChuyen($id_thuyen_chuyen) {
+			$this->modelLmGpThuyenChuyen = $this->modelLmGpThuyenChuyen->findOrFail($id_thuyen_chuyen);
+			if($this->modelLmGpThuyenChuyen->active == 1) {
+				$this->modelLmGpThuyenChuyen->active = 0;
+			}else {
+				$this->modelLmGpThuyenChuyen->active = 1;
+			}
+			DB::beginTransaction();
+			if (!$this->modelLmGpThuyenChuyen->save()) {
+					DB::rollBack();
+					return false;
+			}
+			DB::commit();
+			return $this->modelLmGpThuyenChuyen;
+	}
 }

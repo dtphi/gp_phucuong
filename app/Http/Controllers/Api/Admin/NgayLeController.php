@@ -23,17 +23,17 @@ class NgayLeController extends ApiController
      */
     private $ngayLeSv = null;
 
-
     /**
      * NgayLeController constructor.
      * @param NgayLeSv $ngayLeSv
      * @param array $middleware
      */
 
-    public function __construct(NgayLeRequest $request, NgayLeSv $ngayLeSv, array $middleware = [])
+    public function __construct(NgayLeSv $ngayLeSv, array $middleware = [])
     {
         $this->ngayLeSv = $ngayLeSv;
         parent::__construct($middleware);
+				$this->_initAuthor(new NgayLeRequest);
     }
 
     public function index(NgayLeRequest $request)

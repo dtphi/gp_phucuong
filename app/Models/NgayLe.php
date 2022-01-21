@@ -3,15 +3,12 @@
 namespace App\Models;
 
 use App\Http\Common\Tables;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class NgayLe extends BaseModel
 {
     /**
      * @var string
      */
-    // chỗ này m phải điền thêm các thuộc tính m muốn thêm vào ..... vd người ta muốn thêm role = admin như trong bài viết nói ấy
-    // fillable nó nhưng trường cho phép thêm vào csdl
     protected $table = DB_PREFIX . 'ngay_les';
 
     protected $fillable = [
@@ -37,7 +34,6 @@ class NgayLe extends BaseModel
     public static function fcDeleteByNgayLeId($id = null)
     {
         $id = (int)$id;
-
         if ($id) {
             return DB::delete("delete from " . Tables::$ngay_les . " where id = '" . $id . "'");
         }

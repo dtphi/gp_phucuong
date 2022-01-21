@@ -20,8 +20,8 @@
           <td>
             <p class="text-center">{{ item.chucVuName}}</p>
 						<div class="text-center">
-							<toggle-button class="switch-btn-center" v-if="item.active == 1" :value="switchValue" @change="changeStatusBoNhiem($event, item)"/>
-      				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="changeStatusBoNhiem($event, item)"/>
+							<toggle-button class="switch-btn-center" v-if="item.active == 1" :value="switchValue" @change="changeActiveBoNhiem($event, item)"/>
+      				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="changeActiveBoNhiem($event, item)"/>
 						</div>
           </td>
           <td>
@@ -105,21 +105,11 @@ export default {
       let ngay = `${item.cong_viec_den_ngay}/${item.cong_viec_den_thang}/${item.cong_viec_den_nam}`
       return ngay.replaceAll('null/', '').replaceAll('null', '')
     },
-		changeStatusBoNhiem($event, item) {
-			
-      if($event.value == true) {
-          this.updateActiveBoNhiem({
-						action: 'update_active_bo_nhiem',
-						item: item,
-						active: 1
-        });
-      }else {
-        this.updateActiveBoNhiem({
-					action: 'update_active_bo_nhiem',
-					item: item,
-					active: 0
-      });
-      }  
+		changeActiveBoNhiem($event, item) {
+			this.updateActiveBoNhiem({
+				action: 'update_active_bo_nhiem',
+				item: item,
+			});
     },
   },
   setting: {

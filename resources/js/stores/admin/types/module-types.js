@@ -42,7 +42,6 @@ export const MODULE_MODULE_VAN_THU = 'van_thu'
 export const MODULE_MODULE_VAN_THU_ADD = 'van_thu/add'
 export const MODULE_MODULE_VAN_THU_EDIT = 'van_thu/edit'
 export const MODULE_MODULE_THUYEN_CHUYEN = 'thuyen_chuyen'
-export const MODULE_MODULE_GP_THUYEN_CHUYEN = 'gp_thuyen_chuyen'
 export const MODULE_MODULE_THUYEN_CHUYEN_ADD = 'thuyen_chuyen/add'
 export const MODULE_MODULE_THUYEN_CHUYEN_EDIT = 'thuyen_chuyen/edit'
 
