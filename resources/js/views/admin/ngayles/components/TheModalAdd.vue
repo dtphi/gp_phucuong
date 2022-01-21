@@ -289,10 +289,10 @@ export default {
       info: {
         code: null,
         ten_le: '',
-        solar_day: 1,
-        solar_month: 1,
-        lunar_day: 1,
-        lunar_month: 1,
+        solar_day: '',
+        solar_month: '',
+        lunar_day: '',
+        lunar_month: '',
         loai_le: 0,
         bac_le: 0,
         hanh: null,
@@ -319,7 +319,6 @@ export default {
   watch: {
     insertSuccess(newValue, oldValue) {
       if (newValue) {
-        console.log('insert Ngay Le success');
         this._notification(newValue);
       }
     },
@@ -327,7 +326,7 @@ export default {
   methods: {
     ...mapActions(MODULE_MODULE_NGAY_LE_ADD, {
       'insertInfo': ACTION_INSERT_INFO,
-      ACTION_RESET_NOTIFICATION_INFO
+      'notification':ACTION_RESET_NOTIFICATION_INFO
     }),
     _hideModalEdit() {
       this.info = {};
@@ -339,14 +338,14 @@ export default {
     },
     _notification(notification){
       this.$notify(notification);
-      this[ACTION_RESET_NOTIFICATION_INFO]("");
+      this.notification("");
     }
 
      
   },
   setting: {
     cf: config,
-    list_title: "Danh sách Lễ Chính",
+    list_title: "Danh sách Ngày Lễ",
   },
 };
 </script>

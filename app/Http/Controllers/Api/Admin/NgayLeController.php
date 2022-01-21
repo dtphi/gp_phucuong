@@ -160,7 +160,7 @@ class NgayLeController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->ngayLeSv->apiInsert($formData)) {
+        if ($result = $this->ngayLeSv->apiInsertOrUpdate($formData)) {
             return $this->respondUpdated($result);
         }
 
