@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import '@app/plugins/cms-filter'
+import '@app/plugins/cms-vee-validate'
 // font.awsome.icon
 require('./assets/font.awsome.icon')
 /* Add BootstrapVue */
@@ -10,14 +11,14 @@ import {
 } from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
-import VueLazyload from 'vue-lazyload'
+//import VueLazyload from 'vue-lazyload'
 // import loadingLazy from '@app/views/front/assets/loading/fading-loading-lazy_30.svg'
 /* Add vue lazyload */
-Vue.use(VueLazyload, {
-  // error: loadingLazy,
-  // loading: loadingLazy,
+/*Vue.use(VueLazyload, {
+  error: loadingLazy,
+  loading: loadingLazy,
   attempt: 1,
-})
+})*/
 Vue.config.productionTip = false
 /* Add vue loading overplay */
 import LoadingOverLay from 'vue-loading-overlay'

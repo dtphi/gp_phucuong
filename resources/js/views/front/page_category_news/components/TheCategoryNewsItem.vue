@@ -1,7 +1,7 @@
 <template>
   <figure>
     <a class="img-video" :href="_getHref()">
-      <img v-lazy="info.imgThumUrl" class="rounded img" :alt="_getHref()" />
+      <img :src="info.imgThumUrl" class="rounded img" :alt="_getHref()" />
     </a>
     <video-caption
       v-if="info.information_type == 2"

@@ -1,7 +1,7 @@
 <template>
   <div class="list-item-category">
     <div v-if="info.isImgRender">
-      <img style="width: 100%" v-lazy="info.imgUrl" />
+      <img style="width: 100%" :src="info.imgUrl" />
     </div>
     <full-news-caption :info="info"></full-news-caption>
   </div>

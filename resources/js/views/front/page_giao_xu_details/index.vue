@@ -28,7 +28,7 @@
             </template>-->
           <template #column_middle v-if="info">
             <h2>Giáo xứ {{ info.name }}</h2>
-            <img style="width: 100%; margin-bottom: 15px" v-lazy="info.image" />
+            <img style="width: 100%; margin-bottom: 15px" :src="info.image" />
             <!-- Latest update -->
             <div class="row align-items-center"> 
               <div class="col-sm-6">

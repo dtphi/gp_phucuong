@@ -1,16 +1,11 @@
 import Vue from 'vue'
 import AppConfig from '@app/api/admin/constants/app-config'
 import clonedeep from 'lodash/cloneDeep'
-import moment from 'moment'
-import _ from 'lodash'
 import { config, } from '@app/common/config'
 
-Vue.prototype.$cmsCfg = config
 /**
- * Global prototype vuejs
- */
-Vue.prototype.$deep = clonedeep
-Vue.prototype.$moment = moment
+* Global prototype vuejs
+*/
 const helper = {
   slugify: (text, separator = "-") => {
     return text
@@ -38,13 +33,17 @@ const helper = {
     }
   },
 }
-Vue.prototype.$helper = helper
+
 /**
- * Global filter vuejs
- */
+* Global filter vuejs
+*/
 Vue.filter('capitalize', function(value) {
   if (!value) return ''
   value = value.toString()
   
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
+
+Vue.prototype.$cmsCfg = config
+Vue.prototype.$deep = clonedeep
+Vue.prototype.$helper = helper

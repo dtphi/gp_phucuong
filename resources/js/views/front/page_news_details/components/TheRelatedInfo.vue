@@ -13,14 +13,14 @@
             v-if="_innerScreen767"
             key="image-news-related-screen-767"
             class="img"
-            v-lazy="item.imgUrl"
+            :src="item.imgUrl"
             alt=""
           />
           <img
             v-else
             key="image-news-related-screen"
             class="img"
-            v-lazy="item.imgThumMediumImg"
+            :src="item.imgThumMediumImg"
             alt=""
           />
         </a>

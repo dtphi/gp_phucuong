@@ -34,7 +34,7 @@
                       >
                         <img
                           class="img"
-                          v-lazy="`${pageLists.image}`"
+                          :src="`${pageLists.image}`"
                           :alt="pageLists.ten"
                         />
                       </div>

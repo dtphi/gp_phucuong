@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <img v-lazy="logoUrl" alt="Logo Phú Cường" />
+    <img :src="logoUrl" alt="Logo Phú Cường" />
   </transition>
 </template>
 

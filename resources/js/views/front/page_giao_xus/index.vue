@@ -45,7 +45,7 @@
                           <a class="avatar" :href="info.hrefDetail">
                             <img
                               class="img"
-                              v-lazy="info.image"
+                              :src="info.image"
                               :alt="info.name"
                             />
                           </a>
@@ -157,7 +157,7 @@
                               <a class="avatar" :href="info.hrefDetail">
                                 <img
                                   class="img"
-                                  v-lazy="info.image"
+                                  :src="info.image"
                                   :alt="info.name"
                                 />
                               </a>

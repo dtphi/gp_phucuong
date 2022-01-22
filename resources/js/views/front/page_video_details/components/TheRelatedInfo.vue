@@ -9,7 +9,7 @@
         :key="idx"
       >
         <a class="d-block img-related" :href="_getHref(item)">
-          <img class="img" v-lazy="item.imgThumMediumImg" alt=""
+          <img class="img" :src="item.imgThumMediumImg" alt=""
         /></a>
         <h4 class="tit-bg-common mt-2">
           <a class="pl-0" :href="_getHref(item)">{{ item.name }}</a>

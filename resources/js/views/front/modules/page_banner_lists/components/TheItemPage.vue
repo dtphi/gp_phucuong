@@ -1,6 +1,6 @@
 <template>
   <figure class="figure" @click="_redirectPage()">
-    <img v-lazy="_getImgUrl()" class="rounded img" alt="Giáo Phận Phú Cường" />
+    <img :src="_getImgUrl()" class="rounded img" alt="Giáo Phận Phú Cường" />
     <figcaption class="figure-caption" @click="_redirectPage()">
       {{ pageItem.title }}
     </figcaption>

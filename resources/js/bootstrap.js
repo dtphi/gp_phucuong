@@ -1,4 +1,6 @@
 window._ = require('lodash')
+window.moment = require('moment')
+window.moment.locale('vi')
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
