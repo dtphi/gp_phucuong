@@ -269,7 +269,7 @@
             <option
               :selected="trieu_dong == idx ? 'selected' : ''"
               :value="idx"
-              v-for="(item, idx) in $options.setting.cf.trieuDongs"
+              v-for="(item, idx) in $cmsCfg.trieuDongs"
               :key="idx"
             >
               {{ item }}

@@ -305,9 +305,7 @@
 <script>
 import { mapState, } from 'vuex'
 import { MODULE_AUTH, } from 'store@admin/types/module-types'
-import { fn_get_admin_base_url, } from '@app/api/utils/fn-helper'
 import { unserialize, } from 'php-serialize'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'LeftSideBar',
@@ -355,18 +353,18 @@ export default {
       return menuHtml
     },
     _getHref(path) {
-      return fn_get_admin_base_url() + '/' + path
+      return this.$helper.fn_admin_base_url() + '/' + path
     },
     _getRuleHref(ruleKey) {
       const links = this.$options.setting.permisstionGroupTexts[ruleKey]
 
       return {
-        href: fn_get_admin_base_url() + '/' + links.path, 
+        href: this.$helper.fn_admin_base_url() + '/' + links.path, 
         name: links.name, 
       }
     },
     _getCollapseIn(groupPath) {
-      let regex = this.$route.path.replace(`/${config.adminPrefix}/`, '').split('/')
+      let regex = this.$route.path.replace(`/${this.$cmsCfg.adminPrefix}/`, '').split('/')
       return groupPath.includes(regex[0]) ? ' in': ''
     },
   },

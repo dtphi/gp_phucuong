@@ -36,7 +36,7 @@
                 <option
                   :selected="item.chuc_thanh_id == idx"
                   :value="idx ? idx : ''"
-                  v-for="(item, idx) in $options.setting.cf.chucThanhs"
+                  v-for="(item, idx) in $cmsCfg.chucThanhs"
                   :key="idx"
                 >
                   {{ item }}
@@ -153,7 +153,6 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'TheModalEdit',
@@ -203,7 +202,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     list_title: 'Danh sách Linh mục',
   },
 }

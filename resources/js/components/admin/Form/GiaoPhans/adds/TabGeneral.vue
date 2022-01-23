@@ -194,7 +194,6 @@
 
 <script>
 import { mapActions, } from 'vuex'
-import { config, } from '@app/common/config'
 import tinymce from 'vue-tinymce-editor'
 import { MODULE_MODULE_GIAO_PHAN_ADD, } from 'store@admin/types/module-types'
 import { ACTION_SET_IMAGE, } from 'store@admin/types/action-types'
@@ -214,17 +213,17 @@ export default {
     const elFileContent = document.getElementById('media-file-manager-content')
     const mm = new MM({
       el: '#modal-general-info-manager',
-      api: config.mm.api,
+      api: this.$cmsCfg.mm.api,
       onSelect: (fi) => {
         if (typeof fi === 'object') {
           if (fnCheckImgPath(fi)) {
-            this.fn(`/${config.dirImage}/${fi.selected.path}`, fi.selected)
+            this.fn(`/${this.$cmsCfg.dirImage}/${fi.selected.path}`, fi.selected)
             elFileContent.style = this.$options.setting.cssDisplayNone
           }
         }
       },
     })
-    const options = config.tinymce.options((callback) => {
+    const options = this.$cmsCfg.tinymce.options((callback) => {
       this.fn = callback
       elFileContent.style = this.$options.setting.cssDisplay
     })

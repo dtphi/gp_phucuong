@@ -23,10 +23,6 @@
 import { mapState, } from 'vuex'
 import TheBtnEdit from './TheBtnEdit'
 import TheBtnDeleteConfirm from './TheBtnDeleteConfirm'
-import {
-  fn_get_base_url_image,
-  fn_format_dd_mm_yyyy,
-} from '@app/api/utils/fn-helper'
 
 export default {
   name: 'TheCategoryItem',
@@ -57,14 +53,8 @@ export default {
     return {}
   },
   methods: {
-    _getImgUrl() {
-      return fn_get_base_url_image(this.categoryItem.image)
-    },
     _getNo() {
       return this.no + this.meta.from
-    },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date)
     },
   },
 }

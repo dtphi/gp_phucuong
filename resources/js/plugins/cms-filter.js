@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import AppConfig from '@app/api/admin/constants/app-config'
 import clonedeep from 'lodash/cloneDeep'
-import { config, } from '@app/common/config'
+import { pluginConfig, } from '@app/common/config'
+import NoImage from 'v@admin/assets/img/no-photo.jpg'
 
 /**
 * Global prototype vuejs
@@ -32,6 +33,19 @@ const helper = {
       return _.split(strDate, '-')
     }
   },
+  fn_img_base_url: (path) => {
+    if (typeof path !== 'undefined' && path.thumb) {
+      return pluginConfig.baseUrl + '/' + path.thumb.replace(/^\//, '')
+    }
+    
+    return NoImage
+  },
+  fn_redirect: (path) => {
+    window.location.href = pluginConfig.baseUrl + '/' + path.replace(/^\//, '')
+  },
+  fn_admin_base_url: () => {
+    return pluginConfig.baseUrl + '/' + pluginConfig.adminPrefix
+  },
 }
 
 /**
@@ -44,6 +58,6 @@ Vue.filter('capitalize', function(value) {
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
-Vue.prototype.$cmsCfg = config
+Vue.prototype.$cmsCfg = pluginConfig
 Vue.prototype.$deep = clonedeep
 Vue.prototype.$helper = helper

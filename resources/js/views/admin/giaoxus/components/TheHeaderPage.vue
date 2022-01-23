@@ -49,7 +49,6 @@ import ListSearch from 'com@admin/Search'
 import Breadcrumb from 'com@admin/Breadcrumb'
 import { MODULE_MODULE_GIAO_XU, } from 'store@admin/types/module-types'
 import { ACTION_GET_INFO_LIST, ACTION_GET_INFO_BY_ID, ACTION_GET_LIST_GIAO_HAT } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 import { ModelSelect } from 'vue-search-select'
 export default {
   name: 'GiaoXuHeaderPage',
@@ -90,7 +89,7 @@ export default {
       getListGiaoHat: ACTION_GET_LIST_GIAO_HAT,
     }),
     _pushAddPage() {
-      this.$router.push(`/${config.adminPrefix}/giao-xus/add`)
+      this.$router.push(`/${this.$cmsCfg.adminPrefix}/giao-xus/add`)
     },
     _refreshList() {
       this.giaoHat = ''

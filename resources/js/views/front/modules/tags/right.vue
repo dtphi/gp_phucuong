@@ -31,7 +31,6 @@ import { mapState, } from 'vuex'
 import {
   fn_get_href_base_url,
 } from '@app/api/utils/fn-helper'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'ModuleTag',
@@ -55,7 +54,7 @@ export default {
             }
             return item
           })
-          if (tags.length > config.tagLimit) {
+          if (tags.length > this.$cmsCfg.tagLimit) {
             return tags
           }
           tags = tags.concat(mapObjs)

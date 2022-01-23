@@ -63,7 +63,6 @@
 
 <script>
 import { mapState, } from 'vuex'
-import { config, } from '@app/common/config'
 import { MODULE_MODULE_GROUP_ALBUMS_EDIT, } from 'store@admin/types/module-types'
 
 export default {
@@ -81,7 +80,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     name_txt: 'Group Name',
   },
 }

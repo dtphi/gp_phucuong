@@ -43,7 +43,6 @@
 require('@app/tools/mm/dist/style.css')
 import { MM, } from '@app/tools/mm/dist/mm.min'
 import { EventBus, } from '@app/api/utils/event-bus'
-import { fn_get_base_url_image, } from '@app/api/utils/fn-helper'
 import { fnCheckProp, } from '@app/common/util'
 
 export default {
@@ -97,7 +96,7 @@ export default {
       if (this.groupData.image.thumb && this.groupData.image.thumb.length) {
         return this.groupData.image.thumb
       } else {
-        return fn_get_base_url_image()
+        return this.$helper.fn_img_base_url()
       }
     },
     _isEditForm() {

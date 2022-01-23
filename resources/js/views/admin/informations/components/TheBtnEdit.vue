@@ -17,7 +17,6 @@ import { mapActions, } from 'vuex'
 import { MODULE_INFO_MODAL, } from 'store@admin/types/module-types'
 import { ACTION_SHOW_MODAL_EDIT, } from 'store@admin/types/action-types'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'TheButtonEdit',
@@ -50,7 +49,7 @@ export default {
     },
     _redirectUrl() {
       return fn_redirect_url(
-        `${config.adminPrefix}/informations/edit/${this.infoId}`
+        `${this.$cmsCfg.adminPrefix}/informations/edit/${this.infoId}`
       )
     },
   },

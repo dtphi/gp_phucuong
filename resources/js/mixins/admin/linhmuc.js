@@ -1,8 +1,5 @@
 import Breadcrumb from 'com@admin/Breadcrumb'
 import TheBtnBackListPage from 'v@admin/linhmucs/components/TheBtnBackListPage'
-import {
-  config,
-} from '@app/common/config'
 import tinymce from 'vue-tinymce-editor'
 import {
   fn_get_href_base_url,
@@ -93,7 +90,7 @@ export default {
     },
     data() {
       const elFileContent = document.getElementById('media-file-manager-content')
-      const options = config.tinymce.options((callback) => {
+      const options = this.$cmsCfg.tinymce.options((callback) => {
         this.fn = callback
         elFileContent.style = this.$options.setting.cssDisplay
       })
@@ -222,7 +219,6 @@ export default {
       },
     },
     setting: {
-      cf: config,
       cssDisplay: 'display:block',
       cssDisplayNone: 'display:none',
       name_txt: 'Tên',

@@ -11,7 +11,7 @@
         <option
           :selected="item.chuc_thanh_id == idx"
           :value="idx ? idx : ''"
-          v-for="(item, idx) in $options.setting.cf.chucThanhs"
+          v-for="(item, idx) in $cmsCfg.chucThanhs"
           :key="idx"
         >
           {{ item }}
@@ -106,7 +106,6 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
 import { mapActions, } from 'vuex'
 import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
@@ -153,7 +152,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     info_action_title: 'Thực hiện',
   },
 }

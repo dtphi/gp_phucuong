@@ -44,9 +44,7 @@ import Perpage from 'com@admin/Pagination/SelectPerpage'
 import ListSearch from 'com@admin/Search'
 import Breadcrumb from 'com@admin/Breadcrumb'
 import { MODULE_MODULE_LINH_MUC, } from 'store@admin/types/module-types'
-
 import { ACTION_GET_INFO_LIST, } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'LinhMucHeaderPage',
@@ -66,7 +64,7 @@ export default {
       getInfoList: ACTION_GET_INFO_LIST,
     }),
     _pushAddPage() {
-      this.$router.push(`/${config.adminPrefix}/linh-mucs/add`)
+      this.$router.push(`/${this.$cmsCfg.adminPrefix}/linh-mucs/add`)
     },
     _refreshList() {
       this.getInfoList()

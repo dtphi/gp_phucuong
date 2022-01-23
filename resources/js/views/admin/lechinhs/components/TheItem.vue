@@ -28,9 +28,6 @@
 <script>
 import { mapState, } from 'vuex'
 import BtnDelete from './TheBtnDelete'
-import {
-  fn_format_dd_mm_yyyy,
-} from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_LE_CHINH_EDIT, } from 'store@admin/types/module-types'
 import {
   INFOS_MODAL_SET_INFO,
@@ -60,9 +57,6 @@ export default {
   methods: {
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from)
-    },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date)
     },
     _showModal() {
       if (this.info?.id) {

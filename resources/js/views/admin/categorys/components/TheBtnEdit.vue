@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
-import { fn_get_base_url, fn_redirect_url, } from '@app/api/utils/fn-helper'
+import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 
 export default {
   name: 'TheButtonEdit',
@@ -35,18 +34,17 @@ export default {
   methods: {
     _pushEditPage() {
       this.$router.push(
-        `/${config.adminPrefix}/news-categories/edit/${this.categoryId}`
+        `/${this.$cmsCfg.adminPrefix}/news-categories/edit/${this.categoryId}`
       )
     },
     _redirectUrl() {
       return fn_redirect_url(
-        `${config.adminPrefix}/news-categories/edit/${this.categoryId}`
+        `${this.$cmsCfg.adminPrefix}/news-categories/edit/${this.categoryId}`
       )
     },
     _getHref() {
       return (
-        fn_get_base_url() +
-        `/${config.adminPrefix}/news-categories/edit/${this.categoryId}`
+        `${this.$cmsCfg.baseUrl}/${this.$cmsCfg.adminPrefix}/news-categories/edit/${this.categoryId}`
       )
     },
   },

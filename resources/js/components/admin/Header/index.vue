@@ -4,7 +4,7 @@
       <a type="button" id="button-menu" class="pull-left"
         ><i class="fa fa-indent fa-lg"></i
       ></a>
-      <a :href="_getHref()" class="navbar-brand">
+      <a :href="$helper.fn_admin_base_url()" class="navbar-brand">
         <admin-logo></admin-logo>
       </a>
     </div>
@@ -21,7 +21,7 @@
         ></a>
         <ul class="dropdown-menu dropdown-menu-right">
           <li>
-            <a :href="_getHrefSite()" target="_blank">{{
+            <a :href="$cmsCfg.baseUrl" target="_blank">{{
               $options.setting.site_name
             }}</a>
           </li>
@@ -41,10 +41,6 @@
 import Logout from '../Sidebar/Logout'
 import AdminLogo from '../Logo'
 import HelpAbout from '../Modal/HelpAbout'
-import {
-  fn_get_base_url,
-  fn_get_admin_base_url,
-} from '@app/api/utils/fn-helper'
 
 export default {
   name: 'MainHeader',
@@ -56,12 +52,6 @@ export default {
     size: { type: Number, default: 21, },
   },
   methods: {
-    _getHrefSite() {
-      return fn_get_base_url()
-    },
-    _getHref() {
-      return fn_get_admin_base_url()
-    },
     _showHelpAbout() {
       this.$modal.show(
         HelpAbout,

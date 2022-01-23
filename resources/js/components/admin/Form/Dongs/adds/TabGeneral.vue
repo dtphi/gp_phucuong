@@ -201,8 +201,6 @@
 
 <script>
 import { mapState, } from 'vuex'
-import { config, } from '@app/common/config'
-import { fn_get_tinymce_langs_url, } from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_DONG_ADD, } from 'store@admin/types/module-types'
 import { fnCheckProp, } from '@app/common/util'
 
@@ -228,12 +226,8 @@ export default {
       fn: null,
       mm: new MM({
         el: '#modal-general-info-manager',
-        api: {
-          baseUrl: window.origin + '/api/mmedia',
-          listUrl: 'list',
-          uploadUrl: 'upload',
-        },
-        onSelect: function(fi) {
+        api: this.$cmsCfg.mm.api,
+        onSelect: (fi) => {
           if (typeof fi === 'object') {
             if (fnCheckProp(fi, 'selected') && fi.selected) {
               if (fnCheckProp(fi.selected, 'path')) {
@@ -248,64 +242,19 @@ export default {
         },
       }),
       options: {
-        language_url: fn_get_tinymce_langs_url('vi_VN'),
-        height: '200',
-        image_prepend_url: window.origin + '/',
-        referrer_policy: 'strict-origin-when-cross-origin',
-        file_picker_callback: function(callback, value, meta) {
-          if (meta.filetype === 'file') {
+        language_url: this.$cmsCfg.mm.languageUrl,
+        height: this.$cmsCfg.mm.height,
+        image_prepend_url: this.$cmsCfg.mm.imagePrependUrl,
+        file_picker_callback: (callback, value, meta) => {
+          _self.media.options._selfCom = _self
+          if (_self.$cmsCfg.mm.fileTypes.includes(meta.filetype)) {
             _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
-          }
-
-          if (meta.filetype === 'image') {
-            if (_self.mm == null) {
-              _self.mm = new MM({
-                el: '#modal-general-info-manager',
-                api: {
-                  baseUrl: window.origin + '/api/mmedia',
-                  listUrl: 'list',
-                  uploadUrl: 'upload',
-                },
-                onSelect: function(fi) {
-                  if (typeof fi === 'object') {
-                    if (fnCheckProp(fi, 'selected') && fi.selected) {
-                      if (fnCheckProp(fi.selected, 'path')) {
-                        if (_self.fn) {
-                          _self.fn(
-                            'Image/NewPicture/' + fi.selected.path,
-                            fi.selected
-                          )
-                        }
-                        document.getElementById(
-                          'media-file-manager-content'
-                        ).style = 'display:none'
-                      }
-                    }
-                  }
-                },
-              })
-
-              document.getElementById('media-file-manager-content').style =
-                'display:block'
-            } else {
-              _self.fn = callback
-              document.getElementById('media-file-manager-content').style =
-                'display:block'
-            }
-          }
-
-          if (meta.filetype === 'media') {
-            _self.fn = callback
-            document.getElementById('media-file-manager-content').style =
-              'display:block'
+            elFileContent.style = _self.$options.setting.cssDisplay
           }
         },
-        toolbar2:
-          'undo redo | styleselect | fontsizeselect | fontselect | image ',
-        font_formats:
-          'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
+        referrer_policy: this.$cmsCfg.mm.referrerPolicy,
+        toolbar2: this.$cmsCfg.mm.toolbar2,
+        font_formats:this.$cmsCfg.mm.fontFormats,
       },
     }
   },
@@ -322,7 +271,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
   },
 }
 </script>

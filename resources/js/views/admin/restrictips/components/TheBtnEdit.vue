@@ -14,7 +14,6 @@
 
 <script>
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'TheButtonEditGiaoXu',
@@ -48,7 +47,7 @@ export default {
       if (this.hrefEdit) return window.location.href = this.hrefEdit
       
       return fn_redirect_url(
-        `${config.adminPrefix}/restrict-ips/edit/${this.infoId}`
+        `${this.$cmsCfg.adminPrefix}/restrict-ips/edit/${this.infoId}`
       )
     },
   },

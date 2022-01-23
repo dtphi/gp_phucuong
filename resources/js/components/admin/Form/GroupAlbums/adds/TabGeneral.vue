@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
+
 export default {
   name: 'TabGeneralForm',
   props: {
@@ -75,7 +75,6 @@ export default {
     }
   },
   setting: {
-    cf: config,
     name_txt: 'Group Name',
   },
 }

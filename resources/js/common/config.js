@@ -29,18 +29,7 @@ export const config = {
   site_name: 'GP-PhuCuong',
   baseUrl: baseUrl,
   existStatus: existStatus,
-  site_name: 'GP-PhuCuong',
   carouselLimit: 5,
-  chucThanhs: ['--Chọn chức thánh--', 'Phó Tế', 'Linh Mục', 'Giám Mục'],
-  loaiChucVus: ['Thuyên chuyển', 'Bổ nhiệm khác', 'Khác'],
-  loaiDiaDiems: ['', 'Giáo Xứ', 'Cơ Sở Giáo Phận', 'Dòng', 'Ban Chuyên Trách'],
-  trieuDongs: ['Tu Triều', 'Tu Dòng'],
-  sortIcon: {
-    is: 'glyphicon-sort',
-    base: 'glyphicon',
-    up: 'glyphicon-chevron-up',
-    down: 'glyphicon-chevron-down',
-  },
   slashDir: '/',
   adminPrefix: _adminPathName,
   adminRoute: {
@@ -64,6 +53,25 @@ export const config = {
     history: true,
     mode: 'history',
   },
+  dirImage: 'Image/NewPicture',
+}
+
+export const pluginConfig = {
+  baseUrl: baseUrl,
+  existStatus: existStatus,
+  carouselLimit: 5,
+  chucThanhs: ['--Chọn chức thánh--', 'Phó Tế', 'Linh Mục', 'Giám Mục'],
+  loaiChucVus: ['Thuyên chuyển', 'Bổ nhiệm khác', 'Khác'],
+  loaiDiaDiems: ['', 'Giáo Xứ', 'Cơ Sở Giáo Phận', 'Dòng', 'Ban Chuyên Trách'],
+  trieuDongs: ['Tu Triều', 'Tu Dòng'],
+  sortIcon: {
+    is: 'glyphicon-sort',
+    base: 'glyphicon',
+    up: 'glyphicon-chevron-up',
+    down: 'glyphicon-chevron-down',
+  },
+  slashDir: '/',
+  adminPrefix: _adminPathName,
   dirImage: 'Image/NewPicture',
   mm: {
     api: {
@@ -102,4 +110,4 @@ export const config = {
     }
   },
   tagLimit: 15
-}
+} 

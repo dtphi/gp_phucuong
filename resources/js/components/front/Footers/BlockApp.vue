@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import { fn_get_base_url, } from '@app/api/utils/fn-helper'
 
 export default {
   name: 'BlockAppFooter',
@@ -34,7 +33,7 @@ export default {
   },
   methods: {
     _getImgUrl() {
-      return fn_get_base_url() + this.appItem.img
+      return this.$cmsCfg.baseUrl + this.appItem.img
     },
   },
 }

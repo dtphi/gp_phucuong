@@ -189,7 +189,6 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
 
 export default {
   name: 'TheModalAdd',
@@ -215,7 +214,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     list_title: 'Danh sách Linh mục',
   },
 }

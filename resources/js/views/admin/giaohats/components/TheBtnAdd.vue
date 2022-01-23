@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 
 export default {
@@ -24,7 +23,7 @@ export default {
   },
   methods: {
     _redirectUrl() {
-      return fn_redirect_url(`${config.adminPrefix}/giao-hats/add`)
+      return fn_redirect_url(`${this.$cmsCfg.adminPrefix}/giao-hats/add`)
     },
   },
 }

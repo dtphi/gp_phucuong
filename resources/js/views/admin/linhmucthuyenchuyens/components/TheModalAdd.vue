@@ -196,7 +196,6 @@
 import { mapActions, mapState, } from 'vuex'
 import { MODULE_MODULE_THUYEN_CHUYEN_ADD, } from 'store@admin/types/module-types'
 import { ACTION_RESET_NOTIFICATION_INFO, } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 import InfoGiaoXuAutocomplete from 'com@admin/Form/LinhMucs/Groups/InfoGiaoXuAutocomplete'
 import InfoChucVuAutocomplete from 'com@admin/Form/LinhMucs/Groups/InfoChucVuAutocomplete'
 import InfoDucChaAutocomplete from 'com@admin/Form/LinhMucs/Groups/InfoDucChaAutocomplete'
@@ -269,7 +268,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     list_title: 'Danh sách Linh mục',
   },
 }

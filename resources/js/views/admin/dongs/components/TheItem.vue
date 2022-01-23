@@ -22,10 +22,6 @@
 <script>
 import { mapState, } from 'vuex'
 import BtnEdit from './TheBtnEdit'
-import {
-  fn_get_base_url_image,
-  fn_format_dd_mm_yyyy,
-} from '@app/api/utils/fn-helper'
 
 export default {
   name: 'TheItemDongs',
@@ -49,14 +45,8 @@ export default {
     }),
   },
   methods: {
-    _getImgUrl() {
-      return fn_get_base_url_image(this.info.image)
-    },
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from)
-    },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date)
     },
   },
 }

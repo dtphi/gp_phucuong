@@ -144,7 +144,7 @@
                               padding-left: 10px;
                               font-style: italic;
                             "
-                            >{{ _formatDate(pageLists.nam_sinh) }}</label
+                            >{{ $helper.fn_format_dd_mm_yyyy(pageLists.nam_sinh) }}</label
                           ></span
                         >
                         <span class="col-mobile col-6">
@@ -378,7 +378,7 @@
                               padding-left: 10px;
                               font-style: italic;
                             "
-                            >{{ _formatDate(pageLists.ngay_cap_cmnd) }}</label
+                            >{{ $helper.fn_format_dd_mm_yyyy(pageLists.ngay_cap_cmnd) }}</label
                           >
                         </span>
                         <span class="col-mobile col-6">
@@ -462,7 +462,6 @@ import ContentBottom from 'com@front/Common/ContentBottom'
 import SocialNetwork from 'com@front/Common/SocialNetwork'
 import TabInfoViewedAndPopular from 'com@front/Common/TabInfoViewedAndPopular'
 import MainContent from 'com@front/Common/MainContent'
-import { fn_format_dd_mm_yyyy, } from '@app/api/utils/fn-helper'
 import Vue from 'vue'
 import vuetimeline from '@growthbunker/vuetimeline'
 Vue.use(vuetimeline)
@@ -515,9 +514,6 @@ export default {
     ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, {
       getDetail: GET_DETAIL_LINH_MUC,
     }),
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date)
-    },
     _des(item) {
       var fromDate = item.label_from_date
       var toDate = item.label_to_date ? ' đến ngày ' + item.label_to_date : ''

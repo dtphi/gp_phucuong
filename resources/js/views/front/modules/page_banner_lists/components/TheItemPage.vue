@@ -9,7 +9,6 @@
 
 <script>
 import { mapGetters, } from 'vuex'
-import { fn_get_base_url, } from '@app/api/utils/fn-helper'
 
 export default {
   name: 'TheItemPage',
@@ -34,7 +33,7 @@ export default {
         return this.pageItem.imgThumbUrl
       }
       
-      return fn_get_base_url() + this.pageItem.img
+      return this.$cmsCfg.baseUrl + this.pageItem.img
     },
   },
 }

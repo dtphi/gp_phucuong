@@ -44,9 +44,7 @@
 require('@app/tools/mm/dist/style.css')
 import { MM, } from '@app/tools/mm/dist/mm.min'
 import { EmitOnSelectedImage, } from '@app/api/utils/event-bus'
-import { fn_get_base_url_image, } from '@app/api/utils/fn-helper'
 import { fnCheckImgSelect, } from '@app/common/util'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'TabImageForm',
@@ -69,7 +67,7 @@ export default {
   mounted() {
     this.mediaMM = new MM({
       el: '#media-info-manager',
-      api: config.mm.api,
+      api: this.$cmsCfg.mm.api,
       input: {
         el: '#file-input',
         multiple: false,
@@ -86,7 +84,7 @@ export default {
     _getImgUrl() {
       const thumb = this.groupData?.image?.thumb
       
-      return (typeof thumb !== 'string') ? fn_get_base_url_image(): thumb
+      return (typeof thumb !== 'string') ? this.$helper.fn_img_base_url(): thumb
     },
     _isEditForm() {
       return Object.keys(this.groupData).length

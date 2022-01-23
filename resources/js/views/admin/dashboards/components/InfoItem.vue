@@ -5,19 +5,14 @@
       <a :href="_getHref()">{{ info.name }}</a>
     </td>
     <td class="text-center" style="width: 7%">
-      <img :src="_getImgUrl()" class="img-thumbnail" />
+      <img :src="$helper.fn_img_base_url(info.image)" class="img-thumbnail" />
     </td>
-    <td class="text-center">{{ _formatDate(info.created_at) }}</td>
+    <td class="text-center">{{ $helper.fn_format_dd_mm_yyyy(info.created_at) }}</td>
   </tr>
 </template>
 
 <script>
 import { mapState, } from 'vuex'
-import {
-  fn_get_base_url_image,
-  fn_format_dd_mm_yyyy,
-} from '@app/api/utils/fn-helper'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'InfoItem',
@@ -42,16 +37,10 @@ export default {
   },
   methods: {
     _getHref() {
-      return `/${config.adminPrefix}/informations/edit/${this.info.information_id}`
-    },
-    _getImgUrl() {
-      return fn_get_base_url_image(this.info.image)
+      return `/${this.$cmsCfg.adminPrefix}/informations/edit/${this.info.information_id}`
     },
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from)
-    },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date)
     },
   },
 }

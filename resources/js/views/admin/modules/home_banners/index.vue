@@ -435,7 +435,6 @@ import {
   ACTION_GET_SETTING,
 } from 'store@admin/types/action-types'
 import { fnCheckImgPath, } from '@app/common/util'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'HomeBannerPage',
@@ -446,7 +445,7 @@ export default {
   data() {
     const mm = new MM({
       el: '#modal-general-info-manager',
-      api: config.mm.api,
+      api: this.$cmsCfg.mm.api,
       onSelect: (fi) => {
         const pathImg = 'Image/NewPicture/'
         if (fnCheckImgPath(fi)) {

@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
 import { extend, } from 'vee-validate'
 import { regex, } from 'vee-validate/dist/rules'
 extend('regex', {
@@ -61,7 +60,6 @@ export default {
     }
   },
   setting: {
-    cf: config,
     name_txt: 'IP',
   },
 }

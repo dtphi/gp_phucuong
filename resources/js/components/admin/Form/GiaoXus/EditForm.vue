@@ -34,7 +34,6 @@ import {
   ACTION_UPDATE_INFO_BACK,
 } from 'store@admin/types/action-types'
 import { fnCheckImgPath, } from '@app/common/util'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'FormGiaoXuEdit',
@@ -44,10 +43,10 @@ export default {
   data() {
     const mm = new MM({
       el: '#modal-general-info-manager',
-      api: config.mm.api,
+      api: this.$cmsCfg.mm.api,
       onSelect: (fi) => {
         if (fnCheckImgPath(fi, 'path')) {
-          this.$data.imgSelected = `/${config.dirImage}/${fi.selected.path}`
+          this.$data.imgSelected = `/${this.$cmsCfg.dirImage}/${fi.selected.path}`
           this.$data.selected = fi.selected
           document.getElementById('media-file-manager-content').style =
             'display:none'

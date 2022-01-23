@@ -49,7 +49,6 @@ import Breadcrumb from 'com@admin/Breadcrumb'
 import { MODULE_MODULE_DANHMUC_GIAOPHAN, } from 'store@admin/types/module-types'
 import { ACTION_GET_NEWS_GROUP_LIST, } from 'store@admin/types/action-types'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'GiaoPhanDanhMucHeaderPage',
@@ -61,13 +60,13 @@ export default {
   methods: {
     ...mapActions(MODULE_MODULE_DANHMUC_GIAOPHAN, [ACTION_GET_NEWS_GROUP_LIST]),
     _pushAddPage() {
-      this.$router.push(`/${config.adminPrefix}/giao-phan/danh-mucs/add`)
+      this.$router.push(`/${this.$cmsCfg.adminPrefix}/giao-phan/danh-mucs/add`)
     },
     _refreshList() {
       this[ACTION_GET_NEWS_GROUP_LIST]()
     },
     _redirectUrl() {
-      return fn_redirect_url(`${config.adminPrefix}/giao-phan/danh-mucs/add`)
+      return fn_redirect_url(`${this.$cmsCfg.adminPrefix}/giao-phan/danh-mucs/add`)
     },
   },
   setting: {

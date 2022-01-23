@@ -32,10 +32,6 @@
 <script>
 import { mapActions, mapState, } from 'vuex'
 import BtnDelete from './TheBtnDelete'
-import {
-  fn_get_base_url_image,
-  fn_format_dd_mm_yyyy,
-} from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_CHUC_VU_EDIT, } from 'store@admin/types/module-types'
 import {
   ACTION_GET_INFO_BY_ID,
@@ -64,14 +60,8 @@ export default {
   },
   methods: {
     ...mapActions(MODULE_MODULE_CHUC_VU_EDIT, [ACTION_GET_INFO_BY_ID]),
-    _getImgUrl() {
-      return fn_get_base_url_image(this.info.image)
-    },
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from)
-    },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date)
     },
     async _showModal() {
       if (this.info?.id) {

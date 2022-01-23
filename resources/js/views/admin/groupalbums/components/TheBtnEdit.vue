@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 
 export default {
@@ -48,7 +47,7 @@ export default {
       if (this.hrefEdit) return (window.location.href = this.hrefEdit)
       
       return fn_redirect_url(
-        `${config.adminPrefix}/group-albums/edit/${this.infoId}`
+        `${this.$cmsCfg.adminPrefix}/group-albums/edit/${this.infoId}`
       )
     },
   },

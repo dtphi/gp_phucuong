@@ -17,21 +17,17 @@
         data-original-title="Sửa Tin"
         ><i class="fa fa-edit" />
       </a>
-      <btn-delete
-                :info-id="info.id" :no="no"></btn-delete>
+      <btn-delete :info-id="info.id" :no="no"></btn-delete>
     </td>
   </tr>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import BtnDelete from "./TheBtnDelete";
-import {
-  fn_format_dd_mm_yyyy,
-} from "@app/api/utils/fn-helper";
+import { mapState } from 'vuex'
+import BtnDelete from './TheBtnDelete'
 
 export default {
-  name: "TheItem",
+  name: 'TheItem',
   components: {
     BtnDelete,
   },
@@ -44,7 +40,7 @@ export default {
     },
   },
   data() {
-    return {};
+    return {}
   },
   computed: {
     ...mapState({
@@ -53,14 +49,11 @@ export default {
   },
   methods: {
     _getNo() {
-      return parseInt(this.no) + parseInt(this.meta.from);
-    },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date);
+      return parseInt(this.no) + parseInt(this.meta.from)
     },
     _showModal() {
-      this.$emit("show-modal-edit", this.info);
+      this.$emit('show-modal-edit', this.info)
     },
   },
-};
+}
 </script>

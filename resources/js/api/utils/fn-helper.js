@@ -2,8 +2,6 @@ import AppConfig from '../admin/constants/app-config'
 import {
   config,
 } from '../admin/config'
-import NoImage from 'v@admin/assets/img/no-photo.jpg'
-import moment from 'moment'
 
 export function fn_is_object(obj) {
   if (typeof obj !== 'undefined'
@@ -17,18 +15,12 @@ export function fn_is_object(obj) {
 export function fn_is_string(value) {
   return (typeof value === 'string') || (value instanceof String)
 }
-export function fn_get_base_url() {
-  return config.baseUrl
-}
 export function fn_get_href_base_url(path) {
   if (fn_is_string(path)) {
     return config.baseUrl + '/' + path.replace(/^\//, '')
   }
   
   return config.baseUrl + '/'
-}
-export function fn_get_admin_base_url() {
-  return config.baseUrl + '/' + config.adminPrefix
 }
 export function fn_get_base_api_url(apiPath) {
   return AppConfig.apiUrl + apiPath
@@ -38,13 +30,6 @@ export function fn_get_base_api_detail_url(apiPath, id) {
 }
 export function fn_get_base_url_thumb(thumbPath) {
   return config.baseUrl + '/thumbs/' + thumbPath
-}
-export function fn_get_base_url_image(path) {
-  if (typeof path !== 'undefined' && path.thumb) {
-    return config.baseUrl + '/' + path.thumb.replace(/^\//, '')
-  }
-  
-  return NoImage
 }
 export function fn_get_news_file_connector_url() {
   return config.baseUrl + AppConfig.newsFileConnectUrlPath
@@ -57,16 +42,6 @@ export function fn_get_tinymce_langs_url(langName) {
 }
 export function fn_redirect_url(path) {
   window.location.href = config.baseUrl + '/' + path.replace(/^\//, '')
-}
-export function fn_format_dd_mm_yyyy(date) {
-  if (date === 'Chưa cập nhật' || !date) {
-    return ''
-  }
-  if (date && moment(date).isValid()) {
-    return moment(date).format(AppConfig.formatDateString)
-  }
-  
-  return ''
 }
 export function fn_get_com_update_no() {
   return AppConfig.comUpdateNoSuccess

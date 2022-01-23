@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 
 export default {
@@ -41,7 +40,7 @@ export default {
       }
     },
     _redirectUrl() {
-      return fn_redirect_url(`${config.adminPrefix}/dongs/edit/${this.infoId}`)
+      return fn_redirect_url(`${this.$cmsCfg.adminPrefix}/dongs/edit/${this.infoId}`)
     },
   },
 }

@@ -181,7 +181,6 @@ const { mapFields, } = createHelpers({
   getterType: `${MODULE_MODULE_CO_SO_EDIT}/getInfoField`,
   mutationType: `${MODULE_MODULE_CO_SO_EDIT}/updateInfoField`,
 })
-import { config, } from '@app/common/config'
 
 export default {
   name: 'TheModalEdit',
@@ -223,7 +222,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     list_title: 'Danh sách Linh mục',
   },
 }

@@ -124,7 +124,6 @@ import {
   ACTION_GET_USER_LIST,
 } from 'store@admin/types/action-types'
 import InfoItem from './components/InfoItem'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'DashboardPage',
@@ -176,7 +175,7 @@ export default {
       'ACTION_GET_INFO_LINH_MUC_LIST'
     ]),
     _gettUrl(path) {
-      return `/${config.adminPrefix}/${path}`
+      return `/${this.$cmsCfg.adminPrefix}/${path}`
     },
   },
   setting: {

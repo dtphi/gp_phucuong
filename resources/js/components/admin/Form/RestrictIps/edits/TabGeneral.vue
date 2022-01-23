@@ -43,7 +43,6 @@
 
 <script>
 import { mapState, } from 'vuex'
-import { config, } from '@app/common/config'
 import { MODULE_MODULE_RESTRICT_IP_EDIT, } from 'store@admin/types/module-types'
 import { extend, } from 'vee-validate'
 import { regex, } from 'vee-validate/dist/rules'
@@ -67,7 +66,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     name_txt: 'IP',
   },
 }

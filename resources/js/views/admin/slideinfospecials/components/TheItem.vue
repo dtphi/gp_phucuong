@@ -13,8 +13,8 @@
     <td class="text-center" style="width: 7%">
       <img :src="info.imgThum" class="img-thumbnail" />
     </td>
-    <td class="text-center">{{ _formatDate(info.date_available) }}</td>
-    <td class="text-center">{{ _formatDate(info.created_at) }}</td>
+    <td class="text-center">{{ $helper.fn_format_dd_mm_yyyy(info.date_available) }}</td>
+    <td class="text-center">{{ $helper.fn_format_dd_mm_yyyy(info.created_at) }}</td>
     <td class="text-center">{{ info.status_text }}</td>
     <td class="text-center">
       <input
@@ -30,10 +30,6 @@
 import { mapState, mapActions, } from 'vuex'
 import { MODULE_INFO, } from 'store@admin/types/module-types'
 import { ACTION_UPDATE_INFO_SPECIAL, } from 'store@admin/types/action-types'
-import {
-  fn_get_base_url_image,
-  fn_format_dd_mm_yyyy,
-} from '@app/api/utils/fn-helper'
 
 export default {
   name: 'TheItem',
@@ -72,14 +68,8 @@ export default {
       updateInfo: ACTION_UPDATE_INFO_SPECIAL,
       addSpecial: 'addSpecial',
     }),
-    _getImgUrl() {
-      return fn_get_base_url_image(this.info.image)
-    },
     _getNo() {
       return parseInt(this.no) + parseInt(this.meta.from)
-    },
-    _formatDate(date) {
-      return fn_format_dd_mm_yyyy(date)
     },
     _infoSpecialChange(event) {
       const data = {

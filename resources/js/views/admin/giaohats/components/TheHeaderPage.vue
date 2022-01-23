@@ -45,7 +45,6 @@ import ListSearch from 'com@admin/Search'
 import Breadcrumb from 'com@admin/Breadcrumb'
 import { MODULE_MODULE_GIAO_HAT, } from 'store@admin/types/module-types'
 import { ACTION_GET_INFO_LIST, } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'GiaoHatHeaderPage',
@@ -63,7 +62,7 @@ export default {
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_HAT, [ACTION_GET_INFO_LIST]),
     _pushAddPage() {
-      this.$router.push(`/${config.adminPrefix}/giao-hats/add`)
+      this.$router.push(`/${this.$cmsCfg.adminPrefix}/giao-hats/add`)
     },
     _refreshList() {
       this[ACTION_GET_INFO_LIST]()

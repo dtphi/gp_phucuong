@@ -14,7 +14,6 @@
 require('@app/tools/mm/dist/style.css')
 import { MM, } from '@app/tools/mm/dist/mm.min'
 import { EmitOnSelectInfoMediaImg, } from '@app/api/utils/event-bus'
-import { config, } from '@app/common/config'
 import { fnCheckImgPath, } from '@app/common/util'
 
 export default {
@@ -35,7 +34,7 @@ export default {
   mounted() {
     this.$data.mediaMM = new MM({
       el: '#media-info-manager_',
-      api: config.mm.api,
+      api: this.$cmsCfg.mm.api,
       input: {
         el: '#file-media-info-input',
         multiple: false,

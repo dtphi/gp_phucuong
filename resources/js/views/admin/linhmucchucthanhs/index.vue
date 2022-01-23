@@ -94,7 +94,6 @@ import {
   ACTION_GET_INFO_LIST,
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 import TheModalAdd from './components/TheModalAdd'
 import TheModalEdit from './components/TheModalEdit'
 
@@ -173,7 +172,6 @@ export default {
     this.getInfoList(params)
   },
   setting: {
-    cf: config,
     list_title: 'Danh sách Linh mục',
   },
 }

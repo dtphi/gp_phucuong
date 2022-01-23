@@ -149,7 +149,6 @@
 
 <script>
 import tinymce from 'vue-tinymce-editor'
-import { config, } from '@app/common/config'
 import { MODULE_INFO_ADD, } from 'store@admin/types/module-types'
 import { createHelpers, } from 'vuex-map-fields'
 import { MAP_PC_INFORMATIONS, } from 'store@admin/types/model-map-fields'
@@ -181,7 +180,7 @@ export default {
   },
   data() {
     const elFileContent = document.getElementById('media-file-manager-content')
-    const options = config.tinymce.options((callback) => {
+    const options = this.$cmsCfg.tinymce.options((callback) => {
       this.fn = callback
       elFileContent.style = this.$options.setting.cssDisplay
     })

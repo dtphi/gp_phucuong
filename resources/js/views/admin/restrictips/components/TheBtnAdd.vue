@@ -12,7 +12,6 @@
 
 <script>
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'AddRestrictIp',
@@ -24,7 +23,7 @@ export default {
   },
   methods: {
     _redirectUrl() {
-      return fn_redirect_url(`${config.adminPrefix}/restrict-ips/add`)
+      return fn_redirect_url(`${this.$cmsCfg.adminPrefix}/restrict-ips/add`)
     },
   },
 }

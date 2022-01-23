@@ -107,7 +107,6 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'TheModalEdit',
@@ -157,7 +156,6 @@ export default {
     },
   },
   setting: {
-    cf: config,
     list_title: 'Danh sách Linh mục',
   },
 }

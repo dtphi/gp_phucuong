@@ -68,7 +68,6 @@ import {
   ACTION_SEARCH_ITEMS,
 } from 'store@admin/types/action-types'
 import { INFOS_SET_INFO_LIST, } from 'store@admin/types/mutation-types'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'RestrictIpHeaderPage',
@@ -107,7 +106,7 @@ export default {
       return !str || /^\s*$/.test(str)
     },
     _pushAddPage() {
-      this.$router.push(`/${config.adminPrefix}/restrict-ips/add`)
+      this.$router.push(`/${this.$cmsCfg.adminPrefix}/restrict-ips/add`)
     },
     _refreshList() {
       const params = {

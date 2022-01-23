@@ -116,7 +116,6 @@
 
 <script>
 import { mapState, } from 'vuex'
-import { config, } from '@app/common/config'
 import {
   fn_get_href_base_url,
 } from '@app/api/utils/fn-helper'
@@ -156,19 +155,19 @@ export default {
       fn: null,
       mm: null,
       options: {
-        language_url: config.mm.languageUrl,
-        height: config.mm.height,
-        image_prepend_url: config.mm.imagePrependUrl,
+        language_url: this.$cmsCfg.mm.languageUrl,
+        height: this.$cmsCfg.mm.height,
+        image_prepend_url: this.$cmsCfg.mm.imagePrependUrl,
         file_picker_callback: function(callback, value, meta) {
           _self.media.options._selfCom = _self
-          if (config.mm.fileTypes.includes(meta.filetype)) {
+          if (_self.$cmsCfg.mm.fileTypes.includes(meta.filetype)) {
             _self.fn = callback
             elFileContent.style = _self.$options.setting.cssDisplay
           }
         },
-        referrer_policy: config.mm.referrerPolicy,
-        toolbar2: config.mm.toolbar2,
-        font_formats:config.mm.fontFormats,
+        referrer_policy: this.$cmsCfg.mm.referrerPolicy,
+        toolbar2: this.$cmsCfg.mm.toolbar2,
+        font_formats:this.$cmsCfg.mm.fontFormats,
       },
       viewer: false,
     }

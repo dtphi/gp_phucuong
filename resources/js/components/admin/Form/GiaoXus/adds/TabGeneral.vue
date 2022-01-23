@@ -309,7 +309,6 @@
 
 <script>
 import { mapState, mapActions, } from 'vuex'
-import { config, } from '@app/common/config'
 import { fn_get_href_base_url, } from '@app/api/utils/fn-helper'
 import { MODULE_MODULE_GIAO_XU_ADD, } from 'store@admin/types/module-types'
 import tinymce from 'vue-tinymce-editor'
@@ -361,7 +360,7 @@ export default {
   },
   data() {
     const elFileContent = document.getElementById('media-file-manager-content')
-    const options = config.tinymce.options((callback) => {
+    const options = this.$cmsCfg.tinymce.options((callback) => {
       this.fn = callback
       elFileContent.style = this.$options.setting.cssDisplay
     })

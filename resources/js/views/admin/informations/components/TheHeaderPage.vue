@@ -45,7 +45,6 @@ import ListSearch from 'com@admin/Search'
 import Breadcrumb from 'com@admin/Breadcrumb'
 import { MODULE_INFO, } from 'store@admin/types/module-types'
 import { ACTION_GET_INFO_LIST, } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'InformationHeaderPage',
@@ -63,7 +62,7 @@ export default {
       getInfoList: ACTION_GET_INFO_LIST,
     }),
     _pushAddPage() {
-      this.$router.push(`/${config.adminPrefix}/informations/add`)
+      this.$router.push(`/${this.$cmsCfg.adminPrefix}/informations/add`)
     },
     _refreshList() {
       const params = {

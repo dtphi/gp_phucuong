@@ -114,7 +114,6 @@ import {
   ACTION_UPDATE_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 import { createHelpers, } from 'vuex-map-fields'
 import { MAP_PC_CHUC_VUS, } from 'store@admin/types/model-map-fields'
 const { mapFields, } = createHelpers({
@@ -135,17 +134,17 @@ export default {
     const elFileContent = document.getElementById('media-file-manager-content')
     const mm = new MM({
       el: '#modal-general-info-manager',
-      api: config.mm.api,
+      api: this.$cmsCfg.mm.api,
       onSelect: (fi) => {
         if (typeof fi === 'object') {
           if (fnCheckImgPath(fi)) {
-            this.fn(`/${config.dirImage}/${fi.selected.path}`, fi.selected)
+            this.fn(`/${this.$cmsCfg.dirImage}/${fi.selected.path}`, fi.selected)
             elFileContent.style = this.$options.setting.cssDisplayNone
           }
         }
       },
     })
-    const options = config.tinymce.options((callback) => {
+    const options = this.$cmsCfg.tinymce.options((callback) => {
       this.fn = callback
       elFileContent.style = this.$options.setting.cssDisplay
     })

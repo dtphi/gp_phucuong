@@ -97,7 +97,6 @@ import TabAdvance from './TabAdvanceEdit'
 import TabLink from './TabLink'
 import TabMediaManager from './TabImage'
 import { fnCheckImgSelect, fnCheckImgPath, } from '@app/common/util'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'InformationEditForm',
@@ -111,10 +110,10 @@ export default {
   data() {
     const mm = new MM({
       el: '#modal-general-info-manager',
-      api: config.mm.api,
+      api: this.$cmsCfg.mm.api,
       onSelect: (fi) => {
         if (fnCheckImgPath(fi, 'path')) {
-          this.$data.imgSelected = `/${config.dirImage}/${fi.selected.path}`
+          this.$data.imgSelected = `/${this.$cmsCfg.dirImage}/${fi.selected.path}`
           this.$data.selected = fi.selected
           document.getElementById('media-file-manager-content').style =
             'display:none'

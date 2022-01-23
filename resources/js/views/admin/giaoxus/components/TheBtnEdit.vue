@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { config, } from '@app/common/config'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
 
 export default {
@@ -46,10 +45,10 @@ export default {
     },
     _redirectUrl() {
       if (this.hrefEdit)
-        return fn_redirect_url(`${config.adminPrefix + this.hrefEdit}`)
+        return fn_redirect_url(`${this.$cmsCfg.adminPrefix + this.hrefEdit}`)
       
       return fn_redirect_url(
-        `${config.adminPrefix}/giao-xus/edit/${this.infoId}`
+        `${this.$cmsCfg.adminPrefix}/giao-xus/edit/${this.infoId}`
       )
     },
   },

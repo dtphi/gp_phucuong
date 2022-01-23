@@ -10,9 +10,6 @@
 
 <script>
 import {
-  fn_get_base_url,
-} from '@app/api/utils/fn-helper'
-import {
   config,
 } from '@app/common/config'
 
@@ -21,7 +18,7 @@ export default {
   props: {},
   methods: {
     _getHref() {
-      return fn_get_base_url() + `/${config.adminPrefix}/albums`
+      return `${this.$cmsCfg.baseUrl}/${config.adminPrefix}/albums`
     },
   },
 }

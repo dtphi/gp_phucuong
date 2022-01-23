@@ -46,7 +46,6 @@ import Breadcrumb from 'com@admin/Breadcrumb'
 import { MODULE_MODULE_DONG, } from 'store@admin/types/module-types'
 
 import { ACTION_GET_INFO_LIST, } from 'store@admin/types/action-types'
-import { config, } from '@app/common/config'
 
 export default {
   name: 'DongHeaderPage',
@@ -64,7 +63,7 @@ export default {
   methods: {
     ...mapActions(MODULE_MODULE_DONG, [ACTION_GET_INFO_LIST]),
     _pushAddPage() {
-      this.$router.push(`/${config.adminPrefix}/dongs/add`)
+      this.$router.push(`/${this.$cmsCfg.adminPrefix}/dongs/add`)
     },
     _refreshList() {
       this[ACTION_GET_INFO_LIST]()
