@@ -29,44 +29,34 @@
           <template #column_middle v-if="info">
             <h2>Giáo xứ {{ info.name }}</h2>
             <img style="width: 100%; margin-bottom: 15px" :src="info.image" />
-            <!-- Latest update -->
-            <div class="row align-items-center"> 
-              <div class="col-sm-6">
-                  <vue-timeline-update
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-xs-12">
+                 <vue-timeline-update
                   :date="new Date()"
                   dateString="#"
                   :category="`Linh mục chánh xứ`"
                   title="."
                   :thumbnail="info.img_chanh_xu"
+                  :description="`<div>
+                    <h5>${info.chanh_xu}</h5>
+                    <h5>${info.from_date_chanh}</h5>
+                    <h5>${info.email_chanh}</h5>
+                  </div>`"
                   icon="account_circle"
-                />
-              </div>
-              <div class="col-sm-6">
-                <h4>{{info.chanh_xu}}</h4>
-                <h4>Nhậm chức: {{info.from_date_chanh}}</h4>
-                <h4>Email: {{info.email_chanh}}</h4>
-              </div>  
-            </div>
-            <div class="row" v-for="(info, idx) in info.arr_pho_xu" :key="idx"> 
-              <div class="col-sm">
-                  <vue-timeline-update 
+                /> <!-- 259, 310 -->
+                <vue-timeline-update v-for="(info, idx) in info.arr_pho_xu" :key="idx"
                   :date="new Date()"
                   dateString="-"
                   :category="`Linh mục phó xứ`"
                   title="."
                   :thumbnail="info.img_pho_xu"
+                  :description="`<div>
+                    <h5>${info.pho_xu}</h5>
+                    <h5>${info.from_date_pho}</h5>
+                    <h5>${info.email_pho}</h5>
+                  </div>`"
                   icon="account_circle"
                 />
-              </div>
-              <div class="col-sm">
-                <br><br>
-                <h4>{{info.pho_xu}}</h4>
-                <h4>Nhậm chức: {{info.from_date_pho}}</h4>
-                <h4>Email: {{info.email_pho}}</h4>
-              </div>  
-            </div>
-            <div class="row">
-              <div class="col-lg-6 col-md-12 col-xs-12">
                 <vue-timeline-update v-if="info.ngay_thanh_lap"
                   :date="new Date()"
                   dateString="#"
