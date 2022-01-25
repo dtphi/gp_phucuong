@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive">
+  <div>
     <table
       id="info-chuc-thanh-list"
       class="table table-striped table-bordered table-hover"

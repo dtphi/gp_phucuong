@@ -94,7 +94,7 @@ final class ChucVuService implements BaseModel, ChucVuModel
     public function apiGetChucVus($data = array(), $limit = 5)
     {
         $query = $this->model->select()
-        ->orderBy('updated_at', 'DESC');
+        ->orderBy('sort_id', 'asc');
         if (!empty($data['s_name'])) {
             $name = '%' . $data['s_name'] . '%';
             $query->where('name', 'like', $name);

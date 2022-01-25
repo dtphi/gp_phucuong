@@ -40,6 +40,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
         $this->model = new Linhmuc();
 				$this->modelBoNhiem = new LinhmucBoNhiem();
 				$this->modelLmGpThuyenChuyen = new LinhmucGpThuyenChuyen();
+				$this->modelThuyenChuyen = new LinhmucThuyenchuyen();
     }
 
     public function apiGetList(array $options = [], $limit = 15)
@@ -338,7 +339,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
         $model = new ChucVu();
 
         $query = $model->select()
-            ->orderBy('name', 'DESC');
+            ->orderBy('sort_id', 'asc');
 
         return $query->get();
     }
@@ -481,18 +482,38 @@ final class LinhMucService implements BaseModel, LinhMucModel
 		}
 
 		public function apiUpdateActiveLmThuyenChuyen($id_thuyen_chuyen) {
-			$this->modelLmGpThuyenChuyen = $this->modelLmGpThuyenChuyen->findOrFail($id_thuyen_chuyen);
-			if($this->modelLmGpThuyenChuyen->active == 1) {
-				$this->modelLmGpThuyenChuyen->active = 0;
+				$this->modelLmGpThuyenChuyen = $this->modelLmGpThuyenChuyen->findOrFail($id_thuyen_chuyen);
+				if($this->modelLmGpThuyenChuyen->active == 1) {
+					$this->modelLmGpThuyenChuyen->active = 0;
+				}else {
+					$this->modelLmGpThuyenChuyen->active = 1;
+				}
+				DB::beginTransaction();
+				if (!$this->modelLmGpThuyenChuyen->save()) {
+						DB::rollBack();
+						return false;
+				}
+				DB::commit();
+				return $this->modelLmGpThuyenChuyen;
+		}
+
+		public function apiUpdateActiveThuyenChuyen($id_thuyen_chuyen) {
+			
+			$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($id_thuyen_chuyen);
+
+			if($this->modelThuyenChuyen->active == 1) {
+				$this->modelThuyenChuyen->active = 0;
 			}else {
-				$this->modelLmGpThuyenChuyen->active = 1;
+				$this->modelThuyenChuyen->active = 1;
 			}
+
 			DB::beginTransaction();
-			if (!$this->modelLmGpThuyenChuyen->save()) {
+			if (!$this->modelThuyenChuyen->save()) {
 					DB::rollBack();
 					return false;
 			}
 			DB::commit();
-			return $this->modelLmGpThuyenChuyen;
+
+			return $this->modelThuyenChuyen;
 	}
 }

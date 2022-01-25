@@ -16,7 +16,19 @@
       <td>{{ item.chucvuName }}</td>
       <td>{{ item.ducchaName }}</td>
 
-      <td class="text-right">
+      <td class="text-center">
+				<toggle-button
+									class="switch-btn-center"
+									v-if="item.active == 1"
+									:value="switchValue"
+									@change="_changeActiveThuyenChuyen($event, item)"
+								/>
+					<toggle-button
+						class="switch-btn-center"
+						v-else
+						:value="!switchValue"
+						@change="_changeActiveThuyenChuyen($event, item)"
+					/>
         <button
           @click="_openEditForm"
           type="button"
@@ -210,7 +222,7 @@
             <tr>
               <td>{{ $options.setting.info_action_title }}</td>
               <td colspan="4" class="text-right">
-                <button
+									<button
                   @click="_updateThuyenChuyenForm()"
                   type="button"
                   data-toggle="tooltip"
@@ -298,11 +310,13 @@ export default {
   data() {
     return {
       isEdit: false,
+			switchValue: true,
     }
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
       'removeThuyenChuyen',
+			'updateActiveThuyenChuyen',
       'ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU',
       'ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU',
       'ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA',
@@ -325,6 +339,12 @@ export default {
         })
       }
     },
+		_changeActiveThuyenChuyen($event, item) {
+				this.updateActiveThuyenChuyen({
+					action: 'update_active_thuyen_chuyen',
+					item: item,
+				});
+		}
   },
   setting: {
     info_action_title: 'Thực hiện',
