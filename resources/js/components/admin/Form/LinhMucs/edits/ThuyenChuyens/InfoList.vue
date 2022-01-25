@@ -1,5 +1,5 @@
 <template>
-  <div class="table-responsive">
+	<div>
     <table
       id="info-thuyen-chuyen-list"
       class="table table-striped table-bordered table-hover"
@@ -42,7 +42,7 @@
         </tr>
       </tfoot>
     </table>
-  </div>
+	</div>
 </template>
 
 <script>

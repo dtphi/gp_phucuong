@@ -193,6 +193,10 @@ export default {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'update.active.lm.thuyen.chuyen'
     },
+		update_active_thuyen_chuyen(state, payload) {
+      state.info.lm_thuyen_chuyen = payload
+      state.info.action = 'update.active.thuyen.chuyen'
+    },
     update_lm_thuyen_chuyen_remove(state, payload) {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'remove.lm.thuyen.chuyen'
@@ -554,6 +558,11 @@ export default {
 		async updateActiveLmThuyenChuyen({ commit, state, dispatch }, info ) {
 			const data = info.item.id
 			await commit('update_active_lm_thuyen_chuyen', data)
+			dispatch(ACTION_CHANGE_STATUS, state.info)
+    },
+		async updateActiveThuyenChuyen({ commit, state, dispatch }, info ) {
+			const data = info.item.id
+			await commit('update_active_thuyen_chuyen', data)
 			dispatch(ACTION_CHANGE_STATUS, state.info)
     },
     async removeLmThuyenChuyen({ commit, dispatch, state, }, params) {
