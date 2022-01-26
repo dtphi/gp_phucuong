@@ -5,6 +5,7 @@ import linhmuc from './linhmucs'
 import home from './homes'
 import video from './videos'
 import info from './infos'
+import HanhCacThanh from './HanhCacThanh'
 import subscribe from './subscribes'
 import appModule from './modules'
 // import createLogger from '../../plugins/logger'
@@ -217,6 +218,7 @@ export default new Vuex.Store({
     home,
     video,
     info,
+    HanhCacThanh,
     subscribe,
     appModule,
   },

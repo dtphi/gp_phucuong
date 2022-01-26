@@ -26,6 +26,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::apiResource('/homes/get-list', 'HomeController');
     Route::get('/app/info/get-information-list', 'NewsController@list');
     Route::get('/app/info/get-information', 'NewsController@detail');
+    Route::get('/app/get-ngay-les', 'NewsController@indexNgayLe');
     Route::get('/app/info/get-latest-information', 'NewsController@showLastedList');
     Route::get('/app/info/get-popular-information', 'NewsController@showPopularList');
     Route::get('/app/info/get-related-information', 'NewsController@showRelatedList');

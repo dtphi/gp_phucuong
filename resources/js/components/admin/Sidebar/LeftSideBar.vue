@@ -10,7 +10,7 @@
         <small>{{userPhone}}</small>
       </div>
     </div>
-    <template v-if="user.isAdmin">
+    <template>
       <ul style="list-style: none;
     padding: 10px;">
         <li id="dashboard">
@@ -200,7 +200,7 @@
             </li>
           </ul>
         </li>
-        <li id="files" v-if="user.isAdmin">
+        <li id="files" >
           <a class="parent" :href="_getHref('filemanagers')"><i class="fa fa-file fw"></i><span>{{
             $options.setting.category_sub_image_title
           }}</span></a>
@@ -287,7 +287,7 @@
         </li>
       </ul>
     </template>
-    <template v-else>
+    <!-- <template v-else>
       <ul style="list-style: none;
     padding: 10px;">
         <li id="dashboard">
@@ -298,7 +298,7 @@
         </li>
       </ul>
       <ul v-html="_renderMenu()" id="menu" :style="ulMenu"></ul>
-    </template>
+    </template> -->
   </nav>
 </template>
 

@@ -34,7 +34,7 @@ import {
 } from '../common/config'
 
 export default [{
-  path: '/'+config.adminPrefix,
+  path: '/' + config.adminPrefix,
   component: {
     render: c => c('router-view'),
   },
@@ -82,7 +82,7 @@ export default [{
   }, {
     path: 'module-*',
     component: () =>
-      import ('v@admin/modules'),
+      import('v@admin/modules'),
     name: 'admin.module.list',
     meta: {
       layout: DefaultLayout,
@@ -130,7 +130,7 @@ export default [{
     }, {
       path: 'add',
       component: () =>
-        import ('v@admin/categorys/add'),
+        import('v@admin/categorys/add'),
       name: 'admin.category.add',
       meta: {
         layout: DefaultLayout,
@@ -156,7 +156,7 @@ export default [{
     }, {
       path: 'edit/:categoryId',
       component: () =>
-        import ('v@admin/categorys/edit'),
+        import('v@admin/categorys/edit'),
       name: 'admin.category.edit',
       meta: {
         layout: DefaultLayout,
@@ -230,7 +230,7 @@ export default [{
     }, {
       path: 'add',
       component: () =>
-        import ('v@admin/informations/add'),
+        import('v@admin/informations/add'),
       name: 'admin.informations.add',
       meta: {
         auth: true,
@@ -253,7 +253,7 @@ export default [{
     }, {
       path: 'edit/:infoId',
       component: () =>
-        import ('v@admin/informations/edit'),
+        import('v@admin/informations/edit'),
       name: 'admin.informations.edit',
       meta: {
         auth: true,
@@ -282,7 +282,7 @@ export default [{
     children: [{
       path: '',
       component: () =>
-        import ('v@admin/slideinfospecials'),
+        import('v@admin/slideinfospecials'),
       name: 'admin.slide-info-specials.list',
       meta: {
         auth: true,
@@ -378,7 +378,7 @@ export default [{
       },
     }, {
       path: 'add',
-      component: () => import ('v@admin/linhmucs/add'),
+      component: () => import('v@admin/linhmucs/add'),
       name: 'admin.linh.muc.add',
       meta: {
         layout: DefaultLayout,
@@ -403,7 +403,7 @@ export default [{
       },
     }, {
       path: 'edit/:linhmucId',
-      component: () => import ('v@admin/linhmucs/edit'),
+      component: () => import('v@admin/linhmucs/edit'),
       name: 'admin.linh.muc.edit',
       meta: {
         layout: DefaultLayout,
@@ -563,7 +563,7 @@ export default [{
       },
     }, {
       path: 'add',
-      component: () => import ('v@admin/giaophans/add'),
+      component: () => import('v@admin/giaophans/add'),
       name: 'admin.giao.phan.add',
       meta: {
         layout: DefaultLayout,
@@ -588,7 +588,7 @@ export default [{
       },
     }, {
       path: 'edit/:giaoPhanId',
-      component: () => import ('v@admin/giaophans/edit'),
+      component: () => import('v@admin/giaophans/edit'),
       name: 'admin.giao.phan.edit',
       meta: {
         layout: DefaultLayout,
@@ -640,7 +640,7 @@ export default [{
       },
     }, {
       path: 'add',
-      component: () => import ('v@admin/giaohats/add'),
+      component: () => import('v@admin/giaohats/add'),
       name: 'admin.giao.hat.add',
       meta: {
         layout: DefaultLayout,
@@ -665,7 +665,7 @@ export default [{
       },
     }, {
       path: 'edit/:giaohatId',
-      component: () => import ('v@admin/giaohats/edit'),
+      component: () => import('v@admin/giaohats/edit'),
       name: 'admin.giao.hat.edit',
       meta: {
         layout: DefaultLayout,
@@ -717,7 +717,7 @@ export default [{
       },
     }, {
       path: 'add',
-      component: () => import ('v@admin/giaoxus/add'),
+      component: () => import('v@admin/giaoxus/add'),
       name: 'admin.giao.xu.add',
       meta: {
         layout: DefaultLayout,
@@ -742,7 +742,7 @@ export default [{
       },
     }, {
       path: 'edit/:giaoxuId',
-      component: () => import ('v@admin/giaoxus/edit'),
+      component: () => import('v@admin/giaoxus/edit'),
       name: 'admin.giao.xu.edit',
       meta: {
         layout: DefaultLayout,
@@ -875,7 +875,7 @@ export default [{
       },
     }, {
       path: 'add',
-      component: () => import ('v@admin/dongs/add'),
+      component: () => import('v@admin/dongs/add'),
       name: 'admin.dong.add',
       meta: {
         layout: DefaultLayout,
@@ -900,7 +900,7 @@ export default [{
       },
     }, {
       path: 'edit/:dongId',
-      component: () => import ('v@admin/dongs/edit'),
+      component: () => import('v@admin/dongs/edit'),
       name: 'admin.dong.edit',
       meta: {
         layout: DefaultLayout,
@@ -1219,7 +1219,7 @@ export default [{
       },
     }, {
       path: 'edit/:infoId',
-      component: () => import ('v@admin/restrictips/edit'),
+      component: () => import('v@admin/restrictips/edit'),
       name: 'admin.restrict_ip.edit',
       meta: {
         layout: DefaultLayout,
@@ -1297,7 +1297,7 @@ export default [{
       },
     }, {
       path: 'edit/:infoId',
-      component: () => import ('v@admin/albums/edit'),
+      component: () => import('v@admin/albums/edit'),
       name: 'admin.albums.edit',
       meta: {
         layout: DefaultLayout,
@@ -1375,7 +1375,7 @@ export default [{
       },
     }, {
       path: 'edit/:infoId',
-      component: () => import ('v@admin/groupalbums/edit'),
+      component: () => import('v@admin/groupalbums/edit'),
       name: 'admin.group.albums.edit',
       meta: {
         layout: DefaultLayout,
@@ -1399,32 +1399,32 @@ export default [{
         },
       },
     }],
-  },  {
+  }, {
     path: 'ngay-les',
     component: {
-        render: c => c('router-view')
+      render: c => c('router-view')
     },
     children: [{
-        path: '',
-        component: NgayLePage,
-        name: 'admin.ngay.le.list',
-        meta: {
-            layout: DefaultLayout,
-            auth: true,
-            breadcrumbs: [{
-                name: 'Quản trị',
-                linkName: 'admin.dashboards',
-                linkPath: '/dashboards'
-            }, {
-                name: 'Ngày Lễ'
-            }],
-            header: 'Danh sách Ngày lễ',
-            role: 'admin',
-            title: 'Ngày Lễ | ' + config.site_name,
-            show: {
-                footer: true
-            }
+      path: '',
+      component: NgayLePage,
+      name: 'admin.ngay.le.list',
+      meta: {
+        layout: DefaultLayout,
+        auth: true,
+        breadcrumbs: [{ 
+          name: 'Quản trị',
+          linkName: 'admin.dashboards',
+          linkPath: '/dashboards'
+        }, {
+          name: 'Ngày Lễ'
+        }],
+        header: 'Danh sách Ngày lễ',
+        role: 'admin',
+        title: 'Ngày Lễ | ' + config.site_name,
+        show: {
+          footer: true
         }
+      }
     },]
-},],
+  },],
 }]

@@ -36,6 +36,10 @@ interface BaseModel
 
     public function apiGetInfoListByIds($data = array());
 
+    // public function apiGetListNgayLe($data = array(), $limit = 5);
+
+    public function apiGetDetailNgayLe($id);
+
     public function apiGetGiaoXuList($data = array(), $limit = 5);
 
     public function apiGetDetailGiaoXu($id);

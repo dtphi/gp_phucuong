@@ -96,6 +96,7 @@ final class NewsService extends Service implements NewsModel
 
     public function apiGetInfoList($data = array())
     {
+        
         $infoType = 1;
         if (isset($data['infoType'])) {
             $infoType = (int)$data['infoType'];
@@ -141,6 +142,21 @@ final class NewsService extends Service implements NewsModel
         $query->orderByDesc('date_available');
 
         return $query->paginate($limit);
+    }
+
+    public function apiGetInfoNgayLe($information_id)
+    {
+        // TODO: Implement apiGetDetail() method.
+        $result = $this->model->findOrFail($information_id);
+        if ($result) {
+            return [
+                'id'   => $result->id,
+                'ten_le'             => $result->ten_le,
+                'hanh'      => $result->hanh,
+            ];
+        } else {
+            return false;
+        }
     }
 
     public function _apiGetTagInfoList($data = array())
