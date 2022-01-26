@@ -73,7 +73,7 @@ routeEnv = {
         network: network,
       },
     }],
-  }, {
+  },  {
     path: 'danh-muc-tin/:slug_1/:slug',
     component: {
       render: c => c('router-view'),
@@ -225,6 +225,25 @@ routeEnv = {
       },
     }],
   }, {
+    path: 'hanh-cac-thanh',
+    component: {
+      render: c => c('router-view'),
+    },
+    children: [{
+      path: '',
+      component: () => import('v@front/page_hanh_cac_thanh'),
+      name: 'hanh-cac-thanh-page',
+      meta: {
+        auth: false,
+        header: 'Trang ngay-les',
+        layout: MainLayout,
+        role: 'guest',
+        layout_content: {},
+      },
+    },]
+  },
+  
+  {
     path: 'giao-xu',
     component: {
       render: c => c('router-view'),
@@ -252,7 +271,7 @@ routeEnv = {
         layout_content: {},
       },
     }],
-  }],
+  },],
 }
 
 export default [routeEnv]

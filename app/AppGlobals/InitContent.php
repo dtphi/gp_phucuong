@@ -58,6 +58,9 @@ final class InitContent
         if ($request->is('giao-xu*')) {
             $flag = 'giao-xu';
         }
+        if ($request->is('hanh-cac-thanh*')) {
+            $flag = 'hanh-cac-thanh  ';
+        }
 
         if (!empty($flag)) {
             $this->pathInfo = trim($request->getPathInfo(), '/');

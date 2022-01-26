@@ -1094,4 +1094,45 @@ class ApiController extends Controller
     
         return $this->respondWithCollectionPagination($json);
     }
+	
+	public function getNgayLeList(Request $request)
+	{
+		
+		$page = 1;
+		if ($request->query('page')) {
+			$page = $request->query('page');
+		}
+		try {
+			$results = [];
+			$collections = $this->sv->apiGetNgayLeList();
+			$pagination = $this->_getTextPagination($collections);
+
+			foreach ($collections as $key => $info) {
+				$results[] = [
+					'id' => (int) $info->id,
+					'ten_le' => $info->ten_le,
+					'hanh' => $info->hanh,
+				];
+			}
+			$json = [
+				'data' => [
+					'results'    => $results,
+					'pagination' => $pagination,
+					'page'       => $page
+				]
+			];
+		} catch (HandlerMsgCommon $e) {
+			$json = [
+				'data' => [
+					'results'    => [],
+					'pagination' => [],
+					'msg'       => $e->render()
+				]
+			];
+		}
+		dd($info,'12312312');
+
+		return $this->respondWithCollectionPagination($json);
+	}
+
 } 

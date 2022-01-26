@@ -18,6 +18,7 @@ use App\Models\LinhmucVanthu;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
+use App\Models\NgayLe;
 use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
 
@@ -44,6 +45,7 @@ class Service implements BaseModel
 		$this->modelGiaoHat = new GiaoHat();
 		$this->modelChucVu = new ChucVu();
 		$this->modelLinhMucThuyenChuyen = new LinhmucThuyenchuyen();
+		$this->modelNgayLe = new NgayLe();
 		$this->modelPhanHatXu = new GiaoPhanHatXu();
 	}
 
@@ -191,6 +193,26 @@ class Service implements BaseModel
 
 		return $query->get();
 	}
+
+	public function apiGetNgayLeList($data = array(), $limit = 5)
+    {
+        // TODO: Implement apiGetList() method.
+        $query = $this->apiGetNgayLes($data);
+        return $query->paginate($limit);
+    }
+
+	public function apiGetDetailNgayLe($id = null) 
+	{
+		return NgayLe::findOrFail($id);
+
+	}
+
+	public function apiGetNgayLes($data = array(), $limit = 5)
+    {
+        $query = $this->model->select()
+        ->orderBy('id', 'DESC');
+        return $query;
+    }
 
 	public function apiGetGiaoXuList($data = array(), $limit = 5)
 	{
