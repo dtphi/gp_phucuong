@@ -22,6 +22,7 @@ const initParamsApp = {
 router.beforeEach(async(to, from, next) => {
   if (Object.keys(to.meta.layout_content).length === 0) {
     to.meta.layout_content = layout.layout_content
+    console.log('test1')
   }
   next()
 })

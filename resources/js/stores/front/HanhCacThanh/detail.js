@@ -1,7 +1,7 @@
-import { apiGetDetail, apiGetListsToCategory, } from '@app/api/front/HanhCacThanh'
+import { apiGetDetail, apiGetListsToCategory, } from '@app/api/front/infos'
 import { INIT_LIST, INIT_RELATED_LIST, SET_ERROR,
 } from '@app/stores/front/types/mutation-types'
-import { GET_DETAIL, GET_LIST_NGAY_LE,
+import { GET_DETAIL, GET_RELATED_INFORMATION_LIST_TO_CATEGORY,
 } from '@app/stores/front/types/action-types'
 import { fnCheckProp, } from '@app/common/util'
 
@@ -44,7 +44,7 @@ export default {
         apiGetDetail(routeParams.slug,
           (result) => {
             commit(INIT_LIST, result.data.results)
-            dispatch(GET_LISTS_NGAY_LE, {
+            dispatch(GET_RELATED_INFORMATION_LIST_TO_CATEGORY, {
               slug: `category-related-${result.data.results.related_category}`,
             })
           },
@@ -53,7 +53,7 @@ export default {
           }, routeParams)
       }
     },
-    [GET_LIST_NGAY_LE]({ commit, }, routeParams) {
+    [GET_RELATED_INFORMATION_LIST_TO_CATEGORY]({ commit, }, routeParams) {
       let page = 1
       let params = { limit: 7, page: page, ...routeParams, }
       apiGetListsToCategory((result) => {

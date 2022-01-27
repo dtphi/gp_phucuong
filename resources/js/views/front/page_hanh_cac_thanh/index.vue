@@ -1,11 +1,10 @@
 <template>
-  <main id="video" class="py-2">
+  <main id="videdo" class="py-2">
     <div class="container">
       <main-menu></main-menu>
       <div
         style="background-color: #80808008"
-        :style="{ backgroundColor: contentBgColor }"
-      >
+        :style="{ backgroundColor: contentBgColor }">
         <content-top v-if="_isContentTop">
           <template v-if="loading">
             <loading-over-lay
@@ -13,7 +12,6 @@
               :is-full-page="fullPage"
             ></loading-over-lay>
           </template>
-          <!-- hien thong tin -->
           <div class="list-videos">
             <the-list-category-news-item
               class="info-list"
@@ -32,9 +30,6 @@
           <paginate></paginate>
           <template #column_right>
             <social-network></social-network>
-            <!--<div class="box-social">
-                <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
-            </div>-->
             <div class="box-care mt-3">
               <b-row class="mt-3">
                 <b-col cols="12" class="m-auto">
@@ -67,7 +62,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, } from 'vuex'
+import { mapActions, mapState} from 'vuex'
 import MainMenu from 'com@front/Common/MainMenu'
 import TheListCategoryNewsItem from './components/TheListCategoryNewsItem'
 import Paginate from 'com@front/Pagination'
@@ -79,13 +74,12 @@ import ContentTop from 'com@front/Common/ContentTop'
 import SocialNetwork from 'com@front/Common/SocialNetwork'
 
 export default {
-  name: 'InfoListtoCategory',
+  name : 'InfoListtoHanh',
   components: {
     MainMenu,
     ContentTop,
     MainContent,
     ContentBottom,
-    TheListCategoryNewsItem,
     Paginate,
     SocialNetwork,
   },
@@ -114,19 +108,18 @@ export default {
     },
   },
   mounted() {
-    this.getListNgayLe({
+    this.getInfoListToHanh({
       ...this.$route.params,
       renderType: 1,
     })
   },
   methods: {
     ...mapActions(MODULE_NGAY_LE, {
-      getListNgayLe: GET_LIST_NGAY_LE,
+      getInfoListToHanh: GET_LIST_NGAY_LE,
     }),
   },
 }
 </script>
 
-<style lang="scss">
-@import "./category-news-styles.scss";
+<style>
 </style>

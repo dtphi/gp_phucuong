@@ -1,6 +1,6 @@
 import detail from './detail'
 import { apiGetListsToCategory, apiGetVideoListsToCategory, apiGetPopularList, apiGetLastedList,
-} from '@app/api/front/HanhCacThanh'
+} from '@app/api/front/infos'
 import { INIT_LIST, INIT_INFO_LASTED_LIST, INIT_INFO_POPULAR_LIST, SET_ERROR,
 } from '@app/stores/front/types/mutation-types'
 import { GET_LIST_NGAY_LE, GET_POPULAR_INFORMATION_LIST_TO_CATEGORY,
@@ -146,7 +146,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_NGAY_LE,
+              name: MODULE_INFO,
               actionList: GET_LIST_NGAY_LE,
               params: params,
             },
@@ -171,7 +171,7 @@ export default {
           }
           var configs = {
             moduleActive: {
-              name: MODULE_NGAY_LE,
+              name: MODULE_INFO,
               actionList: GET_LIST_NGAY_LE,
               params: params,
             },
