@@ -14,6 +14,15 @@ class GiaoXuResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $json = [];
+
+        $res = $this->resource;
+        if ($res) {
+            $json = parent::toArray($request);
+            $json = array_merge($json, [
+                'thuyen_chuyens' => $res->arr_thuyen_chuyen_list,
+            ]);
+        }
+        return $json;
     }
 }

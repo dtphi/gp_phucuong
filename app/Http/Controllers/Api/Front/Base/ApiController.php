@@ -532,9 +532,9 @@ class ApiController extends Controller
 				$duong_nhiem = [];
 				foreach($info->linhmucthuyenchuyens as $key => $value) {
 					$duong_nhiem[] = [
-						'ten_duong_nhiem' => $value->linhMuc->ten,
+						'ten_duong_nhiem' => isset($value->linhMuc) ? $value->linhMuc->ten : "Chưa cập nhật",
 						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
-						'chuc_vu' => $value->chucVu->name,
+						'chuc_vu' => isset($value->chucVu) ? $value->chucVu->name : "Chưa cập nhật",
 					];
 				}
 				$results[] = [

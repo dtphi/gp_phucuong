@@ -7,6 +7,11 @@
       <li class="active">
         <a href="#tab-giao-hat-xu" data-toggle="tab">Giáo Xứ</a>
       </li>
+      <li>
+        <a href="#tab-thuyen-chuyen" data-toggle="tab">{{
+          $options.setting.tab_thuyen_chuyen_title
+        }}</a>
+      </li>
     </ul>
     <!-- Tab General -->
     <div class="tab-content">
@@ -20,6 +25,13 @@
           :mmPath="imgSelected"
         ></tab-general>
       </div>
+      <div class="tab-pane" id="tab-thuyen-chuyen">
+        <tab-thuyen-chuyen
+          role="tabpanel"
+          class="tab-pane"
+          :group-data="info"
+        ></tab-thuyen-chuyen>
+      </div>
     </div>
   </form>
 </template>
@@ -28,6 +40,8 @@
 import { mapState, mapGetters, mapActions, } from 'vuex'
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
 import TabGeneral from './edits/TabGeneral'
+import TabThuyenChuyen from './edits/TabThuyenChuyen'
+
 import {
   ACTION_SET_LOADING,
   ACTION_UPDATE_INFO,
@@ -39,6 +53,7 @@ export default {
   name: 'FormGiaoXuEdit',
   components: {
     TabGeneral,
+    TabThuyenChuyen
   },
   data() {
     const mm = new MM({

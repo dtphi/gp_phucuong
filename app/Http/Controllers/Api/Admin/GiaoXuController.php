@@ -249,7 +249,7 @@ class GiaoXuController extends ApiController
         return $this->respondBadRequest();
     }
 
-    public function listGiaoHats(Request $request) {
+    public function listGiaoHats(GiaoXuRequest $request) {
         try {
             $results = [];
             $collections = $this->gxSv->apiGetListGiaoHat();
@@ -276,7 +276,7 @@ class GiaoXuController extends ApiController
         return $this->respondWithCollectionPagination($json);
     }
 
-    public function listGiaoXuByIdGiaoHat(Request $request, $id = null) {
+    public function listGiaoXuByIdGiaoHat(GiaoXuRequest $request, $id = null) {
         $page = 1;
         if ($request->query('page')) {
             $page = $request->query('page');
