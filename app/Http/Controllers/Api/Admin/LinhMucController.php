@@ -207,18 +207,24 @@ class LinhMucController extends ApiController
 					} catch (HandlerMsgCommon $e) {
 							throw $e->render();
 					}
+				}elseif($action == 'update.active.thuyen.chuyen'){
+					try {
+						  $json = $this->linhMucSv->apiUpdateActiveThuyenChuyen($data['lm_thuyen_chuyen']);
+					} catch (HandlerMsgCommon $e) {
+							throw $e->render();
+					}
+					return $json;
+			} else {
+					try {
+						$model = $this->linhMucSv->apiGetDetail($id);
+
+				} catch (HandlerMsgCommon $e) {
+						Log::debug('User not found, Request ID = ' . $id);
+
+						throw $e->render();
 				}
-
-        try {
-            $model = $this->linhMucSv->apiGetDetail($id);
-
-        } catch (HandlerMsgCommon $e) {
-            Log::debug('User not found, Request ID = ' . $id);
-
-            throw $e->render();
-        }
-
-        return $this->__handleStoreUpdate($model, $request);
+				return $this->__handleStoreUpdate($model, $request);
+			}
     }
 
     /**
@@ -264,7 +270,6 @@ class LinhMucController extends ApiController
     private function __handleStoreUpdate(&$model, &$request)
     {
         $formData = $request->all();
-
         if ($result = $this->linhMucSv->apiUpdate($model, $formData)) {
             return $this->respondUpdated($result);
         }
@@ -346,7 +351,6 @@ class LinhMucController extends ApiController
             $collections[] = [
                 'id'   => $value->id,
                 'name' => $value->name,
-                'type' => $value->type_giao_xu
             ];
         }
 

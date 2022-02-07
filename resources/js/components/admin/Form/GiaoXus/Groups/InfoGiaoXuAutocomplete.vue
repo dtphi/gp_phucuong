@@ -2,7 +2,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">
       <span data-toggle="tooltip" data-original-title="(Tự động hoàn toàn)"
-        >Chức vụ</span
+        >Giáo xứ</span
       >
     </label>
     <div class="col-sm-10" id="cms-scroll-dropdown">
@@ -11,11 +11,11 @@
         v-on:focus="_focusParentCategory"
         :value="name"
         type="text"
-        name="category"
-        placeholder="Chọn chức vụ"
+        name="giao_xu_name"
+        placeholder="Chọn giáo xứ"
         class="form-control"
       />
-			<input
+      <input
         autocomplete="off"
         @keyup="_keyUpName"
         v-model="searchName"
@@ -28,7 +28,7 @@
       </span>
       <ul v-show="!isSearch" class="dropdown-menu cms-ul-cate-dropdown">
         <li
-          v-for="(item, idx) in _chucVus"
+          v-for="(item, idx) in _giaoxus"
           :key="idx"
           @click="_addInfoToCategory(item)"
         >
@@ -44,7 +44,7 @@ import { mapState, mapActions, } from 'vuex'
 import { MODULE_MODULE_LINH_MUC, } from 'store@admin/types/module-types'
 
 export default {
-  name: 'InfoChucVuAutocomplete',
+  name: 'GiaoXuAutocomplete',
   props: {
     name: {
       default: null,
@@ -54,34 +54,34 @@ export default {
     return {
       dropdownStyle: 'display: none;',
       isSearch: true,
-			searchName: '',
+      searchName: '',
     }
   },
   computed: {
     ...mapState(MODULE_MODULE_LINH_MUC, {
-      dropdowns: (state) => state.dropdownChucVus,
+      dropdowns: (state) => state.dropdownGiaoXus,
     }),
-    _chucVus() {
-			if (this.searchName) {
-					return _.filter(this.dropdowns,  (obj) => {
-							return obj.name.indexOf(this.searchName) !== -1
-					})
-			}
+    _giaoxus() {
+      if (this.searchName) {
+        return _.filter(this.dropdowns, (obj) => {
+          return obj.name.indexOf(this.searchName) !== -1
+        })
+      }
 
       return this.dropdowns
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC, ['ACTION_GET_DROPDOWN_CHUC_VU_LIST']),
+    ...mapActions(MODULE_MODULE_LINH_MUC, ['ACTION_GET_DROPDOWN_GIAO_XU_LIST']),
     _searchCategories() {
       const query = this.query
       if (query && query.length) {
-        this.ACTION_GET_DROPDOWN_CHUC_VU_LIST(query)
+        this.ACTION_GET_DROPDOWN_GIAO_XU_LIST(query)
       }
     },
     _focusParentCategory() {
       if (this.dropdowns.length == 0) {
-        this.ACTION_GET_DROPDOWN_CHUC_VU_LIST('')
+        this.ACTION_GET_DROPDOWN_GIAO_XU_LIST('')
       }
     },
     _closeDropdown() {
@@ -89,12 +89,12 @@ export default {
       this._focusParentCategory()
     },
     _addInfoToCategory(infoCategory) {
-      this.$emit('on-select-chuc-vu', infoCategory)
+      this.$emit('on-select-giao-xu', infoCategory)
       this._closeDropdown()
     },
-		_keyUpName(evt) {
-				this.$data.searchName = evt.target.value
-		}
+    _keyUpName(evt) {
+      this.$data.searchName = evt.target.value
+    },
   },
 }
 </script>
