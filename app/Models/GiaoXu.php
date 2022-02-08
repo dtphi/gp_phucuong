@@ -91,6 +91,7 @@ class GiaoXu extends BaseModel
                     'quoc_gia' => $thuyenChuyen->quoc_gia,
                     'ghi_chu' => $thuyenChuyen->ghi_chu,
                     'active' => $thuyenChuyen->active,
+										'chuc_vu_active' => $thuyenChuyen->chuc_vu_active,
                 ];
             }
         }
