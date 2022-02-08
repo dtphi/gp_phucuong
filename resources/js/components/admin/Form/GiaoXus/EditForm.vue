@@ -5,7 +5,7 @@
             :is-full-page="fullPage"></loading-over-lay>-->
     <ul class="nav nav-tabs">
       <li class="active">
-        <a href="#tab-giao-hat-xu" data-toggle="tab">Giáo Xứ</a>
+        <a href="#tab-general" data-toggle="tab">Giáo Xứ</a>
       </li>
       <li>
         <a href="#tab-thuyen-chuyen" data-toggle="tab">{{
