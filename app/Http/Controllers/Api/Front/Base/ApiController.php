@@ -17,6 +17,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Api\Front\Services\Service;
 use App\Http\Controllers\Api\Front\Services\SettingService;
 use App\Models\Albums;
+use App\Models\Linhmuc;
 use GrahamCampbell\ResultType\Result;
 
 class ApiController extends Controller
@@ -579,7 +580,7 @@ class ApiController extends Controller
 		$emptyItem = null;
 
 		$linhMucTienNhiem = [];
-		$linhMucChanhXu = $this->sv->apiGetLinhMucChanhXuByGiaoXuId($giaoXuId);
+		$linhMucChanhXus = $this->sv->apiGetLinhMucChanhXuByGiaoXuId($giaoXuId);
 		$linhMucPhoXus = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
 		$arrLmIds = [];
 		foreach ($linhMucs as $linhMuc) {
@@ -594,16 +595,18 @@ class ApiController extends Controller
 		if (empty($linhMucTienNhiem))
 			$linhMucTienNhiem = ['Chưa cập nhật'];
 
-		$imgChanhXu = '';
-		$nameChanhXu = '';
-		$fromDateChanhXu = $emptyStr;
-		$emailChanhXu = $emptyStr;
-		if ($linhMucChanhXu) {
-			$nameChanhXu = isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.' - '.$linhMucChanhXu->ten_linh_muc:$emptyStr;
-			$imgChanhXu = isset($linhMucChanhXu->linhMuc->image) ? url($linhMucChanhXu->linhMuc->image) : url('images/linh-muc.jpg');
-			$fromDateChanhXu = isset($linhMucChanhXu->from_date) ? \Carbon\Carbon::parse($linhMucChanhXu->from_date)->format('d-m-Y') : $emptyStr;
-			$emailChanhXu = isset($linhMucChanhXu->email) ? $linhMucChanhXu->email : $emptyStr;
+		$arr_chanh_xu = [];
+		if ($linhMucChanhXus) {
+			foreach($linhMucChanhXus as $linhMucChanhXu) {
+				$arr_chanh_xu[] = [
+					'chanh_xu' => isset($linhMucChanhXu->ten_thanh)?$linhMucChanhXu->ten_thanh.' - '.$linhMucChanhXu->ten_linh_muc:$emptyStr,
+					'img_chanh_xu' => isset($linhMucChanhXu->linhMuc->image) ? url($linhMucChanhXu->linhMuc->image) : url('images/linh-muc.jpg'),
+					'email_chanh' => isset($linhMucChanhXu->email) ? $linhMucChanhXu->email : $emptyStr,
+					'from_date_chanh' => isset($linhMucChanhXu->from_date) ? \Carbon\Carbon::parse($linhMucChanhXu->from_date)->format('d-m-Y') : $emptyStr,
+				];
+			}
 		}
+
 		$arr_pho_xu = [];
 		if ($linhMucPhoXus){
 			foreach($linhMucPhoXus as $linhMucPhoXu) {
@@ -633,11 +636,8 @@ class ApiController extends Controller
 				'dien_thoai' => $info->dien_thoai ?? $emptyItem,
 				'email' => $info->email ?? $emptyItem,
 				'linh_muc_tien_nhiem' => implode('<br>', $linhMucTienNhiem),
-				'chanh_xu' => $nameChanhXu,
-				'img_chanh_xu' => $imgChanhXu,
+				'arr_chanh_xu' => $arr_chanh_xu,
 				'ngay_thanh_lap' => !empty($info->ngay_thanh_lap) ? $info->ngay_thanh_lap : $emptyItem,
-				'from_date_chanh' => $fromDateChanhXu,
-				'email_chanh' => $emailChanhXu,
 				'arr_pho_xu' => $arr_pho_xu,
 			];
 		}

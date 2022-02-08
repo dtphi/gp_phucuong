@@ -240,7 +240,7 @@ class Service implements BaseModel
 		$linhMuc = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
 		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', 1)
 		->orderByDesc('from_date')
-		->first();
+		->get();
 
 		return $linhMuc;
 	}
