@@ -31,7 +31,7 @@
             <img style="width: 100%; margin-bottom: 15px" :src="info.image" />
             <div class="row">
               <div class="col-lg-6 col-md-12 col-xs-12">
-                 <vue-timeline-update
+                 <vue-timeline-update v-for="(info, idx) in info.arr_chanh_xu" :key="idx + 'A'"
                   :date="new Date()"
                   dateString="#"
                   :category="`Linh mục chánh xứ`"
@@ -43,7 +43,7 @@
                     <h5>${info.email_chanh}</h5>
                   </div>`"
                   icon="account_circle"
-                /> <!-- 259, 310 -->
+                /> 
                 <vue-timeline-update v-for="(info, idx) in info.arr_pho_xu" :key="idx"
                   :date="new Date()"
                   dateString="-"
