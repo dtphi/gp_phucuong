@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class GiaoXuResource extends JsonResource
 {
+	  public static $wrap = 'giaoxu';
     /**
      * Transform the resource into an array.
      *
