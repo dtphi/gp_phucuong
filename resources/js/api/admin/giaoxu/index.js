@@ -149,7 +149,29 @@ export const apiDeleteInfo = (infoId, resolve, errResole) => {
     .catch(errors => errResole(errors))
 }
 
-export const apiGetInfoGiaoHat = (resolve, errResole) => {
+export const apiGetGiaoXuByIdGiaohat = (resolve, errResole, infoId) => {
+  return axios.get(fn_get_base_api_detail_url(API_GIAO_XUS_BY_ID_GIAO_HAT, infoId))
+    .then((response) => {
+      if (response.status === 200) {
+        var json = {}
+        json['data'] = response.data.data
+        json['status'] = 1000
+        resolve(json)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => {
+      if (errors.response) {
+        errResole(errors)
+      }
+    })
+}
+
+export const apiGetGiaoHatInfos = (resolve, errResole) => {
   return axios.get(fn_get_base_api_url(API_GIAO_HATS_BY_GIAO_XUS_RESOURCE))
     .then((response) => {
       if (response.status === 200) {
@@ -172,27 +194,5 @@ export const apiGetInfoGiaoHat = (resolve, errResole) => {
         }])
       }
 
-    })
-} 
-
-export const apiGetGiaoXuByIdGiaohat = (resolve, errResole, infoId) => {
-  return axios.get(fn_get_base_api_detail_url(API_GIAO_XUS_BY_ID_GIAO_HAT, infoId))
-    .then((response) => {
-      if (response.status === 200) {
-        var json = {}
-        json['data'] = response.data.data
-        json['status'] = 1000
-        resolve(json)
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test',
-        }])
-      }
-    })
-    .catch(errors => {
-      if (errors.response) {
-        errResole(errors)
-      }
     })
 }
