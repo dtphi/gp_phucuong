@@ -1,6 +1,5 @@
 import AppConfig from 'api@admin/constants/app-config'
-import { apiGetInfoGiaoXuById, apiUpdateInfo, } from 'api@admin/giaoxu'
-import { apiGetGiaoHatInfos, } from 'api@admin/giaohat'
+import { apiGetInfoGiaoXuById, apiUpdateInfo, apiGetGiaoHatInfos} from 'api@admin/giaoxu'
 import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_FAILED,
@@ -155,19 +154,6 @@ export default {
   },
 
   actions: {
-    // GET LIST GIAO HAT
-    ACTION_GET_LIST_GIAO_HAT({ commit, }, params) {
-      apiGetGiaoHatInfos(
-        (infos) => {
-          commit('INFO_GIAO_HAT', infos.data.results)
-        },
-        (errors) => {
-          commit(SET_ERROR, errors)
-        },
-        params
-      )
-    },
-
     [ACTION_SHOW_MODAL_EDIT]({ dispatch, }, infoId) {
       dispatch(ACTION_GET_INFO_BY_ID, infoId)
     },
@@ -179,7 +165,7 @@ export default {
         infoId,
         (result) => {
           commit(INFOS_MODAL_SET_INFO_ID, infoId)
-          commit(INFOS_MODAL_SET_INFO, result.data.data)
+          commit(INFOS_MODAL_SET_INFO, result.data.giaoxu)
           dispatch(ACTION_SET_LOADING, false)
         },
         (errors) => {

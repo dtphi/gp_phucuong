@@ -298,7 +298,7 @@ class GiaoXuController extends ApiController
                     'name'           => $info->giaoXu->name,
                     'dia_chi'         => $info->giaoXu->dia_chi,
                     'dien_thoai'          => $info->giaoXu->dien_thoai,
-					'image'      => $info->giaoXu->image,
+										'image'      => $info->giaoXu->image,
                     'imgThum'    => url($this->getThumbnail($staticImgThum, 0, 40)),
                     'email'    => $info->giaoXu->email,
                     'active'     => $info->giaoXu->active,

@@ -4,7 +4,7 @@ import {
   apiGetInfoGiaoXuById,
   apiGetGiaoXuInfos,
   apiDeleteInfo,
-  apiGetInfoGiaoHat,
+  apiGetGiaoHatInfos,
   apiGetGiaoXuByIdGiaohat,
 } from 'api@admin/giaoxu'
 import { MODULE_MODULE_GIAO_XU, } from '../types/module-types'
@@ -166,7 +166,7 @@ export default {
     },
 
     [ACTION_GET_LIST_GIAO_HAT] ({commit}) {
-      apiGetInfoGiaoHat(
+      apiGetGiaoHatInfos(
       (response) => {
         commit('GIAO_HAT_LISTS', response.data.results)
         commit(INFOS_GET_INFO_LIST_SUCCESS, true)
