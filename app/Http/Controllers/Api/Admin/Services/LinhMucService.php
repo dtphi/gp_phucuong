@@ -501,10 +501,10 @@ final class LinhMucService implements BaseModel, LinhMucModel
 			
 			$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($id_thuyen_chuyen);
 
-			if($this->modelThuyenChuyen->active == 1) {
-				$this->modelThuyenChuyen->active = 0;
+			if($this->modelThuyenChuyen->chuc_vu_active == 1) {
+				$this->modelThuyenChuyen->chuc_vu_active = 0;
 			}else {
-				$this->modelThuyenChuyen->active = 1;
+				$this->modelThuyenChuyen->chuc_vu_active = 1;
 			}
 
 			DB::beginTransaction();

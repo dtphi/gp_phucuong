@@ -54,6 +54,7 @@ class Linhmuc extends BaseModel
         'update_user',
         'is_duc_cha',
         'code',
+				'chuc_vu_active',
         'phone',
         'email',
         'password',
@@ -252,6 +253,7 @@ class Linhmuc extends BaseModel
                     'quoc_gia' => $thuyenChuyen->quoc_gia,
                     'ghi_chu' => $thuyenChuyen->ghi_chu,
                     'active' => $thuyenChuyen->active,
+										'chuc_vu_active' => $thuyenChuyen->chuc_vu_active,
                 ];
             }
         }
