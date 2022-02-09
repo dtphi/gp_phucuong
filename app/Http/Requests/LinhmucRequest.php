@@ -192,7 +192,6 @@ class LinhmucRequest extends BaseRequest
                     'du_hoc'              => $thuyenChuyen['du_hoc'],
                     'quoc_gia'            => $thuyenChuyen['quoc_gia'],
                     'active'              => $thuyenChuyen['active'],
-										'chuc_vu_active'      => $thuyenChuyen['chuc_vu_active'],
                     'ghi_chu'             => $thuyenChuyen['ghi_chu']
                 ];
             }

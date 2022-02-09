@@ -19,7 +19,7 @@
       <td class="text-center">
 				<toggle-button
 									class="switch-btn-center"
-									v-if="item.active == 1"
+									v-if="item.chuc_vu_active == 1"
 									:value="switchValue"
 									@change="_changeActiveThuyenChuyen($event, item)"
 								/>
