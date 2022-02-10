@@ -4,6 +4,7 @@ import {
 } from '@app/api/utils/fn-helper'
 import {
   API_LINH_MUCS_RESOURCE,
+	API_LM_THUYEN_CHUYENS_RESOURCE,
 } from 'store@admin/types/api-paths'
 
 export const apiGetDropdownCategories = (resolve, errResole, params) => {
@@ -161,3 +162,27 @@ export const apiDeleteInfo = (infoId, resolve, errResole) => {
     })
     .catch(errors => errResole(errors))
 }
+
+export const apiGetThuyenChuyenById = (infoId, resolve, errResole) => {
+  return axios.get(fn_get_base_api_detail_url(API_LM_THUYEN_CHUYENS_RESOURCE, infoId))
+    .then((response) => {
+      if (response.status === 200) {
+        var json = {}
+        json['data'] = response.data.data
+        json['status'] = 1000
+        resolve(json)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => {
+      if (errors.response) {
+        errResole(errors)
+      }
+    })
+}
+
+

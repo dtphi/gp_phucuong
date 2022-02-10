@@ -72,6 +72,11 @@ export default {
       this.checkAllThuyenChuyen(event.target.checked)
     },
   },
+	mounted() {
+		setTimeout(() => {
+			console.log(this.lists, 'ìno')
+		}, 3000)
+	},
   setting: {
     info_action_title: 'Thực hiện',
   },

@@ -515,5 +515,13 @@ final class LinhMucService implements BaseModel, LinhMucModel
 			DB::commit();
 
 			return $this->modelThuyenChuyen;
-	}
+		}
+
+		public function apiGetThuyenChuyen($infoId){
+			$query = $this->modelThuyenChuyen->select()
+			->where('linh_muc_id', $infoId)
+			->get();
+
+			return $query;
+		}
 }

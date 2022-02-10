@@ -1,6 +1,6 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { v4 as uuidv4, } from 'uuid'
-import { apiUpdateInfo, apiGetInfoById} from 'api@admin/linhmuc'
+import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById} from 'api@admin/linhmuc'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -71,6 +71,7 @@ const defaultState = () => {
       lm_thuyen_chuyens: [],
       action: '',
     },
+		arr_thuyen_chuyens: [],
     thuyenChuyen: null,
     isImgChange: true,
     loading: false,
@@ -101,6 +102,9 @@ export default {
     getInfoField(state) {
       return getField(state.info)
     },
+		arr_thuyen_chuyens(state) {
+			return state.arr_thuyen_chuyens
+		}
   },
 
   mutations: {
@@ -243,6 +247,9 @@ export default {
     updateInfoField(state, field) {
       return updateField(state.info, field)
     },
+		set_info_thuyen_chuyens(state, payload) {
+			return state.arr_thuyen_chuyens = payload
+		}
   },
 
   actions: {
@@ -686,6 +693,18 @@ export default {
         }
       )
     },
+		ACTION_GET_INFO_THUYEN_CHUYEN({dispatch, commit}, infoId) {
+      apiGetThuyenChuyenById(
+        infoId,
+        (response) => {
+          commit('set_info_thuyen_chuyens', response.data.results)
+        },
+        (errors) => {
+          commit(SET_ERROR, Object.values(errors))
+        }
+      )
+		},
+
     [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
       commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values)
     },
