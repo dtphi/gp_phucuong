@@ -31,9 +31,6 @@
           <paginate></paginate>
           <template #column_right>
             <social-network></social-network>
-            <!--<div class="box-social">
-                <tab-info-viewed-and-popular></tab-info-viewed-and-popular>
-            </div>-->
             <div class="box-care mt-3">
               <b-row class="mt-3">
                 <b-col cols="12" class="m-auto">

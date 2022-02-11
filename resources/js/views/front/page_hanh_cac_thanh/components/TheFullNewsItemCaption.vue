@@ -20,8 +20,8 @@ import {
 } from '@app/api/utils/fn-helper'
 
 export default {
-  name: 'TheCategoryNewsItem',
-  props: {
+    name: 'TheCategoryNewsItem',
+    props: {
     info: {},
   },
   data() {
@@ -38,3 +38,7 @@ export default {
   },
 }
 </script>
+
+<style>
+
+</style>
