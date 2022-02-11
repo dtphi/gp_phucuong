@@ -125,9 +125,15 @@ class GiaoXuRequest extends BaseRequest
      * @return array
      */
     public function rules()
-    {
-        return [
-            //
-        ];
+    { 
+        if ($this->isMethod('get'))
+            return [];
+        if(empty($this->get('action'))) {
+            return [
+                'ten'                 => 'max:50'
+            ];
+        }
+
+        return [];
     }
 }

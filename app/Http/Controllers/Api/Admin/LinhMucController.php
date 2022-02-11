@@ -162,7 +162,6 @@ class LinhMucController extends ApiController
     {
         $data = $request->all();
         $action = $request->get('action');
-
         if ($action == 'create.update.bang.cap.db') {
             try {
                 $json = $this->linhMucSv->apiUpdateBangCap($data);
@@ -214,6 +213,13 @@ class LinhMucController extends ApiController
 							throw $e->render();
 					}
 					return $json;
+			}elseif($action == 'addThuyenChuyen') {
+				try {
+					$json = $this->linhMucSv->apiAddThuyenChuyen($data);
+				} catch (HandlerMsgCommon $e) {
+						throw $e->render();
+				}
+				return $json;
 			} else {
 					try {
 						$model = $this->linhMucSv->apiGetDetail($id);
@@ -455,8 +461,10 @@ class LinhMucController extends ApiController
 					foreach ($collections as $key => $info) {
 							$results[] = [
 									'id' => (int)$info->id,
-									'linh_muc_url' => url('admin/linh-mucs/edit/' . $info->linh_muc_id),
-									'ten_linh_muc' => $info->ten_linh_muc,
+									'isCheck' => false,
+                  'isEdit' => 1,
+									'from_date' => $info->from_date,		
+									'to_date' => $info->to_date,
 									'fromGiaoXuName'      => $info->ten_from_giao_xu,
 									'fromchucvuName' => $info->ten_from_chuc_vu,
 									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"d-m-Y"):'',
@@ -479,7 +487,8 @@ class LinhMucController extends ApiController
 				} catch (HandlerMsgCommon $e) {
 						throw $e->render();
 				}
-
+				dd($results, 'test');
+				
 				$json = [
 						'data' => [
 								'results' => $results,

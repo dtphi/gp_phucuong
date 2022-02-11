@@ -162,6 +162,9 @@ export default {
     update_thuyen_chuyen_remove(state, payload) {
       state.info.thuyen_chuyens = payload
     },
+		update_arr_thuyen_chuyens(state, payload) {
+			state.arr_thuyen_chuyens = payload
+		},
     update_van_thu(state, payload) {
       state.info.van_thus.push(payload)
     },
@@ -456,12 +459,10 @@ export default {
       })
     },
     addThuyenChuyen({ dispatch, commit, state, }, params) {
-      if (
-        fnCheckProp(params, 'action') &&
-                fnCheckProp(params, 'info') &&
-                params.action === 'create.update.thuyen.chuyen.db'
+			console.log(params, 'params')
+      if (fnCheckProp(params, 'action') && params.action == 'addThuyenChuyen'
       ) {
-        let thuyenChuyen = params.info
+        let thuyenChuyen = params.data
         dispatch(ACTION_SET_LOADING, true)
         //implement
         thuyenChuyen['linhMucId'] = state.info.id
@@ -469,7 +470,8 @@ export default {
         apiUpdateInfo(
           thuyenChuyen,
           (result) => {
-            commit('update_thuyen_chuyen_remove', result.data.data.results)
+						console.log(result, 'results')
+            // commit('update_arr_thuyen_chuyens', result.data.data.results)
             commit(SET_ERROR, [])
             commit(
               INFOS_MODAL_INSERT_INFO_SUCCESS,

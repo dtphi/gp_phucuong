@@ -90,6 +90,7 @@
           role="tabpanel"
           class="tab-pane"
           :group-data="info"
+					:type-chuc-vu="$options.setting.typeThuyenChuyen"
         ></tab-thuyen-chuyen>
       </div>
       <div class="tab-pane" id="tab-bo-nhiem-khac" v-if="currentTab == 'bo_nhiem_khac'">
