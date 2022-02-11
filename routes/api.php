@@ -32,7 +32,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::get('/app/info/get-special-information', 'NewsController@showSpecialModuleList');
     Route::get('/app/get-data-module', 'ModuleController@showDataList');
     Route::get('/app/get-data-giao-xu', 'Base\ApiController@getGiaoXuList');
-    Route::get('/app/get-data-hanh', 'Base\ApiController@getNgayLeList');
+    Route::get('/app/get-data-hanh', 'Base\ApiController@getNgayLeList');// change
     Route::get('/app/get-data-giao-phan', 'Base\ApiController@getGiaoPhanList');
     Route::post('/app/get-data-giao-hat', 'Base\ApiController@getGiaoHatList');
     Route::post('/app/get-data-giao-xu-by-id', 'Base\ApiController@getGiaoXuListById');
