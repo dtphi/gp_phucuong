@@ -617,49 +617,4 @@ class NewsController extends Controller
             'results' => $json['results']
         ]);
     }
-
-    public function indexNgayLe(Request $request)
-    {
-       
-        $data = $request->all();
-        $page = 1;
-        if ($request->query('page')) {
-            $page = $request->query('page');
-        }
-        try {
-
-            $limit       = $this->_getPerPage();
-            $collections = $this->ngayLeSv->apiGetList($data, $limit);
-            $pagination  = $this->_getTextPagination($collections);
-            $results = [];
-            foreach ($collections as $key => $info) {
-                $results[] = [
-                    'id' => (int)$info->id,
-                    'ten_le'     => $info->ten_le,
-                    'hanh' => $info->hanh,
-                ];
-            }
-        } catch (HandlerMsgCommon $e) {
-            throw $e->render();
-        }
-
-        $json = [
-            'data' => [
-                'results'    => $results,
-                'pagination' => $pagination,
-                'page'       => $page
-            ]
-        ];
-        return $this->respondWithCollectionPagination($json);
-        
-        $id =null;
-        try {
-            $json = $this->ngayLeSv->apiGetResourceDetail($id);
-        } catch (HandlerMsgCommon $e) {
-            throw $e->render();
-        }
-
-        return $json;
-
-    }
 }

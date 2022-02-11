@@ -29,7 +29,6 @@ export default {
     'column-left': () => import('com@front/Common/ColumnLeft'),
   },
   data() {
-    console.log(this.$route);
     return {
       contentType: 'top',
     }
@@ -62,8 +61,5 @@ export default {
       return false
     },
   },
-  mounted() {
-    console.log(this.$route.meta.layout_content);
-  }
 }
 </script>
