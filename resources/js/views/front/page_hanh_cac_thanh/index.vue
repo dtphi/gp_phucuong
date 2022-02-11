@@ -4,7 +4,8 @@
       <main-menu></main-menu>
       <div
         style="background-color: #80808008"
-        :style="{ backgroundColor: contentBgColor }">
+        :style="{ backgroundColor: contentBgColor }"
+      >
         <content-top v-if="_isContentTop">
           <template v-if="loading">
             <loading-over-lay
@@ -19,13 +20,6 @@
               :info="item"
               :key="idx"
             ></the-list-category-news-item>
-            <template v-if="infoList.length == 0">
-              <div
-                style="text-align: center; font-size: 30px; color: #f0f8ffc7"
-              >
-                Nội Dung Danh Mục Chưa Có Thông Tin
-              </div>
-            </template>
           </div>
           <paginate></paginate>
           <template #column_right>
@@ -62,19 +56,19 @@
 </template>
 
 <script>
-import { mapActions, mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import MainMenu from 'com@front/Common/MainMenu'
 import TheListCategoryNewsItem from './components/TheListCategoryNewsItem'
 import Paginate from 'com@front/Pagination'
-import { MODULE_NGAY_LE, } from '@app/stores/front/types/module-types'
-import { GET_LIST_NGAY_LE, } from '@app/stores/front/types/action-types'
+import { MODULE_HANH_CAC_THANH } from '@app/stores/front/types/module-types'
+import { GET_LISTS } from '@app/stores/front/types/action-types'
 import MainContent from 'com@front/Common/MainContent'
 import ContentBottom from 'com@front/Common/ContentBottom'
 import ContentTop from 'com@front/Common/ContentTop'
 import SocialNetwork from 'com@front/Common/SocialNetwork'
 
 export default {
-  name : 'InfoListtoHanh',
+  name: 'InfoListtoHanh',
   components: {
     MainMenu,
     ContentTop,
@@ -82,6 +76,7 @@ export default {
     ContentBottom,
     Paginate,
     SocialNetwork,
+    TheListCategoryNewsItem,
   },
   data() {
     return {
@@ -91,11 +86,11 @@ export default {
   },
   computed: {
     ...mapState({
-      contentBgColor: state => state.cfApp.setting.contentBgColor,
+      contentBgColor: (state) => state.cfApp.setting.contentBgColor,
     }),
-    ...mapState(MODULE_NGAY_LE, {
-      infoList: state => state.pageLists,
-      loading: state => state.loading,
+    ...mapState(MODULE_HANH_CAC_THANH, {
+      infoList: (state) => state.pageLists,
+      loading: (state) => state.loading,
     }),
     _isContentTop() {
       return this.$route.meta.layout_content.content_top
@@ -114,8 +109,8 @@ export default {
     })
   },
   methods: {
-    ...mapActions(MODULE_NGAY_LE, {
-      getInfoListToHanh: GET_LIST_NGAY_LE,
+    ...mapActions(MODULE_HANH_CAC_THANH, {
+      getInfoListToHanh: GET_LISTS,
     }),
   },
 }

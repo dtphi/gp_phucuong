@@ -1,7 +1,7 @@
 <template>
   <figcaption class="figure-caption">
-    <!-- <h4 class="title mt-2 ellipsis-two-lines">
-      <a :href="_getHref()">{{ info.name }}</a>
+    <h4 class="title mt-2 ellipsis-two-lines">
+      <a>{{ info.name }}</a>
     </h4>
     <span class="d-block view-date"
       >{{ info.viewed }} lượt xem | {{ info.date_available }}</span
@@ -10,7 +10,7 @@
       <div class="ellipsis-three-lines" v-html="info.description"></div>
     </span>
     <span class="d-block mb-1"></span>
-  </figcaption> -->
+  </figcaption>
 </template>
 
 <script>

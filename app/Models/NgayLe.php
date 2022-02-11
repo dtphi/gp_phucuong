@@ -11,6 +11,8 @@ class NgayLe extends BaseModel
      */
     protected $table = DB_PREFIX . 'ngay_les';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'code',
         'solar_day',

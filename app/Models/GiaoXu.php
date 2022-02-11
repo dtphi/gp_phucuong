@@ -111,7 +111,7 @@ class GiaoXu extends BaseModel
   }
 
   public function scopeName($query, $request) {
-      return  $query->where('name', 'LIKE', '%' . $request->input('query') . '%');   
+      return  $query->where('name', 'LIKE', '%' . $request->input('query') . '%');
   }
   
 }

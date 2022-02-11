@@ -26,17 +26,18 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::apiResource('/homes/get-list', 'HomeController');
     Route::get('/app/info/get-information-list', 'NewsController@list');
     Route::get('/app/info/get-information', 'NewsController@detail');
-    Route::get('/app/get-ngay-les', 'NewsController@indexNgayLe');
     Route::get('/app/info/get-latest-information', 'NewsController@showLastedList');
     Route::get('/app/info/get-popular-information', 'NewsController@showPopularList');
     Route::get('/app/info/get-related-information', 'NewsController@showRelatedList');
     Route::get('/app/info/get-special-information', 'NewsController@showSpecialModuleList');
     Route::get('/app/get-data-module', 'ModuleController@showDataList');
     Route::get('/app/get-data-giao-xu', 'Base\ApiController@getGiaoXuList');
+    Route::get('/app/get-data-hanh', 'Base\ApiController@getNgayLeList');// change
     Route::get('/app/get-data-giao-phan', 'Base\ApiController@getGiaoPhanList');
     Route::post('/app/get-data-giao-hat', 'Base\ApiController@getGiaoHatList');
     Route::post('/app/get-data-giao-xu-by-id', 'Base\ApiController@getGiaoXuListById');
     Route::get('/app/get-data-giao-xu/{id}', 'Base\ApiController@getGiaoXuDetail');
+    Route::post('/app/get-data-hanh-by-id', 'Base\ApiController@getNgayLeListById');
 		Route::get('/app/get-data-linh-muc', 'Base\ApiController@getLinhMucList');
     Route::get('/app/get-data-chuc-vu', 'Base\ApiController@getChucVuList');
     Route::post('/app/get-data-linh-muc-by-id', 'Base\ApiController@getLinhMucListById');

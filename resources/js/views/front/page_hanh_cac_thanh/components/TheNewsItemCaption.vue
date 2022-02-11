@@ -1,20 +1,16 @@
 <template>
   <figcaption class="figure-caption">
     <h4 class="title mt-2 ellipsis-two-lines">
-      <img :src="iconBook" alt="Icon" />
-      <a :href="_getHref()">{{ info.sort_name }}...</a>
+      <a>{{ info.ten_le }}...</a>
     </h4>
     <span class="d-block mb-1">
       <div
         class="ellipsis-three-lines"
-        v-html="info.sort_description.substring(0, 100)"
+        v-html="info.hanh.substring(0, 100)"
       ></div>
       <a :href="_getHref()">...</a>
     </span>
     <span class="d-block mb-1"></span>
-    <span class="d-block"
-      >{{ info.viewed }} lượt xem | {{ info.date_available }}</span
-    >
   </figcaption>
 </template>
 
@@ -40,13 +36,13 @@ export default {
     ...mapGetters(['iconBookUrl']),
   },
   methods: {
-    _getHref() {
-      if ((String(this.info['name_slug']) !== 'undefined') && (String(this.info['name_slug']).length > 5)) {
-        return fn_get_href_base_url(`tin-tuc/chi-tiet/${this.info.name_slug}`)
-      } else {
-        return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(this.info.name)}`)
-      }
-    },
+    // _getHref() {
+    //   if ((String(this.info['name_slug']) !== 'undefined') && (String(this.info['name_slug']).length > 5)) {
+    //     return fn_get_href_base_url(`tin-tuc/chi-tiet/${this.info.name_slug}`)
+    //   } else {
+    //     return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(this.info.name)}`)
+    //   }
+    // },
   },
 }
 </script>

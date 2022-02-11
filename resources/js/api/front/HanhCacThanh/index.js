@@ -1,19 +1,34 @@
 import {
-    fn_get_base_api_url,
-  } from '@app/api/utils/fn-helper'
-  import {
-    API_NGAYLE_DETAIL,
-    API_INFO_LIST,
-    API_INFO_GET_LASTED_LIST,
-    API_INFO_GET_POPULAR_LIST,
-    API_INFO_GET_RELATED_LIST,
-    API_INFO_GET_SPECIAL_MODULE_LIST,
-  } from 'store@front/types/api-paths'
-  
-  export const apiGetSpecialModuleList = (resolve, errResole, params) => {
-    return axios.get(fn_get_base_api_url(API_INFO_GET_SPECIAL_MODULE_LIST), {
-      params: params,
-    }).then((response) => {
+  fn_get_base_api_url,
+  fn_get_base_api_detail_url,
+} from '@app/api/utils/fn-helper'
+import {
+  API_HANH_CAC_THANH_LIST,
+  API_HANH_CAC_THANH_LIST_BY_ID,
+} from 'store@front/types/api-paths'
+
+export const apiGetLists = (resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_url(API_HANH_CAC_THANH_LIST), {
+    params: params,
+  }).then((response) => {
+    if (response.status === 200) {
+      resolve(response.data)
+      console.log(response)
+    } else {
+      errResole([{
+        status: response.status,
+        msg: 'error test',
+      }])
+    }
+  })
+    .catch(errors => errResole(errors))
+}
+
+export const apiGetDetail = (infoId, resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_detail_url(API_HANH_CAC_THANH_LIST_BY_ID, infoId), {
+    params: params,
+  })
+    .then((response) => {
       if (response.status === 200) {
         resolve(response.data)
       } else {
@@ -23,103 +38,33 @@ import {
         }])
       }
     })
-      .catch(errors => errResole(errors))
-  }
-  
-  export const apiGetPopularList = (resolve, errResole, params) => {
-    return axios.get(fn_get_base_api_url(API_INFO_GET_POPULAR_LIST), {
-      params: params,
-    }).then((response) => {
-      if (response.status === 200) {
-        resolve(response.data)
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test',
-        }])
-      }
-    })
-      .catch(errors => errResole(errors))
-  }
-  
-  export const apiGetRelatedList = (resolve, errResole, params) => {
-    return axios.get(fn_get_base_api_url(API_INFO_GET_RELATED_LIST), {
-      params: params,
-    }).then((response) => {
-      if (response.status === 200) {
-        resolve(response.data)
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test',
-        }])
-      }
-    })
-      .catch(errors => errResole(errors))
-  }
-  
-  export const apiGetLastedList = (resolve, errResole, params) => {
-    return axios.get(fn_get_base_api_url(API_INFO_GET_LASTED_LIST), {
-      params: params,
-    }).then((response) => {
-      if (response.status === 200) {
-        resolve(response.data)
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test',
-        }])
-      }
-    })
-      .catch(errors => errResole(errors))
-  }
-  
-  export const apiGetVideoListsToCategory = (resolve, errResole, params) => {
-    return axios.get(fn_get_base_api_url(API_INFO_LIST), {
-      params: params,
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          resolve(response.data)
-        } else {
-          errResole([{
-            status: response.status,
-            msg: 'error test',
-          }])
-        }
+    .catch(errors => errResole(errors))
+}
+
+export const apiGetListsHanhCacThanh = (resolve, errResole, options) => {
+  return axios.post(fn_get_base_api_url(API_HANH_CAC_THANH_LIST_BY_ID), {
+    params: options.params,
+    page: options.page,
+    query: options.query,
+  }).then((response) => {
+    if (response.status === 200) {
+      resolve({
+        data: response.data.data,
       })
-      .catch(errors => errResole(errors))
-  }
-  
-  export const apiGetListsToCategory = (resolve, errResole, params) => {
-  
-    return axios.get(fn_get_base_api_url(API_INFO_LIST), {
-      params: params,
-    }).then((response) => {
-      if (response.status === 200) {
-        resolve(response.data)
-      } else {
+    } else {
+      errResole([{
+        status: response.status,
+        msg: 'error test',
+      }])
+    }
+  })
+    .catch(errors => {
+      if (errors.response) {
         errResole([{
-          status: response.status,
-          msg: 'error test',
+          status: errors.response.status,
+          messageCommon: errors.response.data.message,
+          messages: errors.response.data.errors,
         }])
       }
     })
-      .catch(errors => errResole(errors))
-  }
-  
-  export const apiGetDetail = (infoId, resolve, errResole, params) => {
-    return axios.get(fn_get_base_api_url(API_NGAYLE_DETAIL), {
-      params: params,
-    }).then((response) => {
-      if (response.status === 200) {
-        resolve(response.data)
-      } else {
-        errResole([{
-          status: response.status,
-          msg: 'error test',
-        }])
-      }
-    })
-      .catch(errors => errResole(errors))
-  }
+}

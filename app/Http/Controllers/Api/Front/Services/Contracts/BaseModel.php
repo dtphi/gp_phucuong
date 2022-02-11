@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Front\Services\Contracts;
 
+use PhpParser\Node\Expr\FuncCall;
+
 interface BaseModel
 {
     /**
@@ -36,9 +38,11 @@ interface BaseModel
 
     public function apiGetInfoListByIds($data = array());
 
-    // public function apiGetListNgayLe($data = array(), $limit = 5);
+    public function apiGetNgayLeList($data = array(), $limit = 5);
 
     public function apiGetDetailNgayLe($id);
+
+    // public function getNgayLeListById($id =null);
 
     public function apiGetGiaoXuList($data = array(), $limit = 5);
 
