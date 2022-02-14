@@ -5,20 +5,19 @@
       class="table table-striped table-bordered table-hover">
       <thead>
         <tr>
-          <td>Từ giáo xứ</td>
-          <td>Từ ngày</td>
-          <td>Chức vụ</td>
-          <td>Đến giáo xứ</td>
-          <td>Ngày</td>
-          <td>Chức vụ</td>
-          <td>Đức Cha</td>
-          <td></td>
+          <td class="text-center">TT</td>
+          <td class="text-center">CHỨC VỤ</td>
+          <td class="text-center">ĐỊA ĐIỂM</td>
+          <td class="text-center">THỜI GIAN ĐẾN <br> (ngày tháng năm)</td>
+          <td class="text-center">THỜI GIAN ĐI <br> (ngày tháng năm)</td>
+          <td class="text-center">{{ $options.setting.info_action_title }}</td>
         </tr>
       </thead>
       <info-item
         v-for="(item, idx) in lists"
         :item="item"
         :key="idx"
+				:vitri="idx"
       ></info-item>
       <tfoot>
         <tr>
@@ -31,8 +30,6 @@
 </template>
 
 <script>
-import { mapActions, } from 'vuex'
-import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 import InfoItem from './InfoItem'
 
 export default {
@@ -45,17 +42,6 @@ export default {
       default: {},
     },
   },
-  methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['checkAllThuyenChuyen']),
-    _checkAllThuyenChuyen(event) {
-      this.checkAllThuyenChuyen(event.target.checked)
-    },
-  },
-	mounted() {
-		setTimeout(() => {
-			console.log(this.lists, 'ìno')
-		}, 3000)
-	},
   setting: {
     info_action_title: 'Thực hiện',
   },

@@ -439,7 +439,6 @@ final class LinhMucService implements BaseModel, LinhMucModel
 
     public function apiUpdateThuyenChuyen($data = []) 
     {
-				dd($data['id'], 'test');
         $hat = LinhMucThuyenChuyen::updateOrCreate(
             [
                 'id' => $data['id'], 
@@ -527,19 +526,17 @@ final class LinhMucService implements BaseModel, LinhMucModel
 		}
 
 		public function apiAddThuyenChuyen($data = []) 
-    {
+    {		
 				$hat = LinhMucThuyenChuyen::create(
 				[
-						'linh_muc_id' => $data['linhMucId']
-				],
-				[
+						'linh_muc_id' => $data['linhMucId'],
+						'giao_xu_id' => $data['giao_xu_id'],
+						'chuc_vu_id' => $data['chuc_vu_id'],
 						'from_giao_xu_id' => 0,
 						'from_chuc_vu_id' => 0,
 						'from_date' => $data['from_date'],
-						'duc_cha_id' => '',
 						'to_date' => $data['to_date'],
-						'chuc_vu_id' => $data['chuc_vu_id'],
-						'giao_xu_id' => $data['giao_xu_id'],
+						'duc_cha_id' => '',
 						'co_so_gp_id' => $data['co_so_gp_id'],
 						'dong_id' => $data['dong_id'],
 						'ban_chuyen_trach_id' => $data['ban_chuyen_trach_id'],

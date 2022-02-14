@@ -15,7 +15,8 @@ import {
   ACTION_SET_IMAGE,
   ACTION_GET_INFO_BY_ID,
   ACTION_RESET_NOTIFICATION_INFO,
-	ACTION_CHANGE_STATUS
+	ACTION_CHANGE_STATUS,
+	ACTION_DELETE_INFO_BY_ID
 } from '../types/action-types'
 import { fnCheckProp, } from '@app/common/util'
 import { getField, updateField } from 'vuex-map-fields'
@@ -207,6 +208,10 @@ export default {
     update_lm_thuyen_chuyen_remove(state, payload) {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'remove.lm.thuyen.chuyen'
+    },
+		update_thuyen_chuyen_remove(state, payload) {
+      state.arr_thuyen_chuyens = payload
+      state.info.action = 'remove.thuyen.chuyen'
     },
     update_bang_cap_remove(state, payload) {
       state.info.bang_caps = payload
@@ -469,9 +474,8 @@ export default {
         thuyenChuyen['action'] = params.action
         apiUpdateInfo(
           thuyenChuyen,
-          (result) => {
-						console.log(result, 'results')
-            // commit('update_arr_thuyen_chuyens', result.data.data.results)
+          (response) => {
+            commit('update_arr_thuyen_chuyens', response.data.data.results)
             commit(SET_ERROR, [])
             commit(
               INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -580,6 +584,13 @@ export default {
         'update_lm_thuyen_chuyen_remove',
         data
       )
+    },
+		async removeThuyenChuyen({ commit, dispatch, state, }, params) {
+      const data = params.item
+      await commit(
+        'update_thuyen_chuyen_remove',
+        data
+      )
       dispatch(ACTION_INSERT_INFO, state.info)
     },
     ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH(
@@ -656,6 +667,12 @@ export default {
           dispatch(ACTION_SET_LOADING, false)
         }
       )
+    },
+		async [ACTION_DELETE_INFO_BY_ID]({}, infoId) {
+      await apiDeleteAlbums(
+        infoId,
+        (results) => {},
+        (errors) => {})
     },
     [ACTION_INSERT_INFO_BACK]({ dispatch, commit, }, info) {
       apiUpdateInfo(

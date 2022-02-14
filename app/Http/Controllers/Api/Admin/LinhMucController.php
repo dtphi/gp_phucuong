@@ -487,7 +487,6 @@ class LinhMucController extends ApiController
 				} catch (HandlerMsgCommon $e) {
 						throw $e->render();
 				}
-				dd($results, 'test');
 				
 				$json = [
 						'data' => [

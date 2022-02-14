@@ -1,37 +1,19 @@
 <template>
   <tbody>
     <tr v-if="item.isEdit" key="thuyen-chuyen-title">
-      <td class="text-center">
-        <input
-          type="checkbox"
-          :id="`info_select_id_${item.id}`"
-          v-model="item.isCheck"
-        />
-      </td>
-      <td>{{ item.fromgiaoxuName }}</td>
-      <td>{{ item.label_from_date }}</td>
-      <td>{{ item.fromchucvuName }}</td>
-      <td>{{ item.giaoxuName }}</td>
-      <td>{{ item.label_to_date }}</td>
-      <td>{{ item.chucvuName }}</td>
-      <td>{{ item.ducchaName }}</td>
-
-      <td class="text-center">
-				<toggle-button
-									class="switch-btn-center"
-									v-if="item.chuc_vu_active == 1"
-									:value="switchValue"
-									@change="_changeActiveThuyenChuyen($event, item)"
-								/>
-					<toggle-button
-						class="switch-btn-center"
-						v-else
-						:value="!switchValue"
-						@change="_changeActiveThuyenChuyen($event, item)"
-					/>
-        <button
+      <td>{{ vitri + 1 }}</td>
+      <p class="text-center">{{ item.chucvuName}}</p>
+      <div class="text-center">
+				<toggle-button class="switch-btn-center" v-if="item.chuc_vu_active == 1" :value="switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
+				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
+			</div>
+			<td>Giáo Xứ {{ item.giaoxuName }}</td>
+			<td class="text-center">{{ item.label_from_date  }}</td>
+			<td class="text-center">{{ item.label_to_date }}</td>
+			<td>	
+				<button
           type="button"
-          @click="_removeItem()"
+          @click="_removeItem(item)"
           data-toggle="tooltip"
           class="btn btn-default cms-btn"
         >
@@ -51,32 +33,17 @@
 
 <script>
 import { mapActions, } from 'vuex'
-import linhMucMix from '@app/mixins/admin/linhmuc'
 import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
-import InfoGiaoXuAutocomplete from '../../Groups/InfoGiaoXuAutocomplete'
-import InfoChucVuAutocomplete from '../../Groups/InfoChucVuAutocomplete'
-import InfoDucChaAutocomplete from '../../Groups/InfoDucChaAutocomplete'
-import InfoCoSoGiaoPhanAutocomplete from '../../Groups/InfoCoSoGiaoPhanAutocomplete'
-import InfoDongAutocomplete from '../../Groups/InfoDongAutocomplete'
-import InfoBanChuyenTrachAutocomplete from '../../Groups/InfoBanChuyenTrachAutocomplete'
-import InfoNewItem from './InfoNewItem'
 
 export default {
   name: 'TheInfoItem',
-  mixins: [linhMucMix.tabData],
-  components: {
-    InfoGiaoXuAutocomplete,
-    InfoChucVuAutocomplete,
-    InfoDucChaAutocomplete,
-    InfoCoSoGiaoPhanAutocomplete,
-    InfoDongAutocomplete,
-    InfoBanChuyenTrachAutocomplete,
-    InfoNewItem,
-  },
   props: {
     item: {
       default: {},
     },
+		vitri: {
+			default: 1,
+		}
   },
   data() {
     return {
@@ -88,14 +55,6 @@ export default {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
       'removeThuyenChuyen',
 			'updateActiveThuyenChuyen',
-      'ACTION_UPDATE_DROPDOWN_FROM_GIAO_XU',
-      'ACTION_UPDATE_DROPDOWN_FROM_CHUC_VU',
-      'ACTION_UPDATE_DROPDOWN_FROM_DUC_CHA',
-      'ACTION_UPDATE_DROPDOWN_TO_CHUC_VU',
-      'ACTION_UPDATE_DROPDOWN_TO_GIAO_XU',
-      'ACTION_UPDATE_DROPDOWN_CO_SO_GIAO_PHAN',
-      'ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_DONG',
-      'ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH',
       'addThuyenChuyen'
     ]),
 		_removeItem(item) {
