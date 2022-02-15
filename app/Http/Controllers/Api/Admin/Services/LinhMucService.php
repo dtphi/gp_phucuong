@@ -282,6 +282,11 @@ final class LinhMucService implements BaseModel, LinhMucModel
         }
     }
 
+		private function _removeThuyenChuyen($linhmucId, $model)
+    {
+        LinhmucThuyenChuyen::fcDeleteByLinhmucThuyenChuyenId($linhmucId, $model['id']);
+    }
+
     public function apiUpdate($model, $data = [])
     {
         /**
@@ -297,7 +302,9 @@ final class LinhMucService implements BaseModel, LinhMucModel
             $this->_addLmThuyenChuyen($data['id'], $data['lm_thuyen_chuyen']);
         } elseif ($data['action'] == 'remove.lm.thuyen.chuyen') {
             $this->_removeLmThuyenChuyen($data['id'], $data['lm_thuyen_chuyen']);
-        } else {
+        } elseif ($data['action'] == 'remove.thuyen.chuyen') {
+					$this->_removeThuyenChuyen($data['id'], $data['item']);
+			} else {
             $model->fill($data);
             if ($model->save()) {
                 $this->_updateLinhMuc($model, $data);

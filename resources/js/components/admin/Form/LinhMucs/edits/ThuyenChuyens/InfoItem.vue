@@ -11,6 +11,14 @@
 			<td class="text-center">{{ item.label_from_date  }}</td>
 			<td class="text-center">{{ item.label_to_date }}</td>
 			<td>	
+				<a
+					href="javascript:void(0);"
+					data-toggle="tooltip"
+					@click.prevent="_showModal"
+					class="btn btn-default cms-btn"
+					data-original-title="Sửa thuyên chuyển"
+					><i class="fa fa-edit" />
+      	</a>
 				<button
           type="button"
           @click="_removeItem(item)"
@@ -32,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions, } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
@@ -42,8 +50,8 @@ export default {
       default: {},
     },
 		vitri: {
-			default: 1,
-		}
+			type: Number,
+		},
   },
   data() {
     return {
@@ -55,16 +63,29 @@ export default {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
       'removeThuyenChuyen',
 			'updateActiveThuyenChuyen',
-      'addThuyenChuyen'
+      'addThuyenChuyen',
     ]),
+		...mapMutations(MODULE_MODULE_LINH_MUC_EDIT, ['remove_thuyen_chuyens']),
 		_removeItem(item) {
-      const isDl = confirm('Tiếp tục xóa linh mục thuyên chuyển')
-      if (isDl) {
-        this.removeThuyenChuyen({
-          action: 'removeThuyenChuyen',
-          item: item,
-        })
-      }
+      this.$modal.show("dialog", {
+        title: "Xóa thuyên chuyển",
+        text: "Bạn muốn xóa thuyên chuyển ?",
+        buttons: [
+          {
+            title: "Hủy",
+            handler: () => {
+              this.$modal.hide("dialog");
+            },
+          },
+          {
+            title: "Xóa",
+            handler: () => {
+							this.removeThuyenChuyen({item: item, vitri: this.vitri, action: 'remove.thuyen.chuyen', id: this.$route.params.linhmucId })
+              this.$modal.hide("dialog")
+            },
+          },
+        ],
+      });
     },
     _openEditForm() {
       this.isEdit = !this.isEdit
@@ -83,8 +104,14 @@ export default {
 					action: 'update_active_thuyen_chuyen',
 					item: item,
 				});
-		}
+		},
+		_showModal() {
+			//this.$store.comit('current', this.item)
+			this.$modal.show('modal-thuyen-chuyen-edit')
+      // this.$emit('show-modal-edit', this.item)
+    },
   },
+	
   setting: {
     info_action_title: 'Thực hiện',
   },

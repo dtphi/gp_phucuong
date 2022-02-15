@@ -222,4 +222,13 @@ class LinhmucThuyenchuyen extends BaseModel
             return DB::delete("delete from " . Tables::$linhmuc_thuyenchuyens . " where linh_muc_id = '" . $linhmucId . "'");
         }
     }
+
+		public static function fcDeleteByLinhmucThuyenChuyenId($linhmucId = null, $idThuyenChuyen = null)
+    {
+        $linhmucId = (int)$linhmucId;
+				$idThuyenChuyen = (int)$idThuyenChuyen;
+        if ($linhmucId) {
+            return DB::delete("delete from " . Tables::$linhmuc_thuyenchuyens . " where linh_muc_id = '" . $linhmucId . "' and id = " . $idThuyenChuyen);
+        }
+    }
 }

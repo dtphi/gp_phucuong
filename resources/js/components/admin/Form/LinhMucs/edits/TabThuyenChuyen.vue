@@ -18,6 +18,7 @@
 <script>
 import InfoList from './ThuyenChuyens/InfoList'
 import ModalThuyenChuyen from './Modals/TheModalThuyenChuyen'
+import ModalEditThuyenChuyen from './Modals/TheModalEditThuyenChuyen'
 import BtnAdd from './ThuyenChuyens/BtnAdd'
 import { mapState, mapActions, } from 'vuex'
 import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
@@ -26,6 +27,7 @@ export default {
   components: {
     InfoList,
 		ModalThuyenChuyen,
+		ModalEditThuyenChuyen,
 		BtnAdd,
   },
 	props: {
@@ -34,6 +36,12 @@ export default {
 				return 0
 			}
 		},
+	},
+	data() {
+		console.log(this.arr_thuyen_chuyens, 'test');
+		return {
+			current: this.arr_thuyen_chuyens ? this.arr_thuyen_chuyens[0] : {}
+		}
 	},
 	computed: {
     ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
@@ -47,6 +55,9 @@ export default {
 		}),
 		_showModalAdd() {
 			this.$modal.show('modal-thuyen-chuyen-add')
+		},
+		_showModalEdit(item) {
+			console.log('testr');
 		}
   },
 	mounted() {

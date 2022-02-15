@@ -160,9 +160,9 @@ export default {
     update_thuyen_chuyen(state, payload) {
       state.info.thuyen_chuyens.push(payload)
     },
-    update_thuyen_chuyen_remove(state, payload) {
-      state.info.thuyen_chuyens = payload
-    },
+    // update_thuyen_chuyen_remove(state, payload) {
+    //   state.info.thuyen_chuyens = payload
+    // },
 		update_arr_thuyen_chuyens(state, payload) {
 			state.arr_thuyen_chuyens = payload
 		},
@@ -210,8 +210,7 @@ export default {
       state.info.action = 'remove.lm.thuyen.chuyen'
     },
 		update_thuyen_chuyen_remove(state, payload) {
-      state.arr_thuyen_chuyens = payload
-      state.info.action = 'remove.thuyen.chuyen'
+      state.info.action = payload
     },
     update_bang_cap_remove(state, payload) {
       state.info.bang_caps = payload
@@ -257,6 +256,9 @@ export default {
     },
 		set_info_thuyen_chuyens(state, payload) {
 			return state.arr_thuyen_chuyens = payload
+		},
+		remove_thuyen_chuyens(state, index) {
+			state.arr_thuyen_chuyens.splice(index, 1)
 		}
   },
 
@@ -522,16 +524,16 @@ export default {
         })
       }
     },
-    removeThuyenChuyen({ commit, state, }, params) {
-      let thuyenChuyens = state.info.thuyen_chuyens
-      const data = params.item
-      commit(
-        'update_thuyen_chuyen_remove',
-        _.remove(thuyenChuyens, (item) => {
-          return !(item.id == data.id)
-        })
-      )
-    },
+    // removeThuyenChuyen({ commit, state, }, params) {
+    //   let thuyenChuyens = state.info.thuyen_chuyens
+    //   const data = params.item
+    //   commit(
+    //     'update_thuyen_chuyen_remove',
+    //     _.remove(thuyenChuyens, (item) => {
+    //       return !(item.id == data.id)
+    //     })
+    //   )
+    // },
     checkAllThuyenChuyen({ state, }, check) {
       _.forEach(state.info.thuyen_chuyens, (item) => {
         _.update(item, 'isCheck', (isCheck) => {
@@ -585,13 +587,14 @@ export default {
         data
       )
     },
-		async removeThuyenChuyen({ commit, dispatch, state, }, params) {
-      const data = params.item
-      await commit(
-        'update_thuyen_chuyen_remove',
-        data
+		removeThuyenChuyen({ commit }, info) {
+			commit('remove_thuyen_chuyens', info.vitri)
+      commit('update_thuyen_chuyen_remove', info.action)
+			apiUpdateInfo(
+        info,
+        (result) => {},
+        (errors) => {}
       )
-      dispatch(ACTION_INSERT_INFO, state.info)
     },
     ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH(
       { commit, },
@@ -667,12 +670,6 @@ export default {
           dispatch(ACTION_SET_LOADING, false)
         }
       )
-    },
-		async [ACTION_DELETE_INFO_BY_ID]({}, infoId) {
-      await apiDeleteAlbums(
-        infoId,
-        (results) => {},
-        (errors) => {})
     },
     [ACTION_INSERT_INFO_BACK]({ dispatch, commit, }, info) {
       apiUpdateInfo(
