@@ -1,6 +1,6 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { v4 as uuidv4, } from 'uuid'
-import { apiUpdateInfo, apiGetInfoById} from 'api@admin/linhmuc'
+import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById} from 'api@admin/linhmuc'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -15,7 +15,8 @@ import {
   ACTION_SET_IMAGE,
   ACTION_GET_INFO_BY_ID,
   ACTION_RESET_NOTIFICATION_INFO,
-	ACTION_CHANGE_STATUS
+	ACTION_CHANGE_STATUS,
+	ACTION_DELETE_INFO_BY_ID
 } from '../types/action-types'
 import { fnCheckProp, } from '@app/common/util'
 import { getField, updateField } from 'vuex-map-fields'
@@ -71,6 +72,7 @@ const defaultState = () => {
       lm_thuyen_chuyens: [],
       action: '',
     },
+		arr_thuyen_chuyens: [],
     thuyenChuyen: null,
     isImgChange: true,
     loading: false,
@@ -101,6 +103,9 @@ export default {
     getInfoField(state) {
       return getField(state.info)
     },
+		arr_thuyen_chuyens(state) {
+			return state.arr_thuyen_chuyens
+		}
   },
 
   mutations: {
@@ -155,9 +160,12 @@ export default {
     update_thuyen_chuyen(state, payload) {
       state.info.thuyen_chuyens.push(payload)
     },
-    update_thuyen_chuyen_remove(state, payload) {
-      state.info.thuyen_chuyens = payload
-    },
+    // update_thuyen_chuyen_remove(state, payload) {
+    //   state.info.thuyen_chuyens = payload
+    // },
+		update_arr_thuyen_chuyens(state, payload) {
+			state.arr_thuyen_chuyens = payload
+		},
     update_van_thu(state, payload) {
       state.info.van_thus.push(payload)
     },
@@ -201,6 +209,9 @@ export default {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'remove.lm.thuyen.chuyen'
     },
+		update_thuyen_chuyen_remove(state, payload) {
+      state.info.action = payload
+    },
     update_bang_cap_remove(state, payload) {
       state.info.bang_caps = payload
     },
@@ -243,6 +254,12 @@ export default {
     updateInfoField(state, field) {
       return updateField(state.info, field)
     },
+		set_info_thuyen_chuyens(state, payload) {
+			return state.arr_thuyen_chuyens = payload
+		},
+		remove_thuyen_chuyens(state, index) {
+			state.arr_thuyen_chuyens.splice(index, 1)
+		}
   },
 
   actions: {
@@ -449,20 +466,18 @@ export default {
       })
     },
     addThuyenChuyen({ dispatch, commit, state, }, params) {
-      if (
-        fnCheckProp(params, 'action') &&
-                fnCheckProp(params, 'info') &&
-                params.action === 'create.update.thuyen.chuyen.db'
+			console.log(params, 'params')
+      if (fnCheckProp(params, 'action') && params.action == 'addThuyenChuyen'
       ) {
-        let thuyenChuyen = params.info
+        let thuyenChuyen = params.data
         dispatch(ACTION_SET_LOADING, true)
         //implement
         thuyenChuyen['linhMucId'] = state.info.id
         thuyenChuyen['action'] = params.action
         apiUpdateInfo(
           thuyenChuyen,
-          (result) => {
-            commit('update_thuyen_chuyen_remove', result.data.data.results)
+          (response) => {
+            commit('update_arr_thuyen_chuyens', response.data.data.results)
             commit(SET_ERROR, [])
             commit(
               INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -509,16 +524,16 @@ export default {
         })
       }
     },
-    removeThuyenChuyen({ commit, state, }, params) {
-      let thuyenChuyens = state.info.thuyen_chuyens
-      const data = params.item
-      commit(
-        'update_thuyen_chuyen_remove',
-        _.remove(thuyenChuyens, (item) => {
-          return !(item.id == data.id)
-        })
-      )
-    },
+    // removeThuyenChuyen({ commit, state, }, params) {
+    //   let thuyenChuyens = state.info.thuyen_chuyens
+    //   const data = params.item
+    //   commit(
+    //     'update_thuyen_chuyen_remove',
+    //     _.remove(thuyenChuyens, (item) => {
+    //       return !(item.id == data.id)
+    //     })
+    //   )
+    // },
     checkAllThuyenChuyen({ state, }, check) {
       _.forEach(state.info.thuyen_chuyens, (item) => {
         _.update(item, 'isCheck', (isCheck) => {
@@ -571,7 +586,15 @@ export default {
         'update_lm_thuyen_chuyen_remove',
         data
       )
-      dispatch(ACTION_INSERT_INFO, state.info)
+    },
+		removeThuyenChuyen({ commit }, info) {
+			commit('remove_thuyen_chuyens', info.vitri)
+      commit('update_thuyen_chuyen_remove', info.action)
+			apiUpdateInfo(
+        info,
+        (result) => {},
+        (errors) => {}
+      )
     },
     ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH(
       { commit, },
@@ -686,6 +709,18 @@ export default {
         }
       )
     },
+		ACTION_GET_INFO_THUYEN_CHUYEN({dispatch, commit}, infoId) {
+      apiGetThuyenChuyenById(
+        infoId,
+        (response) => {
+          commit('set_info_thuyen_chuyens', response.data.results)
+        },
+        (errors) => {
+          commit(SET_ERROR, Object.values(errors))
+        }
+      )
+		},
+
     [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
       commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values)
     },

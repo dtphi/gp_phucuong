@@ -237,10 +237,9 @@ class Service implements BaseModel
 	public function apiGetLinhMucChanhXuByGiaoXuId($giaoXuId = null)
 	{
 		$linhMuc = LinhmucThuyenchuyen::where(Tables::$linhmuc_thuyenchuyens . '.giao_xu_id', $giaoXuId)
-			->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', 1)
-			->orderByDesc('from_date')
-			->get();
-
+		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_id', 1)
+		->where(Tables::$linhmuc_thuyenchuyens . '.chuc_vu_active', 1)
+		->orderByDesc('from_date')->get();
 		return $linhMuc;
 	}
 

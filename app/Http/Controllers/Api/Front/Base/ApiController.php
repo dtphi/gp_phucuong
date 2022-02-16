@@ -583,21 +583,13 @@ class ApiController extends Controller
 		$linhMucChanhXus = $this->sv->apiGetLinhMucChanhXuByGiaoXuId($giaoXuId);
 		$linhMucPhoXus = $this->sv->apiGetLinhMucPhoXuByGiaoXuId($giaoXuId);
 		$arrLmIds = [];
-		foreach ($linhMucs as $linhMuc) {
-			$url_linhmuc = url('linh-muc/chi-tiet/' . $linhMuc->linh_muc_id);
-			$from = \Carbon\Carbon::parse($linhMuc->from_date)->year ?? $emptyStr;
-			$to = \Carbon\Carbon::parse($linhMuc->to_date)->year ?? $emptyStr;
-			if (!in_array($linhMuc->linh_muc_id, $arrLmIds)) {
-				$linhMucTienNhiem[] = '<a style="color: black !important;cursor:pointer" href="' . $url_linhmuc . '">' . $linhMuc->ten_thanh . ' ' . $linhMuc->ten_linh_muc . ' (' . $from . '-' . $to . ')</a>';
-			}
-			array_push($arrLmIds, $linhMuc->linh_muc_id);
-		}
-		if (empty($linhMucTienNhiem))
-			$linhMucTienNhiem = ['Chưa cập nhật'];
 
 		$arr_chanh_xu = [];
+		$arr_id_chanh_xu = [];
+		$arr_id_pho_xu = [];
 		if ($linhMucChanhXus) {
-			foreach ($linhMucChanhXus as $linhMucChanhXu) {
+			foreach($linhMucChanhXus as $linhMucChanhXu) {
+				array_push($arr_id_chanh_xu, $linhMucChanhXu->linh_muc_id);
 				$arr_chanh_xu[] = [
 					'chanh_xu' => isset($linhMucChanhXu->ten_thanh) ? $linhMucChanhXu->ten_thanh . ' - ' . $linhMucChanhXu->ten_linh_muc : $emptyStr,
 					'img_chanh_xu' => isset($linhMucChanhXu->linhMuc->image) ? url($linhMucChanhXu->linhMuc->image) : url('images/linh-muc.jpg'),
@@ -606,10 +598,10 @@ class ApiController extends Controller
 				];
 			}
 		}
-
 		$arr_pho_xu = [];
-		if ($linhMucPhoXus) {
-			foreach ($linhMucPhoXus as $linhMucPhoXu) {
+		if ($linhMucPhoXus){
+			foreach($linhMucPhoXus as $linhMucPhoXu) {
+				array_push($arr_id_pho_xu, $linhMucPhoXu->linh_muc_id);
 				$arr_pho_xu[] = [
 					'pho_xu' => isset($linhMucPhoXu->ten_thanh) ? $linhMucPhoXu->ten_thanh . ' - ' . $linhMucPhoXu->ten_linh_muc : $emptyStr,
 					'img_pho_xu' => isset($linhMucPhoXu->linhMuc->image) ? url($linhMucPhoXu->linhMuc->image) : url('images/linh-muc.jpg'),
@@ -618,6 +610,18 @@ class ApiController extends Controller
 				];
 			}
 		}
+		foreach ($linhMucs as $linhMuc) {
+			$url_linhmuc = url('linh-muc/chi-tiet/' . $linhMuc->linh_muc_id);
+			$from = \Carbon\Carbon::parse($linhMuc->from_date)->year ?? $emptyStr;
+			$to = \Carbon\Carbon::parse($linhMuc->to_date)->year ?? $emptyStr;
+			if (!in_array($linhMuc->linh_muc_id, $arrLmIds) && !in_array($linhMuc->linh_muc_id, $arr_id_chanh_xu) && !in_array($linhMuc->linh_muc_id, $arr_id_pho_xu)) {
+				$linhMucTienNhiem[] = '<a style="color: black !important;cursor:pointer" href="'. $url_linhmuc .'">' . $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc . ' (' . $from . '-' . $to . ')</a>';
+			}
+			array_push($arrLmIds, $linhMuc->linh_muc_id);
+		}
+		if (empty($linhMucTienNhiem))
+			$linhMucTienNhiem = ['Chưa cập nhật'];
+
 		$json['results'] = [];
 		if ($info) {
 			$defaultImage = 'Image/Picture/Images/CacGiaoXu/Hat-BenCat/RachKien-Gx-Thuml.png';

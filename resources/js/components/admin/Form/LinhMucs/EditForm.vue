@@ -4,49 +4,49 @@
             :active.sync="loading"
             :is-full-page="fullPage"></loading-over-lay>-->
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li class="active" @click="currentTab = 'general'">
         <a href="#tab-general" data-toggle="tab">{{
           $options.setting.tab_general_title
         }}</a>
       </li>
-      <li>
-        <a href="#tab-mo-rong" data-toggle="tab">{{
+      <li @click="currentTab = 'mo_rong'">
+        <a href="#tab-mo-rong" data-toggle="tab" >{{
           $options.setting.tab_mo_rong_title
         }}</a>
       </li>
-      <li>
+      <li @click="currentTab = 'bang_cap'">
         <a href="#tab-bang-cap" data-toggle="tab">{{
           $options.setting.tab_bang_cap_title
         }}</a>
       </li>
-      <li>
+      <li @click="currentTab = 'chuc_thanh'">
         <a href="#tab-chuc-thanh" data-toggle="tab">{{
           $options.setting.tab_chuc_thanh_title
         }}</a>
       </li>
-      <li>
+      <li @click="currentTab = 'van_thu'">
         <a href="#tab-van-thu" data-toggle="tab">{{
           $options.setting.tab_van_thu_title
         }}</a>
       </li>
-      <li>
+      <li @click="currentTab = 'thuyen_chuyen'">
         <a href="#tab-thuyen-chuyen" data-toggle="tab">{{
           $options.setting.tab_thuyen_chuyen_title
         }}</a>
       </li>
-      <li>
+      <li @click="currentTab = 'bo_nhiem_khac'">
         <a href="#tab-bo-nhiem-khac" data-toggle="tab">{{
           $options.setting.tab_bo_nhiem_khac_title
         }}</a>
       </li>
-      <li>
+      <li @click="currentTab = 'gp_thuyen_chuyen'">
         <a href="#tab-gp-thuyen-chuyen" data-toggle="tab">{{
           $options.setting.tab_gp_thuyen_chuyen_title
         }}</a>
       </li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active" id="tab-general">
+      <div class="tab-pane active" id="tab-general" v-if="currentTab == 'general'">
         <tab-general
           role="tabpanel"
           class="tab-pane active"
@@ -55,7 +55,7 @@
           :mmPath="imgSelected"
         ></tab-general>
       </div>
-      <div class="tab-pane" id="tab-mo-rong">
+      <div class="tab-pane" id="tab-mo-rong" v-if="currentTab == 'mo_rong'">
         <tab-mo-rong
           role="tabpanel"
           class="tab-pane"
@@ -64,35 +64,36 @@
           :mmPath="imgSelected"
         ></tab-mo-rong>
       </div>
-      <div class="tab-pane" id="tab-bang-cap">
+      <div class="tab-pane" id="tab-bang-cap" v-if="currentTab == 'bang_cap'">
         <tab-bang-cap
           role="tabpanel"
           class="tab-pane"
           :group-data="info"
         ></tab-bang-cap>
       </div>
-      <div class="tab-pane" id="tab-chuc-thanh">
+      <div class="tab-pane" id="tab-chuc-thanh" v-if="currentTab == 'chuc_thanh'">
         <tab-chuc-thanh
           role="tabpanel"
           class="tab-pane"
           :group-data="info"
         ></tab-chuc-thanh>
       </div>
-      <div class="tab-pane" id="tab-van-thu">
+      <div class="tab-pane" id="tab-van-thu" v-if="currentTab == 'van_thu'">
         <tab-van-thu
           role="tabpanel"
           class="tab-pane"
           :group-data="info"
         ></tab-van-thu>
       </div>
-      <div class="tab-pane" id="tab-thuyen-chuyen">
+      <div class="tab-pane" id="tab-thuyen-chuyen" v-if="currentTab == 'thuyen_chuyen'">
         <tab-thuyen-chuyen
           role="tabpanel"
           class="tab-pane"
           :group-data="info"
+					:type-chuc-vu="$options.setting.typeThuyenChuyen"
         ></tab-thuyen-chuyen>
       </div>
-      <div class="tab-pane" id="tab-bo-nhiem-khac">
+      <div class="tab-pane" id="tab-bo-nhiem-khac" v-if="currentTab == 'bo_nhiem_khac'">
         <tab-bo-nhiem-khac
           role="tabpanel"
           class="tab-pane"
@@ -100,7 +101,7 @@
           :type-chuc-vu="$options.setting.typeBoNhiem"
         ></tab-bo-nhiem-khac>
       </div>
-      <div class="tab-pane" id="tab-gp-thuyen-chuyen">
+      <div class="tab-pane" id="tab-gp-thuyen-chuyen" v-if="currentTab == 'gp_thuyen_chuyen'">
         <tab-lm-thuyen-chuyen
           role="tabpanel"
           class="tab-pane"
@@ -160,6 +161,7 @@ export default {
       mm: mm,
       selected: null,
       imgSelected: '',
+			currentTab: 'general',
     }
   },
   computed: {
@@ -171,7 +173,7 @@ export default {
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
       ACTION_INSERT_INFO,
-      ACTION_INSERT_INFO_BACK
+      ACTION_INSERT_INFO_BACK,
     ]),
     _submitInfo() {
       this[ACTION_INSERT_INFO](this.info)

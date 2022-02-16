@@ -162,7 +162,6 @@ class LinhMucController extends ApiController
     {
         $data = $request->all();
         $action = $request->get('action');
-
         if ($action == 'create.update.bang.cap.db') {
             try {
                 $json = $this->linhMucSv->apiUpdateBangCap($data);
@@ -214,6 +213,13 @@ class LinhMucController extends ApiController
 							throw $e->render();
 					}
 					return $json;
+			}elseif($action == 'addThuyenChuyen') {
+				try {
+					$json = $this->linhMucSv->apiAddThuyenChuyen($data);
+				} catch (HandlerMsgCommon $e) {
+						throw $e->render();
+				}
+				return $json;
 			} else {
 					try {
 						$model = $this->linhMucSv->apiGetDetail($id);
@@ -445,4 +451,48 @@ class LinhMucController extends ApiController
 
         return $this->respondWithCollectionPagination($collections);
     }
+
+		public function listLinhMucThuyenChuyen($infoId = null) 
+		{
+				try {
+					$collections = $this->linhMucSv->apiGetThuyenChuyen($infoId);
+					$results = [];
+					
+					foreach ($collections as $key => $info) {
+							$results[] = [
+									'id' => (int)$info->id,
+									'isCheck' => false,
+                  'isEdit' => 1,
+									'from_date' => $info->from_date,		
+									'to_date' => $info->to_date,
+									'fromGiaoXuName'      => $info->ten_from_giao_xu,
+									'fromchucvuName' => $info->ten_from_chuc_vu,
+									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"d-m-Y"):'',
+									'ducchaName' => $info->ten_duc_cha,
+									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"d-m-Y"):'',
+									'chucvuName' => $info->ten_to_chuc_vu,
+									'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
+									'giaoxuName' => $info->ten_to_giao_xu,
+									'cosogpName' => $info->ten_co_so,
+									'dongName' => $info->ten_dong,
+									'banchuyentrachName' => $info->ten_ban_chuyen_trach,
+									'du_hoc' => $info->du_hoc,
+									'quoc_gia' => $info->quoc_gia,
+									'ghi_chu' => $info->ghi_chu,
+									'active' => $info->active,
+									'active_text' => $info->active?'Xảy ra':'Ẩn',
+									'chuc_vu_active' => $info->chuc_vu_active
+							];
+					}
+				} catch (HandlerMsgCommon $e) {
+						throw $e->render();
+				}
+				
+				$json = [
+						'data' => [
+								'results' => $results,
+						]
+				];
+				return $this->respondWithCollectionPagination($json);
+		}
 }

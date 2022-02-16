@@ -282,6 +282,11 @@ final class LinhMucService implements BaseModel, LinhMucModel
         }
     }
 
+		private function _removeThuyenChuyen($linhmucId, $model)
+    {
+        LinhmucThuyenChuyen::fcDeleteByLinhmucThuyenChuyenId($linhmucId, $model['id']);
+    }
+
     public function apiUpdate($model, $data = [])
     {
         /**
@@ -297,7 +302,9 @@ final class LinhMucService implements BaseModel, LinhMucModel
             $this->_addLmThuyenChuyen($data['id'], $data['lm_thuyen_chuyen']);
         } elseif ($data['action'] == 'remove.lm.thuyen.chuyen') {
             $this->_removeLmThuyenChuyen($data['id'], $data['lm_thuyen_chuyen']);
-        } else {
+        } elseif ($data['action'] == 'remove.thuyen.chuyen') {
+					$this->_removeThuyenChuyen($data['id'], $data['item']);
+			} else {
             $model->fill($data);
             if ($model->save()) {
                 $this->_updateLinhMuc($model, $data);
@@ -515,5 +522,39 @@ final class LinhMucService implements BaseModel, LinhMucModel
 			DB::commit();
 
 			return $this->modelThuyenChuyen;
-	}
+		}
+
+		public function apiGetThuyenChuyen($infoId){
+			$query = $this->modelThuyenChuyen->select()
+			->where('linh_muc_id', $infoId)
+			->get();
+
+			return $query;
+		}
+
+		public function apiAddThuyenChuyen($data = []) 
+    {		
+				$hat = LinhMucThuyenChuyen::create(
+				[
+						'linh_muc_id' => $data['linhMucId'],
+						'giao_xu_id' => $data['giao_xu_id'],
+						'chuc_vu_id' => $data['chuc_vu_id'],
+						'from_giao_xu_id' => 0,
+						'from_chuc_vu_id' => 0,
+						'from_date' => $data['from_date'],
+						'to_date' => $data['to_date'],
+						'duc_cha_id' => '',
+						'co_so_gp_id' => $data['co_so_gp_id'],
+						'dong_id' => $data['dong_id'],
+						'ban_chuyen_trach_id' => $data['ban_chuyen_trach_id'],
+						'du_hoc' => $data['du_hoc'],
+						'quoc_gia' => '',
+						'active' => $data['active'],
+						'ghi_chu' => $data['ghi_chu'],
+						'chuc_vu_active' => $data['chuc_vu_active']
+				]
+			);
+
+        return new LinhMucThuyenChuyenCollection(LinhMucThuyenChuyen::where('linh_muc_id', $data['linhMucId'])->get());
+    }
 }
