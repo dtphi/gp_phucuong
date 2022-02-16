@@ -20,7 +20,5 @@ interface NewsModel
 
     public function apiGetInfoListByIds($data = array());
 
-    // public function apiGetInfoListNgayLe($data = array());
-
     public function apiGetInfoCarouselListByIds($data = array());
 }

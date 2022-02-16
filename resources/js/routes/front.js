@@ -73,7 +73,7 @@ routeEnv = {
         network: network,
       },
     }],
-  },  {
+  }, {
     path: 'danh-muc-tin/:slug_1/:slug',
     component: {
       render: c => c('router-view'),
@@ -235,14 +235,14 @@ routeEnv = {
       name: 'hanh-cac-thanh-page',
       meta: {
         auth: false,
-        header: 'Trang ngay-les',
+        header: 'Trang Hành Các Thánh',
         layout: MainLayout,
         role: 'guest',
         layout_content: {},
       },
-    },]
+    },],
   },
-  
+
   {
     path: 'giao-xu',
     component: {

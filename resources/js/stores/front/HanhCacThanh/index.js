@@ -1,13 +1,11 @@
 import detail from './detail'
-import { apiGetListsToCategory, apiGetVideoListsToCategory, apiGetPopularList, apiGetLastedList,
+import { apiGetLists, apiGetListsHanhCacThanh
 } from '@app/api/front/HanhCacThanh'
-import { INIT_LIST, INIT_INFO_LASTED_LIST, INIT_INFO_POPULAR_LIST, SET_ERROR,
-} from '@app/stores/front/types/mutation-types'
-import { GET_LIST_NGAY_LE, GET_POPULAR_INFORMATION_LIST_TO_CATEGORY,
-  GET_LASTED_INFORMATION_LIST_TO_CATEGORY,
-} from '@app/stores/front/types/action-types'
-import { MODULE_INFO, } from '@app/stores/front/types/module-types'
+import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
+import { GET_LISTS_HANH_CAC_THANH, } from '@app/stores/front/types/action-types'
+import { MODULE_HANH_CAC_THANH, } from '@app/stores/front/types/module-types'
 import { fnCheckProp, } from '@app/common/util'
+import { GET_LISTS } from '../types/action-types'
 
 export default {
   namespaced: true,
@@ -15,9 +13,7 @@ export default {
     loading: false,
     mainMenus: [],
     pageLists: [],
-    infoLastedList: [],
-    infoPopularList: [],
-    module_category_sub_left_side_bar: [],
+    HanhCacThanhList: [],
     listActive: 'pageList',
     errors: [],
   },
@@ -28,31 +24,19 @@ export default {
     pageLists(state) {
       return state.pageLists
     },
+    loading(state) {
+      return state.loading
+    },
+    HanhCacThanhLists(state) {
+      return state.HanhCacThanhLists
+    },
   },
   mutations: {
-    init_list_active(state, payload) {
-      state.listActive = payload
-    },
-    init_list_sub_category_side_bar(state, payload) {
-      state.module_category_sub_left_side_bar = payload
+    MAIN_MENU(state, value) {
+      state.mainMenus = value
     },
     [INIT_LIST](state, payload) {
-      if (state.listActive == 'popular') {
-        state.infoPopularList = payload
-      }
-      if (state.listActive == 'lasted') {
-        state.infoLastedList = payload
-      } else {
-        state.pageLists = payload
-      }
-    },
-    [INIT_INFO_LASTED_LIST](state, payload) {
-      state.infoLastedList = payload
-      state.listActive = 'lasted'
-    },
-    [INIT_INFO_POPULAR_LIST](state, payload) {
-      state.infoPopularList = payload
-      state.listActive = 'popular'
+      state.pageLists = payload
     },
     [SET_ERROR](state, payload) {
       state.errors = payload
@@ -60,237 +44,46 @@ export default {
     setLoading(state, payload) {
       state.loading = payload
     },
+    INIT_HANH_CAC_THANH_LIST(state, payload) {
+      state.HanhCacThanhLists = payload
+    },
   },
   actions: {
-    [GET_LASTED_INFORMATION_LIST_TO_CATEGORY]({ commit, }, routeParams) {
+    [GET_LISTS]({ commit, dispatch, }, options) {
       commit('setLoading', true)
-      let slug = ''
-      if (fnCheckProp(routeParams, 'slug')) {
-        slug = routeParams.slug
-      }
-      let page = 1
-      if (fnCheckProp(routeParams, 'page')) {
-        page = routeParams.page
-      }
-      let params = { ...routeParams, page: page, slug: slug, }
-      if (fnCheckProp(routeParams, 'infoType')) {
-        apiGetLastedList((result) => {
-          commit(INIT_INFO_LASTED_LIST, result.data.results)
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        },
-        (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, params)
-      } else {
-        params = { ...params, limit: 15, }
-        apiGetLastedList((result) => {
-          commit(INIT_INFO_LASTED_LIST, result.data.results)
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, params)
-      }
+      apiGetLists((responses) => {
+        commit(INIT_LIST, responses.data.results)
+        commit(SET_ERROR, [])
+        var pagination = {
+          current_page: 1,
+          total: 0,
+        }
+        if (fnCheckProp(responses.data, 'pagination')) {
+          pagination = responses.data.pagination
+        }
+        var configs = {
+          moduleActive: {
+            name: MODULE_HANH_CAC_THANH,
+            actionList: GET_LISTS,
+          },
+          collectionData: pagination,
+        }
+        dispatch('setConfigApp', configs, { root: true, })
+        commit('setLoading', false)
+      }, (errors) => {
+        commit(SET_ERROR, errors)
+        commit('setLoading', false)
+      }, options)
     },
-    [GET_POPULAR_INFORMATION_LIST_TO_CATEGORY]({ commit, }, routeParams) {
+    async [GET_LISTS_HANH_CAC_THANH]({ commit, }, options) {
       commit('setLoading', true)
-      let slug = ''
-      if (fnCheckProp(routeParams, 'slug')) {
-        slug = routeParams.slug
-      }
-      let page = 1
-      if (fnCheckProp(routeParams, 'page')) {
-        page = routeParams.page
-      }
-      let params = { ...routeParams, page: page, slug: slug, renderType: 1, }
-      if (fnCheckProp(routeParams, 'infoType')) {
-        apiGetPopularList((result) => {
-          commit(INIT_INFO_POPULAR_LIST, result.data.results)
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, params)
-      } else {
-        apiGetPopularList((result) => {
-          commit(INIT_INFO_POPULAR_LIST, result.data.results)
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, params)
-      }
-    },
-    [GET_LIST_NGAY_LE]({ commit, dispatch, }, routeParams) {
-      commit('setLoading', true)
-      let slug = ''
-      if (fnCheckProp(routeParams, 'slug')) {
-        slug = routeParams.slug
-      }
-      let page = 1
-      if (fnCheckProp(routeParams, 'page')) {
-        page = routeParams.page
-      }
-      let params = { ...routeParams, page: page, slug: slug, }
-      if (fnCheckProp(routeParams, 'infoType')) {
-        apiGetVideoListsToCategory((result) => {
-          commit(INIT_LIST, result.data.results)
-          var pagination = { current_page: 1, total: 0, }
-          if (fnCheckProp(result.data, 'pagination')) {
-            pagination = result.data.pagination
-          }
-          var configs = {
-            moduleActive: {
-              name: MODULE_NGAY_LE,
-              actionList: GET_LIST_NGAY_LE,
-              params: params,
-            },
-            collectionData: pagination,
-          }
-          dispatch('setConfigApp', configs, { root: true, })
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, routeParams)
-      } else {
-        apiGetListsToCategory((result) => {
-          commit(INIT_LIST, result.data.results)
-          if (fnCheckProp(result.data, 'subCategoryMenu')) {
-            commit('init_list_sub_category_side_bar', result.data.subCategoryMenu)
-          }
-          var pagination = { current_page: 1, total: 0, }
-          if (fnCheckProp(result.data, 'pagination')) {
-            pagination = result.data.pagination
-          }
-          var configs = {
-            moduleActive: {
-              name: MODULE_NGAY_LE,
-              actionList: GET_LIST_NGAY_LE,
-              params: params,
-            },
-            collectionData: pagination,
-          }
-          dispatch('setConfigApp', configs, { root: true, })
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, params)
-      }
-    },
-    GET_INFORMATION_LIST_TO_SUB_CATEGORY({ commit, dispatch, }, routeParams) {
-      commit('setLoading', true)
-      let slug = ''
-      if (fnCheckProp(routeParams, 'slug')) {
-        slug = routeParams.slug
-      }
-      let page = 1
-      if (fnCheckProp(routeParams, 'page')) {
-        page = routeParams.page
-      }
-      let params = { ...routeParams, page: page, slug: slug, }
-      if (fnCheckProp(routeParams, 'infoType')) {
-        apiGetVideoListsToCategory((result) => {
-          commit(INIT_LIST, result.data.results)
-          var pagination = { current_page: 1, total: 0, }
-          if (fnCheckProp(result.data, 'pagination')) {
-            pagination = result.data.pagination
-          }
-          var configs = {
-            moduleActive: {
-              params: params,
-            },
-            collectionData: pagination,
-          }
-          dispatch('setConfigApp', configs, { root: true, })
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, routeParams)
-      } else {
-        apiGetListsToCategory((result) => {
-          commit(INIT_LIST, result.data.results)
-          var pagination = { current_page: 1, total: 0, }
-          if (fnCheckProp(result.data, 'pagination')) {
-            pagination = result.data.pagination
-          }
-          var configs = {
-            moduleActive: {
-              params: params,
-            },
-            collectionData: pagination,
-          }
-          dispatch('setConfigApp', configs, { root: true, })
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, params)
-      }
-    },
-    GET_INFORMATION_LIST_TO_LEFT_CATEGORY({ commit, dispatch, }, routeParams) {
-      commit('setLoading', true)
-      let slug = ''
-      if (fnCheckProp(routeParams, 'slug')) {
-        slug = routeParams.slug
-      }
-      let page = 1
-      if (fnCheckProp(routeParams, 'page')) {
-        page = routeParams.page
-      }
-      let params = { ...routeParams, page: page, slug: slug, }
-      if (fnCheckProp(routeParams, 'infoType')) {
-        apiGetVideoListsToCategory((result) => {
-          commit(INIT_LIST, result.data.results)
-          var pagination = { current_page: 1, total: 0, }
-          if (fnCheckProp(result.data, 'pagination')) {
-            pagination = result.data.pagination
-          }
-          var configs = {
-            moduleActive: {
-              params: params,
-            },
-            collectionData: pagination,
-          }
-          dispatch('setConfigApp', configs, { root: true, })
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, routeParams)
-      } else {
-        apiGetListsToCategory((result) => {
-          commit(INIT_LIST, result.data.results)
-          var pagination = { current_page: 1, total: 0, }
-          if (fnCheckProp(result.data, 'pagination')) {
-            pagination = result.data.pagination
-          }
-          var configs = {
-            moduleActive: {
-              params: params,
-            },
-            collectionData: pagination,
-          }
-          dispatch('setConfigApp', configs, { root: true, })
-          commit(SET_ERROR, [])
-          commit('setLoading', false)
-        }, (errors) => {
-          commit('setLoading', false)
-          commit(SET_ERROR, errors)
-        }, params)
-      }
+      await apiGetListsHanhCacThanh((response) => {
+        commit('INIT_HANH_CAC_THANH_LIST', response.data.results)
+        commit('setLoading', false)
+      }, (errors) => {
+        commit('setLoading', false)
+        commit(SET_ERROR, errors)
+      }, options)
     },
   },
   modules: {

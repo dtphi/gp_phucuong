@@ -59,7 +59,7 @@ final class InitContent
             $flag = 'giao-xu';
         }
         if ($request->is('hanh-cac-thanh*')) {
-            $flag = 'hanh-cac-thanh  ';
+            $flag = 'hanh-cac-thanh';
         }
 
         if (!empty($flag)) {
@@ -186,6 +186,24 @@ final class InitContent
                 }
             }
 
+            if (isset($segments[0]) && ($flag == 'hanh-cac-thanh')) {
+                $this->settings['meta_title'] = 'Hành Các Thánh';
+
+                if (isset($segments[1]) && $request->is('hanh-cac-thanh/*')) {
+                    $layout = $this->__getLayoutContent('hanh-cac-thanh/chi-tiet/*');
+
+                    $endSegment  = end($segments);
+                    $arrSegments = explode('-', $endSegment);
+                    $idSegment   = (int)end($arrSegments);
+
+                    if ($idSegment) {
+                        //
+                    }
+                } else {
+                    $layout = $this->__getLayoutContent('hanh-cac-thanh');
+                }
+            }
+
             if (empty($layout)) {
                 $layout = $this->__getLayoutContent();
             }
@@ -209,6 +227,7 @@ final class InitContent
         } else {
             $this->settings['pageDir'] = config('app.is_mix') ? mix('js/stg/app-front.js'): asset('js/app-front.js');
         }
+        // dd($this->settings, 'test');
     }
 
     /**

@@ -144,21 +144,6 @@ final class NewsService extends Service implements NewsModel
         return $query->paginate($limit);
     }
 
-    public function apiGetInfoNgayLe($information_id)
-    {
-        // TODO: Implement apiGetDetail() method.
-        $result = $this->model->findOrFail($information_id);
-        if ($result) {
-            return [
-                'id'   => $result->id,
-                'ten_le'             => $result->ten_le,
-                'hanh'      => $result->hanh,
-            ];
-        } else {
-            return false;
-        }
-    }
-
     public function _apiGetTagInfoList($data = array())
     {
         $query = DB::table(Tables::$information_to_categorys)->select([
