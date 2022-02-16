@@ -74,16 +74,17 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('settings', 'SettingController');
 
     Route::apiResource('linh-mucs', 'LinhMucController');
+		Route::get('lm-thuyen-chuyens/{infoId}', 'LinhMucController@listLinhMucThuyenChuyen');
     Route::apiResource('linh-muc-bang-caps', 'LinhMucBangCapController');
     Route::apiResource('linh-muc-chuc-thanhs', 'LinhMucChucThanhController');
     Route::apiResource('linh-muc-van-thus', 'LinhMucVanThuController');
     Route::apiResource('linh-muc-thuyen-chuyens', 'LinhMucThuyenChuyenController');
-		Route::get('lm-thuyen-chuyens', 'LinhMucThuyenChuyenController@listThuyenChuyen');
+		Route::apiResource('linh-muc-gp-thuyen-chuyens', 'LinhMucGPThuyenChuyenController');
     Route::post('change-status-thuyen-chuyens','LinhMucThuyenChuyenController@changeStatus');
 
     Route::apiResource('giao-phans', 'GiaoPhanController');
     Route::apiResource('giao-hats', 'GiaoHatController');
-    Route::apiResource('giao-xus', 'GiaoXuController');
+    Route::apiResource('giao-xus', 'GiaoXuController'); 
     Route::get('giao-hats-by-giao-xus', 'GiaoXuController@listGiaoHats');
     Route::get('giao-xus-by-id-giao-hat/{id}', 'GiaoXuController@listGiaoXuByIdGiaoHat');
 
@@ -92,22 +93,22 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('co-sos', 'CoSoController');
     Route::apiResource('dongs', 'DongController');
     Route::apiResource('thanhs', 'ThanhController');
+		Route::apiResource('ngay-les', 'NgayLeController');
     Route::apiResource('chuc-vus', 'ChucVuController');
     Route::apiResource('le-chinhs', 'LeChinhController');
-    Route::apiResource('ngay-les', 'NgayLeController');
     Route::apiResource('giao-phan/danh-mucs', 'GiaoPhanDanhMucController');
     Route::get('/danh-mucs/dropdowns', 'GiaoPhanDanhMucController@dropdown');
     Route::apiResource('giao-phan/tin-tucs', 'GiaoPhanTinTucController');
     Route::get('/tin-tucs/dropdowns', 'GiaoPhanTinTucController@dropdown');
-    Route::apiResource('restrict-ips', 'RestrictIpController');
+    Route::apiResource('restrict-ips', 'RestrictIpController'); //RestrictIpController
     Route::get('search-ips','RestrictIpController@search');
     Route::post('change-status-ips','RestrictIpController@changeStatus');
 
-    Route::apiResource('albums', 'AlbumsController'); 
+    Route::apiResource('albums', 'AlbumsController'); //AlbumsController
     Route::get('search-albums','AlbumsController@search');
     Route::post('change-status-albums','AlbumsController@changeStatus');
-
-    Route::apiResource('group-albums', 'GroupAlbumsController'); 
+    
+    Route::apiResource('group-albums', 'GroupAlbumsController'); //GroupAlbumsController
     Route::get('search-group-albums','GroupAlbumsController@search');
     Route::post('change-status-group-albums','GroupAlbumsController@changeStatus');
 
