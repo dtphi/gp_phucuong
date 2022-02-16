@@ -15,6 +15,7 @@ export const API_LINH_MUC_CHUC_THANHS_RESOURCE = '/api/linh-muc-chuc-thanhs'
 export const API_LINH_MUC_VAN_THUS_RESOURCE = '/api/linh-muc-van-thus'
 export const API_LINH_MUC_THUYEN_CHUYENS_RESOURCE = '/api/linh-muc-thuyen-chuyens'
 export const API_LM_THUYEN_CHUYENS_RESOURCE = '/api/lm-thuyen-chuyens'
+export const API_GX_THUYEN_CHUYENS_RESOURCE = '/api/gx-thuyen-chuyens'
 
 export const API_GIAO_PHANS_RESOURCE = '/api/giao-phans'
 export const API_GIAO_HATS_RESOURCE = '/api/giao-hats'

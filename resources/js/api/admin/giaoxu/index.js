@@ -6,7 +6,7 @@ import {
   API_GIAO_XUS_RESOURCE,
   API_GIAO_HATS_BY_GIAO_XUS_RESOURCE,
   API_GIAO_XUS_BY_ID_GIAO_HAT,
-  
+  API_GX_THUYEN_CHUYENS_RESOURCE
 } from 'store@admin/types/api-paths'
 
 
@@ -195,4 +195,44 @@ export const apiGetGiaoHatInfos = (resolve, errResole) => {
       }
 
     })
+}
+
+export const apiGetThuyenChuyenById = (infoId, resolve, errResole) => {
+  return axios.get(fn_get_base_api_detail_url(API_GX_THUYEN_CHUYENS_RESOURCE, infoId))
+    .then((response) => {
+      if (response.status === 200) {
+        var json = {}
+        json['data'] = response.data.data
+        json['status'] = 1000
+        resolve(json)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => {
+      if (errors.response) {
+        errResole(errors)
+      }
+    })
+}
+
+export const apiInsertGiaoXuThuyenChuyen = (info, resolve, errResole) => {
+  return axios.post(fn_get_base_api_url(API_LINH_MUCS_RESOURCE), info)
+    .then((response) => {
+      if (response.status === 201) {
+        var json = {}
+        json['data'] = response.data.result
+        json['code'] = response.data.code
+        resolve(json)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => errResole(errors))
 }

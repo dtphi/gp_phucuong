@@ -11,6 +11,7 @@ use App\Http\Resources\GiaoXus\GiaoXuResource;
 use App\Http\Resources\GiaoXus\GiaoXuCollection;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoXuModel;
+use App\Models\LinhmucThuyenchuyen;
 
 final class GiaoXuService implements BaseModel, GiaoXuModel
 {
@@ -28,6 +29,7 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
     $this->model    = new GiaoXu();
     $this->modelGiaoHat = new GiaoHat();
     $this->modelPhanHatXu = new GiaoPhanHatXu();
+		$this->modelThuyenChuyen = new LinhmucThuyenchuyen();
   }
 
   public function apiGetList(array $options = [], $limit = 5)
@@ -124,4 +126,12 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
       $query = $this->modelPhanHatXu->where('giao_hat_id', $id)->with(['giaoXu']);
       return $query->paginate($limit);
   }
+
+	public function apiGetThuyenChuyen($infoId){
+		$query = $this->modelThuyenChuyen->select()
+		->where('giao_xu_id', $infoId)
+		->get();
+
+		return $query;
+	}
 }

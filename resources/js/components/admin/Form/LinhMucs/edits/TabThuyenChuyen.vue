@@ -37,12 +37,6 @@ export default {
 			}
 		},
 	},
-	data() {
-		console.log(this.arr_thuyen_chuyens, 'test');
-		return {
-			current: this.arr_thuyen_chuyens ? this.arr_thuyen_chuyens[0] : {}
-		}
-	},
 	computed: {
     ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
       loading: (state) => state.loading,
@@ -56,9 +50,6 @@ export default {
 		_showModalAdd() {
 			this.$modal.show('modal-thuyen-chuyen-add')
 		},
-		_showModalEdit(item) {
-			console.log('testr');
-		}
   },
 	mounted() {
     const linhmucId = parseInt(this.$route.params.linhmucId)
