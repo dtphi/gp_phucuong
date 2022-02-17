@@ -175,6 +175,7 @@ class GiaoXuController extends ApiController
     {
 				$data = $request->all();
 				$action = $request->get('action');
+
 				if ($action == 'addThuyenChuyen') {
 						try {
 								$json = $this->gxSv->apiAddThuyenChuyen($data);
@@ -189,17 +190,23 @@ class GiaoXuController extends ApiController
 								throw $e->render();
 						}
 				return $json;
+				}elseif($action == 'remove.thuyen.chuyen') {
+						try {
+							$json = $this->gxSv->apiRemoveThuyenChuyen($data);
+						} catch (HandlerMsgCommon $e) {
+								throw $e->render();
+						}
+						return $json;
 				}else {
 						try {
 							$model = $this->gxSv->apiGetDetail($id);
 
-					} catch (HandlerMsgCommon $e) {
+						} catch (HandlerMsgCommon $e) {
 							Log::debug('Giao xu not found, Request ID = ' . $id);
-
 							throw $e->render();
 						}
 						return $this->__handleStoreUpdate($model, $request);
-				}  
+					}  
     }
 
     /**

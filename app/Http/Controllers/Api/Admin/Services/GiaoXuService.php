@@ -172,5 +172,9 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 				}
 				DB::commit();
 				return $this->modelThuyenChuyen;
-			}
+		}
+
+		public function apiRemoveThuyenChuyen($data = []) {
+			 LinhmucThuyenChuyen::fcDeleteByGiaoXuThuyenChuyenId($data['giaoxuId'], $data['item']['id']);
+		}
 }

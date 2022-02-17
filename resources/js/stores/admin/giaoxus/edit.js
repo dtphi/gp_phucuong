@@ -1,5 +1,5 @@
 import AppConfig from 'api@admin/constants/app-config'
-import { apiGetInfoGiaoXuById, apiUpdateInfo, apiInsertGiaoXuThuyenChuyen, apiGetThuyenChuyenById} from 'api@admin/giaoxu'
+import { apiGetInfoGiaoXuById, apiUpdateInfo, apiUpdateGiaoXuThuyenChuyen, apiGetThuyenChuyenById} from 'api@admin/giaoxu'
 import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_FAILED,
@@ -23,6 +23,7 @@ import {
   ACTION_UPDATE_INFO_BACK,
   ACTION_RESET_NOTIFICATION_INFO,
   ACTION_SET_IMAGE,
+	ACTION_CHANGE_STATUS
 } from '../types/action-types'
 import { config, } from '@app/api/admin/config'
 import { getField, updateField } from 'vuex-map-fields'
@@ -176,6 +177,9 @@ export default {
 		},
 		set_update_thuyen_chuyen(state, payload) {
 			state.update_thuyen_chuyen = payload
+		},
+		remove_thuyen_chuyens(state, index) {
+			state.arr_thuyen_chuyens.splice(index, 1)
 		}
   },
 
@@ -282,7 +286,7 @@ export default {
         //implement
         thuyenChuyen['giaoxuId'] = params.giaoxuId
         thuyenChuyen['action'] = params.action
-        apiInsertGiaoXuThuyenChuyen(
+        apiUpdateGiaoXuThuyenChuyen(
           thuyenChuyen,
           (response) => {
             commit('set_arr_thuyen_chuyens', response.data.data.results)
@@ -304,6 +308,35 @@ export default {
           }
         )
 		},
+		[ACTION_CHANGE_STATUS]({ commit, }, info) {
+			info['giaoxuId'] = info.item.giao_xu_id
+      apiUpdateGiaoXuThuyenChuyen(
+        info,
+        (result) => {
+          if (result) {
+						console.log('true')
+            commit(SET_ERROR, [])
+          }
+        },
+        (errors) => {
+					console.log('false')
+          commit(SET_ERROR, errors)
+        }
+      )
+    },
+
+		async updateActiveThuyenChuyen({ commit, state, dispatch }, info ) {
+			dispatch(ACTION_CHANGE_STATUS, info)
+    },
+		removeThuyenChuyen({ commit }, info) {
+			info['giaoxuId'] = info.id
+			commit('remove_thuyen_chuyens', info.vitri)
+			apiUpdateGiaoXuThuyenChuyen(
+        info,
+        (result) => {},
+        (errors) => {}
+      )
+    },
 
     [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values)

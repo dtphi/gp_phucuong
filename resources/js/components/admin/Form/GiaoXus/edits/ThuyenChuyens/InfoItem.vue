@@ -80,24 +80,12 @@ export default {
           {
             title: "Xóa",
             handler: () => {
-							this.removeThuyenChuyen({item: item, vitri: this.vitri, action: 'remove.thuyen.chuyen', id: this.$route.params.linhmucId })
+							this.removeThuyenChuyen({item: item, vitri: this.vitri, action: 'remove.thuyen.chuyen', id: this.$route.params.giaoxuId })
               this.$modal.hide("dialog")
             },
           },
         ],
       });
-    },
-    _openEditForm() {
-      this.isEdit = !this.isEdit
-    },
-    _updateThuyenChuyenForm() {
-      const id = this.item?.id
-      if (id) {
-        this.addThuyenChuyen({
-          action: 'create.update.thuyen.chuyen.db',
-          info: this.item,
-        })
-      }
     },
 		_changeActiveThuyenChuyen($event, item) {
 				this.updateActiveThuyenChuyen({
