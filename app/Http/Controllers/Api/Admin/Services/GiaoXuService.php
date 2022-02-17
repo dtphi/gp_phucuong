@@ -161,4 +161,16 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 
         return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->get());
     }
+		public function apiUpdateActiveThuyenChuyen($data = []) 
+		{
+				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['item']['id']);
+				$this->modelThuyenChuyen->chuc_vu_active == 1 ? $this->modelThuyenChuyen->chuc_vu_active = 0 : $this->modelThuyenChuyen->chuc_vu_active = 1;
+				DB::beginTransaction();
+				if (!$this->modelThuyenChuyen->save()) {
+						DB::rollBack();
+						return false;
+				}
+				DB::commit();
+				return $this->modelThuyenChuyen;
+			}
 }

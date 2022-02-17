@@ -181,8 +181,14 @@ class GiaoXuController extends ApiController
 						} catch (HandlerMsgCommon $e) {
 								throw $e->render();
 						}
-		
 						return $json;
+				}elseif($action == 'update.active.thuyen.chuyen') {
+						try {
+							$json = $this->gxSv->apiUpdateActiveThuyenChuyen($data);
+						} catch (HandlerMsgCommon $e) {
+								throw $e->render();
+						}
+				return $json;
 				}else {
 						try {
 							$model = $this->gxSv->apiGetDetail($id);

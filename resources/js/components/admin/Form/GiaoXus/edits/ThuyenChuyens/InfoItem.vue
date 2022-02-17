@@ -101,7 +101,7 @@ export default {
     },
 		_changeActiveThuyenChuyen($event, item) {
 				this.updateActiveThuyenChuyen({
-					action: 'update_active_thuyen_chuyen',
+					action: 'update.active.thuyen.chuyen',
 					item: item,
 				});
 		},

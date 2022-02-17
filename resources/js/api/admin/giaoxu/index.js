@@ -219,7 +219,7 @@ export const apiGetThuyenChuyenById = (infoId, resolve, errResole) => {
     })
 }
 
-export const apiInsertGiaoXuThuyenChuyen = (info, resolve, errResole) => {
+export const apiUpdateGiaoXuThuyenChuyen = (info, resolve, errResole) => {
   return axios.put(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info['giaoxuId']), info)
     .then((response) => {
       if (response.status === 200) {
