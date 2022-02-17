@@ -173,16 +173,27 @@ class GiaoXuController extends ApiController
      */
     public function update(GiaoXuRequest $request, $id = null)
     {
-        try {
-            $model = $this->gxSv->apiGetDetail($id);
+				$data = $request->all();
+				$action = $request->get('action');
+				if ($action == 'addThuyenChuyen') {
+						try {
+								$json = $this->gxSv->apiAddThuyenChuyen($data);
+						} catch (HandlerMsgCommon $e) {
+								throw $e->render();
+						}
+		
+						return $json;
+				}else {
+						try {
+							$model = $this->gxSv->apiGetDetail($id);
 
-        } catch (HandlerMsgCommon $e) {
-            Log::debug('Giao xu not found, Request ID = ' . $id);
+					} catch (HandlerMsgCommon $e) {
+							Log::debug('Giao xu not found, Request ID = ' . $id);
 
-            throw $e->render();
-        }
-
-        return $this->__handleStoreUpdate($model, $request);
+							throw $e->render();
+						}
+						return $this->__handleStoreUpdate($model, $request);
+				}  
     }
 
     /**

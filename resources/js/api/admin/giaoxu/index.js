@@ -6,7 +6,7 @@ import {
   API_GIAO_XUS_RESOURCE,
   API_GIAO_HATS_BY_GIAO_XUS_RESOURCE,
   API_GIAO_XUS_BY_ID_GIAO_HAT,
-  API_GX_THUYEN_CHUYENS_RESOURCE
+  API_GX_THUYEN_CHUYENS_RESOURCE,
 } from 'store@admin/types/api-paths'
 
 
@@ -84,7 +84,7 @@ export const apiGetGiaoXuInfos = (resolve, errResole, params) => {
 export const apiUpdateInfo = (info, resolve, errResole) => {
   return axios.put(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info.id), info)
     .then((response) => {
-      if (response.status === 200) {
+      if (response.status === 1000) {
         var json = {}
         json['data'] = response.data
         json['status'] = 1000
@@ -220,12 +220,12 @@ export const apiGetThuyenChuyenById = (infoId, resolve, errResole) => {
 }
 
 export const apiInsertGiaoXuThuyenChuyen = (info, resolve, errResole) => {
-  return axios.post(fn_get_base_api_url(API_LINH_MUCS_RESOURCE), info)
+  return axios.put(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info['giaoxuId']), info)
     .then((response) => {
-      if (response.status === 201) {
+      if (response.status === 200) {
         var json = {}
-        json['data'] = response.data.result
-        json['code'] = response.data.code
+        json['data'] = response.data
+        json['status'] = 1000
         resolve(json)
       } else {
         errResole([{

@@ -15,6 +15,14 @@
         </div>
       </div>
       <div class="form-group">
+        <div class="col-sm-12">
+          <info-linh-muc-autocomplete
+            @on-select-linh-muc="_selectThuyenChuyenFromLinhMuc"
+            :name="linhMucName"
+          ></info-linh-muc-autocomplete>
+        </div>
+      </div>  
+      <div class="form-group">
         <label class="col-sm-3 control-label">Thời gian đến <br> (ngày tháng năm)</label>
         <div class="col-sm-9" style="display: inline-flex">
           <input
@@ -115,9 +123,12 @@ import InfoGiaoXuAutocomplete from '../../Groups/InfoGiaoXuAutocomplete'
 import InfoCoSoGiaoPhanAutocomplete from '../../Groups/InfoCoSoGiaoPhanAutocomplete'
 import InfoDongAutocomplete from '../../Groups/InfoDongAutocomplete'
 import InfoBanChuyenTrachAutocomplete from '../../Groups/InfoBanChuyenTrachAutocomplete'
+import InfoLinhMucAutocomplete from '../../Groups/InfoLinhMucAutocomplete'
 const thuyenChuyen = {
   chucVuName: '',
   chuc_vu_id: '',
+	linhMucName: '',
+	linh_muc_id: '',
   diaDiemName: '',
   giao_xu_id: '',
   dia_diem_loai: '',
@@ -147,6 +158,7 @@ export default {
     InfoCoSoGiaoPhanAutocomplete,
     InfoDongAutocomplete,
     InfoBanChuyenTrachAutocomplete,
+		InfoLinhMucAutocomplete
   },
   props: {
     typeChucVu: {
@@ -158,6 +170,10 @@ export default {
   data() {
     return {
       ...thuyenChuyen,
+      isGiaoXu: 1,
+      isCoSo: 2,
+      isDong: 3,
+      isBanChuyenTrach: 4,
     }
   },
   watch: {
@@ -198,9 +214,31 @@ export default {
       this.$data.chucVuName = chucVu.name
       this.$data.chuc_vu_id = chucVu.id
     },
+		_selectThuyenChuyenFromLinhMuc(chucVu) {
+      this.$data.linhMucName = chucVu.name
+      this.$data.linh_muc_id = chucVu.id
+    },
+    _selectThuyenChuyenFromGiaoXu(giaoXu) {
+      this.$data.diaDiemName = giaoXu.name
+      this.$data.giao_xu_id = giaoXu.id
+    },
+    _selectThuyenChuyenCoSoGiaoPhan(coso) {
+      this.$data.diaDiemName = coso.name
+      this.$data.co_so_gp_id = coso.id
+    },
+    _selectThuyenChuyenDong(dong) {
+      this.$data.diaDiemName = dong.name
+      this.$data.dong_id = dong.id
+    },
+    _selectThuyenChuyenBanChuyenTrach(bcTrach) {
+      this.$data.diaDiemName = bcTrach.name
+      this.$data.ban_chuyen_trach_id = bcTrach.id
+    },
     _resetModal() {
       this.$data.chucVuName = ''
       this.$data.chuc_vu_id = ''
+			this.$data.linhMucName = ''
+      this.$data.linh_muc_id = ''
       this.$data.dia_diem_loai = ''
       this.$data.diaDiemName = ''
       this.$data.giao_xu_id = ''
@@ -220,13 +258,14 @@ export default {
 			this.$data.ghi_chu = ''
 			this.$data.du_hoc = 0
     },
-    async _addInfo() {
+    _addInfo() {
       const data = this.$data
-      if (data.chuc_vu_id) {
-        await this.addThuyenChuyen({
+      if (data.chuc_vu_id && data.linh_muc_id) {
+          this.addThuyenChuyen({
           action: 'addThuyenChuyen',
           data: data,
 					giaoxuId: this.$route.params.giaoxuId,
+
         })
         this._resetModal()
         this.$modal.hide(this.$options.setting.modal_name)

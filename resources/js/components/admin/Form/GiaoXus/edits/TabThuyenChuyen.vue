@@ -11,7 +11,7 @@
 				</div>
       </div>
     </div>
-		<modal-edit-thuyen-chuyen></modal-edit-thuyen-chuyen>
+		<!-- <modal-edit-thuyen-chuyen></modal-edit-thuyen-chuyen> -->
 		<modal-thuyen-chuyen :type-chuc-vu="typeChucVu"></modal-thuyen-chuyen>
   </div>
 </template>
@@ -19,7 +19,7 @@
 <script>
 import InfoList from './ThuyenChuyens/InfoList'
 import ModalThuyenChuyen from './Modals/TheModalThuyenChuyen'
-import ModalEditThuyenChuyen from './Modals/TheModalEditThuyenChuyen'
+// import ModalEditThuyenChuyen from './Modals/TheModalEditThuyenChuyen'
 import BtnAdd from './ThuyenChuyens/BtnAdd'
 import { mapState, mapActions, } from 'vuex'
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
@@ -28,7 +28,6 @@ export default {
   components: {
     InfoList,
 		BtnAdd,
-		ModalEditThuyenChuyen,
 		ModalThuyenChuyen
   },
 	props: {

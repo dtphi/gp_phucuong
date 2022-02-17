@@ -47,6 +47,7 @@ const defaultState = () => {
     dropdownCoSoGiaoPhans: [],
     dropdownBanChuyenTrachs: [],
     dropdownDongs: [],
+		dropdownLinhMucs: [],
     loading: false,
     updateSuccess: false,
     errors: [],
@@ -83,6 +84,9 @@ export default {
     },
     SET_DROPDOWN_DUC_CHA_LIST(state, payload) {
       state.dropdownDucChas = payload
+    },
+		SET_DROPDOWN_LINH_MUC_LIST(state, payload) {
+      state.dropdownLinhMucs = payload
     },
     SET_DROPDOWN_CHUC_VU_LIST(state, payload) {
       state.dropdownChucVus = payload
@@ -186,6 +190,21 @@ export default {
       apiGetDropdownCategories(
         (result) => {
           commit('SET_DROPDOWN_DUC_CHA_LIST', result)
+        },
+        (errors) => {
+          commit(SET_ERROR, errors)
+        },
+        params
+      )
+    },
+		ACTION_GET_DROPDOWN_LINH_MUC_LIST({ commit, }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.linh.muc',
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          commit('SET_DROPDOWN_LINH_MUC_LIST', result)
         },
         (errors) => {
           commit(SET_ERROR, errors)
