@@ -333,7 +333,19 @@ export default {
 			commit('remove_thuyen_chuyens', info.vitri)
 			apiUpdateGiaoXuThuyenChuyen(
         info,
-        (result) => {},
+        (response) => {
+				},
+        (errors) => {}
+      )
+    },
+
+		updateThuyenChuyen({ commit }, info) {
+			info['giaoxuId'] = info.giaoxuId
+			apiUpdateGiaoXuThuyenChuyen(
+        info,
+        (response) => {
+					commit('set_arr_thuyen_chuyens', response.data.data.results)
+				},
         (errors) => {}
       )
     },

@@ -197,6 +197,13 @@ class GiaoXuController extends ApiController
 								throw $e->render();
 						}
 						return $json;
+				}elseif($action == 'update.thuyen.chuyen') {
+					try {
+						$json = $this->gxSv->apiUpdateThuyenChuyen($data);
+					} catch (HandlerMsgCommon $e) {
+							throw $e->render();
+					}
+					return $json;
 				}else {
 						try {
 							$model = $this->gxSv->apiGetDetail($id);
@@ -364,6 +371,8 @@ class GiaoXuController extends ApiController
 									'from_date' => $info->from_date,		
 									'to_date' => $info->to_date,
 									'linhMucName' => $info->TenLinhMuc,
+									'linh_muc_id' => $info->linh_muc_id, 
+									'tenThanh' => $info->ten_thanh,
 									'fromGiaoXuName'      => $info->ten_from_giao_xu,
 									'fromchucvuName' => $info->ten_from_chuc_vu,
 									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"d-m-Y"):'',

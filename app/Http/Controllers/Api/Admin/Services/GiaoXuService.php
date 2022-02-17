@@ -175,6 +175,24 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 		}
 
 		public function apiRemoveThuyenChuyen($data = []) {
-			 LinhmucThuyenChuyen::fcDeleteByGiaoXuThuyenChuyenId($data['giaoxuId'], $data['item']['id']);
+			 	LinhmucThuyenChuyen::fcDeleteByGiaoXuThuyenChuyenId($data['giaoxuId'], $data['item']['id']);
 		}
+
+		public function apiUpdateThuyenChuyen($data = []) 
+		{
+				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['id_thuyen_chuyen']);
+				$this->modelThuyenChuyen->linh_muc_id = $data['data']['linh_muc_id'];
+				$this->modelThuyenChuyen->chuc_vu_id = $data['data']['chuc_vu_id'];
+				$this->modelThuyenChuyen->from_date = $data['data']['from_date'];
+				$this->modelThuyenChuyen->to_date = $data['data']['to_date'];
+
+				DB::beginTransaction();
+				if (!$this->modelThuyenChuyen->save()) {
+						DB::rollBack();
+						return false;
+				}
+				DB::commit();
+
+				return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->get());
+	 	}
 }
