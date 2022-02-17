@@ -59,7 +59,9 @@ class LinhMucController extends ApiController
             return $this->dropdownDong($request);
         } elseif ($action == 'dropdown.ban.chuyen.trach') {
             return $this->dropdownBanChuyenTrach($request);
-        }
+        }elseif ($action == 'dropdown.linh.muc') {
+					return $this->dropdownLinhMuc($request);
+			}
 
         $data = $request->all();
         $page = 1;
@@ -452,7 +454,24 @@ class LinhMucController extends ApiController
         return $this->respondWithCollectionPagination($collections);
     }
 
-		public function listLinhMucThuyenChuyen($infoId = null) 
+		public function dropdownLinhMuc(LinhmucRequest $request)
+    {
+        $data = $request->all();
+				
+        $results     = $this->linhMucSv->apiGetLinhMucList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id'   => $value->id,
+                'name' => $value->ten_thanh . '|' . $value->ten,
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
+		public function listLinhMucThuyenChuyen($infoId = null, LinhmucRequest $request) 
 		{
 				try {
 					$collections = $this->linhMucSv->apiGetThuyenChuyen($infoId);

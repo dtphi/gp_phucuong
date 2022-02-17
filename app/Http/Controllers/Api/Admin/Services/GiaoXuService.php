@@ -11,6 +11,8 @@ use App\Http\Resources\GiaoXus\GiaoXuResource;
 use App\Http\Resources\GiaoXus\GiaoXuCollection;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoXuModel;
+use App\Models\LinhmucThuyenchuyen;
+use App\Models\Linhmuc;
 
 final class GiaoXuService implements BaseModel, GiaoXuModel
 {
@@ -28,6 +30,7 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
     $this->model    = new GiaoXu();
     $this->modelGiaoHat = new GiaoHat();
     $this->modelPhanHatXu = new GiaoPhanHatXu();
+		$this->modelThuyenChuyen = new LinhmucThuyenchuyen();
   }
 
   public function apiGetList(array $options = [], $limit = 5)
@@ -124,4 +127,38 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
       $query = $this->modelPhanHatXu->where('giao_hat_id', $id)->with(['giaoXu']);
       return $query->paginate($limit);
   }
+
+	public function apiGetThuyenChuyen($infoId){
+		$query = $this->modelThuyenChuyen->select()
+		->where('giao_xu_id', $infoId)
+		->get();
+
+		return $query;
+	}
+
+	public function apiAddThuyenChuyen($data = []) 
+    {		
+				$hat = LinhMucThuyenChuyen::create(
+				[
+						'linh_muc_id' => $data['linh_muc_id'],
+						'giao_xu_id' => $data['giaoxuId'],
+						'chuc_vu_id' => $data['chuc_vu_id'],
+						'from_giao_xu_id' => 0,
+						'from_chuc_vu_id' => 0,
+						'from_date' => $data['from_date'],
+						'to_date' => $data['to_date'],
+						'duc_cha_id' => '',
+						'co_so_gp_id' => $data['co_so_gp_id'],
+						'dong_id' => $data['dong_id'],
+						'ban_chuyen_trach_id' => $data['ban_chuyen_trach_id'],
+						'du_hoc' => $data['du_hoc'],
+						'quoc_gia' => '',
+						'active' => $data['active'],
+						'ghi_chu' => $data['ghi_chu'],
+						'chuc_vu_active' => $data['chuc_vu_active']
+				]
+			);
+
+        return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->get());
+    }
 }

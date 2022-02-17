@@ -2,19 +2,15 @@
   <button
     type="button"
     data-toggle="tooltip"
-    @click="_addInfo()"
-    title="Thêm bằng cấp"
+    @click.prevent="_showModal()"
+    title="Thêm thuyên chuyển"
     class="btn btn-default cms-btn"
   >
-    <font-awesome-layers style="background: honeydew">
-      <font-awesome-icon size="1x" icon="plus" />
-    </font-awesome-layers>
+    <i class="fa fa-plus" />
   </button>
 </template>
 
 <script>
-import { mapActions, } from 'vuex'
-import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
 
 export default {
   name: 'TheButtonAdd',
@@ -24,12 +20,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['addThuyenChuyen']),
-
-    _addInfo() {
-      this.addThuyenChuyen({
-        action: 'addThuyenChuyen',
-      })
+    _showModal() {
+      this.$emit('show-modal-add')
     },
   },
 }

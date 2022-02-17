@@ -1,5 +1,5 @@
 import AppConfig from 'api@admin/constants/app-config'
-import { apiGetInfoGiaoXuById, apiUpdateInfo, apiGetGiaoHatInfos} from 'api@admin/giaoxu'
+import { apiGetInfoGiaoXuById, apiUpdateInfo, apiInsertGiaoXuThuyenChuyen, apiGetThuyenChuyenById} from 'api@admin/giaoxu'
 import {
   INFOS_MODAL_SET_INFO_ID,
   INFOS_MODAL_SET_INFO_ID_FAILED,
@@ -12,6 +12,8 @@ import {
   INFOS_FORM_ADD_INFO_TO_RELATED_LIST,
   INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST,
   INFOS_FORM_SET_MAIN_IMAGE,
+	INFOS_MODAL_INSERT_INFO_FAILED,
+	INFOS_MODAL_INSERT_INFO_SUCCESS,
 } from '../types/mutation-types'
 import {
   ACTION_GET_INFO_BY_ID,
@@ -57,6 +59,9 @@ const defaultState = () => {
     updateSuccess: false,
     errors: [],
     isImgChange: true,
+		arr_thuyen_chuyens: [],
+		update_thuyen_chuyen: {},
+		insertSuccess: false,
   }
 }
 
@@ -94,6 +99,15 @@ export default {
     },
     getInfoField(state) {
       return getField(state.info)
+    },
+		arr_thuyen_chuyens(state) {
+			return state.arr_thuyen_chuyens
+		},
+		update_thuyen_chuyen(state) {
+			return state.update_thuyen_chuyen
+		},
+		insertSuccess(state) {
+      return state.insertSuccess
     },
   },
 
@@ -141,6 +155,9 @@ export default {
     [INFOS_FORM_ADD_INFO_TO_RELATED_DISPLAY_LIST](state, payload) {
       state.listRelatedsDisplay = payload
     },
+		[INFOS_MODAL_INSERT_INFO_FAILED](state, payload) {
+      state.insertSuccess = payload
+    },
     INFO_GIAO_HAT(state, payload) {
       state.listGiaoHat = payload
     },
@@ -148,9 +165,18 @@ export default {
       state.info.image = payload
       state.isImgChange = true
     },
+		[INFOS_MODAL_INSERT_INFO_SUCCESS](state, payload) {
+      state.insertSuccess = payload
+    },
     updateInfoField(state, field) {
       return updateField(state.info, field)
     },
+		set_arr_thuyen_chuyens(state, payload) {
+			state.arr_thuyen_chuyens = payload
+		},
+		set_update_thuyen_chuyen(state, payload) {
+			state.update_thuyen_chuyen = payload
+		}
   },
 
   actions: {
@@ -238,6 +264,46 @@ export default {
         }
       )
     },
+		ACTION_GET_INFO_THUYEN_CHUYEN({commit}, infoId) {
+      apiGetThuyenChuyenById(
+        infoId,
+        (response) => {
+          commit('set_arr_thuyen_chuyens', response.data.results)
+        },
+        (errors) => {
+          commit(SET_ERROR, Object.values(errors))
+        }
+      )
+		},
+
+		async addThuyenChuyen({ dispatch, commit, state, }, params) {
+        let thuyenChuyen = params.data
+        dispatch(ACTION_SET_LOADING, true)
+        //implement
+        thuyenChuyen['giaoxuId'] = params.giaoxuId
+        thuyenChuyen['action'] = params.action
+        apiInsertGiaoXuThuyenChuyen(
+          thuyenChuyen,
+          (response) => {
+            commit('set_arr_thuyen_chuyens', response.data.data.results)
+            commit(SET_ERROR, [])
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            dispatch(ACTION_SET_LOADING, false)
+          },
+          (errors) => {
+						console.log(errors, 'error')
+            commit(
+              INFOS_MODAL_INSERT_INFO_FAILED,
+              AppConfig.comInsertNoFail
+            )
+            commit(SET_ERROR, errors)
+            dispatch(ACTION_SET_LOADING, false)
+          }
+        )
+		},
 
     [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, values)

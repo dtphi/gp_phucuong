@@ -388,6 +388,16 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return $query->get();
     }
 
+		public function apiGetLinhMucList($data = [])
+    {
+        $model = new LinhMuc();
+        $query = $model->select()
+						->where('active', 1)
+            ->orderBy('ten', 'DESC');
+
+        return $query->get();
+    }
+
     public function apiUpdateBangCap($data = []) 
     {
         $hat = LinhMucBangCap::updateOrCreate(

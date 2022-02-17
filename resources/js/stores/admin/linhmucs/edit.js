@@ -466,7 +466,6 @@ export default {
       })
     },
     addThuyenChuyen({ dispatch, commit, state, }, params) {
-			console.log(params, 'params')
       if (fnCheckProp(params, 'action') && params.action == 'addThuyenChuyen'
       ) {
         let thuyenChuyen = params.data

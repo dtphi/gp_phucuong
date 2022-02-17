@@ -4,10 +4,10 @@
             :active.sync="loading"
             :is-full-page="fullPage"></loading-over-lay>-->
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li class="active" @click="currentTab = 'general'">
         <a href="#tab-general" data-toggle="tab">Giáo Xứ</a>
       </li>
-      <li>
+      <li @click="currentTab = 'thuyen_chuyen'">
         <a href="#tab-thuyen-chuyen" data-toggle="tab">{{
           $options.setting.tab_thuyen_chuyen_title
         }}</a>
@@ -15,7 +15,7 @@
     </ul>
     <!-- Tab General -->
     <div class="tab-content">
-      <div class="tab-pane active" id="tab-general">
+      <div class="tab-pane active" id="tab-general" v-if="currentTab == 'general'">
         <tab-general
           ref="tabGeneral"
           role="tabpanel"
@@ -25,7 +25,7 @@
           :mmPath="imgSelected"
         ></tab-general>
       </div>
-      <div class="tab-pane" id="tab-thuyen-chuyen">
+      <div class="tab-pane" id="tab-thuyen-chuyen" v-if="currentTab == 'thuyen_chuyen'">
         <tab-thuyen-chuyen
           role="tabpanel"
           class="tab-pane"
@@ -74,6 +74,7 @@ export default {
       mm: mm,
       selected: null,
       imgSelected: '',
+			currentTab: 'general',
     }
   },
   computed: {
@@ -83,17 +84,11 @@ export default {
     }),
     ...mapGetters(MODULE_MODULE_GIAO_XU_EDIT, ['info']),
   },
-  created() {
-    this.ACTION_GET_LIST_GIAO_HAT({
-      perPage: -1,
-    })
-  },
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
       ACTION_SET_LOADING,
       ACTION_UPDATE_INFO,
       ACTION_UPDATE_INFO_BACK,
-      'ACTION_GET_LIST_GIAO_HAT'
     ]),
     _submitInfo() {
       this[ACTION_UPDATE_INFO](this.info)
