@@ -1,13 +1,14 @@
 <template>
   <tbody>
-    <tr v-if="item.isEdit" key="thuyen-chuyen-title">
+		<modal-edit-thuyen-chuyen v-if="lists.isEdit == 0" :item="lists"></modal-edit-thuyen-chuyen> 
+    <tr key="thuyen-chuyen-title">
       <td>{{ vitri + 1 }}</td>
       <p class="text-center">{{ item.chucvuName}}</p>
       <div class="text-center">
 				<toggle-button class="switch-btn-center" v-if="item.chuc_vu_active == 1" :value="switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 			</div>
-			<td>Giáo Xứ {{ item.linhMucName }}</td>
+			<td>{{ item.linhMucName }}</td>
 			<td class="text-center">{{ item.label_from_date  }}</td>
 			<td class="text-center">{{ item.label_to_date }}</td>
 			<td>	
@@ -42,9 +43,13 @@
 <script>
 import { mapActions, mapMutations } from 'vuex'
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
+import ModalEditThuyenChuyen from '../Modals/TheModalEditThuyenChuyen'
 
 export default {
   name: 'TheInfoItem',
+	components: {
+		ModalEditThuyenChuyen
+	},
   props: {
     item: {
       default: {},
@@ -57,8 +62,12 @@ export default {
     return {
       isEdit: false,
 			switchValue: true,
+			lists: {}
     }
   },
+	mounted() {
+		this.lists = this.item
+	},
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
       'removeThuyenChuyen',
@@ -80,33 +89,24 @@ export default {
           {
             title: "Xóa",
             handler: () => {
-							this.removeThuyenChuyen({item: item, vitri: this.vitri, action: 'remove.thuyen.chuyen', id: this.$route.params.linhmucId })
+							this.removeThuyenChuyen({item: item, vitri: this.vitri, action: 'remove.thuyen.chuyen', id: this.$route.params.giaoxuId })
               this.$modal.hide("dialog")
             },
           },
         ],
       });
     },
-    _openEditForm() {
-      this.isEdit = !this.isEdit
-    },
-    _updateThuyenChuyenForm() {
-      const id = this.item?.id
-      if (id) {
-        this.addThuyenChuyen({
-          action: 'create.update.thuyen.chuyen.db',
-          info: this.item,
-        })
-      }
-    },
 		_changeActiveThuyenChuyen($event, item) {
 				this.updateActiveThuyenChuyen({
-					action: 'update_active_thuyen_chuyen',
+					action: 'update.active.thuyen.chuyen',
 					item: item,
 				});
 		},
-		_showModal(item) {
-			this.set_update_thuyen_chuyen(item)
+		changeEdit() {
+				this.item.isEdit = 0
+		},
+		async _showModal() {
+			await this.changeEdit()
 			this.$modal.show('modal-thuyen-chuyen-edit')
     },
   },

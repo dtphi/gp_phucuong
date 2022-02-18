@@ -175,25 +175,45 @@ class GiaoXuController extends ApiController
     {
 				$data = $request->all();
 				$action = $request->get('action');
+
 				if ($action == 'addThuyenChuyen') {
 						try {
 								$json = $this->gxSv->apiAddThuyenChuyen($data);
 						} catch (HandlerMsgCommon $e) {
 								throw $e->render();
 						}
-		
 						return $json;
+				}elseif($action == 'update.active.thuyen.chuyen') {
+						try {
+							$json = $this->gxSv->apiUpdateActiveThuyenChuyen($data);
+						} catch (HandlerMsgCommon $e) {
+								throw $e->render();
+						}
+				return $json;
+				}elseif($action == 'remove.thuyen.chuyen') {
+						try {
+							$json = $this->gxSv->apiRemoveThuyenChuyen($data);
+						} catch (HandlerMsgCommon $e) {
+								throw $e->render();
+						}
+						return $json;
+				}elseif($action == 'update.thuyen.chuyen') {
+					try {
+						$json = $this->gxSv->apiUpdateThuyenChuyen($data);
+					} catch (HandlerMsgCommon $e) {
+							throw $e->render();
+					}
+					return $json;
 				}else {
 						try {
 							$model = $this->gxSv->apiGetDetail($id);
 
-					} catch (HandlerMsgCommon $e) {
+						} catch (HandlerMsgCommon $e) {
 							Log::debug('Giao xu not found, Request ID = ' . $id);
-
 							throw $e->render();
 						}
 						return $this->__handleStoreUpdate($model, $request);
-				}  
+					}  
     }
 
     /**
@@ -351,6 +371,8 @@ class GiaoXuController extends ApiController
 									'from_date' => $info->from_date,		
 									'to_date' => $info->to_date,
 									'linhMucName' => $info->TenLinhMuc,
+									'linh_muc_id' => $info->linh_muc_id, 
+									'tenThanh' => $info->ten_thanh,
 									'fromGiaoXuName'      => $info->ten_from_giao_xu,
 									'fromchucvuName' => $info->ten_from_chuc_vu,
 									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"d-m-Y"):'',
