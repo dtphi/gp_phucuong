@@ -23,6 +23,7 @@ class GiaoXuCollection extends ResourceCollection
 							'from_date' => $thuyenChuyen->from_date,		
 							'to_date' => $thuyenChuyen->to_date,
 							'linhMucName' => $thuyenChuyen->TenLinhMuc,
+							'linh_muc_id' => $thuyenChuyen->linh_muc_id,
 							'fromGiaoXuName'      => $thuyenChuyen->ten_from_giao_xu,
 							'fromchucvuName' => $thuyenChuyen->ten_from_chuc_vu,
 							'label_from_date' => ($thuyenChuyen->from_date)?date_format(date_create($thuyenChuyen->from_date),"d-m-Y"):'',

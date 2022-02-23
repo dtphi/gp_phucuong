@@ -1,6 +1,10 @@
 <template>
   <tbody>
-		<modal-edit-thuyen-chuyen v-if="lists.isEdit == 0" :item="lists"></modal-edit-thuyen-chuyen> 
+		<modal-edit-thuyen-chuyen
+				v-if="_infoUpdate.id"
+        :info="_infoUpdate || {}"
+				@update-info-success="_updateInfoList"
+		></modal-edit-thuyen-chuyen> 
     <tr key="thuyen-chuyen-title">
       <td>{{ vitri + 1 }}</td>
       <p class="text-center">{{ item.chucvuName}}</p>
@@ -15,7 +19,7 @@
 				<a
 					href="javascript:void(0);"
 					data-toggle="tooltip"
-					@click.prevent="_showModal(item)"
+					@click.prevent="_showModalEdit(item)"
 					class="btn btn-default cms-btn"
 					data-original-title="Sửa thuyên chuyển"
 					><i class="fa fa-edit" />
@@ -62,11 +66,14 @@ export default {
     return {
       isEdit: false,
 			switchValue: true,
-			lists: {}
+			infoUpdate: {},
+			curInfo: {},
     }
   },
-	mounted() {
-		this.lists = this.item
+	computed: {
+		_infoUpdate() {
+      return this.infoUpdate
+    }
 	},
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
@@ -74,7 +81,6 @@ export default {
 			'updateActiveThuyenChuyen',
       'addThuyenChuyen',
     ]),
-		...mapMutations(MODULE_MODULE_GIAO_XU_EDIT, ['set_update_thuyen_chuyen']),
 		_removeItem(item) {
       this.$modal.show("dialog", {
         title: "Xóa thuyên chuyển",
@@ -103,12 +109,18 @@ export default {
 				});
 		},
 		changeEdit() {
-				this.item.isEdit = 0
+				this.isEdit = !this.isEdit
 		},
-		async _showModal() {
-			await this.changeEdit()
-			this.$modal.show('modal-thuyen-chuyen-edit')
+		_showModalEdit(info) {
+			this.curInfo = info;
+			this.infoUpdate = { ...info };
+			this.$nextTick(() => {
+          this.$modal.show('modal-thuyen-chuyen-edit');
+      });
     },
+		_updateInfoList(data) {
+			this.$modal.hide('modal-thuyen-chuyen-edit');
+		}
   },
 	
   setting: {

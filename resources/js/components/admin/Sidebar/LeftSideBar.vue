@@ -115,11 +115,11 @@
                 <span>{{ $options.setting.linhmuc_vanthus_title }}</span></a
               >
             </li>
-            <li>
+            <!-- <li>
               <a :href="_getHref('thuyen-chuyens')">
                 <span>{{ $options.setting.linhmuc_thuyenchuyens_title }}</span></a
               >
-            </li>
+            </li> -->
             <li>
               <a :href="_getHref('chuc-vus')">
                 <span>{{ $options.setting.chuc_vus_title }}</span></a

@@ -375,9 +375,9 @@ class GiaoXuController extends ApiController
 									'tenThanh' => $info->ten_thanh,
 									'fromGiaoXuName'      => $info->ten_from_giao_xu,
 									'fromchucvuName' => $info->ten_from_chuc_vu,
-									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"d-m-Y"):'',
+									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"Y-m-d"):'',
 									'ducchaName' => $info->ten_duc_cha,
-									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"d-m-Y"):'',
+									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'',
 									'chucvuName' => $info->ten_to_chuc_vu,
 									'chuc_vu_id' => $info->chuc_vu_id,
 									'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
@@ -404,6 +404,52 @@ class GiaoXuController extends ApiController
 						]
 				];
 				return $this->respondWithCollectionPagination($json);
+		}
+
+		public function getDetailThuyenChuyen($id = null) {
+			try {
+					$results = [];
+					$info = $this->gxSv->apiGetThuyenChuyenDetail($id);
+					$results = [
+						'id' => (int)$info->id,
+						'isCheck' => false,
+						'isEdit' => 1,
+						'from_date' => $info->from_date,		
+						'to_date' => $info->to_date,
+						'linhMucName' => $info->TenLinhMuc,
+						'linh_muc_id' => $info->linh_muc_id, 
+						'tenThanh' => $info->ten_thanh,
+						'fromGiaoXuName'      => $info->ten_from_giao_xu,
+						'fromchucvuName' => $info->ten_from_chuc_vu,
+						'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"d-m-Y"):'',
+						'ducchaName' => $info->ten_duc_cha,
+						'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"d-m-Y"):'',
+						'chucvuName' => $info->ten_to_chuc_vu,
+						'chuc_vu_id' => $info->chuc_vu_id,
+						'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
+						'giaoxuName' => $info->ten_to_giao_xu,
+						'giao_xu_id' => $info->giao_xu_id, 
+						'cosogpName' => $info->ten_co_so,
+						'dongName' => $info->ten_dong,
+						'banchuyentrachName' => $info->ten_ban_chuyen_trach,
+						'du_hoc' => $info->du_hoc,
+						'quoc_gia' => $info->quoc_gia,
+						'ghi_chu' => $info->ghi_chu,
+						'active' => $info->active,
+						'active_text' => $info->active?'Xảy ra':'Ẩn',
+						'chuc_vu_active' => $info->chuc_vu_active
+					];
+			} catch (HandlerMsgCommon $e) {
+					throw $e->render();
+			}
+
+			$json = [
+				'data' => [
+					'results' => $results,
+					'status' => 200
+				]
+			];
+			return $this->respondWithCollectionPagination($json);
 		}
 
 }

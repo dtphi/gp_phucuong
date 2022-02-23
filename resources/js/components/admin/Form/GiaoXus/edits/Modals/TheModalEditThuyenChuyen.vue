@@ -108,14 +108,17 @@
         type="button"
         value="Thêm"
         class="btn btn-primary"
-        @click.prevent="_updateInfo"
+        @click.prevent="_submitUpdate"
       />
     </template>
   </the-modal-resizable>
 </template>
 
 <script>
-import { mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters, mapState} from 'vuex'
+import {
+    ACTION_RESET_NOTIFICATION_INFO 
+} from 'store@admin/types/action-types';
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
 import TheModalResizable from 'com@admin/Modal/TheModalResizable'
 import InfoChucVuAutocomplete from '../../Groups/InfoChucVuAutocomplete'
@@ -166,9 +169,10 @@ export default {
         return 1
       } 
     },
-		item: {
-      default: {},
-    },
+		info: {
+				type: Object,
+				require: true,
+		}
   },
   data() {
     return {
@@ -178,6 +182,15 @@ export default {
       isDong: 3,
       isBanChuyenTrach: 4,
     }
+  },
+	computed: {
+		...mapState(MODULE_MODULE_GIAO_XU_EDIT, [
+			'update_thuyen_chuyen',
+			'updateSuccess',
+		]),
+    _showDiaDiem() {
+      return this.dia_diem_loai
+    },
   },
   watch: {
     from_date(val) {
@@ -190,24 +203,28 @@ export default {
         this._setDenNgayThangNam(val)
       }
     },
-  },
-  computed: {
-    _showDiaDiem() {
-      return this.dia_diem_loai
-    },
-  },
+		'updateSuccess'(newValue, oldValue) {
+				if (newValue) {
+						this._notificationUpdate(newValue);
+				}
+		},
+	},
 	created() {
-			this.$data.linhMucName = this.item.tenThanh + '|' + this.item.linhMucName 
-      this.$data.linh_muc_id = this.item.linh_muc_id
-			this.$data.chucVuName = this.item.chucvuName
-			this.$data.chuc_vu_id = this.item.chuc_vu_id
-			this.$data.from_date = this.item.label_from_date
-			this.$data.to_date = this.item.label_to_date
-			this._setTuNgayThangNam(this.item.label_from_date)
-			this._setDenNgayThangNam(this.item.label_to_date)
+			this.$data.chucVuName = this.info.chucvuName
+      this.$data.chuc_vu_id = this.info.chuc_vu_id
+			this.$data.linhMucName = this.info.linhMucName
+			this.$data.linh_muc_id = this.info.linh_muc_id
+			this.$data.from_date = this.info.label_from_date
+			this.$data.to_date = this.info.label_to_date
+			this.$data.active = this.info.active
+			this.$data.chuc_vu_active = this.info.chuc_vu_active
 	},
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, ['updateThuyenChuyen']),
+    ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
+			'updateThuyenChuyen', 
+			'getDetailThuyenchuyen',
+		  ACTION_RESET_NOTIFICATION_INFO,
+		]),
     _setTuNgayThangNam(val) {
       const arrDate = this.$helper.fn_split_date_time(val)
       this.$data.dia_diem_tu_nam = arrDate[0]
@@ -271,21 +288,28 @@ export default {
 			this.$data.ghi_chu = ''
 			this.$data.du_hoc = 0
     },
-    _updateInfo() {
-      const data = this.$data
-      if (data.chuc_vu_id && data.linh_muc_id) {
+    _submitUpdate() {
+			const data = this.$data
+      if (data.chuc_vu_id & data.linh_muc_id) {
           this.updateThuyenChuyen({
           action: 'update.thuyen.chuyen',
           data: data,
-					id_thuyen_chuyen: this.item.id,
+					id_thuyen_chuyen: this.info.id,
 					giaoxuId: this.$route.params.giaoxuId,
         })
-        this._resetModal()
-        this.$modal.hide(this.$options.setting.modal_name)
+				this.$emit('update-info-success', data);
       } else {
         alert('Nhập thông tin thuyên chuyển')
       }
+			this._hideModalEdit;
     },
+		_notificationUpdate(notification) {
+				if (notification.type == 'success') {
+						this.$emit('update-info-success');
+				}
+				this.$notify(notification);
+				this.resetNotification();
+		},
   },
   setting: {
     modal_title: 'Cập nhật Thuyên Chuyển',

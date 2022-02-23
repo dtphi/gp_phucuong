@@ -131,6 +131,7 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 	public function apiGetThuyenChuyen($infoId){
 		$query = $this->modelThuyenChuyen->select()
 		->where('giao_xu_id', $infoId)
+		->orderBy('from_date', 'DESC')
 		->get();
 
 		return $query;
@@ -158,8 +159,7 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 						'chuc_vu_active' => $data['chuc_vu_active']
 				]
 			);
-
-        return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->get());
+        return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->orderBy('from_date', 'DESC')->get());
     }
 		public function apiUpdateActiveThuyenChuyen($data = []) 
 		{
@@ -192,7 +192,18 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 						return false;
 				}
 				DB::commit();
-
-				return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->get());
+			
+				return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->orderBy('from_date', 'DESC')->get());
 	 	}
+
+		// public function apiGetResourceThuyenChuyenDetail($id = null)
+    // {
+    //     // TODO: Implement apiGetResourceDetail() method.
+    //     return new GiaoXuResource($this->apiGetThuyenChuyenDetail($id));
+    // }
+
+		 public function apiGetThuyenChuyenDetail($id = null) {
+				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($id);
+				return $this->modelThuyenChuyen;
+		}
 }
