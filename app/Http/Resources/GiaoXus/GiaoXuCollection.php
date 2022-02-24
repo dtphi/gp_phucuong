@@ -22,7 +22,7 @@ class GiaoXuCollection extends ResourceCollection
 							'isEdit' => 1,
 							'from_date' => $thuyenChuyen->from_date,		
 							'to_date' => $thuyenChuyen->to_date,
-							'linhMucName' => $thuyenChuyen->TenLinhMuc,
+							'linhMucName' => $thuyenChuyen->tenThanh . ' ' . $thuyenChuyen->TenLinhMuc,
 							'linh_muc_id' => $thuyenChuyen->linh_muc_id,
 							'fromGiaoXuName'      => $thuyenChuyen->ten_from_giao_xu,
 							'fromchucvuName' => $thuyenChuyen->ten_from_chuc_vu,

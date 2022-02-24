@@ -464,7 +464,7 @@ class LinhMucController extends ApiController
         foreach ($results as $key => $value) {
             $collections[] = [
                 'id'   => $value->id,
-                'name' => $value->ten_thanh . '|' . $value->ten,
+                'name' => $value->ten_thanh . ' ' . $value->ten,
             ];
         }
 

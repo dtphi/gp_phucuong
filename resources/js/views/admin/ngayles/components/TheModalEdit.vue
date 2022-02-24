@@ -300,7 +300,7 @@
             }
         },
          mounted(){
-            
+            console.log(this.info)
         },
         data() {
             return {

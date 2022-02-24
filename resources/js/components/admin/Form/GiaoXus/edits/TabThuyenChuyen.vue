@@ -5,7 +5,7 @@
 				<div class="text-right">
 						<btn-add @show-modal-add="_showModalAdd"></btn-add>
 				</div>
-        <info-list :lists="arr_thuyen_chuyens"></info-list>	
+        <info-list></info-list>	
 				<div class="text-right">
 						<btn-add @show-modal-add="_showModalAdd"></btn-add>
 				</div>
@@ -19,8 +19,6 @@
 import InfoList from './ThuyenChuyens/InfoList'
 import ModalThuyenChuyen from './Modals/TheModalThuyenChuyen'
 import BtnAdd from './ThuyenChuyens/BtnAdd'
-import { mapState, mapActions, } from 'vuex'
-import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
 export default {
   name: 'TabThuyenChuyenForm',
   components: {
@@ -35,25 +33,10 @@ export default {
 			}
 		},
 	},
-	computed: {
-    ...mapState(MODULE_MODULE_GIAO_XU_EDIT, {
-      loading: (state) => state.loading,
-      arr_thuyen_chuyens: (state) => state.arr_thuyen_chuyens,
-    }),
-  },
 	methods: {
-    ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, {
-			getInfoThuyenChuyen: 'ACTION_GET_INFO_THUYEN_CHUYEN',
-		}),
 		_showModalAdd() {
 			this.$modal.show('modal-thuyen-chuyen-add')
 		},
-  },
-	mounted() {
-    const giaoxuId = parseInt(this.$route.params.giaoxuId)
-    if (giaoxuId) {
-      this.getInfoThuyenChuyen(giaoxuId)
-    }
   },
 }
 </script>

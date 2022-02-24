@@ -61,7 +61,19 @@ const defaultState = () => {
     errors: [],
     isImgChange: true,
 		arr_thuyen_chuyens: [],
-		update_thuyen_chuyen: {},
+		update_thuyen_chuyen: {
+			id: '',
+			giao_xu_id: '',
+			linh_muc_id: '',
+			linhMucName: '',
+			tenThanh: '',
+			chuc_vu_id: '',
+			chucvuName: '',
+			label_from_date: '',
+			label_to_date: '',
+			from_date: '',
+			to_date: ''
+		},
 		insertSuccess: false,
   }
 }
@@ -212,7 +224,7 @@ export default {
       commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
 
-    // UPDATE GIAO XU
+    // UPDATE GIAO XU 
     [ACTION_UPDATE_INFO]({ commit, }, info) {
       commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, '')
       apiUpdateInfo(
@@ -268,6 +280,7 @@ export default {
         }
       )
     },
+
 		ACTION_GET_INFO_THUYEN_CHUYEN({commit}, infoId) {
       apiGetThuyenChuyenById(
         infoId,
@@ -341,10 +354,11 @@ export default {
 
 		updateThuyenChuyen({ commit }, info) {
 			info['giaoxuId'] = info.giaoxuId
+			commit('set_update_thuyen_chuyen', info.data)
 			apiUpdateGiaoXuThuyenChuyen(
         info,
         (response) => {
-					commit('set_arr_thuyen_chuyens', response.data.data.results)
+					commit(INFOS_MODAL_UPDATE_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
 				},
         (errors) => {}
       )

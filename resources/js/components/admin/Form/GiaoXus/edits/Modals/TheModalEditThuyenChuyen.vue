@@ -1,10 +1,11 @@
 <template>
-  <the-modal-resizable
-    :title="$options.setting.modal_title"
-    :modal-name="$options.setting.modal_name"
-  >
-    <template #cms_modal_form_group>
-      <div class="form-group">
+		<div class="panel panel-default" style="height: 100%; overflow: auto">
+      <div class="panel-heading cms-modal-heading">
+        <h3 class="panel-title"><i :class="icon"></i>{{ title }}</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal cms-modal-form">
+						<div class="form-group">
         <div class="col-sm-12">
           <info-chuc-vu-autocomplete
             @on-select-chuc-vu="_selectThuyenChuyenFromChucVu"
@@ -96,22 +97,25 @@
           ></cms-date-picker>
         </div>
       </div>
-    </template>
-    <template #cms_modal_btn_group>
-      <input
-        type="button"
-        value="Đóng"
-        class="btn btn-danger"
-        @click="_hideModalEdit"
-      />
-      <input
-        type="button"
-        value="Thêm"
-        class="btn btn-primary"
-        @click.prevent="_submitUpdate"
-      />
-    </template>
-  </the-modal-resizable>
+        </form>
+        <div class="cms-modal-footer-btn">
+          <div class="text-center cms-modal-group-btn">
+						<input
+						type="button"
+						value="Đóng"
+						class="btn btn-danger"
+						@click="_hideModalEdit"
+					/>
+					<input
+						type="button"
+						value="Thêm"
+						class="btn btn-primary"
+						@click.prevent="_submitUpdate"
+					/>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -172,7 +176,13 @@ export default {
 		info: {
 				type: Object,
 				require: true,
-		}
+		},
+		icon: {
+      default: 'fa fa-plus',
+    },
+    title: {
+      default: 'Tiêu Để',
+    },
   },
   data() {
     return {
@@ -185,7 +195,6 @@ export default {
   },
 	computed: {
 		...mapState(MODULE_MODULE_GIAO_XU_EDIT, [
-			'update_thuyen_chuyen',
 			'updateSuccess',
 		]),
     _showDiaDiem() {
@@ -210,20 +219,19 @@ export default {
 		},
 	},
 	created() {
-			this.$data.chucVuName = this.info.chucvuName
-      this.$data.chuc_vu_id = this.info.chuc_vu_id
-			this.$data.linhMucName = this.info.linhMucName
-			this.$data.linh_muc_id = this.info.linh_muc_id
-			this.$data.from_date = this.info.label_from_date
-			this.$data.to_date = this.info.label_to_date
-			this.$data.active = this.info.active
-			this.$data.chuc_vu_active = this.info.chuc_vu_active
+		this.$data.chuc_vu_id = this.info.chuc_vu_id
+		this.$data.chucVuName = this.info.chucvuName
+		this.$data.linh_muc_id = this.info.linh_muc_id
+		this.$data.linhMucName = this.info.linhMucName
+		this.$data.id = this.info.id
+		this.$data.giao_xu_id = this.info.giao_xu_id
+		this.$data.from_date = this.info.label_from_date
+		this.$data.to_date = this.info.label_to_date
 	},
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
-			'updateThuyenChuyen', 
-			'getDetailThuyenchuyen',
-		  ACTION_RESET_NOTIFICATION_INFO,
+				'updateThuyenChuyen', 
+				ACTION_RESET_NOTIFICATION_INFO,
 		]),
     _setTuNgayThangNam(val) {
       const arrDate = this.$helper.fn_split_date_time(val)
@@ -290,18 +298,20 @@ export default {
     },
     _submitUpdate() {
 			const data = this.$data
-      if (data.chuc_vu_id & data.linh_muc_id) {
+      if (data.chuc_vu_id && data.linh_muc_id) {
           this.updateThuyenChuyen({
           action: 'update.thuyen.chuyen',
           data: data,
 					id_thuyen_chuyen: this.info.id,
 					giaoxuId: this.$route.params.giaoxuId,
         })
-				this.$emit('update-info-success', data);
+				this._resetModal;
+				this.$nextTick(() => {
+          this.$emit('update-info-success');
+      	});
       } else {
         alert('Nhập thông tin thuyên chuyển')
       }
-			this._hideModalEdit;
     },
 		_notificationUpdate(notification) {
 				if (notification.type == 'success') {
@@ -318,3 +328,27 @@ export default {
   },
 }
 </script>
+<style scoped lang="scss">
+.cms-modal-heading {
+  color: #eeeeeee8;
+  position: absolute;
+  width: 100%;
+  border-color: #784545;
+  background: #2e2222b3;
+  z-index: 999999;
+}
+.cms-modal-form {
+  padding: 25px;
+}
+.cms-modal-footer-btn {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  background-color: #0e212a;
+
+  .cms-modal-group-btn {
+    padding: 10px;
+  }
+}
+</style>

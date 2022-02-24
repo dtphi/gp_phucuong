@@ -1,10 +1,5 @@
 <template>
   <tbody>
-		<modal-edit-thuyen-chuyen
-				v-if="_infoUpdate.id"
-        :info="_infoUpdate || {}"
-				@update-info-success="_updateInfoList"
-		></modal-edit-thuyen-chuyen> 
     <tr key="thuyen-chuyen-title">
       <td>{{ vitri + 1 }}</td>
       <p class="text-center">{{ item.chucvuName}}</p>
@@ -19,7 +14,7 @@
 				<a
 					href="javascript:void(0);"
 					data-toggle="tooltip"
-					@click.prevent="_showModalEdit(item)"
+					@click.prevent="_showModalEdit"
 					class="btn btn-default cms-btn"
 					data-original-title="Sửa thuyên chuyển"
 					><i class="fa fa-edit" />
@@ -45,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
 import ModalEditThuyenChuyen from '../Modals/TheModalEditThuyenChuyen'
 
@@ -66,15 +61,8 @@ export default {
     return {
       isEdit: false,
 			switchValue: true,
-			infoUpdate: {},
-			curInfo: {},
     }
   },
-	computed: {
-		_infoUpdate() {
-      return this.infoUpdate
-    }
-	},
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
       'removeThuyenChuyen',
@@ -111,16 +99,9 @@ export default {
 		changeEdit() {
 				this.isEdit = !this.isEdit
 		},
-		_showModalEdit(info) {
-			this.curInfo = info;
-			this.infoUpdate = { ...info };
-			this.$nextTick(() => {
-          this.$modal.show('modal-thuyen-chuyen-edit');
-      });
+		_showModalEdit() {
+			 this.$emit('show-modal-edit', this.item)
     },
-		_updateInfoList(data) {
-			this.$modal.hide('modal-thuyen-chuyen-edit');
-		}
   },
 	
   setting: {
