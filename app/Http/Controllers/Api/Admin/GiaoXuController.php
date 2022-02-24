@@ -370,14 +370,14 @@ class GiaoXuController extends ApiController
                   'isEdit' => 1,
 									'from_date' => $info->from_date,		
 									'to_date' => $info->to_date,
-									'linhMucName' => $info->TenLinhMuc,
+									'linhMucName' => $info->tenThanh . ' ' . $info->TenLinhMuc,
 									'linh_muc_id' => $info->linh_muc_id, 
 									'tenThanh' => $info->ten_thanh,
 									'fromGiaoXuName'      => $info->ten_from_giao_xu,
 									'fromchucvuName' => $info->ten_from_chuc_vu,
-									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"d-m-Y"):'',
+									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"Y-m-d"):'',
 									'ducchaName' => $info->ten_duc_cha,
-									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"d-m-Y"):'',
+									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'',
 									'chucvuName' => $info->ten_to_chuc_vu,
 									'chuc_vu_id' => $info->chuc_vu_id,
 									'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
@@ -405,5 +405,4 @@ class GiaoXuController extends ApiController
 				];
 				return $this->respondWithCollectionPagination($json);
 		}
-
 }

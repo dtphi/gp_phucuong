@@ -1,10 +1,11 @@
 <template>
-  <the-modal-resizable
-    :title="$options.setting.modal_title"
-    :modal-name="$options.setting.modal_name"
-  >
-    <template #cms_modal_form_group>
-      <div class="form-group">
+		<div class="panel panel-default" style="height: 100%; overflow: auto">
+      <div class="panel-heading cms-modal-heading">
+        <h3 class="panel-title"><i :class="icon"></i>{{ title }}</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal cms-modal-form">
+						<div class="form-group">
         <div class="col-sm-12">
           <info-chuc-vu-autocomplete
             @on-select-chuc-vu="_selectThuyenChuyenFromChucVu"
@@ -96,26 +97,32 @@
           ></cms-date-picker>
         </div>
       </div>
-    </template>
-    <template #cms_modal_btn_group>
-      <input
-        type="button"
-        value="Đóng"
-        class="btn btn-danger"
-        @click="_hideModalEdit"
-      />
-      <input
-        type="button"
-        value="Thêm"
-        class="btn btn-primary"
-        @click.prevent="_updateInfo"
-      />
-    </template>
-  </the-modal-resizable>
+        </form>
+        <div class="cms-modal-footer-btn">
+          <div class="text-center cms-modal-group-btn">
+						<input
+						type="button"
+						value="Đóng"
+						class="btn btn-danger"
+						@click="_hideModalEdit"
+					/>
+					<input
+						type="button"
+						value="Thêm"
+						class="btn btn-primary"
+						@click.prevent="_submitUpdate"
+					/>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
-import { mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters, mapState} from 'vuex'
+import {
+    ACTION_RESET_NOTIFICATION_INFO 
+} from 'store@admin/types/action-types';
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
 import TheModalResizable from 'com@admin/Modal/TheModalResizable'
 import InfoChucVuAutocomplete from '../../Groups/InfoChucVuAutocomplete'
@@ -166,8 +173,15 @@ export default {
         return 1
       } 
     },
-		item: {
-      default: {},
+		info: {
+				type: Object,
+				require: true,
+		},
+		icon: {
+      default: 'fa fa-plus',
+    },
+    title: {
+      default: 'Tiêu Để',
     },
   },
   data() {
@@ -178,6 +192,14 @@ export default {
       isDong: 3,
       isBanChuyenTrach: 4,
     }
+  },
+	computed: {
+		...mapState(MODULE_MODULE_GIAO_XU_EDIT, [
+			'updateSuccess',
+		]),
+    _showDiaDiem() {
+      return this.dia_diem_loai
+    },
   },
   watch: {
     from_date(val) {
@@ -190,24 +212,27 @@ export default {
         this._setDenNgayThangNam(val)
       }
     },
-  },
-  computed: {
-    _showDiaDiem() {
-      return this.dia_diem_loai
-    },
-  },
+		'updateSuccess'(newValue, oldValue) {
+				if (newValue) {
+						this._notificationUpdate(newValue);
+				}
+		},
+	},
 	created() {
-			this.$data.linhMucName = this.item.tenThanh + '|' + this.item.linhMucName 
-      this.$data.linh_muc_id = this.item.linh_muc_id
-			this.$data.chucVuName = this.item.chucvuName
-			this.$data.chuc_vu_id = this.item.chuc_vu_id
-			this.$data.from_date = this.item.label_from_date
-			this.$data.to_date = this.item.label_to_date
-			this._setTuNgayThangNam(this.item.label_from_date)
-			this._setDenNgayThangNam(this.item.label_to_date)
+		this.$data.chuc_vu_id = this.info.chuc_vu_id
+		this.$data.chucVuName = this.info.chucvuName
+		this.$data.linh_muc_id = this.info.linh_muc_id
+		this.$data.linhMucName = this.info.linhMucName
+		this.$data.id = this.info.id
+		this.$data.giao_xu_id = this.info.giao_xu_id
+		this.$data.from_date = this.info.label_from_date
+		this.$data.to_date = this.info.label_to_date
 	},
   methods: {
-    ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, ['updateThuyenChuyen']),
+    ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
+				'updateThuyenChuyen', 
+				ACTION_RESET_NOTIFICATION_INFO,
+		]),
     _setTuNgayThangNam(val) {
       const arrDate = this.$helper.fn_split_date_time(val)
       this.$data.dia_diem_tu_nam = arrDate[0]
@@ -271,21 +296,30 @@ export default {
 			this.$data.ghi_chu = ''
 			this.$data.du_hoc = 0
     },
-    _updateInfo() {
-      const data = this.$data
+    _submitUpdate() {
+			const data = this.$data
       if (data.chuc_vu_id && data.linh_muc_id) {
           this.updateThuyenChuyen({
           action: 'update.thuyen.chuyen',
           data: data,
-					id_thuyen_chuyen: this.item.id,
+					id_thuyen_chuyen: this.info.id,
 					giaoxuId: this.$route.params.giaoxuId,
         })
-        this._resetModal()
-        this.$modal.hide(this.$options.setting.modal_name)
+				this._resetModal;
+				this.$nextTick(() => {
+          this.$emit('update-info-success');
+      	});
       } else {
         alert('Nhập thông tin thuyên chuyển')
       }
     },
+		_notificationUpdate(notification) {
+				if (notification.type == 'success') {
+						this.$emit('update-info-success');
+				}
+				this.$notify(notification);
+				this.resetNotification();
+		},
   },
   setting: {
     modal_title: 'Cập nhật Thuyên Chuyển',
@@ -294,3 +328,27 @@ export default {
   },
 }
 </script>
+<style scoped lang="scss">
+.cms-modal-heading {
+  color: #eeeeeee8;
+  position: absolute;
+  width: 100%;
+  border-color: #784545;
+  background: #2e2222b3;
+  z-index: 999999;
+}
+.cms-modal-form {
+  padding: 25px;
+}
+.cms-modal-footer-btn {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 100%;
+  background-color: #0e212a;
+
+  .cms-modal-group-btn {
+    padding: 10px;
+  }
+}
+</style>

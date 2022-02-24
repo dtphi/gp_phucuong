@@ -131,8 +131,9 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 	public function apiGetThuyenChuyen($infoId){
 		$query = $this->modelThuyenChuyen->select()
 		->where('giao_xu_id', $infoId)
+		->orderBy('from_date', 'DESC')
 		->get();
-
+			
 		return $query;
 	}
 
@@ -158,14 +159,13 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 						'chuc_vu_active' => $data['chuc_vu_active']
 				]
 			);
-
-        return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->get());
+        return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->orderBy('from_date', 'DESC')->get());
     }
 		public function apiUpdateActiveThuyenChuyen($data = []) 
 		{
 				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['item']['id']);
 				$this->modelThuyenChuyen->chuc_vu_active == 1 ? $this->modelThuyenChuyen->chuc_vu_active = 0 : $this->modelThuyenChuyen->chuc_vu_active = 1;
-				DB::beginTransaction();
+				DB::beginTransaction();	
 				if (!$this->modelThuyenChuyen->save()) {
 						DB::rollBack();
 						return false;
@@ -192,7 +192,7 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 						return false;
 				}
 				DB::commit();
-
-				return new GiaoXuCollection(LinhMucThuyenChuyen::where('giao_xu_id', $data['giaoxuId'])->get());
+			
+				return $this->modelThuyenChuyen;
 	 	}
 }

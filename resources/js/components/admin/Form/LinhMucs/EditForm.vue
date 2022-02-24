@@ -39,11 +39,11 @@
           $options.setting.tab_bo_nhiem_khac_title
         }}</a>
       </li>
-      <li @click="currentTab = 'gp_thuyen_chuyen'">
+      <!--<li @click="currentTab = 'gp_thuyen_chuyen'">
         <a href="#tab-gp-thuyen-chuyen" data-toggle="tab">{{
           $options.setting.tab_gp_thuyen_chuyen_title
         }}</a>
-      </li>
+      </li> -->
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="tab-general" v-if="currentTab == 'general'">
@@ -101,14 +101,14 @@
           :type-chuc-vu="$options.setting.typeBoNhiem"
         ></tab-bo-nhiem-khac>
       </div>
-      <div class="tab-pane" id="tab-gp-thuyen-chuyen" v-if="currentTab == 'gp_thuyen_chuyen'">
+      <!-- <div class="tab-pane" id="tab-gp-thuyen-chuyen" v-if="currentTab == 'gp_thuyen_chuyen'">
         <tab-lm-thuyen-chuyen
           role="tabpanel"
           class="tab-pane"
           :group-data="info"
           :type-chuc-vu="$options.setting.typeThuyenChuyen"
         ></tab-lm-thuyen-chuyen>
-      </div>
+      </div> -->
     </div>
   </form>
 </template>
