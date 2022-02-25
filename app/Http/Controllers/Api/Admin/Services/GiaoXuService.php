@@ -181,11 +181,19 @@ final class GiaoXuService implements BaseModel, GiaoXuModel
 		public function apiUpdateThuyenChuyen($data = []) 
 		{
 				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['id_thuyen_chuyen']);
-				$this->modelThuyenChuyen->linh_muc_id = $data['data']['linh_muc_id'];
-				$this->modelThuyenChuyen->chuc_vu_id = $data['data']['chuc_vu_id'];
-				$this->modelThuyenChuyen->from_date = $data['data']['from_date'];
-				$this->modelThuyenChuyen->to_date = $data['data']['to_date'];
+				if($data['data']['dia_diem_tu_nam'] == null || $data['data']['dia_diem_tu_thang'] == null || $data['data']['dia_diem_tu_ngay'] == null) {
+						$this->modelThuyenChuyen->from_date = null;
+				}else {
+					$this->modelThuyenChuyen->from_date = $data['data']['dia_diem_tu_nam'] .'-'. $data['data']['dia_diem_tu_thang'] .'-'. $data['data']['dia_diem_tu_ngay'];
+				}		
 
+				if($data['data']['dia_diem_den_nam'] == null || $data['data']['dia_diem_den_thang'] == null || $data['data']['dia_diem_den_ngay'] == null) {
+						$this->modelThuyenChuyen->to_date = null;
+				}else {
+						$this->modelThuyenChuyen->to_date = $data['data']['dia_diem_den_nam'] .'-'. $data['data']['dia_diem_den_thang'] .'-'. $data['data']['dia_diem_den_ngay'];
+				}
+				$this->modelThuyenChuyen->linh_muc_id = $data['data']['linh_muc_id'];
+				$this->modelThuyenChuyen->chuc_vu_id = $data['data']['chuc_vu_id'];		
 				DB::beginTransaction();
 				if (!$this->modelThuyenChuyen->save()) {
 						DB::rollBack();

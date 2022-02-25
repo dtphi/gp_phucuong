@@ -4,7 +4,7 @@
       <td>{{ vitri + 1 }}</td>
       <p class="text-center">{{ item.chucvuName}}</p>
       <div class="text-center">
-				<toggle-button class="switch-btn-center" v-if="item.chuc_vu_active == 1" :value="switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
+				<toggle-button class="switch-btn-center" v-if="checkActiveToggle" :value="switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 			</div>
 			<td>{{ item.linhMucName }}</td>
@@ -63,6 +63,17 @@ export default {
 			switchValue: true,
     }
   },
+	computed: {
+		checkActiveToggle: function() {
+				if(this.item.chuc_vu_active == 1) {
+					if(this.item.label_to_date === '')
+						return true
+					return false
+				}else {
+					return false
+				}
+		}
+	},
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [
       'removeThuyenChuyen',

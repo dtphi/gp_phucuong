@@ -79,18 +79,24 @@ export default {
 					this.$modal.show("modal-thuyen-chuyen-edit");
    	 	},
 			_updateInfoList() {
-				console.log(this.update_thuyen_chuyen, 'upda');
 				this.curInfo.id = this.update_thuyen_chuyen.id;
 				this.curInfo.giao_xu_id = this.update_thuyen_chuyen.giao_xu_id;
 				this.curInfo.linh_muc_id = this.update_thuyen_chuyen.linh_muc_id;
 				this.curInfo.linhMucName = this.update_thuyen_chuyen.linhMucName;
 				this.curInfo.chuc_vu_id = this.update_thuyen_chuyen.chuc_vu_id;
 				this.curInfo.chucvuName = this.update_thuyen_chuyen.chucVuName;
-				this.curInfo.label_from_date = this.update_thuyen_chuyen.from_date;
-				this.curInfo.label_to_date = this.update_thuyen_chuyen.to_date;
+				this.curInfo.chuc_vu_active = this.update_thuyen_chuyen.chuc_vu_active;
 
-				console.log(this.curInfo, 'cur')
-
+				if(this.update_thuyen_chuyen.dia_diem_tu_nam == "" || this.update_thuyen_chuyen.dia_diem_tu_thang == "" || this.update_thuyen_chuyen.dia_diem_tu_ngay == ""){
+						this.curInfo.label_from_date = '';
+				} else {
+						this.curInfo.label_from_date = this.update_thuyen_chuyen.dia_diem_tu_nam + '-' + this.update_thuyen_chuyen.dia_diem_tu_thang + '-' + this.update_thuyen_chuyen.dia_diem_tu_ngay;
+				}	
+				if(this.update_thuyen_chuyen.dia_diem_den_nam == "" || this.update_thuyen_chuyen.dia_diem_den_thang == "" || this.update_thuyen_chuyen.dia_diem_den_ngay == ""){
+						this.curInfo.label_to_date = '';
+				} else {
+						this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam + '-' + this.update_thuyen_chuyen.dia_diem_den_thang + '-' + this.update_thuyen_chuyen.dia_diem_den_ngay;
+				}
 				this.$modal.hide("modal-thuyen-chuyen-edit");
     },
 		_notificationUpdate(notification) {
