@@ -311,7 +311,6 @@ export default {
             dispatch(ACTION_SET_LOADING, false)
           },
           (errors) => {
-						console.log(errors, 'error')
             commit(
               INFOS_MODAL_INSERT_INFO_FAILED,
               AppConfig.comInsertNoFail
@@ -327,12 +326,10 @@ export default {
         info,
         (result) => {
           if (result) {
-						console.log('true')
             commit(SET_ERROR, [])
           }
         },
         (errors) => {
-					console.log('false')
           commit(SET_ERROR, errors)
         }
       )
