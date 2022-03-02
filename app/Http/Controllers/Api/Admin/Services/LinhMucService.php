@@ -456,30 +456,31 @@ final class LinhMucService implements BaseModel, LinhMucModel
 
     public function apiUpdateThuyenChuyen($data = []) 
     {
-        $hat = LinhMucThuyenChuyen::updateOrCreate(
-            [
-                'id' => $data['id'], 
-                'linh_muc_id' => $data['linhMucId']
-            ],
-            [
-                'from_giao_xu_id' => $data['from_giao_xu_id'],
-                'from_chuc_vu_id' => $data['from_chuc_vu_id'],
-                'from_date' => $data['from_date'],
-                'duc_cha_id' => $data['duc_cha_id'],
-                'to_date' => $data['to_date'],
-                'chuc_vu_id' => $data['chuc_vu_id'],
-                'giao_xu_id' => $data['giao_xu_id'],
-                'co_so_gp_id' => $data['co_so_gp_id'],
-                'dong_id' => $data['dong_id'],
-                'ban_chuyen_trach_id' => $data['ban_chuyen_trach_id'],
-                'du_hoc' => $data['du_hoc'],
-                'quoc_gia' => $data['quoc_gia'],
-                'active' => $data['active'],
-                'ghi_chu' => $data['ghi_chu']
-            ]
-        );
-
-        return new LinhMucThuyenChuyenCollection(LinhMucThuyenChuyen::where('linh_muc_id', $data['linhMucId'])->get());
+				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['id_thuyen_chuyen']);
+				if($data['data']['dia_diem_tu_nam'] == null || $data['data']['dia_diem_tu_thang'] == null || $data['data']['dia_diem_tu_ngay'] == null) {
+						$this->modelThuyenChuyen->from_date = null;
+				}else {
+					$this->modelThuyenChuyen->from_date = $data['data']['dia_diem_tu_nam'] .'-'. $data['data']['dia_diem_tu_thang'] .'-'. $data['data']['dia_diem_tu_ngay'];
+				}		
+				
+				if($data['data']['dia_diem_den_nam'] == null || $data['data']['dia_diem_den_thang'] == null || $data['data']['dia_diem_den_ngay'] == null) {
+						$this->modelThuyenChuyen->to_date = null;
+				}else {
+						$this->modelThuyenChuyen->to_date = $data['data']['dia_diem_den_nam'] .'-'. $data['data']['dia_diem_den_thang'] .'-'. $data['data']['dia_diem_den_ngay'];
+				}
+				$this->modelThuyenChuyen->chuc_vu_id = $data['data']['chuc_vu_id'];	
+				$this->modelThuyenChuyen->giao_xu_id = $data['data']['giao_xu_id'];	
+				$this->modelThuyenChuyen->co_so_gp_id = $data['data']['co_so_gp_id'];
+				$this->modelThuyenChuyen->dong_id = $data['data']['dong_id'];
+				$this->modelThuyenChuyen->ban_chuyen_trach_id = $data['data']['ban_chuyen_trach_id'];
+				$this->modelThuyenChuyen->du_hoc = $data['data']['du_hoc'];
+				$this->modelThuyenChuyen->ghi_chu = $data['data']['ghi_chu'];
+				DB::beginTransaction();
+				if (!$this->modelThuyenChuyen->save()) {
+						DB::rollBack();
+						return false;
+				}
+				DB::commit();
     }
 
 		public function apiUpdateActiveBoNhiem($id_bo_nhiem) {
@@ -530,20 +531,32 @@ final class LinhMucService implements BaseModel, LinhMucModel
 					return false;
 			}
 			DB::commit();
-
 			return $this->modelThuyenChuyen;
 		}
 
-		public function apiGetThuyenChuyen($infoId){
-			$query = $this->modelThuyenChuyen->select()
-			->where('linh_muc_id', $infoId)
-			->get();
+		public function apiGetThuyenChuyen($infoId = null){
+				$query = $this->modelThuyenChuyen->select()
+				->where('linh_muc_id', $infoId)
+				->orderBy('from_date', 'DESC')
+				->get();
 
-			return $query;
+				return $query;
 		}
 
 		public function apiAddThuyenChuyen($data = []) 
     {		
+				if($data['dia_diem_tu_nam'] == null || $data['dia_diem_tu_thang'] == null || $data['dia_diem_tu_ngay'] == null) {
+						$data['from_date'] = null;
+				}else {
+						$data['from_date'] = $data['dia_diem_tu_nam'] .'-'. $data['dia_diem_tu_thang'] .'-'. $data['dia_diem_tu_ngay'];
+				}		
+
+				if($data['dia_diem_den_nam'] == null || $data['dia_diem_den_thang'] == null || $data['dia_diem_den_ngay'] == null) {
+						$data['to_date'] = null;
+				}else {
+						$data['to_date'] = $data['dia_diem_den_nam'] .'-'. $data['dia_diem_den_thang'] .'-'. $data['dia_diem_den_ngay'];
+				}
+
 				$hat = LinhMucThuyenChuyen::create(
 				[
 						'linh_muc_id' => $data['linhMucId'],

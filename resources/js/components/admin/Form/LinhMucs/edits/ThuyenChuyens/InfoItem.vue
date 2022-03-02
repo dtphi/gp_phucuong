@@ -4,17 +4,22 @@
       <td>{{ vitri + 1 }}</td>
       <p class="text-center">{{ item.chucvuName}}</p>
       <div class="text-center">
-				<toggle-button class="switch-btn-center" v-if="item.chuc_vu_active == 1" :value="switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
+				<toggle-button class="switch-btn-center" v-if="checkActiveToggle" :value="switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 			</div>
-			<td>Giáo Xứ {{ item.giaoxuName }}</td>
+			<td class="text-center" v-if="item.giaoxuName">
+				<a :href="item.giao_xu_url">{{diaDiemName}}</a>
+			</td>
+			<td v-else class="text-center">
+					{{diaDiemName}}
+			</td>
 			<td class="text-center">{{ item.label_from_date  }}</td>
 			<td class="text-center">{{ item.label_to_date }}</td>
 			<td>	
 				<a
 					href="javascript:void(0);"
 					data-toggle="tooltip"
-					@click.prevent="_showModal"
+					@click.prevent="_showModalEdit"
 					class="btn btn-default cms-btn"
 					data-original-title="Sửa thuyên chuyển"
 					><i class="fa fa-edit" />
@@ -59,6 +64,28 @@ export default {
 			switchValue: true,
     }
   },
+	computed: {
+			checkActiveToggle: function() {
+				if(this.item.chuc_vu_active == 1) {
+					if(this.item.label_to_date === '')
+						return true
+					return false
+				}else {
+					return false
+				}
+			},
+			diaDiemName: function() {
+					if(this.item.giaoxuName) {
+							return this.item.giaoxuName 
+					}else if(this.item.cosogpName) {
+							return this.item.cosogpName
+					}else if(this.item.dongName) {
+							return this.item.dongName
+					}else {
+							return this.item.banchuyentrachName
+					}
+			}
+	},
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
       'removeThuyenChuyen',
@@ -105,10 +132,8 @@ export default {
 					item: item,
 				});
 		},
-		_showModal() {
-			//this.$store.comit('current', this.item)
-			this.$modal.show('modal-thuyen-chuyen-edit')
-      // this.$emit('show-modal-edit', this.item)
+		_showModalEdit() {
+			 	this.$emit('show-modal-edit', this.item)
     },
   },
 	

@@ -297,7 +297,7 @@ export default {
         let thuyenChuyen = params.data
         dispatch(ACTION_SET_LOADING, true)
         //implement
-        thuyenChuyen['giaoxuId'] = params.giaoxuId
+        thuyenChuyen['giaoxuId'] = params.giaoxuId	
         thuyenChuyen['action'] = params.action
         apiUpdateGiaoXuThuyenChuyen(
           thuyenChuyen,
