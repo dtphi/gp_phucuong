@@ -7,7 +7,9 @@
 				<toggle-button class="switch-btn-center" v-if="checkActiveToggle" :value="switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 			</div>
-			<td>{{ item.linhMucName }}</td>
+			<td class="text-center">
+				<a :href="item.linh_muc_url">{{item.linhMucName}}</a>
+			</td>
 			<td class="text-center">{{ item.label_from_date  }}</td>
 			<td class="text-center">{{ item.label_to_date }}</td>
 			<td>	
@@ -42,13 +44,9 @@
 <script>
 import { mapActions } from 'vuex'
 import { MODULE_MODULE_GIAO_XU_EDIT, } from 'store@admin/types/module-types'
-import ModalEditThuyenChuyen from '../Modals/TheModalEditThuyenChuyen'
 
 export default {
   name: 'TheInfoItem',
-	components: {
-		ModalEditThuyenChuyen
-	},
   props: {
     item: {
       default: {},

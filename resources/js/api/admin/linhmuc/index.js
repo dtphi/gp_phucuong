@@ -185,4 +185,22 @@ export const apiGetThuyenChuyenById = (infoId, resolve, errResole) => {
     })
 }
 
+export const apiUpdateLinhMucThuyenChuyen = (info, resolve, errResole) => {
+  return axios.put(fn_get_base_api_detail_url(API_LINH_MUCS_RESOURCE, info['linhMucId']), info)
+    .then((response) => {
+      if (response.status === 200) {
+        var json = {}
+        json['data'] = response.data
+        json['status'] = 1000
+        resolve(json)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => errResole(errors))
+}
+
 

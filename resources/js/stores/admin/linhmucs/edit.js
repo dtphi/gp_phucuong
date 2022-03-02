@@ -1,6 +1,6 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { v4 as uuidv4, } from 'uuid'
-import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById} from 'api@admin/linhmuc'
+import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById, apiUpdateLinhMucThuyenChuyen} from 'api@admin/linhmuc'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -16,7 +16,6 @@ import {
   ACTION_GET_INFO_BY_ID,
   ACTION_RESET_NOTIFICATION_INFO,
 	ACTION_CHANGE_STATUS,
-	ACTION_DELETE_INFO_BY_ID
 } from '../types/action-types'
 import { fnCheckProp, } from '@app/common/util'
 import { getField, updateField } from 'vuex-map-fields'
@@ -73,6 +72,19 @@ const defaultState = () => {
       action: '',
     },
 		arr_thuyen_chuyens: [],
+		update_thuyen_chuyen: {
+			id: '',
+			giao_xu_id: '',
+			linh_muc_id: '',
+			linhMucName: '',
+			tenThanh: '',
+			chuc_vu_id: '',
+			chucvuName: '',
+			label_from_date: '',
+			label_to_date: '',
+			from_date: '',
+			to_date: ''
+		},
     thuyenChuyen: null,
     isImgChange: true,
     loading: false,
@@ -105,6 +117,9 @@ export default {
     },
 		arr_thuyen_chuyens(state) {
 			return state.arr_thuyen_chuyens
+		},
+		update_thuyen_chuyen(state) {
+				return state.update_thuyen_chuyen
 		}
   },
 
@@ -259,6 +274,9 @@ export default {
 		},
 		remove_thuyen_chuyens(state, index) {
 			state.arr_thuyen_chuyens.splice(index, 1)
+		},
+		set_update_thuyen_chuyen(state, payload) {
+				state.update_thuyen_chuyen = payload
 		}
   },
 
@@ -719,6 +737,17 @@ export default {
         }
       )
 		},
+
+		updateThuyenChuyen({ commit }, info) {
+			commit('set_update_thuyen_chuyen', info.data)
+			apiUpdateLinhMucThuyenChuyen(
+        info,
+        (response) => {
+					commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+				},
+        (errors) => {}
+      )
+    },
 
     [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {
       commit(INFOS_MODAL_INSERT_INFO_SUCCESS, values)
