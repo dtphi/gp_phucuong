@@ -46,6 +46,7 @@
           v-slot="{ errors }"
         >
           <input
+						disabled
             v-model="phone"
             type="text"
             id="input-info-so-dien-thoai"
@@ -66,6 +67,7 @@
           v-slot="{ errors }"
         >
           <input
+						disabled
             autocomplete="off"
             v-model="email"
             type="text"
@@ -73,7 +75,6 @@
             class="form-control"
             placeholder="Email"
           />
-
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>

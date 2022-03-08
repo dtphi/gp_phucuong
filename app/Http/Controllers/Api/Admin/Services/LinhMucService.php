@@ -296,27 +296,22 @@ final class LinhMucService implements BaseModel, LinhMucModel
         
         if ($data['action'] == 'add.bo.nhiem') {
             $this->_addBoNhiem($data['id'], $data['bo_nhiem']);
-        } elseif ($data['action'] == 'remove.bo.nhiem') {
-            $this->_removeBoNhiem($data['id'], $data['bo_nhiem']);
         } elseif ($data['action'] == 'add.lm.thuyen.chuyen') {
             $this->_addLmThuyenChuyen($data['id'], $data['lm_thuyen_chuyen']);
         } elseif ($data['action'] == 'remove.lm.thuyen.chuyen') {
             $this->_removeLmThuyenChuyen($data['id'], $data['lm_thuyen_chuyen']);
-        } elseif ($data['action'] == 'remove.thuyen.chuyen') {
+        } elseif ($data['action'] == 'remove.thuyen.chuyen' || $data['action'] == 'remove.bo.nhiem') {
 					$this->_removeThuyenChuyen($data['id'], $data['item']);
-			} else {
+				} else {
             $model->fill($data);
             if ($model->save()) {
                 $this->_updateLinhMuc($model, $data);
             } else {
                 DB::rollBack();
-
                 return false;
             }
         }
-
         DB::commit();
-
         return $model;
     }
 
@@ -483,6 +478,30 @@ final class LinhMucService implements BaseModel, LinhMucModel
 				DB::commit();
     }
 
+		public function apiUpdateBoNhiem($data = []) 
+    {
+				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['id_bo_nhiem']);
+				if($data['data']['cong_viec_tu_nam'] == null || $data['data']['cong_viec_tu_thang'] == null || $data['data']['cong_viec_tu_ngay'] == null) {
+						$this->modelThuyenChuyen->from_date = null;
+				}else {
+					$this->modelThuyenChuyen->from_date = $data['data']['cong_viec_tu_nam'] .'-'. $data['data']['cong_viec_tu_thang'] .'-'. $data['data']['cong_viec_tu_ngay'];
+				}		
+				
+				if($data['data']['cong_viec_den_nam'] == null || $data['data']['cong_viec_den_thang'] == null || $data['data']['cong_viec_den_ngay'] == null) {
+						$this->modelThuyenChuyen->to_date = null;
+				}else {
+						$this->modelThuyenChuyen->to_date = $data['data']['cong_viec_den_nam'] .'-'. $data['data']['cong_viec_den_thang'] .'-'. $data['data']['cong_viec_den_ngay'];
+				}
+				$this->modelThuyenChuyen->chuc_vu_id = $data['data']['chuc_vu_id'];
+				$this->modelThuyenChuyen->ghi_chu = $data['data']['cong_viec'];
+				DB::beginTransaction();
+				if (!$this->modelThuyenChuyen->save()) {
+						DB::rollBack();
+						return false;
+				}
+				DB::commit();
+    }
+
 		public function apiUpdateActiveBoNhiem($id_bo_nhiem) {
 				$this->modelBoNhiem = $this->modelBoNhiem->findOrFail($id_bo_nhiem);
 				if($this->modelBoNhiem->active == 1) {
@@ -543,6 +562,16 @@ final class LinhMucService implements BaseModel, LinhMucModel
 				return $query;
 		}
 
+		public function apiGetBoNhiem($infoId = null){
+			$query = $this->modelThuyenChuyen->select()
+			->where('linh_muc_id', $infoId)
+			->where('is_bo_nhiem', 1)
+			->orderBy('from_date', 'DESC')
+			->get();
+
+			return $query;
+		}
+
 		public function apiAddThuyenChuyen($data = []) 
     {		
 				if($data['dia_diem_tu_nam'] == null || $data['dia_diem_tu_thang'] == null || $data['dia_diem_tu_ngay'] == null) {
@@ -579,5 +608,44 @@ final class LinhMucService implements BaseModel, LinhMucModel
 			);
 
         return new LinhMucThuyenChuyenCollection(LinhMucThuyenChuyen::where('linh_muc_id', $data['linhMucId'])->get());
+    }
+
+		public function apiAddBoNhiem($data = []) 
+    {		
+				if($data['cong_viec_tu_nam'] == null || $data['cong_viec_tu_thang'] == null || $data['cong_viec_tu_ngay'] == null) {
+						$data['from_date'] = null;
+				}else {
+						$data['from_date'] = $data['cong_viec_tu_nam'] .'-'. $data['cong_viec_tu_thang'] .'-'. $data['cong_viec_tu_ngay'];
+				}		
+
+				if($data['cong_viec_den_nam'] == null || $data['cong_viec_den_thang'] == null || $data['cong_viec_den_ngay'] == null) {
+						$data['to_date'] = null;
+				}else {
+						$data['to_date'] = $data['cong_viec_den_nam'] .'-'. $data['cong_viec_den_thang'] .'-'. $data['cong_viec_den_ngay'];
+				}
+
+				$hat = LinhMucThuyenChuyen::create(
+				[
+						'linh_muc_id' => $data['linhMucId'],
+						'giao_xu_id' => 0,
+						'chuc_vu_id' => $data['chuc_vu_id'],
+						'from_giao_xu_id' => 0,
+						'from_chuc_vu_id' => 0,
+						'from_date' => $data['from_date'],
+						'to_date' => $data['to_date'],
+						'duc_cha_id' => '',
+						'co_so_gp_id' => 0,
+						'dong_id' => 0,
+						'ban_chuyen_trach_id' => 0,
+						'du_hoc' => 0,
+						'quoc_gia' => '',
+						'active' => $data['active'],
+						'ghi_chu' => $data['cong_viec'],			
+						'chuc_vu_active' => 1,
+						'is_bo_nhiem' => 1,
+				]
+			);
+
+        return new LinhMucThuyenChuyenCollection(LinhMucThuyenChuyen::where('linh_muc_id', $data['linhMucId'])->where('is_bo_nhiem', 1)->orderBy('from_date', 'DESC')->get());
     }
 }

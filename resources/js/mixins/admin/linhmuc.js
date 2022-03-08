@@ -121,6 +121,7 @@ export default {
           if (newValue && Object.keys(newValue).length) {
             newValue.ghi_chu = (newValue.ghi_chu === null) ? '' : newValue.ghi_chu
             newValue.rip_ghi_chu = (newValue.rip_ghi_chu === null) ? '' : newValue.rip_ghi_chu
+						newValue.cham_ngon = (newValue.cham_ngon === null) ? '' : newValue.cham_ngon
             
             return newValue
           }

@@ -131,6 +131,7 @@ export const MAP_PC_LINHMUCS = [
   'rip_giao_xu_id',
   'rip_giaoxu_name',
   'rip_ghi_chu',
+	'cham_ngon',
   'ghi_chu',
   'is_duc_cha',
   'uuid',

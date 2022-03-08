@@ -90,9 +90,7 @@ export default {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
       'removeThuyenChuyen',
 			'updateActiveThuyenChuyen',
-      'addThuyenChuyen',
     ]),
-		...mapMutations(MODULE_MODULE_LINH_MUC_EDIT, ['remove_thuyen_chuyens']),
 		_removeItem(item) {
       this.$modal.show("dialog", {
         title: "Xóa thuyên chuyển",
@@ -113,18 +111,6 @@ export default {
           },
         ],
       });
-    },
-    _openEditForm() {
-      this.isEdit = !this.isEdit
-    },
-    _updateThuyenChuyenForm() {
-      const id = this.item?.id
-      if (id) {
-        this.addThuyenChuyen({
-          action: 'create.update.thuyen.chuyen.db',
-          info: this.item,
-        })
-      }
     },
 		_changeActiveThuyenChuyen($event, item) {
 				this.updateActiveThuyenChuyen({

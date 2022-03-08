@@ -170,7 +170,6 @@ class LinhMucController extends ApiController
             } catch (HandlerMsgCommon $e) {
                 throw $e->render();
             }
-    
             return $json;
         } elseif ($action == 'create.update.chuc.thanh.db') {
             try {
@@ -194,15 +193,21 @@ class LinhMucController extends ApiController
             } catch (HandlerMsgCommon $e) {
                 throw $e->render();
             }
-    
             return $json;
-        }elseif ($action == 'update.active.bo.nhiem') {
-						try {
-							  $json = $this->linhMucSv->apiUpdateActiveBoNhiem($data['bo_nhiem']);
-						} catch (HandlerMsgCommon $e) {
-								 throw $e->render();
-						}
-				}elseif($action == 'update.active.lm.d thuyen.chuyen'){
+        } elseif ($action == 'update.bo.nhiem') {
+					try {
+							$json = $this->linhMucSv->apiUpdate($data);
+					} catch (HandlerMsgCommon $e) {
+							throw $e->render();
+					}
+					return $json;
+				} elseif ($action == 'update.active.bo.nhiem') {
+					try {
+							$json = $this->linhMucSv->apiUpdateActiveBoNhiem($data['bo_nhiem']);
+					} catch (HandlerMsgCommon $e) {
+							throw $e->render();
+					}
+				}elseif($action == 'update.active.lm.thuyen.chuyen'){
 					try {
 						  $json = $this->linhMucSv->apiUpdateActiveLmThuyenChuyen($data['lm_thuyen_chuyen']);
 					} catch (HandlerMsgCommon $e) {
@@ -222,6 +227,13 @@ class LinhMucController extends ApiController
 						throw $e->render();
 				}
 				return $json;
+				}elseif($action == 'addBoNhiem') {
+					try {
+						$json = $this->linhMucSv->apiAddBoNhiem($data);
+					} catch (HandlerMsgCommon $e) {
+							throw $e->render();
+					}
+					return $json;
 				}else {
 					try {
 						$model = $this->linhMucSv->apiGetDetail($id);
@@ -506,6 +518,41 @@ class LinhMucController extends ApiController
 									'active' => $info->active,
 									'active_text' => $info->active?'Xảy ra':'Ẩn',
 									'chuc_vu_active' => $info->chuc_vu_active
+							];
+					}
+				} catch (HandlerMsgCommon $e) {
+						throw $e->render();
+				}
+				
+				$json = [
+						'data' => [
+								'results' => $results,
+						]
+				];
+				return $this->respondWithCollectionPagination($json);
+		}
+
+		public function listLinhMucBoNhiem($infoId = null, LinhmucRequest $request) 
+		{
+				try {
+					$collections = $this->linhMucSv->apiGetBoNhiem($infoId);
+					$results = [];
+
+					foreach ($collections as $key => $info) {
+							$results[] = [
+									'id' => (int)$info->id,
+									'isCheck' => false,
+                  'isEdit' => 1,					
+									'to_date' => $info->to_date,
+									'from_date' => $info->from_date,
+									'chuc_vu_id' => $info->chuc_vu_id,
+									'chucvuName' => $info->ten_to_chuc_vu,
+									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"Y-m-d"):'',
+									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'',
+									'ghi_chu' => $info->ghi_chu,
+									'active' => $info->active,
+									'active_text' => $info->active?'Xảy ra':'Ẩn',
+									'chuc_vu_active' => $info->chuc_vu_active,
 							];
 					}
 				} catch (HandlerMsgCommon $e) {

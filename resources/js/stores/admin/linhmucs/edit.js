@@ -1,6 +1,7 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { v4 as uuidv4, } from 'uuid'
-import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById, apiUpdateLinhMucThuyenChuyen} from 'api@admin/linhmuc'
+import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById,
+	apiUpdateLinhMucThuyenChuyen, apiGetBoNhiemById} from 'api@admin/linhmuc'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -54,6 +55,7 @@ const defaultState = () => {
       rip_giao_xu_id: null,
       rip_giaoxu_name: '',
       rip_ghi_chu: '',
+			cham_ngon: '',
       ghi_chu: '',
       code: '',
       phone: '',
@@ -71,6 +73,7 @@ const defaultState = () => {
       lm_thuyen_chuyens: [],
       action: '',
     },
+		arr_bo_nhiems: [],
 		arr_thuyen_chuyens: [],
 		update_thuyen_chuyen: {
 			id: '',
@@ -84,6 +87,9 @@ const defaultState = () => {
 			label_to_date: '',
 			from_date: '',
 			to_date: ''
+		},
+		update_bo_nhiem: {
+
 		},
     thuyenChuyen: null,
     isImgChange: true,
@@ -120,6 +126,12 @@ export default {
 		},
 		update_thuyen_chuyen(state) {
 				return state.update_thuyen_chuyen
+		},
+		arr_bo_nhiems(state) {
+			return state.arr_bo_nhiems
+		},
+		update_bo_nhiem(state) {
+				return state.update_bo_nhiem
 		}
   },
 
@@ -180,6 +192,9 @@ export default {
     // },
 		update_arr_thuyen_chuyens(state, payload) {
 			state.arr_thuyen_chuyens = payload
+		},
+		update_arr_bo_nhiems(state, payload) {
+			state.arr_bo_nhiems = payload
 		},
     update_van_thu(state, payload) {
       state.info.van_thus.push(payload)
@@ -277,6 +292,15 @@ export default {
 		},
 		set_update_thuyen_chuyen(state, payload) {
 				state.update_thuyen_chuyen = payload
+		},
+		set_info_bo_nhiems(state, payload) {
+			return state.arr_bo_nhiems = payload
+		},
+		remove_bo_nhiems(state, index) {
+			state.arr_bo_nhiems.splice(index, 1)
+		},
+		set_update_bo_nhiem(state, payload) {
+				state.update_bo_nhiem = payload
 		}
   },
 
@@ -541,6 +565,36 @@ export default {
         })
       }
     },
+		addBoNhiem({ dispatch, commit, state, }, params) {
+      if (fnCheckProp(params, 'action') && params.action == 'addBoNhiem'
+      ) {
+        let bonhiem = params.data
+        dispatch(ACTION_SET_LOADING, true)
+        bonhiem['linhMucId'] = state.info.id
+        bonhiem['action'] = params.action
+        apiUpdateInfo(
+          bonhiem,
+          (response) => {
+						console.log(response.data.data.results, 'test')
+            commit('update_arr_bo_nhiems', response.data.data.results)
+            commit(SET_ERROR, [])
+            commit(
+              INFOS_MODAL_INSERT_INFO_SUCCESS,
+              AppConfig.comInsertNoSuccess
+            )
+            dispatch(ACTION_SET_LOADING, false)
+          },
+          (errors) => {
+            commit(
+              INFOS_MODAL_INSERT_INFO_FAILED,
+              AppConfig.comInsertNoFail
+            )
+            commit(SET_ERROR, errors)
+            dispatch(ACTION_SET_LOADING, false)
+          }
+        )
+      }
+    },
     // removeThuyenChuyen({ commit, state, }, params) {
     //   let thuyenChuyens = state.info.thuyen_chuyens
     //   const data = params.item
@@ -560,13 +614,7 @@ export default {
         })
       })
     },
-    async addBoNhiem({ commit, dispatch, state, }, boNhiem) {
-      await commit('update_bo_nhiem', {
-        id: uuidv4(),
-        ...boNhiem.data,
-      })
-      dispatch(ACTION_INSERT_INFO, state.info)
-    },
+    
 		async updateActiveBoNhiem({ commit, state, dispatch }, info ) {
 			const data = info.item.id
 			await commit('update_active_bo_nhiem', data)
@@ -606,6 +654,15 @@ export default {
     },
 		removeThuyenChuyen({ commit }, info) {
 			commit('remove_thuyen_chuyens', info.vitri)
+      commit('update_thuyen_chuyen_remove', info.action)
+			apiUpdateInfo(
+        info,
+        (result) => {},
+        (errors) => {}
+      )
+    },
+		removeBoNhiem({ commit }, info) {
+			commit('remove_bo_nhiems', info.vitri)
       commit('update_thuyen_chuyen_remove', info.action)
 			apiUpdateInfo(
         info,
@@ -737,9 +794,29 @@ export default {
         }
       )
 		},
-
+		ACTION_GET_INFO_BO_NHIEM({dispatch, commit}, infoId) {
+      apiGetBoNhiemById(
+        infoId,
+        (response) => {
+          commit('set_info_bo_nhiems', response.data.results)
+        },
+        (errors) => {
+          commit(SET_ERROR, Object.values(errors))
+        }
+      )
+		},
 		updateThuyenChuyen({ commit }, info) {
 			commit('set_update_thuyen_chuyen', info.data)
+			apiUpdateLinhMucThuyenChuyen(
+        info,
+        (response) => {
+					commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+				},
+        (errors) => {}
+      )
+    },
+		updateBoNhiem({ commit }, info) {
+			commit('set_update_bo_nhiem', info.data)
 			apiUpdateLinhMucThuyenChuyen(
         info,
         (response) => {

@@ -74,7 +74,8 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('settings', 'SettingController');
 
     Route::apiResource('linh-mucs', 'LinhMucController');
-		Route::get('lm-thuyen-chuyens/{id}', 'LinhMucController@listLinhMucThuyenChuyen');
+		Route::get('lm-bo-nhiems/{infoId}', 'LinhMucController@listLinhMucBoNhiem');
+		Route::get('lm-thuyen-chuyens/{infoId}', 'LinhMucController@listLinhMucThuyenChuyen');
     Route::apiResource('linh-muc-bang-caps', 'LinhMucBangCapController');
     Route::apiResource('linh-muc-chuc-thanhs', 'LinhMucChucThanhController');
     Route::apiResource('linh-muc-van-thus', 'LinhMucVanThuController');
@@ -85,7 +86,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('giao-phans', 'GiaoPhanController');
     Route::apiResource('giao-hats', 'GiaoHatController');
     Route::apiResource('giao-xus', 'GiaoXuController'); 
-		Route::get('gx-thuyen-chuyens/{id}', 'GiaoXuController@listGiaoXuThuyenChuyen');
+		Route::get('gx-thuyen-chuyens/{infoId}', 'GiaoXuController@listGiaoXuThuyenChuyen');
     Route::get('giao-hats-by-giao-xus', 'GiaoXuController@listGiaoHats');
     Route::get('giao-xus-by-id-giao-hat/{id}', 'GiaoXuController@listGiaoXuByIdGiaoHat');
 
