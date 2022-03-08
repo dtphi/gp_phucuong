@@ -328,6 +328,18 @@
         :key="giao_xu_rip"
       ></info-giao-xu-autocomplete>
     </div>
+		<div class="form-group">
+      <label for="input-info-cham-ngon" class="col-sm-2 control-label"
+        >Châm ngôn</label
+      >
+      <div class="col-sm-10">
+        <tinymce
+          id="input-cham-ngon"
+          :other_options="options"
+          v-model="cham_ngon"
+        ></tinymce>
+      </div>
+    </div>
     <div class="form-group">
       <label for="input-info-rip-ghi-chu" class="col-sm-2 control-label"
         >Rip ghi chú</label

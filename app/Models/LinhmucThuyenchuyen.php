@@ -67,6 +67,7 @@ class LinhmucThuyenchuyen extends BaseModel
         'quoc_gia',
         'ghi_chu',
         'active',
+				'is_bo_nhiem',
         'update_user'
     ];
 

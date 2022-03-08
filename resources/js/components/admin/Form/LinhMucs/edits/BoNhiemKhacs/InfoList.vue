@@ -1,9 +1,8 @@
 <template>
-  <div class="table-responsive">
+  <div>
     <table
       id="info-bo-nhiem-list"
-      class="table table-striped table-bordered table-hover"
-    >
+      class="table table-striped table-bordered table-hover">
       <thead>
         <tr>
           <td class="text-center">TT</td>
@@ -14,45 +13,13 @@
           <td class="text-center">{{ $options.setting.info_action_title }}</td>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="(item, idx) in lists" :key="idx">
-          <td>{{ (idx+1) }}</td>
-          <td>
-            <p class="text-center">{{ item.chucVuName}}</p>
-						<div class="text-center">
-							<toggle-button class="switch-btn-center" v-if="item.active == 1" :value="switchValue" @change="changeActiveBoNhiem($event, item)"/>
-      				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="changeActiveBoNhiem($event, item)"/>
-						</div>
-          </td>
-          <td>
-            {{ item.cong_viec }}
-          </td>
-          <td class="text-right">
-            {{ _getTuNgay(item) }}
-          </td>
-          <td class="text-right">
-            {{ _getDenNgay(item) }}
-          </td>
-          <td>
-            <button
-              type="button"
-              @click="_removeItem(item)"
-              data-toggle="tooltip"
-              class="btn btn-default cms-btn"
-            >
-              <font-awesome-layers size="1x" style="background: MistyRose">
-                <font-awesome-icon icon="circle" style="color: Tomato" />
-                <font-awesome-icon
-                  icon="times"
-                  class="fa-inverse"
-                  transform="shrink-4"
-                />
-              </font-awesome-layers>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-
+			<info-item
+        v-for="(item, idx) in _infoList"
+        :item="item"
+        :key="idx"
+				:vitri="idx"
+				@show-modal-edit="_showModalEdit"
+      ></info-item>
       <tfoot>
         <tr>
           <td colspan="4"></td>
@@ -60,19 +27,30 @@
           </td>
         </tr>
       </tfoot>
+			<modal name="modal-lm-bo-nhiem-edit" :height="500" :click-to-close="false">
+				<the-modal-edit
+					v-if="_infoUpdate.id"
+					:info="_infoUpdate"
+					:info-id="_infoUpdate.id"
+					@update-info-success="_updateInfoList"
+				></the-modal-edit>
+			</modal>
     </table>
   </div>
 </template>
 
 <script>
-import { mapActions, } from 'vuex'
-import BtnAdd from './BtnAdd'
+import { mapActions, mapState} from 'vuex'
 import { MODULE_MODULE_LINH_MUC_EDIT, } from 'store@admin/types/module-types'
+import InfoItem from './InfoItem'
+import TheModalEdit from '../Modals/TheModalEditBoNhiemKhac'
+
 
 export default {
   name: 'TheInfoList',
   components: {
-    BtnAdd,
+		InfoItem,
+		TheModalEdit
   },
   props: {
     lists: {
@@ -82,35 +60,60 @@ export default {
     },
   },
 	data() {
-		return {
-			switchValue: true,
-		}
+			return {
+					infoUpdate: {},
+					curInfo: {},
+			}
 	},
+	computed: {
+    ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
+      loading: (state) => state.loading,
+      arr_bo_nhiems: (state) => state.arr_bo_nhiems,
+			update_bo_nhiem: (state) => state.update_bo_nhiem,
+    }),
+		_infoList() {
+				return this.arr_bo_nhiems;
+		},
+		_infoUpdate() {
+				return this.infoUpdate;
+		}
+  },
   methods: {
-    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, ['removeBoNhiem', 'updateActiveBoNhiem']),
-    _removeItem(item) {
-      const isDl = confirm('Tiếp tục xóa bổ nhiệm')
-      if (isDl) {
-        this.removeBoNhiem({
-          action: 'removeBoNhiem',
-          item: item,
-        })
-      }
+    ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, {
+				getInfoBoNhiem: 'ACTION_GET_INFO_BO_NHIEM',
+		}),
+		_showModalEdit(info) {
+				this.curInfo = info;
+				this.infoUpdate = { ...info };
+				this.$modal.show("modal-lm-bo-nhiem-edit");
+		},
+		_updateInfoList() {
+				console.log(this.update_bo_nhiem, 'bo_nhiem_update');
+				this.curInfo.chuc_vu_id = this.update_bo_nhiem.chuc_vu_id;
+				this.curInfo.chucvuName = this.update_bo_nhiem.chucVuName;
+				this.curInfo.ghi_chu = this.update_bo_nhiem.cong_viec;
+				if(this.update_bo_nhiem.cong_viec_tu_nam == "" || this.update_bo_nhiem.cong_viec_tu_thang == "" || this.update_bo_nhiem.cong_viec_tu_ngay == ""){
+						this.curInfo.label_from_date = '';
+				} else {
+						this.curInfo.label_from_date = this.update_bo_nhiem.cong_viec_tu_nam + '-' + this.update_bo_nhiem.cong_viec_tu_thang + '-' + this.update_bo_nhiem.cong_viec_tu_ngay;
+				}	
+				if(this.update_bo_nhiem.cong_viec_den_nam == "" || this.update_bo_nhiem.cong_viec_den_thang == "" || this.update_bo_nhiem.cong_viec_den_ngay == ""){
+						this.curInfo.label_to_date = '';
+				} else {
+						this.curInfo.label_to_date = this.update_bo_nhiem.cong_viec_den_nam + '-' + this.update_bo_nhiem.cong_viec_den_thang + '-' + this.update_bo_nhiem.cong_viec_den_ngay;
+				}
+				this.$modal.hide("modal-lm-bo-nhiem-edit");
+  	},
+    _notificationUpdate(notification) {
+				this.$notify(notification);
+				this.resetNotification();
     },
-    _getTuNgay(item) {
-      let ngay = `${item.cong_viec_tu_ngay}/${item.cong_viec_tu_thang}/${item.cong_viec_tu_nam}`
-      return ngay.replaceAll('null/', '').replaceAll('null', '')
-    },
-    _getDenNgay(item) {
-      let ngay = `${item.cong_viec_den_ngay}/${item.cong_viec_den_thang}/${item.cong_viec_den_nam}`
-      return ngay.replaceAll('null/', '').replaceAll('null', '')
-    },
-		changeActiveBoNhiem($event, item) {
-			this.updateActiveBoNhiem({
-				action: 'update_active_bo_nhiem',
-				item: item,
-			});
-    },
+  },
+	mounted() {
+			const linhmucId = parseInt(this.$route.params.linhmucId)
+			if (linhmucId) {
+				this.getInfoBoNhiem(linhmucId)
+			}
   },
   setting: {
     info_action_title: 'Thực hiện',

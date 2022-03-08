@@ -50,6 +50,7 @@ class Linhmuc extends BaseModel
         'ngay_rip',
         'rip_giao_xu_id',
         'rip_ghi_chu',
+				'cham_ngon',
         'ghi_chu',
         'update_user',
         'is_duc_cha',
@@ -58,7 +59,7 @@ class Linhmuc extends BaseModel
         'phone',
         'email',
         'password',
-        'sort_id'
+        'sort_id',
     ];
 
     /**

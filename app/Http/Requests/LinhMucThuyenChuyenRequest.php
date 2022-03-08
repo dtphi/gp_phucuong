@@ -127,6 +127,7 @@ class LinhMucThuyenChuyenRequest extends BaseRequest
         }
         $formData['rip_giao_xu_id'] = isset($formData['rip_giao_xu_id']) ? $formData['rip_giao_xu_id'] : null;
         $formData['rip_ghi_chu']    = isset($formData['rip_ghi_chu']) ? $formData['rip_ghi_chu'] : '';
+				$formData['cham_ngon']        = isset($formData['cham_ngon']) ? $formData['cham_ngon'] : '';
         $formData['ghi_chu']        = isset($formData['ghi_chu']) ? $formData['ghi_chu'] : '';
         $formData['is_duc_cha']     = isset($formData['is_duc_cha']) ? (int)$formData['is_duc_cha'] : 0;
         $formData['code']           = isset($formData['code']) ? $formData['code'] : '';

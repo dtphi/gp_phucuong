@@ -5,7 +5,7 @@
         <div class="text-right">
           <btn-add @show-modal-add="_showModalAdd"></btn-add>
         </div>
-        <info-list :lists="groupData.bo_nhiems"></info-list>
+        <info-list></info-list>
         <div class="text-right">
           <btn-add @show-modal-add="_showModalAdd"></btn-add>
         </div>
@@ -32,13 +32,10 @@ export default {
         return 1
       } 
     },
-    groupData: {
-      type: Object,
-    },
   },
   methods: {
     _showModalAdd() {
-      this.$modal.show('modal-linh-muc-bo-nhiem-add')
+      this.$modal.show('modal-lm-bo-nhiem-add')
     },
   },
 }

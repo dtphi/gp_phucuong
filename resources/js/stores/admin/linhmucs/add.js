@@ -52,6 +52,7 @@ const defaultState = () => {
       rip_giao_xu_id: null,
       rip_giaoxu_name: '',
       rip_ghi_chu: '',
+			cham_ngon: '',
       ghi_chu: '',
       code: '',
       phone: '',
