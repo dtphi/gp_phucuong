@@ -31,7 +31,25 @@
             class="form-control"
             :placeholder="$options.setting.name_txt"
           />
-
+          <span class="cms-text-red">{{ errors[0] }}</span>
+        </validation-provider>
+      </div>
+    </div>
+		<div class="form-group">
+      <label for="input-info-cham-ngon" class="col-sm-2 control-label">Châm ngôn</label>
+      <div class="col-sm-10">
+        <validation-provider
+          name="info_cham_ngon"
+          rules="max:500"
+          v-slot="{ errors }"
+        >
+          <input
+            v-model="cham_ngon"
+            type="text"
+            id="input-info-cham-ngon"
+            class="form-control"
+            placeholder="Châm ngôn"
+          />
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
       </div>
@@ -327,18 +345,6 @@
         :name="rip_giaoxu_name"
         :key="giao_xu_rip"
       ></info-giao-xu-autocomplete>
-    </div>
-		<div class="form-group">
-      <label for="input-info-cham-ngon" class="col-sm-2 control-label"
-        >Châm ngôn</label
-      >
-      <div class="col-sm-10">
-        <tinymce
-          id="input-cham-ngon"
-          :other_options="options"
-          v-model="cham_ngon"
-        ></tinymce>
-      </div>
     </div>
     <div class="form-group">
       <label for="input-info-rip-ghi-chu" class="col-sm-2 control-label"

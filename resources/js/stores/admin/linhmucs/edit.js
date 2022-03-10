@@ -72,6 +72,8 @@ const defaultState = () => {
       bo_nhiems: [],
       lm_thuyen_chuyens: [],
       action: '',
+			sinh_giao_xu: '',
+			mat_giao_xu: '',
     },
 		arr_bo_nhiems: [],
 		arr_thuyen_chuyens: [],

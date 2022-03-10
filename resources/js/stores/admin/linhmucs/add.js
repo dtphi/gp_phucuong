@@ -60,7 +60,8 @@ const defaultState = () => {
       password: '',
       sort_id: 0,
       active: 1,
-
+			sinh_giao_xu: '',
+			mat_giao_xu: '',
       bang_caps: [],
       chuc_thanhs: [],
       thuyen_chuyens: [],
