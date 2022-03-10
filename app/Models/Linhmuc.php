@@ -60,6 +60,8 @@ class Linhmuc extends BaseModel
         'email',
         'password',
         'sort_id',
+				'sinh_giao_xu',
+				'mat_giao_xu'
     ];
 
     /**

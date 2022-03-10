@@ -7,12 +7,24 @@
         :key="ten_thanh_linh_muc"
       ></info-ten-thanh-autocomplete>
     </div>
-    <div>
-      <info-giao-xu-autocomplete
-        @on-select-giao-xu="_selectGiaoXu"
-        :name="giao_xu_name"
-        :key="giao_xu_linh_muc"
-      ></info-giao-xu-autocomplete>
+		<div class="form-group">
+      <label for="input-info-sinh-giao-xu" class="col-sm-2 control-label">Giáo xứ</label>
+      <div class="col-sm-10">
+        <validation-provider
+          name="info_sinh_giao_xu"
+          rules="max:255"
+          v-slot="{ errors }"
+        >
+          <input
+            v-model="sinh_giao_xu"
+            type="text"
+            id="input-info-sinh-giao-xu"
+            class="form-control"
+            placeholder="Sinh tại giáo xứ"
+          />
+          <span class="cms-text-red">{{ errors[0] }}</span>
+        </validation-provider>
+      </div>
     </div>
     <div class="form-group">
       <label for="input-info-name" class="col-sm-2 control-label">{{
@@ -30,6 +42,25 @@
             id="input-info-name"
             class="form-control"
             :placeholder="$options.setting.name_txt"
+          />
+          <span class="cms-text-red">{{ errors[0] }}</span>
+        </validation-provider>
+      </div>
+    </div>
+		<div class="form-group">
+      <label for="input-info-cham-ngon" class="col-sm-2 control-label">Châm ngôn</label>
+      <div class="col-sm-10">
+        <validation-provider
+          name="info_cham_ngon"
+          rules="max:500"
+          v-slot="{ errors }"
+        >
+          <input
+            v-model="cham_ngon"
+            type="text"
+            id="input-info-cham-ngon"
+            class="form-control"
+            placeholder="Châm ngôn"
           />
           <span class="cms-text-red">{{ errors[0] }}</span>
         </validation-provider>
@@ -351,23 +382,23 @@
         <label class="control-label">{{ lable_ngay_rip }}</label>
       </div>
     </div>
-    <div>
-      <info-giao-xu-autocomplete
-        @on-select-giao-xu="_selectRipGiaoXu"
-        :name="rip_giaoxu_name"
-        :key="giao_xu_rip"
-      ></info-giao-xu-autocomplete>
-    </div>
-		<div class="form-group">
-      <label for="input-info-cham-ngon" class="col-sm-2 control-label"
-        >Châm ngôn</label
-      >
+    <div class="form-group">
+      <label for="input-info-mat-giao-xu" class="col-sm-2 control-label">Giáo xứ</label>
       <div class="col-sm-10">
-        <tinymce
-          id="input-cham-ngon"
-          :other_options="options"
-          v-model="cham_ngon"
-        ></tinymce>
+        <validation-provider
+          name="info_mat_giao_xu"
+          rules="max:255"
+          v-slot="{ errors }"
+        >
+          <input
+            v-model="mat_giao_xu"
+            type="text"
+            id="input-info-mat-giao-xu"
+            class="form-control"
+            placeholder="Mất tại giáo xứ"
+          />
+          <span class="cms-text-red">{{ errors[0] }}</span>
+        </validation-provider>
       </div>
     </div>
     <div class="form-group">

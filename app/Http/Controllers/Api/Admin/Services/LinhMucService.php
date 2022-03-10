@@ -262,16 +262,16 @@ final class LinhMucService implements BaseModel, LinhMucModel
             }
         }
 
-        LinhmucThuyenchuyen::fcDeleteByLinhmucId($linhmucId);
-        if (isset($data['thuyen_chuyens']) && !empty($data['thuyen_chuyens'])) {
-            foreach ($data['thuyen_chuyens'] as $thCh) {
-                LinhmucThuyenchuyen::insertByLinhmucId($linhmucId, $thCh['from_giao_xu_id'],
-                    $thCh['from_chuc_vu_id'], $thCh['from_date'], $thCh['duc_cha_id'], $thCh['to_date'],
-                    $thCh['chuc_vu_id'], $thCh['giao_xu_id'], $thCh['co_so_gp_id'], $thCh['dong_id'],
-                    $thCh['ban_chuyen_trach_id'], $thCh['du_hoc'], $thCh['quoc_gia'], $thCh['active'],
-                    $thCh['ghi_chu']);
-            }
-        }
+        // LinhmucThuyenchuyen::fcDeleteByLinhmucId($linhmucId);
+        // if (isset($data['thuyen_chuyens']) && !empty($data['thuyen_chuyens'])) {
+        //     foreach ($data['thuyen_chuyens'] as $thCh) {
+        //         LinhmucThuyenchuyen::insertByLinhmucId($linhmucId, $thCh['from_giao_xu_id'],
+        //             $thCh['from_chuc_vu_id'], $thCh['from_date'], $thCh['duc_cha_id'], $thCh['to_date'],
+        //             $thCh['chuc_vu_id'], $thCh['giao_xu_id'], $thCh['co_so_gp_id'], $thCh['dong_id'],
+        //             $thCh['ban_chuyen_trach_id'], $thCh['du_hoc'], $thCh['quoc_gia'], $thCh['active'],
+        //             $thCh['ghi_chu'], $thCh['is_bo_nhiem']);
+        //     }
+        // }
 
         LinhmucVanthu::fcDeleteByLinhmucId($linhmucId);
         if (isset($data['van_thus']) && !empty($data['van_thus'])) {
@@ -556,6 +556,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
 		public function apiGetThuyenChuyen($infoId = null){
 				$query = $this->modelThuyenChuyen->select()
 				->where('linh_muc_id', $infoId)
+				->where('is_bo_nhiem', '!=', 1)
 				->orderBy('from_date', 'DESC')
 				->get();
 

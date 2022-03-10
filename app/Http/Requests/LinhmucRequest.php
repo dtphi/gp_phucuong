@@ -65,6 +65,8 @@ class LinhmucRequest extends BaseRequest
             $formData['ngay_thang_nam_sinh'] = null;
         }
         $formData['noi_sinh']     = isset($formData['noi_sinh']) ? $formData['noi_sinh'] : null;
+				$formData['sinh_giao_xu']     = isset($formData['sinh_giao_xu']) ? $formData['sinh_giao_xu'] : null;
+				$formData['mat_giao_xu']     = isset($formData['mat_giao_xu']) ? $formData['mat_giao_xu'] : null;
         $formData['giao_xu_id']   = isset($formData['giao_xu_id']) ? $formData['giao_xu_id'] : null;
         $formData['ho_ten_cha']   = isset($formData['ho_ten_cha']) ? $formData['ho_ten_cha'] : null;
         $formData['ho_ten_me']    = isset($formData['ho_ten_me']) ? $formData['ho_ten_me'] : null;

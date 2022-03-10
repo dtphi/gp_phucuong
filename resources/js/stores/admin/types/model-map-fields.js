@@ -136,5 +136,19 @@ export const MAP_PC_LINHMUCS = [
   'is_duc_cha',
   'uuid',
   'sort_id',
-  'active'
+  'active',
+	'sinh_giao_xu',
+	'mat_giao_xu'
+]
+export const MAP_PC_THUYEN_CHUYENS = [
+			'id',
+			'linh_muc_id',
+			'linhMucName',
+			'tenThanh',
+			'chuc_vu_id',
+			'chucvuName',
+			'label_from_date',
+			'label_to_date',
+			'from_date',
+			'to_date'
 ]
