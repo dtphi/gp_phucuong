@@ -759,11 +759,12 @@ class ApiController extends Controller
 				'id' => (int) $infos->id,
 				'ten' => $infos->ten,
 				'ten_thanh' => $infos->ten_thanh ?? $emptyStr,
-				'nam_sinh' => $infos->ngay_sinh ?? $emptyStr,
+				'nam_sinh' =>($infos->ngay_thang_nam_sinh) ? date_format(date_create($infos->ngay_thang_nam_sinh), "d-m-Y") : $emptyStr,
 				'image'	=> !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
+				'sinh_giao_xu' => $infos->sinh_giao_xu ?? $emptyStr,
 				'giao_xu' => $infos->ten_xu ?? $emptyStr,
 				'dia_chi' => $infos->noi_sinh ?? $emptyStr,
-				'giao_phan' => $infos->gp_name ?? $emptyStr,
+				'giao_phan' => 'Giáo Phận Phú Cường',
 				'ho_ten_cha' => $infos->ho_ten_cha ?? $emptyStr,
 				'ho_ten_me' => $infos->ho_ten_me ?? $emptyStr,
 				'ngay_rua_toi' => ($infos->ngay_rua_toi) ? date_format(date_create($infos->ngay_rua_toi), "d-m-Y") : $emptyStr,
@@ -771,6 +772,7 @@ class ApiController extends Controller
 				'so_cmnd' => $infos->so_cmnd ?? $emptyStr,
 				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? $emptyStr,
 				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? $emptyStr,
+				'cham_ngon' => $infos->cham_ngon ?? $emptyStr,
 				'cv_hien_tai' => $chucVuHienTai ?? $emptyStr,
 				'ds_chuc_vu' => $thuyenChuyens ?? "",
 				'ds_chuc_thanh' => $infos->arr_chuc_thanh_list ?? "",
@@ -778,6 +780,7 @@ class ApiController extends Controller
 		} catch (HandlerMsgCommon $e) {
 			throw $e->render();
 		}
+
 		return  $results;
 	}
 
