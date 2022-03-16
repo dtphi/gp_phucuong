@@ -132,6 +132,9 @@
 </template>
 
 <script>
+import { MODULE_MODULE_THANH_ADD } from "store@admin/types/module-types";
+import { ACTION_INSERT_INFO, ACTION_RESET_NOTIFICATION_INFO} from "store@admin/types/action-types";
+import { mapState, mapActions } from "vuex";
 export default {
   name: 'TheModalAdd',
   data() {
@@ -146,13 +149,43 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapState(MODULE_MODULE_THANH_ADD,{
+      loading: (state) => state.loading,
+      errors: (state) => state.errors,
+      insertSuccess: (state) => state.insertSuccess,
+    }),
+    
+    _errors() {
+      return this.errors.length;
+    },
+  },
+  watch: {
+    insertSuccess(newValue, oldValue) {
+      if (newValue) {
+        this._notification(newValue);
+      }
+    },
+  },
   methods: {
+    ...mapActions(MODULE_MODULE_THANH_ADD, {
+      'insertInfo': ACTION_INSERT_INFO,
+      'notification':ACTION_RESET_NOTIFICATION_INFO
+    }),
     _hideModalEdit() {
       this.info = {}
       this.$modal.hide('modal-thanh-add')
     },
     _submitUpdate() {
-      return 0
+      
+      if(this.info.name !== '' && this.info.latin != ''  && this.info.bon_mang != null) {
+        this.insertInfo(this.info);
+        this._hideModalEdit()
+      }
+    },
+    _notification(notification){
+      this.$notify(notification);
+      this.notification("");
     },
   },
   setting: {

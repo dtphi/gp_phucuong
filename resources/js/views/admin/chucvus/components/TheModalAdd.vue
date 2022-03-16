@@ -57,7 +57,6 @@
         <div class="col-sm-9">
           <tinymce
             id="input-info-bo-nhiem"
-            :other_options="options"
             v-model="info.vtbn"
           ></tinymce>
         </div>
@@ -91,11 +90,11 @@
 
 <script>
 import { mapState, mapActions, } from 'vuex'
-import { config } from '@app/common/config'
+// import { config, } from '@app/common/config'
 import TheModalResizable from 'com@admin/Modal/TheModalResizable'
 import tinymce from 'vue-tinymce-editor'
-import { fnCheckImgPath } from '@app/common/util'
-import { MODULE_MODULE_CHUC_VU_ADD } from 'store@admin/types/module-types'
+// import { fnCheckImgPath, } from '@app/common/util'
+import { MODULE_MODULE_CHUC_VU_ADD, } from 'store@admin/types/module-types'
 import {
   ACTION_INSERT_INFO,
   ACTION_RESET_NOTIFICATION_INFO,
@@ -108,28 +107,28 @@ export default {
     TheModalResizable,
   },
   data() {
-    const elFileContent = document.getElementById('media-file-manager-content')
-    const mm = new MM({
-      el: '#modal-general-info-manager',
-      api: config.mm.api,
-      onSelect: (fi) => {
-        if (typeof fi === 'object') {
-          if (fnCheckImgPath(fi)) {
-            this.fn(`/${config.dirImage}/${fi.selected.path}`, fi.selected)
-            elFileContent.style = this.$options.setting.cssDisplayNone
-          }
-        }
-      },
-    })
-    const options = config.tinymce.options((callback) => {
-      this.fn = callback
-      elFileContent.style = this.$options.setting.cssDisplay
-    })
+    // const elFileContent = document.getElementById('media-file-manager-content')
+    // const mm = new MM({
+    //   el: '#modal-general-info-manager',
+    //   // api: config.mm.api,
+    //   onSelect: (fi) => {
+    //     if (typeof fi === 'object') {
+    //       if (fnCheckImgPath(fi)) {
+    //         this.fn(`/${config.dirImage}/${fi.selected.path}`, fi.selected)
+    //         elFileContent.style = this.$options.setting.cssDisplayNone
+    //       }
+    //     }
+    //   },
+    // })
+    // const options = config.tinymce.options((callback) => {
+    //   this.fn = callback
+    //   elFileContent.style = this.$options.setting.cssDisplay
+    // })
 
     return {
-      fn: null,
-      mm: mm,
-      options: options,
+      // fn: null,
+      // mm: mm,
+      // options: options,
       info: {
         active: 1,
         vtbn: '',
@@ -141,10 +140,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(MODULE_MODULE_CHUC_VU_ADD, [
-      'loading',
-      'insertSuccess',
-    ]),
+    ...mapState(MODULE_MODULE_CHUC_VU_ADD, ['loading', 'insertSuccess']),
   },
   watch: {
     insertSuccess(newValue) {
@@ -156,7 +152,7 @@ export default {
   methods: {
     ...mapActions(MODULE_MODULE_CHUC_VU_ADD, [
       ACTION_INSERT_INFO,
-      ACTION_RESET_NOTIFICATION_INFO,
+      ACTION_RESET_NOTIFICATION_INFO
     ]),
     _hideModalEdit() {
       this.$modal.hide('modal-chuc-vu-add')

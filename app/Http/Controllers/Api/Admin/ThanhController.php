@@ -162,7 +162,7 @@ class ThanhController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->thanhSv->apiInsert($formData)) {
+        if ($result = $this->thanhSv->apiInsertOrUpdate($formData)) {
             return $this->respondUpdated($result);
         }
 
