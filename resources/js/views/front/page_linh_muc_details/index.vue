@@ -144,7 +144,7 @@
                               padding-left: 10px;
                               font-style: italic;
                             "
-                            >{{ $helper.fn_format_dd_mm_yyyy(pageLists.nam_sinh) }}</label
+                            >{{pageLists.nam_sinh}}</label
                           ></span
                         >
                         <span class="col-mobile col-6">
@@ -210,7 +210,7 @@
                               padding-left: 10px;
                               font-style: italic;
                             "
-                            >{{ pageLists.giao_xu }}</label
+                            >{{ pageLists.sinh_giao_xu }}</label
                           >
                         </span>
                         <span class="col-mobile col-6">
@@ -422,6 +422,9 @@
                       >
                         Châm ngôn đời linh mục
                       </h4>
+											<div class="text-center">
+												<h3>{{pageLists.cham_ngon}}</h3>
+											</div>							
                     </div>
                     <div>
                       <h3>HOẠT ĐỘNG SỨ VỤ</h3>
