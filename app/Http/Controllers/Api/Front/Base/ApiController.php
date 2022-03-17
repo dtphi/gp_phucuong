@@ -767,6 +767,8 @@ class ApiController extends Controller
 				'giao_phan' => 'Giáo Phận Phú Cường',
 				'ho_ten_cha' => $infos->ho_ten_cha ?? $emptyStr,
 				'ho_ten_me' => $infos->ho_ten_me ?? $emptyStr,
+        'noi_rua_toi' => $infos->noi_rua_toi ?? '',
+        'noi_them_suc' => $infos->noi_them_suc ?? '',
 				'ngay_rua_toi' => ($infos->ngay_rua_toi) ? date_format(date_create($infos->ngay_rua_toi), "d-m-Y") : $emptyStr,
 				'ngay_them_suc' => ($infos->ngay_them_suc) ? date_format(date_create($infos->ngay_them_suc), "d-m-Y") : '',
 				'so_cmnd' => $infos->so_cmnd ?? $emptyStr,
