@@ -210,8 +210,6 @@ export default {
     },
     _submitUpdate() {
       this[ACTION_UPDATE_INFO](this.info)
-      
-      return 0
     },
     _notificationUpdate(notification) {
       if (notification.type == 'success') {
