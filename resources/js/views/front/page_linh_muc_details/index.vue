@@ -69,6 +69,7 @@
                         style="margin-bottom: 2rem; font-size: 20px"
                         class="d-block"
                       >
+                        {{pageLists.noi_rua_toi}}<br>
                         {{ pageLists.ngay_rua_toi }}
                       </p>
                       <a
@@ -81,6 +82,7 @@
                         style="margin-bottom: 2rem; font-size: 20px"
                         class="d-block"
                       >
+                        {{pageLists.noi_them_suc}}<br>
                         {{ pageLists.ngay_them_suc }}
                       </p>
                       <a
