@@ -282,6 +282,27 @@ final class LinhMucService implements BaseModel, LinhMucModel
         }
     }
 
+    public function deleteInformation($model = null) {
+        DB::beginTransaction();
+      try {
+        $id = $model->id;
+        $this->_deleteById($id);
+        DB::commit();
+      } catch (\Exceptions $e) {
+        DB::rollBack();
+        throw $e;
+        return false;
+      }
+    }
+
+    private function _deleteById($id)
+    {      
+      Linhmuc::fcDeleteById($id);
+      LinhmucBangcap::fcDeleteByLinhmucId($id);
+      LinhmucChucthanh::fcDeleteByLinhmucId($id);
+      LinhmucThuyenchuyen::fcDeleteByLinhmucId($id);
+    }
+
 		private function _removeThuyenChuyen($linhmucId, $model)
     {
         LinhmucThuyenChuyen::fcDeleteByLinhmucThuyenChuyenId($linhmucId, $model['id']);

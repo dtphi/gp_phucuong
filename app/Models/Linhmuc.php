@@ -316,5 +316,10 @@ class Linhmuc extends BaseModel
 
     public function scopeName($query, $request) {
       return  $query->where('ten', 'LIKE', '%' . $request->input('query') . '%');
-  }
+    }
+
+    public function fcDeleteById($id) {
+        DB::delete("delete from `" . Tables::$linhmucs . "` where id = '" . (int)$id . "'");
+    }
+
 }
