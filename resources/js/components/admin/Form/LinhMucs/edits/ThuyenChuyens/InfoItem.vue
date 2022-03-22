@@ -14,7 +14,7 @@
 					{{diaDiemName}}
 			</td>
 			<td class="text-center">{{ item.label_from_date  }}</td>
-			<td class="text-center">{{ item.label_to_date }}</td>
+			<td class="text-center">{{ check_label_to_date }}</td>
 			<td>	
 				<a
 					href="javascript:void(0);"
@@ -74,6 +74,13 @@ export default {
 					return false
 				}
 			},
+      check_label_to_date: function() {
+        if(this.item.label_to_date === '') {
+          return 'Cho đến nay'
+        }else {
+          return this.item.label_to_date
+        }
+      },
 			diaDiemName: function() {
 					if(this.item.giaoxuName) {
 							return this.item.giaoxuName 

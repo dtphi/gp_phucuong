@@ -11,7 +11,7 @@
 				<a :href="item.linh_muc_url">{{item.linhMucName}}</a>
 			</td>
 			<td class="text-center">{{ item.label_from_date  }}</td>
-			<td class="text-center">{{ item.label_to_date }}</td>
+			<td class="text-center">{{check_label_to_date}}</td>
 			<td>	
 				<a
 					href="javascript:void(0);"
@@ -70,7 +70,14 @@ export default {
 				}else {
 					return false
 				}
-		}
+		},
+    check_label_to_date: function() {
+      if(this.item.label_to_date === '') {
+        return 'Cho đến nay'
+      }else {
+        return this.item.label_to_date
+      }
+    }
 	},
   methods: {
     ...mapActions(MODULE_MODULE_GIAO_XU_EDIT, [

@@ -502,7 +502,7 @@ class LinhMucController extends ApiController
 									'fromchucvuName' => $info->ten_from_chuc_vu,
 									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"Y-m-d"):'',
 									'ducchaName' => $info->ten_duc_cha,
-									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'Cho đến nay',
+									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'',
 									'chucvuName' => $info->ten_to_chuc_vu,
 									'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
 									'giaoxuName' => $info->ten_to_giao_xu,
