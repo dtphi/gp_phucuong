@@ -377,7 +377,7 @@ class GiaoXuController extends ApiController
 									'fromchucvuName' => $info->ten_from_chuc_vu,
 									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"Y-m-d"):'',
 									'ducchaName' => $info->ten_duc_cha,
-									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'',
+									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'Cho đến nay',
 									'chucvuName' => $info->ten_to_chuc_vu,
 									'chuc_vu_id' => $info->chuc_vu_id,
 									'linh_muc_url' => url('admin/linh-mucs/edit/' . $info->linh_muc_id),
