@@ -94,14 +94,14 @@
                       <p
                         style="margin-bottom: 2rem; font-size: 20px"
                         v-for="(value, idx) in pageLists.ds_chuc_thanh"
-                        :key="value.chuc_thanh_id + '_ct'"
+                        :key="idx + 'B'"
                         class="d-block"
                       >
                         {{ idx + 1 + ". " + chucThanh[value.chuc_thanh_id]
                         }}<br />
                         <span style="font-size: 14px"
-                          >Thụ phong bởi :<br />
-                          {{ value.nguoi_thu_phong }}</span
+                          >Thụ phong bởi Đức Cha:<br />
+                          {{ _ngThuPhong(value.nguoi_thu_phong) }}</span
                         ><br />
                         <span style="font-size: 14px"
                           >Tại: {{ value.noi_thu_phong }}</span
@@ -111,6 +111,7 @@
                           {{ value.label_ngay_thang_nam_chuc_thanh }}</span
                         ><br />
                       </p>
+                      <h5>RIP: {{pageLists.ngay_rip}}</h5>
                     </div>
                   </div>
                   <div class="col-mobile col-8">
@@ -436,7 +437,7 @@
                       >
                       <vue-timeline-update
                         v-for="item in pageLists.ds_chuc_vu"
-                        :key="item.id"
+                        :key="item.id + 'A'"
                         :date="new Date()"
                         :dateString="item.label_from_date"
                         :category="`Chức vụ: ${item.chucvuName}`"
@@ -520,11 +521,15 @@ export default {
       getDetail: GET_DETAIL_LINH_MUC,
     }),
     _des(item) {
+      const ghi_chu = (item.ghi_chu !== null) ? item.ghi_chu : ''
       var fromDate = item.label_from_date
       var toDate = item.label_to_date ? ' đến ngày ' + item.label_to_date : ''
-      var des = 'Từ ngày ' + fromDate + toDate + ' ' + item.ghi_chu
+      var des = 'Từ ngày ' + fromDate + toDate + ' ' + ghi_chu
       
       return des
+    },
+    _ngThuPhong(nguoi_thu_phong) {
+      return (nguoi_thu_phong !== null) ? nguoi_thu_phong : 'Chưa cập nhật'
     },
     _itemChucVus(chucVus) {
       const self = this

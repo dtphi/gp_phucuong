@@ -161,7 +161,7 @@ class LinhMucController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(LinhmucRequest $request, $id = null)
-    {
+    { 
         $data = $request->all();
         $action = $request->get('action');
 				if ($action == 'create.update.bang.cap.db') {
@@ -502,7 +502,7 @@ class LinhMucController extends ApiController
 									'fromchucvuName' => $info->ten_from_chuc_vu,
 									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"Y-m-d"):'',
 									'ducchaName' => $info->ten_duc_cha,
-									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'',
+									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'Cho đến nay',
 									'chucvuName' => $info->ten_to_chuc_vu,
 									'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
 									'giaoxuName' => $info->ten_to_giao_xu,

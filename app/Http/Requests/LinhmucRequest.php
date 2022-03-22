@@ -111,7 +111,7 @@ class LinhmucRequest extends BaseRequest
         $formData['ten_dong']        = isset($formData['ten_dong']) ? $formData['ten_dong'] : null;
         $formData['ngay_trieu_dong'] = isset($formData['ngay_trieu_dong']) ? $formData['ngay_trieu_dong'] : '';
         if (!empty($formData['ngay_trieu_dong'])) {
-            $formData['ngay_trieu_dong'] = new Carbon($formData['ngay_cap_cmnd']);
+            $formData['ngay_trieu_dong'] = new Carbon($formData['ngay_trieu_dong']);
         } else {
             $formData['ngay_trieu_dong'] = null;
         }
@@ -123,7 +123,7 @@ class LinhmucRequest extends BaseRequest
         }
         $formData['ngay_rip'] = isset($formData['ngay_rip']) ? $formData['ngay_rip'] : '';
         if (!empty($formData['ngay_rip'])) {
-            $formData['ngay_rip'] = new Carbon($formData['ngay_cap_cmnd']);
+            $formData['ngay_rip'] = new Carbon($formData['ngay_rip']);
         } else {
             $formData['ngay_rip'] = null;
         }

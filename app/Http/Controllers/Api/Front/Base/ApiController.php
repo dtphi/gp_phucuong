@@ -774,6 +774,7 @@ class ApiController extends Controller
 				'so_cmnd' => $infos->so_cmnd ?? $emptyStr,
 				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? $emptyStr,
 				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? $emptyStr,
+        'ngay_rip' => ($infos->ngay_rip) ? date_format(date_create($infos->ngay_rip), "d-m-Y") : '',
 				'cham_ngon' => $infos->cham_ngon ?? $emptyStr,
 				'cv_hien_tai' => $chucVuHienTai ?? $emptyStr,
 				'ds_chuc_vu' => $thuyenChuyens ?? "",
