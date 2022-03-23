@@ -145,10 +145,10 @@ class ThanhController extends ApiController
     {
         try {
             $model = $this->thanhSv->apiGetDetail($id);
-            $model->forceDelete();
         } catch (HandlerMsgCommon $e) {
             throw $e->render();
         }
+        $this->thanhSv->deleteInformation($model);
 
         return $this->respondDeleted("{$this->resourceName} deleted.");
     }
@@ -161,7 +161,6 @@ class ThanhController extends ApiController
     private function __handleStore(&$request)
     {
         $formData = $request->all();
-
         if ($result = $this->thanhSv->apiInsertOrUpdate($formData)) {
             return $this->respondUpdated($result);
         }

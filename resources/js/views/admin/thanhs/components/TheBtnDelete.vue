@@ -41,7 +41,6 @@ export default {
       deleteInfo: ACTION_DELETE_INFO_BY_ID,
     }),
     _showDiaglogConfirm() {
-      this.setInfoDelete(this.infoId)
       this.$modal.show('dialog', {
         title: 'Xóa tên thánh',
         text: 'Bạn muốn xóa tên thánh ?',
