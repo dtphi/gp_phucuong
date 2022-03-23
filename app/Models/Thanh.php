@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use DB;
+use App\Http\Common\Tables;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Thanh extends BaseModel
@@ -20,4 +22,8 @@ class Thanh extends BaseModel
         'active',
         'update_user'
     ];
+
+    public function fcDeleteById($id) {
+        DB::delete("delete from `" . Tables::$thanhs . "` where id = '" . (int)$id . "'");
+    }
 }

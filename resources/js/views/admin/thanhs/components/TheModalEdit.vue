@@ -55,7 +55,7 @@
           <div class="col-sm-10">
             <cms-date-picker
               value-type="format"
-              format="YYYY-MM-DD"
+              format="MM-DD"
               v-model="bon_mang"
               type="date"
             ></cms-date-picker>
@@ -89,17 +89,6 @@
               <textarea class="form-control" v-model="cuoc_doi"></textarea>
               <span class="cms-text-red">{{ errors[0] }}</span>
             </validation-provider>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
-            >Trạng thái</label
-          >
-          <div class="col-sm-10">
-            <select class="form-control" v-model="active">
-              <option value="1" :selected="active == 1">Xảy ra</option>
-              <option value="0" :selected="active == 0">Ẩn</option>
-            </select>
           </div>
         </div>
       </form>
@@ -165,7 +154,6 @@ export default {
     },
     _submitUpdate() {
       this.updateInfo(this.info)
-      
       return 0
     },
     _notificationUpdate(notification) {

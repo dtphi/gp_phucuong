@@ -101,4 +101,17 @@ final class ThanhService implements BaseModel, ThanhModel
     public function apiInsert($data = null) {
 
     }
+
+    public function deleteInformation($model = null) {
+        DB::beginTransaction();
+      try {
+        $id = $model->id;
+        Thanh::fcDeleteById($id);
+        DB::commit();
+      } catch (\Exceptions $e) {
+        DB::rollBack();
+        throw $e;
+        return false;
+      }
+    }
 }
