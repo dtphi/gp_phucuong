@@ -56,7 +56,7 @@
             <div class="col-sm-10">
               <cms-date-picker
                 value-type="format"
-                format="YYYY-MM-DD"
+                format="MM-DD"
                 v-model="info.bon_mang"
                 type="date"
               ></cms-date-picker>
@@ -152,13 +152,8 @@ export default {
   computed: {
     ...mapState(MODULE_MODULE_THANH_ADD,{
       loading: (state) => state.loading,
-      errors: (state) => state.errors,
       insertSuccess: (state) => state.insertSuccess,
     }),
-    
-    _errors() {
-      return this.errors.length;
-    },
   },
   watch: {
     insertSuccess(newValue, oldValue) {
@@ -176,16 +171,18 @@ export default {
       this.info = {}
       this.$modal.hide('modal-thanh-add')
     },
-    _submitUpdate() {
-      
-      if(this.info.name !== '' && this.info.latin != ''  && this.info.bon_mang != null) {
-        this.insertInfo(this.info);
-        this._hideModalEdit()
+    async _submitUpdate() {
+      if(this.info.name !== '' && this.info.bon_mang != null) {
+        await this.insertInfo(this.info)
       }
     },
-    _notification(notification){
-      this.$notify(notification);
-      this.notification("");
+    _notification(notification) {
+      if(notification.type == 'success') {
+        this.info = {}
+        this.$emit('add-info-success')
+      }
+      this.$notify(notification)
+      this.notification('')
     },
   },
   setting: {

@@ -84,10 +84,10 @@ export const apiGetGiaoXuInfos = (resolve, errResole, params) => {
 export const apiUpdateInfo = (info, resolve, errResole) => {
   return axios.put(fn_get_base_api_detail_url(API_GIAO_XUS_RESOURCE, info.id), info)
     .then((response) => {
-      if (response.status === 1000) {
+      if (response.status === 200) {
         var json = {}
         json['data'] = response.data
-        json['status'] = 1000
+        json['status'] = 200
         resolve(json)
       } else {
         errResole([{
