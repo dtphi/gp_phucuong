@@ -18,6 +18,8 @@ class Thanh extends BaseModel
         'latin',
         'ghi_chu',
         'bon_mang',
+        'bon_mang_ngay',
+        'bon_mang_thang',
         'cuoc_doi',
         'active',
         'update_user'

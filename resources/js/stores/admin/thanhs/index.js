@@ -106,6 +106,10 @@ export default {
     [INFOS_SET_ERROR](state, payload) {
       state.errors = payload
     },
+    remove_thanh(state, payload) {
+      const i = state.infos.map(item => item.id).indexOf(payload)
+      state.infos.splice(i, 1)
+    }
   },
 
   actions: {
@@ -144,22 +148,21 @@ export default {
     },
 
     async [ACTION_DELETE_INFO_BY_ID]({ state, dispatch, commit, }, infoId) {
-      let getId = null
-      if (typeof state.infoDelete === 'object') {
-        if (fnCheckProp(state.infoDelete, 'information_id')) {
-          getId = parseInt(state.infoDelete.information_id)
-        }
-      }
+      // let getId = null
+      // if (typeof state.infoDelete === 'object') {
+      //   if (fnCheckProp(state.infoDelete, 'information_id')) {
+      //     getId = parseInt(state.infoDelete.information_id)
+      //   }
+      // }
       const deleteId = parseInt(infoId)
 
-      if (getId === deleteId) {
+      if (deleteId) {
         await apiDeleteInfo(
           deleteId,
           (infos) => {
             if (infos) {
+              commit('remove_thanh', infoId)
               commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
-              dispatch(ACTION_GET_INFO_LIST)
-              commit(INFOS_INFO_DELETE_BY_ID, null)
             }
           },
           (errors) => {

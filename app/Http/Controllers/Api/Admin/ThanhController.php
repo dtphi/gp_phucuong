@@ -59,7 +59,7 @@ class ThanhController extends ApiController
                     'id' => (int)$info->id,
                     'name'           => $info->name,
                     'latin' => $info->latin,
-                    'bon_mang'         => $info->bon_mang,
+                    'bon_mang'         => $info->bon_mang_ngay . ' - ' . $info->bon_mang_thang,
                     'ghi_chu'          => $info->ghi_chu,
                     'cuoc_doi'    => $info->cuoc_doi,
                     'active'     => $info->active,

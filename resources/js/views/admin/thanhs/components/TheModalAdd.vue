@@ -53,13 +53,35 @@
             <label for="input-info-name" class="col-sm-2 control-label"
               >Bổn mạng</label
             >
-            <div class="col-sm-10">
-              <cms-date-picker
-                value-type="format"
-                format="MM-DD"
-                v-model="info.bon_mang"
-                type="date"
-              ></cms-date-picker>
+            <div class="col-sm-3">
+              <p>Ngày:</p>
+              <validation-provider
+                name="info_bon_mang_ngay"
+                rules="max:255"
+                v-slot="{ errors }"
+              >
+                <input
+                  v-model="info.bon_mang_ngay"
+                  type="text"
+                  id="input-info-bon-mang-ngay"
+                />
+                <span class="cms-text-red">{{ errors[0] }}</span>
+              </validation-provider>
+            </div>
+            <div class="col-sm-3">
+              <p>Tháng:</p>
+              <validation-provider
+                name="info_bon_mang_thang"
+                rules="max:255"
+                v-slot="{ errors }"
+              >
+                <input
+                  v-model="info.bon_mang_thang"
+                  type="text"
+                  id="input-info-bon-mang-thang"
+                />
+                <span class="cms-text-red">{{ errors[0] }}</span>
+              </validation-provider>
             </div>
           </div>
           <div class="form-group">
@@ -161,7 +183,7 @@ export default {
       this.$modal.hide('modal-thanh-add')
     },
     async _submitUpdate() {
-      if(this.info.name !== '' && this.info.bon_mang != null) {
+      if(this.info.name !== '') {
         await this.insertInfo(this.info)
       }
     },
