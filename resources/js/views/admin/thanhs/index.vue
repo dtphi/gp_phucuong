@@ -150,7 +150,8 @@ export default {
       this.curInfo.latin = this.info.latin
       this.curInfo.ghi_chu = this.info.ghi_chu
       this.curInfo.cuoc_doi = this.info.cuoc_doi
-      this.curInfo.bon_mang = this.info.bon_mang
+      this.curInfo.bon_mang_ngay = this.info.bon_mang_ngay
+      this.curInfo.bon_mang_thang = this.info.bon_mang_thang
       this.curInfo.active = this.info.active
       this.$modal.hide('modal-thanh-edit')
     },
