@@ -11,7 +11,7 @@
     </td>
     <td class="text-left">{{ info.name }}</td>
     <td>{{ info.latin }}</td>
-    <td class="text-center">{{ info.bon_mang }}</td>
+    <td class="text-center">{{ bonmang }}</td>
     <td>
       <div v-html="info.ghi_chu"></div>
     </td>
@@ -61,6 +61,9 @@ export default {
     ...mapState({
       meta: state => state.cfApp.collectionData,
     }),
+    bonmang() {
+      return this.info.bon_mang_ngay + ' - ' + this.info.bon_mang_thang
+    }
   },
   methods: {
     _getNo() {
