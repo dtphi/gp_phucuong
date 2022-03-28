@@ -344,7 +344,7 @@ class ApiController extends Controller
 					$tmp = $img;
 					$tmp['width'] = (int)$img['width'];
 					$tmp['image'] = url('/Image/NewPicture/' . $img['image']);
-					$tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280, 280));
+					$tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280));
 					$albums[$key] = $tmp;
 				} else {
 					unset($value[$key]);
