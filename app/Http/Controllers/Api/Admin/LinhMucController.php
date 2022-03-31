@@ -196,7 +196,7 @@ class LinhMucController extends ApiController
             return $json;
         } elseif ($action == 'update.bo.nhiem') {
 					try {
-							$json = $this->linhMucSv->apiUpdate($data);
+							$json = $this->linhMucSv->apiUpdateBoNhiem($data);
 					} catch (HandlerMsgCommon $e) {
 							throw $e->render();
 					}
