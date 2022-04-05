@@ -111,7 +111,7 @@
                           {{ value.label_ngay_thang_nam_chuc_thanh }}</span
                         ><br />
                       </p>
-                      <h5>RIP: {{pageLists.ngay_rip}}</h5>
+                      <h5 v-if="pageLists.ngay_rip">RIP: {{pageLists.ngay_rip}}</h5>
                     </div>
                   </div>
                   <div class="col-mobile col-8">
@@ -441,7 +441,7 @@
                         :date="new Date()"
                         :dateString="item.label_from_date"
                         :category="`Chức vụ: ${item.chucvuName}`"
-                        :title="`- <a href='/giao-xu/chi-tiet/${item.giao_xu_id}'>Giáo xứ: ${item.giaoxuName}</a>`"
+                        :title="`- <a href='/giao-xu/chi-tiet/${item.giao_xu_id}'>${diadiem(item)}</a>`"
                         :description="_des(item)"
                         icon="history"
                       />
@@ -520,6 +520,17 @@ export default {
     ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, {
       getDetail: GET_DETAIL_LINH_MUC,
     }),
+    diadiem(item) {
+       if(item.giaoxuName !== '') {
+          return 'Giáo xứ: '+ item.giaoxuName
+       }else if (item.cosogpName !== '') {
+         return 'Cơ sở giáo phận: ' + item.cosogpName
+       }else if (item.dongName !== '') {
+         return 'Dòng: ' + item.dongName
+       }else {
+         return 'Ban chuyên trách: ' + item.banchuyentrachName
+       }
+    },
     _des(item) {
       const ghi_chu = (item.ghi_chu !== null) ? item.ghi_chu : ''
       var fromDate = item.label_from_date
