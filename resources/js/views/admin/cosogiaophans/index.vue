@@ -61,7 +61,7 @@
         @update-info-success="_updateInfoList"
       ></the-modal-edit>
     </modal>
-    <the-modal-add></the-modal-add>
+    <the-modal-add @add-info-success="_addInfoList"></the-modal-add>
   </div>
 </template>
 
@@ -105,6 +105,7 @@ export default {
   computed: {
     ...mapState({
       perPage: state => state.cfApp.perPage,
+      rootData: (state) => state.cfApp,
     }),
     ...mapGetters(['isNotEmptyList']),
     ...mapState(MODULE_MODULE_CO_SO, ['infos', 'loading', 'isDelete']),
@@ -122,6 +123,14 @@ export default {
     ]),
     _showModalAdd() {
       this.$modal.show('modal-co-so-add')
+    },
+    _addInfoList() {
+      this.$modal.hide('modal-co-so-add')
+      const params = {
+        ...this.rootData.searchs,
+        perPage: this.rootData.perPage
+      }
+      this[ACTION_GET_INFO_LIST](params)
     },
     _showModalEdit() {
       this.$modal.show('modal-co-so-edit')
@@ -141,7 +150,7 @@ export default {
     this[ACTION_GET_INFO_LIST](params)
   },
   setting: {
-    list_title: 'Danh sách Linh mục',
+    list_title: 'Danh sách cơ sở',
   },
 }
 </script>

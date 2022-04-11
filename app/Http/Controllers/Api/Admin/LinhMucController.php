@@ -61,7 +61,9 @@ class LinhMucController extends ApiController
             return $this->dropdownBanChuyenTrach($request);
         }elseif ($action == 'dropdown.linh.muc') {
 					return $this->dropdownLinhMuc($request);
-			}
+			  } elseif ($action == 'dropdown.cong.doan.ngoai.giao.phan') {
+          return $this->dropdownCongDoanNgoaiGiaoPhan($request);
+        }
 
         $data = $request->all();
         $page = 1;
@@ -483,6 +485,23 @@ class LinhMucController extends ApiController
         return $this->respondWithCollectionPagination($collections);
     }
 
+    public function dropdownCongDoanNgoaiGiaoPhan(LinhmucRequest $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->linhMucSv->apiGetCongDoanNgoaiGiaoPhanList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+          $collections[] = [
+            'id'   => $value->id,
+            'name' => $value->name,
+          ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
 		public function listLinhMucThuyenChuyen($infoId = null, LinhmucRequest $request) 
 		{
 				try {
@@ -508,6 +527,7 @@ class LinhMucController extends ApiController
 									'giaoxuName' => $info->ten_to_giao_xu,
 									'cosogpName' => $info->ten_co_so,
 									'co_so_id' => $info->co_so_gp_id,
+                  'co_so_status' => $info->trang_thai_co_so,
 									'dong_id' => $info->dong_id,
 									'ban_chuyen_trach_id' => $info->ban_chuyen_trach_id,
 									'dongName' => $info->ten_dong,

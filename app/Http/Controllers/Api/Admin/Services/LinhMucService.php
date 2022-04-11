@@ -314,7 +314,6 @@ final class LinhMucService implements BaseModel, LinhMucModel
          * Save user with transaction to make sure all data stored correctly
          */
         DB::beginTransaction();
-        
         if ($data['action'] == 'add.bo.nhiem') {
             $this->_addBoNhiem($data['id'], $data['bo_nhiem']);
         } elseif ($data['action'] == 'add.lm.thuyen.chuyen') {
@@ -381,8 +380,9 @@ final class LinhMucService implements BaseModel, LinhMucModel
     {
         $model = new CoSoGiaoPhan();
         $query = $model->select()
+            ->where('status', '=', 0)
+            ->orWhere('status', '=', NULL)
             ->orderBy('name', 'DESC');
-
         return $query->get();
     }
 
@@ -410,6 +410,17 @@ final class LinhMucService implements BaseModel, LinhMucModel
         $query = $model->select()
 						->where('active', 1)
             ->orderBy('ten', 'DESC');
+
+        return $query->get();
+    }
+
+    public function apiGetCongDoanNgoaiGiaoPhanList($data = [])
+    {
+        $model = new CoSoGiaoPhan();
+        $query = $model->select()
+        ->where('active', 1)
+        ->where('status', '=', 1)
+        ->orderBy('name', 'DESC');
 
         return $query->get();
     }

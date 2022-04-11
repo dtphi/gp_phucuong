@@ -86,15 +86,30 @@ export default {
 				if(this.update_thuyen_chuyen.giao_xu_id != 0) {
 					this.curInfo.giaoxuName = this.update_thuyen_chuyen.diaDiemName
 					this.curInfo.giao_xu_id = this.update_thuyen_chuyen.giao_xu_id
+          this.curInfo.giao_xu_url = 'https://haydesachnoipodcast.com/admin/giao-xus/edit/' + this.update_thuyen_chuyen.giao_xu_id 
+          this.curInfo.co_so_id = 0
+          this.curInfo.dong_id = 0
+          this.curInfo.ban_chuyen_trach_id = 0
 				}else if(this.update_thuyen_chuyen.co_so_gp_id != 0) {
 					this.curInfo.cosogpName = this.update_thuyen_chuyen.diaDiemName
 					this.curInfo.co_so_id = this.update_thuyen_chuyen.co_so_gp_id
+          this.curInfo.co_so_status = this.update_thuyen_chuyen.co_so_status
+          this.curInfo.giao_xu_id = 0
+          this.curInfo.dong_id = 0
+          this.curInfo.ban_chuyen_trach_id = 0
+          this.curInfo.co_so_status = this.update_thuyen_chuyen.co_so_status
 				}else if(this.update_thuyen_chuyen.dong_id != 0) {
 					this.curInfo.dongName = this.update_thuyen_chuyen.diaDiemName
 					this.curInfo.dong_id = this.update_thuyen_chuyen.dong_id
-				}else {
+          this.curInfo.giao_xu_id = 0
+          this.curInfo.co_so_id = 0
+          this.curInfo.ban_chuyen_trach_id = 0
+				}else{
 					this.curInfo.banchuyentrachName = this.update_thuyen_chuyen.diaDiemName
 					this.curInfo.ban_chuyen_trach_id = this.update_thuyen_chuyen.ban_chuyen_trach_id
+          this.curInfo.giao_xu_id = 0
+          this.curInfo.co_so_id = 0
+          this.curInfo.dong_id = 0
 				}
 
 				if(this.update_thuyen_chuyen.dia_diem_tu_nam == "" || this.update_thuyen_chuyen.dia_diem_tu_thang == "" || this.update_thuyen_chuyen.dia_diem_tu_ngay == ""){
