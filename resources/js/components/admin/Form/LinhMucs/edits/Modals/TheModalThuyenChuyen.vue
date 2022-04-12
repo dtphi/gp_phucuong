@@ -50,6 +50,12 @@
             :name="diaDiemName"
             :key="`ban_chuyen_trach_${dia_diem_loai}`"
           ></info-ban-chuyen-trach-autocomplete>
+          <info-cong-doan-ngoai-autocomplete
+            v-if="_showDiaDiem === isCongDoanNgoai"
+            @on-select-cong-doan-ngoai-giao-phan="_selectThuyenChuyenCongDoanNgoai"
+            :name="diaDiemName"
+            :key="`cong_doan_ngoai${dia_diem_loai}`"
+          ></info-cong-doan-ngoai-autocomplete>
         </div>
       </div>
       <div class="form-group">
@@ -153,6 +159,7 @@ import InfoGiaoXuAutocomplete from '../../Groups/InfoGiaoXuAutocomplete'
 import InfoCoSoGiaoPhanAutocomplete from '../../Groups/InfoCoSoGiaoPhanAutocomplete'
 import InfoDongAutocomplete from '../../Groups/InfoDongAutocomplete'
 import InfoBanChuyenTrachAutocomplete from '../../Groups/InfoBanChuyenTrachAutocomplete'
+import InfoCongDoanNgoaiAutocomplete from '../../Groups/InfoCongDoanNgoaiAutocomplete'
 const thuyenChuyen = {
   chucVuName: '',
   chuc_vu_id: '',
@@ -177,7 +184,7 @@ const thuyenChuyen = {
 }
 
 export default {
-  name: 'TheModalLmThuyenChuyen',
+  name: 'TheModalThuyenChuyen',
   components: {
     TheModalResizable,
     InfoChucVuAutocomplete,
@@ -185,6 +192,7 @@ export default {
     InfoCoSoGiaoPhanAutocomplete,
     InfoDongAutocomplete,
     InfoBanChuyenTrachAutocomplete,
+    InfoCongDoanNgoaiAutocomplete
   },
   props: {
     typeChucVu: {
@@ -200,6 +208,7 @@ export default {
       isCoSo: 2,
       isDong: 3,
       isBanChuyenTrach: 4,
+      isCongDoanNgoai: 5,
     }
   },
   watch: {
@@ -255,6 +264,10 @@ export default {
     _selectThuyenChuyenBanChuyenTrach(bcTrach) {
       this.$data.diaDiemName = bcTrach.name
       this.$data.ban_chuyen_trach_id = bcTrach.id
+    },
+    _selectThuyenChuyenCongDoanNgoai(cdNgoai) {
+      this.$data.diaDiemName = cdNgoai.name
+      this.$data.co_so_gp_id = cdNgoai.id
     },
     _resetModal() {
       this.$data.chucVuName = ''
