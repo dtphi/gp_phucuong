@@ -275,7 +275,7 @@ export default {
       this.$data.dia_diem_loai = 1
       this.$data.giao_xu_id = this.info.giao_xu_id
       this.$data.diaDiemName = this.info.giaoxuName
-    } else if (this.info.co_so_id !== 0  && (this.info.co_so_status === 0 || this.info.co_so_status === '') ) {
+    } else if (this.info.co_so_id !== 0  && (this.info.co_so_status === 1 || this.info.co_so_status === '') ) {
       this.$data.dia_diem_loai = 2
       this.$data.co_so_gp_id = this.info.co_so_id
       this.$data.diaDiemName = this.info.cosogpName
@@ -284,7 +284,7 @@ export default {
       this.$data.dia_diem_loai = 3
       this.$data.dong_id = this.info.dong_id
       this.$data.diaDiemName = this.info.dongName
-    } else if (this.info.co_so_id !== 0 && this.info.co_so_status === 1) {
+    } else if (this.info.co_so_id !== 0 && this.info.co_so_status === 0) {
       this.$data.dia_diem_loai = 5
       this.$data.co_so_gp_id = this.info.co_so_id
       this.$data.diaDiemName = this.info.cosogpName
@@ -328,7 +328,7 @@ export default {
     _selectThuyenChuyenCoSoGiaoPhan(coso) {
       this.$data.diaDiemName = coso.name
       this.$data.co_so_gp_id = coso.id
-      this.$data.co_so_status = 0
+      this.$data.co_so_status = 1
       this.$data.giao_xu_id = 0
       this.$data.dong_id = 0
       this.$data.ban_chuyen_trach_id = 0
@@ -350,7 +350,7 @@ export default {
     _selectThuyenChuyenCongDoanNgoai(cdNgoai) {
       this.$data.diaDiemName = cdNgoai.name
       this.$data.co_so_gp_id = cdNgoai.id
-      this.$data.co_so_status = 1
+      this.$data.co_so_status = 0
       this.$data.giao_xu_id = 0
       this.$data.dong_id = 0
       this.$data.ban_chuyen_trach_id = 0

@@ -2,7 +2,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">
       <span data-toggle="tooltip" data-original-title="(Tự động hoàn toàn)"
-        >Cộng đoàn ngoài giáo phận</span
+        >Cơ sở ngoài giáo phận</span
       >
     </label>
     <div class="col-sm-10" id="cms-scroll-dropdown">
@@ -12,7 +12,7 @@
         :value="name"
         type="text"
         name="category"
-        placeholder="Chọn cộng đoàn ngoài giáo phận"
+        placeholder="Chọn cơ sở ngoài giáo phận"
         id="input-parent-cong-doan-ngoai-giao-phan-name"
         class="form-control"
       />
