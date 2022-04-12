@@ -275,18 +275,18 @@ export default {
       this.$data.dia_diem_loai = 1
       this.$data.giao_xu_id = this.info.giao_xu_id
       this.$data.diaDiemName = this.info.giaoxuName
-    } else if (this.info.co_so_id !== 0  && (this.info.co_so_status === 1 || this.info.co_so_status === '') ) {
+    } else if (this.info.co_so_gp_id !== 0  && this.info.co_so_status === 1) {
       this.$data.dia_diem_loai = 2
-      this.$data.co_so_gp_id = this.info.co_so_id
+      this.$data.co_so_gp_id = this.info.co_so_gp_id
       this.$data.diaDiemName = this.info.cosogpName
-      this.$data.co_so_status = this.info.co_so_status
+      this.$data.is_co_so_giao_phan = this.info.is_co_so_giao_phan
     } else if (this.info.dong_id !== 0) {
       this.$data.dia_diem_loai = 3
       this.$data.dong_id = this.info.dong_id
       this.$data.diaDiemName = this.info.dongName
-    } else if (this.info.co_so_id !== 0 && this.info.co_so_status === 0) {
+    } else if (this.info.co_so_gp_id !== 0 && this.info.co_so_status === 0) {
       this.$data.dia_diem_loai = 5
-      this.$data.co_so_gp_id = this.info.co_so_id
+      this.$data.co_so_gp_id = this.info.co_so_gp_id
       this.$data.diaDiemName = this.info.cosogpName
     } else {
       this.$data.dia_diem_loai = 4
@@ -379,7 +379,7 @@ export default {
       this.$data.giao_xu_id = 0
       this.$data.ghi_chu = ''
       this.$data.du_hoc = 0
-      this.$data.co_so_status = ''
+      this.$data.is_co_so_giao_phan = ''
     },
     _submitUpdate() {
       const data = this.$data

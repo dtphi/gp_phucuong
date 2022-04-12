@@ -18,7 +18,7 @@ class CoSoGiaoPhan extends BaseModel
         'dien_thoai',
         'fax',
         'website',
-        'status',
+        'coco_giaophan',
         'active',
         'update_user'
     ];

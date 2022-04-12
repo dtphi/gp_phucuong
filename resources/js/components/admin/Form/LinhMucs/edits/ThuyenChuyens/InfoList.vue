@@ -74,6 +74,7 @@ export default {
 			getInfoThuyenChuyen: 'ACTION_GET_INFO_THUYEN_CHUYEN',
 		}),
 		_showModalEdit(info) {
+        
 				this.curInfo = info;
 				this.infoUpdate = { ...info };
 				this.$modal.show("modal-lm-thuyen-chuyen-edit");
@@ -87,13 +88,13 @@ export default {
 					this.curInfo.giaoxuName = this.update_thuyen_chuyen.diaDiemName
 					this.curInfo.giao_xu_id = this.update_thuyen_chuyen.giao_xu_id
           this.curInfo.giao_xu_url = 'https://haydesachnoipodcast.com/admin/giao-xus/edit/' + this.update_thuyen_chuyen.giao_xu_id 
-          this.curInfo.co_so_id = 0
+          this.curInfo.co_so_gp_id = 0
           this.curInfo.dong_id = 0
           this.curInfo.ban_chuyen_trach_id = 0
 				}else if(this.update_thuyen_chuyen.co_so_gp_id != 0) {
 					this.curInfo.cosogpName = this.update_thuyen_chuyen.diaDiemName
-					this.curInfo.co_so_id = this.update_thuyen_chuyen.co_so_gp_id
-          this.curInfo.co_so_status = this.update_thuyen_chuyen.co_so_status
+					this.curInfo.co_so_gp_id = this.update_thuyen_chuyen.co_so_gp_id
+          this.curInfo.is_co_so_giao_phan = this.update_thuyen_chuyen.is_co_so_giao_phan
           this.curInfo.giao_xu_id = 0
           this.curInfo.dong_id = 0
           this.curInfo.ban_chuyen_trach_id = 0
@@ -102,13 +103,13 @@ export default {
 					this.curInfo.dongName = this.update_thuyen_chuyen.diaDiemName
 					this.curInfo.dong_id = this.update_thuyen_chuyen.dong_id
           this.curInfo.giao_xu_id = 0
-          this.curInfo.co_so_id = 0
+          this.curInfo.co_so_gp_id = 0
           this.curInfo.ban_chuyen_trach_id = 0
 				}else{
 					this.curInfo.banchuyentrachName = this.update_thuyen_chuyen.diaDiemName
 					this.curInfo.ban_chuyen_trach_id = this.update_thuyen_chuyen.ban_chuyen_trach_id
           this.curInfo.giao_xu_id = 0
-          this.curInfo.co_so_id = 0
+          this.curInfo.co_so_gp_id = 0
           this.curInfo.dong_id = 0
 				}
 
