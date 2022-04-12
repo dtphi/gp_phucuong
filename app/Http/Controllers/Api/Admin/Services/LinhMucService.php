@@ -380,8 +380,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
     {
         $model = new CoSoGiaoPhan();
         $query = $model->select()
-            ->where('status', '=', 0)
-            ->orWhere('status', '=', NULL)
+            ->where('coso_giaophan', '=', 1)
             ->orderBy('name', 'DESC');
         return $query->get();
     }
@@ -419,7 +418,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
         $model = new CoSoGiaoPhan();
         $query = $model->select()
         ->where('active', 1)
-        ->where('status', '=', 1)
+        ->where('coso_giaophan', '=', 0)
         ->orderBy('name', 'DESC');
 
         return $query->get();
