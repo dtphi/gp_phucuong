@@ -522,13 +522,13 @@ export default {
     }),
     diadiem(item) {
        if(item.giaoxuName !== '') {
-          return 'Giáo xứ: '+ item.giaoxuName
+          return item.giaoxuName
        }else if (item.cosogpName !== '') {
-         return 'Cơ sở giáo phận: ' + item.cosogpName
+         return item.cosogpName
        }else if (item.dongName !== '') {
-         return 'Dòng: ' + item.dongName
+         return item.dongName
        }else {
-         return 'Ban chuyên trách: ' + item.banchuyentrachName
+         return item.banchuyentrachName
        }
     },
     _des(item) {
