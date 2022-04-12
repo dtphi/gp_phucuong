@@ -164,7 +164,7 @@ const thuyenChuyen = {
   chucVuName: '',
   chuc_vu_id: '',
   diaDiemName: '',
-  giao_xu_id: '',
+  giao_xu_id: 0,
   dia_diem_loai: '',
   dia_diem_tu_ngay: '',
   dia_diem_tu_thang: '',

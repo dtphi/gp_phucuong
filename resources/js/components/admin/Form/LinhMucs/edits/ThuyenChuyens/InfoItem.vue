@@ -82,11 +82,11 @@ export default {
         }
       },
 			diaDiemName: function() {
-					if(this.item.giao_xu_id !== 0) {
+					if(this.item.giao_xu_id != 0) {
 							return this.item.giaoxuName 
-					}else if(this.item.co_so_id !== 0) {
+					}else if(this.item.co_so_gp_id != 0) {
 							return this.item.cosogpName
-					}else if(this.item.dong_id !== 0) {
+					}else if(this.item.dong_id != 0) {
 							return this.item.dongName
 					}else {
 							return this.item.banchuyentrachName
