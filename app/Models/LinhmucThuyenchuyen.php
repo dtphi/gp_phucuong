@@ -135,8 +135,8 @@ class LinhmucThuyenchuyen extends BaseModel
     public function getTrangThaiCoSoAttribute($value)
     {
       if($this->coSo) {
-        if($this->coSo->coco_giaophan == 1) {
-          return $this->coSo->coco_giaophan;
+        if($this->coSo->coso_giaophan == 1) {
+          return $this->coSo->coso_giaophan;
         } else {
           return 0;
         }
