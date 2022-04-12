@@ -11,14 +11,6 @@
         <form class="form-horizontal">
           <div class="form-group">
             <label for="input-info-name" class="col-sm-2 control-label"
-              >Giáo phận</label
-            >
-            <div class="col-sm-10">
-              {{ info.ten_linh_muc }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="input-info-name" class="col-sm-2 control-label"
               >Tên cơ sở</label
             >
             <div class="col-sm-10">
@@ -28,7 +20,7 @@
                 v-slot="{ errors }"
               >
                 <input
-                  v-model="info.nguoi_thu_phong"
+                  v-model="info.name"
                   type="text"
                   id="input-info-name"
                   class="form-control"
@@ -156,6 +148,17 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="input-info-status" class="col-sm-2 control-label"
+              >Cộng đoàn</label
+            >
+            <div class="col-sm-10">
+              <select class="form-control" v-model="info.status">
+                <option value="1" :selected="info.status == 1">Ngoài giáo phận</option>
+                <option value="0" :selected="info.status == 0">Trong giáo phận</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
             <label for="input-info-name" class="col-sm-2 control-label"
               >Trạng thái</label
             >
@@ -180,7 +183,7 @@
             type="button"
             value="Cập nhật"
             class="btn btn-primary"
-            @click.prevent="_submitUpdate"
+            @click.prevent="_submitAdd"
           />
         </div>
       </div>
@@ -189,7 +192,9 @@
 </template>
 
 <script>
-
+import { MODULE_MODULE_CO_SO_ADD } from "store@admin/types/module-types";
+import { ACTION_INSERT_INFO, ACTION_RESET_NOTIFICATION_INFO} from "store@admin/types/action-types";
+import { mapState, mapActions } from "vuex";
 export default {
   name: 'TheModalAdd',
   data() {
@@ -201,20 +206,51 @@ export default {
         name: '',
         ten_linh_muc: '',
         type: 0,
+        status: 0,
       },
     }
   },
+  computed: {
+      ...mapState(MODULE_MODULE_CO_SO_ADD,{
+        loading: (state) => state.loading,
+        insertSuccess: (state) => state.insertSuccess,
+      }),
+  },
+  watch: {
+    insertSuccess(newValue, oldValue) {
+      if (newValue) {
+        this._notification(newValue);
+      }
+    },
+  },
   methods: {
+    ...mapActions(MODULE_MODULE_CO_SO_ADD, {
+      'insertInfo': ACTION_INSERT_INFO,
+      'notification':ACTION_RESET_NOTIFICATION_INFO
+    }),
     _hideModalEdit() {
       this.info = {}
       this.$modal.hide('modal-co-so-add')
     },
-    _submitUpdate() {
-      return 0
+    async _submitAdd() {
+      if(this.info.name !== '') {
+        await this.insertInfo(this.info)
+      }
+    },
+    _notification(notification) {
+      if(notification.type == 'success') {
+        this.info = {
+          active: 1,
+          status: 0
+        }
+        this.$emit('add-info-success')
+      }
+      this.$notify(notification)
+      this.notification('')
     },
   },
   setting: {
-    list_title: 'Danh sách Linh mục',
+    list_title: 'Danh sách cơ sở',
   },
 }
 </script>

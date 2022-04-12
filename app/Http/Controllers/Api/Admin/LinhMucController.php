@@ -61,7 +61,9 @@ class LinhMucController extends ApiController
             return $this->dropdownBanChuyenTrach($request);
         }elseif ($action == 'dropdown.linh.muc') {
 					return $this->dropdownLinhMuc($request);
-			}
+			  } elseif ($action == 'dropdown.cong.doan.ngoai.giao.phan') {
+          return $this->dropdownCongDoanNgoaiGiaoPhan($request);
+        }
 
         $data = $request->all();
         $page = 1;
@@ -161,7 +163,7 @@ class LinhMucController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(LinhmucRequest $request, $id = null)
-    {
+    { 
         $data = $request->all();
         $action = $request->get('action');
 				if ($action == 'create.update.bang.cap.db') {
@@ -196,7 +198,7 @@ class LinhMucController extends ApiController
             return $json;
         } elseif ($action == 'update.bo.nhiem') {
 					try {
-							$json = $this->linhMucSv->apiUpdate($data);
+							$json = $this->linhMucSv->apiUpdateBoNhiem($data);
 					} catch (HandlerMsgCommon $e) {
 							throw $e->render();
 					}
@@ -483,6 +485,23 @@ class LinhMucController extends ApiController
         return $this->respondWithCollectionPagination($collections);
     }
 
+    public function dropdownCongDoanNgoaiGiaoPhan(LinhmucRequest $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->linhMucSv->apiGetCongDoanNgoaiGiaoPhanList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+          $collections[] = [
+            'id'   => $value->id,
+            'name' => $value->name,
+          ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+
 		public function listLinhMucThuyenChuyen($infoId = null, LinhmucRequest $request) 
 		{
 				try {
@@ -497,7 +516,7 @@ class LinhMucController extends ApiController
 									'from_date' => $info->from_date,		
 									'to_date' => $info->to_date,
 									'chuc_vu_id' => $info->chuc_vu_id,
-									'giao_xu_id' => $info->giao_xu_id,
+									'giao_xu_id' => ($info->giao_xu_id) ? $info->giao_xu_id : 0,
 									'fromGiaoXuName'      => $info->ten_from_giao_xu,
 									'fromchucvuName' => $info->ten_from_chuc_vu,
 									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"Y-m-d"):'',
@@ -507,7 +526,8 @@ class LinhMucController extends ApiController
 									'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
 									'giaoxuName' => $info->ten_to_giao_xu,
 									'cosogpName' => $info->ten_co_so,
-									'co_so_id' => $info->co_so_gp_id,
+                  'co_so_gp_id' => $info->co_so_gp_id,
+                  'co_so_status' => $info->trang_thai_co_so,
 									'dong_id' => $info->dong_id,
 									'ban_chuyen_trach_id' => $info->ban_chuyen_trach_id,
 									'dongName' => $info->ten_dong,

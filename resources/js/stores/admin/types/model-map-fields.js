@@ -40,7 +40,8 @@ export const MAP_PC_THANHS = [
   'id',
   'name',
   'latin',
-  'bon_mang',
+  'bon_mang_ngay',
+  'bon_mang_thang',
   'ghi_chu',
   'cuoc_doi',
   'active'

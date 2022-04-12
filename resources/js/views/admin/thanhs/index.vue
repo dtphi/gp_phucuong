@@ -64,7 +64,7 @@
         @update-info-success="_updateInfoList"
       ></the-modal-edit>
     </modal>
-    <the-modal-add></the-modal-add>
+    <the-modal-add @add-info-success="_addInfoList"></the-modal-add>
   </div>
 </template>
 
@@ -98,6 +98,9 @@ export default {
       fullPage: false,
       isResource: false,
       curInfo: {},
+      searchs: {
+        page: 1,
+      }
     }
   },
   watch: {
@@ -110,6 +113,7 @@ export default {
   computed: {
     ...mapState({
       perPage: state => state.cfApp.perPage,
+      rootData: (state) => state.cfApp,
     }),
     ...mapGetters(['isNotEmptyList']),
     ...mapState(MODULE_MODULE_THANH, ['infos', 'loading', 'isDelete']),
@@ -133,12 +137,21 @@ export default {
       this.curInfo = info
       this.$modal.show('modal-thanh-edit')
     },
+    _addInfoList() {
+      this.$modal.hide('modal-thanh-add')
+      const params = {
+        ...this.rootData.searchs,
+        perPage: this.rootData.perPage,
+      }
+      this.getInfoList(params)
+    },
     _updateInfoList() {
       this.curInfo.name = this.info.name
       this.curInfo.latin = this.info.latin
       this.curInfo.ghi_chu = this.info.ghi_chu
       this.curInfo.cuoc_doi = this.info.cuoc_doi
-      this.curInfo.bon_mang = this.info.bon_mang
+      this.curInfo.bon_mang_ngay = this.info.bon_mang_ngay
+      this.curInfo.bon_mang_thang = this.info.bon_mang_thang
       this.curInfo.active = this.info.active
       this.$modal.hide('modal-thanh-edit')
     },

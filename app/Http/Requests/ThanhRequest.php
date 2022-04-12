@@ -61,7 +61,7 @@ class ThanhRequest extends BaseRequest
         $formData['bon_mang_ngay']           = isset($formData['bon_mang_ngay']) ? $formData['bon_mang_ngay'] : null;
         $formData['bon_mang_thang']           = isset($formData['bon_mang_thang']) ? $formData['bon_mang_thang'] : null;
         $formData['cuoc_doi']        = isset($formData['cuoc_doi']) ? htmlentities($formData['cuoc_doi']) : null;
-        $formData['active']           = isset($formData['active']) ? $formData['active'] : null;
+        $formData['active']           = isset($formData['active']) ? $formData['active'] : 1;
         $formData['sort_id']          = isset($formData['sort_id']) ? $formData['sort_id'] : null;
         $formData['tag']              = isset($formData['tag']) ? $formData['tag'] : null;
         $formData['meta_title']       = isset($formData['meta_title']) ? $formData['meta_title'] : null;

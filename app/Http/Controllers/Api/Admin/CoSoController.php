@@ -164,7 +164,7 @@ class CoSoController extends ApiController
     {
         $formData = $request->all();
 
-        if ($result = $this->cosoSv->apiInsert($formData)) {
+        if ($result = $this->cosoSv->apiInsertOrUpdate($formData)) {
             return $this->respondUpdated($result);
         }
 

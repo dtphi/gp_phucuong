@@ -26,7 +26,7 @@ final class ThanhService implements BaseModel, ThanhModel
         $this->model    = new Thanh();
     }
 
-    public function apiGetList(array $options = [], $limit = 5)
+    public function apiGetList(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetList() method.
         $query = $this->apiGetThanhs($options);
@@ -34,7 +34,7 @@ final class ThanhService implements BaseModel, ThanhModel
         return $query->paginate($limit);
     }
   
-    public function apiGetResourceCollection(array $options = [], $limit = 5)
+    public function apiGetResourceCollection(array $options = [], $limit = 15)
     {
         // TODO: Implement apiGetResourceCollection() method.
         return null;
@@ -90,11 +90,28 @@ final class ThanhService implements BaseModel, ThanhModel
         return $model;
     }
 
-    public function apiGetThanhs($data = array(), $limit = 5)
+    public function apiGetThanhs($data = array(), $limit = 15)
     {
         $query = $this->model->select()
         ->orderBy('id', 'DESC');
 
         return $query;
+    }
+    
+    public function apiInsert($data = null) {
+
+    }
+
+    public function deleteInformation($model = null) {
+        DB::beginTransaction();
+      try {
+        $id = $model->id;
+        Thanh::fcDeleteById($id);
+        DB::commit();
+      } catch (\Exceptions $e) {
+        DB::rollBack();
+        throw $e;
+        return false;
+      }
     }
 }

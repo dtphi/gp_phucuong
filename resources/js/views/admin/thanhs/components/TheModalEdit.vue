@@ -49,18 +49,40 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
-            >Bổn mạng</label
-          >
-          <div class="col-sm-10">
-            <cms-date-picker
-              value-type="format"
-              format="YYYY-MM-DD"
-              v-model="bon_mang"
-              type="date"
-            ></cms-date-picker>
+            <label for="input-info-name" class="col-sm-2 control-label"
+              >Bổn mạng</label
+            >
+            <div class="col-sm-3">
+              <p>Ngày:</p>
+              <validation-provider
+                name="info_bon_mang_ngay"
+                rules="max:255"
+                v-slot="{ errors }"
+              >
+                <input
+                  v-model="bon_mang_ngay"
+                  type="text"
+                  id="input-info-bon-mang-ngay"
+                />
+                <span class="cms-text-red">{{ errors[0] }}</span>
+              </validation-provider>
+            </div>
+            <div class="col-sm-3">
+              <p>Tháng:</p>
+              <validation-provider
+                name="info_bon_mang_thang"
+                rules="max:255"
+                v-slot="{ errors }"
+              >
+                <input
+                  v-model="bon_mang_thang"
+                  type="text"
+                  id="input-info-bon-mang-thang"
+                />
+                <span class="cms-text-red">{{ errors[0] }}</span>
+              </validation-provider>
+            </div>
           </div>
-        </div>
         <div class="form-group">
           <label for="input-info-name" class="col-sm-2 control-label"
             >Ghi chú</label
@@ -89,17 +111,6 @@
               <textarea class="form-control" v-model="cuoc_doi"></textarea>
               <span class="cms-text-red">{{ errors[0] }}</span>
             </validation-provider>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="input-info-name" class="col-sm-2 control-label"
-            >Trạng thái</label
-          >
-          <div class="col-sm-10">
-            <select class="form-control" v-model="active">
-              <option value="1" :selected="active == 1">Xảy ra</option>
-              <option value="0" :selected="active == 0">Ẩn</option>
-            </select>
           </div>
         </div>
       </form>
@@ -165,7 +176,6 @@ export default {
     },
     _submitUpdate() {
       this.updateInfo(this.info)
-      
       return 0
     },
     _notificationUpdate(notification) {
