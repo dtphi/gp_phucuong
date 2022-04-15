@@ -65,7 +65,8 @@ class CoSoController extends ApiController
                     'fax'    => $info->fax,
                     'website'    => $info->website,
                     'active'     => $info->active,
-                    'active_text' => $info->active?'Xảy ra':'Ẩn'
+                    'active_text' => $info->active?'Xảy ra':'Ẩn',
+                    'coso_giaophan_text' => $info->coso_giaophan ? 'Trong giáo phận' : 'Ngoài giáo phận'
                 ];
             }
 

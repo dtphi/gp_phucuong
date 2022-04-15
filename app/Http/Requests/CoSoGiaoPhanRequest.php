@@ -33,6 +33,7 @@ class CoSoGiaoPhanRequest extends FormRequest
         $formData['email']             = isset($formData['email']) ? $formData['email'] : null;
         $formData['fax']             = isset($formData['fax']) ? $formData['fax'] : null;
         $formData['website']           = isset($formData['website']) ? $formData['website'] : null;
+        $formData['coso_giaophan']             = isset($formData['coso_giaophan']) ? $formData['coso_giaophan'] : null;
         $formData['active']           = isset($formData['active']) ? $formData['active'] : null;
         $formData['sort_id']          = isset($formData['sort_id']) ? $formData['sort_id'] : null;
         $formData['tag']              = isset($formData['tag']) ? $formData['tag'] : null;
