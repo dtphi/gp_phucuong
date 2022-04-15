@@ -1,25 +1,24 @@
 <template>
   <tr>
     <td>{{ _getNo() }}</td>
-    <td class="text-center">
+    <!-- <td class="text-center">
       <input
         type="checkbox"
         name="selected[]"
-        :id="`info_select_id_${id}`"
-        :value="id"
+        :id="`info_select_id_${info.id}`"
+        :value="info.id"
       />
-    </td>
-    <td class="text-left">{{ name }}</td>
+    </td> -->
+    <td class="text-left">{{ info.name }}</td>
     <td>
-      <div v-html="dia_chi"></div>
+      <div v-html="info.dia_chi"></div>
     </td>
-    <td class="text-center">{{ email }}</td>
-    <td class="text-center">{{ dien_thoai }}</td>
-    <td class="text-center">{{ fax }}</td>
+    <td class="text-center">{{ info.email }}</td>
+    <td class="text-center">{{ info.dien_thoai }}</td>
     <td class="text-left">
-      <a :href="website">{{ website }}</a>
+      <a :href="info.website">{{ info.website }}</a>
     </td>
-    <td class="text-center">{{ active }}</td>
+    <td class="text-center">{{ info.coso_giaophan_text }}</td>
     <td class="text-right">
       <a
         href="javascript:void(0);"
@@ -29,7 +28,7 @@
         data-original-title="Sửa Tin"
         ><i class="fa fa-edit" />
       </a>
-      <btn-delete :info-id="id"></btn-delete>
+      <btn-delete :info-id="info.id"></btn-delete>
     </td>
   </tr>
 </template>

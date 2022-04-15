@@ -69,6 +69,7 @@
                         style="margin-bottom: 2rem; font-size: 20px"
                         class="d-block"
                       >
+                        {{pageLists.noi_rua_toi}}<br>
                         {{ pageLists.ngay_rua_toi }}
                       </p>
                       <a
@@ -81,6 +82,7 @@
                         style="margin-bottom: 2rem; font-size: 20px"
                         class="d-block"
                       >
+                        {{pageLists.noi_them_suc}}<br>
                         {{ pageLists.ngay_them_suc }}
                       </p>
                       <a
@@ -92,14 +94,14 @@
                       <p
                         style="margin-bottom: 2rem; font-size: 20px"
                         v-for="(value, idx) in pageLists.ds_chuc_thanh"
-                        :key="value.chuc_thanh_id + '_ct'"
+                        :key="idx + 'B'"
                         class="d-block"
                       >
                         {{ idx + 1 + ". " + chucThanh[value.chuc_thanh_id]
                         }}<br />
                         <span style="font-size: 14px"
-                          >Thụ phong bởi :<br />
-                          {{ value.nguoi_thu_phong }}</span
+                          >Thụ phong bởi Đức Cha:<br />
+                          {{ _ngThuPhong(value.nguoi_thu_phong) }}</span
                         ><br />
                         <span style="font-size: 14px"
                           >Tại: {{ value.noi_thu_phong }}</span
@@ -109,6 +111,7 @@
                           {{ value.label_ngay_thang_nam_chuc_thanh }}</span
                         ><br />
                       </p>
+                      <h5 v-if="pageLists.ngay_rip">RIP: {{pageLists.ngay_rip}}</h5>
                     </div>
                   </div>
                   <div class="col-mobile col-8">
@@ -144,7 +147,7 @@
                               padding-left: 10px;
                               font-style: italic;
                             "
-                            >{{ $helper.fn_format_dd_mm_yyyy(pageLists.nam_sinh) }}</label
+                            >{{pageLists.nam_sinh}}</label
                           ></span
                         >
                         <span class="col-mobile col-6">
@@ -210,7 +213,7 @@
                               padding-left: 10px;
                               font-style: italic;
                             "
-                            >{{ pageLists.giao_xu }}</label
+                            >{{ pageLists.sinh_giao_xu }}</label
                           >
                         </span>
                         <span class="col-mobile col-6">
@@ -422,6 +425,9 @@
                       >
                         Châm ngôn đời linh mục
                       </h4>
+											<div class="text-center">
+												<h3>{{pageLists.cham_ngon}}</h3>
+											</div>							
                     </div>
                     <div>
                       <h3>HOẠT ĐỘNG SỨ VỤ</h3>
@@ -431,11 +437,11 @@
                       >
                       <vue-timeline-update
                         v-for="item in pageLists.ds_chuc_vu"
-                        :key="item.id"
+                        :key="item.id + 'A'"
                         :date="new Date()"
                         :dateString="item.label_from_date"
                         :category="`Chức vụ: ${item.chucvuName}`"
-                        :title="`- <a href='/giao-xu/chi-tiet/${item.giao_xu_id}'>Giáo xứ: ${item.giaoxuName}</a>`"
+                        :title="`- <a href='/giao-xu/chi-tiet/${item.giao_xu_id}'>${diadiem(item)}</a>`"
                         :description="_des(item)"
                         icon="history"
                       />
@@ -514,12 +520,27 @@ export default {
     ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, {
       getDetail: GET_DETAIL_LINH_MUC,
     }),
+    diadiem(item) {
+       if(item.giaoxuName !== '') {
+          return item.giaoxuName
+       }else if (item.cosogpName !== '') {
+         return item.cosogpName
+       }else if (item.dongName !== '') {
+         return item.dongName
+       }else {
+         return item.banchuyentrachName
+       }
+    },
     _des(item) {
+      const ghi_chu = (item.ghi_chu !== null) ? item.ghi_chu : ''
       var fromDate = item.label_from_date
       var toDate = item.label_to_date ? ' đến ngày ' + item.label_to_date : ''
-      var des = 'Từ ngày ' + fromDate + toDate + ' ' + item.ghi_chu
+      var des = 'Từ ngày ' + fromDate + toDate + ' ' + ghi_chu
       
       return des
+    },
+    _ngThuPhong(nguoi_thu_phong) {
+      return (nguoi_thu_phong !== null) ? nguoi_thu_phong : 'Chưa cập nhật'
     },
     _itemChucVus(chucVus) {
       const self = this

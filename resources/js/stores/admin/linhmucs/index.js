@@ -47,7 +47,8 @@ const defaultState = () => {
     dropdownCoSoGiaoPhans: [],
     dropdownBanChuyenTrachs: [],
     dropdownDongs: [],
-		dropdownLinhMucs: [],
+    dropdownLinhMucs: [],
+    dropdownCongDoanNgoaiGiaoPhans: [],
     loading: false,
     updateSuccess: false,
     errors: [],
@@ -94,6 +95,9 @@ export default {
     SET_DROPDOWN_TEN_THANH_LIST(state, payload) {
       state.dropdownThanhs = payload
     },
+    SET_DROPDOWN_CONG_DOAN_NGOAI_GIAO_PHAN_LIST(state, payload) {
+      state.dropdownCongDoanNgoaiGiaoPhans = payload
+    },
     [NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST](state, payload) {
       state.dropdownGiaoXus = payload
     },
@@ -133,6 +137,10 @@ export default {
     },
     [SET_ERROR](state, payload) {
       state.errors = payload
+    },
+    remove_linh_muc(state, payload) {
+      const i = state.infos.map(item => item.id).indexOf(payload)
+      state.infos.splice(i, 1)
     },
   },
 
@@ -242,6 +250,22 @@ export default {
         params
       )
     },
+    ACTION_GET_DROPDOWN_CONG_DOAN_NGOAI_GIAO_PHAN_LIST({ commit, }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.cong.doan.ngoai.giao.phan',
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          console.log(result, 'results')
+          commit('SET_DROPDOWN_CONG_DOAN_NGOAI_GIAO_PHAN_LIST', result)
+        },
+        (errors) => {
+          commit(SET_ERROR, errors)
+        },
+        params
+      )
+    },
     ACTION_GET_DROPDOWN_GIAO_XU_LIST({ commit, }, filterName) {
       const params = {
         filter_name: filterName,
@@ -289,22 +313,23 @@ export default {
         params
       )
     },
-    async [ACTION_DELETE_INFO_BY_ID]({ state, dispatch, commit, }, infoId) {
-      let getId = null
-      if (typeof state.infoDelete === 'object') {
-        if (fnCheckProp(state.infoDelete, 'information_id')) {
-          getId = parseInt(state.infoDelete.information_id)
-        }
-      }
+    async [ACTION_DELETE_INFO_BY_ID]({ dispatch, commit, }, infoId) {
+      commit('remove_linh_muc', infoId)
+      // let getId = null
+      // if (typeof state.infoDelete === 'object') {
+      //   if (fnCheckProp(state.infoDelete, 'information_id')) {
+      //     getId = parseInt(state.infoDelete.information_id)
+      //   }
+      // }
       const deleteId = parseInt(infoId)
-      if (getId === deleteId) {
+      if (deleteId) {
         await apiDeleteInfo(
           deleteId,
           (infos) => {
             if (infos) {
               commit(INFOS_DELETE_INFO_BY_ID_SUCCESS, true)
-              dispatch(ACTION_GET_INFO_LIST)
-              commit(INFOS_INFO_DELETE_BY_ID, null)
+              // dispatch(ACTION_GET_INFO_LIST)
+              // commit(INFOS_INFO_DELETE_BY_ID, null)
             }
           },
           (errors) => {

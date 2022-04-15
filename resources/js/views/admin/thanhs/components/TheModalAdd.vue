@@ -53,13 +53,35 @@
             <label for="input-info-name" class="col-sm-2 control-label"
               >Bổn mạng</label
             >
-            <div class="col-sm-10">
-              <cms-date-picker
-                value-type="format"
-                format="YYYY-MM-DD"
-                v-model="info.bon_mang"
-                type="date"
-              ></cms-date-picker>
+            <div class="col-sm-3">
+              <p>Ngày:</p>
+              <validation-provider
+                name="info_bon_mang_ngay"
+                rules="max:255"
+                v-slot="{ errors }"
+              >
+                <input
+                  v-model="info.bon_mang_ngay"
+                  type="text"
+                  id="input-info-bon-mang-ngay"
+                />
+                <span class="cms-text-red">{{ errors[0] }}</span>
+              </validation-provider>
+            </div>
+            <div class="col-sm-3">
+              <p>Tháng:</p>
+              <validation-provider
+                name="info_bon_mang_thang"
+                rules="max:255"
+                v-slot="{ errors }"
+              >
+                <input
+                  v-model="info.bon_mang_thang"
+                  type="text"
+                  id="input-info-bon-mang-thang"
+                />
+                <span class="cms-text-red">{{ errors[0] }}</span>
+              </validation-provider>
             </div>
           </div>
           <div class="form-group">
@@ -98,17 +120,6 @@
               </validation-provider>
             </div>
           </div>
-          <div class="form-group">
-            <label for="input-info-name" class="col-sm-2 control-label"
-              >Trạng thái</label
-            >
-            <div class="col-sm-10">
-              <select class="form-control" v-model="info.active">
-                <option value="1" :selected="info.active == 1">Xảy ra</option>
-                <option value="0" :selected="info.active == 0">Ẩn</option>
-              </select>
-            </div>
-          </div>
         </form>
       </div>
       <div class="container-fluid">
@@ -132,27 +143,57 @@
 </template>
 
 <script>
+import { MODULE_MODULE_THANH_ADD } from "store@admin/types/module-types";
+import { ACTION_INSERT_INFO, ACTION_RESET_NOTIFICATION_INFO} from "store@admin/types/action-types";
+import { mapState, mapActions } from "vuex";
 export default {
   name: 'TheModalAdd',
   data() {
     return {
       info: {
-        active: 1,
-        ghi_chu: '',
-        id: null,
-        name: '',
-        ten_linh_muc: '',
-        type: 0,
+        // active: 1,
+        // ghi_chu: '',
+        // id: null,
+        // name: '',
+        // ten_linh_muc: '',
+        // type: 0,
       },
     }
   },
+  computed: {
+    ...mapState(MODULE_MODULE_THANH_ADD,{
+      loading: (state) => state.loading,
+      insertSuccess: (state) => state.insertSuccess,
+    }),
+  },
+  watch: {
+    insertSuccess(newValue, oldValue) {
+      if (newValue) {
+        this._notification(newValue);
+      }
+    },
+  },
   methods: {
+    ...mapActions(MODULE_MODULE_THANH_ADD, {
+      'insertInfo': ACTION_INSERT_INFO,
+      'notification':ACTION_RESET_NOTIFICATION_INFO
+    }),
     _hideModalEdit() {
       this.info = {}
       this.$modal.hide('modal-thanh-add')
     },
-    _submitUpdate() {
-      return 0
+    async _submitUpdate() {
+      if(this.info.name !== '') {
+        await this.insertInfo(this.info)
+      }
+    },
+    _notification(notification) {
+      if(notification.type == 'success') {
+        this.info = {}
+        this.$emit('add-info-success')
+      }
+      this.$notify(notification)
+      this.notification('')
     },
   },
   setting: {

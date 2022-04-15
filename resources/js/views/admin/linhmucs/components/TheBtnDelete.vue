@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions, } from 'vuex'
+import { mapActions, mapGetters, } from 'vuex'
 import { MODULE_MODULE_LINH_MUC, } from 'store@admin/types/module-types'
 import {
   ACTION_SET_INFO_DELETE_BY_ID,
@@ -31,20 +31,28 @@ export default {
         return value && Number.isInteger(value)
       },
     },
+    no: {
+      type: Number,
+    },
   },
   data() {
     return {}
+  },
+  computed: {
+    ...mapGetters(MODULE_MODULE_LINH_MUC, ['infos']),
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC, {
       setInfoDelete: ACTION_SET_INFO_DELETE_BY_ID,
       deleteInfo: ACTION_DELETE_INFO_BY_ID,
     }),
+    _delete() {
+      this[ACTION_DELETE_INFO_BY_ID](this.infoId)
+    },
     _showDiaglogConfirm() {
-      this.setInfoDelete(this.infoId)
       this.$modal.show('dialog', {
-        title: 'Xóa Tin Tức',
-        text: 'Bạn muốn xóa tin tức ?',
+        title: 'Xóa linh mục',
+        text: 'Bạn muốn xóa linh mục ?',
         buttons: [
           {
             title: 'Hủy',

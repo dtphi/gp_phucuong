@@ -9,7 +9,12 @@
           </h3>
           <div class="row" id="cms-panel-search">
             <div class="col-sm-3">
-              <input class="form-control" type="text" placeholder="Tên chức vụ" v-model="searchs.name"/>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Tên chức vụ"
+                v-model="searchs.name"
+              />
             </div>
             <div class="col-sm-3">
               <select class="form-control" v-model="searchs.type_giao_xu">
@@ -27,12 +32,14 @@
             <div class="col-sm-3">
               <select class="form-control" v-model="searchs.active">
                 <option value="-1"></option>
-                <option value="1" >Xảy ra</option>
-                <option value="0" >Ẩn</option>
+                <option value="1">Xảy ra</option>
+                <option value="0">Ẩn</option>
               </select>
             </div>
             <div class="col-sm-3">
-              <button class="btn btn-primary" @click="_searchList"><i class="fa fa-search"></i>Tìm kiếm</button>
+              <button class="btn btn-primary" @click="_searchList">
+                <i class="fa fa-search"></i>Tìm kiếm
+              </button>
             </div>
           </div>
         </div>
@@ -64,7 +71,9 @@
                           Loại chức vụ
                         </th>
                         <th style="width: 10%">Sắp xếp</th>
-                        <th style="width: 10%;" class="text-center">Trạng thái</th>
+                        <th style="width: 10%" class="text-center">
+                          Trạng thái
+                        </th>
                         <th style="width: 15%" class="text-right">Action</th>
                       </tr>
                     </thead>
@@ -96,7 +105,10 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import Item from './components/TheItem'
 import TheHeaderPage from './components/TheHeaderPage'
 import Paginate from 'com@admin/Pagination'
-import { MODULE_MODULE_CHUC_VU, MODULE_MODULE_CHUC_VU_EDIT, } from 'store@admin/types/module-types'
+import {
+  MODULE_MODULE_CHUC_VU,
+  MODULE_MODULE_CHUC_VU_EDIT,
+} from 'store@admin/types/module-types'
 import {
   ACTION_GET_INFO_LIST,
   ACTION_RESET_NOTIFICATION_INFO,
@@ -122,7 +134,7 @@ export default {
         type_giao_xu: -1,
         active: -1,
         page: 1,
-      }
+      },
     }
   },
   watch: {
@@ -150,9 +162,7 @@ export default {
       ACTION_GET_INFO_LIST,
       ACTION_RESET_NOTIFICATION_INFO,
     ]),
-    ...mapActions(MODULE_MODULE_CHUC_VU_EDIT, [
-      'ACTION_RESET_INFO_ITEM'
-    ]),
+    ...mapActions(MODULE_MODULE_CHUC_VU_EDIT, ['ACTION_RESET_INFO_ITEM']),
     _showModalAdd() {
       this.$modal.show('modal-chuc-vu-add')
     },
@@ -187,7 +197,7 @@ export default {
       }
       this.$store.dispatch('updateSearch', params)
       this[ACTION_GET_INFO_LIST](params)
-    }
+    },
   },
   mounted() {
     const params = {
