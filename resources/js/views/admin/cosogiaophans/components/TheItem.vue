@@ -15,10 +15,10 @@
     </td>
     <td class="text-center">{{ info.email }}</td>
     <td class="text-center">{{ info.dien_thoai }}</td>
-    <td class="text-center">{{ info.fax }}</td>
     <td class="text-left">
       <a :href="info.website">{{ info.website }}</a>
     </td>
+    <td class="text-center">{{ info.coso_giaophan_text }}</td>
     <td class="text-right">
       <a
         href="javascript:void(0);"

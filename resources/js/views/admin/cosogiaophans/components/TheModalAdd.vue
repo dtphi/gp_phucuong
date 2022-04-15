@@ -40,7 +40,7 @@
                 v-slot="{ errors }"
               >
                 <input
-                  v-model="info.noi_thu_phong"
+                  v-model="info.dia_chi"
                   type="text"
                   id="input-info-name"
                   class="form-control"
@@ -60,7 +60,7 @@
                 v-slot="{ errors }"
               >
                 <input
-                  v-model="info.noi_thu_phong"
+                  v-model="info.email"
                   type="text"
                   id="input-info-name"
                   class="form-control"
@@ -80,7 +80,7 @@
                 v-slot="{ errors }"
               >
                 <input
-                  v-model="info.noi_thu_phong"
+                  v-model="info.dien_thoai"
                   type="text"
                   id="input-info-name"
                   class="form-control"
@@ -100,7 +100,7 @@
                 v-slot="{ errors }"
               >
                 <input
-                  v-model="info.noi_thu_phong"
+                  v-model="info.fax"
                   type="text"
                   id="input-info-name"
                   class="form-control"
@@ -120,7 +120,7 @@
                 v-slot="{ errors }"
               >
                 <input
-                  v-model="info.noi_thu_phong"
+                  v-model="info.website"
                   type="text"
                   id="input-info-name"
                   class="form-control"
@@ -130,42 +130,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="input-info-name" class="col-sm-2 control-label"
-              >Ghi chú</label
-            >
-            <div class="col-sm-10">
-              <validation-provider
-                name="info_ghi_chu"
-                rules="max:200"
-                v-slot="{ errors }"
-              >
-                <textarea
-                  class="form-control"
-                  v-model="info.ghi_chu"
-                ></textarea>
-                <span class="cms-text-red">{{ errors[0] }}</span>
-              </validation-provider>
-            </div>
-          </div>
-          <div class="form-group">
             <label for="input-info-status" class="col-sm-2 control-label"
               >Cộng đoàn</label
             >
             <div class="col-sm-10">
-              <select class="form-control" v-model="info.status">
-                <option value="1" :selected="info.status == 1">Ngoài giáo phận</option>
-                <option value="0" :selected="info.status == 0">Trong giáo phận</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="input-info-name" class="col-sm-2 control-label"
-              >Trạng thái</label
-            >
-            <div class="col-sm-10">
-              <select class="form-control" v-model="info.active">
-                <option value="1" :selected="info.active == 1">Xảy ra</option>
-                <option value="0" :selected="info.active == 0">Ẩn</option>
+              <select class="form-control" v-model="info.coso_giaophan">
+                <option value="1" :selected="info.coso_giaophan == 1">Trong giáo phận</option>
+                <option value="0" :selected="info.coso_giaophan == 0">Ngoài giáo phận</option>
               </select>
             </div>
           </div>
@@ -204,9 +175,8 @@ export default {
         ghi_chu: '',
         id: null,
         name: '',
-        ten_linh_muc: '',
         type: 0,
-        status: 0,
+        coso_giaophan: 1,
       },
     }
   },
@@ -241,7 +211,7 @@ export default {
       if(notification.type == 'success') {
         this.info = {
           active: 1,
-          status: 0
+          coso_giaophan: 1
         }
         this.$emit('add-info-success')
       }
