@@ -27,7 +27,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.name"
+                v-model="name"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -47,7 +47,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.dia_chi"
+                v-model="dia_chi"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -67,7 +67,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.email"
+                v-model="email"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -87,7 +87,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.dien_thoai"
+                v-model="dien_thoai"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -107,7 +107,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.fax"
+                v-model="fax"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -127,7 +127,7 @@
               v-slot="{ errors }"
             >
               <input
-                v-model="info.website"
+                v-model="website"
                 type="text"
                 id="input-info-name"
                 class="form-control"
@@ -136,6 +136,17 @@
             </validation-provider>
           </div>
         </div>
+        <div class="form-group">
+            <label for="input-info-status" class="col-sm-2 control-label"
+              >Cộng đoàn</label
+            >
+            <div class="col-sm-10">
+              <select class="form-control" v-model="coso_giaophan">
+                <option value="1" :selected="coso_giaophan == 1">Trong giáo phận</option>
+                <option value="0" :selected="coso_giaophan == 0">Ngoài giáo phận</option>
+              </select>
+            </div>
+          </div>
       </form>
     </div>
     <div class="container-fluid">
@@ -165,7 +176,7 @@ import {
   ACTION_RESET_NOTIFICATION_INFO,
 } from 'store@admin/types/action-types'
 import { createHelpers, } from 'vuex-map-fields'
-import { MAP_PC_CO_SO_GIAO_PHANS, } from 'store@admin/types/model-map-fields'
+import { MAP_PC_CO_SOS, } from 'store@admin/types/model-map-fields'
 const { mapFields, } = createHelpers({
   getterType: `${MODULE_MODULE_CO_SO_EDIT}/getInfoField`,
   mutationType: `${MODULE_MODULE_CO_SO_EDIT}/updateInfoField`,
@@ -179,7 +190,7 @@ export default {
     }
   },
   computed: {
-    ...mapFields(MAP_PC_CO_SO_GIAO_PHANS),
+    ...mapFields(MAP_PC_CO_SOS),
     ...mapState(MODULE_MODULE_CO_SO_EDIT, ['info', 'loading', 'updateSuccess']),
   },
   watch: {
@@ -190,26 +201,27 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_CO_SO_EDIT, [
-      ACTION_UPDATE_INFO,
-      ACTION_RESET_NOTIFICATION_INFO
-    ]),
+    ...mapActions(MODULE_MODULE_CO_SO_EDIT,{
+      updateInfo: ACTION_UPDATE_INFO,
+      resetNotification: ACTION_RESET_NOTIFICATION_INFO,
+    }),
     _hideModalEdit() {
       this.$modal.hide('modal-co-so-edit')
     },
-    _submitUpdate() {
-      this[ACTION_UPDATE_INFO](this.info)
+    async _submitUpdate() {
+      await this.updateInfo(this.info)
+      return 0
     },
     _notificationUpdate(notification) {
       if (notification.type == 'success') {
         this.$emit('update-info-success')
       }
       this.$notify(notification)
-      this[ACTION_RESET_NOTIFICATION_INFO]()
+      this.resetNotification()
     },
   },
   setting: {
-    list_title: 'Danh sách Linh mục',
+    list_title: 'Danh sách cơ sở',
   },
 }
 </script>
