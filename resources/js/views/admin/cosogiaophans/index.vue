@@ -32,9 +32,9 @@
                         <th style="width: 10%" class="text-left">Tên</th>
                         <th style="width: 25%" class="text-left">Địa chỉ</th>
                         <th style="witdh: 15%" class="text-center">Email</th>
-                        <th style="witdh: 15%" class="text-center">Diện thoại</th>
-                        <th style="witdh: 15%" class="text-center">Fax</th>
-                        <th style="witdh: 10%" class="text-center">Website</th>
+                        <th style="witdh: 15%" class="text-center">Điện thoại</th>
+                        <th style="witdh: 15%" class="text-center">Website</th>
+                        <th style="witdh: 10%" class="text-center">Cơ sở</th>
                         <th style="width: 5%" class="text-right">Action</th>
                       </tr>
                     </thead>
@@ -72,6 +72,7 @@ import TheHeaderPage from './components/TheHeaderPage'
 import Paginate from 'com@admin/Pagination'
 import {
   MODULE_MODULE_CO_SO,
+  MODULE_MODULE_CO_SO_EDIT
 } from 'store@admin/types/module-types'
 import {
   ACTION_GET_INFO_LIST,
@@ -93,6 +94,7 @@ export default {
     return {
       fullPage: false,
       isResource: false,
+      curInfo: {}
     }
   },
   watch: {
@@ -109,6 +111,7 @@ export default {
     }),
     ...mapGetters(['isNotEmptyList']),
     ...mapState(MODULE_MODULE_CO_SO, ['infos', 'loading', 'isDelete']),
+    ...mapState(MODULE_MODULE_CO_SO_EDIT, ['info']),
     _infoList() {
       return this.infos
     },
@@ -117,10 +120,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(MODULE_MODULE_CO_SO, [
-      ACTION_GET_INFO_LIST,
-      ACTION_RESET_NOTIFICATION_INFO
-    ]),
+    ...mapActions(MODULE_MODULE_CO_SO, {
+      getInfoList: ACTION_GET_INFO_LIST,
+      resetNotification: ACTION_RESET_NOTIFICATION_INFO,
+    }),
+    ...mapActions(MODULE_MODULE_CO_SO_EDIT, ['ACTION_RESET_INFO_ITEM']),
     _showModalAdd() {
       this.$modal.show('modal-co-so-add')
     },
@@ -135,8 +139,15 @@ export default {
     _showModalEdit() {
       this.$modal.show('modal-co-so-edit')
     },
-    _updateInfoList() {
+    async _updateInfoList() {
       this.$modal.hide('modal-co-so-edit')
+      const params = {
+        ...this.rootData.searchs,
+        perPage: this.rootData.perPage,
+      }
+      await this.getInfoList(params)
+      await this.ACTION_RESET_INFO_ITEM()
+      
     },
     _notificationUpdate(notification) {
       this.$notify(notification)
