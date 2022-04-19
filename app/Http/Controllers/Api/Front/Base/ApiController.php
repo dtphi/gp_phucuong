@@ -721,10 +721,11 @@ class ApiController extends Controller
 					'href_giaoxu' => $hrefGx,
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
-					'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+					'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
 					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+          'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
 					'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
 				];
 			}
