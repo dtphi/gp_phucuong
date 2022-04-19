@@ -63,7 +63,8 @@
                           </h4>
                           <div class="row">
                             <div class="col-6">
-                              <span>Chức vụ: {{ info.chuc_vu }}</span>
+                              <span v-if="info.ngay_rip">RIP: {{ info.ngay_rip }}</span>
+                              <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
                               <a :href="info.href_giaoxu">
                                 <span>Nơi phục vụ: {{ info.giao_xu }} </span>
                               </a>
