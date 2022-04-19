@@ -56,7 +56,8 @@
                         >
                           {{ pageLists.ten }}
                         </p>
-                        <p>{{ pageLists.cv_hien_tai }}</p>
+                        <p v-if="pageLists.ngay_rip">RIP: {{pageLists.ngay_rip}}</p>
+                        <p v-else>{{ pageLists.cv_hien_tai }}</p>
                       </div>
                       <h4 class="text-uppercase text-center mb-3">Bí tích</h4>
                       <a
