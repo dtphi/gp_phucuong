@@ -448,7 +448,7 @@
                       />
                     </div>
                     <div class="mt-3" v-if="pageLists.rip_ghi_chu">
-                      <h5 v-html="pageLists.rip_ghi_chu"></h5>
+                      <span v-html="pageLists.rip_ghi_chu"></span>
                     </div>
                   </div>
                 </div>

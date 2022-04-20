@@ -982,6 +982,7 @@ class ApiController extends Controller
 					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
 					$giaoXuHienTai = $giaoXu['giaoxuName'];
 					$chucVuHienTai = $giaoXu['chucvuName'];
+          $noiNghiHuu = $giaoXu['cosogpName'];
 					$giaoHatHienTai = $giaoXu['giaoHatName'];
 				}
 
@@ -1004,9 +1005,11 @@ class ApiController extends Controller
 					'href_giaoxu' => $hrefGx,
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
-					'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+          'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
+          'noi_nghi_huu' => $noiNghiHuu,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
+          'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
 					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
 					'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
 				];
@@ -1059,6 +1062,7 @@ class ApiController extends Controller
 					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
 					$giaoXuHienTai = $giaoXu['giaoxuName'];
 					$chucVuHienTai = $giaoXu['chucvuName'];
+          $noiNghiHuu = $giaoXu['cosogpName'];
 					$giaoHatHienTai = $giaoXu['giaoHatName'];
 				}
 
@@ -1082,9 +1086,11 @@ class ApiController extends Controller
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
 					'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+          'noi_nghi_huu' => $noiNghiHuu,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
 					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+          'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
 					'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
 				];
 			}
