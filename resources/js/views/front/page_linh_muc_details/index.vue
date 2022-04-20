@@ -447,6 +447,9 @@
                         icon="history"
                       />
                     </div>
+                    <div class="mt-3" v-if="pageLists.rip_ghi_chu">
+                      <h5 v-html="pageLists.rip_ghi_chu"></h5>
+                    </div>
                   </div>
                 </div>
               </div>
