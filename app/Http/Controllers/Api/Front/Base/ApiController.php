@@ -697,9 +697,10 @@ class ApiController extends Controller
 				} else {
 					$giaoXu = end($giaoXuHienTai);
 					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
-					$giaoXuHienTai = $giaoXu['giaoxuName'];
 					$chucVuHienTai = $giaoXu['chucvuName'];
-					$giaoHatHienTai = $giaoXu['giaoHatName'];
+          $noiNghiHuu = $giaoXu['cosogpName'];
+          $giaoXuHienTai = $giaoXu['giaoxuName'];
+          $giaoHatHienTai = $giaoXu['giaoHatName'];
 				}
 
 				$ngayNhanChucThanhHienTai = '';
@@ -722,6 +723,7 @@ class ApiController extends Controller
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
 					'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
+          'noi_nghi_huu' => $noiNghiHuu,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
 					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
@@ -776,6 +778,7 @@ class ApiController extends Controller
 				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? $emptyStr,
 				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? $emptyStr,
         'ngay_rip' => ($infos->ngay_rip) ? date_format(date_create($infos->ngay_rip), "d-m-Y") : '',
+        'rip_ghi_chu' => html_entity_decode($infos->rip_ghi_chu) ?? "",
 				'cham_ngon' => $infos->cham_ngon ?? $emptyStr,
 				'cv_hien_tai' => $chucVuHienTai ?? $emptyStr,
 				'ds_chuc_vu' => $thuyenChuyens ?? "",
