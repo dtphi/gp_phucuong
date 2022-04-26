@@ -1,0 +1,292 @@
+/* 
+  Giáo phận phú cường: Page linh mucs main css
+*/
+#news {
+    .info-post {
+        img {
+            width: 26px;
+            border-radius: 50%;
+        }
+
+        .name {
+            color: #1bd7f0;
+        }
+    }
+
+    .name-post {
+        color: #cdcdcd;
+    }
+
+    .box-social {
+        .list-icon {
+            font-size: 0;
+
+            a {
+                display: inline-block;
+                width: calc(100% / 5);
+            }
+
+            .nav-tabs {
+                 .nav-link {
+                    color: #000;
+                }
+            }
+        }
+    }
+
+    .box-care {
+        #email {
+            background-color: #CCCCCC;
+            padding: 6px;
+            border-radius: 4px;
+            width: 100%;
+            outline: 0;
+        }
+
+        .btn {
+            background-color: #ED1C24;
+            color: #ffffff;
+            padding: 4px 14px;
+            font-weight: bold;
+        }
+
+        .text-download {
+            color: #ff0000;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+
+    .highlights {
+        .say-gods {
+            .col-7 {
+                .tit-bg-common {
+                    span {
+                        width: 14%;
+                        i {
+                            padding: 2px 12px;
+                        }
+                    }
+
+                    a {
+                        width: 86%;
+                    }
+                }
+
+                .row-item-3 {
+                    color: #000000;
+                    border-bottom-style: dashed;
+
+                    span {
+                        font-size: 14px;
+
+                        &:first-child {
+                            width: 18%;
+                        }
+
+                        &:nth-child(2n) {
+                            width: 60%;
+                        }
+
+                        &:last-child {
+                            width: 22%;
+                        }
+                    }
+                }
+            }
+        }
+
+        .new {
+            .tit-bg-common {
+                span {
+                    width: 12%;
+                }
+
+                a {
+                    width: 88%;
+                    font-size: 14px;
+                }
+            }
+
+            .row-item-3 {
+                color: #000000;
+                border-bottom-style: dashed;
+            }
+        }
+
+        .new-diocese {
+            .tit-bg-common {
+                a {
+                    width: 100%;
+                    padding-left: 0;
+                }
+            }
+
+            .col-r {
+                .tit-bg-common {
+                    a {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .new-document {
+            .tit-bg-common {
+                a {
+                    width: 100%;
+                    padding-left: 0;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+.list-danh-muc {
+    padding: 0 15px;
+
+    .title-linh-muc {
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 50px;
+
+        .line-linh-muc {
+            background-color: #ED1C24;
+            width: 200px;
+            height: 2px;
+            margin: 6px auto;
+        }
+    }
+
+    .tab-linh-muc {
+        .nav-tabs {
+            padding-bottom: 15px;
+    
+            .nav-item {
+                flex: unset;
+            }
+    
+            .nav-link {
+                border: 0;
+                color: #ED1C24;
+                font-weight: bold;
+                text-transform: uppercase;
+        
+                &.active {
+                    background-color: #4D4D4D;
+                    color: #ffffff;
+                    border-top-left-radius: 0px;
+                    border-top-right-radius: 0px;
+                }
+            }
+        }
+
+        .tab-content {
+            margin-top: 30px !important;
+        }
+    
+        .list-linh-muc {
+            .row-linh-muc {
+                margin-bottom: 40px;
+                width: 100%;
+    
+                .avatar {
+                    display: block;
+                }
+    
+                .content {
+                    .tit {
+                        font-size: 16px;
+                        font-weight: 600;
+                        margin-bottom: 14px;
+    
+                        a {
+                            color: #4D4D4D;
+                        }
+                    }
+    
+                    .row {
+                        span {
+                            display: block;
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.nav-link {
+    color: #faf7f7b3;
+    background-color: #808080a6;
+    }
+    .bg-dark-gp {
+    background-color: #4d4d4d;
+    }
+    .select-filter-gp {
+    width: 275px;
+}
+
+@media screen and (max-width: 767px) {
+    #news {
+        .notication {
+            .description {
+                h4 {
+                    font-size: 18px;
+                }
+            }
+
+            .box-social {
+                margin-top: 14px;
+            }
+        }
+    }
+
+    .list-danh-muc {
+        .title-linh-muc {
+            font-size: 16px;
+            margin-bottom: 25px;
+    
+            .line-linh-muc {
+                width: 150px;
+                height: 1px;
+                margin: 4px auto;
+            }
+        }
+    
+        .tab-linh-muc {
+            .nav-tabs {
+                padding-bottom: 15px;
+            }
+    
+            .tab-content {
+                margin-top: 15px !important;
+            }
+        
+            .list-linh-muc {
+                .row-linh-muc {
+                    margin-bottom: 20px;
+                    
+                    .content {
+                        .tit {
+                            font-size: 15px;
+                            margin-top: 8px;
+                            margin-bottom: 8px;
+                        }
+        
+                        .row {
+                            span {
+                                margin-bottom: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

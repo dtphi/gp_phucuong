@@ -271,7 +271,35 @@ routeEnv = {
         layout_content: {},
       },
     }],
-  },],
+  },{
+    path: 'danh-sach-linh-muc',
+    component: {
+      render: c => c('router-view'),
+    },
+    children: [{
+      path: '',
+      component: () => import('v@front/page_danh_sach_linh_mucs'),
+      name: 'danh-sach-linh-muc-page',
+      meta: {
+        auth: false,
+        header: 'Trang danh sách linh mục',
+        layout: MainLayout,
+        role: 'guest',
+        layout_content: {},
+      },
+    }, {
+      path: 'chi-tiet/:linhMucId',
+      component: () => import('v@front/page_linh_muc_chi_tiet'),
+      name: 'linh-muc-chi-tiet-page',
+      meta: {
+        auth: false,
+        header: 'Trang Chi Tiết Sửa Linh Mục',
+        layout: MainLayout,
+        role: 'guest',
+        layout_content: {},
+      },
+    }],
+  }],
 }
 
 export default [routeEnv]
