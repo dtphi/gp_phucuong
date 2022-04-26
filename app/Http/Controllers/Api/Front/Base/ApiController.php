@@ -723,7 +723,7 @@ class ApiController extends Controller
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
 					'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
-          'noi_nghi_huu' => $noiNghiHuu,
+          'noi_nghi_huu' => $noiNghiHuu ?? '',
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
 					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
