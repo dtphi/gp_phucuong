@@ -4,7 +4,7 @@ import {
 } from '@app/api/utils/fn-helper'
 import {
   API_LINH_MUC_DETAIL,
-    API_LINH_MUC_DETAIL_UPDATE,
+  API_LINH_MUC_DETAIL_UPDATE,
   API_LINH_MUC_LIST,
   API_CHUC_VU_LIST,
   API_LINH_MUC_LIST_BY_ID,

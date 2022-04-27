@@ -540,8 +540,9 @@ export default {
       'GET_LINH_MUC_UPDATE_BY_ID',
       'UPDATE_LINH_MUC_DETAIL',
     ]),
-    updateLinhMuc() {
-      this.UPDATE_LINH_MUC_DETAIL(this.linhmuc_update)
+    async updateLinhMuc() {
+      await this.UPDATE_LINH_MUC_DETAIL(this.linhmuc_update)
+      alert('Cập nhật thông tin thành công !!!')
     }
   },
 }

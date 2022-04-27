@@ -53,6 +53,7 @@ class Service implements BaseModel
 		$this->modelPhanHatXu = new GiaoPhanHatXu();
     $this->modelThanh = new Thanh();
     $this->modelDong = new Dong();
+    $this->modelLinhmucTemp = new LinhmucTemp();
 	}
 
 	/**
@@ -309,7 +310,7 @@ class Service implements BaseModel
 
 	public function apiGetLinhmucs($data = [])
 	{
-		$query = $this->modelLinhMuc->select()
+		$query = $this->modelLinhMuc->select() 
 			->orderBy('id', 'DESC');
 		return $query;
 	}
@@ -324,7 +325,10 @@ class Service implements BaseModel
 
 	public function apiGetDetailLinhMuc($id = null)
 	{
-		$model = $this->modelLinhMuc->find($id);
+    $model = $this->modelLinhmucTemp->find($id);
+    if(is_null($model)) {
+      $model = $this->modelLinhMuc->find($id);
+    }
 		return $model;
 	}
 

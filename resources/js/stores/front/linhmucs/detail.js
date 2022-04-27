@@ -82,7 +82,6 @@ export default {
       )
     },
     UPDATE_LINH_MUC_DETAIL({ commit }, update_linhmuc) {
-      console.log(update_linhmuc, 'update_linhmuc')
       apiUpdateLinhMucTemp(
         update_linhmuc,
         (res) => {
