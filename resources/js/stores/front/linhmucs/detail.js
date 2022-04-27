@@ -1,4 +1,4 @@
-import { apiGetDetail, } from '@app/api/front/linhmucs'
+import { apiGetDetail, apiLinhMucUpdateById, apiUpdateLinhMucTemp} from '@app/api/front/linhmucs'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_DETAIL_LINH_MUC, } from '@app/stores/front/types/action-types'
 import { fn_redirect_url, } from '@app/api/utils/fn-helper'
@@ -11,6 +11,7 @@ export default {
     pageLists: [],
     infoRelateds: [],
     errors: [],
+    linhmuc_update: {}
   },
   getters: {
     mainMenus(state) {
@@ -22,6 +23,9 @@ export default {
     infoRelateds(state) {
       return state.infoRelateds
     },
+    linhmuc_update(state) {
+      return state.linhmuc_update
+    }
   }, 
   mutations: {
     [INIT_LIST](state, payload) {
@@ -30,6 +34,9 @@ export default {
     [SET_ERROR](state, payload) {
       state.errors = payload
     },
+    SET_LINH_MUC_UPDATE(state, payload) {
+      state.linhmuc_update = payload
+    }
   },
   actions: {
     [GET_DETAIL_LINH_MUC]({ commit, }, routeParams) {
@@ -63,5 +70,28 @@ export default {
           commit(SET_ERROR, errors)
         }, routeParams)
     },
+    GET_LINH_MUC_UPDATE_BY_ID({commit}, routeParams) {
+      apiLinhMucUpdateById(
+        routeParams.linhMucId,
+        (responses) => {
+          commit('SET_LINH_MUC_UPDATE', responses.data[0]);
+        },
+        (errors) => {
+          commit(SET_ERROR, errors)
+        }
+      )
+    },
+    UPDATE_LINH_MUC_DETAIL({ commit }, update_linhmuc) {
+      console.log(update_linhmuc, 'update_linhmuc')
+      apiUpdateLinhMucTemp(
+        update_linhmuc,
+        (res) => {
+          commit('SET_LINH_MUC_UPDATE',update_linhmuc)
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
+    } 
   },
 }

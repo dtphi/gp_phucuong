@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\Front\Services;
 
 use DB;
+use App\Models\Dong;
 use App\Models\Thanh;
 use App\Models\ChucVu;
 use App\Models\GiaoXu;
+use App\Models\NgayLe;
 use App\Models\GiaoHat;
 use App\Models\Linhmuc;
 use App\Models\Category;
@@ -13,16 +15,16 @@ use App\Models\GiaoPhan;
 use App\Http\Common\Tables;
 use App\Models\GiaoPhanHat;
 use App\Models\Information;
+use Illuminate\Support\Arr;
 use App\Models\GiaoPhanHatXu;
 use App\Models\LinhmucVanthu;
 use App\Models\LinhmucBangcap;
+use yii\console\widgets\Table;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
-use App\Models\NgayLe;
 use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
-use Illuminate\Support\Arr;
-use yii\console\widgets\Table;
+use App\Models\LinhmucTemp;
 
 class Service implements BaseModel
 {
@@ -49,6 +51,8 @@ class Service implements BaseModel
 		$this->modelLinhMucThuyenChuyen = new LinhmucThuyenchuyen();
 		$this->modelNgayLe = new NgayLe();
 		$this->modelPhanHatXu = new GiaoPhanHatXu();
+    $this->modelThanh = new Thanh();
+    $this->modelDong = new Dong();
 	}
 
 	/**
@@ -310,10 +314,10 @@ class Service implements BaseModel
 		return $query;
 	}
 
-	public function apiGetListLinhMuc(array $options = [], $limit = 15)
+	public function apiGetListLinhMuc($data = array(), $limit = 5)
 	{
 		// TODO: Implement apiGetList() method.
-		$query = $this->apiGetLinhmucs($options);
+		$query = $this->apiGetLinhmucs($data);
 
 		return $query->paginate($limit);
 	}
@@ -321,7 +325,6 @@ class Service implements BaseModel
 	public function apiGetDetailLinhMuc($id = null)
 	{
 		$model = $this->modelLinhMuc->find($id);
-
 		return $model;
 	}
 
@@ -439,6 +442,11 @@ class Service implements BaseModel
 		}
 		return $list_giaoxu->paginate($limit);
 	}
+  public function getSubListGiaoHat() 
+  {
+    $query = $this->modelGiaoHat->select()->orderBy('id', 'ASC')->get();
+    return $query;
+  }
 
 	public function apiGetListNgayLe($data = array(), $limit = 5)
 	{ // List Ngay Le By Id
@@ -525,4 +533,54 @@ class Service implements BaseModel
 		}
 		return $list_linhmucs;
 	}
+
+  public function apiGetThanhs()
+  {
+    $query = $this->modelThanh->select('id', 'name')
+    ->orderBy('name', 'asc')->get();
+    return $query;
+  }
+
+  public function apiGetDongs()
+  {
+    $query = $this->modelDong->select('id', 'name')
+    ->orderBy('name', 'asc')->get();
+    return $query;
+  }
+
+  public function apiUpdateLinhMucTemp($data = []){
+      $linhmuc_temp = LinhmucTemp::updateOrCreate(
+        ['id' => $data['id']],
+        [
+          'id' => $data['id'],
+          'ten_thanh_id' => $data['ten_thanh_id'],
+          'ten' => $data['ten'],
+          'ngay_thang_nam_sinh' => $data['ngay_thang_nam_sinh'],
+          'noi_sinh' => $data['dia_chi'],
+          'giao_xu_id' => $data['giao_xu'],
+          'ho_ten_cha' => $data['ho_ten_cha'],
+          'ho_ten_me' => $data['ho_ten_me'],
+          'noi_rua_toi' => $data['noi_rua_toi'],
+          'ngay_rua_toi' => $data['ngay_rua_toi'],
+          'noi_them_suc' => $data['noi_them_suc'],
+          'ngay_them_suc' => $data['ngay_them_suc'],
+          'tieu_chung_vien' => $data['tieu_chung_vien'],
+          'ngay_tieu_chung_vien' => $data['ngay_tieu_chung_vien'],
+          'dai_chung_vien' => $data['dai_chung_vien'],
+          'ngay_dai_chung_vien' => $data['ngay_dai_chung_vien'],
+          'image' => $data['image'],
+          'so_cmnd' => $data['so_cmnd'],
+          'ngay_cap_cmnd' => $data['ngay_cap_cmnd'],
+          'noi_cap_cmnd' => $data['noi_cap_cmnd'],
+          'phone' => $data['phone'],
+          'email' => $data['email'],
+          'trieu_dong' => $data['trieu_dong'],
+          'ten_dong_id' => $data['ten_dong_id'],
+          'ngay_trieu_dong' => $data['ngay_trieu_dong'],
+          'ngay_khan' => $data['ngay_khan'],
+          'is_duc_cha' => $data['is_duc_cha'],
+          'cham_ngon' => $data['cham_ngon'],
+          'sinh_giao_xu' => $data['sinh_giao_xu'],
+        ]);
+  }
 }
