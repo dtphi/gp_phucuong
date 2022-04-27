@@ -202,12 +202,8 @@ class Service implements BaseModel
 
 	public function apiGetNgayLeList($data = array(), $limit = 5)
 	{
-		// TODO: Implement apiGetList() method.
-		$query = $this->modelNgayLe
-		->where('hanh', '')
-		->orwhere('hanh', null)
-		->first('id','ten_le','hanh');
-		// dd($query->paginate($limit), 'test');
+		$query = $this->modelNgayLe	
+			->whereNotNull('hanh')->Where('hanh', '!=', '');
 		return $query->paginate($limit);
 	}
 

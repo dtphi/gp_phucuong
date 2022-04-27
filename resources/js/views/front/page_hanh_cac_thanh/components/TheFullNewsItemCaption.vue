@@ -3,9 +3,6 @@
     <h4 class="title mt-2 ellipsis-two-lines">
       <a>{{ info.ten_le }}</a>
     </h4>
-    <!-- <span class="d-block view-date"
-      >{{ info.viewed }} lượt xem | {{ info.hanh }}</span
-    > -->
     <span class="d-block mb-1">
       <div class="ellipsis-three-lines" v-html="info.hanh"></div>
     </span>
