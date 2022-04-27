@@ -542,7 +542,6 @@ export default {
     ]),
     async updateLinhMuc() {
       await this.UPDATE_LINH_MUC_DETAIL(this.linhmuc_update)
-      alert('Cập nhật thông tin thành công !!!')
     }
   },
 }
