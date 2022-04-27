@@ -42,7 +42,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::get('/app/get-data-chuc-vu', 'Base\ApiController@getChucVuList');
     Route::post('/app/get-data-linh-muc-by-id', 'Base\ApiController@getLinhMucListById');
 		Route::get('/app/get-detail-linh-muc/{id}', 'Base\ApiController@getLinhMucDetail');
-  Route::get('/app/get-detail-linh-muc-update/{id}', 'Base\ApiController@getLinhMucUpdate');
+    Route::get('/app/get-detail-linh-muc-update/{id}', 'Base\ApiController@getLinhMucUpdate');
     Route::post('/app/update-linh-muc-temp', 'Base\ApiController@updateLinhMucTemp');
     Route::apiResource('/email_sub/create', 'EmailController'); 
   });
