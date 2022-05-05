@@ -55,6 +55,7 @@ class Service implements BaseModel
 		$this->modelPhanHatXu = new GiaoPhanHatXu();
     $this->modelThanh = new Thanh();
     $this->modelDong = new Dong();
+    $this->modelLinhMuc = new LinhMuc();
     $this->modelLinhmucTemp = new LinhmucTemp();
     $this->modelThuyenChuyen = new LinhmucThuyenchuyen();
     $this->modelThuyenChuyenTemp = new LinhmucThuyenchuyenTemp();
@@ -332,6 +333,48 @@ class Service implements BaseModel
     $model = $this->modelLinhmucTemp->find($id);
     if(is_null($model)) {
       $model = $this->modelLinhMuc->find($id);
+      $this->modelLinhmucTemp->id = $model->id;
+      $this->modelLinhmucTemp->ten = $model->ten;
+      $this->modelLinhmucTemp->ten_thanh_id = $model->ten_thanh_id;
+      $this->modelLinhmucTemp->ngay_thang_nam_sinh = $model->ngay_thang_nam_sinh;
+      $this->modelLinhmucTemp->noi_sinh = $model->noi_sinh;
+      $this->modelLinhmucTemp->giao_xu_id = $model->giao_xu_id;
+      $this->modelLinhmucTemp->ho_ten_cha = $model->ho_ten_cha;
+      $this->modelLinhmucTemp->ho_ten_me = $model->ho_ten_me;
+      $this->modelLinhmucTemp->noi_rua_toi = $model->noi_rua_toi;
+      $this->modelLinhmucTemp->noi_them_suc = $model->noi_them_suc;
+      $this->modelLinhmucTemp->ngay_them_suc = $model->ngay_them_suc;
+      $this->modelLinhmucTemp->tieu_chung_vien = $model->tieu_chung_vien;
+      $this->modelLinhmucTemp->ngay_tieu_chung_vien = $model->ngay_tieu_chung_vien;
+      $this->modelLinhmucTemp->dai_chung_vien = $model->dai_chung_vien;
+      $this->modelLinhmucTemp->ngay_dai_chung_vien = $model->ngay_dai_chung_vien;
+      $this->modelLinhmucTemp->ngay_cap_cmnd = $model->ngay_cap_cmnd;
+      $this->modelLinhmucTemp->noi_cap_cmnd = $model->noi_cap_cmnd;
+      $this->modelLinhmucTemp->code = $model->code;
+      $this->modelLinhmucTemp->phone = $model->phone;
+      $this->modelLinhmucTemp->email = $model->email;
+      $this->modelLinhmucTemp->password = $model->password;
+      $this->modelLinhmucTemp->flag_user = $model->flag_user;
+      $this->modelLinhmucTemp->trieu_dong = $model->trieu_dong;
+      $this->modelLinhmucTemp->ten_dong_id = $model->ten_dong_id;
+      $this->modelLinhmucTemp->ngay_trieu_dong = $model->ngay_trieu_dong;
+      $this->modelLinhmucTemp->ngay_khan = $model->ngay_khan;
+      $this->modelLinhmucTemp->ngay_rip = $model->ngay_rip;
+      $this->modelLinhmucTemp->rip_giao_xu_id = $model->rip_giao_xu_id;
+      $this->modelLinhmucTemp->rip_ghi_chu = $model->rip_ghi_chu;
+      $this->modelLinhmucTemp->ghi_chu = $model->ghi_chu;
+      $this->modelLinhmucTemp->active = $model->active;
+      $this->modelLinhmucTemp->update_user = $model->update_user;
+      $this->modelLinhmucTemp->is_duc_cha = $model->is_duc_cha;
+      $this->modelLinhmucTemp->created_at = $model->created_at;
+      $this->modelLinhmucTemp->updated_at = $model->updated_at;
+      $this->modelLinhmucTemp->deleted_at = $model->deleted_at;
+      $this->modelLinhmucTemp->sort_id = $model->sort_id;
+      $this->modelLinhmucTemp->mat_giao_xu = $model->mat_giao_xu;
+      $this->modelLinhmucTemp->sinh_giao_xu = $model->sinh_giao_xu;
+      $this->modelLinhmucTemp->cham_ngon = $model->cham_ngon;
+      $this->modelLinhmucTemp->save();
+      $model = $this->modelLinhmucTemp;
     }
 		return $model;
 	}
