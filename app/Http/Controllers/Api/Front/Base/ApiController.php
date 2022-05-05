@@ -530,12 +530,11 @@ class ApiController extends Controller
 			$pagination = $this->_getTextPagination($collections);
 
 			foreach ($collections as $key => $info) {
-				$duong_nhiem = [];
 				foreach ($info->linhmucthuyenchuyens as $key => $value) {
 					$duong_nhiem[] = [
-						'ten_duong_nhiem' => isset($value->linhMuc) ? $value->linhMuc->ten : "Chưa cập nhật",
-						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
-						'chuc_vu' => isset($value->chucVu) ? $value->chucVu->name : "Chưa cập nhật",
+						'ten_duong_nhiem' => isset($value->toArray()['linh_muc']['ten']) ? $value->toArray()['linh_muc']['ten']: "Chưa cập nhật",
+						'hrefLinhMuc' => url('linh-muc/chi-tiet/' . ($value->toArray()['linh_muc'] ? $value->toArray()['linh_muc']['id'] : 0)),
+						'chuc_vu' => isset($value->chucVu) ? $value->toArray()['chuc_vu'] : "Chưa cập nhật",
 					];
 				}
 				$results[] = [
@@ -549,7 +548,6 @@ class ApiController extends Controller
 					'dien_thoai' => $info->dien_thoai ?? "Chưa cập nhật",
 					'so_tin_huu' => $info->so_tin_huu ?? "Chưa cập nhật",
 					'dan_so' => $info->dan_so ?? "Chưa cập nhật",
-					'duong_nhiem' => $duong_nhiem
 				];
 			}
 			$json = [
@@ -671,15 +669,13 @@ class ApiController extends Controller
 
 	public function getLinhMucList(Request $request)
 	{
-		$data = $request->all();
-		$page = 1; // set page dau = 1
+		$page = 1;
 		if ($request->query('page')) {
-			$page = $request->query('page'); // neu request co page thi gan gia tri
+			$page = $request->query('page'); 
 		}
 
 		try {
-			$limit = 5;
-			$collections = $this->sv->apiGetListLinhMuc($data, $limit);
+			$collections = $this->sv->apiGetListLinhMuc();
 			$pagination = $this->_getTextPagination($collections);
 			$results = [];
 			$staticImgThum = self::$thumImgNo;
@@ -697,9 +693,9 @@ class ApiController extends Controller
 				} else {
 					$giaoXu = end($giaoXuHienTai);
 					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
-					$giaoXuHienTai = $giaoXu['giaoxuName'];
 					$chucVuHienTai = $giaoXu['chucvuName'];
-					$giaoHatHienTai = $giaoXu['giaoHatName'];
+          $giaoXuHienTai = $giaoXu['giaoxuName'];
+          $giaoHatHienTai = $giaoXu['giaoHatName'];
 				}
 
 				$ngayNhanChucThanhHienTai = '';
@@ -721,10 +717,11 @@ class ApiController extends Controller
 					'href_giaoxu' => $hrefGx,
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
-					'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+					'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
-					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+					'chuc_vu' => ($chucVuHienTai == "") ? $emptyStr : $chucVuHienTai,
+          'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
 					'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
 				];
 			}
@@ -775,6 +772,7 @@ class ApiController extends Controller
 				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? $emptyStr,
 				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? $emptyStr,
         'ngay_rip' => ($infos->ngay_rip) ? date_format(date_create($infos->ngay_rip), "d-m-Y") : '',
+        'rip_ghi_chu' => html_entity_decode($infos->rip_ghi_chu) ?? "",
 				'cham_ngon' => $infos->cham_ngon ?? $emptyStr,
 				'cv_hien_tai' => $chucVuHienTai ?? $emptyStr,
 				'ds_chuc_vu' => $thuyenChuyens ?? "",
@@ -786,6 +784,69 @@ class ApiController extends Controller
 
 		return  $results;
 	}
+
+  public function getLinhMucUpdate($id = null)
+  {
+    try {
+      $infos = $this->sv->apiGetDetailLinhMuc($id);
+      $thanhs = $this->sv->apiGetThanhs();
+      $dongs = $this->sv->apiGetDongs();
+      $emptyStr = 'Chưa cập nhật';
+      
+      $results[] = [
+        'id' => (int) $infos->id,
+        'ten' => $infos->ten,
+        'ten_thanh_id' => $infos->ten_thanh_id, 
+        'ten_thanh' => $infos->ten_thanh ?? $emptyStr,
+        'nam_sinh' => ($infos->ngay_thang_nam_sinh) ? date_format(date_create($infos->ngay_thang_nam_sinh), "d-m-Y") : '',
+        'image'  => !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
+        'sinh_giao_xu' => $infos-> sinh_giao_xu ?? '' ,
+        'giao_xu' => $infos->ten_xu ,
+        'dia_chi' => $infos->noi_sinh ,
+        'ho_ten_cha' => $infos->ho_ten_cha,
+        'ho_ten_me' => $infos->ho_ten_me,
+        'noi_rua_toi' => $infos->noi_rua_toi,
+        'noi_them_suc' => $infos->noi_them_suc,
+        'ngay_rua_toi' =>  $infos->ngay_rua_toi,
+        'ngay_them_suc' => $infos->ngay_them_suc,
+        'so_cmnd' => $infos->so_cmnd,
+        'ngay_cap_cmnd' => $infos->ngay_cap_cmnd,
+        'noi_cap_cmnd' => $infos->noi_cap_cmnd ,
+        'cham_ngon' => $infos->cham_ngon,
+        'image' => trim($infos->image, '/'),
+        'ngay_thang_nam_sinh' => $infos->ngay_thang_nam_sinh,
+        'tieu_chung_vien' => $infos->tieu_chung_vien,
+        'ngay_tieu_chung_vien' => $infos->ngay_tieu_chung_vien,
+        'dai_chung_vien' => $infos->dai_chung_vien,
+        'ngay_dai_chung_vien' => $infos->ngay_dai_chung_vien,
+        'trieu_dong' => $infos->trieu_dong, 
+        'ten_dong_id' => $infos->ten_dong_id,
+        'ngay_khan' => $infos->ngay_khan,
+        'ngay_trieu_dong' => $infos->ngay_trieu_dong,
+        'lable_ngay_thang_nam_sinh'  => ($infos->ngay_thang_nam_sinh) ? date_format(date_create($infos->ngay_thang_nam_sinh), "d-m-Y") : '',
+        'lable_ngay_rua_toi'         => ($infos->ngay_rua_toi) ? date_format(date_create($infos->ngay_rua_toi), "d-m-Y") : '',
+        'lable_ngay_them_suc'        => ($infos->ngay_them_suc) ? date_format(date_create($infos->ngay_them_suc), "d-m-Y") : '',
+        'lable_ngay_tieu_chung_vien' => ($infos->ngay_tieu_chung_vien) ? date_format(date_create($infos->ngay_tieu_chung_vien), "d-m-Y") : '',
+        'lable_ngay_dai_chung_vien'  => ($infos->ngay_dai_chung_vien) ? date_format(date_create($infos->ngay_dai_chung_vien), "d-m-Y") : '',
+        'lable_ngay_cap_cmnd'        => ($infos->ngay_cap_cmnd) ? date_format(date_create($infos->ngay_cap_cmnd), "d-m-Y") : '',
+        'lable_ngay_trieu_dong'      => ($infos->ngay_trieu_dong) ? date_format(date_create($infos->ngay_trieu_dong), "d-m-Y") : '',
+        'lable_ngay_khan'            => ($infos->ngay_khan) ? date_format(date_create($infos->ngay_khan), "d-m-Y") : '',
+        'lable_ngay_rip'             => ($infos->ngay_rip) ? date_format(date_create($infos->ngay_rip), "d-m-Y") : '',
+        'ten_thanh_name'             => $infos->ten_thanh,
+        'giao_xu_name'               => $infos->ten_giao_xu,
+        'ten_dong_name'              => $infos->ten_dong,
+        'is_duc_cha' => $infos->is_duc_cha, 
+        'phone' => $infos->phone,
+        'email' => $infos->email, 
+        'thanhs' => $thanhs,
+        'dongs' => $dongs,
+        'link_hdsv' => url('danh-sach-linh-muc/hoat-dong-su-vu/' . $infos->id),
+      ];
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
+    }
+    return  $results;
+  }
 
 	public function getGiaoPhanList(Request $request)
 	{
@@ -857,11 +918,11 @@ class ApiController extends Controller
 				foreach ($collections as $key => $info) {
 					$duong_nhiem = [];
 					foreach ($info->giaoXu->linhmucthuyenchuyens as $key => $value) {
-						$duong_nhiem[] = [
-							'ten_duong_nhiem' => $value->linhMuc->ten,
-							'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
-							'chuc_vu' => $value->chucVu->name,
-						];
+            $duong_nhiem[] = [
+              'ten_duong_nhiem' => isset($value->toArray()['linh_muc']['ten']) ? $value->toArray()['linh_muc']['ten'] : "Chưa cập nhật",
+              'hrefLinhMuc' => url('linh-muc/chi-tiet/' . ($value->toArray()['linh_muc'] ? $value->toArray()['linh_muc']['id'] : 0)),
+              'chuc_vu' => isset($value->chucVu) ? $value->toArray()['chuc_vu'] : "Chưa cập nhật",
+            ];
 					}
 					$results[] = [
 						'id' => (int) $info->giaoXu->id,
@@ -881,11 +942,11 @@ class ApiController extends Controller
 				foreach ($collections as $key => $info) {
 					$duong_nhiem = [];
 					foreach ($info->linhmucthuyenchuyens as $key => $value) {
-						$duong_nhiem[] = [
-							'ten_duong_nhiem' => $value->linhMuc->ten,
-							'hrefLinhMuc' => url('linh-muc/chi-tiet/' . $value->linhMuc->id),
-							'chuc_vu' => $value->chucVu->name,
-						];
+            $duong_nhiem[] = [
+              'ten_duong_nhiem' => isset($value->toArray()['linh_muc']['ten']) ? $value->toArray()['linh_muc']['ten'] : "Chưa cập nhật",
+              'hrefLinhMuc' => url('linh-muc/chi-tiet/' . ($value->toArray()['linh_muc'] ? $value->toArray()['linh_muc']['id'] : 0)),
+              'chuc_vu' => isset($value->chucVu) ? $value->toArray()['chuc_vu'] : "Chưa cập nhật",
+            ];
 					}
 					$results[] = [
 						'id' => (int) $info->id,
@@ -1000,9 +1061,10 @@ class ApiController extends Controller
 					'href_giaoxu' => $hrefGx,
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
-					'giao_hat' => $giaoHatHienTai ?? $emptyStr,
+          'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
+          'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
 					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
 					'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
 				];
@@ -1081,6 +1143,7 @@ class ApiController extends Controller
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
 					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+          'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
 					'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
 				];
 			}
@@ -1180,6 +1243,235 @@ class ApiController extends Controller
 		}
 		
 		return $this->respondWithCollectionPagination($json);
-		
 	}
+
+  public function updateLinhMucTemp(Request $request)
+  {
+    $data = $request->all();
+    $this->sv->apiUpdateLinhMucTemp($data);
+  }
+
+  public function getHoatDongSuVu($id = null) {
+    try {
+      $collections = $this->sv->apiGetThuyenChuyen($id);
+      $results = [];
+      foreach ($collections as $key => $info) {
+        $results[] = [
+          'id' => (int)$info->id,
+          'isCheck' => false,
+          'isEdit' => 1,
+          'from_date' => $info->from_date,
+          'to_date' => $info->to_date,
+          'chuc_vu_id' => $info->chuc_vu_id,
+          'giao_xu_id' => ($info->giao_xu_id) ? $info->giao_xu_id : 0,
+          'fromGiaoXuName'      => $info->ten_from_giao_xu,
+          'fromchucvuName' => $info->ten_from_chuc_vu,
+          'label_from_date' => ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '',
+          'ducchaName' => $info->ten_duc_cha,
+          'label_to_date' => ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '',
+          'chucvuName' => $info->ten_to_chuc_vu,
+          'giaoxuName' => $info->ten_to_giao_xu,
+          'cosogpName' => $info->ten_co_so,
+          'co_so_gp_id' => $info->co_so_gp_id,
+          'co_so_status' => $info->trang_thai_co_so,
+          'dong_id' => $info->dong_id,
+          'ban_chuyen_trach_id' => $info->ban_chuyen_trach_id,
+          'dongName' => $info->ten_dong,
+          'banchuyentrachName' => $info->ten_ban_chuyen_trach,
+          'du_hoc' => $info->du_hoc,
+          'quoc_gia' => $info->quoc_gia,
+          'ghi_chu' => $info->ghi_chu,
+          'active' => $info->active,
+          'active_text' => $info->active ? 'Xảy ra' : 'Ẩn',
+          'chuc_vu_active' => $info->chuc_vu_active
+        ];
+      }
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
+    }
+
+    $json = [
+      'data' => [
+        'results' => $results,
+      ]
+    ];
+    return $this->respondWithCollectionPagination($json);
+  } 
+
+  public function listDropdownCategories(Request $request) {
+     $action = $request->query('action');
+        if ($action == 'dropdown.giao.xu') {
+            return $this->dropdownGiaoXu($request);
+        } elseif ($action == 'dropdown.ten.thanh') {
+            return $this->dropdownThanh($request);
+        } elseif ($action == 'dropdown.chuc.vu') {
+            return $this->dropdownChucVu($request);
+        } elseif ($action == 'dropdown.duc.cha') {
+            return $this->dropdownDucCha($request);
+        } elseif ($action == 'dropdown.co.so.giao.phan') {
+            return $this->dropdownCoSoGiaoPhan($request);
+        } elseif ($action == 'dropdown.dong') {
+            return $this->dropdownDong($request);
+        } elseif ($action == 'dropdown.ban.chuyen.trach') {
+            return $this->dropdownBanChuyenTrach($request);
+        }elseif ($action == 'dropdown.linh.muc') {
+					return $this->dropdownLinhMuc($request);
+			  } elseif ($action == 'dropdown.cong.doan.ngoai.giao.phan') {
+          return $this->dropdownCongDoanNgoaiGiaoPhan($request);
+        }
+  }
+  // GIAO_XU_DROPDOWN
+  public function dropdownGiaoXu(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetGiaoXusList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name . ' | ' . $value->dia_chi,
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // THANH_DROPDOWN
+  public function dropdownThanh(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetThanhsList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name,
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // CHUC_VU_DROPDOWN
+  public function dropdownChucVu(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->sv->apiGetChucVusList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id'   => $value->id,
+                'name' => $value->name,
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+  // DUC_CHA_DROPDOWN
+  public function dropdownDucCha(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetDucChasList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'         => $value->id,
+        'name'       => $value->ten,
+        'is_duc_cha' => $value->is_duc_cha
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // CSGP_DROPDOWN
+  public function dropdownCoSoGiaoPhan(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetCoSoGiaoPhansList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // DONG_DROPDOWN
+  public function dropdownDong(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetDongsList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // BAN_CHUEN_TRACH_DROPDOWN
+  public function dropdownBanChuyenTrach(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetBanChuyenTrachsList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // CDNGP_DROPDOWN
+  public function dropdownCongDoanNgoaiGiaoPhan(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetCongDoanNgoaiGiaoPhansList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+          'id'   => $value->id,
+          'name' => $value->name,
+        ];
+    }
+    return $this->respondWithCollectionPagination($collections);
+  }
+  public function addThuyenChuyen(Request $request) {
+    $data = $request->all();
+    if($data['action'] == 'add.thuyen.chuyen') {
+      $formData = json_decode($data['data']);
+      try {
+        $collections = $this->sv->apiAddThuyenChuyen($data['id'], $formData);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200, 
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    }
+  }
 }

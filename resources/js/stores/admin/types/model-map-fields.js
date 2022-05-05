@@ -76,7 +76,7 @@ export const MAP_PC_CONG_DOAN_TU_SIS = [
   'ghi_chu',
   'active'
 ]
-export const MAP_PC_CO_SO_GIAO_PHANS = [
+export const MAP_PC_CO_SOS = [
   'id',
   'name',
   'dia_chi',
@@ -85,7 +85,8 @@ export const MAP_PC_CO_SO_GIAO_PHANS = [
   'coso_giaophan',
   'fax',
   'website',
-  'active'
+  'active',
+  'coso_giaophan_text'
 ]
 export const MAP_PC_LE_CHINHS = [
   'id',

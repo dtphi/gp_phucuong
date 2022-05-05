@@ -46,7 +46,7 @@
                         <div class="col-mobile col-2">
                           <a
                             class="avatar"
-                            :href="`/linh-muc/chi-tiet/${info.id}`"
+                            :href="`/danh-sach-linh-muc/chi-tiet/${info.id}`"
                           >
                             <img
                               class="img"
@@ -57,7 +57,7 @@
                         </div>
                         <div class="col-mobile col-10 content">
                           <h4 class="tit">
-                            <a :href="`/linh-muc/chi-tiet/${info.id}`">{{
+                            <a :href="`/danh-sach-linh-muc/chi-tiet/${info.id}`">{{
                               info.ten_day_du
                             }}</a>
                           </h4>
@@ -67,8 +67,8 @@
                               <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
                               
                               <a :href="info.href_giaoxu">
-                                <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: Hưu </span>
-                                 <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: RIP </span>
+                                <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: {{ info.noi_nghi_huu }} </span>
+                                 <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: {{ info.noi_nghi_huu }} </span>
                                 <span v-else>Nơi phục vụ: {{ info.giao_xu }}</span>
                               </a>
                               <span>Giáo hạt: {{ info.giao_hat }}</span>
@@ -169,7 +169,7 @@
                             <div class="col-mobile col-2">
                               <a
                                 class="avatar"
-                                :href="`/linh-muc/chi-tiet/${info.id}`"
+                                :href="`/danh-sach-linh-muc/chi-tiet/${info.id}`"
                               >
                                 <img
                                   class="img"
@@ -180,7 +180,7 @@
                             </div>
                             <div class="col-mobile col-10 content">
                               <h4 class="tit">
-                                <a :href="`/linh-muc/chi-tiet/${info.id}`">{{
+                                <a :href="`/danh-sach-linh-muc/chi-tiet/${info.id}`">{{
                                   info.ten_day_du
                                 }}</a>
                               </h4>
@@ -190,8 +190,8 @@
                                   <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
                                   
                                   <a :href="info.href_giaoxu">
-                                    <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: Hưu</span>
-                                    <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: RIP </span>
+                                    <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: {{ info.noi_nghi_huu }} </span>
+                                    <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: {{ info.noi_nghi_huu }} </span>
                                     <span v-else>Nơi phục vụ: {{ info.giao_xu }}</span>
                                     </a>
                                     <span>Giáo hạt: {{ info.giao_hat }}</span>
@@ -305,6 +305,11 @@ export default {
     this.getList(this.$route.params)
     this.getListGiaoHat(-1)
     this.getListChucVu()
+  },
+    mounted() {
+    setTimeout( () => {
+      console.log('this_page_ds_linh_muc_test')
+    }, 4000)
   },
   methods: {
     ...mapActions(MODULE_LINH_MUC_PAGE, {
