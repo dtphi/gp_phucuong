@@ -12,6 +12,7 @@ export const API_LINH_MUC_LIST = '/api/app/get-data-linh-muc'
 export const API_LINH_MUC_DETAIL = '/api/app/get-detail-linh-muc'
 export const API_LINH_MUC_DETAIL_UPDATE = '/api/app/get-detail-linh-muc-update'
 export const API_UPDATE_LINH_MUC_TEMP = '/api/app/update-linh-muc-temp'
+export const API_HOAT_DONG_SU_VU = '/api/app/get-hoat-dong-su-vu'
 
 // HOME 
 export const API_HOME_RESOURCE = '/api/homes/get-list'

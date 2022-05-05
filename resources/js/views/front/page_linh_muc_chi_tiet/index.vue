@@ -2,6 +2,7 @@
   <main id="news" class="tab-content">
     <div>
       <h1>THÔNG TIN CÁ NHÂN</h1>
+      <h5><a :href="linhmuc_update.link_hdsv" target="_blank">Hoạt động sứ vụ</a></h5>
     </div>
     <div class="tab-content">
     <div class="form-group">

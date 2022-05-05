@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import VModal from 'vue-js-modal'
 import '@app/plugins/cms-filter'
 import '@app/plugins/cms-vee-validate'
+import '@app/plugins/cms-components'
 // font.awsome.icon
 require('./assets/font.awsome.icon')
 /* Add BootstrapVue */
@@ -37,3 +39,12 @@ Vue.component('ValidationProvider', ValidationProvider)
 /* Add mixin global */
 import utilMixin from '@app/mixins/front'
 Vue.mixin(utilMixin)
+
+/*Add vue js modal and dialog*/
+Vue.use(VModal, {
+  dialog: true,
+  dynamic: true,
+  dynamicDefaults: {
+    clickToClose: false,
+  },
+})

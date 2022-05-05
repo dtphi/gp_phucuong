@@ -15,16 +15,19 @@ use App\Models\GiaoPhan;
 use App\Http\Common\Tables;
 use App\Models\GiaoPhanHat;
 use App\Models\Information;
+use App\Models\LinhmucTemp;
 use Illuminate\Support\Arr;
+use App\Models\CoSoGiaoPhan;
 use App\Models\GiaoPhanHatXu;
 use App\Models\LinhmucVanthu;
+use App\Models\BanChuyenTrach;
 use App\Models\LinhmucBangcap;
 use yii\console\widgets\Table;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
+use App\Models\LinhmucThuyenchuyenTemp;
 use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
-use App\Models\LinhmucTemp;
 
 class Service implements BaseModel
 {
@@ -43,8 +46,7 @@ class Service implements BaseModel
 		$this->modelInfo     = new Information();
 		$this->modelNewGroup = new Category();
 		$this->modelGiaoXu   = new GiaoXu();
-		$this->modelLinhMuc = new Linhmuc();
-		$this->modelLinhMucChucThanh = new LinhMucChucThanh();
+    $this->modelLinhMucChucThanh = new LinhMucChucThanh();
 		$this->modelGiaoPhan = new GiaoPhan();
 		$this->modelGiaoHat = new GiaoHat();
 		$this->modelChucVu = new ChucVu();
@@ -54,6 +56,8 @@ class Service implements BaseModel
     $this->modelThanh = new Thanh();
     $this->modelDong = new Dong();
     $this->modelLinhmucTemp = new LinhmucTemp();
+    $this->modelThuyenChuyen = new LinhmucThuyenchuyen();
+    $this->modelThuyenChuyenTemp = new LinhmucThuyenchuyenTemp();
 	}
 
 	/**
@@ -586,5 +590,125 @@ class Service implements BaseModel
           'cham_ngon' => $data['cham_ngon'],
           'sinh_giao_xu' => $data['sinh_giao_xu'],
         ]);
+  }
+
+  public function apiGetThuyenChuyen($infoId = null)
+  {
+    $model = LinhmucThuyenchuyenTemp::where('linh_muc_id', $infoId)->first();
+    if(!is_null($model)) {
+      $query = $this->modelThuyenChuyenTemp->select()
+      ->where('linh_muc_id', $infoId)
+      ->where('is_bo_nhiem', '!=', 1)
+      ->orderBy('from_date', 'DESC')
+      ->get();
+    }else {
+        $model_linhmucs = LinhmucThuyenchuyen::where('linh_muc_id', $infoId);
+        $array_linhmucs = $model_linhmucs->get()->toArray();
+        foreach ($array_linhmucs as $info) {
+          LinhmucThuyenchuyenTemp::insert($info);
+        $query = $this->modelThuyenChuyenTemp->select()
+        ->where('linh_muc_id', $infoId)
+        ->where('is_bo_nhiem', '!=', 1)
+        ->orderBy('from_date', 'DESC')
+        ->get();
+      }
+     
+    }
+    return $query;
+}
+
+  // DROPDOWN_CATEGORIES
+  public function apiGetGiaoXusList($data = [])
+  {
+    $model = new GiaoXu();
+    $query = $model->select()
+    ->where('type', 'giaoxu')
+    ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetThanhsList($data = [])
+  {
+    $model = new Thanh();
+    $query = $model->select()
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetChucVusList($data = [])
+  {
+    $model = new ChucVu();
+    $query = $model->select()
+      ->orderBy('sort_id', 'ASC');
+    return $query->get();
+  }
+  public function apiGetDucChasList($data = [])
+  {
+    $model = new Linhmuc();
+    $query = $model->select()
+      ->where('is_duc_cha', '=', 1)
+      ->orderBy('ten', 'ASC');
+    return $query->get();
+  }
+  public function apiGetCoSoGiaoPhansList($data = [])
+  {
+    $model = new CoSoGiaoPhan();
+    $query = $model->select()
+      ->where('coso_giaophan', '=', 1)
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetDongsList($data = [])
+  {
+    $model = new Dong();
+    $query = $model->select()
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetBanChuyenTrachsList($data = [])
+  {
+    $model = new BanChuyenTrach();
+    $query = $model->select()
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetCongDoanNgoaiGiaoPhansList($data = [])
+  {
+    $model = new CoSoGiaoPhan();
+    $query = $model->select()
+      ->where('active', 1)
+      ->where('coso_giaophan', '=', 0)
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiAddThuyenChuyen($id = null, $data) 
+  {
+    if ($data->dia_diem_tu_nam == null || $data->dia_diem_tu_thang == null || $data->dia_diem_tu_ngay == null) {
+      $data->from_date = null;
+    } else {
+      $data->from_date = $data->dia_diem_tu_nam . '-' . $data->dia_diem_tu_thang . '-' . $data->dia_diem_tu_ngay;
+    }
+
+    if ($data->dia_diem_den_nam == null || $data->dia_diem_den_thang == null || $data->dia_diem_den_ngay == null) {
+      $data->to_date = null;
+    } else {
+      $data->to_date = $data->dia_diem_den_nam . '-' . $data->dia_diem_den_thang . '-' . $data->dia_diem_den_ngay;
+    }
+
+    $hat = LinhmucThuyenchuyenTemp::create(
+      [
+        'linh_muc_id' => $id,
+        'giao_xu_id' => $data->thuyenChuyen->select_giao_xu,
+        'chuc_vu_id' => $data->select_chuc_vu,
+        'from_giao_xu_id' => 0,
+        'from_chuc_vu_id' => 0,
+        'from_date' => $data->from_date,
+        'to_date' => $data->to_date,
+        'duc_cha_id' => '',
+        'co_so_gp_id' => $data->thuyenChuyen->select_csgp,
+        'dong_id' => $data->thuyenChuyen->select_dong,
+        'ban_chuyen_trach_id' => $data->thuyenChuyen->select_bct,
+        'du_hoc' => 0,
+        'chuc_vu_active' => $data->select_status,
+      ]
+    );
   }
 }

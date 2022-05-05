@@ -9,6 +9,7 @@ import {
   API_CHUC_VU_LIST,
   API_LINH_MUC_LIST_BY_ID,
   API_UPDATE_LINH_MUC_TEMP,
+  API_HOAT_DONG_SU_VU
 } from 'store@front/types/api-paths'
 
 export const apiGetLists = (resolve, errResole, params) => {	
@@ -119,6 +120,62 @@ export const apiUpdateLinhMucTemp = (info, resolve, errResole) => {
         json['data'] = response.data
         json['status'] = 1000
         resolve(json)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => errResole(errors))
+}
+
+export const apiGetHoatDongSuVu = (infoId, resolve, errResole) => {
+  return axios.get(fn_get_base_api_detail_url(API_HOAT_DONG_SU_VU, infoId))
+    .then((response) => {
+      if (response.status === 200) {
+        var json = {}
+        json['data'] = response.data.data
+        json['status'] = 1000
+        resolve(json)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => {
+      if (errors.response) {
+        errResole(errors)
+      }
+    })
+}
+
+export const apiGetDropdownCategories = (params, resolve, errResole) => {
+  return axios.get(fn_get_base_api_url('/api/app/dropdown-categories'), {
+    params: params,
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        resolve(response.data)
+      } else {
+        errResole([{
+          status: response.status,
+          msg: 'error test',
+        }])
+      }
+    })
+    .catch(errors => errResole(errors))
+}
+
+export const apiAddThuyenChuyen = (params, resolve, errResole) => {
+  return axios.get(fn_get_base_api_url('/api/app/add-thuyen-chuyen'), {
+    params: params,
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        resolve(response.data)
       } else {
         errResole([{
           status: response.status,

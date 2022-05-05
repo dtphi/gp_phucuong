@@ -1,5 +1,5 @@
 import detail from './detail'
-import { apiGetLists, apiGetListsChucVu, apiGetListsLinhMuc, } from '@app/api/front/linhmucs'
+import { apiGetLists, apiGetListsChucVu, apiGetListsLinhMuc, apiGetHoatDongSuVu } from '@app/api/front/linhmucs'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_LISTS_LINH_MUC, GET_LISTS_LINH_MUC_BY_ID, GET_LISTS_CHUC_VU, ACTION_REFESH_LIST_FILTER,
 } from '@app/stores/front/types/action-types'
@@ -16,6 +16,7 @@ export default {
     paginationFilter: [],
     loading: false,
     errors: [],
+    hoat_dong_su_vu: [],
   },
   getters: {
     mainMenus(state) {
@@ -36,6 +37,9 @@ export default {
     paginationFilter(state) {
       return state.paginationFilter
     },
+    hoat_dong_su_vu(state) {
+      return state.hoat_dong_su_vu
+    }
   },
   mutations: {
     MAIN_MENU(state, value) {
@@ -65,7 +69,11 @@ export default {
     initFilterList(state) {
       state.linhMucLists = state.pageLists
     },
+    INIT_HOATDONGSUVU(state, payload) {
+      state.hoat_dong_su_vu = payload
+    }
   },
+  
   actions: {
     [GET_LISTS_LINH_MUC]({ commit, dispatch, }, options) {
       commit('setLoading', true)
