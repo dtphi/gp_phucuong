@@ -1278,12 +1278,10 @@ class ApiController extends Controller
           'ban_chuyen_trach_id' => $info->ban_chuyen_trach_id,
           'dongName' => $info->ten_dong,
           'banchuyentrachName' => $info->ten_ban_chuyen_trach,
-          'du_hoc' => $info->du_hoc,
-          'quoc_gia' => $info->quoc_gia,
-          'ghi_chu' => $info->ghi_chu,
           'active' => $info->active,
           'active_text' => $info->active ? 'Xảy ra' : 'Ẩn',
-          'chuc_vu_active' => $info->chuc_vu_active
+          'chuc_vu_active' => $info->chuc_vu_active,
+          
         ];
       }
     } catch (HandlerMsgCommon $e) {
@@ -1466,6 +1464,33 @@ class ApiController extends Controller
           'data' => [
             'success' => 'success',
             'status' => 200, 
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    } else if($data['action'] == 'update.thuyen.chuyen') {
+      $formData = json_decode($data['data']);
+      try {
+        $collections = $this->sv->apiUpdateThuyenChuyen($data['id'], $formData);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    }else {
+      try {
+        $collections = $this->sv->apiDeleteThuyenChuyen($data['id']);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
           ]
         ];
         return $this->respondWithCollectionPagination($json);

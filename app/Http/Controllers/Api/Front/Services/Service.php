@@ -754,4 +754,33 @@ class Service implements BaseModel
       ]
     );
   }
+  public function apiUpdateThuyenChuyen($id = null, $data) 
+  {
+      $thuyenChuyens = $this->modelThuyenChuyenTemp->findOrFail($id);
+      if ($data->dia_diem_tu_nam == null || $data->dia_diem_tu_thang == null || $data->dia_diem_tu_ngay == null) {
+        $thuyenChuyens->from_date = null;
+      } else {
+        $thuyenChuyens->from_date = $data->dia_diem_tu_nam . '-' . $data->dia_diem_tu_thang . '-' . $data->dia_diem_tu_ngay;
+      }
+
+      if ($data->dia_diem_den_nam == null || $data->dia_diem_den_thang == null || $data->dia_diem_den_ngay == null) {
+        $thuyenChuyens->to_date = null;
+      } else {
+        $thuyenChuyens->to_date = $data->dia_diem_den_nam . '-' . $data->dia_diem_den_thang . '-' . $data->dia_diem_den_ngay;
+      }
+      $thuyenChuyens->chuc_vu_id = $data->id_chuc_vu;
+      $thuyenChuyens->giao_xu_id = $data->id_giaoxu;
+      $thuyenChuyens->co_so_gp_id = $data->id_csgp;
+      $thuyenChuyens->dong_id = $data->id_dong;
+      $thuyenChuyens->ban_chuyen_trach_id = $data->id_bct;
+      DB::beginTransaction();
+      if (!$thuyenChuyens->save()) {
+        DB::rollBack();
+        return false;
+      }
+      DB::commit();
+  }
+  public function apiDeleteThuyenChuyen($id = null) {
+    LinhmucThuyenChuyenTemp::fcDeleteByLinhmucTempThuyenChuyenId($id);
+  }
 }
