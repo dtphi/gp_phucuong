@@ -298,7 +298,18 @@ routeEnv = {
         role: 'guest',
         layout_content: {},
       },
-    }],
+      }, {
+        path: 'hoat-dong-su-vu/:linhMucId',
+        component: () => import('v@front/page_hoat_dong_su_vu'),
+        name: 'hoat-dong-su-vu-page',
+        meta: {
+          auth: false,
+          header: 'Trang Hoạt Động Sứ Vụ',
+          layout: MainLayout,
+          role: 'guest',
+          layout_content: {},
+        },
+      }],
   }],
 }
 

@@ -842,6 +842,7 @@ class ApiController extends Controller
         'email' => $infos->email, 
         'thanhs' => $thanhs,
         'dongs' => $dongs,
+        'link_hdsv' => url('danh-sach-linh-muc/hoat-dong-su-vu/' . $infos->id),
       ];
     } catch (HandlerMsgCommon $e) {
       throw $e->render();
@@ -1254,5 +1255,229 @@ class ApiController extends Controller
   {
     $data = $request->all();
     $this->sv->apiUpdateLinhMucTemp($data);
+  }
+
+  public function getHoatDongSuVu($id = null) {
+    try {
+      $collections = $this->sv->apiGetThuyenChuyen($id);
+      $results = [];
+      foreach ($collections as $key => $info) {
+        $results[] = [
+          'id' => (int)$info->id,
+          'isCheck' => false,
+          'isEdit' => 1,
+          'from_date' => $info->from_date,
+          'to_date' => $info->to_date,
+          'chuc_vu_id' => $info->chuc_vu_id,
+          'giao_xu_id' => ($info->giao_xu_id) ? $info->giao_xu_id : 0,
+          'fromGiaoXuName'      => $info->ten_from_giao_xu,
+          'fromchucvuName' => $info->ten_from_chuc_vu,
+          'label_from_date' => ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '',
+          'ducchaName' => $info->ten_duc_cha,
+          'label_to_date' => ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '',
+          'chucvuName' => $info->ten_to_chuc_vu,
+          'giaoxuName' => $info->ten_to_giao_xu,
+          'cosogpName' => $info->ten_co_so,
+          'co_so_gp_id' => $info->co_so_gp_id,
+          'co_so_status' => $info->trang_thai_co_so,
+          'dong_id' => $info->dong_id,
+          'ban_chuyen_trach_id' => $info->ban_chuyen_trach_id,
+          'dongName' => $info->ten_dong,
+          'banchuyentrachName' => $info->ten_ban_chuyen_trach,
+          'du_hoc' => $info->du_hoc,
+          'quoc_gia' => $info->quoc_gia,
+          'ghi_chu' => $info->ghi_chu,
+          'active' => $info->active,
+          'active_text' => $info->active ? 'Xảy ra' : 'Ẩn',
+          'chuc_vu_active' => $info->chuc_vu_active
+        ];
+      }
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
+    }
+
+    $json = [
+      'data' => [
+        'results' => $results,
+      ]
+    ];
+    return $this->respondWithCollectionPagination($json);
+  } 
+
+  public function listDropdownCategories(Request $request) {
+     $action = $request->query('action');
+        if ($action == 'dropdown.giao.xu') {
+            return $this->dropdownGiaoXu($request);
+        } elseif ($action == 'dropdown.ten.thanh') {
+            return $this->dropdownThanh($request);
+        } elseif ($action == 'dropdown.chuc.vu') {
+            return $this->dropdownChucVu($request);
+        } elseif ($action == 'dropdown.duc.cha') {
+            return $this->dropdownDucCha($request);
+        } elseif ($action == 'dropdown.co.so.giao.phan') {
+            return $this->dropdownCoSoGiaoPhan($request);
+        } elseif ($action == 'dropdown.dong') {
+            return $this->dropdownDong($request);
+        } elseif ($action == 'dropdown.ban.chuyen.trach') {
+            return $this->dropdownBanChuyenTrach($request);
+        }elseif ($action == 'dropdown.linh.muc') {
+					return $this->dropdownLinhMuc($request);
+			  } elseif ($action == 'dropdown.cong.doan.ngoai.giao.phan') {
+          return $this->dropdownCongDoanNgoaiGiaoPhan($request);
+        }
+  }
+  // GIAO_XU_DROPDOWN
+  public function dropdownGiaoXu(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetGiaoXusList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name . ' | ' . $value->dia_chi,
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // THANH_DROPDOWN
+  public function dropdownThanh(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetThanhsList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name,
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // CHUC_VU_DROPDOWN
+  public function dropdownChucVu(Request $request)
+    {
+        $data = $request->all();
+
+        $results     = $this->sv->apiGetChucVusList($data);
+        $collections = [];
+
+        foreach ($results as $key => $value) {
+            $collections[] = [
+                'id'   => $value->id,
+                'name' => $value->name,
+            ];
+        }
+
+        return $this->respondWithCollectionPagination($collections);
+    }
+  // DUC_CHA_DROPDOWN
+  public function dropdownDucCha(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetDucChasList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'         => $value->id,
+        'name'       => $value->ten,
+        'is_duc_cha' => $value->is_duc_cha
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // CSGP_DROPDOWN
+  public function dropdownCoSoGiaoPhan(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetCoSoGiaoPhansList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // DONG_DROPDOWN
+  public function dropdownDong(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetDongsList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // BAN_CHUEN_TRACH_DROPDOWN
+  public function dropdownBanChuyenTrach(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetBanChuyenTrachsList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+        'id'   => $value->id,
+        'name' => $value->name
+      ];
+    }
+
+    return $this->respondWithCollectionPagination($collections);
+  }
+  // CDNGP_DROPDOWN
+  public function dropdownCongDoanNgoaiGiaoPhan(Request $request)
+  {
+    $data = $request->all();
+
+    $results     = $this->sv->apiGetCongDoanNgoaiGiaoPhansList($data);
+    $collections = [];
+
+    foreach ($results as $key => $value) {
+      $collections[] = [
+          'id'   => $value->id,
+          'name' => $value->name,
+        ];
+    }
+    return $this->respondWithCollectionPagination($collections);
+  }
+  public function addThuyenChuyen(Request $request) {
+    $data = $request->all();
+    if($data['action'] == 'add.thuyen.chuyen') {
+      $formData = json_decode($data['data']);
+      try {
+        $collections = $this->sv->apiAddThuyenChuyen($data['id'], $formData);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200, 
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    }
   }
 }
