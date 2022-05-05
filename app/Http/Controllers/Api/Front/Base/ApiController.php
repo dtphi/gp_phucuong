@@ -694,7 +694,6 @@ class ApiController extends Controller
 					$giaoXu = end($giaoXuHienTai);
 					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
 					$chucVuHienTai = $giaoXu['chucvuName'];
-          $noiNghiHuu = $giaoXu['cosogpName'];
           $giaoXuHienTai = $giaoXu['giaoxuName'];
           $giaoHatHienTai = $giaoXu['giaoHatName'];
 				}
@@ -719,7 +718,6 @@ class ApiController extends Controller
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
 					'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
-          'noi_nghi_huu' => $noiNghiHuu ?? $emptyStr,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
 					'chuc_vu' => ($chucVuHienTai == "") ? $emptyStr : $chucVuHienTai,
@@ -794,7 +792,7 @@ class ApiController extends Controller
       $thanhs = $this->sv->apiGetThanhs();
       $dongs = $this->sv->apiGetDongs();
       $emptyStr = 'Chưa cập nhật';
-
+      
       $results[] = [
         'id' => (int) $infos->id,
         'ten' => $infos->ten,
@@ -815,7 +813,7 @@ class ApiController extends Controller
         'ngay_cap_cmnd' => $infos->ngay_cap_cmnd,
         'noi_cap_cmnd' => $infos->noi_cap_cmnd ,
         'cham_ngon' => $infos->cham_ngon,
-        'image'                      => trim($infos->image, '/'),
+        'image' => trim($infos->image, '/'),
         'ngay_thang_nam_sinh' => $infos->ngay_thang_nam_sinh,
         'tieu_chung_vien' => $infos->tieu_chung_vien,
         'ngay_tieu_chung_vien' => $infos->ngay_tieu_chung_vien,
@@ -1041,7 +1039,6 @@ class ApiController extends Controller
 					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
 					$giaoXuHienTai = $giaoXu['giaoxuName'];
 					$chucVuHienTai = $giaoXu['chucvuName'];
-          $noiNghiHuu = $giaoXu['cosogpName'];
 					$giaoHatHienTai = $giaoXu['giaoHatName'];
 				}
 
@@ -1065,7 +1062,6 @@ class ApiController extends Controller
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
           'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
-          'noi_nghi_huu' => $noiNghiHuu,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
           'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
@@ -1121,7 +1117,6 @@ class ApiController extends Controller
 					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
 					$giaoXuHienTai = $giaoXu['giaoxuName'];
 					$chucVuHienTai = $giaoXu['chucvuName'];
-          $noiNghiHuu = $giaoXu['cosogpName'];
 					$giaoHatHienTai = $giaoXu['giaoHatName'];
 				}
 
@@ -1145,7 +1140,6 @@ class ApiController extends Controller
 					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
 					'dia_chi' => $info->dia_chi ?? $emptyStr,
 					'giao_hat' => $giaoHatHienTai ?? $emptyStr,
-          'noi_nghi_huu' => $noiNghiHuu,
 					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
 					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
 					'chuc_vu' => $chucVuHienTai ?? $emptyStr,

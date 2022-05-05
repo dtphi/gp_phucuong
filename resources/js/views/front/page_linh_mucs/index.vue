@@ -67,8 +67,8 @@
                               <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
                               
                               <a :href="info.href_giaoxu">
-                                <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: {{ info.noi_nghi_huu }} </span>
-                                 <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: {{ info.noi_nghi_huu }} </span>
+                                <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: Hưu </span>
+                                 <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: RIP </span>
                                 <span v-else>Nơi phục vụ: {{ info.giao_xu }}</span>
                               </a>
                               <span>Giáo hạt: {{ info.giao_hat }}</span>
@@ -190,8 +190,8 @@
                                   <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
                                   
                                   <a :href="info.href_giaoxu">
-                                    <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: {{ info.noi_nghi_huu }} </span>
-                                    <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: {{ info.noi_nghi_huu }} </span>
+                                    <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: Hưu</span>
+                                    <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: RIP </span>
                                     <span v-else>Nơi phục vụ: {{ info.giao_xu }}</span>
                                     </a>
                                     <span>Giáo hạt: {{ info.giao_hat }}</span>
