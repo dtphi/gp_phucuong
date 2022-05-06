@@ -22,8 +22,8 @@
           </template>
         </content-top>
         <main-content v-if="_isContentMain"></main-content>
-        <the-related-info></the-related-info>
-        <module-co-the-ban-quan-tam></module-co-the-ban-quan-tam>
+        <!-- <the-related-info></the-related-info> -->
+        <!-- <module-co-the-ban-quan-tam></module-co-the-ban-quan-tam> -->
         <content-bottom v-if="_isContentBottom"></content-bottom>
       </div>
     </div>

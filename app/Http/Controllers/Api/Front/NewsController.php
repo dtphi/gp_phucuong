@@ -388,10 +388,8 @@ class NewsController extends Controller
                     }
                 }
             }
-        
             $json['result_category_relateds'] = $json['results']['related_category'];
         }
-
         return Helper::successResponse([
             'results'                  => $json['results'],
             'result_category_relateds' => $json['result_category_relateds']

@@ -1,37 +1,35 @@
 /* 
   Giáo phận phú cường: Page category news main css
 */
-#video {
-    .list-videos {
-        background-color: #dee2e6;
-        padding: 15px;
+.list-videos {
+    background-color: #dee2e6;
+    padding: 15px;
 
-        .figure {
-            width: calc((100% - 60px)/4);
-            margin-right: 20px;
-            margin-bottom: 20px;
-            vertical-align: top;
-            cursor: pointer;
+    .figure {
+        width: calc((100% - 60px)/4);
+        margin-right: 20px;
+        margin-bottom: 20px;
+        vertical-align: top;
+        cursor: pointer;
 
-            &:nth-child(4n) {
-                margin-right: 0;
-            }
-
-            .img-video {
-                display: block;
-                height: 120px;
-            }
+        &:nth-child(4n) {
+            margin-right: 0;
         }
 
-        .figure-caption {
-            color: #000000;
+        .img-video {
+            display: block;
+            height: 120px;
+        }
+    }
 
-            .title {
-                font-size: 14px;
+    .figure-caption {
+        color: #000000;
 
-                img {
-                    width: 10%;
-                }
+        .title {
+            font-size: 14px;
+
+            img {
+                width: 10%;
             }
         }
     }
@@ -40,6 +38,7 @@
 @media screen and (max-width: 767px) {
     #video {
         .row {
+
             .col-3,
             .col-9 {
                 max-width: 100%;
@@ -72,7 +71,7 @@
 
             .form {
                 font-size: 12px;
-                
+
                 #email {
                     margin-bottom: 8px !important;
                     padding: 4px;
@@ -86,6 +85,7 @@
 
             .logo {
                 font-size: 12px;
+
                 img {
                     width: 25%;
                 }
