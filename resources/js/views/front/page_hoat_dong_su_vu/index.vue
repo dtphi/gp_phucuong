@@ -1,6 +1,7 @@
 <template>
   <div class="tab-content">
     <h1>Hoạt Động Sứ Vụ</h1>
+    <h5><a :href="'/danh-sach-linh-muc/chi-tiet/' + this.$route.params.linhMucId"  target="_blank">Thông tin cá nhân</a></h5>
     <div class="form-group">
         <div class="col-sm-12">
             <div class="text-right">

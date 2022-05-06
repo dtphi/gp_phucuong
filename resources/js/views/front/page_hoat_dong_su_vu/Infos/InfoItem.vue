@@ -1,5 +1,6 @@
 <template>
   <tbody>
+    <v-dialog />
     <tr v-if="item.isEdit" key="thuyen-chuyen-title">
       <td>{{ vitri + 1 }}</td>
       <p class="text-center">{{ item.chucvuName}}</p>
@@ -7,11 +8,8 @@
           <p v-if="checkActiveToggle">Xảy ra</p>
           <p v-else>Ẩn</p>
 			</div>
-			<td class="text-center" v-if="item.giao_xu_id !== 0">
-				<a :href="item.giao_xu_url">{{diaDiemName}}</a>
-			</td>
-			<td v-else class="text-center">
-					{{diaDiemName}}
+			<td class="text-center">
+				{{diaDiemName}}
 			</td>
 			<td class="text-center">{{ item.label_from_date  }}</td>
 			<td class="text-center">{{ check_label_to_date }}</td>
@@ -21,7 +19,7 @@
 					data-toggle="tooltip"
 					@click.prevent="_showModalEdit"
 					class="btn btn-default cms-btn"
-					data-original-title="Sửa thuyên chuyển"
+					data-original-title="Sửa hoạt động sứ vụ"
 					><i class="fa fa-edit" />
       	</a>
 				<button
@@ -95,13 +93,12 @@ export default {
 	},
   methods: {
     ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, [
-      'removeThuyenChuyen',
-			'updateActiveThuyenChuyen',
+      'DELETE_THUYEN_CHUYEN'
     ]),
 		_removeItem(item) {
-      this.$modal.show("dialog", {
-        title: "Xóa thuyên chuyển",
-        text: "Bạn muốn xóa thuyên chuyển ?",
+      this.$modal.show('dialog', {
+        title: "Xóa hoạt động sứ vụ",
+        text: "Bạn muốn xóa hoạt động sứ vụ này ?",
         buttons: [
           {
             title: "Hủy",
@@ -112,19 +109,13 @@ export default {
           {
             title: "Xóa",
             handler: () => {
-							this.removeThuyenChuyen({item: item, vitri: this.vitri, action: 'remove.thuyen.chuyen', id: this.$route.params.linhmucId })
+							this.DELETE_THUYEN_CHUYEN(item.id)
               this.$modal.hide("dialog")
             },
           },
         ],
       });
     },
-		_changeActiveThuyenChuyen($event, item) {
-				this.updateActiveThuyenChuyen({
-					action: 'update_active_thuyen_chuyen',
-					item: item,
-				});
-		},
 		_showModalEdit() {
 			 	this.$emit('show-modal-edit', this.item)
     },

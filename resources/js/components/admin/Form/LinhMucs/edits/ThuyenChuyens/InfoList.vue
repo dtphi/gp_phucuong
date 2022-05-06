@@ -29,7 +29,6 @@
     </table>
 		<modal name="modal-lm-thuyen-chuyen-edit" :height="500" :click-to-close="false">
 				<the-modal-edit
-					v-if="_infoUpdate.id"
 					:info="_infoUpdate"
 					:info-id="_infoUpdate.id"
 					@update-info-success="_updateInfoList"
@@ -74,7 +73,6 @@ export default {
 			getInfoThuyenChuyen: 'ACTION_GET_INFO_THUYEN_CHUYEN',
 		}),
 		_showModalEdit(info) {
-        
 				this.curInfo = info;
 				this.infoUpdate = { ...info };
 				this.$modal.show("modal-lm-thuyen-chuyen-edit");

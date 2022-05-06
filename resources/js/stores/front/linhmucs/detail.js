@@ -79,6 +79,10 @@ export default {
     SET_DROPDOWN_CONG_DOAN_NGOAI_GIAO_PHAN_LIST(state, payload) {
       state.dropdownCongDoanNgoaiGiaoPhans = payload
     },
+    SET_DELETE_THUYEN_CHUYEN(state, payload) {
+      const i = state.arr_thuyen_chuyens.map(item => item.id).indexOf(payload)
+      state.arr_thuyen_chuyens.splice(i, 1)
+    },
   },
   actions: {
     [GET_DETAIL_LINH_MUC]({ commit, }, routeParams) {
@@ -276,5 +280,29 @@ export default {
         }
       )
     },
+    UPDATE_THUYEN_CHUYEN({ commit }, params) {
+      apiAddThuyenChuyen(
+        params,
+        (res) => {
+          window.location.reload(true);
+        },
+        (err) => {
+          console.log(err, 'err')
+        }
+      )
+    },
+    DELETE_THUYEN_CHUYEN({ commit }, id) {
+      const params = {id: id, action: 'delete.thuyen.chuyen'}
+      commit('SET_DELETE_THUYEN_CHUYEN', id)
+      apiAddThuyenChuyen(
+        params,
+        (res) => {
+          // alert('Xóa thành công !!!')
+        },
+        (err) => {
+          console.log(err, 'err')
+        }
+      )
+    }
   },
 }
