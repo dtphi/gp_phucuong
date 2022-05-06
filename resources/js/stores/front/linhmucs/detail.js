@@ -132,7 +132,7 @@ export default {
         update_linhmuc,
         (res) => {
           alert('Cập nhật thông tin thành công !!!')
-          commit('SET_LINH_MUC_UPDATE',update_linhmuc)
+          window.location.reload(true);
         },
         (err) => {
           console.log(err)

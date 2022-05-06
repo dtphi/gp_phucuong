@@ -113,11 +113,13 @@ export const apiLinhMucUpdateById = (infoId, resolve, errResole) => {
 }
 
 export const apiUpdateLinhMucTemp = (info, resolve, errResole) => {
-  return axios.post(fn_get_base_api_url(API_UPDATE_LINH_MUC_TEMP), info) 
+  return axios.get(fn_get_base_api_url(API_UPDATE_LINH_MUC_TEMP), {
+    params: info
+  }) 
     .then((response) => {
       if (response.status === 200) {
         var json = {}
-        json['data'] = response.data
+        json['data'] = response.data.data
         json['status'] = 1000
         resolve(json)
       } else {
