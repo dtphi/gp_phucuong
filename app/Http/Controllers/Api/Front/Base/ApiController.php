@@ -743,7 +743,7 @@ class ApiController extends Controller
 	public function getLinhMucDetail($id = null, Request $request)
 	{
 		try {
-			$infos = $this->sv->apiGetDetailLinhMuc($id);
+			$infos = $this->sv->apiGetDetailLinhMucMain($id);
 			$thuyenChuyens = $infos->arr_thuyen_chuyen_list;
 			$chucVuHienTai = '';
 			if (!empty($thuyenChuyens)) {

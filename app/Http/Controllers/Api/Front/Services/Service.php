@@ -328,6 +328,12 @@ class Service implements BaseModel
 		return $query->paginate($limit);
 	}
 
+  public function apiGetDetailLinhMucMain($id = null) 
+  {
+    $model = $this->modelLinhMuc->find($id);
+    return $model;
+  }
+
 	public function apiGetDetailLinhMuc($id = null)
 	{
     $model = $this->modelLinhmucTemp->find($id);
