@@ -1248,7 +1248,13 @@ class ApiController extends Controller
   public function updateLinhMucTemp(Request $request)
   {
     $data = $request->all();
-    $this->sv->apiUpdateLinhMucTemp($data);
+    $results = $this->sv->apiUpdateLinhMucTemp($data);
+    $json = [
+      'data' => [
+        'success' => 200,
+      ] 
+    ];
+    return $this->respondWithCollectionPagination($json);
   }
 
   public function getHoatDongSuVu($id = null) {
