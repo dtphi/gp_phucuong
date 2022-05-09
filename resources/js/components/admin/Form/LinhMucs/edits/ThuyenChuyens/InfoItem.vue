@@ -7,7 +7,7 @@
 				<toggle-button class="switch-btn-center" v-if="checkActiveToggle" :value="switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 				<toggle-button class="switch-btn-center" v-else :value="!switchValue" @change="_changeActiveThuyenChuyen($event, item)" />
 			</div>
-			<td class="text-center" v-if="item.giaoxuName">
+			<td class="text-center" v-if="item.giao_xu_id !== 0">
 				<a :href="item.giao_xu_url">{{diaDiemName}}</a>
 			</td>
 			<td v-else class="text-center">
@@ -82,11 +82,11 @@ export default {
         }
       },
 			diaDiemName: function() {
-					if(this.item.giaoxuName) {
+					if(this.item.giao_xu_id != 0) {
 							return this.item.giaoxuName 
-					}else if(this.item.cosogpName) {
+					}else if(this.item.co_so_gp_id != 0) {
 							return this.item.cosogpName
-					}else if(this.item.dongName) {
+					}else if(this.item.dong_id != 0) {
 							return this.item.dongName
 					}else {
 							return this.item.banchuyentrachName

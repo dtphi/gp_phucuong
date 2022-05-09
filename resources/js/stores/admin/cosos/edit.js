@@ -29,6 +29,8 @@ const defaultState = () => {
       fax: '',
       website: '',
       active: '',
+      coso_giaophan_text: '',
+      coso_giaophan:'',
     },
     infoId: 0,
     loading: false,
@@ -155,6 +157,11 @@ export default {
           dispatch(ACTION_SET_LOADING, false)
         }
       )
+    },
+
+    ACTION_RESET_INFO_ITEM({ commit, }) {
+      const stateData = defaultState()
+      commit(INFOS_MODAL_SET_INFO, stateData.info)
     },
 
     [ACTION_RESET_NOTIFICATION_INFO]({ commit, }, values) {

@@ -47,7 +47,8 @@ const defaultState = () => {
     dropdownCoSoGiaoPhans: [],
     dropdownBanChuyenTrachs: [],
     dropdownDongs: [],
-		dropdownLinhMucs: [],
+    dropdownLinhMucs: [],
+    dropdownCongDoanNgoaiGiaoPhans: [],
     loading: false,
     updateSuccess: false,
     errors: [],
@@ -93,6 +94,9 @@ export default {
     },
     SET_DROPDOWN_TEN_THANH_LIST(state, payload) {
       state.dropdownThanhs = payload
+    },
+    SET_DROPDOWN_CONG_DOAN_NGOAI_GIAO_PHAN_LIST(state, payload) {
+      state.dropdownCongDoanNgoaiGiaoPhans = payload
     },
     [NEWSGROUPS_FORM_SET_DROPDOWN_CATEGORY_LIST](state, payload) {
       state.dropdownGiaoXus = payload
@@ -239,6 +243,22 @@ export default {
       apiGetDropdownCategories(
         (result) => {
           commit('SET_DROPDOWN_TEN_THANH_LIST', result)
+        },
+        (errors) => {
+          commit(SET_ERROR, errors)
+        },
+        params
+      )
+    },
+    ACTION_GET_DROPDOWN_CONG_DOAN_NGOAI_GIAO_PHAN_LIST({ commit, }, filterName) {
+      const params = {
+        filter_name: filterName,
+        action: 'dropdown.cong.doan.ngoai.giao.phan',
+      }
+      apiGetDropdownCategories(
+        (result) => {
+          console.log(result, 'results')
+          commit('SET_DROPDOWN_CONG_DOAN_NGOAI_GIAO_PHAN_LIST', result)
         },
         (errors) => {
           commit(SET_ERROR, errors)

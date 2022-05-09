@@ -63,9 +63,13 @@
                           </h4>
                           <div class="row">
                             <div class="col-6">
-                              <span>Chức vụ: {{ info.chuc_vu }}</span>
+                              <span v-if="info.ngay_rip">RIP: {{ info.ngay_rip }}</span>
+                              <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
+                              
                               <a :href="info.href_giaoxu">
-                                <span>Nơi phục vụ: {{ info.giao_xu }} </span>
+                                <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: Hưu </span>
+                                 <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: RIP </span>
+                                <span v-else>Nơi phục vụ: {{ info.giao_xu }}</span>
                               </a>
                               <span>Giáo hạt: {{ info.giao_hat }}</span>
                             </div>
@@ -182,22 +186,22 @@
                               </h4>
                               <div class="row">
                                 <div class="col-6">
-                                  <span>Chức vụ: {{ info.chuc_vu }}</span>
+                                  <span v-if="info.ngay_rip">RIP: {{ info.ngay_rip }}</span>
+                                  <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
+                                  
                                   <a :href="info.href_giaoxu">
-                                    <span
-                                      >Nơi phục vụ: {{ info.giao_xu }}
-                                    </span>
-                                  </a>
-                                  <span>Giáo hạt: {{ info.giao_hat }}</span>
-                                </div>
-                                <div class="col-6">
-                                  <span>Năm sinh: {{ info.nam_sinh }}</span>
-                                  <span
-                                    >Chịu chức: {{ info.ngay_nhan_chuc }}</span
-                                  >
-                                  <span>Địa chỉ: {{ info.dia_chi }}</span>
-                                </div>
-                              </div>
+                                    <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: Hưu</span>
+                                    <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: RIP </span>
+                                    <span v-else>Nơi phục vụ: {{ info.giao_xu }}</span>
+                                    </a>
+                                    <span>Giáo hạt: {{ info.giao_hat }}</span>
+                                  </div>
+                                  <div class="col-6">
+                                    <span>Năm sinh: {{ info.nam_sinh }}</span>
+                                    <span>Chịu chức: {{ info.ngay_nhan_chuc }}</span>
+                                    <span>Địa chỉ: {{ info.dia_chi }}</span>
+                                  </div>
+                                  </div>
                             </div>
                           </div>
                         </div>

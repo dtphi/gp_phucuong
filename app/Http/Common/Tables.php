@@ -39,6 +39,7 @@ final class Tables
     public static $linhmuc_vanthus = DB_PREFIX . 'linhmuc_vanthus';
     public static $linhmuc_chucthanhs = DB_PREFIX . 'linhmuc_chucthanhs';
     public static $linhmuc_thuyenchuyens = DB_PREFIX . 'linhmuc_thuyenchuyens';
+    public static $linhmuc_thuyenchuyens_temp = DB_PREFIX . 'linhmuc_thuyenchuyens_temp';
     public static $linhmuc_gp_thuyenchuyens = DB_PREFIX . 'linhmuc_gp_thuyenchuyens';
     public static $linhmuc_bonhiems = DB_PREFIX . 'linhmuc_bonhiems';
     public static $ngay_les = DB_PREFIX . 'ngay_les';

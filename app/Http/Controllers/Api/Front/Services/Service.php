@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\Front\Services;
 
 use DB;
+use App\Models\Dong;
 use App\Models\Thanh;
 use App\Models\ChucVu;
 use App\Models\GiaoXu;
+use App\Models\NgayLe;
 use App\Models\GiaoHat;
 use App\Models\Linhmuc;
 use App\Models\Category;
@@ -13,16 +15,19 @@ use App\Models\GiaoPhan;
 use App\Http\Common\Tables;
 use App\Models\GiaoPhanHat;
 use App\Models\Information;
+use App\Models\LinhmucTemp;
+use Illuminate\Support\Arr;
+use App\Models\CoSoGiaoPhan;
 use App\Models\GiaoPhanHatXu;
 use App\Models\LinhmucVanthu;
+use App\Models\BanChuyenTrach;
 use App\Models\LinhmucBangcap;
+use yii\console\widgets\Table;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
-use App\Models\NgayLe;
+use App\Models\LinhmucThuyenchuyenTemp;
 use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Http\Controllers\Api\Front\Services\Contracts\BaseModel;
-use Illuminate\Support\Arr;
-use yii\console\widgets\Table;
 
 class Service implements BaseModel
 {
@@ -41,14 +46,19 @@ class Service implements BaseModel
 		$this->modelInfo     = new Information();
 		$this->modelNewGroup = new Category();
 		$this->modelGiaoXu   = new GiaoXu();
-		$this->modelLinhMuc = new Linhmuc();
-		$this->modelLinhMucChucThanh = new LinhMucChucThanh();
+    $this->modelLinhMucChucThanh = new LinhMucChucThanh();
 		$this->modelGiaoPhan = new GiaoPhan();
 		$this->modelGiaoHat = new GiaoHat();
 		$this->modelChucVu = new ChucVu();
 		$this->modelLinhMucThuyenChuyen = new LinhmucThuyenchuyen();
 		$this->modelNgayLe = new NgayLe();
 		$this->modelPhanHatXu = new GiaoPhanHatXu();
+    $this->modelThanh = new Thanh();
+    $this->modelDong = new Dong();
+    $this->modelLinhMuc = new LinhMuc();
+    $this->modelLinhmucTemp = new LinhmucTemp();
+    $this->modelThuyenChuyen = new LinhmucThuyenchuyen();
+    $this->modelThuyenChuyenTemp = new LinhmucThuyenchuyenTemp();
 	}
 
 	/**
@@ -308,23 +318,73 @@ class Service implements BaseModel
 
 	public function apiGetLinhmucs($data = [])
 	{
-		$query = $this->modelLinhMuc->select()
+		$query = $this->modelLinhMuc->select() 
 			->orderBy('id', 'DESC');
 		return $query;
 	}
 
-	public function apiGetListLinhMuc(array $options = [], $limit = 15)
+	public function apiGetListLinhMuc($data = array(), $limit = 5)
 	{
 		// TODO: Implement apiGetList() method.
-		$query = $this->apiGetLinhmucs($options);
+		$query = $this->apiGetLinhmucs($data);
 
 		return $query->paginate($limit);
 	}
 
+  public function apiGetDetailLinhMucMain($id = null) 
+  {
+    $model = $this->modelLinhMuc->find($id);
+    return $model;
+  }
+
 	public function apiGetDetailLinhMuc($id = null)
 	{
-		$model = $this->modelLinhMuc->find($id);
-
+    $model = $this->modelLinhmucTemp->find($id);
+    if(is_null($model)) {
+      $model = $this->modelLinhMuc->find($id);
+      $this->modelLinhmucTemp->id = $model->id;
+      $this->modelLinhmucTemp->ten = $model->ten;
+      $this->modelLinhmucTemp->ten_thanh_id = $model->ten_thanh_id;
+      $this->modelLinhmucTemp->ngay_thang_nam_sinh = $model->ngay_thang_nam_sinh;
+      $this->modelLinhmucTemp->noi_sinh = $model->noi_sinh;
+      $this->modelLinhmucTemp->giao_xu_id = $model->giao_xu_id;
+      $this->modelLinhmucTemp->ho_ten_cha = $model->ho_ten_cha;
+      $this->modelLinhmucTemp->ho_ten_me = $model->ho_ten_me;
+      $this->modelLinhmucTemp->noi_rua_toi = $model->noi_rua_toi;
+      $this->modelLinhmucTemp->noi_them_suc = $model->noi_them_suc;
+      $this->modelLinhmucTemp->ngay_them_suc = $model->ngay_them_suc;
+      $this->modelLinhmucTemp->tieu_chung_vien = $model->tieu_chung_vien;
+      $this->modelLinhmucTemp->ngay_tieu_chung_vien = $model->ngay_tieu_chung_vien;
+      $this->modelLinhmucTemp->dai_chung_vien = $model->dai_chung_vien;
+      $this->modelLinhmucTemp->ngay_dai_chung_vien = $model->ngay_dai_chung_vien;
+      $this->modelLinhmucTemp->ngay_cap_cmnd = $model->ngay_cap_cmnd;
+      $this->modelLinhmucTemp->noi_cap_cmnd = $model->noi_cap_cmnd;
+      $this->modelLinhmucTemp->code = $model->code;
+      $this->modelLinhmucTemp->phone = $model->phone;
+      $this->modelLinhmucTemp->email = $model->email;
+      $this->modelLinhmucTemp->password = $model->password;
+      $this->modelLinhmucTemp->flag_user = $model->flag_user;
+      $this->modelLinhmucTemp->trieu_dong = $model->trieu_dong;
+      $this->modelLinhmucTemp->ten_dong_id = $model->ten_dong_id;
+      $this->modelLinhmucTemp->ngay_trieu_dong = $model->ngay_trieu_dong;
+      $this->modelLinhmucTemp->ngay_khan = $model->ngay_khan;
+      $this->modelLinhmucTemp->ngay_rip = $model->ngay_rip;
+      $this->modelLinhmucTemp->rip_giao_xu_id = $model->rip_giao_xu_id;
+      $this->modelLinhmucTemp->rip_ghi_chu = $model->rip_ghi_chu;
+      $this->modelLinhmucTemp->ghi_chu = $model->ghi_chu;
+      $this->modelLinhmucTemp->active = $model->active;
+      $this->modelLinhmucTemp->update_user = $model->update_user;
+      $this->modelLinhmucTemp->is_duc_cha = $model->is_duc_cha;
+      $this->modelLinhmucTemp->created_at = $model->created_at;
+      $this->modelLinhmucTemp->updated_at = $model->updated_at;
+      $this->modelLinhmucTemp->deleted_at = $model->deleted_at;
+      $this->modelLinhmucTemp->sort_id = $model->sort_id;
+      $this->modelLinhmucTemp->mat_giao_xu = $model->mat_giao_xu;
+      $this->modelLinhmucTemp->sinh_giao_xu = $model->sinh_giao_xu;
+      $this->modelLinhmucTemp->cham_ngon = $model->cham_ngon;
+      $this->modelLinhmucTemp->save();
+      $model = $this->modelLinhmucTemp;
+    }
 		return $model;
 	}
 
@@ -442,6 +502,11 @@ class Service implements BaseModel
 		}
 		return $list_giaoxu->paginate($limit);
 	}
+  public function getSubListGiaoHat() 
+  {
+    $query = $this->modelGiaoHat->select()->orderBy('id', 'ASC')->get();
+    return $query;
+  }
 
 
 	public function apiGetListChucVu()
@@ -522,4 +587,203 @@ class Service implements BaseModel
 		}
 		return $list_linhmucs;
 	}
+
+  public function apiGetThanhs()
+  {
+    $query = $this->modelThanh->select('id', 'name')
+    ->orderBy('name', 'asc')->get();
+    return $query;
+  }
+
+  public function apiGetDongs()
+  {
+    $query = $this->modelDong->select('id', 'name')
+    ->orderBy('name', 'asc')->get();
+    return $query;
+  }
+
+  public function apiUpdateLinhMucTemp($data = []){
+      $linhmuc_temp = LinhmucTemp::updateOrCreate(
+        ['id' => $data['id']],
+        [
+          'id' => $data['id'],
+          'ten_thanh_id' => $data['ten_thanh_id'],
+          'ten' => $data['ten'],
+          'ngay_thang_nam_sinh' => $data['ngay_thang_nam_sinh'] ?? null,
+          'noi_sinh' => $data['dia_chi'],
+          'ho_ten_cha' => $data['ho_ten_cha'],
+          'ho_ten_me' => $data['ho_ten_me'],
+          'noi_rua_toi' => $data['noi_rua_toi'] ?? null,
+          'ngay_rua_toi' => $data['ngay_rua_toi'] ?? null,
+          'noi_them_suc' => $data['noi_them_suc'] ?? '',
+          'ngay_them_suc' => $data['ngay_them_suc'] ?? null,
+          'tieu_chung_vien' => $data['tieu_chung_vien'] ?? '',
+          'ngay_tieu_chung_vien' => $data['ngay_tieu_chung_vien'] ?? null,
+          'dai_chung_vien' => $data['dai_chung_vien'] ?? '',
+          'ngay_dai_chung_vien' => $data['ngay_dai_chung_vien'] ?? null,
+          'image' => $data['image'],
+          'so_cmnd' => $data['so_cmnd'],
+          'ngay_cap_cmnd' => $data['ngay_cap_cmnd'] ?? null,
+          'noi_cap_cmnd' => $data['noi_cap_cmnd'] ?? '',
+          'phone' => $data['phone'] ?? '',
+          'email' => $data['email'] ?? '',
+          'trieu_dong' => $data['trieu_dong'],
+          'ten_dong_id' => $data['ten_dong_id'],
+          'ngay_trieu_dong' => $data['ngay_trieu_dong'] ?? null,
+          'ngay_khan' => $data['ngay_khan'] ?? null,
+          'is_duc_cha' => $data['is_duc_cha'],
+          'cham_ngon' => $data['cham_ngon'] ?? '',
+          'sinh_giao_xu' => $data['sinh_giao_xu'],
+        ]);
+        return $linhmuc_temp;
+  }
+
+  public function apiGetThuyenChuyen($infoId = null)
+  {
+    $model = LinhmucThuyenchuyenTemp::where('linh_muc_id', $infoId)->first();
+    if(!is_null($model)) {
+      $query = $this->modelThuyenChuyenTemp->select()
+      ->where('linh_muc_id', $infoId)
+      ->where('is_bo_nhiem', '!=', 1)
+      ->orderBy('from_date', 'DESC')
+      ->get();
+    }else {
+        $model_linhmucs = LinhmucThuyenchuyen::where('linh_muc_id', $infoId);
+        $array_linhmucs = $model_linhmucs->get()->toArray();
+        foreach ($array_linhmucs as $info) {
+          LinhmucThuyenchuyenTemp::insert($info);
+        $query = $this->modelThuyenChuyenTemp->select()
+        ->where('linh_muc_id', $infoId)
+        ->where('is_bo_nhiem', '!=', 1)
+        ->orderBy('from_date', 'DESC')
+        ->get();
+      }
+     
+    }
+    return $query;
+}
+
+  // DROPDOWN_CATEGORIES
+  public function apiGetGiaoXusList($data = [])
+  {
+    $model = new GiaoXu();
+    $query = $model->select()
+    ->where('type', 'giaoxu')
+    ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetThanhsList($data = [])
+  {
+    $model = new Thanh();
+    $query = $model->select()
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetChucVusList($data = [])
+  {
+    $model = new ChucVu();
+    $query = $model->select()
+      ->orderBy('sort_id', 'ASC');
+    return $query->get();
+  }
+  public function apiGetDucChasList($data = [])
+  {
+    $model = new Linhmuc();
+    $query = $model->select()
+      ->where('is_duc_cha', '=', 1)
+      ->orderBy('ten', 'ASC');
+    return $query->get();
+  }
+  public function apiGetCoSoGiaoPhansList($data = [])
+  {
+    $model = new CoSoGiaoPhan();
+    $query = $model->select()
+      ->where('coso_giaophan', '=', 1)
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetDongsList($data = [])
+  {
+    $model = new Dong();
+    $query = $model->select()
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetBanChuyenTrachsList($data = [])
+  {
+    $model = new BanChuyenTrach();
+    $query = $model->select()
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiGetCongDoanNgoaiGiaoPhansList($data = [])
+  {
+    $model = new CoSoGiaoPhan();
+    $query = $model->select()
+      ->where('active', 1)
+      ->where('coso_giaophan', '=', 0)
+      ->orderBy('name', 'ASC');
+    return $query->get();
+  }
+  public function apiAddThuyenChuyen($id = null, $data) 
+  {
+    if ($data->dia_diem_tu_nam == null || $data->dia_diem_tu_thang == null || $data->dia_diem_tu_ngay == null) {
+      $data->from_date = null;
+    } else {
+      $data->from_date = $data->dia_diem_tu_nam . '-' . $data->dia_diem_tu_thang . '-' . $data->dia_diem_tu_ngay;
+    }
+
+    if ($data->dia_diem_den_nam == null || $data->dia_diem_den_thang == null || $data->dia_diem_den_ngay == null) {
+      $data->to_date = null;
+    } else {
+      $data->to_date = $data->dia_diem_den_nam . '-' . $data->dia_diem_den_thang . '-' . $data->dia_diem_den_ngay;
+    }
+
+    $hat = LinhmucThuyenchuyenTemp::create(
+      [
+        'linh_muc_id' => $id,
+        'giao_xu_id' => $data->thuyenChuyen->select_giao_xu,
+        'chuc_vu_id' => $data->select_chuc_vu,
+        'from_giao_xu_id' => 0,
+        'from_chuc_vu_id' => 0,
+        'from_date' => $data->from_date,
+        'to_date' => $data->to_date,
+        'duc_cha_id' => '',
+        'co_so_gp_id' => $data->thuyenChuyen->select_csgp,
+        'dong_id' => $data->thuyenChuyen->select_dong,
+        'ban_chuyen_trach_id' => $data->thuyenChuyen->select_bct,
+        'du_hoc' => 0,
+        'chuc_vu_active' => $data->select_status,
+      ]
+    );
+  }
+  public function apiUpdateThuyenChuyen($id = null, $data) 
+  {
+      $thuyenChuyens = $this->modelThuyenChuyenTemp->findOrFail($id);
+      if ($data->dia_diem_tu_nam == null || $data->dia_diem_tu_thang == null || $data->dia_diem_tu_ngay == null) {
+        $thuyenChuyens->from_date = null;
+      } else {
+        $thuyenChuyens->from_date = $data->dia_diem_tu_nam . '-' . $data->dia_diem_tu_thang . '-' . $data->dia_diem_tu_ngay;
+      }
+
+      if ($data->dia_diem_den_nam == null || $data->dia_diem_den_thang == null || $data->dia_diem_den_ngay == null) {
+        $thuyenChuyens->to_date = null;
+      } else {
+        $thuyenChuyens->to_date = $data->dia_diem_den_nam . '-' . $data->dia_diem_den_thang . '-' . $data->dia_diem_den_ngay;
+      }
+      $thuyenChuyens->chuc_vu_id = $data->id_chuc_vu;
+      $thuyenChuyens->giao_xu_id = $data->id_giaoxu;
+      $thuyenChuyens->co_so_gp_id = $data->id_csgp;
+      $thuyenChuyens->dong_id = $data->id_dong;
+      $thuyenChuyens->ban_chuyen_trach_id = $data->id_bct;
+      DB::beginTransaction();
+      if (!$thuyenChuyens->save()) {
+        DB::rollBack();
+        return false;
+      }
+      DB::commit();
+  }
+  public function apiDeleteThuyenChuyen($id = null) {
+    LinhmucThuyenChuyenTemp::fcDeleteByLinhmucTempThuyenChuyenId($id);
+  }
 }

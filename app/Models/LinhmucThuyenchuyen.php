@@ -132,6 +132,19 @@ class LinhmucThuyenchuyen extends BaseModel
         return $value;
     }
 
+    public function getTrangThaiCoSoAttribute($value)
+    {
+      if($this->coSo) {
+        if($this->coSo->coso_giaophan == 1) {
+          return $this->coSo->coso_giaophan;
+        } else {
+          return 0;
+        }
+        }else {
+          return 0;
+        }
+    }
+
     public function getTenDucChaAttribute($value)
     {
         $value = ($this->ducCha) ? $this->ducCha->ten : '';

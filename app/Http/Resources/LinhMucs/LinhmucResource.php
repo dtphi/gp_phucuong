@@ -36,19 +36,15 @@ class LinhmucResource extends JsonResource
                 'lable_ngay_trieu_dong'      => ($res->ngay_trieu_dong)?date_format(date_create($res->ngay_trieu_dong), "d-m-Y"):'',
                 'lable_ngay_khan'            => ($res->ngay_khan)?date_format(date_create($res->ngay_khan), "d-m-Y"):'',
                 'lable_ngay_rip'             => ($res->ngay_rip)?date_format(date_create($res->ngay_rip), "d-m-Y"):'',
-                'ten_thanh_name'             => $res->ten_thanh,
-                'giao_xu_name'               => $res->ten_giao_xu,
-                'ten_dong_name'              => $res->ten_dong,
-                'rip_giaoxu_name'            => $res->ten_rip_giao_xu,
-                'bang_caps'                  => $res->arr_bang_cap_list,
-                'chuc_thanhs'                => $res->arr_chuc_thanh_list,
-                'thuyen_chuyens'             => $res->arr_thuyen_chuyen_list,
-                'van_thus'                   => $res->arr_van_thu_list,
-                'bo_nhiems'                  => $res->arr_bo_nhiem_list,
-                'lm_thuyen_chuyens'          => $res->arr_lm_thuyen_chuyen_list,
+                'ten_thanh_name'             => ($res->ten_thanh) ? $res->ten_thanh : '',
+                'giao_xu_name'               => ($res->ten_giao_xu) ? $res->ten_giao_xu : '',
+                'ten_dong_name'              => ($res->ten_dong) ? $res->ten_dong : '',
+                'rip_giaoxu_name'            => ($res->ten_rip_giao_xu) ? $res->ten_rip_giao_xu : '',
+                'bang_caps'                  => ($res->arr_bang_cap_list) ? $res->arr_bang_cap_list : [],
+                'chuc_thanhs'                => ($res->arr_chuc_thanh_list) ? $res->arr_chuc_thanh_list : [],
+                'van_thus'                   => ($res->arr_van_thu_list) ? : $res->arr_van_thu_list,
             ]);
         }
-
         return $json;
     }
 }

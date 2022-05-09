@@ -381,7 +381,7 @@ class NewsController extends Controller
                         $tmp = $img;
                         $tmp['width'] = (int)$img['width'];
                         $tmp['image'] = url('/Image/NewPicture/' . $img['image']);
-                        $tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280, 280));
+                        $tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280));
                         $json['results']['albums'][0]['images'][$key] = $tmp;
                     } else {
                         unset($json['results']['albums'][0]['images'][$key]);

@@ -423,7 +423,7 @@ export default {
     giaohats_title: 'Giáo hạt',
     giaoxus_title: 'Giáo xứ',
     giaodiems_title: 'Giáo điểm',
-    co_so_giao_phans_title: 'Cơ sở giáo phận',
+    co_so_giao_phans_title: 'Danh sách cơ sở',
     cong_doan_tu_sis_title: 'Công đoàn tu sĩ',
     dongs_title: 'Dòng',
     thanhs_title: 'Thánh',

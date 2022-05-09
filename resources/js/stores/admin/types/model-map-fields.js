@@ -16,6 +16,18 @@ export const MAP_PC_GIAO_XUS = [
   'latin',
   'type'
 ]
+export const MAP_PC_GIAO_HATS = [
+  'id',
+  'name',
+  'khu_vuc',
+  'nguoi_quan_hat',
+  'phan_loai',
+  'sort_id',
+  'active',
+  'image',
+  'description',
+  'title'
+]
 export const MAP_PC_INFORMATIONS = [
   'album',
   'image',
@@ -64,15 +76,17 @@ export const MAP_PC_CONG_DOAN_TU_SIS = [
   'ghi_chu',
   'active'
 ]
-export const MAP_PC_CO_SO_GIAO_PHANS = [
+export const MAP_PC_CO_SOS = [
   'id',
   'name',
   'dia_chi',
   'email',
   'dien_thoai',
+  'coso_giaophan',
   'fax',
   'website',
-  'active'
+  'active',
+  'coso_giaophan_text'
 ]
 export const MAP_PC_LE_CHINHS = [
   'id',

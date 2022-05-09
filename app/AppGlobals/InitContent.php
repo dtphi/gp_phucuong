@@ -61,6 +61,9 @@ final class InitContent
         if ($request->is('hanh-cac-thanh*')) {
             $flag = 'hanh-cac-thanh';
         }
+        if ($request->is('danh-sach-linh-muc*')) {
+          $flag = 'danh-sach-linh-muc';
+        }
 
         if (!empty($flag)) {
             $this->pathInfo = trim($request->getPathInfo(), '/');
@@ -186,6 +189,24 @@ final class InitContent
                 }
             }
 
+            if (isset($segments[0]) && ($flag == 'danh-sach-linh-muc')) {
+              $this->settings['meta_title'] = 'Danh sách linh mục';
+
+              if (isset($segments[1]) && $request->is('danh-sach-linh-muc/chi-tiet*')) {
+                $layout = $this->__getLayoutContent('danh-sach-linh-muc/chi-tiet/*');
+
+                $endSegment  = end($segments);
+                $arrSegments = explode('-', $endSegment);
+                $idSegment   = (int)end($arrSegments);
+
+                if ($idSegment) {
+                  //
+                }
+              } else {
+                $layout = $this->__getLayoutContent('danh-sach-linh-muc');
+              }
+            }
+
             if (isset($segments[0]) && ($flag == 'hanh-cac-thanh')) {
                 $this->settings['meta_title'] = 'hanh-cac-thanh';
 
@@ -228,6 +249,7 @@ final class InitContent
         } else {
             $this->settings['pageDir'] = config('app.is_mix') ? mix('js/stg/app-front.js'): asset('js/app-front.js');
         }
+        //  dd($this->settings, 'test');
     }
 
     /**
