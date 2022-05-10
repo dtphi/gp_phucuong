@@ -25,7 +25,7 @@ export default {
     return {}
   },
   mounted(){
-    console.log(this.info,'test');
+    console.log('test wweb');
   },
 
   methods: {
