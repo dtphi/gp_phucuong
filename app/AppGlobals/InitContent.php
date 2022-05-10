@@ -208,10 +208,9 @@ final class InitContent
             }
 
             if (isset($segments[0]) && ($flag == 'hanh-cac-thanh')) {
-                $this->settings['meta_title'] = 'hanh-cac-thanh';
+                $this->settings['meta_title'] = 'Hành Các Thánh';
 
-                if (isset($segments[1]) && $request->is('hanh-cac-thanh/chi-tiet/*')) {
-                    $model  = new \App\Models\NgayLe();
+                if (isset($segments[1]) && $request->is('hanh-cac-thanh/*')) {
                     $layout = $this->__getLayoutContent('hanh-cac-thanh/chi-tiet/*');
 
                     $endSegment  = end($segments);
@@ -249,7 +248,6 @@ final class InitContent
         } else {
             $this->settings['pageDir'] = config('app.is_mix') ? mix('js/stg/app-front.js'): asset('js/app-front.js');
         }
-        //  dd($this->settings, 'test');
     }
 
     /**

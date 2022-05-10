@@ -60,7 +60,6 @@ export default {
       return albums
     },
   },
-  
   methods: {
     _showSlide() {
       if (this.viewer) {
