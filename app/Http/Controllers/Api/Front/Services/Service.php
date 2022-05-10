@@ -210,15 +210,12 @@ class Service implements BaseModel
 	{
 		$query = $this->modelNgayLe	
 			->whereNotNull('hanh')->Where('hanh', '!=', '');
-
 		return $query->paginate($limit);
 	}
 
-	public function apiGetDetailNgayLe($id)
+	public function apiGetDetailNgayLe($id = null)
 	{
-		// dd(NgayLe::findOrFail($id),'1111111');
 		return NgayLe::findOrFail($id);
-		// return $query;
 	}
 
 	public function apiGetGiaoXuList($data = array(), $limit = 5)
@@ -508,6 +505,12 @@ class Service implements BaseModel
     return $query;
   }
 
+	public function apiGetListNgayLe($data = array(), $limit = 5)
+	{ // List Ngay Le By Id
+		$query = $this->modelNgayLe->select('id','ten_le','hanh');
+		
+		return $query->paginate($limit);
+	}
 
 	public function apiGetListChucVu()
 	{

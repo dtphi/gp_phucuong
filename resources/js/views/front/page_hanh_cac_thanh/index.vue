@@ -116,6 +116,5 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import "./category-news-styles.scss";
+<style>
 </style>

@@ -4,7 +4,7 @@ import {
 } from '@app/api/utils/fn-helper'
 import {
   API_HANH_CAC_THANH_LIST,
-  API_HANH_CAC_THANH_DETAIL,
+  API_HANH_CAC_THANH_LIST_BY_ID,
 } from 'store@front/types/api-paths'
 
 export const apiGetLists = (resolve, errResole, params) => {
@@ -24,8 +24,8 @@ export const apiGetLists = (resolve, errResole, params) => {
     .catch(errors => errResole(errors))
 }
 
-export const apiGetDetail = (params, resolve, errResole) => {
-  return axios.get(fn_get_base_api_url(API_HANH_CAC_THANH_DETAIL), {
+export const apiGetDetail = (infoId, resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_detail_url(API_HANH_CAC_THANH_LIST_BY_ID, infoId), {
     params: params,
   })
     .then((response) => {
@@ -42,7 +42,7 @@ export const apiGetDetail = (params, resolve, errResole) => {
 }
 
 export const apiGetListsHanhCacThanh = (resolve, errResole, options) => {
-  return axios.post(fn_get_base_api_url(API_HANH_CAC_THANH_DETAIL), {
+  return axios.post(fn_get_base_api_url(API_HANH_CAC_THANH_LIST_BY_ID), {
     params: options.params,
     page: options.page,
     query: options.query,

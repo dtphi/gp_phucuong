@@ -22,6 +22,15 @@ export default {
   data() {
     return {}
   },
+  methods: {
+    // _getHref() {
+    //   if ((String(this.info['name_slug']) !== 'undefined') && (String(this.info['name_slug']).length > 5)) {
+    //     return fn_get_href_base_url(`tin-tuc/chi-tiet/${this.info.name_slug}`)
+    //   } else {
+    //     return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(this.info.name)}`)
+    //   }
+    // },
+  },
 }
 </script>
 
