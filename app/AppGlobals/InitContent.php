@@ -208,9 +208,10 @@ final class InitContent
             }
 
             if (isset($segments[0]) && ($flag == 'hanh-cac-thanh')) {
-                $this->settings['meta_title'] = 'Hành Các Thánh';
+                $this->settings['meta_title'] = 'hanh-cac-thanh';
 
-                if (isset($segments[1]) && $request->is('hanh-cac-thanh/*')) {
+                if (isset($segments[1]) && $request->is('hanh-cac-thanh/chi-tiet/*')) {
+                    $model  = new \App\Models\NgayLe();
                     $layout = $this->__getLayoutContent('hanh-cac-thanh/chi-tiet/*');
 
                     $endSegment  = end($segments);

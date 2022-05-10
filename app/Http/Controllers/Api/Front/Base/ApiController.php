@@ -586,7 +586,7 @@ class ApiController extends Controller
 		$arr_id_chanh_xu = [];
 		$arr_id_pho_xu = [];
 		if ($linhMucChanhXus) {
-			foreach($linhMucChanhXus as $linhMucChanhXu) {
+			foreach ($linhMucChanhXus as $linhMucChanhXu) {
 				array_push($arr_id_chanh_xu, $linhMucChanhXu->linh_muc_id);
 				$arr_chanh_xu[] = [
 					'chanh_xu' => isset($linhMucChanhXu->ten_thanh) ? $linhMucChanhXu->ten_thanh . ' - ' . $linhMucChanhXu->ten_linh_muc : $emptyStr,
@@ -597,8 +597,8 @@ class ApiController extends Controller
 			}
 		}
 		$arr_pho_xu = [];
-		if ($linhMucPhoXus){
-			foreach($linhMucPhoXus as $linhMucPhoXu) {
+		if ($linhMucPhoXus) {
+			foreach ($linhMucPhoXus as $linhMucPhoXu) {
 				array_push($arr_id_pho_xu, $linhMucPhoXu->linh_muc_id);
 				$arr_pho_xu[] = [
 					'pho_xu' => isset($linhMucPhoXu->ten_thanh) ? $linhMucPhoXu->ten_thanh . ' - ' . $linhMucPhoXu->ten_linh_muc : $emptyStr,
@@ -613,7 +613,7 @@ class ApiController extends Controller
 			$from = \Carbon\Carbon::parse($linhMuc->from_date)->year ?? $emptyStr;
 			$to = \Carbon\Carbon::parse($linhMuc->to_date)->year ?? $emptyStr;
 			if (!in_array($linhMuc->linh_muc_id, $arrLmIds) && !in_array($linhMuc->linh_muc_id, $arr_id_chanh_xu) && !in_array($linhMuc->linh_muc_id, $arr_id_pho_xu)) {
-				$linhMucTienNhiem[] = '<a style="color: black !important;cursor:pointer" href="'. $url_linhmuc .'">' . $linhMuc->ten_thanh . ' ' .$linhMuc->ten_linh_muc . ' (' . $from . '-' . $to . ')</a>';
+				$linhMucTienNhiem[] = '<a style="color: black !important;cursor:pointer" href="' . $url_linhmuc . '">' . $linhMuc->ten_thanh . ' ' . $linhMuc->ten_linh_muc . ' (' . $from . '-' . $to . ')</a>';
 			}
 			array_push($arrLmIds, $linhMuc->linh_muc_id);
 		}
@@ -756,7 +756,7 @@ class ApiController extends Controller
 				'id' => (int) $infos->id,
 				'ten' => $infos->ten,
 				'ten_thanh' => $infos->ten_thanh ?? $emptyStr,
-				'nam_sinh' =>($infos->ngay_thang_nam_sinh) ? date_format(date_create($infos->ngay_thang_nam_sinh), "d-m-Y") : $emptyStr,
+				'nam_sinh' => ($infos->ngay_thang_nam_sinh) ? date_format(date_create($infos->ngay_thang_nam_sinh), "d-m-Y") : $emptyStr,
 				'image'	=> !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
 				'sinh_giao_xu' => $infos->sinh_giao_xu ?? $emptyStr,
 				'giao_xu' => $infos->ten_xu ?? $emptyStr,
@@ -764,8 +764,8 @@ class ApiController extends Controller
 				'giao_phan' => 'Giáo Phận Phú Cường',
 				'ho_ten_cha' => $infos->ho_ten_cha ?? $emptyStr,
 				'ho_ten_me' => $infos->ho_ten_me ?? $emptyStr,
-        'noi_rua_toi' => $infos->noi_rua_toi ?? '',
-        'noi_them_suc' => $infos->noi_them_suc ?? '',
+				'noi_rua_toi' => $infos->noi_rua_toi ?? '',
+				'noi_them_suc' => $infos->noi_them_suc ?? '',
 				'ngay_rua_toi' => ($infos->ngay_rua_toi) ? date_format(date_create($infos->ngay_rua_toi), "d-m-Y") : $emptyStr,
 				'ngay_them_suc' => ($infos->ngay_them_suc) ? date_format(date_create($infos->ngay_them_suc), "d-m-Y") : '',
 				'so_cmnd' => $infos->so_cmnd ?? $emptyStr,
@@ -982,7 +982,7 @@ class ApiController extends Controller
 
 		return $this->respondWithCollectionPagination($json);
 	}
-	
+
 
 	public function getChucVuList(Request $request)
 	{
@@ -1168,6 +1168,61 @@ class ApiController extends Controller
 		return $this->respondWithCollectionPagination($json);
 	}
 
+	function pClean($str)
+	{
+		// return trim(html_entity_decode($input), " \t\n\r\0\x0B\xC2\xA0");
+		$str = str_replace("&nbsp;", " ", $str);
+		$str = preg_replace('/\s+/', ' ', $str);
+		$str = trim($str);
+		return $str;
+	}
+
+	function replaceAll($str) { 
+		$unicode = array(
+ 
+			'a'=>'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
+			 
+			'd'=>'đ',
+			 
+			'e'=>'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ',
+			 
+			'i'=>'í|ì|ỉ|ĩ|ị',
+			 
+			'o'=>'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ',
+			 
+			'u'=>'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự',
+			 
+			'y'=>'ý|ỳ|ỷ|ỹ|ỵ',
+			 
+			'A'=>'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ',
+			 
+			'D'=>'Đ',
+			 
+			'E'=>'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ',
+			 
+			'I'=>'Í|Ì|Ỉ|Ĩ|Ị',
+			 
+			'O'=>'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ',
+			 
+			'U'=>'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự',
+			 
+			'Y'=>'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
+			 
+			);
+			 
+			foreach($unicode as $nonUnicode=>$uni){
+			 
+			$str = preg_replace("/($uni)/i", $nonUnicode, $str);
+			 
+			}
+			$str = strtolower($str);
+			$str = str_replace(',','',$str);
+			$str = str_replace('.','',$str);
+			$str = str_replace(' ','-',$str);
+			 
+			return $str;
+	}
+
 	public function getNgayLeList(Request $request)
 	{
 		$page = 1;
@@ -1182,7 +1237,8 @@ class ApiController extends Controller
 				$results[] = [
 					'id' => (int) $info->id,
 					'ten_le' => $info->ten_le,
-					'hanh' => $info->hanh,
+					'hanh' => strip_tags($this->pClean($info->hanh)),
+					'slug' => $this->replaceAll($info->ten_le),
 				];
 			}
 			$json = [
@@ -1201,48 +1257,24 @@ class ApiController extends Controller
 				]
 			];
 		}
-
 		return $this->respondWithCollectionPagination($json);
 	}
-	
-	public function getNgayLeListById(Request $request)
+
+	public function getNgayLeDetail(Request $request, $id = null)
 	{
-		$page = 1;
-		if ($request->input('page')) {
-			$page = $request->input('page');
+		$params         = $request->all();
+		$params['slug'] = isset($params['slug']) ? $params['slug'] : '';
+        if (!empty($params['slug'])) {
+            $slugs                    = explode('-', $params['slug']);
+            $params['id'] = end($slugs);
+        }
+
+		if (isset($params['id'])) {
+			$json['results']                  = $this->sv->apiGetDetailNgayLe($params['id']);
 		}
-		try {
-			$results = [];
-			$collections = $this->sv->apiGetListNgayLe($request, $limit = 5);
-			$pagination = $this->_getTextPagination($collections);
-			if ($request->input('query') == null) {
-				foreach ($collections as $key => $info) {
-					
-					$results[] = [
-						'id' => (int) $info->id,
-						'ten_le' => $info->ten_le,
-						'hanh' => $info->hanh,
-					];
-				}
-			}
-			$json = [
-				'data' => [
-					'results'    => $results,
-					'pagination' => $pagination,
-					'page'       => $page
-				]
-			];
-		} catch (HandlerMsgCommon $e) {
-			$json = [
-				'data' => [
-					'results'    => [],
-					'pagination' => [],
-					'msg'       => $e->render()
-				]
-			];
-		}
-		
-		return $this->respondWithCollectionPagination($json);
+    return Helper::successResponse([
+        'results'                  => $json['results'],
+    ]);
 	}
 
   public function updateLinhMucTemp(Request $request)
