@@ -240,7 +240,18 @@ routeEnv = {
         role: 'guest',
         layout_content: {},
       },
-    },],
+    },{
+      path: 'chi-tiet/:slug',
+      component: () => import('v@front/page_hanh_details'),
+      name: 'hanh-cac-thanh-detail-page',
+      meta: {
+        auth: false,
+        header: 'Trang Chi Tiết Hành Các Thánh',
+        layout: MainLayout,
+        role: 'guest',
+        layout_content: {},
+      },
+    }],
   },
 
   {
