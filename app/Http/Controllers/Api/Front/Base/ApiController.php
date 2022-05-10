@@ -1239,6 +1239,8 @@ class ApiController extends Controller
 					'ten_le' => $info->ten_le,
 					'hanh' => strip_tags($this->pClean($info->hanh)),
 					'slug' => $this->replaceAll($info->ten_le),
+					'solar_day' => $info->solar_day,
+					'solar_month' => $info->solar_month,
 				];
 			}
 			$json = [
@@ -1257,7 +1259,6 @@ class ApiController extends Controller
 				]
 			];
 		}
-
 		return $this->respondWithCollectionPagination($json);
 	}
 	
@@ -1273,6 +1274,7 @@ class ApiController extends Controller
 		if (isset($params['id'])) {
 			$json['results']                  = $this->sv->apiGetDetailNgayLe($params['id']);
 		}
+		
 		return Helper::successResponse([
             'results'                  => $json['results'],
         ]);

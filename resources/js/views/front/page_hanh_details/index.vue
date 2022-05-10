@@ -71,6 +71,7 @@ export default {
       loading: (state) => state.loading,
       pageLists: (state) => state.pageLists,
     }),
+    ...mapGetters(MODULE_HANH_CAC_THANH_DETAIL, ['pageLists']),
     _isContentTop() {
       return this.$route.meta.layout_content.content_top
     },
@@ -82,10 +83,6 @@ export default {
     },
   },
   mounted() {
-    
-    setTimeout(()=>{
-console.log(this.pageLists,'test pagelist')
-    },7000)
     this.getDetail({
       slug: this.$route.params.slug,
     })

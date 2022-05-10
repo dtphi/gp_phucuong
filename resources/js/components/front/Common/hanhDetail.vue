@@ -1,35 +1,14 @@
 <template>
   <div class="new-detail">
-    <h4 class="tit-detail">{{ pageLists.name }}</h4>
+    <h4 class="tit-detail">{{ pageLists.ten_le }}</h4>
     <p>
       <b-icon class="alarm" icon="alarm"></b-icon>
-      <span>{{ pageLists.date_available }}</span>
+      <span>{{ pageLists.solar_day }}-{{pageLists.solar_month}}</span>
     </p>
 
-    <p v-html="pageLists.sort_description"></p>
+    <p v-html="pageLists.hanh"></p>
 
     <hr />
-
-    <div class="text-detail" v-html="pageLists.hanh"></div>
-
-    <hr />
-    <info-tag :info="pageLists"></info-tag>
-    <hr />
-
-    <h4 v-if="Object.keys(_getAlbums).length" class="tit-detail">ALBUM HÌNH</h4>
-    <div class="docs-galley mb-3" style="position: relative">
-      <ul class="docs-pictures clearfix" id="images">
-        <li v-for="album in _getAlbums" :key="album.id">
-          <img
-            class="thumb"
-            @click="_showSlide()"
-            :data-original="album.image"
-            :src="album.image_thumb"
-            alt="Picture 1"
-          />
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -50,21 +29,11 @@ export default {
       viewer: false,
     }
   },
-  // mounted(){
-  //   console.log(pageLists,'page')
-  // },
   computed: {
     ...mapState(MODULE_HANH_CAC_THANH_DETAIL, {
       loading: (state) => state.loading,
       pageLists: (state) => state.pageLists,
     }),
-    _getAlbums() {
-      let albums = []
-      if (this.pageLists.albums && this.pageLists.albums.length)
-        albums = this.pageLists.albums[0].images
-
-      return albums
-    },
   },
   methods: {
     _showSlide() {

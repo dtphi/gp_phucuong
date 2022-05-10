@@ -209,7 +209,9 @@ class Service implements BaseModel
 	public function apiGetNgayLeList($data = array(), $limit = 10)
 	{
 		$query = $this->modelNgayLe	
-			->whereNotNull('hanh')->Where('hanh', '!=', '');
+			->whereNotNull('hanh',)->Where('hanh', '!=', '')
+			->where('solar_day','!=', 0)
+			->where('solar_month','!=', 0);
 		return $query->paginate($limit);
 	}
 
