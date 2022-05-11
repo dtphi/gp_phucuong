@@ -319,12 +319,11 @@ class Linhmuc extends BaseModel
                 ];
             }
         }
-
         return $value;
     }
 
-    public function scopeName($query, $request) {
-      return  $query->where('ten', 'LIKE', '%' . $request->input('query') . '%');
+    public function scopeName($query, $word) {
+      return  $query->whereRaw("LOWER(ten) LIKE '%" . strtolower($word) . "%'");
     }
 
     public function fcDeleteById($id) {
