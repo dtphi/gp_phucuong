@@ -1,7 +1,7 @@
 <template>
   <figcaption class="figure-caption">
     <h4 class="title mt-2 ellipsis-two-lines">
-      <a>{{ info.ten_le }}</a>
+      <a :href="_getHref()">{{ info.ten_le }}</a>
     </h4>
     <span class="d-block mb-1">
       <div class="ellipsis-three-lines" v-html="info.hanh"></div>
@@ -25,17 +25,17 @@ export default {
     return {}
   },
   mounted(){
-    console.log(this.info,'test');
+    console.log('test wweb');
   },
 
   methods: {
-    // _getHref() {
-    //   if ((String(this.info['name_slug']) !== 'undefined') && (String(this.info['name_slug']).length > 5)) {
-    //     return fn_get_href_base_url(`tin-tuc/chi-tiet/${this.info.name_slug}`)
-    //   } else {
-    //     return fn_get_href_base_url(`tin-tuc/chi-tiet/${fn_change_to_slug(this.info.name)}`)
-    //   }
-    // },
+    _getHref() {
+      if ((String(this.info['slug']) !== 'undefined') && (String(this.info['slug']).length > 5)) {
+        return fn_get_href_base_url(`/hanh-cac-thanh/chi-tiet/${this.info.slug}-${this.info.id}`)
+      } else {
+        return fn_get_href_base_url(`/hanh-cac-thanh/chi-tiet/${fn_change_to_slug(this.info.slug)}`)
+      }
+    },
   },
 }
 </script>

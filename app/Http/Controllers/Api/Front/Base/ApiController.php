@@ -743,7 +743,7 @@ class ApiController extends Controller
 	public function getLinhMucDetail($id = null, Request $request)
 	{
 		try {
-			$infos = $this->sv->apiGetDetailLinhMuc($id);
+			$infos = $this->sv->apiGetDetailLinhMucMain($id);
 			$thuyenChuyens = $infos->arr_thuyen_chuyen_list;
 			$chucVuHienTai = '';
 			if (!empty($thuyenChuyens)) {
@@ -772,7 +772,6 @@ class ApiController extends Controller
 				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? $emptyStr,
 				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? $emptyStr,
         'ngay_rip' => ($infos->ngay_rip) ? date_format(date_create($infos->ngay_rip), "d-m-Y") : '',
-        'rip_ghi_chu' => html_entity_decode($infos->rip_ghi_chu) ?? "",
 				'cham_ngon' => $infos->cham_ngon ?? $emptyStr,
 				'cv_hien_tai' => $chucVuHienTai ?? $emptyStr,
 				'ds_chuc_vu' => $thuyenChuyens ?? "",
@@ -802,7 +801,7 @@ class ApiController extends Controller
         'image'  => !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
         'sinh_giao_xu' => $infos-> sinh_giao_xu ?? '' ,
         'giao_xu' => $infos->ten_xu ,
-        'dia_chi' => $infos->noi_sinh ,
+        'noi_sinh' => $infos->noi_sinh ,
         'ho_ten_cha' => $infos->ho_ten_cha,
         'ho_ten_me' => $infos->ho_ten_me,
         'noi_rua_toi' => $infos->noi_rua_toi,
@@ -1094,7 +1093,7 @@ class ApiController extends Controller
 	{
 		if ($request->query('page')) {
 			$page = $request->query('page');
-		}
+		} 
 
 		try {
 			$collections = $this->sv->apiGetListLinhMucSearch($request);
@@ -1168,6 +1167,62 @@ class ApiController extends Controller
 		return $this->respondWithCollectionPagination($json);
 	}
 
+	function pClean($str)
+	{
+		// return trim(html_entity_decode($input), " \t\n\r\0\x0B\xC2\xA0");
+		$str = str_replace("&nbsp;", " ", $str);
+		$str = preg_replace('/\s+/', ' ', $str);
+		$str = trim($str);
+		return $str;
+	}
+
+	function replaceAll($str) { 
+		$unicode = array(
+
+			'a'=>'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
+
+			'd'=>'đ',
+
+			'e'=>'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ',
+
+			'i'=>'í|ì|ỉ|ĩ|ị',
+
+			'o'=>'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ',
+
+			'u'=>'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự',
+
+			'y'=>'ý|ỳ|ỷ|ỹ|ỵ',
+
+			'A'=>'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ',
+
+			'D'=>'Đ',
+
+			'E'=>'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ',
+
+			'I'=>'Í|Ì|Ỉ|Ĩ|Ị',
+
+			'O'=>'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ',
+
+			'U'=>'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự',
+
+			'Y'=>'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
+
+			);
+
+			foreach($unicode as $nonUnicode=>$uni){
+
+			$str = preg_replace("/($uni)/i", $nonUnicode, $str);
+
+			}
+			$str = strtolower($str);
+			$str = str_replace(',','',$str);
+			$str = str_replace('.','',$str);
+			$str = str_replace(' ','-',$str);
+
+			return $str;
+	}
+
+
 	public function getNgayLeList(Request $request)
 	{
 		$page = 1;
@@ -1182,7 +1237,10 @@ class ApiController extends Controller
 				$results[] = [
 					'id' => (int) $info->id,
 					'ten_le' => $info->ten_le,
-					'hanh' => $info->hanh,
+					'hanh' => strip_tags($this->pClean($info->hanh)),
+					'slug' => $this->replaceAll($info->ten_le),
+					'solar_day' => $info->solar_day,
+					'solar_month' => $info->solar_month,
 				];
 			}
 			$json = [
@@ -1201,54 +1259,71 @@ class ApiController extends Controller
 				]
 			];
 		}
-
 		return $this->respondWithCollectionPagination($json);
 	}
 	
-	public function getNgayLeListById(Request $request)
+	public function getNgayLeDetail(Request $request, $id = null)
 	{
-		$page = 1;
-		if ($request->input('page')) {
-			$page = $request->input('page');
-		}
-		try {
-			$results = [];
-			$collections = $this->sv->apiGetListNgayLe($request, $limit = 5);
-			$pagination = $this->_getTextPagination($collections);
-			if ($request->input('query') == null) {
-				foreach ($collections as $key => $info) {
-					
-					$results[] = [
-						'id' => (int) $info->id,
-						'ten_le' => $info->ten_le,
-						'hanh' => $info->hanh,
-					];
-				}
-			}
-			$json = [
-				'data' => [
-					'results'    => $results,
-					'pagination' => $pagination,
-					'page'       => $page
-				]
-			];
-		} catch (HandlerMsgCommon $e) {
-			$json = [
-				'data' => [
-					'results'    => [],
-					'pagination' => [],
-					'msg'       => $e->render()
-				]
-			];
+		$params         = $request->all();
+		$params['slug'] = isset($params['slug']) ? $params['slug'] : '';
+        if (!empty($params['slug'])) {
+            $slugs                    = explode('-', $params['slug']);
+            $params['id'] = end($slugs);
+        }
+
+		if (isset($params['id'])) {
+			$json['results']                  = $this->sv->apiGetDetailNgayLe($params['id']);
 		}
 		
-		return $this->respondWithCollectionPagination($json);
+		return Helper::successResponse([
+            'results'                  => $json['results'],
+        ]);
 	}
 
   public function updateLinhMucTemp(Request $request)
   {
     $data = $request->all();
-    $this->sv->apiUpdateLinhMucTemp($data);
+    $results = $this->sv->apiUpdateLinhMucTemp($data);
+    $json = [
+      'data' => [
+        'success' => 200,
+      ] 
+    ];
+    return $this->respondWithCollectionPagination($json);
+  }
+  public function getBoNhiemKhac($id = null)
+  {
+    try {
+      $collections = $this->sv->apiGetBoNhiem($id);
+      $results = [];
+
+      foreach ($collections as $key => $info) {
+        $results[] = [
+          'id' => (int)$info->id,
+          'isCheck' => false,
+          'isEdit' => 1,
+          'to_date' => $info->to_date,
+          'from_date' => $info->from_date,
+          'chuc_vu_id' => $info->chuc_vu_id,
+          'chucvuName' => $info->ten_to_chuc_vu,
+          'label_from_date' => ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '',
+          'label_to_date' => ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '',
+          'ghi_chu' => $info->ghi_chu,
+          'active' => $info->active,
+          'active_text' => $info->active ? 'Xảy ra' : 'Ẩn',
+          'chuc_vu_active' => $info->chuc_vu_active,
+        ];
+      }
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
+    }
+
+    $json = [
+      'data' => [
+        'results' => $results,
+      ]
+    ];
+    return $this->respondWithCollectionPagination($json);
   }
 
   public function getHoatDongSuVu($id = null) {
@@ -1278,12 +1353,10 @@ class ApiController extends Controller
           'ban_chuyen_trach_id' => $info->ban_chuyen_trach_id,
           'dongName' => $info->ten_dong,
           'banchuyentrachName' => $info->ten_ban_chuyen_trach,
-          'du_hoc' => $info->du_hoc,
-          'quoc_gia' => $info->quoc_gia,
-          'ghi_chu' => $info->ghi_chu,
           'active' => $info->active,
           'active_text' => $info->active ? 'Xảy ra' : 'Ẩn',
-          'chuc_vu_active' => $info->chuc_vu_active
+          'chuc_vu_active' => $info->chuc_vu_active,
+          
         ];
       }
     } catch (HandlerMsgCommon $e) {
@@ -1466,6 +1539,61 @@ class ApiController extends Controller
           'data' => [
             'success' => 'success',
             'status' => 200, 
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    } else if($data['action'] == 'update.thuyen.chuyen') {
+      $formData = json_decode($data['data']);
+      try {
+        $collections = $this->sv->apiUpdateThuyenChuyen($data['id'], $formData);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    } else if ($data['action'] == 'add.bo.nhiem') {
+      $formData = json_decode($data['data']);
+      try {
+        $collections = $this->sv->apiAddBoNhiem($data['id'], $formData);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    } else if ($data['action'] == 'update.bo.nhiem') {
+      $formData = json_decode($data['data']);
+      try {
+        $collections = $this->sv->apiUpdateBoNhiem($data['id'], $formData);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    }else {
+      try {
+        $collections = $this->sv->apiDeleteThuyenChuyen($data['id']);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
           ]
         ];
         return $this->respondWithCollectionPagination($json);

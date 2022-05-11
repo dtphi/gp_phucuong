@@ -8,8 +8,8 @@
           <td class="text-center">TT</td>
           <td class="text-center">CHỨC VỤ</td>
           <td class="text-center">ĐỊA ĐIỂM</td>
-          <td class="text-center">THỜI GIAN ĐẾN <br> (ngày tháng năm)</td>
-          <td class="text-center">THỜI GIAN ĐI <br> (ngày tháng năm)</td>
+          <td class="text-center">THỜI GIAN ĐẾN <br> (năm tháng ngày)</td>
+          <td class="text-center">THỜI GIAN ĐI <br> (năm tháng ngày)</td>
           <td class="text-center">{{ $options.setting.info_action_title }}</td>
         </tr>
       </thead>
@@ -27,14 +27,13 @@
         </tr>
       </tfoot>
     </table>
-		<!-- <modal name="modal-lm-thuyen-chuyen-edit" :height="500" :click-to-close="false">
+    <modal name="modal-hoat-dong-su-vu-edit" width="800" height="600">
 				<the-modal-edit
-					v-if="_infoUpdate.id"
 					:info="_infoUpdate"
 					:info-id="_infoUpdate.id"
 					@update-info-success="_updateInfoList"
 				></the-modal-edit>
-		</modal> -->
+		</modal>
 	</div>
 </template>
 
@@ -42,16 +41,17 @@
 import { MODULE_LINH_MUC_DETAIL_PAGE, } from '@app/stores/front/types/module-types'
 import { mapState, mapActions, } from 'vuex'
 import InfoItem from './InfoItem'
+import TheModalEdit from '../Modals/ModalHoatDongSuVuEdit.vue'
 
 export default {
   name: 'TheInfoList',
   components: {
 			InfoItem,
+      TheModalEdit
   },
 	data() {
 			return {
 					infoUpdate: {},
-					curInfo: {},
 			}
 	},
   computed: {
@@ -72,60 +72,16 @@ export default {
       'GET_HOAT_DONG_SU_VU' 
     ]),
 		_showModalEdit(info) {
-				this.curInfo = info;
 				this.infoUpdate = { ...info };
-				this.$modal.show("modal-lm-thuyen-chuyen-edit");
+				this.$modal.show("modal-hoat-dong-su-vu-edit");
 		},
-		_updateInfoList() {
-				this.curInfo.id = this.update_thuyen_chuyen.id;
-				this.curInfo.chuc_vu_id = this.update_thuyen_chuyen.chuc_vu_id;
-				this.curInfo.chucvuName = this.update_thuyen_chuyen.chucVuName;
-				this.curInfo.chuc_vu_active = this.update_thuyen_chuyen.chuc_vu_active;
-				if(this.update_thuyen_chuyen.giao_xu_id != 0) {
-					this.curInfo.giaoxuName = this.update_thuyen_chuyen.diaDiemName
-					this.curInfo.giao_xu_id = this.update_thuyen_chuyen.giao_xu_id
-          this.curInfo.giao_xu_url = 'https://haydesachnoipodcast.com/admin/giao-xus/edit/' + this.update_thuyen_chuyen.giao_xu_id 
-          this.curInfo.co_so_gp_id = 0
-          this.curInfo.dong_id = 0
-          this.curInfo.ban_chuyen_trach_id = 0
-				}else if(this.update_thuyen_chuyen.co_so_gp_id != 0) {
-					this.curInfo.cosogpName = this.update_thuyen_chuyen.diaDiemName
-					this.curInfo.co_so_gp_id = this.update_thuyen_chuyen.co_so_gp_id
-          this.curInfo.is_co_so_giao_phan = this.update_thuyen_chuyen.is_co_so_giao_phan
-          this.curInfo.giao_xu_id = 0
-          this.curInfo.dong_id = 0
-          this.curInfo.ban_chuyen_trach_id = 0
-          this.curInfo.co_so_status = this.update_thuyen_chuyen.co_so_status
-				}else if(this.update_thuyen_chuyen.dong_id != 0) {
-					this.curInfo.dongName = this.update_thuyen_chuyen.diaDiemName
-					this.curInfo.dong_id = this.update_thuyen_chuyen.dong_id
-          this.curInfo.giao_xu_id = 0
-          this.curInfo.co_so_gp_id = 0
-          this.curInfo.ban_chuyen_trach_id = 0
-				}else{
-					this.curInfo.banchuyentrachName = this.update_thuyen_chuyen.diaDiemName
-					this.curInfo.ban_chuyen_trach_id = this.update_thuyen_chuyen.ban_chuyen_trach_id
-          this.curInfo.giao_xu_id = 0
-          this.curInfo.co_so_gp_id = 0
-          this.curInfo.dong_id = 0
-				}
-
-				if(this.update_thuyen_chuyen.dia_diem_tu_nam == "" || this.update_thuyen_chuyen.dia_diem_tu_thang == "" || this.update_thuyen_chuyen.dia_diem_tu_ngay == ""){
-						this.curInfo.label_from_date = '';
-				} else {
-						this.curInfo.label_from_date = this.update_thuyen_chuyen.dia_diem_tu_nam + '-' + this.update_thuyen_chuyen.dia_diem_tu_thang + '-' + this.update_thuyen_chuyen.dia_diem_tu_ngay;
-				}	
-				if(this.update_thuyen_chuyen.dia_diem_den_nam == "" || this.update_thuyen_chuyen.dia_diem_den_thang == "" || this.update_thuyen_chuyen.dia_diem_den_ngay == ""){
-						this.curInfo.label_to_date = '';
-				} else {
-						this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam + '-' + this.update_thuyen_chuyen.dia_diem_den_thang + '-' + this.update_thuyen_chuyen.dia_diem_den_ngay;
-				}
-				this.$modal.hide("modal-hoat-dong-su-vu-edit");
-  	},
 		_notificationUpdate(notification) {
 				this.$notify(notification);
 				this.resetNotification();
     },
+    _updateInfoList() {
+      	this.$modal.hide("modal-hoat-dong-su-vu-edit");
+    }
 	},
   mounted() {
     this.GET_HOAT_DONG_SU_VU(this.$route.params)

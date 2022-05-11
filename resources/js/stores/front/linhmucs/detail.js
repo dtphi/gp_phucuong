@@ -1,6 +1,7 @@
 import {
   apiGetDetail, apiLinhMucUpdateById, apiUpdateLinhMucTemp, apiGetHoatDongSuVu,
-  apiGetDropdownCategories, apiAddThuyenChuyen
+  apiGetDropdownCategories, apiAddThuyenChuyen,
+  apiGetBoNhiemKhac
 } from '@app/api/front/linhmucs'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_DETAIL_LINH_MUC, } from '@app/stores/front/types/action-types'
@@ -16,6 +17,7 @@ export default {
     errors: [],
     linhmuc_update: {},
     arr_thuyen_chuyens: [],
+    arr_bo_nhiems: [],
     dropdownGiaoXus: [],
     dropdownThanhs: [],
     dropdownChucVus: [],
@@ -40,6 +42,9 @@ export default {
     },
     arr_thuyen_chuyens(state) {
       return state.list_hdsv
+    },
+    arr_bo_nhiems(state) {
+      return state.arr_bo_nhiems
     }
   }, 
   mutations: {
@@ -54,6 +59,9 @@ export default {
     },
     SET_HDSV(state, payload) {
       state.arr_thuyen_chuyens = payload
+    },
+    SET_BO_NHIEM_KHAC(state, payload) {
+      state.arr_bo_nhiems = payload
     },
     SET_DROPDOWN_GIAO_XU_LIST(state, payload) {
       state.dropdownGiaoXus = payload
@@ -78,6 +86,10 @@ export default {
     },
     SET_DROPDOWN_CONG_DOAN_NGOAI_GIAO_PHAN_LIST(state, payload) {
       state.dropdownCongDoanNgoaiGiaoPhans = payload
+    },
+    SET_DELETE_THUYEN_CHUYEN(state, payload) {
+      const i = state.arr_thuyen_chuyens.map(item => item.id).indexOf(payload)
+      state.arr_thuyen_chuyens.splice(i, 1)
     },
   },
   actions: {
@@ -128,7 +140,7 @@ export default {
         update_linhmuc,
         (res) => {
           alert('Cập nhật thông tin thành công !!!')
-          commit('SET_LINH_MUC_UPDATE',update_linhmuc)
+          window.location.reload(true);
         },
         (err) => {
           console.log(err)
@@ -141,6 +153,18 @@ export default {
         id,
         (res) => {
           commit('SET_HDSV', res.data.results)
+        },
+        (err) => {
+          console.log(err)
+        }
+      ) 
+    },
+    GET_BO_NHIEM_KHAC({ commit }, update_linhmuc) {
+      const id = update_linhmuc.linhMucId
+      apiGetBoNhiemKhac(
+        id,
+        (res) => {
+          commit('SET_BO_NHIEM_KHAC', res.data.results)
         },
         (err) => {
           console.log(err)
@@ -276,5 +300,54 @@ export default {
         }
       )
     },
+    ADD_BO_NHIEM({ commit }, params) {
+      apiAddThuyenChuyen(
+        params,
+        (res) => {
+          alert('Thêm bổ nhiệm khác thành công')
+          window.location.reload(true);
+        },
+        (err) => {
+          console.log(err, 'err')
+        }
+      )
+    },
+    UPDATE_THUYEN_CHUYEN({ commit }, params) {
+      apiAddThuyenChuyen(
+        params,
+        (res) => {
+          alert('Thêm hoạt động sứ vụ thành công')
+          window.location.reload(true);
+        },
+        (err) => {
+          console.log(err, 'err')
+        }
+      )
+    },
+    UPDATE_BO_NHIEM({ commit }, params) {
+      apiAddThuyenChuyen(
+        params,
+        (res) => {
+          alert('Cập nhật bổ nhiệm thành công')
+          window.location.reload(true);
+        },
+        (err) => {
+          console.log(err, 'err')
+        }
+      )
+    },
+    DELETE_THUYEN_CHUYEN({ commit }, id) {
+      const params = {id: id, action: 'delete.thuyen.chuyen'}
+      commit('SET_DELETE_THUYEN_CHUYEN', id)
+      apiAddThuyenChuyen(
+        params,
+        (res) => {
+          // alert('Xóa thành công !!!')
+        },
+        (err) => {
+          console.log(err, 'err')
+        }
+      )
+    }
   },
 }

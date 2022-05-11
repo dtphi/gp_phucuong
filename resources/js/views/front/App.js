@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import VModal from 'vue-js-modal'
 import '@app/plugins/cms-filter'
 import '@app/plugins/cms-vee-validate'
 import '@app/plugins/cms-components'
@@ -40,6 +39,7 @@ Vue.component('ValidationProvider', ValidationProvider)
 import utilMixin from '@app/mixins/front'
 Vue.mixin(utilMixin)
 
+import VModal from 'vue-js-modal'
 /*Add vue js modal and dialog*/
 Vue.use(VModal, {
   dialog: true,

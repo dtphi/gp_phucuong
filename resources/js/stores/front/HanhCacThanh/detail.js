@@ -34,15 +34,16 @@ export default {
   },
   actions: {
     [GET_DETAIL]({ commit, }, routeParams) {
-      const hasHanhIdProp = Object.prototype.hasOwnProperty.call(routeParams, 'id')
-      if (hasHanhIdProp) {
-        apiGetDetail(routeParams.id,
+      const query = routeParams.slug
+      if (routeParams) {
+        apiGetDetail(
+          routeParams,
           (result) => {
-            commit(INIT_LIST, result)
+            commit(INIT_LIST, result.data.results)
           },
           (errors) => {
             commit(SET_ERROR, errors)
-          }, routeParams)
+          },)
       }
     },
   },

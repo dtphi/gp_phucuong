@@ -244,7 +244,12 @@ class LinhmucThuyenchuyenTemp extends BaseModel
     $linhmucId = (int)$linhmucId;
     $idThuyenChuyen = (int)$idThuyenChuyen;
     if ($linhmucId) {
-      return DB::delete("delete from " . Tables::$linhmuc_thuyenchuyens . " where linh_muc_id = '" . $linhmucId . "' and id = " . $idThuyenChuyen);
+      return DB::delete("delete from " . Tables::$linhmuc_thuyenchuyens_temp . " where linh_muc_id = '" . $linhmucId . "' and id = " . $idThuyenChuyen);
+    }
+  }
+  public static function fcDeleteByLinhmucTempThuyenChuyenId($id) {
+    if ($id) {
+      return DB::delete("delete from " . Tables::$linhmuc_thuyenchuyens_temp . " where id = " . $id);
     }
   }
 
