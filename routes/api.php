@@ -46,6 +46,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::get('/app/get-detail-linh-muc-update/{id}', 'Base\ApiController@getLinhMucUpdate');
     Route::post('/app/update-linh-muc-temp', 'Base\ApiController@updateLinhMucTemp');
     Route::get('/app/get-hoat-dong-su-vu/{id}', 'Base\ApiController@getHoatDongSuVu');
+    Route::get('/app/get-bo-nhiem-khac/{id}', 'Base\ApiController@getBoNhiemKhac');
     Route::apiResource('/email_sub/create', 'EmailController');
     Route::get('/app/dropdown-categories', 'Base\ApiController@listDropdownCategories');
     Route::get('/app/add-thuyen-chuyen', 'Base\ApiController@addThuyenChuyen');
