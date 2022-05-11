@@ -801,7 +801,7 @@ class ApiController extends Controller
         'image'  => !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
         'sinh_giao_xu' => $infos-> sinh_giao_xu ?? '' ,
         'giao_xu' => $infos->ten_xu ,
-        'dia_chi' => $infos->noi_sinh ,
+        'noi_sinh' => $infos->noi_sinh ,
         'ho_ten_cha' => $infos->ho_ten_cha,
         'ho_ten_me' => $infos->ho_ten_me,
         'noi_rua_toi' => $infos->noi_rua_toi,
@@ -1093,7 +1093,7 @@ class ApiController extends Controller
 	{
 		if ($request->query('page')) {
 			$page = $request->query('page');
-		}
+		} 
 
 		try {
 			$collections = $this->sv->apiGetListLinhMucSearch($request);
@@ -1288,6 +1288,40 @@ class ApiController extends Controller
       'data' => [
         'success' => 200,
       ] 
+    ];
+    return $this->respondWithCollectionPagination($json);
+  }
+  public function getBoNhiemKhac($id = null)
+  {
+    try {
+      $collections = $this->sv->apiGetBoNhiem($id);
+      $results = [];
+
+      foreach ($collections as $key => $info) {
+        $results[] = [
+          'id' => (int)$info->id,
+          'isCheck' => false,
+          'isEdit' => 1,
+          'to_date' => $info->to_date,
+          'from_date' => $info->from_date,
+          'chuc_vu_id' => $info->chuc_vu_id,
+          'chucvuName' => $info->ten_to_chuc_vu,
+          'label_from_date' => ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '',
+          'label_to_date' => ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '',
+          'ghi_chu' => $info->ghi_chu,
+          'active' => $info->active,
+          'active_text' => $info->active ? 'Xảy ra' : 'Ẩn',
+          'chuc_vu_active' => $info->chuc_vu_active,
+        ];
+      }
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
+    }
+
+    $json = [
+      'data' => [
+        'results' => $results,
+      ]
     ];
     return $this->respondWithCollectionPagination($json);
   }
@@ -1515,6 +1549,34 @@ class ApiController extends Controller
       $formData = json_decode($data['data']);
       try {
         $collections = $this->sv->apiUpdateThuyenChuyen($data['id'], $formData);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    } else if ($data['action'] == 'add.bo.nhiem') {
+      $formData = json_decode($data['data']);
+      try {
+        $collections = $this->sv->apiAddBoNhiem($data['id'], $formData);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
+    } else if ($data['action'] == 'update.bo.nhiem') {
+      $formData = json_decode($data['data']);
+      try {
+        $collections = $this->sv->apiUpdateBoNhiem($data['id'], $formData);
         $json = [
           'data' => [
             'success' => 'success',

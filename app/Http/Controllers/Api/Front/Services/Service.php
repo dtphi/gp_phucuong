@@ -551,7 +551,8 @@ class Service implements BaseModel
 				$list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $array_id_linhmuc)->paginate(5);
 			}
 		} else {
-			$linhmuc_query = $this->modelLinhMuc->query()->name($request)->pluck('id')->toArray();
+      $query = $request->input('query');
+			$linhmuc_query = $this->modelLinhMuc->name($query)->pluck('id')->toArray();
 
 			if (!$request->input('id_giaohat') && $request->input('id_chucvu')) {
 				$list_linhmuc_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
@@ -615,7 +616,7 @@ class Service implements BaseModel
           'ten_thanh_id' => $data['ten_thanh_id'],
           'ten' => $data['ten'],
           'ngay_thang_nam_sinh' => $data['ngay_thang_nam_sinh'] ?? null,
-          'noi_sinh' => $data['dia_chi'],
+          'noi_sinh' => $data['noi_sinh'],
           'ho_ten_cha' => $data['ho_ten_cha'],
           'ho_ten_me' => $data['ho_ten_me'],
           'noi_rua_toi' => $data['noi_rua_toi'] ?? null,
@@ -641,6 +642,17 @@ class Service implements BaseModel
           'sinh_giao_xu' => $data['sinh_giao_xu'],
         ]);
         return $linhmuc_temp;
+  }
+
+  public function apiGetBoNhiem($infoId = null)
+  {
+    $query = $this->modelThuyenChuyenTemp->select()
+    ->where('linh_muc_id', $infoId)
+    ->where('is_bo_nhiem', 1)
+    ->orderBy('from_date', 'DESC')
+    ->get();
+
+    return $query;
   }
 
   public function apiGetThuyenChuyen($infoId = null)
@@ -762,6 +774,42 @@ class Service implements BaseModel
       ]
     );
   }
+
+  public function apiAddBoNhiem($id = null, $data) {
+    if ($data->cong_viec_tu_nam == null || $data->cong_viec_tu_thang == null || $data->cong_viec_tu_ngay == null) {
+      $data->from_date = null;
+    } else {
+      $data->from_date = $data->cong_viec_tu_nam . '-' . $data->cong_viec_tu_thang . '-' . $data->cong_viec_tu_ngay;
+    }
+
+    if ($data->cong_viec_den_nam == null || $data->cong_viec_den_thang == null || $data->cong_viec_den_ngay == null) {
+      $data->to_date = null;
+    } else {
+      $data->to_date = $data->cong_viec_den_nam . '-' . $data->cong_viec_den_thang . '-' . $data->cong_viec_den_ngay;
+    }
+
+    $hat = LinhmucThuyenchuyenTemp::create(
+      [
+        'linh_muc_id' => $id,
+        'giao_xu_id' => 0,
+        'chuc_vu_id' => $data->id_chucvu,
+        'from_giao_xu_id' => 0,
+        'from_chuc_vu_id' => 0,
+        'from_date' => $data->from_date,
+        'to_date' => $data->to_date,
+        'duc_cha_id' => '',
+        'co_so_gp_id' => 0,
+        'dong_id' => 0,
+        'ban_chuyen_trach_id' => 0,
+        'du_hoc' => 0,
+        'active' => 1,
+        'ghi_chu' => $data->cong_viec,
+        'chuc_vu_active' => $data->select_status,
+        'is_bo_nhiem' => 1,
+      ]
+    );
+  }
+
   public function apiUpdateThuyenChuyen($id = null, $data) 
   {
       $thuyenChuyens = $this->modelThuyenChuyenTemp->findOrFail($id);
@@ -788,7 +836,37 @@ class Service implements BaseModel
       }
       DB::commit();
   }
+
   public function apiDeleteThuyenChuyen($id = null) {
+    LinhmucThuyenChuyenTemp::fcDeleteByLinhmucTempThuyenChuyenId($id);
+  }
+  
+  public function apiUpdateBoNhiem($id = null, $data) {
+    $bo_nhiem = $this->modelThuyenChuyen->findOrFail($id);
+    if ($data->cong_viec_tu_nam == null || $data->cong_viec_tu_thang == null || $data->cong_viec_tu_ngay == null) {
+     $bo_nhiem->from_date = null;
+    } else {
+      $bo_nhiem->from_date = $data->cong_viec_tu_nam . '-' . $data->cong_viec_tu_thang . '-' . $data->cong_viec_tu_ngay;
+    }
+
+    if ($data->cong_viec_den_nam == null || $data->cong_viec_den_thang == null || $data->cong_viec_den_ngay == null) {
+      $bo_nhiem->to_date = null;
+    } else {
+      $bo_nhiem->to_date = $data->cong_viec_den_nam . '-' . $data->cong_viec_den_thang . '-' . $data->cong_viec_den_ngay;
+    }
+    $bo_nhiem->chuc_vu_id = $data->id_chucvu;
+    $bo_nhiem->ghi_chu = $data->cong_viec;
+    $bo_nhiem->chuc_vu_active = $data->select_status;
+
+    DB::beginTransaction();
+    if (!$bo_nhiem->save()) {
+      DB::rollBack();
+      return false;
+    }
+    DB::commit();
+  }
+  public function apiDeleteBoNhiem($id = null)
+  {
     LinhmucThuyenChuyenTemp::fcDeleteByLinhmucTempThuyenChuyenId($id);
   }
 }
