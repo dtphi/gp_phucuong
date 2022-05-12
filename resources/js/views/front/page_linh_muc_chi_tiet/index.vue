@@ -1,10 +1,16 @@
 <template>
   <main id="news" class="tab-content">
-    <div>
-      <h1>THÔNG TIN CÁ NHÂN</h1>
-      <h5><a :href="linhmuc_update.link_hdsv" target="_blank">Hoạt động sứ vụ</a></h5>
+    <div class="form-group mt-2">
+      <div class="col-sm-10">
+        <h2>THÔNG TIN CÁ NHÂN</h2>
+      </div>
     </div>
     <div class="tab-content">
+    <div class="form-group">
+      <div class="col-sm-10">
+        <h3><a :href="linhmuc_update.link_hdsv">Hoạt động sứ vụ</a></h3>
+      </div>
+    </div>
     <div class="form-group">
       <h5 for="input-info-sinh-giao-xu" class="col-sm-2 control-label">Tên thánh:</h5>
       <div class="col-sm-10">
@@ -476,7 +482,7 @@
       </div>
     </div>
     <div class="form-group">
-      <button @click="updateLinhMuc()" class="btn btn-primary">CẬP NHẬT</button>
+     <button @click="updateLinhMuc()" class="btn btn-primary">CẬP NHẬT</button>
     </div>
   </div>
   </main>
