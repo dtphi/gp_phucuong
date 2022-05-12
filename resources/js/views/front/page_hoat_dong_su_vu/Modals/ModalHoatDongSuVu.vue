@@ -126,7 +126,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -135,7 +135,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -144,7 +144,7 @@
                 max="4"
                 min="0"
                 class="form-control"
-                style="max-width: 35%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <cms-date-picker
                 value-type="format"
@@ -164,7 +164,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -173,7 +173,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -182,7 +182,7 @@
                 max="4"
                 min="0"
                 class="form-control"
-                style="max-width: 38%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <cms-date-picker
                 value-type="format"
@@ -230,15 +230,7 @@ import { MODULE_LINH_MUC_DETAIL_PAGE } from '@app/stores/front/types/module-type
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'TheCmsModalResizable',
-  props: {
-    icon: {
-      default: 'fa fa-plus',
-    },
-    modalName: {
-      default: 'modal-resizable',
-    },
-  },
+  name: 'ModalHoatDongSuVu',
   data() {
     return {
       dia_diem_loai: '',
@@ -411,6 +403,9 @@ export default {
       this.$data.dia_diem_den_ngay = arrDate[2]
     },
   },
+  mounted() {
+    console.log('rersrerser')
+  }
 }
 </script>
 

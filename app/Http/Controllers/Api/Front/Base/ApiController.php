@@ -1552,6 +1552,19 @@ class ApiController extends Controller
       } catch (HandlerMsgCommon $e) {
         throw $e->render();
       }
+    } else if ($data['action'] == 'delete.bo.nhiem') {
+      try {
+        $collections = $this->sv->apiDeleteBoNhiem($data['id']);
+        $json = [
+          'data' => [
+            'success' => 'success',
+            'status' => 200,
+          ]
+        ];
+        return $this->respondWithCollectionPagination($json);
+      } catch (HandlerMsgCommon $e) {
+        throw $e->render();
+      }
     }else {
       try {
         $collections = $this->sv->apiDeleteThuyenChuyen($data['id']);

@@ -31,7 +31,6 @@
 				<the-modal-edit
 					:info="_infoUpdate"
 					:info-id="_infoUpdate.id"
-					@update-info-success="_updateInfoList"
 				></the-modal-edit>
 		</modal>
 	</div>
@@ -79,9 +78,6 @@ export default {
 				this.$notify(notification);
 				this.resetNotification();
     },
-    _updateInfoList() {
-      	this.$modal.hide("modal-hoat-dong-su-vu-edit");
-    }
 	},
   mounted() {
     this.GET_HOAT_DONG_SU_VU(this.$route.params)

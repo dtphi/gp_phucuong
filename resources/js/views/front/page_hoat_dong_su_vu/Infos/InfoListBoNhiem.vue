@@ -40,7 +40,7 @@
 <script>
 import { MODULE_LINH_MUC_DETAIL_PAGE, } from '@app/stores/front/types/module-types'
 import { mapState, mapActions, } from 'vuex'
-import InfoItemBoNhiem from './InfoItem'
+import InfoItemBoNhiem from './InfoItemBoNhiem'
 import TheModalEditBoNhiem from '../Modals/ModalBoNhiemKhacEdit.vue'
 
 export default {

@@ -1,8 +1,20 @@
 <template>
   <div class="tab-content">
-    <h1>Hoạt Động Sứ Vụ</h1>
-    <h5><a :href="'/danh-sach-linh-muc/chi-tiet/' + this.$route.params.linhMucId"  target="_blank">Thông tin cá nhân</a></h5>
+    <div class="form-group mt-2">
+      <div class="col-sm-12">
+        <h3><a :href="'/danh-sach-linh-muc/chi-tiet/' + this.$route.params.linhMucId">Thông tin cá nhân</a></h3>
+      </div>
+    </div>
     <div class="form-group">
+      <div class="col-sm-12">
+        <select class="form-control" v-model="select_type_action">
+          <option :value="1" :selected="select_type_action === 1">Bổ Nhiệm Khác</option>
+          <option :value="0" :selected="select_type_action === 0">Hoạt Động Sứ Vụ</option>
+        </select>
+      </div>
+    </div>
+    <!-- Hoạt Động Sứ Vụ -->
+    <div class="form-group" v-if="select_type_action === 0">
         <div class="col-sm-12">
             <div class="text-right">
               	<btn-add @show-modal-add="_showModalAdd"></btn-add>
@@ -13,9 +25,8 @@
 				</div>
         </div>
     </div>
-    <!-- Bo_nhiem_khac -->
-    <h1>Bổ Nhiệm Khác</h1>
-    <div class="form-group">
+    <!-- Bổ Nhiệm Khác -->
+    <div class="form-group" v-else>
         <div class="col-sm-12">
             <div class="text-right">
               	<btn-add-bo-nhiem @show-modal-add-bo-nhiem="_showModalAddBoNhiem"></btn-add-bo-nhiem>
@@ -53,17 +64,14 @@ export default {
   },
   data() {
     return {
+      select_type_action: 0,
     }
   },
   methods: {
-    ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, [
-      'GET_HOAT_DONG_SU_VU',
-    ]),
     _showModalAdd() {
 			this.$modal.show('modal-hoat-dong-su-vu-add')
 		},
     _showModalAddBoNhiem() {
-      console.log('modal_bonhiemkhac')
 			this.$modal.show('modal-bo-nhiem-khac-add')
 		},
   },

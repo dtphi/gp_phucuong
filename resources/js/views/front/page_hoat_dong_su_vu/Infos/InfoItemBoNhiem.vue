@@ -1,14 +1,11 @@
 <template>
   <tbody>
+    <v-dialog />
     <tr>
       <td>{{ vitri + 1 }}</td>
-			<p class="text-center">{{ item.chucvuName }}</p>
-			 <div class="text-center">
-          <p v-if="checkActiveToggle">Xảy ra</p>
-          <p v-else>Ẩn</p>
-			</div>
+			<td class="text-center">{{ item.chucvuName }}</td>
 			<td class="text-center">{{ item.ghi_chu }}</td>
-      <td class="text-center">{{ item.label_from_date  }}</td>
+      <td class="text-center">{{ item.label_from_date }}</td>
 			<td class="text-center">{{ item.label_to_date }}</td>
       <td>	
 				<a
@@ -72,12 +69,12 @@ export default {
 	},
   methods: {
     ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, [
-      'DELETE_THUYEN_CHUYEN'
+      'DELETE_BO_NHIEM'
     ]),
 		_removeItem(item) {
       this.$modal.show('dialog', {
         title: "Xóa bổ nhiệm",
-        text: "Bạn muốn xóa hoạt động sứ vụ này ?",
+        text: "Bạn muốn xóa bổ nhiệm này ?",
         buttons: [
           {
             title: "Hủy",
@@ -88,7 +85,7 @@ export default {
           {
             title: "Xóa",
             handler: () => {
-							this.DELETE_THUYEN_CHUYEN(item.id)
+							this.DELETE_BO_NHIEM(item.id)
               this.$modal.hide("dialog")
             },
           },
