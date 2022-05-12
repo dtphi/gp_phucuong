@@ -1283,7 +1283,7 @@ class ApiController extends Controller
   public function updateLinhMucTemp(Request $request)
   {
     $data = $request->all();
-    $results = $this->sv->apiUpdateLinhMucTemp($data);
+    $results = $this->sv->apiUpdateLinhMucTemp($data['params']);
     $json = [
       'data' => [
         'success' => 200,
