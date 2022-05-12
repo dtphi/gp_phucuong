@@ -4,6 +4,17 @@
       <div class="panel-body">
         <form class="form-horizontal cms-modal-form">
           <div class="form-group">
+            <label for="input-info-status" class="col-sm-3 control-label"
+              >Loại hoạt động</label
+            >
+            <div class="col-sm-10">
+              <select class="form-control" v-model="select_action">
+                <option :value="1" :selected="select_action == 1">Bổ nhiệm khác</option>
+                <option :value="0" :selected="select_action == 0">Hoạt động sứ vụ</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-3 control-label">Chức vụ:</label>
             <div class="col-sm-12">
               <select
@@ -21,7 +32,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" v-if="select_action == 1">
             <label for="input-info-name" class="col-sm-3 control-label"
               >Công việc</label
             >
@@ -40,7 +51,7 @@
               </validation-provider>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" v-if="select_action == 0">
             <label class="col-sm-3 control-label">Loại địa điểm</label>
             <div class="col-sm-9">
               <select class="form-control" v-model="dia_diem_loai">
@@ -54,7 +65,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" v-if="select_action == 0">
             <div class="col-sm-12">
               <!-- Giao_xu -->
               <select
@@ -218,17 +229,6 @@
               <select class="form-control" v-model="select_status">
                 <option :value="1" :selected="select_status == 1">Hiện đang giữ</option>
                 <option :value="0" :selected="select_status == 0">Đã xảy ra</option>
-              </select>
-            </div>
-          </div>
-              <div class="form-group">
-            <label for="input-info-status" class="col-sm-3 control-label"
-              >Loại hoạt động</label
-            >
-            <div class="col-sm-10">
-              <select class="form-control" v-model="select_action">
-                <option :value="1" :selected="select_action == 1">Bổ nhiệm khác</option>
-                <option :value="0" :selected="select_action == 0">Hoạt động sứ vụ</option>
               </select>
             </div>
           </div>

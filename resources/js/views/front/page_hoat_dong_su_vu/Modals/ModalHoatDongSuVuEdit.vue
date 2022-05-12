@@ -155,7 +155,6 @@
                 format="YYYY-MM-DD"
                 v-model="from_date"
                 type="date"
-                class="form-control"
               ></cms-date-picker>
             </div>
           </div>
