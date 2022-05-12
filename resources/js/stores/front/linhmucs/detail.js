@@ -90,7 +90,6 @@ export default {
     SET_DELETE_THUYEN_CHUYEN(state, payload) {
       const i = state.arr_thuyen_chuyens.map(item => item.id).indexOf(payload)
       state.arr_thuyen_chuyens.splice(i, 1)
-      console.log(state.arr_thuyen_chuyens, 'xoa')
     },
     SET_DELETE_BO_NHIEM(state, payload) {
       const i = state.arr_bo_nhiems.map(item => item.id).indexOf(payload)
@@ -298,7 +297,8 @@ export default {
       apiAddThuyenChuyen(
         params,
         (res) => {
-          window.location.reload(true);
+          alert('Thêm hoạt động thành công !!')
+          window.location.reload(true)
         },
         (err) => {
           console.log(err, 'err')

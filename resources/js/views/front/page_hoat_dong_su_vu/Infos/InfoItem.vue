@@ -5,6 +5,7 @@
       <td>{{ vitri + 1 }}</td>
       <td class="text-center">{{ item.chucvuName }}</td>
 			<td class="text-center">{{ diaDiemName }}</td>
+      <td class="text-center">{{ item.ghi_chu }}</td>
 			<td class="text-center">{{ item.label_from_date }}</td>
 			<td class="text-center">{{ check_label_to_date }}</td>
 			<td>	
@@ -91,8 +92,8 @@ export default {
     ]),
 		_removeItem(item) {
       this.$modal.show('dialog', {
-        title: "Xóa hoạt động sứ vụ",
-        text: "Bạn muốn xóa hoạt động sứ vụ này ?",
+        title: "Xóa hoạt động",
+        text: "Bạn muốn xóa hoạt động này ?",
         buttons: [
           {
             title: "Hủy",

@@ -1321,7 +1321,8 @@ class ApiController extends Controller
           'active' => $info->active,
           'active_text' => $info->active ? 'Xảy ra' : 'Ẩn',
           'chuc_vu_active' => $info->chuc_vu_active,
-          
+          'ghi_chu' => $info->ghi_chu,
+          'is_bo_nhiem' => $info->is_bo_nhiem,
         ];
       }
     } catch (HandlerMsgCommon $e) {
