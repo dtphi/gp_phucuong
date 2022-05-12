@@ -5,17 +5,8 @@
         <h3><a :href="'/danh-sach-linh-muc/chi-tiet/' + this.$route.params.linhMucId">Thông tin cá nhân</a></h3>
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-12">
-        <select class="form-control" v-model="select_type_action">
-          <option :value="1" :selected="select_type_action === 1">Bổ Nhiệm Khác</option>
-          <option :value="0" :selected="select_type_action === 0">Hoạt Động Sứ Vụ</option>
-          <option :value="2" :selected="select_type_action === 2">Tất cả</option>
-        </select>
-      </div>
-    </div>
     <!-- Hoạt Động Sứ Vụ -->
-    <div class="form-group" v-if="select_type_action === 2">
+    <div class="form-group">
         <div class="col-sm-12">
             <div class="text-right">
               	<btn-add @show-modal-add="_showModalAdd"></btn-add>
@@ -27,7 +18,7 @@
         </div>
     </div>
     <!-- Bổ Nhiệm Khác -->
-    <div class="form-group" v-else>
+    <!-- <div class="form-group" v-else>
         <div class="col-sm-12">
             <div class="text-right">
               	<btn-add-bo-nhiem @show-modal-add-bo-nhiem="_showModalAddBoNhiem"></btn-add-bo-nhiem>
@@ -37,7 +28,7 @@
 						<btn-add-bo-nhiem @show-modal-add-bo-nhiem="_showModalAddBoNhiem"></btn-add-bo-nhiem>
 				</div>
         </div>
-    </div>
+    </div> -->
     <modal-hoat-dong-su-vu></modal-hoat-dong-su-vu>
     <modal-bo-nhiem-khac></modal-bo-nhiem-khac>
   </div>

@@ -350,6 +350,7 @@ class Service implements BaseModel
       $this->modelLinhmucTemp->ho_ten_cha = $model->ho_ten_cha;
       $this->modelLinhmucTemp->ho_ten_me = $model->ho_ten_me;
       $this->modelLinhmucTemp->noi_rua_toi = $model->noi_rua_toi;
+      $this->modelLinhmucTemp->ngay_rua_toi = $model->ngay_rua_toi;
       $this->modelLinhmucTemp->noi_them_suc = $model->noi_them_suc;
       $this->modelLinhmucTemp->ngay_them_suc = $model->ngay_them_suc;
       $this->modelLinhmucTemp->tieu_chung_vien = $model->tieu_chung_vien;
