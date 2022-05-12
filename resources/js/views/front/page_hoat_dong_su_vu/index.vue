@@ -10,11 +10,12 @@
         <select class="form-control" v-model="select_type_action">
           <option :value="1" :selected="select_type_action === 1">Bổ Nhiệm Khác</option>
           <option :value="0" :selected="select_type_action === 0">Hoạt Động Sứ Vụ</option>
+          <option :value="2" :selected="select_type_action === 2">Tất cả</option>
         </select>
       </div>
     </div>
     <!-- Hoạt Động Sứ Vụ -->
-    <div class="form-group" v-if="select_type_action === 0">
+    <div class="form-group" v-if="select_type_action === 2">
         <div class="col-sm-12">
             <div class="text-right">
               	<btn-add @show-modal-add="_showModalAdd"></btn-add>
@@ -64,7 +65,7 @@ export default {
   },
   data() {
     return {
-      select_type_action: 0,
+      select_type_action: 2,
     }
   },
   methods: {

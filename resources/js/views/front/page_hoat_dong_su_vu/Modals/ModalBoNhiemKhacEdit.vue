@@ -196,7 +196,6 @@ export default {
 			this.den_ngay_thang_nam = this.info.label_to_date
 			this.cong_viec = this.info.ghi_chu
       this.select_status = this.info.active
-      console.log(this.select_chuc_vu, 'select')
 	},
   mounted() {
     this.getDropdownChucVus()
@@ -220,7 +219,7 @@ export default {
       this.$data.cong_viec_den_nam = arrDate[0]
       this.$data.cong_viec_den_thang = arrDate[1]
       this.$data.cong_viec_den_ngay = arrDate[2]
-    },
+  },
     _hideModalEdit() {
       this.$modal.hide('modal-bo-nhiem-khac-edit')
     },

@@ -661,7 +661,7 @@ class Service implements BaseModel
     if(!is_null($model)) {
       $query = $this->modelThuyenChuyenTemp->select()
       ->where('linh_muc_id', $infoId)
-      ->where('is_bo_nhiem', '!=', 1)
+      // ->where('is_bo_nhiem', '!=', 1)
       ->orderBy('from_date', 'DESC')
       ->get();
     }else {
@@ -671,11 +671,10 @@ class Service implements BaseModel
           LinhmucThuyenchuyenTemp::insert($info);
         $query = $this->modelThuyenChuyenTemp->select()
         ->where('linh_muc_id', $infoId)
-        ->where('is_bo_nhiem', '!=', 1)
+        // ->where('is_bo_nhiem', '!=', 1)
         ->orderBy('from_date', 'DESC')
         ->get();
       }
-     
     }
     return $query;
 }
@@ -759,17 +758,19 @@ class Service implements BaseModel
     $hat = LinhmucThuyenchuyenTemp::create(
       [
         'linh_muc_id' => $id,
-        'giao_xu_id' => $data->thuyenChuyen->select_giao_xu,
-        'chuc_vu_id' => $data->select_chuc_vu,
+        'giao_xu_id' => $data->thuyenChuyen->select_giao_xu ?? 0,
+        'chuc_vu_id' => $data->select_chuc_vu ?? 0,
         'from_giao_xu_id' => 0,
         'from_chuc_vu_id' => 0,
         'from_date' => $data->from_date,
         'to_date' => $data->to_date,
         'duc_cha_id' => '',
-        'co_so_gp_id' => $data->thuyenChuyen->select_csgp,
-        'dong_id' => $data->thuyenChuyen->select_dong,
-        'ban_chuyen_trach_id' => $data->thuyenChuyen->select_bct,
+        'co_so_gp_id' => $data->thuyenChuyen->select_csgp ?? 0,
+        'dong_id' => $data->thuyenChuyen->select_dong ?? 0,
+        'ban_chuyen_trach_id' => $data->thuyenChuyen->select_bct ?? 0,
         'du_hoc' => 0,
+        'ghi_chu' => $data->cong_viec,
+        'is_bo_nhiem' => $data->select_action,
         'chuc_vu_active' => $data->select_status,
       ]
     );
@@ -842,7 +843,7 @@ class Service implements BaseModel
   }
   
   public function apiUpdateBoNhiem($id = null, $data) {
-    $bo_nhiem = $this->modelThuyenChuyen->findOrFail($id);
+    $bo_nhiem = $this->modelThuyenChuyenTemp->findOrFail($id);
     if ($data->cong_viec_tu_nam == null || $data->cong_viec_tu_thang == null || $data->cong_viec_tu_ngay == null) {
      $bo_nhiem->from_date = null;
     } else {
@@ -854,10 +855,10 @@ class Service implements BaseModel
     } else {
       $bo_nhiem->to_date = $data->cong_viec_den_nam . '-' . $data->cong_viec_den_thang . '-' . $data->cong_viec_den_ngay;
     }
+
     $bo_nhiem->chuc_vu_id = $data->id_chucvu;
     $bo_nhiem->ghi_chu = $data->cong_viec;
     $bo_nhiem->chuc_vu_active = $data->select_status;
-
     DB::beginTransaction();
     if (!$bo_nhiem->save()) {
       DB::rollBack();
