@@ -51,7 +51,7 @@
               </validation-provider>
             </div>
           </div>
-          <div class="form-group" v-if="select_action == 0">
+          <div class="form-group">
             <label class="col-sm-3 control-label">Loại địa điểm</label>
             <div class="col-sm-9">
               <select class="form-control" v-model="dia_diem_loai">
@@ -65,7 +65,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group" v-if="select_action == 0">
+          <div class="form-group">
             <div class="col-sm-12">
               <!-- Giao_xu -->
               <select
