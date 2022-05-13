@@ -1,5 +1,5 @@
 <template>
-  <main id="videdo" class="py-2">
+  <main id="video" class="py-2">
     <div class="container">
       <main-menu></main-menu>
       <div
@@ -116,5 +116,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "./category-news-styles.scss";
 </style>
