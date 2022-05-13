@@ -3,6 +3,9 @@
     <h4 class="title mt-2 ellipsis-two-lines">
       <a :href="_getHref()">{{ info.ten_le }}</a>
     </h4>
+    <span class="d-block view-date"
+      >{{ info.solar_day }}-{{ info.solar_month }}-{{year}}</span
+    >
     <span class="d-block mb-1">
       <div class="ellipsis-three-lines" v-html="info.hanh"></div>
     </span>
@@ -22,12 +25,10 @@ export default {
     info: {},
   },
   data() {
-    return {}
+    return {
+      year: new Date().getFullYear(),
+    }
   },
-  mounted(){
-    console.log('test wweb');
-  },
-
   methods: {
     _getHref() {
       if ((String(this.info['slug']) !== 'undefined') && (String(this.info['slug']).length > 5)) {

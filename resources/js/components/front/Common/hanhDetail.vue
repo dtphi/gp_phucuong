@@ -3,7 +3,7 @@
     <h4 class="tit-detail">{{ pageLists.ten_le }}</h4>
     <p>
       <b-icon class="alarm" icon="alarm"></b-icon>
-      <span>{{ pageLists.solar_day }}-{{pageLists.solar_month}}</span>
+      <span>{{ pageLists.solar_day }}-{{pageLists.solar_month}}-{{year}}</span>
     </p>
 
     <p v-html="pageLists.hanh"></p>
@@ -27,6 +27,7 @@ export default {
     return {
       imgFooter: ImgFooter,
       viewer: false,
+      year: new Date().getFullYear(),
     }
   },
   computed: {
