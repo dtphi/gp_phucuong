@@ -8,7 +8,12 @@
               <h3>Thông tin linh mục</h3>
             </div>
           </div>
-          <div class="form-group" v-if="info_linhmuc_update.length > 0">
+          <div class="form-group" v-if="Object.keys(info_linhmuc_update).length === 0">
+            <div class="col-sm-10">
+              <h1>Thông tin linh mục đã cập nhật !!!</h1>
+            </div>
+          </div>
+          <div class="form-group" v-else>
             <div class="col-sm-10">
               <h5>Tên thánh           : {{info_linhmuc_update.ten_thanh_name }}</h5>
               <h5>Tên                 : {{info_linhmuc_update.ten }}</h5>
@@ -38,14 +43,9 @@
               <h5>Châm ngôn           : {{info_linhmuc_update.cham_ngon }}</h5>
               <h5>Ghi chú             : {{info_linhmuc_update.ghi_chu }}</h5>
             </div>
-          </div>
-          <div class="form-group" v-else>
-            <div class="col-sm-10">
-              <h1>Thông tin linh mục đã cập nhật !!!</h1>
-            </div>
-          </div>
+          </div>       
         </form>
-        <div class="cms-modal-footer-btn" v-if="info_linhmuc_update.length > 0">
+        <div class="cms-modal-footer-btn" v-if="Object.keys(info_linhmuc_update).length !== 0">
           <div class="text-center cms-modal-group-btn">
             <input
               type="button"
@@ -79,7 +79,7 @@ export default {
   computed: {
     ...mapState(MODULE_MODULE_LINH_MUC_EDIT, {
       info_linhmuc_update: (state) => state.info_linhmuc_update
-    })
+    }),
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
@@ -96,7 +96,7 @@ export default {
   },
   mounted() {
     const id = this.$route.params.linhmucId
-    this.GET_INFO_LINHMUC_UPDATE(id)
+    this.GET_INFO_LINHMUC_UPDATE(id) 
   }
 }
 </script>
