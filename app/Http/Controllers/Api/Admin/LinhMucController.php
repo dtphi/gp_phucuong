@@ -236,7 +236,14 @@ class LinhMucController extends ApiController
 							throw $e->render();
 					}
 					return $json;
-				}else {
+				} elseif ($action == 'capnhat.linhmuc') {
+        try {
+          $json = $this->linhMucSv->apiCapNhatLinhMuc($data);
+          } catch (HandlerMsgCommon $e) {
+            throw $e->render();
+          }
+          return $json;
+        }else {
 					try {
 						$model = $this->linhMucSv->apiGetDetail($id);
 
@@ -586,4 +593,14 @@ class LinhMucController extends ApiController
 				];
 				return $this->respondWithCollectionPagination($json);
 		}
+
+    public function listInfoLinhMucUpdate($infoId = null) 
+    {
+        try {
+          $json = $this->linhMucSv->apiGetResourceDetailTemp($infoId);
+        } catch (HandlerMsgCommon $e) {
+          throw $e->render();
+        }
+        return $json;
+    }
 }
