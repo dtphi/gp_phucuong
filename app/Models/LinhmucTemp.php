@@ -5,12 +5,10 @@ namespace App\Models;
 use DB;
 use App\Models\GiaoXu;
 use App\Http\Common\Tables;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LinhmucTemp extends BaseModel
 {
-  use SoftDeletes;
 
   /**
    * @var string

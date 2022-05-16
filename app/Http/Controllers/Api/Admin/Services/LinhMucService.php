@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers\Api\Admin\Services;
 
-use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
-use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
-use App\Http\Resources\LinhMucs\LinhmucResource;
-use App\Http\Resources\LinhMucBangCaps\LinhMucBangCapCollection;
-use App\Http\Resources\LinhMucChucThanhs\LinhMucChucThanhCollection;
-use App\Http\Resources\LinhMucVanThus\LinhMucVanThuCollection;
-use App\Http\Resources\LinhMucThuyenChuyens\LinhMucThuyenChuyenCollection;
-use App\Models\BanChuyenTrach;
-use App\Models\ChucVu;
-use App\Models\CoSoGiaoPhan;
+use DB;
 use App\Models\Dong;
+use App\Models\Thanh;
+use App\Models\ChucVu;
 use App\Models\GiaoXu;
 use App\Models\Linhmuc;
+use App\Models\LinhmucTemp;
+use App\Models\CoSoGiaoPhan;
+use App\Models\LinhmucVanthu;
+use App\Models\BanChuyenTrach;
 use App\Models\LinhmucBangcap;
 use App\Models\LinhmucBoNhiem;
 use App\Models\LinhmucChucthanh;
-use App\Models\LinhmucGpThuyenChuyen;
 use App\Models\LinhmucThuyenchuyen;
-use App\Models\LinhmucVanthu;
-use App\Models\Thanh;
-use DB;
+use App\Models\LinhmucGpThuyenChuyen;
+use App\Http\Resources\LinhMucs\LinhmucResource;
+use App\Http\Resources\LinhMucVanThus\LinhMucVanThuCollection;
+use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
+use App\Http\Resources\LinhMucBangCaps\LinhMucBangCapCollection;
+use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
+use App\Http\Resources\LinhMucChucThanhs\LinhMucChucThanhCollection;
+use App\Http\Resources\LinhMucThuyenChuyens\LinhMucThuyenChuyenCollection;
 
 final class LinhMucService implements BaseModel, LinhMucModel
 {
@@ -38,6 +39,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
     public function __construct()
     {
         $this->model = new Linhmuc();
+        $this->modelTemp = new LinhmucTemp();
 				$this->modelBoNhiem = new LinhmucBoNhiem();
 				$this->modelLmGpThuyenChuyen = new LinhmucGpThuyenChuyen();
 				$this->modelThuyenChuyen = new LinhmucThuyenchuyen();
@@ -65,6 +67,14 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return $this->model;
     }
 
+    public function apiGetDetailTemp($id = null)
+    {
+      // TODO: Implement apiGetDetail() method.
+      $this->modelTemp = $this->modelTemp->find($id);
+
+      return $this->modelTemp;
+    }
+
     /**
      * @author : dtphi .
      * @param null $id
@@ -74,6 +84,12 @@ final class LinhMucService implements BaseModel, LinhMucModel
     {
         // TODO: Implement apiGetResourceDetail() method.
         return new LinhmucResource($this->apiGetDetail($id));
+    }
+
+    public function apiGetResourceDetailTemp($id = null)
+    {
+      // TODO: Implement apiGetResourceDetail() method.
+      return new LinhmucResource($this->apiGetDetailTemp($id));
     }
 
     /**
@@ -679,5 +695,45 @@ final class LinhMucService implements BaseModel, LinhMucModel
 			);
 
         return new LinhMucThuyenChuyenCollection(LinhMucThuyenChuyen::where('linh_muc_id', $data['linhMucId'])->where('is_bo_nhiem', 1)->orderBy('from_date', 'DESC')->get());
+    }
+
+    public function apiCapNhatLinhMuc($data = []) {
+        $newTbLinhMuc = $this->modelTemp->find($data['id']);
+        $oldTbLinhMuc = $this->model->find($data['id']);
+        DB::beginTransaction();
+          $oldTbLinhMuc->ten_thanh_id = $newTbLinhMuc->ten_thanh_id;
+          $oldTbLinhMuc->ten = $newTbLinhMuc->ten;
+          $oldTbLinhMuc->ngay_thang_nam_sinh = $newTbLinhMuc->ngay_thang_nam_sinh;
+          $oldTbLinhMuc->noi_sinh = $newTbLinhMuc->noi_sinh;
+          $oldTbLinhMuc->giao_xu_id = $newTbLinhMuc->giao_xu_id;
+          $oldTbLinhMuc->ho_ten_cha = $newTbLinhMuc->ho_ten_cha;
+          $oldTbLinhMuc->ho_ten_me = $newTbLinhMuc->ho_ten_me;
+          $oldTbLinhMuc->noi_rua_toi = $newTbLinhMuc->noi_rua_toi;
+          $oldTbLinhMuc->ngay_rua_toi = $newTbLinhMuc->ngay_rua_toi;
+          $oldTbLinhMuc->noi_them_suc = $newTbLinhMuc->noi_them_suc;
+          $oldTbLinhMuc->ngay_them_suc = $newTbLinhMuc->ngay_them_suc;
+          $oldTbLinhMuc->tieu_chung_vien = $newTbLinhMuc->tieu_chung_vien;
+          $oldTbLinhMuc->ngay_tieu_chung_vien = $newTbLinhMuc->ngay_tieu_chung_vien;
+          $oldTbLinhMuc->dai_chung_vien = $newTbLinhMuc->dai_chung_vien;
+          $oldTbLinhMuc->ngay_dai_chung_vien = $newTbLinhMuc->ngay_dai_chung_vien;
+          $oldTbLinhMuc->image = $newTbLinhMuc->image;
+          $oldTbLinhMuc->so_cmnd = $newTbLinhMuc->so_cmnd;
+          $oldTbLinhMuc->ngay_cap_cmnd = $newTbLinhMuc->ngay_cap_cmnd;
+          $oldTbLinhMuc->noi_cap_cmnd = $newTbLinhMuc->noi_cap_cmnd;
+          $oldTbLinhMuc->code = $newTbLinhMuc->code;
+          $oldTbLinhMuc->phone = $newTbLinhMuc->phone;
+          $oldTbLinhMuc->email = $newTbLinhMuc->email;
+          $oldTbLinhMuc->ngay_trieu_dong = $newTbLinhMuc->ngay_trieu_dong;
+          $oldTbLinhMuc->ngay_khan = $newTbLinhMuc->ngay_khan;
+          $oldTbLinhMuc->ghi_chu = $newTbLinhMuc->ghi_chu;
+          $oldTbLinhMuc->is_duc_cha = $newTbLinhMuc->is_duc_cha;
+          $oldTbLinhMuc->cham_ngon = $newTbLinhMuc->cham_ngon;
+          $oldTbLinhMuc->sinh_giao_xu = $newTbLinhMuc->sinh_giao_xu;
+          if (!$oldTbLinhMuc->save()) {
+            DB::rollBack();
+            return false;
+          }
+          $newTbLinhMuc->delete();
+          DB::commit();
     }
 }
