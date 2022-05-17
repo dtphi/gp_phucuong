@@ -1,7 +1,7 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { v4 as uuidv4, } from 'uuid'
 import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById,
-  apiUpdateLinhMucThuyenChuyen, apiGetBoNhiemById, apiGetInfoLinhMucUpdate
+  apiUpdateLinhMucThuyenChuyen, apiGetBoNhiemById, apiGetInfoLinhMucUpdate, apiGetInfoThuyenChuyenUpdate
 } from 'api@admin/linhmuc'
 import {
   INFOS_MODAL_SET_LOADING,
@@ -100,7 +100,8 @@ const defaultState = () => {
     loading: false,
     insertSuccess: false,
     errors: [],
-    info_linhmuc_update: []
+    info_linhmuc_update: [],
+    info_thuyenchuyen_update: []
   }
 }
 
@@ -140,6 +141,9 @@ export default {
     },
     info_linhmuc_update(state) {
       return state.info_linhmuc_update
+    },
+    info_thuyenchuyen_update(state) {
+      return state.info_thuyenchuyen_update
     }
   },
 
@@ -312,6 +316,9 @@ export default {
     },
     SET_INFO_LINHMUC_UPDATE(state, payload) {
       state.info_linhmuc_update = payload
+    },
+    SET_INFO_THUYENCHUYEN_UPDATE(state, payload) {
+      state.info_thuyenchuyen_update = payload
     }
   },
 
@@ -854,16 +861,40 @@ export default {
         }
       ) 
     },
+    GET_INFO_THUYENCHUYEN_UPDATE({ commit }, id) {
+      apiGetInfoThuyenChuyenUpdate(
+        id,
+        (res) => {
+          commit('SET_INFO_THUYENCHUYEN_UPDATE', res.data.results)
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
+    },
     UPDATE_LINHMUC_IN_NEWTABLE({ commit }, info) {
       info['action'] = 'capnhat.linhmuc'
       apiUpdateInfo(
       info,
         (res) => {
+        alert('Cập nhật linh mục thành công !!');
         window.location.reload();
       },
       (err) => {
         console.log(err)
       })
+    },
+    UPDATE_THUYENCHUYEN_IN_NEWTABLE({ commit }, info) {
+      info['action'] = 'capnhat.thuyenchuyen'
+      apiUpdateInfo(
+        info,
+        (res) => {
+          alert('Cập nhật hoạt động sứ vụ thành công thành công !!');
+          window.location.reload();
+        },
+        (err) => {
+          console.log(err)
+        })
     }
   },
 }

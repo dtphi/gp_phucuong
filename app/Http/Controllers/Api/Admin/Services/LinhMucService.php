@@ -17,6 +17,7 @@ use App\Models\LinhmucBoNhiem;
 use App\Models\LinhmucChucthanh;
 use App\Models\LinhmucThuyenchuyen;
 use App\Models\LinhmucGpThuyenChuyen;
+use App\Models\LinhmucThuyenchuyenTemp;
 use App\Http\Resources\LinhMucs\LinhmucResource;
 use App\Http\Resources\LinhMucVanThus\LinhMucVanThuCollection;
 use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
@@ -43,6 +44,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
 				$this->modelBoNhiem = new LinhmucBoNhiem();
 				$this->modelLmGpThuyenChuyen = new LinhmucGpThuyenChuyen();
 				$this->modelThuyenChuyen = new LinhmucThuyenchuyen();
+        $this->modelThuyenChuyenTemp = new LinhmucThuyenchuyenTemp();
     }
 
     public function apiGetList(array $options = [], $limit = 15)
@@ -610,6 +612,16 @@ final class LinhMucService implements BaseModel, LinhMucModel
 				return $query;
 		}
 
+    public function apiGetThuyenChuyenTemp($infoId = null)
+    {
+      $query = $this->modelThuyenChuyenTemp->select()
+      ->where('linh_muc_id', $infoId)
+      ->orderBy('from_date', 'DESC')
+      ->get();
+
+      return $query;
+    }
+
 		public function apiGetBoNhiem($infoId = null){
 			$query = $this->modelThuyenChuyen->select()
 			->where('linh_muc_id', $infoId)
@@ -736,4 +748,40 @@ final class LinhMucService implements BaseModel, LinhMucModel
           $newTbLinhMuc->delete();
           DB::commit();
     }
+
+    public function apiCapNhatThuyenChuyen($data = []) 
+    {
+      $old_thuyenchuyens_delete = $this->modelThuyenChuyen->where('linh_muc_id', $data['id'])->delete(); // delete thuyenchuyen by linh_muc_id
+      DB::beginTransaction();
+      $new_thuyenchuyens_arr = $this->modelThuyenChuyenTemp->where('linh_muc_id', $data['id'])->get()->toArray();
+      foreach ($new_thuyenchuyens_arr as $value) {
+        $info_thuyenchuyen = new LinhmucThuyenchuyen;
+        $info_thuyenchuyen->linh_muc_id = $value['linh_muc_id'];
+        $info_thuyenchuyen->from_giao_xu_id = $value['from_giao_xu_id'];
+        $info_thuyenchuyen->from_chuc_vu_id = $value['from_chuc_vu_id'];
+        $info_thuyenchuyen->from_date = $value['from_date'];
+        $info_thuyenchuyen->duc_cha_id = $value['duc_cha_id'];
+        $info_thuyenchuyen->to_date = $value['to_date'];
+        $info_thuyenchuyen->chuc_vu_id = $value['chuc_vu_id'];
+        $info_thuyenchuyen->giao_xu_id = $value['giao_xu_id'];
+        $info_thuyenchuyen->dong_id = $value['dong_id'];
+        $info_thuyenchuyen->ban_chuyen_trach_id = $value['ban_chuyen_trach_id'];
+        $info_thuyenchuyen->du_hoc = $value['du_hoc'];
+        $info_thuyenchuyen->co_so_gp_id = $value['co_so_gp_id'];
+        $info_thuyenchuyen->quoc_gia = $value['quoc_gia'];
+        $info_thuyenchuyen->ghi_chu = $value['ghi_chu'];
+        $info_thuyenchuyen->active = $value['active'];
+        $info_thuyenchuyen->chuc_vu_active = $value['chuc_vu_active'];
+        $info_thuyenchuyen->update_user = $value['update_user'];
+        $info_thuyenchuyen->is_bo_nhiem = $value['is_bo_nhiem'];
+        $info_thuyenchuyen->save();
+      }
+
+      if(!$info_thuyenchuyen->save()) {
+        DB::rollBack();
+        return false;
+      }
+      $new_thuyenchuyens_delete = $this->modelThuyenChuyenTemp->where('linh_muc_id', $data['id'])->delete(); // delete thuyenchuyen_temp by linh_muc_id
+      DB::commit();
+    } 
 }

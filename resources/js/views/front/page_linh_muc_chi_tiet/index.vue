@@ -482,7 +482,9 @@
       </div>
     </div>
     <div class="form-group">
-     <button @click="updateLinhMuc()" class="btn btn-primary">CẬP NHẬT</button>
+      <div class="cl-osm-10">
+        <button @click="updateLinhMuc()" class="btn btn-primary">CẬP NHẬT</button>
+      </div>
     </div>
   </div>
   </main>

@@ -16,6 +16,7 @@ export const API_LINH_MUC_VAN_THUS_RESOURCE = '/api/linh-muc-van-thus'
 export const API_LINH_MUC_THUYEN_CHUYENS_RESOURCE = '/api/linh-muc-thuyen-chuyens'
 export const API_LM_THUYEN_CHUYENS_RESOURCE = '/api/lm-thuyen-chuyens'
 export const API_LINH_MUC_UPDATE = '/api/linh-muc-update'
+export const API_THUYENCHUYEN_UPDATE = '/api/thuyen-chuyen-update'
 export const API_LM_BO_NHIEMS_RESOURCE = '/api/lm-bo-nhiems'
 export const API_GX_THUYEN_CHUYENS_RESOURCE = '/api/gx-thuyen-chuyens'
 
