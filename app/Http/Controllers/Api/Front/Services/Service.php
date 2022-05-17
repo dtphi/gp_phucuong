@@ -670,7 +670,26 @@ class Service implements BaseModel
         $model_linhmucs = LinhmucThuyenchuyen::where('linh_muc_id', $infoId);
         $array_linhmucs = $model_linhmucs->get()->toArray();
         foreach ($array_linhmucs as $info) {
-          LinhmucThuyenchuyenTemp::insert($info);
+            $array_linhmucs = new LinhmucThuyenchuyenTemp;
+            $array_linhmucs->linh_muc_id = $info['linh_muc_id'];
+            $array_linhmucs->from_giao_xu_id = $info['from_giao_xu_id'];
+            $array_linhmucs->from_chuc_vu_id = $info['from_chuc_vu_id'];
+            $array_linhmucs->from_date = $info['from_date'];
+            $array_linhmucs->duc_cha_id = $info['duc_cha_id'];
+            $array_linhmucs->to_date = $info['to_date'];
+            $array_linhmucs->chuc_vu_id = $info['chuc_vu_id'];
+            $array_linhmucs->giao_xu_id = $info['giao_xu_id'];
+            $array_linhmucs->dong_id = $info['dong_id'];
+            $array_linhmucs->ban_chuyen_trach_id = $info['ban_chuyen_trach_id'];
+            $array_linhmucs->du_hoc = $info['du_hoc'];
+            $array_linhmucs->co_so_gp_id = $info['co_so_gp_id'];
+            $array_linhmucs->quoc_gia = $info['quoc_gia'];
+            $array_linhmucs->ghi_chu = $info['ghi_chu'];
+            $array_linhmucs->active = $info['active'];
+            $array_linhmucs->chuc_vu_active = $info['chuc_vu_active'];
+            $array_linhmucs->update_user = $info['update_user'];
+            $array_linhmucs->is_bo_nhiem = $info['is_bo_nhiem'];
+            $array_linhmucs->save();
         }
         $query = $this->modelThuyenChuyenTemp->select()
         ->where('linh_muc_id', $infoId)
