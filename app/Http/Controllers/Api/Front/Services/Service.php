@@ -669,12 +669,12 @@ class Service implements BaseModel
         $array_linhmucs = $model_linhmucs->get()->toArray();
         foreach ($array_linhmucs as $info) {
           LinhmucThuyenchuyenTemp::insert($info);
+        }
         $query = $this->modelThuyenChuyenTemp->select()
         ->where('linh_muc_id', $infoId)
-        // ->where('is_bo_nhiem', '!=', 1)
-        ->orderBy('from_date', 'DESC')
-        ->get();
-      }
+          // ->where('is_bo_nhiem', '!=', 1)
+          ->orderBy('from_date', 'DESC')
+          ->get();
     }
     return $query;
 }

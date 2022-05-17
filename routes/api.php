@@ -81,6 +81,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
 
     Route::apiResource('linh-mucs', 'LinhMucController');
     Route::get('linh-muc-update/{infoId}', 'LinhMucController@listInfoLinhMucUpdate');
+    Route::get('thuyen-chuyen-update/{infoId}', 'LinhMucController@listInfoThuyenChuyenUpdate');
 		Route::get('lm-bo-nhiems/{infoId}', 'LinhMucController@listLinhMucBoNhiem');
 		Route::get('lm-thuyen-chuyens/{infoId}', 'LinhMucController@listLinhMucThuyenChuyen');
     Route::apiResource('linh-muc-bang-caps', 'LinhMucBangCapController');

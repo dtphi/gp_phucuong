@@ -21,7 +21,7 @@
               <h5>Nơi sinh            : {{info_linhmuc_update.noi_sinh }}</h5>
               <h5>Họ tên cha          : {{info_linhmuc_update.ho_ten_cha }}</h5>
               <h5>Họ tên mẹ           : {{info_linhmuc_update.ho_ten_me }}</h5>
-              <h5>Sinh tại xứ         : {{info_linhmuc_update.ten }}</h5>
+              <h5>Sinh tại xứ         : {{info_linhmuc_update.sinh_giao_xu }}</h5>
               <h5>Hình ảnh            : {{info_linhmuc_update.image }}</h5>
               <h5>Ngày rửa tội        : {{info_linhmuc_update.lable_ngay_rua_toi }}</h5>
               <h5>Nơi rửa tội         : {{info_linhmuc_update.noi_rua_toi }}</h5>
