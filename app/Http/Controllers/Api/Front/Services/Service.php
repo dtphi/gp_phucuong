@@ -317,7 +317,7 @@ class Service implements BaseModel
 
 	public function apiGetLinhmucs($data = [])
 	{
-		$query = $this->modelLinhMuc->select() 
+		$query = $this->modelLinhMuc->select()
 			->orderBy('id', 'DESC');
 		return $query;
 	}
@@ -330,7 +330,7 @@ class Service implements BaseModel
 		return $query->paginate($limit);
 	}
 
-  public function apiGetDetailLinhMucMain($id = null) 
+  public function apiGetDetailLinhMucMain($id = null)
   {
     $model = $this->modelLinhMuc->find($id);
     return $model;
@@ -503,7 +503,7 @@ class Service implements BaseModel
 		}
 		return $list_giaoxu->paginate($limit);
 	}
-  public function getSubListGiaoHat() 
+  public function getSubListGiaoHat()
   {
     $query = $this->modelGiaoHat->select()->orderBy('id', 'ASC')->get();
     return $query;
@@ -512,7 +512,7 @@ class Service implements BaseModel
 	public function apiGetListNgayLe($data = array(), $limit = 5)
 	{ // List Ngay Le By Id
 		$query = $this->modelNgayLe->select('id','ten_le','hanh');
-		
+
 		return $query->paginate($limit);
 	}
 
@@ -527,70 +527,88 @@ class Service implements BaseModel
 	{
 		if ($request->input('query') == null) {
 			if ($request->input('id_giaohat') == null && $request->input('id_chucvu') != null) {
-				$list_linhmuc_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
-				$list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $list_linhmuc_chucvu)->orderBy('id', 'ASC')->paginate(5);
+        $list_linhmucs = $this->modelLinhMuc->whereHas(
+          'thuyenChuyens',
+          function($q) use ($request) {
+            $q->join(\DB::raw('(select linh_muc_id as lm_id, max(from_date) as max_date from pc_linhmuc_thuyenchuyens group by linh_muc_id) as lmtc'),
+            function($join)
+              {
+                  $join->on('lmtc.max_date', '=', 'pc_linhmuc_thuyenchuyens.from_date')
+                  ->whereColumn('lmtc.lm_id', '=', 'pc_linhmuc_thuyenchuyens.linh_muc_id');
+              })->where('chuc_vu_id', $request->input('id_chucvu'));
+        })->orderBy('id', 'ASC')->paginate(5);
 			} else if ($request->input('id_chucvu') == null && $request->input('id_giaohat') != null) {
-				$linhmuc_by_giaohat = $this->modelGiaoHat->find($request->input('id_giaohat'))->giaoxus->load('linhmucs');
-				$array_id_linhmuc_by_giaohat = [];
-				foreach ($linhmuc_by_giaohat->toArray() as $key => $value) {
-
-					foreach ($value['linhmucs'] as $key1 => $item) {
-
-						$array_id_linhmuc_by_giaohat[] = $item['id'];
-					}
-				}
-				$list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $array_id_linhmuc_by_giaohat)->orderBy('id', 'ASC')->paginate(5);
+        $list_id_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', $request->input('id_giaohat'))->pluck('giao_xu_id')->toArray();
+        $list_linhmucs = $this->modelLinhMuc->whereHas(
+          'thuyenChuyens',
+          function ($q) use ($request, $list_id_giaoxu) {
+            $q->join(
+              \DB::raw('(select linh_muc_id as lm_id, max(from_date) as max_date from pc_linhmuc_thuyenchuyens group by linh_muc_id) as lmtc'),
+              function ($join) {
+                $join->on('lmtc.max_date', '=', 'pc_linhmuc_thuyenchuyens.from_date')
+                ->whereColumn('lmtc.lm_id', '=', 'pc_linhmuc_thuyenchuyens.linh_muc_id');
+              }
+            )->whereIn('giao_xu_id', $list_id_giaoxu);
+          }
+        )->orderBy('id', 'ASC')->paginate(5);
 			} else {
-				$array_id_linhmuc_by_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
-				$linhmuc_by_giaohat = $this->modelGiaoHat->find($request->input('id_giaohat'))->giaoxus->load('linhmucs');
-				$array_id_linhmuc_by_giaohat = [];
-				foreach ($linhmuc_by_giaohat->toArray() as $key => $value) {
-					foreach ($value['linhmucs'] as $key1 => $item) {
-						$array_id_linhmuc_by_giaohat[] = $item['id'];
-					}
-				}
-				$array_id_linhmuc = array_unique(array_merge($array_id_linhmuc_by_chucvu, $array_id_linhmuc_by_giaohat));
-				$list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $array_id_linhmuc)->paginate(5);
+        $list_id_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', $request->input('id_giaohat'))->pluck('giao_xu_id')->toArray();
+        $list_linhmucs = $this->modelLinhMuc->whereHas(
+          'thuyenChuyens',
+          function ($q) use ($request, $list_id_giaoxu) {
+            $q->join(
+              \DB::raw('(select linh_muc_id as lm_id, max(from_date) as max_date from pc_linhmuc_thuyenchuyens group by linh_muc_id) as lmtc'),
+              function ($join) {
+                $join->on('lmtc.max_date', '=', 'pc_linhmuc_thuyenchuyens.from_date')
+                ->whereColumn('lmtc.lm_id', '=', 'pc_linhmuc_thuyenchuyens.linh_muc_id');
+              }
+            )->whereIn('giao_xu_id', $list_id_giaoxu)->where('chuc_vu_id', $request->input('id_chucvu'));
+          }
+        )->orderBy('id', 'ASC')->paginate(5);
 			}
 		} else {
       $query = $request->input('query');
-			$linhmuc_query = $this->modelLinhMuc->name($query)->pluck('id')->toArray();
-
 			if (!$request->input('id_giaohat') && $request->input('id_chucvu')) {
-				$list_linhmuc_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
-				$merge_chucvu_query = array_unique(array_merge($list_linhmuc_chucvu, $linhmuc_query));
-
-				$list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $merge_chucvu_query)->orderBy('id', 'ASC')->paginate(5);
+        $list_linhmucs = $this->modelLinhMuc->name($query)->whereHas(
+          'thuyenChuyens',
+          function ($q) use ($request) {
+            $q->join(
+              \DB::raw('(select linh_muc_id as lm_id, max(from_date) as max_date from pc_linhmuc_thuyenchuyens group by linh_muc_id) as lmtc'),
+              function ($join) {
+                $join->on('lmtc.max_date', '=', 'pc_linhmuc_thuyenchuyens.from_date')
+                ->whereColumn('lmtc.lm_id', '=', 'pc_linhmuc_thuyenchuyens.linh_muc_id');
+              }
+            )->where('chuc_vu_id', $request->input('id_chucvu'));
+          }
+        )->orderBy('id', 'ASC')->paginate(5);
 			} else if (!$request->input('id_chucvu') && $request->input('id_giaohat')) {
-				$linhmuc_by_giaohat = $this->modelGiaoHat->find($request->input('id_giaohat'))->giaoxus->load('linhmucs');
-				$array_id_linhmuc_by_giaohat = [];
-				foreach ($linhmuc_by_giaohat->toArray() as $key => $value) {
-
-					foreach ($value['linhmucs'] as $key1 => $item) {
-
-						$array_id_linhmuc_by_giaohat[] = $item['id'];
-					}
-				}
-				$merge_giaohat_query = array_unique(array_merge($array_id_linhmuc_by_giaohat, $linhmuc_query));
-				$list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $merge_giaohat_query)->orderBy('id', 'ASC')->paginate(5);
+        $list_id_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', $request->input('id_giaohat'))->pluck('giao_xu_id')->toArray();
+        $list_linhmucs = $this->modelLinhMuc->name($query)->whereHas(
+          'thuyenChuyens',
+          function ($q) use ($request, $list_id_giaoxu) {
+            $q->join(
+              \DB::raw('(select linh_muc_id as lm_id, max(from_date) as max_date from pc_linhmuc_thuyenchuyens group by linh_muc_id) as lmtc'),
+              function ($join) {
+                $join->on('lmtc.max_date', '=', 'pc_linhmuc_thuyenchuyens.from_date')
+                ->whereColumn('lmtc.lm_id', '=', 'pc_linhmuc_thuyenchuyens.linh_muc_id');
+              }
+            )->whereIn('giao_xu_id', $list_id_giaoxu);
+          }
+        )->orderBy('id', 'ASC')->paginate(5);
 			} else {
-				if ($request->input('id_chucvu')) {
-					$array_id_linhmuc_by_chucvu = $this->modelLinhMucThuyenChuyen->where('chuc_vu_id', $request->input('id_chucvu'))->orderBy('linh_muc_id', 'ASC')->distinct()->pluck('linh_muc_id')->toArray();
-				} else {
-					$array_id_linhmuc_by_chucvu = [];
-				}
-				$array_id_linhmuc_by_giaohat = [];
-				if ($request->input('id_giaohat')) {
-					$linhmuc_by_giaohat = $this->modelGiaoHat->find($request->input('id_giaohat'))->giaoxus->load('linhmucs');
-					foreach ($linhmuc_by_giaohat->toArray() as $key => $value) {
-						foreach ($value['linhmucs'] as $key1 => $item) {
-							$array_id_linhmuc_by_giaohat[] = $item['id'];
-						}
-					}
-				}
-
-				$array_id_linhmuc = array_unique(array_merge($array_id_linhmuc_by_chucvu, $array_id_linhmuc_by_giaohat, $linhmuc_query));
-				$list_linhmucs = $this->modelLinhMuc->select()->whereIn('id', $array_id_linhmuc)->paginate(5);
+        $list_id_giaoxu = $this->modelPhanHatXu->where('giao_hat_id', $request->input('id_giaohat'))->pluck('giao_xu_id')->toArray();
+        $list_linhmucs = $this->modelLinhMuc->name($query)->whereHas(
+          'thuyenChuyens',
+          function ($q) use ($request, $list_id_giaoxu) {
+            $q->join(
+              \DB::raw('(select linh_muc_id as lm_id, max(from_date) as max_date from pc_linhmuc_thuyenchuyens group by linh_muc_id) as lmtc'),
+              function ($join) {
+                $join->on('lmtc.max_date', '=', 'pc_linhmuc_thuyenchuyens.from_date')
+                ->whereColumn('lmtc.lm_id', '=', 'pc_linhmuc_thuyenchuyens.linh_muc_id');
+              }
+            )->whereIn('giao_xu_id', $list_id_giaoxu)->where('chuc_vu_id', $request->input('id_chucvu'));
+          }
+        )->orderBy('id', 'ASC')->paginate(5);
 			}
 		}
 		return $list_linhmucs;
@@ -762,7 +780,7 @@ class Service implements BaseModel
       ->orderBy('name', 'ASC');
     return $query->get();
   }
-  public function apiAddThuyenChuyen($id = null, $data) 
+  public function apiAddThuyenChuyen($id = null, $data)
   {
     if ($data->dia_diem_tu_nam == null || $data->dia_diem_tu_thang == null || $data->dia_diem_tu_ngay == null) {
       $data->from_date = null;
@@ -832,7 +850,7 @@ class Service implements BaseModel
     );
   }
 
-  public function apiUpdateThuyenChuyen($id = null, $data) 
+  public function apiUpdateThuyenChuyen($id = null, $data)
   {
       $thuyenChuyens = $this->modelThuyenChuyenTemp->findOrFail($id);
       if ($data->dia_diem_tu_nam == null || $data->dia_diem_tu_thang == null || $data->dia_diem_tu_ngay == null) {
@@ -862,7 +880,7 @@ class Service implements BaseModel
   public function apiDeleteThuyenChuyen($id = null) {
     LinhmucThuyenChuyenTemp::fcDeleteByLinhmucTempThuyenChuyenId($id);
   }
-  
+
   public function apiUpdateBoNhiem($id = null, $data) {
     $bo_nhiem = $this->modelThuyenChuyenTemp->findOrFail($id);
     if ($data->cong_viec_tu_nam == null || $data->cong_viec_tu_thang == null || $data->cong_viec_tu_ngay == null) {
