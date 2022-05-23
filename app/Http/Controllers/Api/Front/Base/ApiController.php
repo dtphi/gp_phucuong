@@ -671,7 +671,7 @@ class ApiController extends Controller
 	{
 		$page = 1;
 		if ($request->query('page')) {
-			$page = $request->query('page'); 
+			$page = $request->query('page');
 		}
 
 		try {
@@ -792,11 +792,11 @@ class ApiController extends Controller
       $thanhs = $this->sv->apiGetThanhs();
       $dongs = $this->sv->apiGetDongs();
       $emptyStr = 'Chưa cập nhật';
-      
+
       $results[] = [
         'id' => (int) $infos->id,
         'ten' => $infos->ten,
-        'ten_thanh_id' => $infos->ten_thanh_id, 
+        'ten_thanh_id' => $infos->ten_thanh_id,
         'ten_thanh' => $infos->ten_thanh ?? $emptyStr,
         'nam_sinh' => ($infos->ngay_thang_nam_sinh) ? date_format(date_create($infos->ngay_thang_nam_sinh), "d-m-Y") : '',
         'image'  => !empty($infos->image) ? url($infos->image) : url('images/linh-muc.jpg'),
@@ -819,7 +819,7 @@ class ApiController extends Controller
         'ngay_tieu_chung_vien' => $infos->ngay_tieu_chung_vien,
         'dai_chung_vien' => $infos->dai_chung_vien,
         'ngay_dai_chung_vien' => $infos->ngay_dai_chung_vien,
-        'trieu_dong' => $infos->trieu_dong, 
+        'trieu_dong' => $infos->trieu_dong,
         'ten_dong_id' => $infos->ten_dong_id,
         'ngay_khan' => $infos->ngay_khan,
         'ngay_trieu_dong' => $infos->ngay_trieu_dong,
@@ -835,9 +835,9 @@ class ApiController extends Controller
         'ten_thanh_name'             => $infos->ten_thanh,
         'giao_xu_name'               => $infos->ten_giao_xu,
         'ten_dong_name'              => $infos->ten_dong,
-        'is_duc_cha' => $infos->is_duc_cha, 
+        'is_duc_cha' => $infos->is_duc_cha,
         'phone' => $infos->phone,
-        'email' => $infos->email, 
+        'email' => $infos->email,
         'thanhs' => $thanhs,
         'dongs' => $dongs,
         'link_hdsv' => url('danh-sach-linh-muc/hoat-dong-su-vu/' . $infos->id),
@@ -982,7 +982,7 @@ class ApiController extends Controller
 
 		return $this->respondWithCollectionPagination($json);
 	}
-	
+
 
 	public function getChucVuList(Request $request)
 	{
@@ -1028,46 +1028,48 @@ class ApiController extends Controller
 				$giaoHatHienTai = '';
 				$chucVuHienTai = '';
 				$giaoXuHienTai = !empty($info->arr_thuyen_chuyen_list) ? $info->arr_thuyen_chuyen_list : '';
-				$chucThanhs = !empty($info->arr_chuc_thanh_list) ? $info->arr_chuc_thanh_list : '';
+        $giaoXu = end($giaoXuHienTai);
+        $chucThanhs = !empty($info->arr_chuc_thanh_list) ? $info->arr_chuc_thanh_list : '';
 
-				if (empty($giaoXuHienTai)) {
-					$giaoXuHienTai = $info->ten_giao_xu;
-					$hrefGx = ($info->giao_xu_id) ? url('giao-xu/chi-tiet/' . $info->giao_xu_id) : "javascript:void(0);";
-					$giaoHatHienTai = $info->ten_hat_xu;
-				} else {
-					$giaoXu = end($giaoXuHienTai);
-					$hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
-					$giaoXuHienTai = $giaoXu['giaoxuName'];
-					$chucVuHienTai = $giaoXu['chucvuName'];
-					$giaoHatHienTai = $giaoXu['giaoHatName'];
-				}
+        if (empty($giaoXuHienTai))
+        {
+            $giaoXuHienTai = $info->ten_giao_xu;
+            $hrefGx = ($info->giao_xu_id) ? url('giao-xu/chi-tiet/' . $info->giao_xu_id) : "javascript:void(0);";
+            $giaoHatHienTai = $info->ten_hat_xu;
+          } else {
+            $hrefGx = $giaoXu['giao_xu_id'] ? url('giao-xu/chi-tiet/' . $giaoXu['giao_xu_id']) : "javascript:void(0);";
+            $giaoXuHienTai = $giaoXu['giaoxuName'];
+            $chucVuHienTai = $giaoXu['chucvuName'];
+            $giaoHatHienTai = $giaoXu['giaoHatName'];
+          }
 
-				$ngayNhanChucThanhHienTai = '';
-				$tenChucThanh = '';
-				if (empty($chucThanhs)) {
-					$ngayNhanChucThanhHienTai = $emptyStr;
-				} else {
-					$chucThanhs = end($chucThanhs);
-					$ngayNhanChucThanhHienTai = $chucThanhs['label_ngay_thang_nam_chuc_thanh'];
-					$tenChucThanh = Tables::$chucThanhs[$chucThanhs['chuc_thanh_id']];
-				}
+          $ngayNhanChucThanhHienTai = '';
+          $tenChucThanh = '';
+          if (empty($chucThanhs)) {
+            $ngayNhanChucThanhHienTai = $emptyStr;
+          } else {
+            $chucThanhs = end($chucThanhs);
+            $ngayNhanChucThanhHienTai = $chucThanhs['label_ngay_thang_nam_chuc_thanh'];
+            $tenChucThanh = Tables::$chucThanhs[$chucThanhs['chuc_thanh_id']];
+          }
 
-				$results[] = [
-					'id' => (int) $info->id,
-					'ten' => $info->ten,
-					'chucThanhName' => $tenChucThanh,
-					'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? $emptyStr,
-					'image'	=> !empty($info->image) ? url($info->image) : url('images/linh-muc.jpg'),
-					'href_giaoxu' => $hrefGx,
-					'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
-					'dia_chi' => $info->dia_chi ?? $emptyStr,
-          'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
-					'ten_thanh' => $info->ten_thanh ?? $emptyStr,
-					'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
-          'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
-					'chuc_vu' => $chucVuHienTai ?? $emptyStr,
-					'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
-				];
+
+          $results[] = [
+            'id' => (int) $info->id,
+            'ten' => $info->ten,
+            'chucThanhName' => $tenChucThanh,
+            'nam_sinh' => \Carbon\Carbon::parse($info->ngay_thang_nam_sinh)->format('d-m-Y') ?? $emptyStr,
+            'image'  => !empty($info->image) ? url($info->image) : url('images/linh-muc.jpg'),
+            'href_giaoxu' => $hrefGx,
+            'giao_xu' => $giaoXuHienTai ? 'Giáo xứ ' . $giaoXuHienTai : $emptyStr,
+            'dia_chi' => $info->dia_chi ?? $emptyStr,
+            'giao_hat' => ($giaoHatHienTai != '') ? $giaoHatHienTai : $emptyStr,
+            'ten_thanh' => $info->ten_thanh ?? $emptyStr,
+            'ngay_nhan_chuc' => $ngayNhanChucThanhHienTai ?? $emptyStr,
+            'ngay_rip' => ($info->ngay_rip) ? date_format(date_create($info->ngay_rip), "d-m-Y") : '',
+            'chuc_vu' => $chucVuHienTai ?? $emptyStr,
+            'ten_day_du' => $tenChucThanh . ' ' . $info->ten_thanh . ' ' . $info->ten
+          ];
 			}
 
 			$json = [
@@ -1094,7 +1096,7 @@ class ApiController extends Controller
 	{
 		if ($request->query('page')) {
 			$page = $request->query('page');
-		} 
+		}
 
 		try {
 			$collections = $this->sv->apiGetListLinhMucSearch($request);
@@ -1204,7 +1206,7 @@ class ApiController extends Controller
 
 		return $this->respondWithCollectionPagination($json);
 	}
-	
+
 	public function getNgayLeListById(Request $request)
 	{
 		$page = 1;
@@ -1217,7 +1219,7 @@ class ApiController extends Controller
 			$pagination = $this->_getTextPagination($collections);
 			if ($request->input('query') == null) {
 				foreach ($collections as $key => $info) {
-					
+
 					$results[] = [
 						'id' => (int) $info->id,
 						'ten_le' => $info->ten_le,
@@ -1241,7 +1243,7 @@ class ApiController extends Controller
 				]
 			];
 		}
-		
+
 		return $this->respondWithCollectionPagination($json);
 	}
 
@@ -1252,7 +1254,7 @@ class ApiController extends Controller
     $json = [
       'data' => [
         'success' => 200,
-      ] 
+      ]
     ];
     return $this->respondWithCollectionPagination($json);
   }
@@ -1335,7 +1337,7 @@ class ApiController extends Controller
       ]
     ];
     return $this->respondWithCollectionPagination($json);
-  } 
+  }
 
   public function listDropdownCategories(Request $request) {
      $action = $request->query('action');
@@ -1504,7 +1506,7 @@ class ApiController extends Controller
         $json = [
           'data' => [
             'success' => 'success',
-            'status' => 200, 
+            'status' => 200,
           ]
         ];
         return $this->respondWithCollectionPagination($json);

@@ -108,6 +108,11 @@ class Linhmuc extends BaseModel
         return $this->hasMany(LinhmucThuyenchuyen::class, 'linh_muc_id')->orderBy('from_date');
     }
 
+    public function lastThuyenChuyen()
+    {
+      return $this->hasMany(LinhmucThuyenchuyen::class, 'linh_muc_id')->orderBy('from_date', 'desc')->limit(1);
+    }
+
     public function boNhiems()
     {
         return $this->hasMany(LinhmucBoNhiem::class, 'linh_muc_id')
@@ -138,7 +143,7 @@ class Linhmuc extends BaseModel
         return $value;
     }
 
-    public function getTenHatXuAttribute($value) 
+    public function getTenHatXuAttribute($value)
     {
         $value = ($this->giaoXu) ? $this->giaoXu->ten_giao_hat : '';
 
