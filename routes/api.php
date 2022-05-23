@@ -32,18 +32,19 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::get('/app/info/get-special-information', 'NewsController@showSpecialModuleList');
     Route::get('/app/get-data-module', 'ModuleController@showDataList');
     Route::get('/app/get-data-giao-xu', 'Base\ApiController@getGiaoXuList');
+    Route::get('/app/get-data-hanh', 'Base\ApiController@getNgayLeList');
+    Route::get('/app/get-hanh-detail', 'Base\ApiController@getNgayLeDetail');//change
     Route::get('/app/get-data-giao-phan', 'Base\ApiController@getGiaoPhanList');
     Route::post('/app/get-data-giao-hat', 'Base\ApiController@getGiaoHatList');
     Route::post('/app/get-data-giao-xu-by-id', 'Base\ApiController@getGiaoXuListById');
     Route::get('/app/get-data-giao-xu/{id}', 'Base\ApiController@getGiaoXuDetail');
-    Route::get('/app/get-data-linh-muc', 'Base\ApiController@getLinhMucList');
+    Route::post('/app/get-data-hanh-by-id', 'Base\ApiController@getNgayLeListById');
+		Route::get('/app/get-data-linh-muc', 'Base\ApiController@getLinhMucList');
     Route::get('/app/get-data-chuc-vu', 'Base\ApiController@getChucVuList');
     Route::post('/app/get-data-linh-muc-by-id', 'Base\ApiController@getLinhMucListById');
     Route::get('/app/get-detail-linh-muc/{id}', 'Base\ApiController@getLinhMucDetail');
     Route::get('/app/get-detail-linh-muc-update/{id}', 'Base\ApiController@getLinhMucUpdate');
     Route::post('/app/update-linh-muc-temp', 'Base\ApiController@updateLinhMucTemp');
-    Route::get('/app/get-data-hanh', 'Base\ApiController@getNgayLeList');
-    Route::post('/app/get-data-hanh-by-id', 'Base\ApiController@getNgayLeListById');
     Route::get('/app/get-hoat-dong-su-vu/{id}', 'Base\ApiController@getHoatDongSuVu');
     Route::get('/app/get-bo-nhiem-khac/{id}', 'Base\ApiController@getBoNhiemKhac');
     Route::apiResource('/email_sub/create', 'EmailController');

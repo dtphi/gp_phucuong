@@ -772,7 +772,6 @@ class ApiController extends Controller
 				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? $emptyStr,
 				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? $emptyStr,
         'ngay_rip' => ($infos->ngay_rip) ? date_format(date_create($infos->ngay_rip), "d-m-Y") : '',
-        'rip_ghi_chu' => html_entity_decode($infos->rip_ghi_chu) ?? "",
 				'cham_ngon' => $infos->cham_ngon ?? $emptyStr,
 				'cv_hien_tai' => $chucVuHienTai ?? $emptyStr,
 				'ds_chuc_vu' => $thuyenChuyens ?? "",
@@ -1170,6 +1169,62 @@ class ApiController extends Controller
 		return $this->respondWithCollectionPagination($json);
 	}
 
+	function pClean($str)
+	{
+		// return trim(html_entity_decode($input), " \t\n\r\0\x0B\xC2\xA0");
+		$str = str_replace("&nbsp;", " ", $str);
+		$str = preg_replace('/\s+/', ' ', $str);
+		$str = trim($str);
+		return $str;
+	}
+
+	function replaceAll($str) { 
+		$unicode = array(
+
+			'a'=>'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
+
+			'd'=>'đ',
+
+			'e'=>'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ',
+
+			'i'=>'í|ì|ỉ|ĩ|ị',
+
+			'o'=>'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ',
+
+			'u'=>'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự',
+
+			'y'=>'ý|ỳ|ỷ|ỹ|ỵ',
+
+			'A'=>'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ',
+
+			'D'=>'Đ',
+
+			'E'=>'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ',
+
+			'I'=>'Í|Ì|Ỉ|Ĩ|Ị',
+
+			'O'=>'Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ',
+
+			'U'=>'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự',
+
+			'Y'=>'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
+
+			);
+
+			foreach($unicode as $nonUnicode=>$uni){
+
+			$str = preg_replace("/($uni)/i", $nonUnicode, $str);
+
+			}
+			$str = strtolower($str);
+			$str = str_replace(',','',$str);
+			$str = str_replace('.','',$str);
+			$str = str_replace(' ','-',$str);
+
+			return $str;
+	}
+
+
 	public function getNgayLeList(Request $request)
 	{
 		$page = 1;
@@ -1184,7 +1239,10 @@ class ApiController extends Controller
 				$results[] = [
 					'id' => (int) $info->id,
 					'ten_le' => $info->ten_le,
-					'hanh' => $info->hanh,
+					'hanh' => strip_tags($this->pClean($info->hanh)),
+					'slug' => $this->replaceAll($info->ten_le),
+					'solar_day' => $info->solar_day,
+					'solar_month' => $info->solar_month,
 				];
 			}
 			$json = [
@@ -1203,48 +1261,25 @@ class ApiController extends Controller
 				]
 			];
 		}
-
 		return $this->respondWithCollectionPagination($json);
 	}
-
-	public function getNgayLeListById(Request $request)
+	
+	public function getNgayLeDetail(Request $request, $id = null)
 	{
-		$page = 1;
-		if ($request->input('page')) {
-			$page = $request->input('page');
-		}
-		try {
-			$results = [];
-			$collections = $this->sv->apiGetListNgayLe($request, $limit = 5);
-			$pagination = $this->_getTextPagination($collections);
-			if ($request->input('query') == null) {
-				foreach ($collections as $key => $info) {
+		$params         = $request->all();
+		$params['slug'] = isset($params['slug']) ? $params['slug'] : '';
+        if (!empty($params['slug'])) {
+            $slugs                    = explode('-', $params['slug']);
+            $params['id'] = end($slugs);
+        }
 
-					$results[] = [
-						'id' => (int) $info->id,
-						'ten_le' => $info->ten_le,
-						'hanh' => $info->hanh,
-					];
-				}
-			}
-			$json = [
-				'data' => [
-					'results'    => $results,
-					'pagination' => $pagination,
-					'page'       => $page
-				]
-			];
-		} catch (HandlerMsgCommon $e) {
-			$json = [
-				'data' => [
-					'results'    => [],
-					'pagination' => [],
-					'msg'       => $e->render()
-				]
-			];
+		if (isset($params['id'])) {
+			$json['results']                  = $this->sv->apiGetDetailNgayLe($params['id']);
 		}
-
-		return $this->respondWithCollectionPagination($json);
+		
+		return Helper::successResponse([
+            'results'                  => $json['results'],
+        ]);
 	}
 
   public function updateLinhMucTemp(Request $request)

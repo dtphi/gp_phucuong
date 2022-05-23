@@ -248,7 +248,6 @@ final class InitContent
         } else {
             $this->settings['pageDir'] = config('app.is_mix') ? mix('js/stg/app-front.js'): asset('js/app-front.js');
         }
-        //  dd($this->settings, 'test');
     }
 
     /**

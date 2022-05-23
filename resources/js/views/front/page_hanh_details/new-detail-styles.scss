@@ -1,0 +1,14 @@
+/* 
+  Giáo phận phú cường: Page news details main css
+*/
+
+@media screen and (max-width: 990px) {
+    .new-detail {
+        .text-detail {
+            img {
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+    }
+}
