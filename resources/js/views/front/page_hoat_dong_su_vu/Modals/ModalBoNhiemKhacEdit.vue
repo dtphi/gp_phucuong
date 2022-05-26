@@ -48,7 +48,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -57,7 +57,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -66,7 +66,7 @@
                 max="4"
                 min="0"
                 class="form-control"
-                style="max-width: 35%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <cms-date-picker
                 value-type="format"
@@ -85,7 +85,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -94,7 +94,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -103,7 +103,7 @@
                 max="4"
                 min="0"
                 class="form-control"
-                style="max-width: 38%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <cms-date-picker
                 value-type="format"
@@ -196,7 +196,6 @@ export default {
 			this.den_ngay_thang_nam = this.info.label_to_date
 			this.cong_viec = this.info.ghi_chu
       this.select_status = this.info.active
-      console.log(this.select_chuc_vu, 'select')
 	},
   mounted() {
     this.getDropdownChucVus()
@@ -220,7 +219,7 @@ export default {
       this.$data.cong_viec_den_nam = arrDate[0]
       this.$data.cong_viec_den_thang = arrDate[1]
       this.$data.cong_viec_den_ngay = arrDate[2]
-    },
+  },
     _hideModalEdit() {
       this.$modal.hide('modal-bo-nhiem-khac-edit')
     },

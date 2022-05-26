@@ -8,6 +8,7 @@
           <td class="text-center">TT</td>
           <td class="text-center">CHỨC VỤ</td>
           <td class="text-center">ĐỊA ĐIỂM</td>
+          <td class="text-center">CÔNG VIỆC</td>
           <td class="text-center">THỜI GIAN ĐẾN <br> (năm tháng ngày)</td>
           <td class="text-center">THỜI GIAN ĐI <br> (năm tháng ngày)</td>
           <td class="text-center">{{ $options.setting.info_action_title }}</td>
@@ -31,9 +32,14 @@
 				<the-modal-edit
 					:info="_infoUpdate"
 					:info-id="_infoUpdate.id"
-					@update-info-success="_updateInfoList"
 				></the-modal-edit>
 		</modal>
+    <modal name="modal-bo-nhiem-khac-edit" width="800" height="600">
+        <the-modal-edit-bo-nhiem
+          :info="_infoUpdate"
+          :info-id="_infoUpdate.id"
+        ></the-modal-edit-bo-nhiem>
+      </modal>
 	</div>
 </template>
 
@@ -42,12 +48,14 @@ import { MODULE_LINH_MUC_DETAIL_PAGE, } from '@app/stores/front/types/module-typ
 import { mapState, mapActions, } from 'vuex'
 import InfoItem from './InfoItem'
 import TheModalEdit from '../Modals/ModalHoatDongSuVuEdit.vue'
+import TheModalEditBoNhiem from '../Modals/ModalBoNhiemKhacEdit.vue'
 
 export default {
   name: 'TheInfoList',
   components: {
 			InfoItem,
-      TheModalEdit
+      TheModalEdit,
+      TheModalEditBoNhiem
   },
 	data() {
 			return {
@@ -73,15 +81,18 @@ export default {
     ]),
 		_showModalEdit(info) {
 				this.infoUpdate = { ...info };
-				this.$modal.show("modal-hoat-dong-su-vu-edit");
+        console.log(this.infoUpdate.is_bo_nhiem , 'info')
+        if(this.infoUpdate.is_bo_nhiem == 1) {  
+          this.$modal.show("modal-bo-nhiem-khac-edit");
+        }else {   
+          this.$modal.show("modal-hoat-dong-su-vu-edit");
+        }
+				
 		},
 		_notificationUpdate(notification) {
 				this.$notify(notification);
 				this.resetNotification();
     },
-    _updateInfoList() {
-      	this.$modal.hide("modal-hoat-dong-su-vu-edit");
-    }
 	},
   mounted() {
     this.GET_HOAT_DONG_SU_VU(this.$route.params)

@@ -1,7 +1,8 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { v4 as uuidv4, } from 'uuid'
 import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById,
-	apiUpdateLinhMucThuyenChuyen, apiGetBoNhiemById} from 'api@admin/linhmuc'
+  apiUpdateLinhMucThuyenChuyen, apiGetBoNhiemById, apiGetInfoLinhMucUpdate, apiGetInfoThuyenChuyenUpdate
+} from 'api@admin/linhmuc'
 import {
   INFOS_MODAL_SET_LOADING,
   INFOS_MODAL_INSERT_INFO_SUCCESS,
@@ -99,6 +100,8 @@ const defaultState = () => {
     loading: false,
     insertSuccess: false,
     errors: [],
+    info_linhmuc_update: [],
+    info_thuyenchuyen_update: []
   }
 }
 
@@ -135,7 +138,13 @@ export default {
 		},
 		update_bo_nhiem(state) {
 				return state.update_bo_nhiem
-		}
+    },
+    info_linhmuc_update(state) {
+      return state.info_linhmuc_update
+    },
+    info_thuyenchuyen_update(state) {
+      return state.info_thuyenchuyen_update
+    }
   },
 
   mutations: {
@@ -304,7 +313,13 @@ export default {
 		},
 		set_update_bo_nhiem(state, payload) {
 				state.update_bo_nhiem = payload
-		}
+    },
+    SET_INFO_LINHMUC_UPDATE(state, payload) {
+      state.info_linhmuc_update = payload
+    },
+    SET_INFO_THUYENCHUYEN_UPDATE(state, payload) {
+      state.info_thuyenchuyen_update = payload
+    }
   },
 
   actions: {
@@ -835,5 +850,51 @@ export default {
     [ACTION_SET_IMAGE]({ commit, }, imgFile) {
       commit(INFOS_FORM_SET_MAIN_IMAGE, imgFile)
     },
+    GET_INFO_LINHMUC_UPDATE({ commit }, id) {
+      apiGetInfoLinhMucUpdate(
+        id,
+        (res) => {
+          commit('SET_INFO_LINHMUC_UPDATE', res.data)
+        },
+        (err) => {
+          console.log(err)
+        }
+      ) 
+    },
+    GET_INFO_THUYENCHUYEN_UPDATE({ commit }, id) {
+      apiGetInfoThuyenChuyenUpdate(
+        id,
+        (res) => {
+          commit('SET_INFO_THUYENCHUYEN_UPDATE', res.data.results)
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
+    },
+    UPDATE_LINHMUC_IN_NEWTABLE({ commit }, info) {
+      info['action'] = 'capnhat.linhmuc'
+      apiUpdateInfo(
+      info,
+        (res) => {
+        alert('Cập nhật linh mục thành công !!');
+        window.location.reload();
+      },
+      (err) => {
+        console.log(err)
+      })
+    },
+    UPDATE_THUYENCHUYEN_IN_NEWTABLE({ commit }, info) {
+      info['action'] = 'capnhat.thuyenchuyen'
+      apiUpdateInfo(
+        info,
+        (res) => {
+          alert('Cập nhật hoạt động sứ vụ thành công thành công !!');
+          window.location.reload();
+        },
+        (err) => {
+          console.log(err)
+        })
+    }
   },
 }

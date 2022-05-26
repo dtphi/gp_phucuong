@@ -114,7 +114,7 @@ export const apiLinhMucUpdateById = (infoId, resolve, errResole) => {
 }
 
 export const apiUpdateLinhMucTemp = (info, resolve, errResole) => {
-  return axios.get(fn_get_base_api_url(API_UPDATE_LINH_MUC_TEMP), {
+  return axios.post(fn_get_base_api_url(API_UPDATE_LINH_MUC_TEMP), {
     params: info
   }) 
     .then((response) => {

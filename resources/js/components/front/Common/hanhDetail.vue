@@ -1,9 +1,9 @@
 <template>
   <div class="new-detail">
-    <h4 class="tit-detail">{{ pageLists.ten_le }}</h4>
+    <h4 class="tit-detail">{{ pageLists.ten_le }} (Ngày {{ pageLists.solar_day }} Tháng {{ pageLists.solar_month }})</h4>
     <p>
-      <b-icon class="alarm" icon="alarm"></b-icon>
-      <span>{{ pageLists.solar_day }}-{{pageLists.solar_month}}</span>
+      <!-- <b-icon class="alarm" icon="alarm"></b-icon> -->
+      <!-- <span>{{ pageLists.solar_day }}-{{pageLists.solar_month}}</span> -->
     </p>
 
     <p v-html="pageLists.hanh"></p>

@@ -3,15 +3,10 @@
     <v-dialog />
     <tr v-if="item.isEdit" key="thuyen-chuyen-title">
       <td>{{ vitri + 1 }}</td>
-      <p class="text-center">{{ item.chucvuName}}</p>
-      <div class="text-center">
-          <p v-if="checkActiveToggle">Xảy ra</p>
-          <p v-else>Ẩn</p>
-			</div>
-			<td class="text-center">
-				{{diaDiemName}}
-			</td>
-			<td class="text-center">{{ item.label_from_date  }}</td>
+      <td class="text-center">{{ item.chucvuName }}</td>
+			<td class="text-center">{{ diaDiemName }}</td>
+      <td class="text-center">{{ item.ghi_chu }}</td>
+			<td class="text-center">{{ item.label_from_date }}</td>
 			<td class="text-center">{{ check_label_to_date }}</td>
 			<td>	
 				<a
@@ -43,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 import { MODULE_LINH_MUC_DETAIL_PAGE, } from '@app/stores/front/types/module-types'
 
 export default {
@@ -97,8 +92,8 @@ export default {
     ]),
 		_removeItem(item) {
       this.$modal.show('dialog', {
-        title: "Xóa hoạt động sứ vụ",
-        text: "Bạn muốn xóa hoạt động sứ vụ này ?",
+        title: "Xóa hoạt động",
+        text: "Bạn muốn xóa hoạt động này ?",
         buttons: [
           {
             title: "Hủy",

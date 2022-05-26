@@ -63,9 +63,9 @@
                           </h4>
                           <div class="row">
                             <div class="col-6">
-                              <span v-if="info.ngay_rip">RIP: {{ info.ngay_rip }}</span>
+                              <span v-if="info.chuc_vu === 'R.I.P'">RIP: {{ info.ngay_rip }}</span>
                               <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
-                              
+
                               <a :href="info.href_giaoxu">
                                 <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: Hưu </span>
                                  <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: RIP </span>
@@ -186,9 +186,9 @@
                               </h4>
                               <div class="row">
                                 <div class="col-6">
-                                  <span v-if="info.ngay_rip">RIP: {{ info.ngay_rip }}</span>
+                                  <span v-if="info.chuc_vu === 'R.I.P'">RIP: {{ info.ngay_rip }}</span>
                                   <span v-else>Chức vụ: {{ info.chuc_vu }}</span>
-                                  
+
                                   <a :href="info.href_giaoxu">
                                     <span v-if="info.chuc_vu === 'Hưu'">Nơi nghỉ hưu: Hưu</span>
                                     <span v-else-if="info.chuc_vu === 'R.I.P'">Nơi RIP: RIP </span>

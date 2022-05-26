@@ -130,7 +130,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -139,7 +139,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -148,14 +148,13 @@
                 max="4"
                 min="0"
                 class="form-control"
-                style="max-width: 35%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <cms-date-picker
                 value-type="format"
                 format="YYYY-MM-DD"
                 v-model="from_date"
                 type="date"
-                class="form-control"
               ></cms-date-picker>
             </div>
           </div>
@@ -168,7 +167,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -177,7 +176,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -186,7 +185,7 @@
                 max="4"
                 min="0"
                 class="form-control"
-                style="max-width: 38%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <cms-date-picker
                 value-type="format"

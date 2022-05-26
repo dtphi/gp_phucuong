@@ -91,6 +91,10 @@ export default {
       const i = state.arr_thuyen_chuyens.map(item => item.id).indexOf(payload)
       state.arr_thuyen_chuyens.splice(i, 1)
     },
+    SET_DELETE_BO_NHIEM(state, payload) {
+      const i = state.arr_bo_nhiems.map(item => item.id).indexOf(payload)
+      state.arr_bo_nhiems.splice(i, 1)
+    },
   },
   actions: {
     [GET_DETAIL_LINH_MUC]({ commit, }, routeParams) {
@@ -293,7 +297,8 @@ export default {
       apiAddThuyenChuyen(
         params,
         (res) => {
-          window.location.reload(true);
+          alert('Thêm hoạt động thành công !!')
+          window.location.reload(true)
         },
         (err) => {
           console.log(err, 'err')
@@ -339,6 +344,19 @@ export default {
     DELETE_THUYEN_CHUYEN({ commit }, id) {
       const params = {id: id, action: 'delete.thuyen.chuyen'}
       commit('SET_DELETE_THUYEN_CHUYEN', id)
+      apiAddThuyenChuyen(
+        params,
+        (res) => {
+          //alert('Xóa thành công !!!')
+        },
+        (err) => {
+          console.log(err, 'err')
+        }
+      )
+    },
+    DELETE_BO_NHIEM({ commit }, id) {
+      const params = {id: id, action: 'delete.bo.nhiem'}
+      commit('SET_DELETE_BO_NHIEM', id)
       apiAddThuyenChuyen(
         params,
         (res) => {

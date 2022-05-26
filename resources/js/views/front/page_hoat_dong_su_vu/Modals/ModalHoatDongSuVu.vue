@@ -4,6 +4,17 @@
       <div class="panel-body">
         <form class="form-horizontal cms-modal-form">
           <div class="form-group">
+            <label for="input-info-status" class="col-sm-3 control-label"
+              >Loại hoạt động</label
+            >
+            <div class="col-sm-10">
+              <select class="form-control" v-model="select_action">
+                <option :value="1" :selected="select_action == 1">Bổ nhiệm khác</option>
+                <option :value="0" :selected="select_action == 0">Hoạt động sứ vụ</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-3 control-label">Chức vụ:</label>
             <div class="col-sm-12">
               <select
@@ -19,6 +30,25 @@
                   {{ item.name }}
                 </option>
               </select>
+            </div>
+          </div>
+          <div class="form-group" v-if="select_action == 1">
+            <label for="input-info-name" class="col-sm-3 control-label"
+              >Công việc</label
+            >
+            <div class="col-sm-9">
+              <validation-provider
+                name="info_cong_viec"
+                rules="max:200"
+                v-slot="{ errors }"
+              >
+                <textarea
+                  rows="5"
+                  class="form-control"
+                  v-model="cong_viec"
+                ></textarea>
+                <span class="cms-text-red">{{ errors[0] }}</span>
+              </validation-provider>
             </div>
           </div>
           <div class="form-group">
@@ -126,7 +156,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -135,7 +165,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -144,14 +174,13 @@
                 max="4"
                 min="0"
                 class="form-control"
-                style="max-width: 35%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <cms-date-picker
                 value-type="format"
                 format="YYYY-MM-DD"
                 v-model="from_date"
                 type="date"
-                class="form-control"
               ></cms-date-picker>
             </div>
           </div>
@@ -164,7 +193,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -173,7 +202,7 @@
                 max="2"
                 min="0"
                 class="form-control"
-                style="max-width: 30%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <label style="font-size: 20px">-</label>
               <input
@@ -182,7 +211,7 @@
                 max="4"
                 min="0"
                 class="form-control"
-                style="max-width: 38%; text-align: right"
+                style="max-width: 25%; text-align: right"
               />
               <cms-date-picker
                 value-type="format"
@@ -198,13 +227,13 @@
             >
             <div class="col-sm-10">
               <select class="form-control" v-model="select_status">
-                <option value="1" :selected="select_status == 1">Hiện đang giữ</option>
-                <option value="0" :selected="select_status == 0">Đã xảy ra</option>
+                <option :value="1" :selected="select_status == 1">Hiện đang giữ</option>
+                <option :value="0" :selected="select_status == 0">Đã xảy ra</option>
               </select>
             </div>
           </div>
         </form>
-        <div class="cms-modal-footer-btn">
+        <div >
           <div class="text-center cms-modal-group-btn">
             <input
               type="button"
@@ -230,24 +259,18 @@ import { MODULE_LINH_MUC_DETAIL_PAGE } from '@app/stores/front/types/module-type
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'TheCmsModalResizable',
-  props: {
-    icon: {
-      default: 'fa fa-plus',
-    },
-    modalName: {
-      default: 'modal-resizable',
-    },
-  },
+  name: 'ModalHoatDongSuVu',
   data() {
     return {
       dia_diem_loai: '',
+      cong_viec: '',
       isGiaoXu: 1,
       isCoSo: 2,
       isDong: 3,
       isBanChuyenTrach: 4,
       isCongDoanNgoai: 5,
       select_chuc_vu: 0,
+      select_action: 0,
       thuyenChuyen: {
         select_giao_xu: 0,
         select_csgp: 0,
@@ -411,6 +434,9 @@ export default {
       this.$data.dia_diem_den_ngay = arrDate[2]
     },
   },
+  mounted() {
+    console.log('rersrerser')
+  }
 }
 </script>
 

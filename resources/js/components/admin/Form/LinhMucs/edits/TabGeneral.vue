@@ -1,5 +1,11 @@
 <template>
   <div class="tab-content">
+    <modal-update-linh-muc v-if="openModal"></modal-update-linh-muc>
+    <div class="form-group">
+      <div class="col-sm-10">
+        <button @click="showModalUpdate" type="button" class="btn btn-primary">Xác nhận linh mục</button>
+      </div>
+    </div>
     <div>
       <info-ten-thanh-autocomplete
         @on-select-ten-thanh="_selectGeneralTenThanh"
@@ -432,6 +438,7 @@ const { mapFields, } = createHelpers({
   getterType: `${MODULE_MODULE_LINH_MUC_EDIT}/getInfoField`,
   mutationType: `${MODULE_MODULE_LINH_MUC_EDIT}/updateInfoField`,
 })
+import ModalUpdateLinhMuc from './Modals/ModalUpdateLinhMuc.vue'
 
 export default {
   name: 'TabGeneralForm',
@@ -440,6 +447,12 @@ export default {
     InfoGiaoXuAutocomplete,
     InfoTenThanhAutocomplete,
     InfoDongAutocomplete,
+    ModalUpdateLinhMuc
+  },
+  data() {
+    return {
+      openModal: false
+    }
   },
   computed: {
     ...mapFields(MAP_PC_LINHMUCS),
@@ -452,6 +465,13 @@ export default {
       'ACTION_UPDATE_DROPDOWN_DONG',
       'ACTION_UPDATE_DROPDOWN_TEN_THANH_LIST'
     ]),
+    showModalUpdate() {
+      this.openModal = true
+      this.$nextTick(() => {
+        this.$modal.show('modal-update-linh-muc')
+      })
+      
+    }
   },
 }
 </script>
