@@ -677,13 +677,13 @@ class LinhMucController extends ApiController
     $nguoiThuPhong = '';
     foreach($json->chucThanhs as $value) { // chuc thanh
         if($value['chuc_thanh_id'] == 1) {
-          $phoTe = $value['noi_thu_phong'];
-          $ngayPhoTe = date_format(date_create($value['ngay_thang_nam_chuc_thanh']), "d-m-Y");
+          $phoTe = $value['noi_thu_phong'] ?? '';
+          $ngayPhoTe = $value['ngay_thang_nam_chuc_thanh'] ? date_format(date_create($value['ngay_thang_nam_chuc_thanh']), "d-m-Y") : '';
         }
         if($value['chuc_thanh_id'] == 2) {
-          $linhMuc = $value['noi_thu_phong'];
-          $ngayLinhMuc = date_format(date_create($value['ngay_thang_nam_chuc_thanh']), "d-m-Y");
-          $nguoiThuPhong = $value['nguoi_thu_phong'];
+          $linhMuc = $value['noi_thu_phong'] ?? '';
+          $ngayLinhMuc = ($value['ngay_thang_nam_chuc_thanh']) ? date_format(date_create($value['ngay_thang_nam_chuc_thanh']), "d-m-Y") : '';
+          $nguoiThuPhong = $value['nguoi_thu_phong'] ?: '';
         }
     }
 
@@ -695,35 +695,34 @@ class LinhMucController extends ApiController
 
     // chi tiet linh muc
     $templateProcessor->setImageValue('image_linhmuc', array('path' => $staticImgThum, 'width' => 120, 'height' => 180, 'ratio' => false));
-    // dd('567');
-    $templateProcessor->setValue('thanh', $json->ten_thanh);
-    $templateProcessor->setValue('ho_ten', $json->ten);
-    $templateProcessor->setValue('sinh_ngay', ($json->ngay_thang_nam_sinh)?date_format(date_create($json->ngay_thang_nam_sinh), "d-m-Y"):'');
-    $templateProcessor->setValue('noi_sinh', $json->noi_sinh);
-    $templateProcessor->setValue('sinh_tai_xu', $json->sinh_giao_xu);
+
+    $templateProcessor->setValue('thanh', $json->ten_thanh ?? '');
+    $templateProcessor->setValue('ho_ten', $json->ten ?? '');
+    $templateProcessor->setValue('sinh_ngay', ($json->ngay_thang_nam_sinh) ? date_format(date_create($json->ngay_thang_nam_sinh), "d-m-Y") : '');
+    $templateProcessor->setValue('noi_sinh', $json->noi_sinh ?? '');
+    $templateProcessor->setValue('sinh_tai_xu', $json->sinh_giao_xu ?? '');
     $templateProcessor->setValue('giao_phan', 'Phú Cường');
-    $templateProcessor->setValue('ho_ten_cha', $json->ho_ten_cha);
-    $templateProcessor->setValue('ho_ten_me', $json->ho_ten_me);
-    $templateProcessor->setValue('noi_rua_toi', $json->noi_rua_toi);
+    $templateProcessor->setValue('ho_ten_cha', $json->ho_ten_cha ?? '');
+    $templateProcessor->setValue('ho_ten_me', $json->ho_ten_me ?? '');
+    $templateProcessor->setValue('noi_rua_toi', $json->noi_rua_toi ?? '');
     $templateProcessor->setValue('ngay_rua_toi', ($json->ngay_rua_toi) ? date_format(date_create($json->ngay_rua_toi), "d-m-Y") : '');
-    $templateProcessor->setValue('noi_them_suc', $json->noi_them_suc);
+    $templateProcessor->setValue('noi_them_suc', $json->noi_them_suc ?? '');
     $templateProcessor->setValue('ngay_them_suc', ($json->ngay_them_suc) ? date_format(date_create($json->ngay_them_suc), "d-m-Y") : '');
-    $templateProcessor->setValue('tieu_chung_vien', $json->tieu_chung_vien);
+    $templateProcessor->setValue('tieu_chung_vien', $json->tieu_chung_vien ?? '');
     $templateProcessor->setValue('ngay_tieu_chung_vien', ($json->ngay_tieu_chung_vien) ? date_format(date_create($json->ngay_tieu_chung_vien), "d-m-Y") : '');
-    $templateProcessor->setValue('dai_chung_vien', $json->dai_chung_vien);
+    $templateProcessor->setValue('dai_chung_vien', $json->dai_chung_vien ?? '');
     $templateProcessor->setValue('ngay_dai_chung_vien', ($json->ngay_dai_chung_vien) ? date_format(date_create($json->ngay_dai_chung_vien), "d-m-Y") : '');
     $templateProcessor->setValue('pho_te', $phoTe);
     $templateProcessor->setValue('ngay_pho_te', $ngayPhoTe);
     $templateProcessor->setValue('chiu_chuc', $linhMuc);
     $templateProcessor->setValue('ngay_chiu_chuc', $ngayLinhMuc);
     $templateProcessor->setValue('duc_giam_muc', $nguoiThuPhong);
-    $templateProcessor->setValue('cmnd', $json->so_cmnd);
-    $templateProcessor->setValue('ngay_cap', date_format(date_create($json->ngay_cap_cmnd), "d-m-Y"));
-    $templateProcessor->setValue('noi_cap', $json->noi_cap_cmnd);
-    $templateProcessor->setValue('cham_ngon', $json->cham_ngon);
+    $templateProcessor->setValue('cmnd', $json->so_cmnd ?? '');
+    $templateProcessor->setValue('ngay_cap', ($json->ngay_cap_cmnd) ? date_format(date_create($json->ngay_cap_cmnd), "d-m-Y") : '');
+    $templateProcessor->setValue('noi_cap', $json->noi_cap_cmnd ?? '');
+    $templateProcessor->setValue('cham_ngon', $json->cham_ngon ?? '');
     // // // $templateProcessor->setImageValue('qua_doi_luc', $json);
     // // // $templateProcessor->setImageValue('ngay_qua_doi');
-
     // // // table
     $templateProcessor->cloneRow('id', count($thuyen_chuyens));
 
