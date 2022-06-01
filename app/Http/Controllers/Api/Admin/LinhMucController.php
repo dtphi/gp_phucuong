@@ -667,7 +667,7 @@ class LinhMucController extends ApiController
 
   public function exportLinhMuc($id = null)
   {
-    $json = $this->linhMucSv->apiGetResourceDetail($id);
+    $json = $this->linhMucSv->apiGetDetail($id);
     $thuyen_chuyens = $this->linhMucSv->apiHoatDongSuVu($id);
 
     $phoTe = '';
@@ -675,6 +675,7 @@ class LinhMucController extends ApiController
     $linhMuc = '';
     $ngayLinhMuc = '';
     $nguoiThuPhong = '';
+
     foreach($json->chucThanhs as $value) { // chuc thanh
         if($value['chuc_thanh_id'] == 1) {
           $phoTe = $value['noi_thu_phong'] ?? '';
@@ -687,7 +688,7 @@ class LinhMucController extends ApiController
         }
     }
 
-    $templateProcessor = new TemplateProcessor('word-template/user.docx');
+    $templateProcessor = new TemplateProcessor(public_path('word-template/user.docx'));
     $staticImgThum = 'images/no-photo.jpg';
     if (!empty($json->image) && file_exists(public_path($json->image))) {
       $staticImgThum = $json->image;
