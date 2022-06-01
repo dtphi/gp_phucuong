@@ -316,7 +316,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
     }
 
     private function _deleteById($id)
-    {      
+    {
       Linhmuc::fcDeleteById($id);
       LinhmucBangcap::fcDeleteByLinhmucId($id);
       LinhmucChucthanh::fcDeleteByLinhmucId($id);
@@ -444,11 +444,11 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return $query->get();
     }
 
-    public function apiUpdateBangCap($data = []) 
+    public function apiUpdateBangCap($data = [])
     {
         $hat = LinhMucBangCap::updateOrCreate(
             [
-                'id' => $data['id'], 
+                'id' => $data['id'],
                 'linh_muc_id' => $data['linhMucId']
             ],
             [
@@ -462,11 +462,11 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return new LinhMucBangCapCollection(LinhMucBangCap::where('linh_muc_id', $data['linhMucId'])->get());
     }
 
-    public function apiUpdateChucThanh($data = []) 
+    public function apiUpdateChucThanh($data = [])
     {
         $hat = LinhMucChucThanh::updateOrCreate(
             [
-                'id' => $data['id'], 
+                'id' => $data['id'],
                 'linh_muc_id' => $data['linhMucId']
             ],
             [
@@ -482,11 +482,11 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return new LinhMucChucThanhCollection(LinhMucChucThanh::where('linh_muc_id', $data['linhMucId'])->get());
     }
 
-    public function apiUpdateVanThu($data = []) 
+    public function apiUpdateVanThu($data = [])
     {
         $hat = LinhMucVanThu::updateOrCreate(
             [
-                'id' => $data['id'], 
+                'id' => $data['id'],
                 'linh_muc_id' => $data['linhMucId']
             ],
             [
@@ -500,22 +500,22 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return new LinhMucVanThuCollection(LinhMucVanThu::where('linh_muc_id', $data['linhMucId'])->get());
     }
 
-    public function apiUpdateThuyenChuyen($data = []) 
+    public function apiUpdateThuyenChuyen($data = [])
     {
 				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['id_thuyen_chuyen']);
 				if($data['data']['dia_diem_tu_nam'] == null || $data['data']['dia_diem_tu_thang'] == null || $data['data']['dia_diem_tu_ngay'] == null) {
 						$this->modelThuyenChuyen->from_date = null;
 				}else {
 					$this->modelThuyenChuyen->from_date = $data['data']['dia_diem_tu_nam'] .'-'. $data['data']['dia_diem_tu_thang'] .'-'. $data['data']['dia_diem_tu_ngay'];
-				}		
-				
+				}
+
 				if($data['data']['dia_diem_den_nam'] == null || $data['data']['dia_diem_den_thang'] == null || $data['data']['dia_diem_den_ngay'] == null) {
 						$this->modelThuyenChuyen->to_date = null;
 				}else {
 						$this->modelThuyenChuyen->to_date = $data['data']['dia_diem_den_nam'] .'-'. $data['data']['dia_diem_den_thang'] .'-'. $data['data']['dia_diem_den_ngay'];
 				}
-				$this->modelThuyenChuyen->chuc_vu_id = $data['data']['chuc_vu_id'];	
-				$this->modelThuyenChuyen->giao_xu_id = $data['data']['giao_xu_id'];	
+				$this->modelThuyenChuyen->chuc_vu_id = $data['data']['chuc_vu_id'];
+				$this->modelThuyenChuyen->giao_xu_id = $data['data']['giao_xu_id'];
 				$this->modelThuyenChuyen->co_so_gp_id = $data['data']['co_so_gp_id'];
 				$this->modelThuyenChuyen->dong_id = $data['data']['dong_id'];
 				$this->modelThuyenChuyen->ban_chuyen_trach_id = $data['data']['ban_chuyen_trach_id'];
@@ -529,15 +529,15 @@ final class LinhMucService implements BaseModel, LinhMucModel
 				DB::commit();
     }
 
-		public function apiUpdateBoNhiem($data = []) 
+		public function apiUpdateBoNhiem($data = [])
     {
 				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['id_bo_nhiem']);
 				if($data['data']['cong_viec_tu_nam'] == null || $data['data']['cong_viec_tu_thang'] == null || $data['data']['cong_viec_tu_ngay'] == null) {
 						$this->modelThuyenChuyen->from_date = null;
 				}else {
 					$this->modelThuyenChuyen->from_date = $data['data']['cong_viec_tu_nam'] .'-'. $data['data']['cong_viec_tu_thang'] .'-'. $data['data']['cong_viec_tu_ngay'];
-				}		
-				
+				}
+
 				if($data['data']['cong_viec_den_nam'] == null || $data['data']['cong_viec_den_thang'] == null || $data['data']['cong_viec_den_ngay'] == null) {
 						$this->modelThuyenChuyen->to_date = null;
 				}else {
@@ -586,7 +586,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
 		}
 
 		public function apiUpdateActiveThuyenChuyen($id_thuyen_chuyen) {
-			
+
 			$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($id_thuyen_chuyen);
 
 			if($this->modelThuyenChuyen->chuc_vu_active == 1) {
@@ -614,6 +614,16 @@ final class LinhMucService implements BaseModel, LinhMucModel
 				return $query;
 		}
 
+    public function apiHoatDongSuVu($infoId = null)
+    {
+      $query = $this->modelThuyenChuyen->select()
+      ->where('linh_muc_id', $infoId)
+      ->orderBy('from_date', 'DESC')
+      ->get();
+
+      return $query;
+    }
+
     public function apiGetThuyenChuyenTemp($infoId = null)
     {
       $query = $this->modelThuyenChuyenTemp->select()
@@ -634,13 +644,13 @@ final class LinhMucService implements BaseModel, LinhMucModel
 			return $query;
 		}
 
-		public function apiAddThuyenChuyen($data = []) 
-    {		
+		public function apiAddThuyenChuyen($data = [])
+    {
 				if($data['dia_diem_tu_nam'] == null || $data['dia_diem_tu_thang'] == null || $data['dia_diem_tu_ngay'] == null) {
 						$data['from_date'] = null;
 				}else {
 						$data['from_date'] = $data['dia_diem_tu_nam'] .'-'. $data['dia_diem_tu_thang'] .'-'. $data['dia_diem_tu_ngay'];
-				}		
+				}
 
 				if($data['dia_diem_den_nam'] == null || $data['dia_diem_den_thang'] == null || $data['dia_diem_den_ngay'] == null) {
 						$data['to_date'] = null;
@@ -672,13 +682,13 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return new LinhMucThuyenChuyenCollection(LinhMucThuyenChuyen::where('linh_muc_id', $data['linhMucId'])->get());
     }
 
-		public function apiAddBoNhiem($data = []) 
-    {		
+		public function apiAddBoNhiem($data = [])
+    {
 				if($data['cong_viec_tu_nam'] == null || $data['cong_viec_tu_thang'] == null || $data['cong_viec_tu_ngay'] == null) {
 						$data['from_date'] = null;
 				}else {
 						$data['from_date'] = $data['cong_viec_tu_nam'] .'-'. $data['cong_viec_tu_thang'] .'-'. $data['cong_viec_tu_ngay'];
-				}		
+				}
 
 				if($data['cong_viec_den_nam'] == null || $data['cong_viec_den_thang'] == null || $data['cong_viec_den_ngay'] == null) {
 						$data['to_date'] = null;
@@ -702,7 +712,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
 						'du_hoc' => 0,
 						'quoc_gia' => '',
 						'active' => $data['active'],
-						'ghi_chu' => $data['cong_viec'],			
+						'ghi_chu' => $data['cong_viec'],
 						'chuc_vu_active' => 1,
 						'is_bo_nhiem' => 1,
 				]
@@ -751,7 +761,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
           DB::commit();
     }
 
-    public function apiCapNhatThuyenChuyen($data = []) 
+    public function apiCapNhatThuyenChuyen($data = [])
     {
       try {
         DB::beginTransaction();
@@ -786,10 +796,10 @@ final class LinhMucService implements BaseModel, LinhMucModel
 
         $new_thuyenchuyens_delete = $this->modelThuyenChuyenTemp->where('linh_muc_id', $data['id'])->delete(); // delete thuyenchuyen_temp by linh_muc_id
         DB::commit();
-        
+
       } catch (\Exception  $e) {
         DB::rollback();
         throw $e;
       }
-    } 
+    }
 }

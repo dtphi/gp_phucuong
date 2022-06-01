@@ -61,7 +61,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
 
 Route::namespace('App\Http\Controllers\Api\Admin')
   ->middleware(['app.version', 'auth:sanctum', 'secip'])
-  ->group(function () { 
+  ->group(function () {
     Route::get('/user', function (Request $request) {
       $user = $request->user();
       $user->isAdmin = fn_is_admin_permission();
@@ -81,6 +81,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('settings', 'SettingController');
 
     Route::apiResource('linh-mucs', 'LinhMucController');
+    Route::get('export-linh-muc/{id}', 'LinhMucController@exportLinhMuc');
     Route::get('linh-muc-update/{infoId}', 'LinhMucController@listInfoLinhMucUpdate');
     Route::get('thuyen-chuyen-update/{infoId}', 'LinhMucController@listInfoThuyenChuyenUpdate');
 		Route::get('lm-bo-nhiems/{infoId}', 'LinhMucController@listLinhMucBoNhiem');
@@ -94,7 +95,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
 
     Route::apiResource('giao-phans', 'GiaoPhanController');
     Route::apiResource('giao-hats', 'GiaoHatController');
-    Route::apiResource('giao-xus', 'GiaoXuController'); 
+    Route::apiResource('giao-xus', 'GiaoXuController');
 		Route::get('gx-thuyen-chuyens/{infoId}', 'GiaoXuController@listGiaoXuThuyenChuyen');
     Route::get('giao-hats-by-giao-xus', 'GiaoXuController@listGiaoHats');
     Route::get('giao-xus-by-id-giao-hat/{id}', 'GiaoXuController@listGiaoXuByIdGiaoHat');
@@ -118,7 +119,7 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('albums', 'AlbumsController'); //AlbumsController
     Route::get('search-albums','AlbumsController@search');
     Route::post('change-status-albums','AlbumsController@changeStatus');
-    
+
     Route::apiResource('group-albums', 'GroupAlbumsController'); //GroupAlbumsController
     Route::get('search-group-albums','GroupAlbumsController@search');
     Route::post('change-status-group-albums','GroupAlbumsController@changeStatus');

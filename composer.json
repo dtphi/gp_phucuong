@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.17",
+        "phpoffice/phpword": "^0.18.3",
         "pusher/pusher-php-server": "^7.0"
     },
     "require-dev": {
