@@ -1,7 +1,8 @@
 import AppConfig from 'api@admin/constants/app-config'
 import { v4 as uuidv4, } from 'uuid'
-import { apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById,
-  apiUpdateLinhMucThuyenChuyen, apiGetBoNhiemById, apiGetInfoLinhMucUpdate, apiGetInfoThuyenChuyenUpdate
+import {
+  apiUpdateInfo, apiGetInfoById, apiGetThuyenChuyenById,
+  apiUpdateLinhMucThuyenChuyen, apiGetBoNhiemById, apiGetInfoLinhMucUpdate, apiGetInfoThuyenChuyenUpdate, apiExportLinhMuc
 } from 'api@admin/linhmuc'
 import {
   INFOS_MODAL_SET_LOADING,
@@ -17,10 +18,11 @@ import {
   ACTION_SET_IMAGE,
   ACTION_GET_INFO_BY_ID,
   ACTION_RESET_NOTIFICATION_INFO,
-	ACTION_CHANGE_STATUS,
+  ACTION_CHANGE_STATUS,
 } from '../types/action-types'
 import { fnCheckProp, } from '@app/common/util'
 import { getField, updateField } from 'vuex-map-fields'
+import { faDownload } from '@fortawesome/free-solid-svg-icons'
 
 const defaultState = () => {
   return {
@@ -56,7 +58,7 @@ const defaultState = () => {
       rip_giao_xu_id: null,
       rip_giaoxu_name: '',
       rip_ghi_chu: '',
-			cham_ngon: '',
+      cham_ngon: '',
       ghi_chu: '',
       code: '',
       phone: '',
@@ -73,28 +75,28 @@ const defaultState = () => {
       bo_nhiems: [],
       lm_thuyen_chuyens: [],
       action: '',
-			sinh_giao_xu: '',
-			mat_giao_xu: '',
+      sinh_giao_xu: '',
+      mat_giao_xu: '',
     },
-		arr_bo_nhiems: [],
-		arr_thuyen_chuyens: [],
-		update_thuyen_chuyen: {
-			id: '',
-			giao_xu_id: '',
-			linh_muc_id: '',
+    arr_bo_nhiems: [],
+    arr_thuyen_chuyens: [],
+    update_thuyen_chuyen: {
+      id: '',
+      giao_xu_id: '',
+      linh_muc_id: '',
       linhMucName: '',
       co_so_status: '',
-			tenThanh: '',
-			chuc_vu_id: '',
-			chucvuName: '',
-			label_from_date: '',
-			label_to_date: '',
-			from_date: '',
-			to_date: ''
-		},
-		update_bo_nhiem: {
+      tenThanh: '',
+      chuc_vu_id: '',
+      chucvuName: '',
+      label_from_date: '',
+      label_to_date: '',
+      from_date: '',
+      to_date: ''
+    },
+    update_bo_nhiem: {
 
-		},
+    },
     thuyenChuyen: null,
     isImgChange: true,
     loading: false,
@@ -127,17 +129,17 @@ export default {
     getInfoField(state) {
       return getField(state.info)
     },
-		arr_thuyen_chuyens(state) {
-			return state.arr_thuyen_chuyens
-		},
-		update_thuyen_chuyen(state) {
-				return state.update_thuyen_chuyen
-		},
-		arr_bo_nhiems(state) {
-			return state.arr_bo_nhiems
-		},
-		update_bo_nhiem(state) {
-				return state.update_bo_nhiem
+    arr_thuyen_chuyens(state) {
+      return state.arr_thuyen_chuyens
+    },
+    update_thuyen_chuyen(state) {
+      return state.update_thuyen_chuyen
+    },
+    arr_bo_nhiems(state) {
+      return state.arr_bo_nhiems
+    },
+    update_bo_nhiem(state) {
+      return state.update_bo_nhiem
     },
     info_linhmuc_update(state) {
       return state.info_linhmuc_update
@@ -190,7 +192,7 @@ export default {
     },
     update_dropdown_thuyen_chuyen(state, payload) {
       const thuyenChuyen = (payload) ? payload : state.thuyenChuyen
-      _.forEach(state.info.thuyen_chuyens, function(item, idx) {
+      _.forEach(state.info.thuyen_chuyens, function (item, idx) {
         if (fnCheckProp(item, 'id') && item.id == thuyenChuyen.id) {
           state.info.thuyen_chuyens[idx] = thuyenChuyen
         }
@@ -202,12 +204,12 @@ export default {
     // update_thuyen_chuyen_remove(state, payload) {
     //   state.info.thuyen_chuyens = payload
     // },
-		update_arr_thuyen_chuyens(state, payload) {
-			state.arr_thuyen_chuyens = payload
-		},
-		update_arr_bo_nhiems(state, payload) {
-			state.arr_bo_nhiems = payload
-		},
+    update_arr_thuyen_chuyens(state, payload) {
+      state.arr_thuyen_chuyens = payload
+    },
+    update_arr_bo_nhiems(state, payload) {
+      state.arr_bo_nhiems = payload
+    },
     update_van_thu(state, payload) {
       state.info.van_thus.push(payload)
     },
@@ -227,7 +229,7 @@ export default {
       state.info.bo_nhiem = payload
       state.info.action = 'add.bo.nhiem'
     },
-		update_active_bo_nhiem(state, payload) {
+    update_active_bo_nhiem(state, payload) {
       state.info.bo_nhiem = payload
       state.info.action = 'update.active.bo.nhiem'
     },
@@ -239,11 +241,11 @@ export default {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'add.lm.thuyen.chuyen'
     },
-		update_active_lm_thuyen_chuyen(state, payload) {
+    update_active_lm_thuyen_chuyen(state, payload) {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'update.active.lm.thuyen.chuyen'
     },
-		update_active_thuyen_chuyen(state, payload) {
+    update_active_thuyen_chuyen(state, payload) {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'update.active.thuyen.chuyen'
     },
@@ -251,7 +253,7 @@ export default {
       state.info.lm_thuyen_chuyen = payload
       state.info.action = 'remove.lm.thuyen.chuyen'
     },
-		update_thuyen_chuyen_remove(state, payload) {
+    update_thuyen_chuyen_remove(state, payload) {
       state.info.action = payload
     },
     update_bang_cap_remove(state, payload) {
@@ -296,23 +298,23 @@ export default {
     updateInfoField(state, field) {
       return updateField(state.info, field)
     },
-		set_info_thuyen_chuyens(state, payload) {
-			return state.arr_thuyen_chuyens = payload
-		},
-		remove_thuyen_chuyens(state, index) {
-			state.arr_thuyen_chuyens.splice(index, 1)
-		},
-		set_update_thuyen_chuyen(state, payload) {
-				state.update_thuyen_chuyen = payload
-		},
-		set_info_bo_nhiems(state, payload) {
-			return state.arr_bo_nhiems = payload
-		},
-		remove_bo_nhiems(state, index) {
-			state.arr_bo_nhiems.splice(index, 1)
-		},
-		set_update_bo_nhiem(state, payload) {
-				state.update_bo_nhiem = payload
+    set_info_thuyen_chuyens(state, payload) {
+      return state.arr_thuyen_chuyens = payload
+    },
+    remove_thuyen_chuyens(state, index) {
+      state.arr_thuyen_chuyens.splice(index, 1)
+    },
+    set_update_thuyen_chuyen(state, payload) {
+      state.update_thuyen_chuyen = payload
+    },
+    set_info_bo_nhiems(state, payload) {
+      return state.arr_bo_nhiems = payload
+    },
+    remove_bo_nhiems(state, index) {
+      state.arr_bo_nhiems.splice(index, 1)
+    },
+    set_update_bo_nhiem(state, payload) {
+      state.update_bo_nhiem = payload
     },
     SET_INFO_LINHMUC_UPDATE(state, payload) {
       state.info_linhmuc_update = payload
@@ -338,8 +340,8 @@ export default {
     addBangCaps({ dispatch, state, commit, }, params) {
       if (
         fnCheckProp(params, 'action') &&
-                fnCheckProp(params, 'info') &&
-                params.action === 'create.update.bang.cap.db'
+        fnCheckProp(params, 'info') &&
+        params.action === 'create.update.bang.cap.db'
       ) {
         let bangCap = params.info
         dispatch(ACTION_SET_LOADING, true)
@@ -400,8 +402,8 @@ export default {
     addChucThanhs({ dispatch, commit, state, }, params) {
       if (
         fnCheckProp(params, 'action') &&
-                fnCheckProp(params, 'info') &&
-                params.action === 'create.update.chuc.thanh.db'
+        fnCheckProp(params, 'info') &&
+        params.action === 'create.update.chuc.thanh.db'
       ) {
         let chucThanh = params.info
         dispatch(ACTION_SET_LOADING, true)
@@ -464,8 +466,8 @@ export default {
     addVanThus({ dispatch, commit, state, }, params) {
       if (
         fnCheckProp(params, 'action') &&
-                fnCheckProp(params, 'info') &&
-                params.action === 'create.update.van.thu.db'
+        fnCheckProp(params, 'info') &&
+        params.action === 'create.update.van.thu.db'
       ) {
         let vanThu = params.info
         dispatch(ACTION_SET_LOADING, true)
@@ -583,7 +585,7 @@ export default {
         })
       }
     },
-		addBoNhiem({ dispatch, commit, state, }, params) {
+    addBoNhiem({ dispatch, commit, state, }, params) {
       if (fnCheckProp(params, 'action') && params.action == 'addBoNhiem'
       ) {
         let bonhiem = params.data
@@ -593,7 +595,7 @@ export default {
         apiUpdateInfo(
           bonhiem,
           (response) => {
-						console.log(response.data.data.results, 'test')
+            console.log(response.data.data.results, 'test')
             commit('update_arr_bo_nhiems', response.data.data.results)
             commit(SET_ERROR, [])
             commit(
@@ -632,11 +634,11 @@ export default {
         })
       })
     },
-    
-		async updateActiveBoNhiem({ commit, state, dispatch }, info ) {
-			const data = info.item.id
-			await commit('update_active_bo_nhiem', data)
-			dispatch(ACTION_CHANGE_STATUS, state.info)
+
+    async updateActiveBoNhiem({ commit, state, dispatch }, info) {
+      const data = info.item.id
+      await commit('update_active_bo_nhiem', data)
+      dispatch(ACTION_CHANGE_STATUS, state.info)
     },
     async removeBoNhiem({ commit, dispatch, state, }, params) {
       const data = params.item
@@ -653,15 +655,15 @@ export default {
       })
       dispatch(ACTION_INSERT_INFO, state.info)
     },
-		async updateActiveLmThuyenChuyen({ commit, state, dispatch }, info ) {
-			const data = info.item.id
-			await commit('update_active_lm_thuyen_chuyen', data)
-			dispatch(ACTION_CHANGE_STATUS, state.info)
+    async updateActiveLmThuyenChuyen({ commit, state, dispatch }, info) {
+      const data = info.item.id
+      await commit('update_active_lm_thuyen_chuyen', data)
+      dispatch(ACTION_CHANGE_STATUS, state.info)
     },
-		async updateActiveThuyenChuyen({ commit, state, dispatch }, info ) {
-			const data = info.item.id
-			await commit('update_active_thuyen_chuyen', data)
-			dispatch(ACTION_CHANGE_STATUS, state.info)
+    async updateActiveThuyenChuyen({ commit, state, dispatch }, info) {
+      const data = info.item.id
+      await commit('update_active_thuyen_chuyen', data)
+      dispatch(ACTION_CHANGE_STATUS, state.info)
     },
     async removeLmThuyenChuyen({ commit, dispatch, state, }, params) {
       const data = params.item
@@ -670,22 +672,22 @@ export default {
         data
       )
     },
-		removeThuyenChuyen({ commit }, info) {
-			commit('remove_thuyen_chuyens', info.vitri)
+    removeThuyenChuyen({ commit }, info) {
+      commit('remove_thuyen_chuyens', info.vitri)
       commit('update_thuyen_chuyen_remove', info.action)
-			apiUpdateInfo(
+      apiUpdateInfo(
         info,
-        (result) => {},
-        (errors) => {}
+        (result) => { },
+        (errors) => { }
       )
     },
-		removeBoNhiem({ commit }, info) {
-			commit('remove_bo_nhiems', info.vitri)
+    removeBoNhiem({ commit }, info) {
+      commit('remove_bo_nhiems', info.vitri)
       commit('update_thuyen_chuyen_remove', info.action)
-			apiUpdateInfo(
+      apiUpdateInfo(
         info,
-        (result) => {},
-        (errors) => {}
+        (result) => { },
+        (errors) => { }
       )
     },
     ACTION_UPDATE_DROPDOWN_THUYEN_CHUYEN_BAN_CHUYEN_TRACH(
@@ -726,7 +728,7 @@ export default {
     [ACTION_SET_LOADING]({ commit, }, isLoading) {
       commit(INFOS_MODAL_SET_LOADING, isLoading)
     },
-		[ACTION_CHANGE_STATUS]({ commit, }, info) {
+    [ACTION_CHANGE_STATUS]({ commit, }, info) {
       apiUpdateInfo(
         info,
         (result) => {
@@ -801,7 +803,7 @@ export default {
         }
       )
     },
-		ACTION_GET_INFO_THUYEN_CHUYEN({dispatch, commit}, infoId) {
+    ACTION_GET_INFO_THUYEN_CHUYEN({ dispatch, commit }, infoId) {
       apiGetThuyenChuyenById(
         infoId,
         (response) => {
@@ -811,8 +813,8 @@ export default {
           commit(SET_ERROR, Object.values(errors))
         }
       )
-		},
-		ACTION_GET_INFO_BO_NHIEM({dispatch, commit}, infoId) {
+    },
+    ACTION_GET_INFO_BO_NHIEM({ dispatch, commit }, infoId) {
       apiGetBoNhiemById(
         infoId,
         (response) => {
@@ -822,25 +824,25 @@ export default {
           commit(SET_ERROR, Object.values(errors))
         }
       )
-		},
-		updateThuyenChuyen({ commit }, info) {
-			commit('set_update_thuyen_chuyen', info.data)
-			apiUpdateLinhMucThuyenChuyen(
+    },
+    updateThuyenChuyen({ commit }, info) {
+      commit('set_update_thuyen_chuyen', info.data)
+      apiUpdateLinhMucThuyenChuyen(
         info,
         (response) => {
-					commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-				},
-        (errors) => {}
+          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+        },
+        (errors) => { }
       )
     },
-		updateBoNhiem({ commit }, info) {
-			commit('set_update_bo_nhiem', info.data)
-			apiUpdateLinhMucThuyenChuyen(
+    updateBoNhiem({ commit }, info) {
+      commit('set_update_bo_nhiem', info.data)
+      apiUpdateLinhMucThuyenChuyen(
         info,
         (response) => {
-					commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
-				},
-        (errors) => {}
+          commit(INFOS_MODAL_INSERT_INFO_SUCCESS, AppConfig.comUpdateNoSuccess);
+        },
+        (errors) => { }
       )
     },
 
@@ -859,7 +861,7 @@ export default {
         (err) => {
           console.log(err)
         }
-      ) 
+      )
     },
     GET_INFO_THUYENCHUYEN_UPDATE({ commit }, id) {
       apiGetInfoThuyenChuyenUpdate(
@@ -875,14 +877,14 @@ export default {
     UPDATE_LINHMUC_IN_NEWTABLE({ commit }, info) {
       info['action'] = 'capnhat.linhmuc'
       apiUpdateInfo(
-      info,
+        info,
         (res) => {
-        alert('Cập nhật linh mục thành công !!');
-        window.location.reload();
-      },
-      (err) => {
-        console.log(err)
-      })
+          alert('Cập nhật linh mục thành công !!');
+          window.location.reload();
+        },
+        (err) => {
+          console.log(err)
+        })
     },
     UPDATE_THUYENCHUYEN_IN_NEWTABLE({ commit }, info) {
       info['action'] = 'capnhat.thuyenchuyen'
@@ -895,6 +897,23 @@ export default {
         (err) => {
           console.log(err)
         })
+    },
+    ACTION_EXPORT_LINH_MUC({ commit }, { id, name }) {
+      apiExportLinhMuc(
+        id,
+        (res) => {
+          const filename = name;
+          const blob = new Blob([res.data], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" })
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(blob)
+          link.download = name + '.docx';
+          link.click()
+          URL.revokeObjectURL(link.href)
+        },
+        (err) => {
+          console.log(err)
+        }
+     )
     }
   },
 }

@@ -19,6 +19,7 @@ export const API_LINH_MUC_UPDATE = '/api/linh-muc-update'
 export const API_THUYENCHUYEN_UPDATE = '/api/thuyen-chuyen-update'
 export const API_LM_BO_NHIEMS_RESOURCE = '/api/lm-bo-nhiems'
 export const API_GX_THUYEN_CHUYENS_RESOURCE = '/api/gx-thuyen-chuyens'
+export const API_EXPORT_LINH_MUC = '/api/export-linh-muc'
 
 export const API_GIAO_PHANS_RESOURCE = '/api/giao-phans'
 export const API_GIAO_HATS_RESOURCE = '/api/giao-hats'
