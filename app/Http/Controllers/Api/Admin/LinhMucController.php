@@ -667,7 +667,12 @@ class LinhMucController extends ApiController
 
   public function exportLinhMuc($id = null)
   {
-    $json = $this->linhMucSv->apiGetDetail($id);
+    try {
+      $json = $this->linhMucSv->apiGetDetail($id);
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
+    }
+
     $thuyen_chuyens = $this->linhMucSv->apiHoatDongSuVu($id);
 
     $phoTe = '';
@@ -688,7 +693,8 @@ class LinhMucController extends ApiController
         }
     }
 
-    $templateProcessor = new TemplateProcessor(public_path('word-template/user.docx'));
+
+    $templateProcessor = new TemplateProcessor(storage_path('app/public/word-template/user.docx'));
     $staticImgThum = 'images/no-photo.jpg';
     if (!empty($json->image) && file_exists(public_path($json->image))) {
       $staticImgThum = $json->image;
