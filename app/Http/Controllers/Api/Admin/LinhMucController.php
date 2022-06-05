@@ -694,7 +694,7 @@ class LinhMucController extends ApiController
     }
 
 
-    $templateProcessor = new TemplateProcessor(storage_path('app/public/word-template/user.docx'));
+    $templateProcessor = new TemplateProcessor((storage_path('/app/public/word-template/user.docx')));
     $staticImgThum = 'images/no-photo.jpg';
     if (!empty($json->image) && file_exists(public_path($json->image))) {
       $staticImgThum = $json->image;
@@ -743,8 +743,8 @@ class LinhMucController extends ApiController
       $j++;
     }
 
-    $templateProcessor->saveAs($json->ten . '.docx');
-    return response()->download($json->ten . '.docx')->deleteFileAfterSend(true);
+    $templateProcessor->saveAs(storage_path('/app/public/word-template/'. $json->ten . '.docx'));
+    return response()->download(storage_path('/app/public/word-template/' . $json->ten . '.docx'))->deleteFileAfterSend(true);
   }
 
   public function diaDiemName($info)
