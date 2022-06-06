@@ -618,7 +618,7 @@ final class LinhMucService implements BaseModel, LinhMucModel
     {
       $query = $this->modelThuyenChuyen->select()
       ->where('linh_muc_id', $infoId)
-      ->orderBy('from_date', 'DESC')
+      ->orderBy('from_date', 'ASC')
       ->get();
 
       return $query;

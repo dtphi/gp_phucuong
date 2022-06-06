@@ -721,6 +721,7 @@ class LinhMucController extends ApiController
     $templateProcessor->setValue('ngay_dai_chung_vien', ($json->ngay_dai_chung_vien) ? date_format(date_create($json->ngay_dai_chung_vien), "d-m-Y") : '');
     $templateProcessor->setValue('pho_te', $phoTe);
     $templateProcessor->setValue('ngay_pho_te', $ngayPhoTe);
+    $templateProcessor->setValue('gia_nhap_giao_si', $ngayPhoTe);
     $templateProcessor->setValue('chiu_chuc', $linhMuc);
     $templateProcessor->setValue('ngay_chiu_chuc', $ngayLinhMuc);
     $templateProcessor->setValue('duc_giam_muc', $nguoiThuPhong);
@@ -728,6 +729,12 @@ class LinhMucController extends ApiController
     $templateProcessor->setValue('ngay_cap', ($json->ngay_cap_cmnd) ? date_format(date_create($json->ngay_cap_cmnd), "d-m-Y") : '');
     $templateProcessor->setValue('noi_cap', $json->noi_cap_cmnd ?? '');
     $templateProcessor->setValue('cham_ngon', $json->cham_ngon ?? '');
+    if(!is_null($json->ngay_rip)) {
+      $templateProcessor->setValue('gio_mat', date_format(date_create($json->ngay_rip), "H:i") ?? '');
+      $templateProcessor->setValue('ngay_mat', date_format(date_create($json->ngay_rip), "d-m-Y") ?? '');
+      $templateProcessor->setValue('noi_mat', ($json->mat_giao_xu) ? $json->mat_giao_xu : 'Chưa cập nhật');
+    }
+
     // // // $templateProcessor->setImageValue('qua_doi_luc', $json);
     // // // $templateProcessor->setImageValue('ngay_qua_doi');
     // // // table
