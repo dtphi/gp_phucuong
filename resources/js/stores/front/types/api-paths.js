@@ -15,7 +15,7 @@ export const API_UPDATE_LINH_MUC_TEMP = '/api/app/update-linh-muc-temp'
 export const API_HOAT_DONG_SU_VU = '/api/app/get-hoat-dong-su-vu'
 export const API_BO_NHIEM_KHAC = '/api/app/get-bo-nhiem-khac'
 
-// HOME 
+// HOME
 export const API_HOME_RESOURCE = '/api/homes/get-list'
 
 //VIDEO
@@ -30,3 +30,5 @@ export const API_INFO_GET_SPECIAL_MODULE_LIST = '/api/app/info/get-special-infor
 
 // EMAIL SUBSCRIBES
 export const API_EMAIL_SUBSCRIBE = '/api/email_sub/create'
+
+export const API_EXPORT_LINH_MUC = '/api/app/export-linh-muc'

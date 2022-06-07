@@ -918,4 +918,15 @@ class Service implements BaseModel
   {
     LinhmucThuyenChuyenTemp::fcDeleteByLinhmucTempThuyenChuyenId($id);
   }
+
+  public function apiGetHoatDongSuVu($id = null)
+  {
+    $query = $this->modelThuyenChuyen
+      ->where('linh_muc_id', $id)
+      ->orderBy('from_date', 'ASC')
+      ->get();
+
+      return $query;
+  }
+
 }

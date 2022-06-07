@@ -1,7 +1,7 @@
 import {
   apiGetDetail, apiLinhMucUpdateById, apiUpdateLinhMucTemp, apiGetHoatDongSuVu,
   apiGetDropdownCategories, apiAddThuyenChuyen,
-  apiGetBoNhiemKhac
+  apiGetBoNhiemKhac, apiExportLinhMuc
 } from '@app/api/front/linhmucs'
 import { INIT_LIST, SET_ERROR, } from '@app/stores/front/types/mutation-types'
 import { GET_DETAIL_LINH_MUC, } from '@app/stores/front/types/action-types'
@@ -46,7 +46,7 @@ export default {
     arr_bo_nhiems(state) {
       return state.arr_bo_nhiems
     }
-  }, 
+  },
   mutations: {
     [INIT_LIST](state, payload) {
       state.pageLists = payload
@@ -161,7 +161,7 @@ export default {
         (err) => {
           console.log(err)
         }
-      ) 
+      )
     },
     GET_BO_NHIEM_KHAC({ commit }, update_linhmuc) {
       const id = update_linhmuc.linhMucId
@@ -173,7 +173,7 @@ export default {
         (err) => {
           console.log(err)
         }
-      ) 
+      )
     },
     GET_LIST_GIAO_XU({ commit }) {
       const action = 'dropdown.giao.xu';
@@ -230,7 +230,7 @@ export default {
         },
         (errors) => {
           commit(SET_ERROR, errors)
-        }      
+        }
       )
     },
     GET_LIST_DUC_CHA({ commit, }) {
@@ -275,7 +275,7 @@ export default {
         },
         (errors) => {
           commit(SET_ERROR, errors)
-        }     
+        }
       )
     },
     GET_LIST_CSNGP({ commit, }) {
@@ -290,7 +290,7 @@ export default {
         },
         (errors) => {
           commit(SET_ERROR, errors)
-        },      
+        },
       )
     },
     ADD_THUYEN_CHUYEN({ commit }, params) {
@@ -364,6 +364,24 @@ export default {
         },
         (err) => {
           console.log(err, 'err')
+        }
+      )
+    },
+
+    ACTION_EXPORT_FILE_LINHMUC({ commit }, {id, name}) {
+      apiExportLinhMuc(
+        id,
+        (res) => {
+          const filename = name;
+          const blob = new Blob([res.data], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" })
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(blob)
+          link.download = name + '.docx';
+          link.click()
+          URL.revokeObjectURL(link.href)
+        },
+        (err) => {
+          console.log(err)
         }
       )
     }

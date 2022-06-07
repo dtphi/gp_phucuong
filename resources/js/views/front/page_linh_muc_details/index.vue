@@ -113,6 +113,7 @@
                         ><br />
                       </p>
                       <h5 v-if="pageLists.ngay_rip">RIP: {{pageLists.ngay_rip}}</h5>
+                    <button type="button" class="btn btn-primary" @click="exportFileLinhMuc(pageLists.id, pageLists.ten)">Xuất file</button>
                     </div>
                   </div>
                   <div class="col-mobile col-8">
@@ -428,7 +429,7 @@
                       </h4>
 											<div class="text-center">
 												<h3>{{pageLists.cham_ngon}}</h3>
-											</div>							
+											</div>
                     </div>
                     <div>
                       <h3>HOẠT ĐỘNG SỨ VỤ</h3>
@@ -524,6 +525,12 @@ export default {
     ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, {
       getDetail: GET_DETAIL_LINH_MUC,
     }),
+    ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, [
+      'ACTION_EXPORT_FILE_LINHMUC'
+    ]),
+    exportFileLinhMuc(id, name) {
+      this.ACTION_EXPORT_FILE_LINHMUC({id: id, name: name});
+    },
     diadiem(item) {
        if(item.giaoxuName !== '') {
           return item.giaoxuName
@@ -540,7 +547,7 @@ export default {
       var fromDate = item.label_from_date
       var toDate = item.label_to_date ? ' đến ngày ' + item.label_to_date : ''
       var des = 'Từ ngày ' + fromDate + toDate + ' ' + ghi_chu
-      
+
       return des
     },
     _ngThuPhong(nguoi_thu_phong) {
@@ -570,7 +577,7 @@ export default {
           )
         })
       }
-      
+
       return self.chucVus
     },
     edit(e) {
