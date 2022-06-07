@@ -729,15 +729,21 @@ class LinhMucController extends ApiController
     $templateProcessor->setValue('ngay_cap', ($json->ngay_cap_cmnd) ? date_format(date_create($json->ngay_cap_cmnd), "d-m-Y") : '');
     $templateProcessor->setValue('noi_cap', $json->noi_cap_cmnd ?? '');
     $templateProcessor->setValue('cham_ngon', $json->cham_ngon ?? '');
+
+    $ngay_rip= '';
+    $gio_rip = '';
+    $noi_rip = '';
+
     if(!is_null($json->ngay_rip)) {
-      $templateProcessor->setValue('gio_mat', date_format(date_create($json->ngay_rip), "H:i") ?? '');
-      $templateProcessor->setValue('ngay_mat', date_format(date_create($json->ngay_rip), "d-m-Y") ?? '');
-      $templateProcessor->setValue('noi_mat', ($json->mat_giao_xu) ? $json->mat_giao_xu : 'Chưa cập nhật');
+      $gio_rip = date_format(date_create($json->ngay_rip), "H:i") ?? '';
+      $ngay_rip = date_format(date_create($json->ngay_rip), "d-m-Y") ?? '';
+      $noi_rip = ($json->mat_giao_xu) ? $json->mat_giao_xu : 'Chưa cập nhật';
     }
 
-    // // // $templateProcessor->setImageValue('qua_doi_luc', $json);
-    // // // $templateProcessor->setImageValue('ngay_qua_doi');
-    // // // table
+    $templateProcessor->setValue('gio_mat', $gio_rip);
+    $templateProcessor->setValue('ngay_mat', $ngay_rip);
+    $templateProcessor->setValue('noi_mat', $noi_rip);
+
     $templateProcessor->cloneRow('id', count($thuyen_chuyens));
 
     $j = 1;

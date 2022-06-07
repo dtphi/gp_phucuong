@@ -6,19 +6,20 @@ use Image;
 use Storage;
 use Exception;
 use Carbon\Carbon;
+use App\Models\Albums;
 use App\Helpers\Helper;
+use App\Models\Linhmuc;
 use Illuminate\Http\File;
 use App\Http\Common\Tables;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Controller;
+use GrahamCampbell\ResultType\Result;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Api\Front\Services\Service;
 use App\Http\Controllers\Api\Front\Services\SettingService;
-use App\Models\Albums;
-use App\Models\Linhmuc;
-use GrahamCampbell\ResultType\Result;
 
 class ApiController extends Controller
 {
@@ -1178,7 +1179,7 @@ class ApiController extends Controller
 		return $str;
 	}
 
-	function replaceAll($str) { 
+	function replaceAll($str) {
 		$unicode = array(
 
 			'a'=>'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
@@ -1263,7 +1264,7 @@ class ApiController extends Controller
 		}
 		return $this->respondWithCollectionPagination($json);
 	}
-	
+
 	public function getNgayLeDetail(Request $request, $id = null)
 	{
 		$params         = $request->all();
@@ -1276,7 +1277,7 @@ class ApiController extends Controller
 		if (isset($params['id'])) {
 			$json['results']                  = $this->sv->apiGetDetailNgayLe($params['id']);
 		}
-		
+
 		return Helper::successResponse([
             'results'                  => $json['results'],
         ]);
@@ -1616,6 +1617,114 @@ class ApiController extends Controller
       } catch (HandlerMsgCommon $e) {
         throw $e->render();
       }
+    }
+  }
+
+  public function exportLinhMuc($id = null)
+  {
+    try {
+      $json = $this->sv->apiGetDetailLinhMucMain($id);
+    } catch (HandlerMsgCommon $e) {
+      throw $e->render();
+    }
+
+    $thuyen_chuyens = $this->sv->apiGetHoatDongSuVu($id);
+
+    $phoTe = '';
+    $ngayPhoTe = '';
+    $linhMuc = '';
+    $ngayLinhMuc = '';
+    $nguoiThuPhong = '';
+
+    foreach ($json->chucThanhs as $value) { // chuc thanh
+      if ($value['chuc_thanh_id'] == 1) {
+        $phoTe = $value['noi_thu_phong'] ?? '';
+        $ngayPhoTe = $value['ngay_thang_nam_chuc_thanh'] ? date_format(date_create($value['ngay_thang_nam_chuc_thanh']), "d-m-Y") : '';
+      }
+      if ($value['chuc_thanh_id'] == 2) {
+        $linhMuc = $value['noi_thu_phong'] ?? '';
+        $ngayLinhMuc = ($value['ngay_thang_nam_chuc_thanh']) ? date_format(date_create($value['ngay_thang_nam_chuc_thanh']), "d-m-Y") : '';
+        $nguoiThuPhong = $value['nguoi_thu_phong'] ?: '';
+      }
+    }
+
+
+    $templateProcessor = new TemplateProcessor((storage_path('/app/public/word-template/user.docx')));
+    $staticImgThum = 'images/no-photo.jpg';
+    if (!empty($json->image) && file_exists(public_path($json->image))) {
+      $staticImgThum = $json->image;
+    }
+
+    // chi tiet linh muc
+    $templateProcessor->setImageValue('image_linhmuc', array('path' => $staticImgThum, 'width' => 120, 'height' => 180, 'ratio' => false));
+
+    $templateProcessor->setValue('thanh', $json->ten_thanh ?? '');
+    $templateProcessor->setValue('ho_ten', $json->ten ?? '');
+    $templateProcessor->setValue('sinh_ngay', ($json->ngay_thang_nam_sinh) ? date_format(date_create($json->ngay_thang_nam_sinh), "d-m-Y") : '');
+    $templateProcessor->setValue('noi_sinh', $json->noi_sinh ?? '');
+    $templateProcessor->setValue('sinh_tai_xu', $json->sinh_giao_xu ?? '');
+    $templateProcessor->setValue('giao_phan', 'Phú Cường');
+    $templateProcessor->setValue('ho_ten_cha', $json->ho_ten_cha ?? '');
+    $templateProcessor->setValue('ho_ten_me', $json->ho_ten_me ?? '');
+    $templateProcessor->setValue('noi_rua_toi', $json->noi_rua_toi ?? '');
+    $templateProcessor->setValue('ngay_rua_toi', ($json->ngay_rua_toi) ? date_format(date_create($json->ngay_rua_toi), "d-m-Y") : '');
+    $templateProcessor->setValue('noi_them_suc', $json->noi_them_suc ?? '');
+    $templateProcessor->setValue('ngay_them_suc', ($json->ngay_them_suc) ? date_format(date_create($json->ngay_them_suc), "d-m-Y") : '');
+    $templateProcessor->setValue('tieu_chung_vien', $json->tieu_chung_vien ?? '');
+    $templateProcessor->setValue('ngay_tieu_chung_vien', ($json->ngay_tieu_chung_vien) ? date_format(date_create($json->ngay_tieu_chung_vien), "d-m-Y") : '');
+    $templateProcessor->setValue('dai_chung_vien', $json->dai_chung_vien ?? '');
+    $templateProcessor->setValue('ngay_dai_chung_vien', ($json->ngay_dai_chung_vien) ? date_format(date_create($json->ngay_dai_chung_vien), "d-m-Y") : '');
+    $templateProcessor->setValue('pho_te', $phoTe);
+    $templateProcessor->setValue('ngay_pho_te', $ngayPhoTe);
+    $templateProcessor->setValue('gia_nhap_giao_si', $ngayPhoTe);
+    $templateProcessor->setValue('chiu_chuc', $linhMuc);
+    $templateProcessor->setValue('ngay_chiu_chuc', $ngayLinhMuc);
+    $templateProcessor->setValue('duc_giam_muc', $nguoiThuPhong);
+    $templateProcessor->setValue('cmnd', $json->so_cmnd ?? '');
+    $templateProcessor->setValue('ngay_cap', ($json->ngay_cap_cmnd) ? date_format(date_create($json->ngay_cap_cmnd), "d-m-Y") : '');
+    $templateProcessor->setValue('noi_cap', $json->noi_cap_cmnd ?? '');
+    $templateProcessor->setValue('cham_ngon', $json->cham_ngon ?? '');
+
+    $ngay_rip = '';
+    $gio_rip = '';
+    $noi_rip = '';
+
+    if (!is_null($json->ngay_rip)) {
+      $gio_rip = date_format(date_create($json->ngay_rip), "H:i") ?? '';
+      $ngay_rip = date_format(date_create($json->ngay_rip), "d-m-Y") ?? '';
+      $noi_rip = ($json->mat_giao_xu) ? $json->mat_giao_xu : 'Chưa cập nhật';
+    }
+
+    $templateProcessor->setValue('gio_mat', $gio_rip);
+    $templateProcessor->setValue('ngay_mat', $ngay_rip);
+    $templateProcessor->setValue('noi_mat', $noi_rip);
+
+    $templateProcessor->cloneRow('id', count($thuyen_chuyens));
+
+    $j = 1;
+    foreach ($thuyen_chuyens as $key => $info) {
+      $templateProcessor->setValue('id#' . $j, $j);
+      $templateProcessor->setValue('chuc_vu#' . $j, $info->ten_to_chuc_vu);
+      $templateProcessor->setValue('dia_diem#' . $j, $this->diaDiemName($info));
+      $templateProcessor->setValue('thoi_gian_den#' . $j, ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '');
+      $templateProcessor->setValue('thoi_gian_di#' . $j, ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '');
+      $j++;
+    }
+
+    $templateProcessor->saveAs(storage_path('/app/public/word-template/' . $json->ten . '.docx'));
+    return response()->download(storage_path('/app/public/word-template/' . $json->ten . '.docx'))->deleteFileAfterSend(true);
+  }
+
+  public function diaDiemName($info)
+  {
+    if ($info->giao_xu_id != 0) {
+      return $info->ten_to_giao_xu;
+    } else if ($info->co_so_gp_id != 0) {
+      return $info->ten_co_so;
+    } else if ($info->dong_id != 0) {
+      return $info->ten_dong;
+    } else {
+      return $info->ten_ban_chuyen_trach;
     }
   }
 }
