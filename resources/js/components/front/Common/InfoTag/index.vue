@@ -42,7 +42,7 @@ export default {
         const mapObjs = _.map(this.info.tag, (item) => {
           const objTag = {
             href: fn_get_href_base_url(
-              `tin-tuc/chi-tiet/${this.$helper.slugify(item)}-${this.info.information_id}`
+              `tin-tuc/tags/${this.$helper.slugify(item)}-${this.info.information_id}`
             ),
             name: item,
           }
