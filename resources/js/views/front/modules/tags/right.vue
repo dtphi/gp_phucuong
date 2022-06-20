@@ -49,7 +49,7 @@ export default {
         if (element?.tag?.length) {
           const mapObjs = _.map(element.tag, (item) => {
             item = {
-              'href': fn_get_href_base_url(`tin-tuc/tags/${this.$helper.slugify(item)}-${element.information_id}`),
+              'href': fn_get_href_base_url(`tin-tuc/chi-tiet/${this.$helper.slugify(item)}-${element.information_id}`),
               'name': item
             }
             return item
@@ -62,7 +62,7 @@ export default {
         // create unique array
         //tags = [...new Set(tags)]
       });
-      return  tags
+      return tags
     },
   },
 }

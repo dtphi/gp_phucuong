@@ -107,7 +107,6 @@ class Service implements BaseModel
       ->filterActiveStatus()
       ->orderByAscSort()
       ->orderByAscParentId();
-
     return $query->get();
   }
 
@@ -167,33 +166,44 @@ class Service implements BaseModel
     if (isset($data['infoType'])) {
       $infoType = (int)$data['infoType'];
     }
-
-    $query = DB::table(Tables::$informations)->select(
-      [
-        'date_available',
-        'sort_description',
-        'image',
-        Tables::$informations . '.information_id',
-        'information_type',
-        'name',
-        'name_slug',
-        'viewed',
-        'vote',
-        'tag'
-      ]
-    )
-      ->leftJoin(
-        Tables::$information_descriptions,
+    $query = $this->modelInfo
+    ->leftJoin(
+      Tables::$information_descriptions,
         Tables::$informations . '.information_id',
         '=',
-        Tables::$information_descriptions . '.information_id'
-      )
-      ->where('status', '=', '1')
-      ->where('information_type', '=', $infoType);
-
+        Tables::$information_descriptions . '.information_id')
+    ->where('status', '=', '1')
+    ->where('information_type', '=', $infoType);
     if (isset($data['information_ids'])) {
       $query->whereIn(Tables::$informations . '.information_id', $data['information_ids']);
     }
+
+    // $query = DB::table(Tables::$informations)->select(
+    //   [
+    //     'date_available',
+    //     'sort_description',
+    //     'image',
+    //     Tables::$informations . '.information_id',
+    //     'information_type',
+    //     'name',
+    //     'name_slug',
+    //     'viewed',
+    //     'vote',
+    //     'tag'
+    //   ]
+    // )
+    //   ->leftJoin(
+    //     Tables::$information_descriptions,
+    //     Tables::$informations . '.information_id',
+    //     '=',
+    //     Tables::$information_descriptions . '.information_id'
+    //   )
+    //   ->where('status', '=', '1')
+    //   ->where('information_type', '=', $infoType);
+
+    // if (isset($data['information_ids'])) {
+    //   $query->whereIn(Tables::$informations . '.information_id', $data['information_ids']);
+    // }
 
     $limit = 20;
     if (isset($data['limit'])) {
