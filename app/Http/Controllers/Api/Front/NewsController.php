@@ -374,7 +374,7 @@ class NewsController extends Controller
 
             $json['results']                  = $this->newsSv->apiGetInfo($params['information_id']);
             $albums = !empty($json['results']['albums']) ? $json['results']['albums']: [];
-         
+
             if (!empty($albums)) {
                 foreach ($albums[0]['images'] as $key => $img) {
                     if ($img['status']) {
@@ -388,7 +388,7 @@ class NewsController extends Controller
                     }
                 }
             }
-        
+
             $json['result_category_relateds'] = $json['results']['related_category'];
         }
 
@@ -616,5 +616,19 @@ class NewsController extends Controller
         return Helper::successResponse([
             'results' => $json['results']
         ]);
+    }
+
+    public function getInfoTag(Request $request)
+    {
+      $params         = $request->all();
+      $params['slug'] = isset($params['slug']) ? $params['slug'] : '';
+      if (!empty($params['slug'])) {
+        $slugs                    = explode('-', $params['slug']);
+        $params['information_id'] = end($slugs);
+    }
+      $results    = $this->newsSv->apiGetInfo($params['information_id'], $params['slug']);
+      return Helper::successResponse([
+        'results'                  => $results,
+      ]);
     }
 }
