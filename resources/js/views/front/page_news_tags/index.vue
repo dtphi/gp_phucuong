@@ -14,19 +14,25 @@
             ></loading-over-lay>
           </template>
           <div class="list-videos">
-            <the-list-category-news-item
+            <!-- <the-list-category-news-item
               class="info-list"
               v-for="(item, idx) in infoList"
               :info="item"
               :key="idx"
-            ></the-list-category-news-item>
-            <template v-if="infoList.length == 0">
+            ></the-list-category-news-item> -->
+            <a style="text-decoration: none" target="blank" :href="infoTag.link_chi_tiet">
+              <h3>{{infoTag.name}}</h3>
+              <img style="width: 100%" v-if="infoTag.image" :src="infoTag.image.path" alt="123">
+              <p class="mt-1">{{infoTag.sort_description}}</p>
+            </a>
+
+            <!-- <template v-if="infoList.length == 0">
               <div
                 style="text-align: center; font-size: 30px; color: #f0f8ffc7"
               >
-               
+
               </div>
-            </template>
+            </template> -->
           </div>
           <paginate></paginate>
           <template #column_right>
@@ -67,7 +73,7 @@ import { mapActions, mapState, } from 'vuex'
 import MainMenu from 'com@front/Common/MainMenu'
 import TheListCategoryNewsItem from './components/TheListCategoryNewsItem'
 import Paginate from 'com@front/Pagination'
-import { MODULE_INFO, } from '@app/stores/front/types/module-types'
+import { MODULE_INFO, MODULE_INFO_DETAIL} from '@app/stores/front/types/module-types'
 import { GET_INFORMATION_LIST_TO_CATEGORY, } from '@app/stores/front/types/action-types'
 import MainContent from 'com@front/Common/MainContent'
 import ContentBottom from 'com@front/Common/ContentBottom'
@@ -95,9 +101,13 @@ export default {
     ...mapState({
       contentBgColor: state => state.cfApp.setting.contentBgColor,
     }),
-    ...mapState(MODULE_INFO, {
-      infoList: state => state.pageLists,
-      loading: state => state.loading,
+    // ...mapState(MODULE_INFO, {
+    //   infoList: state => state.pageLists,
+    //   loading: state => state.loading,
+    // }),
+    ...mapState(MODULE_INFO_DETAIL, {
+      loading: (state) => state.loading,
+      infoTag: (state) => state.infoTag,
     }),
     _isContentTop() {
       return this.$route.meta.layout_content.content_top
@@ -110,15 +120,22 @@ export default {
     },
   },
   mounted() {
-    this.getInfoListToCategory({
-      ...this.$route.params,
-      news_group_type: 'tag_type',
+    // this.getInfoListToCategory({
+    //   ...this.$route.params,
+    //   news_group_type: 'tag_type',
+    // })
+    this.getInfoTag({
+      slug: this.$route.params.slug,
     })
   },
   methods: {
-    ...mapActions(MODULE_INFO, {
-      getInfoListToCategory: GET_INFORMATION_LIST_TO_CATEGORY,
+    // ...mapActions(MODULE_INFO, {
+    //   getInfoListToCategory: GET_INFORMATION_LIST_TO_CATEGORY,
+    // }),
+    ...mapActions(MODULE_INFO_DETAIL, {
+      getInfoTag: 'GET_INFO_TAG',
     }),
+
   },
 }
 </script>

@@ -1,4 +1,4 @@
-import { apiGetDetail, apiGetListsToCategory, } from '@app/api/front/infos'
+import { apiGetDetail, apiGetListsToCategory, apiGetInfoTag } from '@app/api/front/infos'
 import { INIT_LIST, INIT_RELATED_LIST, SET_ERROR,
 } from '@app/stores/front/types/mutation-types'
 import { GET_DETAIL, GET_RELATED_INFORMATION_LIST_TO_CATEGORY,
@@ -15,6 +15,7 @@ export default {
     },
     infoRelateds: [],
     errors: [],
+    infoTag: [],
   },
   getters: {
     mainMenus(state) {
@@ -26,6 +27,9 @@ export default {
     infoRelateds(state) {
       return state.infoRelateds
     },
+    infoTag(state) {
+      return state.infoTag
+    }
   },
   mutations: {
     [INIT_LIST](state, payload) {
@@ -37,12 +41,16 @@ export default {
     [SET_ERROR](state, payload) {
       state.errors = payload
     },
+    INFO_TAG(state, payload) {
+      state.infoTag = payload
+    }
   },
   actions: {
     [GET_DETAIL]({ commit, dispatch, }, routeParams) {
       if (fnCheckProp(routeParams, 'slug')) {
         apiGetDetail(routeParams.slug,
           (result) => {
+            console.log(result.data.results, 'tets')
             commit(INIT_LIST, result.data.results)
             dispatch(GET_RELATED_INFORMATION_LIST_TO_CATEGORY, {
               slug: `category-related-${result.data.results.related_category}`,
@@ -62,5 +70,20 @@ export default {
         commit(SET_ERROR, errors)
       }, params)
     },
+
+    GET_INFO_TAG({ commit }, routeParams) {
+      if (fnCheckProp(routeParams, 'slug')) {
+        apiGetInfoTag(routeParams.slug,
+          (result) => {
+            commit('INFO_TAG', result.data.results)
+            // dispatch(GET_RELATED_INFORMATION_LIST_TO_CATEGORY, {
+            //   slug: `category-related-${result.data.results.related_category}`,
+            // })
+          },
+          (errors) => {
+            commit(SET_ERROR, errors)
+          }, routeParams)
+      }
+    }
   },
 }

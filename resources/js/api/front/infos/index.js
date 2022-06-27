@@ -3,6 +3,7 @@ import {
 } from '@app/api/utils/fn-helper'
 import {
   API_INFO_DETAIL,
+  API_INFO_TAG,
   API_INFO_LIST,
   API_INFO_GET_LASTED_LIST,
   API_INFO_GET_POPULAR_LIST,
@@ -110,6 +111,22 @@ export const apiGetListsToCategory = (resolve, errResole, params) => {
 
 export const apiGetDetail = (infoId, resolve, errResole, params) => {
   return axios.get(fn_get_base_api_url(API_INFO_DETAIL), {
+    params: params,
+  }).then((response) => {
+    if (response.status === 200) {
+      resolve(response.data)
+    } else {
+      errResole([{
+        status: response.status,
+        msg: 'error test',
+      }])
+    }
+  })
+    .catch(errors => errResole(errors))
+}
+
+export const apiGetInfoTag = (infoId, resolve, errResole, params) => {
+  return axios.get(fn_get_base_api_url(API_INFO_TAG), {
     params: params,
   }).then((response) => {
     if (response.status === 200) {

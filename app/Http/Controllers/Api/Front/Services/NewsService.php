@@ -23,7 +23,7 @@ final class NewsService extends Service implements NewsModel
         $this->infoRelated = new InformationRelated();
     }
 
-    public function apiGetInfo($information_id)
+    public function apiGetInfo($information_id, $param_slug = null)
     {
         // TODO: Implement apiGetDetail() method.
         $result = $this->model->findOrFail($information_id);
@@ -39,7 +39,8 @@ final class NewsService extends Service implements NewsModel
                 'vote'             => $result->vote,
                 'tag'              => (!empty($result->tag)) ? explode(',', $result->tag) : [],
                 'albums'           => $result->arr_album_list,
-                'related_category' => !empty($result->arr_category_list) ? $result->arr_category_list[0] : null
+                'related_category' => !empty($result->arr_category_list) ? $result->arr_category_list[0] : null,
+                'link_chi_tiet' => '/tin-tuc/chi-tiet/' . $param_slug
             ];
         } else {
             return false;
@@ -96,7 +97,6 @@ final class NewsService extends Service implements NewsModel
 
     public function apiGetInfoList($data = array())
     {
-        
         $infoType = 1;
         if (isset($data['infoType'])) {
             $infoType = (int)$data['infoType'];
