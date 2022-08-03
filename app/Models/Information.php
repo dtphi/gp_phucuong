@@ -234,7 +234,7 @@ class Information extends BaseModel
             $collection = Tag::whereIn('id', explode('|', $value))
                 ->get();
             foreach ($collection as $tag) {
-                $arrTags[] = $tag->name;
+                $arrTags[$tag->id] = "$tag->id||$tag->name";
             }
         }
 

@@ -47,10 +47,12 @@ export default {
       let tags = []
       _.cloneDeep(this.infoLasteds).forEach(element => {
         if (element?.tag?.length) {
+          console.log('element-module-right',element)
           const mapObjs = _.map(element.tag, (item) => {
+            const splitStr = item.split('||');
             item = {
-              'href': fn_get_href_base_url(`tin-tuc/tags/${this.$helper.slugify(item)}-${element.information_id}`),
-              'name': item
+              'href': fn_get_href_base_url(`tin-tuc/tags/${this.$helper.slugify(item)}-${element.information_id}?tag=${splitStr[0]}`),
+              'name': splitStr[1]
             }
             return item
           })

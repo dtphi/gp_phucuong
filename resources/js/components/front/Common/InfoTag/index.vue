@@ -40,11 +40,13 @@ export default {
       let tags = []
       if (this.info?.tag?.length) {
         const mapObjs = _.map(this.info.tag, (item) => {
+          console.log('element-common',this.info.tag)
+          const splitStr = item.split('||');
           const objTag = {
             href: fn_get_href_base_url(
-              `tin-tuc/tags/${this.$helper.slugify(item)}-${this.info.information_id}`
+              `tin-tuc/tags/${this.$helper.slugify(item)}-${this.info.information_id}?tag=${splitStr[0]}`
             ),
-            name: item,
+            name: splitStr[1],
           }
           return objTag
         })
