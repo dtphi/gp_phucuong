@@ -24,7 +24,7 @@
               <div
                 style="text-align: center; font-size: 30px; color: #f0f8ffc7"
               >
-                Nội Dung Danh Mục Chưa Có Thông Tin
+                ............
               </div>
             </template>
           </div>

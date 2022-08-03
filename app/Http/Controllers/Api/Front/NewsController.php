@@ -81,6 +81,10 @@ class NewsController extends Controller
         if ($request->query('news_group_type')) {
             $params['news_group_type'] = $request->query('news_group_type');
         }
+        $params['tag'] = null;
+        if ($request->query('tag')) {
+          $params['tag'] = $request->query('tag');
+        }
 
         $widthThumbInfoList  = 184;
         $heightThumbInfoList = 120;
@@ -626,9 +630,11 @@ class NewsController extends Controller
         $slugs                    = explode('-', $params['slug']);
         $params['information_id'] = end($slugs);
     }
-      $results    = $this->newsSv->apiGetInfo($params['information_id'], $params['slug']);
+    $tagId = $request->input('tag') ?? null;
+      $results    = $this->newsSv->apiGetInfo($tagId, $params['slug']);
       return Helper::successResponse([
         'results'                  => $results,
+        'tagId' => $tagId
       ]);
     }
 }
