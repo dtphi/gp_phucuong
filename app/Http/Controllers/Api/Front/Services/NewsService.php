@@ -146,7 +146,7 @@ final class NewsService extends Service implements NewsModel
 
     public function _apiGetTagInfoList($data = array())
     {
-        $query = DB::table(Tables::$information_to_categorys)->select([
+        $query = DB::table(Tables::$informations)->select([
             'category_id',
             'date_available',
             'sort_description',
@@ -158,11 +158,11 @@ final class NewsService extends Service implements NewsModel
             'viewed',
             'vote'
         ])
-            ->leftJoin(Tables::$informations, Tables::$information_to_categorys . '.information_id', '=',
-                Tables::$informations . '.information_id')
+          ->leftJoin(Tables::$information_to_categorys, Tables::$informations . '.information_id', '=',Tables::$informations . '.information_id')
             ->leftJoin(Tables::$information_descriptions, Tables::$informations . '.information_id', '=',
                 Tables::$information_descriptions . '.information_id')
-            ->where('status', '=', '1');
+            ->where(Tables::$informations . '.status', '=', '1')
+            ->where(Tables::$information_descriptions . '.tag', 'LIKE', '%'.$data['tag'].'%');
 
         $limit = 20;
         if (isset($data['limit'])) {
@@ -171,6 +171,7 @@ final class NewsService extends Service implements NewsModel
 
         $query->orderByDesc('sort_order');
         $query->orderByDesc('date_available');
+        $query->groupBy('information_id');
 
         return $query->paginate($limit);
     }
