@@ -19,8 +19,8 @@
                             </template>
                             <template v-if="loading">
                                 <div style="height: 100px">
-                                    <loading-over-lay 
-                                    :active.sync="loading" 
+                                    <loading-over-lay
+                                    :active.sync="loading"
                                     :is-full-page="fullPage"></loading-over-lay>
                                 </div>
                             </template>
@@ -29,7 +29,7 @@
                                 <div class="form-horizontal">
                                     <div class="form-group required">
                                         <label
-                                               class="col-sm-2 control-label" 
+                                               class="col-sm-2 control-label"
                                                for="input-user-name">{{$options.setting.nameTxt}}</label>
                                         <div class="col-sm-10">
                                             <validation-provider
@@ -45,6 +45,29 @@
                                                 <span class="cms-text-red">{{ errors[0] }}</span>
                                             </validation-provider>
                                         </div>
+                                    </div>
+                                    <div class="form-group required">
+                                      <label
+                                        for="input-user-phone"
+                                        class="col-sm-2 control-label"
+                                        >{{ $options.setting.phoneTxt }}</label
+                                      >
+                                      <div class="col-sm-10">
+                                        <validation-provider
+                                          name="user_phone"
+                                          rules="required|max:191"
+                                          v-slot="{ errors }"
+                                        >
+                                          <input
+                                            id="input-user-phone"
+                                            v-model="user.phone"
+                                            type="text"
+                                            class="form-control"
+                                            :placeholder="$options.setting.phoneTxt"
+                                          />
+                                          <span class="cms-text-red">{{ errors[0] }}</span>
+                                        </validation-provider>
+                                      </div>
                                     </div>
                                     <div class="form-group required">
                                         <label
@@ -188,6 +211,7 @@ export default {
     passwordTxt: 'Password',
     emailTxt: 'Email',
     nameTxt: 'Họ tên',
+    phoneTxt: 'Phone',
     actionName: 'add',
     isAddFrom: true,
     modal_title: 'Thêm người dùng',
