@@ -49,21 +49,23 @@ export const apiGetUsers = (resolve, errResole, params) => {
     params: params,
   })
     .then((response) => {
-      if (response.status === 200) {
+      if (response?.status === 200) {
         resolve(response.data)
       } else {
         errResole([{
-          status: response.status,
+          status: response?.status,
           msg: 'error test',
         }])
       }
     })
     .catch(errors => {
-      errResole([{
-        status: errors.response.status,
-        messageCommon: errors.response.data.message,
-        messages: errors.response.data.errors,
-      }])
+      if (errors?.response?.status) {
+        errResole([{
+          status: errors.response.status,
+          messageCommon: errors.response.data.message,
+          messages: errors.response.data.errors,
+        }])
+      }
     })
 }
 
@@ -169,7 +171,7 @@ export const apiSearchAll = (query, resolve, errResole) => {
   let params = {
     query,
   }
-  
+
   return axios.get(fn_get_base_api_url('/api/search-user'), {
     params,
   })

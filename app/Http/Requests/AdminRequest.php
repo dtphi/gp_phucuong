@@ -4,11 +4,12 @@ namespace App\Http\Requests;
 
 use App\Rules\ExistUserMail;
 use App\Http\Common\BaseRequest;
+use App\Rules\ExistUserPhone;
 use Auth;
 
 class AdminRequest extends BaseRequest
 {
-    
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -47,21 +48,24 @@ class AdminRequest extends BaseRequest
      */
     public function rules()
     {
-        if ($this->get('action') == 'permission') 
+        if ($this->get('action') == 'permission')
             return [];
 
         if ($this->isMethod('post')) {
             return [
                 'name'     => 'required|max:255',
+                'phone'    => 'required|max:15|unique:admins,phone',
                 'email'    => 'required|unique:admins,email|email:rfc,dns|max:255',
                 'password' => 'required|min:8'
             ];
         }
 
         if ($this->isMethod('put')) {
+            $id = $this->get('id');
             return [
                 'name'     => 'required|max:255',
-                'email'    => ['required', 'max:255', new ExistUserMail($this->get('id'))],
+                'phone'    => ['required', 'max:15', new ExistUserPhone($id)],
+                'email'    => ['required', 'max:255', new ExistUserMail($id)],
                 'password' => 'required|min:8'
             ];
         }

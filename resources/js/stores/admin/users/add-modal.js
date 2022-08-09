@@ -28,6 +28,7 @@ const defaultState = () => {
     styleCss: '',
     user: {
       name: '',
+      phone: '',
       email: '',
       password: '',
     },
