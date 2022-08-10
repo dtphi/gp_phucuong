@@ -33,3 +33,4 @@ deploy*
 .md
 *html
 adminlinhmuc-production.blade.php
+administrator-otp.blade.php
