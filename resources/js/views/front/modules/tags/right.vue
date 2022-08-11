@@ -17,7 +17,7 @@
           :id="`${idx}-tags-tag_${tag.name.replace(/\s/g, '_')}_`"
           tag="li"
           class="mt-1 mr-1"
-          body-class="py-1 text-nowrap"
+          body-class="py-1"
         >
           <a :href="tag.href">{{ tag.name }}</a>
         </b-card>

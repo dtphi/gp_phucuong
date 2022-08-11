@@ -1,5 +1,5 @@
 <template>
-  <div id="co-the-ban-quan-tam-module" class="mt-2 mb-3 new-care">
+  <div id="co-the-ban-quan-tam-module" class="mt-2 mb-3 new-care p-3">
     <h4 class="tit-common clr-blue mb-3">Có thể bạn quan tâm</h4>
     <div class="list-new">
       <a

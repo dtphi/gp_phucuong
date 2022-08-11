@@ -1,6 +1,6 @@
 <template>
   <div :class="isFixed?'fixed-top':''">
-    <div class="fz-0" :class="isFixed?'container':''">
+    <div class="fz-0 d-md-flex" :class="isFixed?'container':''">
       <nav id="nav">
         <ul class="menu-pc nav-menu">
           <li class="active">
