@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4 new-related" v-if="infoRelateds.length">
+  <div class="mt-4 new-related p-3" v-if="infoRelateds.length">
     <h4 class="tit-common clr-blue mb-3">Tin liên quan</h4>
     <b-row>
       <b-col

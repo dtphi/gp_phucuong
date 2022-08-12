@@ -96,4 +96,7 @@ export default {
 .viewer-backdrop {
   background-color: rgba(0, 0, 0, 0.75) !important;
 }
+.new-detail .text-detail iframe {
+  max-width: 100%;
+}
 </style>

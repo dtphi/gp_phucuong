@@ -148,6 +148,9 @@ export default {
       text-transform: capitalize;
     }
   }
+  .fanpage {
+    overflow: auto;
+  }
 
   .tit-bg-common {
     font-size: 0;
