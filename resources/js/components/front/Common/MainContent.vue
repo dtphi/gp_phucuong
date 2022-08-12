@@ -1,5 +1,5 @@
 <template>
-  <b-row id="content-main" class="my-3">
+  <b-row id="content-main" class="p-3">
     <slot name="before"></slot>
     <slot name="before_column_both"></slot>
     <keep-alive>

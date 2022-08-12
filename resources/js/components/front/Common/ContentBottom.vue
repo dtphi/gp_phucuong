@@ -1,5 +1,5 @@
 <template>
-  <div id="gp-phucuong-content-bottom" class="highlights mt-3">
+  <div id="gp-phucuong-content-bottom" class="highlights p-3">
     <slot name="before"></slot>
     <keep-alive>
       <component
