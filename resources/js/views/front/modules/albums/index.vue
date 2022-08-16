@@ -1,18 +1,35 @@
 <template>
   <div id="album-module" v-if="Object.keys(_getAlbums).length">
     <h4 class="tit-detail">ALBUM HÌNH</h4>
-    <div class="docs-galley mb-3" style="position: relative">
-      <ul class="docs-pictures clearfix" id="images">
-        <li v-for="album in _getAlbums" :key="album.id">
-          <img
-            class="thumb"
-            @click="_showSlide()"
-            :data-original="album.image"
-            :src="album.image_thumb"
+    <b-row cols="1" cols-sm="2" cols-md="2" cols-lg="3">
+      <b-col v-for="(album, idx) in _getAlbums" :key="idx">
+        <img
+            @click="_showAlbumModal(idx)"
+            :src="album.image"
           />
-        </li>
-      </ul>
-    </div>
+      </b-col>
+    </b-row>
+
+    <!-- Modal -->
+    <b-modal size="xl" scrollable no-close-on-backdrop id="gp_phucuong-album-list" hide-footer>
+      <template #modal-title>
+        <code>XEM ALBUM HÌNH</code>
+      </template>
+      <div class="d-block text-center">
+        <div class="docs-galley mb-3" style="position: relative">
+          <ul class="docs-pictures clearfix" id="gp_phucuong-album-images">
+            <li v-for="album in _getImageList" :key="album.id">
+              <img
+                class="thumb"
+                @click="_showSlide()"
+                :data-original="album.image"
+                :src="album.image_thumb"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -22,11 +39,12 @@ import 'viewerjs/dist/viewer.css'
 import Viewer from 'viewerjs'
 
 export default {
-  name: 'ModuleAlbum',
+  name: 'ModuleAlbumModal',
   data() {
     return {
       fullPage: true,
       viewer: false,
+      idx: 0
     }
   },
   computed: {
@@ -36,22 +54,31 @@ export default {
     _getAlbums() {
       return this.lastAlbum
     },
+    _getImageList() {
+      return this.lastAlbum[this.idx]['albums']
+    }
   },
   methods: {
     _showSlide() {
-      if (this.viewer) {
-        return
-      }
-      new Viewer(document.getElementById('images'), {
+      this.$bvModal.hide('gp_phucuong-album-list')
+      new Viewer(document.getElementById('gp_phucuong-album-images'), {
         url: 'data-original',
+        backdrop: true,
       })
-      this.viewer = true
+      return;
     },
+    _showAlbumModal(idx) {
+      this.$data.idx = idx
+      this.$bvModal.show('gp_phucuong-album-list')
+    }
   },
 }
 </script>
 
 <style>
+#gp_phucuong-album-list {
+  background: silver !important;
+}
 .docs-pictures {
   list-style: none;
   margin: 0;

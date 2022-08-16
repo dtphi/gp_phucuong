@@ -329,29 +329,34 @@ class ApiController extends Controller
 
 	public function getLastImageListAlbums()
 	{
-		$lastAlbum = Albums::where('status', 1)->orderByDesc('id')->first();
-		$value = ($lastAlbum) ? $lastAlbum->image : '';
+		$albumList = Albums::where('status', 1)->orderByDesc('id')->limit(6)->get();
 
-		$value = !empty($value) ? unserialize($value) : [];
-		if (!empty($value)) {
-			$sort = array_column($value, 'width');
-			array_multisort($sort, SORT_ASC, $value);
-		}
+    $albums = [];
+    foreach ($albumList as $k => $lastAlbum) {
+      $value = ($lastAlbum) ? $lastAlbum->image : '';
 
-		$albums = [];
-		if (!empty($value)) {
-			foreach ($value as $key => $img) {
-				if ($img['status']) {
-					$tmp = $img;
-					$tmp['width'] = (int)$img['width'];
-					$tmp['image'] = url('/Image/NewPicture/' . $img['image']);
-					$tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280));
-					$albums[$key] = $tmp;
-				} else {
-					unset($value[$key]);
-				}
-			}
-		}
+      $value = !empty($value) ? unserialize($value) : [];
+      if (!empty($value)) {
+        $sort = array_column($value, 'width');
+        array_multisort($sort, SORT_ASC, $value);
+      }
+
+
+      if (!empty($value)) {
+        $albums[$k]['image'] = url($this->getThumbnail('/Image/NewPicture/' . $lastAlbum->image, 280));;
+        foreach ($value as $key => $img) {
+          if ($img['status']) {
+            $tmp = $img;
+            $tmp['width'] = (int)$img['width'];
+            $tmp['image'] = url('/Image/NewPicture/' . $img['image']);
+            $tmp['image_thumb'] = url($this->getThumbnail('/Image/NewPicture/' . $img['image'], 280));
+            $albums[$k]['albums'][] = $tmp;
+          } else {
+            unset($value[$key]);
+          }
+        }
+      }
+    }
 
 		return $albums;
 	}
