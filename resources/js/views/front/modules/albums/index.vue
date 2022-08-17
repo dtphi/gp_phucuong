@@ -60,12 +60,14 @@ export default {
   },
   methods: {
     _showSlide() {
-      this.$bvModal.hide('gp_phucuong-album-list')
-      new Viewer(document.getElementById('gp_phucuong-album-images'), {
+      this.viewer = new Viewer(document.getElementById('gp_phucuong-album-images'), {
         url: 'data-original',
-        backdrop: true,
+        backdrop: 'static'
       })
-      return;
+
+      this.$bvModal.hide('gp_phucuong-album-list')
+      this.viewer.initialBodyPaddingRight = ''
+      this.viewer.initialBodyComputedPaddingRight = ''
     },
     _showAlbumModal(idx) {
       this.$data.idx = idx
@@ -77,7 +79,7 @@ export default {
 
 <style>
 #gp_phucuong-album-list {
-  background: silver !important;
+  background: rgba(128, 128, 128, 0.07) !important;
 }
 .docs-pictures {
   list-style: none;
