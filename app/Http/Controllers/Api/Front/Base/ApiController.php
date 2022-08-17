@@ -343,7 +343,7 @@ class ApiController extends Controller
 
 
       if (!empty($value)) {
-        $albums[$k]['image'] = url($this->getThumbnail('/Image/NewPicture/' . $lastAlbum->image, 280));;
+        $albums[$k]['image'] = url($this->getThumbnail($lastAlbum->image_origin['path'], 280));
         foreach ($value as $key => $img) {
           if ($img['status']) {
             $tmp = $img;
