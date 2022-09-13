@@ -1,8 +1,5 @@
 <template>
   <form class="form-horizontal" autocomplete="off">
-    <!--<loading-over-lay
-            :active.sync="loading"
-            :is-full-page="fullPage"></loading-over-lay>-->
     <ul class="nav nav-tabs">
       <li class="active" @click="currentTab = 'general'">
         <a href="#tab-general" data-toggle="tab">{{
@@ -39,11 +36,11 @@
           $options.setting.tab_bo_nhiem_khac_title
         }}</a>
       </li>
-      <!--<li @click="currentTab = 'gp_thuyen_chuyen'">
-        <a href="#tab-gp-thuyen-chuyen" data-toggle="tab">{{
-          $options.setting.tab_gp_thuyen_chuyen_title
+      <li @click="currentTab = 'ho_so'">
+        <a href="#tab-ho-so" data-toggle="tab">{{
+          $options.setting.tab_ho_so_title
         }}</a>
-      </li> -->
+      </li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="tab-general" v-if="currentTab == 'general'">
@@ -101,14 +98,13 @@
           :type-chuc-vu="$options.setting.typeBoNhiem"
         ></tab-bo-nhiem-khac>
       </div>
-      <!-- <div class="tab-pane" id="tab-gp-thuyen-chuyen" v-if="currentTab == 'gp_thuyen_chuyen'">
-        <tab-lm-thuyen-chuyen
+      <div class="tab-pane" id="tab-ho-so" v-if="currentTab == 'ho_so'">
+        <tab-ho-so
           role="tabpanel"
           class="tab-pane"
           :group-data="info"
-          :type-chuc-vu="$options.setting.typeThuyenChuyen"
-        ></tab-lm-thuyen-chuyen>
-      </div> -->
+        ></tab-ho-so>
+      </div>
     </div>
   </form>
 </template>
@@ -128,6 +124,7 @@ import TabVanThu from './edits/TabVanThu'
 import TabThuyenChuyen from './edits/TabThuyenChuyen'
 import TabLmThuyenChuyen from './edits/TabLmThuyenChuyen'
 import TabBoNhiemKhac from './edits/TabBoNhiemKhac'
+import TabHoSo from './edits/TabHoSo'
 import { fnCheckImgPath, } from '@app/common/util'
 
 export default {
@@ -141,6 +138,7 @@ export default {
     TabThuyenChuyen,
     TabLmThuyenChuyen,
     TabBoNhiemKhac,
+    TabHoSo,
   },
   data() {
     const mm = new MM({
@@ -195,6 +193,7 @@ export default {
     tab_van_thu_title: 'Văn Thư',
     tab_special_info_title: 'Slide tin tức tiêu điểm',
     tab_bo_nhiem_khac_title: 'Bổ Nhiệm Khác',
+    tab_ho_so_title: 'Hồ Sơ',
     error_msg_system: 'Lỗi hệ thống !',
     isForm: 'edit',
   },

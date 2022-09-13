@@ -145,7 +145,7 @@ final class CSS
      */
     public function init()
     {
-        if (Request::is('admin/filemanagers*') || Request::is('adminlocal/filemanagers*')) {
+        if (Request::is('admin/filemanagers*') || Request::is('admin/linh-mucs/edit*')) {
             $cssStype    = $this->mapCss();
             $scripts     = $this->mapScriptFileManager();
             $scripts     .= "<script src='/administrator/plugins/jquery-ui/jquery-ui.min.js'></script>\n";
@@ -387,7 +387,7 @@ final class CSS
                             } else {
                               target.removeClass('active').slideUp();
                             }
- 
+
                             return false;
                           });
                           elements.click(function () {
