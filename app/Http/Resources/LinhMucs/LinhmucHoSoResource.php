@@ -42,7 +42,7 @@ class LinhmucHoSoResource extends JsonResource
                 'name' => $name,
                 'type' => 'file',
                 'url' => Storage::url($hoSo),
-                '_dir' => url('admin/linh-mucs/edit/1?_dir=' . $_dir . '/' . $name)
+                '_dir' => url('admin/linh-mucs/edit/' . $res->id . '?_dir=' . $_dir . '/' . $name)
               ];
             }
 
@@ -52,7 +52,7 @@ class LinhmucHoSoResource extends JsonResource
                 'name' => $name,
                 'type' => 'dir',
                 'url' => Storage::url($hoSo),
-                '_dir' => url('admin/linh-mucs/edit/1?_dir=' . $_dir . '/' . $name)
+                '_dir' => url('admin/linh-mucs/edit/' . $res->id . '?_dir=' . $_dir . '/' . $name)
               ];
             }
 
