@@ -1,7 +1,10 @@
 <template>
   <form class="form-horizontal" autocomplete="off">
+    <!--<loading-over-lay
+            :active.sync="loading"
+            :is-full-page="fullPage"></loading-over-lay>-->
     <ul class="nav nav-tabs">
-      <li class="active" @click="currentTab = 'general'">
+      <li :class="isActive ? '': 'active'" @click="currentTab = 'general'">
         <a href="#tab-general" data-toggle="tab">{{
           $options.setting.tab_general_title
         }}</a>
@@ -36,17 +39,17 @@
           $options.setting.tab_bo_nhiem_khac_title
         }}</a>
       </li>
-      <li @click="currentTab = 'ho_so'">
+      <li :class="isActive ? 'active': ''" @click="currentTab = 'ho_so'">
         <a href="#tab-ho-so" data-toggle="tab">{{
           $options.setting.tab_ho_so_title
         }}</a>
       </li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active" id="tab-general" v-if="currentTab == 'general'">
+      <div class="tab-pane" :class="isActive ? '': 'active'" id="tab-general" v-if="currentTab == 'general'">
         <tab-general
           role="tabpanel"
-          class="tab-pane active"
+          class="tab-pane" :class="isActive ? '': 'active'"
           :general-data="info"
           :mmSelected="selected"
           :mmPath="imgSelected"
@@ -98,10 +101,10 @@
           :type-chuc-vu="$options.setting.typeBoNhiem"
         ></tab-bo-nhiem-khac>
       </div>
-      <div class="tab-pane" id="tab-ho-so" v-if="currentTab == 'ho_so'">
+      <div class="tab-pane" :class="isActive ? 'active': ''" id="tab-ho-so" v-if="currentTab == 'ho_so'">
         <tab-ho-so
           role="tabpanel"
-          class="tab-pane"
+          class="tab-pane" :class="isActive ? 'active': ''"
           :group-data="info"
         ></tab-ho-so>
       </div>
@@ -138,7 +141,7 @@ export default {
     TabThuyenChuyen,
     TabLmThuyenChuyen,
     TabBoNhiemKhac,
-    TabHoSo,
+    TabHoSo
   },
   data() {
     const mm = new MM({
@@ -159,7 +162,7 @@ export default {
       mm: mm,
       selected: null,
       imgSelected: '',
-			currentTab: 'general',
+			currentTab: '',
     }
   },
   computed: {
@@ -167,6 +170,19 @@ export default {
       loading: (state) => state.loading,
       info: (state) => state.info,
     }),
+    isActive() {
+      if (this.$route.query?._dir !== undefined) {
+        return true;
+      }
+      return false;
+    }
+  },
+  mounted() {
+    if(this.$route.query?._dir !== undefined) {
+      this.$data.currentTab = 'ho_so'
+    } else {
+      this.$data.currentTab = 'general'
+    }
   },
   methods: {
     ...mapActions(MODULE_MODULE_LINH_MUC_EDIT, [
