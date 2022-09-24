@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Resources\LinhMucBangCaps\LinhMucBangCapCollection;
 use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
 use App\Http\Resources\LinhMucChucThanhs\LinhMucChucThanhCollection;
+use App\Http\Resources\LinhMucs\LinhmucHoSoResource;
 use App\Http\Resources\LinhMucThuyenChuyens\LinhMucThuyenChuyenCollection;
 
 final class LinhMucService implements BaseModel, LinhMucModel
@@ -87,6 +88,10 @@ final class LinhMucService implements BaseModel, LinhMucModel
     public function apiGetResourceDetail($id = null)
     {
         // TODO: Implement apiGetResourceDetail() method.
+        $type = request()->input('_type');
+        if ($type === 'hoso') {
+          return new LinhmucHoSoResource($this->apiGetDetail($id));
+        }
         return new LinhmucResource($this->apiGetDetail($id));
     }
 
