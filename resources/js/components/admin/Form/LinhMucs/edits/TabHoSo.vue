@@ -2,8 +2,20 @@
   <div class="tab-content">
     <div class="form-group">
       <div class="col-sm-12">
+        <div>
+          <button type="button" @click="_showModalAdd">Thêm thư mục +</button>
+          <button type="button">Tải file </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
         <ul class="breadcrumb" v-html="breadbrum">
         </ul>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
         <table>
           <tbody>
             <tr v-for="(item, idx) in allFiles" :key="idx">
@@ -14,29 +26,38 @@
         </table>
       </div>
     </div>
+    <the-modal-add :linhmuc-id="linhmucId" :dir-query="dirQuery" @update-success="_loadHoSo"></the-modal-add>
   </div>
 </template>
 
 <script>
-  import {
+import {
   fn_get_base_api_detail_url,
 } from '@app/api/utils/fn-helper'
-  import axios from 'axios'
+import axios from 'axios'
+import TheModalAdd from './TheModalAdd'
 
-  export default {
-    name: 'TabHoSo',
-    data() {
-      return {
-        breadbrum: '',
-        allFiles: []
-      }
-    },
-    mounted() {
-      const lmId = this.$route.params.linhmucId
-      const dirQuery = (this.$route.query?._dir === undefined) ? 'AllFiles': this.$route.query._dir;
+export default {
+  name: 'TabHoSo',
+  components: { TheModalAdd },
+  data() {
+    return {
+      breadbrum: '',
+      allFiles: [],
+      linhmucId: null,
+      dirQuery: 'AllFiles'
+    }
+  },
+  mounted() {
+    this.linhmucId = this.$route.params.linhmucId
+    this.$data.dirQuery = (this.$route.query?._dir === undefined) ? 'AllFiles' : this.$route.query._dir
 
-        // axios
-        axios.get(fn_get_base_api_detail_url('/api/linh-mucs', lmId + '?_type=hoso&_dir=' + dirQuery))
+    this._loadHoSo()
+  },
+  methods: {
+    _loadHoSo() {
+      let loadUrl = fn_get_base_api_detail_url('/api/linh-mucs', this.linhmucId + '?_type=hoso&_dir=' + this.dirQuery)
+      axios.get(loadUrl)
         .then((response) => {
           if (response.status === 200) {
             this.$data.breadbrum = response.data.linhmuc.breadbrum
@@ -49,5 +70,9 @@
           }
         })
     },
+    _showModalAdd() {
+      this.$modal.show('modal-ho-so-add')
+    },
   }
-  </script>
+}
+</script>
