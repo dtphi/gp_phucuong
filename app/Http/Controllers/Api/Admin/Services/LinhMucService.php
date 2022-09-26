@@ -184,6 +184,17 @@ final class LinhMucService implements BaseModel, LinhMucModel
 
     public function apiInsert($data = [])
     {
+      $request = request();
+      $type = $request->input('_type');
+
+      if ($type == 'hoso') {
+        $_dir= $request->input('_dir');
+        $linhmucId = $request->input('linhmucId');
+        $rootDir = 'app/public/HoSo' . '/' . $linhmucId . '/' . $_dir . '/';
+        $name = $request->fileHoSos->getClientOriginalName();
+        $extension = $request->fileHoSos->getClientOriginalExtension();
+        $request->fileHoSos->move(storage_path($rootDir), $name);
+      }
         /**
          * Save user with transaction to make sure all data stored correctly
          */
