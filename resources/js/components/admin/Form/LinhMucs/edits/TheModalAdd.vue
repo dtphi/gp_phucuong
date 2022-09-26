@@ -6,7 +6,7 @@
           <i class="fa fa-plus"></i>Thêm thư mục mới
         </h3>
         <div slot="top-right" class="pull-right">
-          <button @click="_hideModalEdit">❌</button>
+          <button type="button" @click="_hideModalEdit">❌</button>
         </div>
       </div>
       <div class="panel-body">
