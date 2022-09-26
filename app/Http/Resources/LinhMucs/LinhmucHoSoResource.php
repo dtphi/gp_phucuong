@@ -63,7 +63,7 @@ class LinhmucHoSoResource extends JsonResource
             unset($arrDir[count($arrDir) - 1]);
             foreach ($arrDir as $dir) {
               $queryDir = (empty($dirName)) ? $dir : $dirName . '/' . $dir;
-              $breadbrum[] = '<li><a href="' . url('admin/linh-mucs/edit/1?_dir=' . $queryDir) . '">' . $dir . '</a></li>';
+              $breadbrum[] = '<li><a href="' . url('admin/linh-mucs/edit/' . $res->id  . '?_dir=' . $queryDir) . '">' . $dir . '</a></li>';
               $dirName = $dir;
             }
             $breadbrum[] = '<li><a href="javascript:void(0);">' . $lastDir . '</a></li>';
