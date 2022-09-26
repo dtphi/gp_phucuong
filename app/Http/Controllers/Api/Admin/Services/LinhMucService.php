@@ -26,7 +26,9 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\BaseModel;
 use App\Http\Resources\LinhMucBangCaps\LinhMucBangCapCollection;
 use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel;
 use App\Http\Resources\LinhMucChucThanhs\LinhMucChucThanhCollection;
+use App\Http\Resources\LinhMucs\LinhmucHoSoResource;
 use App\Http\Resources\LinhMucThuyenChuyens\LinhMucThuyenChuyenCollection;
+use Storage;
 
 final class LinhMucService implements BaseModel, LinhMucModel
 {
@@ -87,6 +89,16 @@ final class LinhMucService implements BaseModel, LinhMucModel
     public function apiGetResourceDetail($id = null)
     {
         // TODO: Implement apiGetResourceDetail() method.
+        $action = request()->input('action');
+        if ($action == 'new_dir') {
+          $newDirName = request()->input('new_dir_name');
+          $rootDir = request()->input('_dir');
+          Storage::disk('public')->makeDirectory('HoSo' . '/' . $id . '/' . $rootDir . '/' . $newDirName);
+        }
+        $type = request()->input('_type');
+        if ($type === 'hoso') {
+          return new LinhmucHoSoResource($this->apiGetDetail($id));
+        }
         return new LinhmucResource($this->apiGetDetail($id));
     }
 
@@ -172,6 +184,17 @@ final class LinhMucService implements BaseModel, LinhMucModel
 
     public function apiInsert($data = [])
     {
+      $request = request();
+      $type = $request->input('_type');
+
+      if ($type == 'hoso') {
+        $_dir= $request->input('_dir');
+        $linhmucId = $request->input('linhmucId');
+        $rootDir = 'app/public/HoSo' . '/' . $linhmucId . '/' . $_dir . '/';
+        $name = $request->fileHoSos->getClientOriginalName();
+        $extension = $request->fileHoSos->getClientOriginalExtension();
+        $request->fileHoSos->move(storage_path($rootDir), $name);
+      }
         /**
          * Save user with transaction to make sure all data stored correctly
          */
