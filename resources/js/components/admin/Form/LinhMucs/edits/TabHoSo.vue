@@ -23,11 +23,24 @@
     </div>
     <div class="form-group">
       <div class="col-sm-12">
-        <table>
+        <table class="table">
+          <thead>
+            <th>NAME</th>
+            <th>UPDATED</th>
+            <th>SIZE</th>
+          </thead>
           <tbody>
             <tr v-for="(item, idx) in allFiles" :key="idx">
-              <td v-if="item.type==='file'"><a :href="item.url" target="_blank">{{item.name}}</a></td>
-              <td v-else><a :href="item._dir">{{item.name}}</a></td>
+              <template v-if="item.type==='file'">
+                <td><a :href="item.url" target="_blank">{{item.name}}</a></td>
+                <td>{{item.lastModified}}</td>
+                <td>{{item.size}}</td>
+              </template>
+              <template v-else>
+                <td><a :href="item._dir">{{item.name}}</a></td>
+                <td>{{item.lastModified}}</td>
+                <td>{{item.size}}</td>
+              </template>
             </tr>
           </tbody>
         </table>
