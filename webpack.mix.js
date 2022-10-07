@@ -11,6 +11,6 @@ let argv = require('yargs').argv;
  |
  */
 
-/*require(`./webpack.${argv.app}.mix`); */
+require(`./webpack.${argv.app}.mix`);
 
-require('./webpack.dev.mix');
+/*require('./webpack.dev.mix');*/
