@@ -491,18 +491,21 @@
                     <b-alert v-model="showFolderSuccessAlert" variant="success" dismissible>
                       Đã tạo thư mục thành công!
                       </b-alert>
-                        <b-alert v-model="showFileSuccessAlert" variant="success" dismissible>
+                    <b-alert v-model="showFileSuccessAlert" variant="success" dismissible>
                       Đã thêm tệp mới thành công!
+                      </b-alert>
+                      <b-alert v-model="delFileFailedAlert" variant="danger" dismissible>
+                      Xóa thất bại, xin thử lại!
                       </b-alert>
                     <div class="bi-tich p-3 mt-3" style="min-height:500px;">
 
                       <h3>QUẢN LÝ HỒ SƠ</h3>
 
                       <!-- <b-breadcrumb-item v-for="item in lstlink" v-on:click.prevent="test(item)">{{item}}</b-breadcrumb-item> -->
-                      <b-link v-for="item in lstlink" v-on:click.prevent="breadCum(item)" v-bind:key="item.id">{{item}} / </b-link>
-                    <div class="select-dropdown input-prepend input-append">
-                      <b-row align-h="end">
-                        <b-dropdown variant="primary" id="dropdown-1"  no-caret class="m-md-2" >
+                    
+                      <b-row >
+                        <b-col cols="auto" class="mr-auto p-3"><b-link v-for="item,index in lstlink" v-on:click.prevent="breadCum(item)" v-bind:key="item.id" :disabled="index==lstlink.length-1?true:false">{{item}} > </b-link></b-col>
+                        <b-col cols="auto" class="p-3"><b-dropdown variant="primary" id="dropdown-1" size="sm"  no-caret >
                           <template slot="button-content">
                                         <b-icon icon="plus-lg">
                                         </b-icon>
@@ -510,9 +513,9 @@
                           <b-dropdown-item v-b-modal.newFolder>Thư mục mới</b-dropdown-item>
                           <b-dropdown-item @click="upFileEvent()">Tải lên tệp</b-dropdown-item>
                           <b-dropdown-item>Tải lên thư mục</b-dropdown-item>
-                        </b-dropdown>
+                        </b-dropdown></b-col>
                       </b-row>
-                    </div>
+                    
                     <form id="uploadBox" class="mb-2 mt-2 d-none hide" action="upload.php" method="post" enctype="multipart/form-data">
                       <input type="file" name="fileToUpload" id="fileToUpload" @change="submitUpload()">
                       <input type="button" value="Upload" name="Upload" @click="Upload()">
@@ -664,6 +667,7 @@ export default {
         showFolderErrorAlert: false,
         showFolderSuccessAlert: false,
         showFileSuccessAlert:false,
+        delFileFailedAlert:false,
         root:[],
     }
   },
@@ -724,7 +728,7 @@ export default {
         dir=lstlink.slice(1).join('/')
        }
      })
-     console.log(dir)
+     //console.log(dir)
      this.lstlink=lstlink
     }
     // console.log(this.lstlink)
@@ -737,19 +741,20 @@ export default {
       var self = this;
       var targetfile=self.lstlink.slice(1).join('/')+'/'+item
       var url = 'http://'+DOMAIN+'/api/explorer/delFile?id='+DOMAIN_ID+'&name=' + targetfile
-      if(confirm('Bạn muốn xóa '+item+' ?'))
+      if(confirm('Bạn muốn xóa '+item+' không ?'))
         $.get(url, function(data, status) {
           if (data == true)
             self.isImg='none'
             self.LoadData(self.lstlink.slice(1).join('/'));
             });
+          else self.delFileFailedAlert=true
    },
    downFile(item){
     if(item.type=='file'){
       //this.$router.go(DOMAIN+item.pathreal)
       window.open('http://'+DOMAIN+item.pathreal)
     }
-    else alert("download file")
+    else alert("Thư mục hiện chưa có tính năng download")
    },
     newFolderEvent() {
           var self = this;
@@ -797,7 +802,7 @@ export default {
           if (item.type == 'folder') {
             
            // newlinkpath=newlinkpath.filter(n => n)
-           console.log(currdir)
+           //console.log(currdir)
             
             this.lstlink.push(currdir.at(-1))
             this.LoadData(currdir.join('/'))
@@ -843,11 +848,11 @@ export default {
         submitUpload() {
           var self = this
           var targetdir=self.lstlink.slice(1).join('/')
-          console.log(self.targetdir)
+          //console.log(self.targetdir)
           var frm = $('#uploadBox');
           var formData = new FormData(frm[0]);
           formData.append('targetdir', targetdir);
-          console.log(formData)
+          //console.log(formData)
           $.ajaxSetup({
             headers: {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
