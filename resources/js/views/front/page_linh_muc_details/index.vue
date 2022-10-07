@@ -114,7 +114,47 @@
                       </p>
                       <h5 v-if="pageLists.ngay_rip">RIP: {{pageLists.ngay_rip}}</h5>
                     <button type="button" class="btn btn-primary" @click="exportFileLinhMuc(pageLists.id, pageLists.ten)">Xuất file</button>
-                    </div>
+                    <b-button variant="primary" v-b-modal.modal-1 hidden>Quản Lý Hồ Sơ</b-button>
+                    <b-modal id="modal-1" title="Files management">
+                      <b-breadcrumb :items="items"></b-breadcrumb>
+                      <p class="my-4">All files</p>
+                    </b-modal>
+                  </div>
+                  <div class="bi-tich p-3 mt-3">
+                          <table class="table mb-0 tbl-server-info">
+                    
+                            <tbody>
+                              <tr v-for="(item,index) in root">
+                              
+                                <td @click="showReview(item)" role="button">
+                                    <b-icon :icon="item.type == 'file' ? IconShow(item.name) : 'folder-fill'" class="mr-1"></b-icon>  {{item.name}}
+                                </td>
+                              
+                              </tr>
+                            </tbody>
+                          </table>
+                        
+                  </div>
+                  <div class="bi-tich p-3 mt-3">
+                  <div v-if="isImg==='img'">
+                    <a :href="'http://'+itemselect" target="_blank">
+                    <img :src="'http://'+itemselect" width="100%" />
+                  </a>
+                  </div>
+                  <div v-else-if="isImg==='file'">
+                    <a :href="'http://'+itemselect" target="_blank">
+                    <img :src="'http://'+downloadimg" width="100%" alt="Click để tải tài liệu." />
+                  </a>
+                  </div>
+                  <div v-else>
+                    
+                    <img :src="'http://'+defaultimg" width="100%" alt="Click để tải tài liệu." />
+                 
+                  </div>
+                    
+                    
+                  
+                  </div>
                   </div>
                   <div class="col-mobile col-8">
                     <div class="info-personal mt-5" style="font-size: 0.87rem">
@@ -448,22 +488,115 @@
                         icon="history"
                       />
                     </div>
+                    <b-alert v-model="showFolderSuccessAlert" variant="success" dismissible>
+                      Đã tạo thư mục thành công!
+                      </b-alert>
+                        <b-alert v-model="showFileSuccessAlert" variant="success" dismissible>
+                      Đã thêm tệp mới thành công!
+                      </b-alert>
+                    <div class="bi-tich p-3 mt-3" style="min-height:500px;">
+
+                      <h3>QUẢN LÝ HỒ SƠ</h3>
+
+                      <!-- <b-breadcrumb-item v-for="item in lstlink" v-on:click.prevent="test(item)">{{item}}</b-breadcrumb-item> -->
+                      <b-link v-for="item in lstlink" v-on:click.prevent="breadCum(item)" v-bind:key="item.id">{{item}} / </b-link>
+                    <div class="select-dropdown input-prepend input-append">
+                      <b-row align-h="end">
+                        <b-dropdown variant="primary" id="dropdown-1"  no-caret class="m-md-2" >
+                          <template slot="button-content">
+                                        <b-icon icon="plus-lg">
+                                        </b-icon>
+                            </template>
+                          <b-dropdown-item v-b-modal.newFolder>Thư mục mới</b-dropdown-item>
+                          <b-dropdown-item @click="upFileEvent()">Tải lên tệp</b-dropdown-item>
+                          <b-dropdown-item>Tải lên thư mục</b-dropdown-item>
+                        </b-dropdown>
+                      </b-row>
+                    </div>
+                    <form id="uploadBox" class="mb-2 mt-2 d-none hide" action="upload.php" method="post" enctype="multipart/form-data">
+                      <input type="file" name="fileToUpload" id="fileToUpload" @change="submitUpload()">
+                      <input type="button" value="Upload" name="Upload" @click="Upload()">
+                      
+                    </form>
+                    
+                    <div class="row">
+                        
+                        <div class="col-md-12">
+                          <table class="table mb-0 tbl-server-info">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tên File</th>
+                                <th scope="col">Kích thước</th>
+                                <th scope="col">Ngày cập nhật</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(item,index) in listfile">
+                                <td>
+                                  {{index+1}}
+                                </td>
+                                <td @click="showReview(item)" role="button">
+                                    <b-icon :icon="item.type == 'file' ? IconShow(item.name) : 'folder-fill'" class="mr-1"></b-icon>  {{item.name}}
+                                </td>
+                                <td>{{item.type == 'file' ? formatBytes(item.size) : ''}}</td>
+                                <td>{{item.type == 'file' ? timestampToDateVn(item.date) : ''}}</td>
+                                <td>
+                                    <b-dropdown size="sm" no-caret id="dropdown-2" variant="link" toggle-class="text-decoration-none">
+                                      <template slot="button-content">
+                                        <b-icon icon="three-dots">
+                                        </b-icon>
+                                      </template>
+                                      <b-dropdown-item v-if="item.type==='file'" @click="showReview(item)"><b-icon icon="eye-fill"></b-icon> Mở File</b-dropdown-item>
+                                      <b-dropdown-item @click='delFile(item.name)'><b-icon icon="trash-fill"></b-icon> Xóa</b-dropdown-item>
+                                      <b-dropdown-item><b-icon icon="pencil-fill"></b-icon> Chỉnh sửa</b-dropdown-item>
+                                      <b-dropdown-item v-if="item.type==='file'"><b-icon icon="printer-fill"></b-icon> In</b-dropdown-item>
+                                      <b-dropdown-item @click='downFile(item)'><b-icon icon="cloud-download-fill"></b-icon> Tải</b-dropdown-item>
+                                    </b-dropdown>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                        <!-- Modal -->
+                      <b-modal id="newFolder" @shown="focusMyElement" hide-footer title="Nhập tên thư mục" >
+                        <div class="modal-body">
+                          <b-alert v-model="showFolderErrorAlert" variant="danger" dismissible>
+                        không thể tạo!
+                        </b-alert>
+                              <div class="input-group"> <input id="nameFolder" ref="focusThis" type="text" class="form-control" v-model="nameNewFolder">
+                                <div class="input-group-append"> <button class="btn btn-primary" type="button" @click="newFolderEvent()"> Tạo thư mục </button> </div>
+                              </div>
+                            </div>
+                          
+                      </b-modal>
+                    
+
+                    </div>
+                    
                     <div class="mt-3" v-if="pageLists.rip_ghi_chu">
                       <span v-html="pageLists.rip_ghi_chu"></span>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                  
+                </div>  
+              </div>       
+            </div>   
           </template>
         </main-content>
-        <content-bottom v-if="_isContentBottom"> </content-bottom>
+
+        <content-bottom v-if="_isContentBottom"> 
+        </content-bottom>
       </div>
     </div>
   </main>
 </template>
 
 <script>
+  
 import { mapState, mapActions, } from 'vuex'
 import { MODULE_LINH_MUC_DETAIL_PAGE, } from '@app/stores/front/types/module-types'
 import { GET_DETAIL_LINH_MUC, } from '@app/stores/front/types/action-types'
@@ -476,6 +609,11 @@ import MainContent from 'com@front/Common/MainContent'
 import Vue from 'vue'
 import vuetimeline from '@growthbunker/vuetimeline'
 Vue.use(vuetimeline)
+
+var GLOBAL_URL=window.location.href.replace(/https?:\/\//,'')
+var SP = GLOBAL_URL.split('/')
+var DOMAIN = SP[0]
+var DOMAIN_ID = SP[SP.length-1]
 
 export default {
   name: 'InfoPage',
@@ -495,6 +633,38 @@ export default {
       imgCarousel: 'https://picsum.photos/1024/480/?image=58',
       chucThanh: ['', 'Phó Tế', 'Linh Mục', 'Giám Mục'],
       chucVus: [],
+      lstlink:[
+          'All files'
+      ],
+      items: [
+          {
+            text: 'All files',
+            href: '#',
+          },
+          {
+            text: 'Huy',
+            href: '#'
+          },
+          {
+            text: 'Grandchildren',
+            active: true
+          }
+        ],
+        isImg:'none',
+        filedeleted:'',
+        targetdir:'',
+        listfile: [],
+        itemselect: '',
+        defaultimg:DOMAIN + '/front/img/image-svgrepo-com.svg',
+        downloadimg:DOMAIN + '/front/img/download-svgrepo-com.svg',
+        LstFileIcon: [],
+        nameNewFolder: '',
+        dirFolder: '',
+        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),  
+        showFolderErrorAlert: false,
+        showFolderSuccessAlert: false,
+        showFileSuccessAlert:false,
+        root:[],
     }
   },
   computed: {
@@ -520,7 +690,11 @@ export default {
   },
   mounted() {
     this.getDetail(this.$route.params)
-  },
+    this.LoadData()
+  
+   
+},
+
   methods: {
     ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, {
       getDetail: GET_DETAIL_LINH_MUC,
@@ -531,6 +705,187 @@ export default {
     exportFileLinhMuc(id, name) {
       this.ACTION_EXPORT_FILE_LINHMUC({id: id, name: name});
     },
+    focusMyElement() {
+      this.$refs.focusThis.focus()
+    },
+   breadCum(dir){
+    
+    if (dir=='All files'){
+      dir=null
+      this.lstlink=['All files']
+    }
+    else if (dir!=='All files')
+    {
+      var lstlink=this.lstlink
+      lstlink.forEach(function(link,index){
+       if (dir==link){
+         
+        lstlink=lstlink.slice(0,index+1)
+        dir=lstlink.slice(1).join('/')
+       }
+     })
+     console.log(dir)
+     this.lstlink=lstlink
+    }
+    // console.log(this.lstlink)
+    this.LoadData(dir)
+   },
+   getCurrentDir(dirname){
+
+   },
+   delFile(item){
+      var self = this;
+      var targetfile=self.lstlink.slice(1).join('/')+'/'+item
+      var url = 'http://'+DOMAIN+'/api/explorer/delFile?id='+DOMAIN_ID+'&name=' + targetfile
+      if(confirm('Bạn muốn xóa '+item+' ?'))
+        $.get(url, function(data, status) {
+          if (data == true)
+            self.isImg='none'
+            self.LoadData(self.lstlink.slice(1).join('/'));
+            });
+   },
+   downFile(item){
+    if(item.type=='file'){
+      //this.$router.go(DOMAIN+item.pathreal)
+      window.open('http://'+DOMAIN+item.pathreal)
+    }
+    else alert("download file")
+   },
+    newFolderEvent() {
+          var self = this;
+          var currdir= self.lstlink.slice(1).join('/')
+          var nameNewFolder = self.nameNewFolder
+          var url = 'http://'+DOMAIN+'/api/explorer/newFolder?id='+DOMAIN_ID+'&name=' + currdir+'/'+ nameNewFolder
+          $.get(url, function(data, status) {
+            if (data == true) {
+              //alert("Đã tạo thư mục thành công! " + nameNewFolder);
+              // $('#newFolder').modal('hide');
+              // $bvModal.hide('#newFolder');
+              self.showFolderSuccessAlert=true
+              self.$bvModal.hide("newFolder")
+              self.LoadData(currdir);
+              self.nameNewFolder = ''
+            } else {
+              self.showFolderErrorAlert=true
+              self.nameNewFolder = ''
+            }
+          });
+
+        },
+        upFileEvent() {
+          $('#fileToUpload').trigger('click');
+        },
+        formatBytes(bytes, decimals = 2) {
+          if (bytes == '') return '';
+          if (!+bytes) return '0 Bytes'
+          const k = 1024
+          const dm = decimals < 0 ? 0 : decimals
+          const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+          const i = Math.floor(Math.log(bytes) / Math.log(k))
+          return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+        },
+        timestampToDateVn(time) {
+          if (time == '') return '';
+          var date = new Date(time * 1000)
+          var day = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
+          var month = date.getMonth() < 10 ? "0" + date.getMonth() + "" : date.getMonth();
+          return day + "/" + month + "/" + date.getUTCFullYear() + " " + date.getUTCHours() + ":" + date.getMinutes()
+        },
+        
+        showReview(item) {
+          var currdir=this.LinkPathProcess(item.path)
+          if (item.type == 'folder') {
+            
+           // newlinkpath=newlinkpath.filter(n => n)
+           console.log(currdir)
+            
+            this.lstlink.push(currdir.at(-1))
+            this.LoadData(currdir.join('/'))
+          } 
+          else 
+          {
+            var imgType=['png','jpg','bmp','gif']
+            var ext=item.name.split('.')
+            if (imgType.includes(ext.at(-1))){
+              this.itemselect = DOMAIN +item.pathreal
+            this.isImg='img'
+            }
+            
+            else {
+              this.itemselect = DOMAIN +item.pathreal
+            this.isImg='file'}
+
+          }
+        },
+        LinkPathProcess(linkpath){
+           linkpath=linkpath.split('\\').filter(n => n)
+           var newlinkpath=[]
+           linkpath.forEach(function(item,index){
+         
+            if (item=='AllFiles')
+             newlinkpath = linkpath.slice(index+1)
+           })
+           return newlinkpath 
+        },
+        
+        IconShow(namefile) {
+          var icon = 'file-earmark-fill'
+          var sp = namefile.split('.')
+          if (sp.length > 1) {
+            var ext = sp[sp.length - 1]
+            var iext = this.LstFileIcon.filter(item => item.ext == ext)
+            if (iext.length > 0) {
+              icon = iext[0].icon
+            }
+          }
+          return icon;
+        },
+        submitUpload() {
+          var self = this
+          var targetdir=self.lstlink.slice(1).join('/')
+          console.log(self.targetdir)
+          var frm = $('#uploadBox');
+          var formData = new FormData(frm[0]);
+          formData.append('targetdir', targetdir);
+          console.log(formData)
+          $.ajaxSetup({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+         });
+          $.ajax({
+            url: 'http://'+DOMAIN+'/api/explorer/upload?id='+DOMAIN_ID,
+            type: 'POST',
+            data: formData,
+            success: function(data) {
+              //console.log(data)
+              if (data != null) {
+                self.LoadData(targetdir);
+                self.showFileSuccessAlert=true
+                frm[0].reset()
+              }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+          });
+        },
+        LoadData(dir1 = null) {
+          var self = this
+          
+          var url = 'http://'+DOMAIN+'/api/explorer/getlistdir?id='+DOMAIN_ID;
+          if (dir1 != null) url += '&dir=' + dir1;
+          $.getJSON(url, function(json) {
+            self.listfile = json
+            //console.log(json)
+            
+            self.listfile = self.listfile.sort((a, b) => b.type.localeCompare(a.type));
+            if(self.root.length==0)
+            self.root=self.listfile.filter(item=>item.type=='folder')
+            
+          });
+        },
+
     diadiem(item) {
        if(item.giaoxuName !== '') {
           return item.giaoxuName
@@ -581,7 +936,7 @@ export default {
       return self.chucVus
     },
     edit(e) {
-      console.log('edit ' + e['eventId'])
+      //console.log('edit ' + e['eventId'])
     },
     reset() {
       this.item = {}
@@ -601,6 +956,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
+
+
+<style lang="scss" >
 @import "./styles.scss";
 </style>

@@ -20,8 +20,8 @@ require('laravel-mix-alias');
  mix.alias('store@admin', '/resources/js/stores/admin');
  mix.alias('v@admin', '/resources/js/views/admin');
  mix.alias('api@admin', '/resources/js/api/admin');
- mix.js('resources/js/app-admin.js', 'public/js');
- mix.js('resources/js/app-front.js', 'public/js');
+mix.js('resources/js/app-admin.js', 'public/js');
+mix.js('resources/js/app-front.js', 'public/js');
 
 if (mix.inProduction()) {
     mix.version();

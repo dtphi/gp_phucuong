@@ -2,6 +2,7 @@ import Vue from 'vue'
 import '@app/plugins/cms-filter'
 import '@app/plugins/cms-vee-validate'
 import '@app/plugins/cms-components'
+import $ from "jquery"
 // font.awsome.icon
 require('./assets/font.awsome.icon')
 /* Add BootstrapVue */
@@ -48,3 +49,5 @@ Vue.use(VModal, {
     clickToClose: false,
   },
 })
+window.$ = require('jquery')
+window.JQuery = require('jquery')

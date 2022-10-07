@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
+    protected $namespace = 'App\Http\Controllers';
     /**
      * The path to the "home" route for your application.
      *
@@ -42,6 +43,7 @@ class RouteServiceProvider extends ServiceProvider
             $rPath = 'rout' . 'es' . '/' . 'ap' . 'i.' . $rEnv . '.php';
             if ($request->is('ap' . 'i*')) {
                 Route::prefix('ap' . 'i')
+            
                     ->middleware('ap' . 'i')
                     ->namespace($this->namespace)
                     ->group(base_path($rPath));

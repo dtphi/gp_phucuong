@@ -127,3 +127,10 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::any('/mmedia/{any}', function () {
     });
   });
+  Route::namespace('\App\Http\Controllers\Api\Admin')
+  ->group(function () {
+  Route::get('/explorer/getlistdir','ExplorerController@getlistdir');
+  Route::post('/explorer/upload','ExplorerController@upload');
+  Route::get('/explorer/newFolder','ExplorerController@newFolder');
+  Route::get('/explorer/delFile','ExplorerController@delFile');
+  });
