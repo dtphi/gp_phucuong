@@ -33,19 +33,18 @@ class ExplorerController extends ApiController
         $rootDir = 'HoSo' . '/' . $id . '/' . 'AllFiles' . '/';
         
 //dd( $rootDir );
-        $dirRead1 = $this->pathStorage . "\\HoSo\\$id";
+        $dirRead1 = $this->pathStorage . "HoSo/$id";
         
-
         if (!file_exists($dirRead1)) {
             mkdir($dirRead1, 0777, true);
         }
-        $dirRead = $dirRead1 . "\\AllFiles\\";
+        $dirRead = $dirRead1 . "/AllFiles";
         if (!file_exists($dirRead)) {
             mkdir($dirRead, 0777, true);
         }
 
         if (!empty($request->dir) && $request->dir !== 'AllFiles') {
-            $dirRead .= "\\$request->dir";
+            $dirRead .= "/$request->dir";
         }
 
         $hoSoFiles = $storagePublic->files($dirRead);
@@ -60,22 +59,23 @@ class ExplorerController extends ApiController
             if (in_array($file, $skipFile)) {
                 continue;
             }
-            if (($mode == 0 || $mode == 1) && is_file("$dirRead\\$file")) {
+            if (($mode == 0 || $mode == 1) && is_file("$dirRead/$file")) {
                 $fl = new stdClass();
                 $path = "$dirRead\\$file";
                 $fl->name = $file;
-                $fl->path = $path;
-                $fl->pathreal="/storage/HoSo/".$id."/AllFiles/".$request->dir."/$file";
+                $fl->path = "/storage/HoSo/".$id."/AllFiles/".$request->dir."$file";
+                $fl->pathreal="/storage/HoSo/".$id."/AllFiles/".$request->dir."$file";
                 $fl->size = filesize($path);
                 $fl->date = filemtime($path);
                 $fl->type = filetype($path);
                 $lst[] = $fl;
             }
-            if (($mode == 0 || $mode == 2) && is_dir("$dirRead\\$file")) {
+            if (($mode == 0 || $mode == 2) && is_dir("$dirRead/$file")) {
                 $fl = new stdClass();
                 $path = "$dirRead\\$file";
                 $fl->name = $file;
-                $fl->path = $path;
+                $fl->path = "/storage/HoSo/".$id."/AllFiles/".$request->dir."$file";
+                $fl->pathreal="/storage/HoSo/".$id."/AllFiles/".$request->dir."$file";
                 $fl->type = 'folder';
                 $lst[] = $fl;
             }
