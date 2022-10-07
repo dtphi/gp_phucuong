@@ -1,6 +1,10 @@
 /* 
   Giáo phận phú cường: Page linh muc detail main css
 */
+.disabled {
+    cursor: not-allowed;
+    color: gray
+  }
 .card-header {
     &:first-child{
         text-align: left !important;
