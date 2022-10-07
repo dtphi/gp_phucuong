@@ -798,7 +798,7 @@ export default {
         },
         
         showReview(item) {
-          var currdir=this.LinkPathProcess(item.path)
+          var currdir=this.LinkPathProcess(item.pathreal)
           if (item.type == 'folder') {
             
            // newlinkpath=newlinkpath.filter(n => n)
@@ -823,7 +823,7 @@ export default {
           }
         },
         LinkPathProcess(linkpath){
-           linkpath=linkpath.split('\\').filter(n => n)
+           linkpath=linkpath.split('/').filter(n => n)
            var newlinkpath=[]
            linkpath.forEach(function(item,index){
          
