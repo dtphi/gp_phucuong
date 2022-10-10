@@ -17,7 +17,7 @@ class ExplorerController extends ApiController
 {   
     public $storage = "";
     public $pathStorage = "";
-    public $fileallow = ["jpg", "png", "zip","pdf","xlsx"];
+    public $fileallow = ["jpg", "png", "zip","pdf","xlsx","txt"];
     public function __construct(){
         $this->storage = Storage::disk('public');
         $this->pathStorage = $this->storage->getAdapter()->getPathPrefix();
@@ -26,7 +26,7 @@ class ExplorerController extends ApiController
 
     public function getlistdir(Request $request)
     {
-        
+        $this->pathStorage=str_replace("\\","/",$this->pathStorage);
         $skipFile = ['.', '..', '.htaccess'];
         $id = $request->id;
         $storagePublic = Storage::disk('public');
@@ -88,7 +88,7 @@ class ExplorerController extends ApiController
         $id=$request->id;
         
         $folderName=$request->name;
-      
+        $this->pathStorage=str_replace("\\","/",$this->pathStorage);
         $folderContain=$this->pathStorage.'/HoSo' . '/' . $id . '/' . 'AllFiles' . '/';
         $dir=$folderContain.$folderName;
         
@@ -107,10 +107,10 @@ class ExplorerController extends ApiController
 
             foreach ($objects as $object) {
                 if ($object != '.' && $object != '..') {
-                    if (filetype($dir . '\\' . $object) == 'dir') {
-                        rrmdir($dir . '\\' . $object);
+                    if (filetype($dir . '/' . $object) == 'dir') {
+                        $this->rrmdir($dir . '/' . $object);
                     } else {
-                        unlink($dir . '\\' . $object);
+                        unlink($dir . '/' . $object);
                     }
                 }
             }
@@ -122,7 +122,8 @@ class ExplorerController extends ApiController
 
     public function upload(Request $request){
         $id=$request->id;
-        $folderUpload=$this->pathStorage.'/HoSo' . '/' . $id . '/' . 'AllFiles' . '/';
+        $this->pathStorage=str_replace("\\","/",$this->pathStorage);
+        $folderUpload=$this->pathStorage.'HoSo' . '/' . $id . '/' . 'AllFiles';
         $files =  $request->file('fileToUpload');
         $filenameup = $files->getClientOriginalName();
         $targetdir=$request->targetdir;
@@ -132,26 +133,29 @@ class ExplorerController extends ApiController
         // $filesave = str_replace("@GUI", guid(), $filesave);
         // $filesave = str_replace("@EXT", $ext, $filesave);
         $res = null;
-        
+        // dd("$folderUpload/$filesave");
         if (in_array($ext, $this->fileallow)) {
-            $target_file = "$folderUpload/$filesave";
-            if ($files->move($folderUpload.$targetdir,$files->getClientOriginalName())) {
+            $target_file = "$folderUpload/$targetdir/$filesave";
+            if ($files->move("$folderUpload/$targetdir",$files->getClientOriginalName())) {
                 $res = new stdClass();
                 $res->nameOld = $files->getClientOriginalName();
                 //$res->size = $files->getSize();
                 $res->name = $filesave;
                 $res->target = $target_file;
                 //$res->path = "$urlUpload/$target_file";
+                //dd($res);
             }
+            return response()->json($res);
         }
-        return response()->json($res);
+        return response()->json(false);
 
 
         
     }
     public function newFolder(Request $request){
         $id=$request->id;
-        $folderUpload=$this->pathStorage.'/HoSo' . '/' . $id . '/' . 'AllFiles' . '/';
+        $this->pathStorage=str_replace("\\","/",$this->pathStorage);
+        $folderUpload=$this->pathStorage.'HoSo' . '/' . $id . '/' . 'AllFiles' . '/';
         $dir=$request->name;
         $folderNameDir=$folderUpload . $dir;
         if(!file_exists($folderNameDir)){
