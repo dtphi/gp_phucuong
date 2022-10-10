@@ -120,7 +120,7 @@
                       <p class="my-4">All files</p>
                     </b-modal>
                   </div>
-                  <div class="bi-tich p-3 mt-3">
+                  <!-- <div class="bi-tich p-3 mt-3">
                           <table class="table mb-0 tbl-server-info">
                     
                             <tbody>
@@ -134,7 +134,7 @@
                             </tbody>
                           </table>
                         
-                  </div>
+                  </div> -->
                   <!-- <div class="bi-tich p-3 mt-3">
                   <div v-if="isImg==='img'">
                     <a :href="'http://'+itemselect" target="_blank">
@@ -494,6 +494,9 @@
                       <b-alert v-model="delFileFailedAlert" variant="danger" dismissible>
                       Xóa thất bại, xin thử lại!
                       </b-alert>
+                      <b-alert v-model="showFileFailedAlert" variant="danger" dismissible>
+                      Thêm thất bại, xin thử lại!
+                      </b-alert>
                     <div class="bi-tich p-3 mt-3" style="min-height:500px;">
 
                       <h3>QUẢN LÝ HỒ SƠ</h3>
@@ -552,7 +555,7 @@
                                       <b-dropdown-item @click='delFile(item.name)'><b-icon icon="trash-fill"></b-icon> Xóa</b-dropdown-item>
                                       <b-dropdown-item><b-icon icon="pencil-fill"></b-icon> Chỉnh sửa</b-dropdown-item>
                                       <b-dropdown-item v-if="item.type==='file'"><b-icon icon="printer-fill"></b-icon> In</b-dropdown-item>
-                                      <b-dropdown-item @click='downFile(item)'><b-icon icon="cloud-download-fill"></b-icon> Tải</b-dropdown-item>
+                                      <b-dropdown-item @click='downFile(item)'><b-icon icon="cloud-download-fill"></b-icon> Tải Xuống</b-dropdown-item>
                                     </b-dropdown>
                                 </td>
                               </tr>
@@ -573,7 +576,29 @@
                             </div>
                           
                       </b-modal>
+                      <b-modal id="showReview" :size="isImg=='file'?'sm':''" hide-footer hide-header >
+
+                        <div class="modal-body">
+
+                          <div v-if="isImg ==='img'">
+                            <a :href="'http://'+itemselect" target="_blank">
+                            <img :src="'http://'+itemselect" width="100%" />
+                          </a>
+                          </div>
+                          <div v-else-if="isImg ==='file'">
+                            <a :href="'http://'+itemselect" target="_blank">
+                            <img :src="'http://'+downloadimg" alt="Click để tải tài liệu." />
+                          </a>
+                          </div>
+                          <div v-else>
                     
+                            <img :src="'http://'+defaultimg" width="100%" alt="Click để tải tài liệu." />
+                 
+                  </div>
+
+                        </div>
+
+                      </b-modal>
 
                     </div>
                     
@@ -665,6 +690,7 @@ export default {
         showFolderSuccessAlert: false,
         showFileSuccessAlert:false,
         delFileFailedAlert:false,
+        showFileFailedAlert:false,
         root:[],
     }
   },
@@ -789,11 +815,10 @@ export default {
         timestampToDateVn(time) {
           if (time == '') return '';
           var date = new Date(time * 1000)
-          var day = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
-          var month = date.getMonth() < 10 ? "0" + date.getMonth() + "" : date.getMonth();
-          return day + "/" + month + "/" + date.getUTCFullYear() + " " + date.getUTCHours() + ":" + date.getMinutes()
+          var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+          var month = (date.getMonth()+1) < 10 ? "0" + (date.getMonth()+1) + "" : (date.getMonth()+1);
+          return day + "/" + month + "/" + date.getUTCFullYear() + " " + date.getHours() + ":" + date.getMinutes()
         },
-        
         showReview(item) {
           var currdir=this.LinkPathProcess(item.pathreal)
           if (item.type == 'folder') {
@@ -806,6 +831,7 @@ export default {
           } 
           else 
           {
+            this.$bvModal.show("showReview")
             var imgType=['png','jpg','bmp','gif']
             var ext=item.name.split('.')
             if (imgType.includes(ext.at(-1))){
@@ -861,11 +887,14 @@ export default {
             data: formData,
             success: function(data) {
               //console.log(data)
-              if (data != null) {
+              if (data==false|data==null){
+                self.showFileFailedAlert=true
+              }
+             else {
                 self.LoadData(targetdir);
                 self.showFileSuccessAlert=true
                 frm[0].reset()
-              }
+              }  
             },
             cache: false,
             contentType: false,
