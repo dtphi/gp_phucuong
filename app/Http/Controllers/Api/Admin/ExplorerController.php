@@ -135,14 +135,15 @@ class ExplorerController extends ApiController
         $res = null;
         // dd("$folderUpload/$filesave");
         if (in_array($ext, $this->fileallow)) {
-            $target_file = "$folderUpload/$filesave";
-            if ($files->move($folderUpload.$targetdir,$files->getClientOriginalName())) {
+            $target_file = "$folderUpload/$targetdir/$filesave";
+            if ($files->move("$folderUpload/$targetdir",$files->getClientOriginalName())) {
                 $res = new stdClass();
                 $res->nameOld = $files->getClientOriginalName();
                 //$res->size = $files->getSize();
                 $res->name = $filesave;
                 $res->target = $target_file;
                 //$res->path = "$urlUpload/$target_file";
+                //dd($res);
             }
             return response()->json($res);
         }

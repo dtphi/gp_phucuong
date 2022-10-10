@@ -135,7 +135,7 @@
                           </table>
                         
                   </div>
-                  <div class="bi-tich p-3 mt-3">
+                  <!-- <div class="bi-tich p-3 mt-3">
                   <div v-if="isImg==='img'">
                     <a :href="'http://'+itemselect" target="_blank">
                     <img :src="'http://'+itemselect" width="100%" />
@@ -151,10 +151,7 @@
                     <img :src="'http://'+defaultimg" width="100%" alt="Click để tải tài liệu." />
                  
                   </div>
-                    
-                    
-                  
-                  </div>
+                  </div> -->
                   </div>
                   <div class="col-mobile col-8">
                     <div class="info-personal mt-5" style="font-size: 0.87rem">
