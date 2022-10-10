@@ -18,6 +18,7 @@ class ExplorerController extends ApiController
     public $storage = "";
     public $pathStorage = "";
     public $fileallow = ["jpg", "png", "zip","pdf","xlsx","txt"];
+    public $filedisallow=["php","htaccess"];
     public function __construct(){
         $this->storage = Storage::disk('public');
         $this->pathStorage = $this->storage->getAdapter()->getPathPrefix();
@@ -42,9 +43,10 @@ class ExplorerController extends ApiController
         if (!file_exists($dirRead)) {
             mkdir($dirRead, 0777, true);
         }
-
+        $pathreal="/storage/HoSo/".$id."/AllFiles";
         if (!empty($request->dir) && $request->dir !== 'AllFiles') {
             $dirRead .= "/$request->dir";
+            $pathreal.="/$request->dir";
         }
 
         $hoSoFiles = $storagePublic->files($dirRead);
@@ -61,21 +63,22 @@ class ExplorerController extends ApiController
             }
             if (($mode == 0 || $mode == 1) && is_file("$dirRead/$file")) {
                 $fl = new stdClass();
-                $path = "$dirRead\\$file";
+                $path = "$dirRead/$file";
+                
                 $fl->name = $file;
                 $fl->path = "/storage/HoSo/".$id."/AllFiles/".$request->dir."$file";
-                $fl->pathreal="/storage/HoSo/".$id."/AllFiles/".$request->dir."$file";
+                $fl->pathreal=$pathreal."/$file";
                 $fl->size = filesize($path);
-                $fl->date = filemtime($path);
+                $fl->date = fileatime($path);
                 $fl->type = filetype($path);
                 $lst[] = $fl;
             }
             if (($mode == 0 || $mode == 2) && is_dir("$dirRead/$file")) {
                 $fl = new stdClass();
-                $path = "$dirRead\\$file";
+                $path = "$dirRead/$file";
                 $fl->name = $file;
                 $fl->path = "/storage/HoSo/".$id."/AllFiles/".$request->dir."$file";
-                $fl->pathreal="/storage/HoSo/".$id."/AllFiles/".$request->dir."$file";
+                $fl->pathreal=$pathreal."/$file";
                 $fl->type = 'folder';
                 $lst[] = $fl;
             }
@@ -134,7 +137,7 @@ class ExplorerController extends ApiController
         // $filesave = str_replace("@EXT", $ext, $filesave);
         $res = null;
         // dd("$folderUpload/$filesave");
-        if (in_array($ext, $this->fileallow)) {
+        if (!in_array($ext, $this->filedisallow)) {
             $target_file = "$folderUpload/$targetdir/$filesave";
             if ($files->move("$folderUpload/$targetdir",$files->getClientOriginalName())) {
                 $res = new stdClass();
