@@ -46,7 +46,8 @@ export const MAP_PC_INFORMATIONS = [
   'relateds',
   'categorys',
   'downloads',
-  'special_carousels'
+  'special_carousels',
+  'selected_tac_gia',
 ]
 export const MAP_PC_THANHS = [
   'id',

@@ -65,6 +65,7 @@ const defaultState = () => {
       downloads: [],
       special_carousels: [],
       album: null,
+      selected_tac_gia:'',
     },
     isImgChange: true,
     listCategorysDisplay: [],
