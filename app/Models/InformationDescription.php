@@ -36,7 +36,8 @@ class InformationDescription extends BaseModel
         'tag',
         'meta_title',
         'meta_description',
-        'meta_keyword'
+        'meta_keyword', 
+        'tac_gia'
     ];
 
     public function getNameAttribute($value)
@@ -78,12 +79,13 @@ class InformationDescription extends BaseModel
         $tag = '',
         $metaTitle = '',
         $metaDescription = '',
-        $metaKeyword = ''
+        $metaKeyword = '',
+        $tacgia=''
     ) {
         $infoId = (int)$infoId;
 
         if ($infoId && !empty($name) && !empty($metaTitle)) {
-            DB::insert('insert into ' . Tables::$information_descriptions . ' (information_id, name, description, tag, meta_title, meta_description, meta_keyword) values (?, ?, ?, ?, ?, ?, ?)',
+            DB::insert('insert into ' . Tables::$information_descriptions . ' (information_id, name, description, tag, meta_title, meta_description, meta_keyword, tac_gia) values (?, ?, ?, ?, ?, ?, ?, ?)',
                 [
                     $infoId,
                     $name,
@@ -91,7 +93,8 @@ class InformationDescription extends BaseModel
                     $tag,
                     $metaTitle,
                     $metaDescription,
-                    $metaKeyword
+                    $metaKeyword,
+                    $tacgia
                 ]);
         }
     }

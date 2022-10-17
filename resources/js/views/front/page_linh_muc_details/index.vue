@@ -576,11 +576,12 @@
                             </div>
                           
                       </b-modal>
-                      <b-modal id="showReview" :size="isImg=='file'?'sm':''" hide-footer hide-header >
+                      <b-modal id="showReview" :size="isImg=='file'?'sm':''" hide-footer hide-header centered >
 
                         <div class="modal-body">
-
-                          <div v-if="isImg ==='img'">
+                          <b-button variant="transparent" size="sm" @click="$bvModal.hide('showReview')" style="position:absolute;right:0px;top:0px;z-index:1;"><b-icon icon="x-lg"></b-icon></b-button>
+                          <div>
+                            <div  v-if="isImg ==='img'">
                             <a :href="'http://'+itemselect" target="_blank">
                             <img :src="'http://'+itemselect" width="100%" />
                           </a>
@@ -594,8 +595,8 @@
                     
                             <img :src="'http://'+defaultimg" width="100%" alt="Click để tải tài liệu." />
                  
-                  </div>
-
+                          </div>
+                          </div>
                         </div>
 
                       </b-modal>
@@ -720,7 +721,7 @@ export default {
     this.LoadData()
   
    
-},
+  },
 
   methods: {
     ...mapActions(MODULE_LINH_MUC_DETAIL_PAGE, {

@@ -120,6 +120,112 @@
         </validation-provider>
       </div>
     </div>
+    <div class="form-group required">
+      <label for="input-info-tac-gia" class="col-sm-2 control-label">
+        {{ $options.setting.info_tac_gia_txt }}
+      </label>
+      <div class="col-sm-10 " >
+        <validation-provider
+          name="info_tac_gia"
+          rules="required"
+          v-slot="{ errors }"
+        ><div class="col-sm-12" style="display: flex;padding-left: 0px;padding-right: 0px;">
+        <select class="form-control" id="selecting-tac-gia" v-model="selected_tac_gia">
+          <option value="" selected disabled hidden>Chọn tác giả</option>
+          <option v-for="tacgia in tacgias" v-bind:value="tacgia.id"  >{{tacgia.name}}</option>
+        </select>
+        <button
+              type="button"
+              @click=""
+              data-toggle="modal"
+              :title="$options.setting.btn_them_tac_gia_txt"
+              class="btn btn-primary"
+              data-target="#tacgiaModal"
+            >
+              <i class="fa fa-plus"></i>
+        </button>
+        <div class="modal fade" id="tacgiaModal" tabindex="-1" >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">QUẢN LÝ TÁC GIẢ</h5>
+                
+              </div>
+              <div class="modal-body">
+                <div class="tabtable">
+                  <ul class="nav nav-tabs">
+                  <li role="presentation" class="active" id="listtacgiatab"><a data-toggle="tab" href="#listtacgia">Danh sách tác giả</a></li>
+                  <li role="presentation" id="themtacgiatab"><a data-toggle="tab" href="#themtacgia">Thêm tác giả</a></li>
+                </ul>
+                <div class="tab-content" >
+                  <div role="tabpanel" class="tab-pane fade in active" id="listtacgia">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                            <th>Số thứ tự</th>
+                            <th class="text-left">Tên tác giả</th>
+                            <th style="width: 80px;">Sửa & Xóa</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="tacgia,index in tacgias">
+                          <td style="width: 20%">{{index+1}}</td>
+                          <td style="width: 65%" id="rowtacgia" v-if="tacgia.id !== edittedid">{{tacgia.name}}</td>
+                          <td style="width: 65%" v-else>
+                            <div class="col-md-12">
+                              <form class="form-inline" >
+                              <div class="form-group" style="padding-top:0px;padding-bottom:0px;">
+                                <input type="text" class="form-control" v-model="edittedname" required>
+                              </div>
+                              <button type="button" @click="editTacgias()" class="btn btn-default">Sửa</button>
+                              <button type="button" @click="edittedid=0" class="btn btn-default">Hủy</button>
+                            </form>
+                            </div>
+                            </td>
+                          <td class="text-center" style="width: 15%">
+                            <i class="fa fa-pencil-square-o edit-item" title="Sửa" v-on:click="editFieldTacgias(tacgia.id,tacgia.name)" style="margin-right: 10px; cursor: pointer;"></i>
+                            <i v-on:click="delTacgias(tacgia.id)" title="Xóa" class="fa fa-trash-o delete-item" style="cursor: pointer;"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div role="tabpanel" class="tab-pane fade" id="themtacgia">
+                    <div class="row form-horizontal">
+                      <div class="col-md-12">
+                          <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" style="border-radius: 0 !important;" class="form-control" id="newname" v-model="newname" placeholder="Nhập tên tác giả">
+                                </div>
+                                <div class="input-groups-btn col-md-12" style="margin-top: 5px;">
+                                    <button type="button" class="btn btn-primary" style="border-radius: 0 3px 3px 0;" @click="addTacgias()"><i class="fa fa-save"></i>
+                                        Lưu
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                    
+                </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <span class="cms-text-red">{{ errors[0] }}</span>
+        </validation-provider>
+      </div>
+    </div>
     <div class="form-group">
       <label for="input-info-tag" class="col-sm-2 control-label">
         <span
@@ -188,11 +294,18 @@ export default {
     return {
       fn: null,
       options: options,
+      tacgias:[],
+      newname:'',
+      edittedname:'',
+      edittedid:0,
     }
   },
   computed: {
-    ...mapFields(MAP_PC_INFORMATIONS),
+    ...mapFields(MAP_PC_INFORMATIONS), 
   },
+  mounted() {
+      this.getTacgiasList()
+    },
   watch: {
     mmPath(val) {
       this._updateImageField(val)
@@ -203,6 +316,58 @@ export default {
       if (typeof this.fn === 'function') {
         this.fn(path, this.mmSelected)
       }
+      
+    },
+    getTacgiasList(){
+      var self = this
+      var url = 'http://127.0.0.1/api/informations/getlisttacgias';
+      $.getJSON(url, function(json) {
+       self.tacgias = json
+      //console.log(self.tacgias)
+      });
+    },
+    delTacgias(id){
+      var self = this
+      var url = 'http://127.0.0.1/api/informations/deltacgias?id='+id;
+      $.getJSON(url, function(json) {
+       if(json==true)
+        self.getTacgiasList()
+        else alert("Xoa That Bai")
+      });
+    },
+    addTacgias(){
+      var self = this
+      var name = self.newname
+      var url = 'http://127.0.0.1/api/informations/addtacgias?name='+name;
+      $.getJSON(url, function(json) {
+       if(json==true){
+        self.getTacgiasList()
+        $('.nav-tabs a[href="#listtacgia"]').tab('show');
+        self.newname=""
+       }
+       else alert("them that bai")
+        
+      });
+    },
+    editFieldTacgias(id,name){
+      var self = this
+      self.edittedid=id
+      self.edittedname=name
+    },
+    editTacgias(){
+      var self = this
+      var name=self.edittedname
+      var id=self.edittedid
+      var url = 'http://127.0.0.1/api/informations/edittacgias?id='+id+'&name='+name;
+      $.getJSON(url, function(json) {
+       if (json){
+        self.edittedname=''
+        self.edittedid=0
+        self.getTacgiasList()
+       }
+       else alert("Sua that bai")
+      
+      });
     },
   },
   setting: {
@@ -216,6 +381,8 @@ export default {
     info_meta_description_txt: 'Thẻ meta mô tả',
     info_tag_txt: 'Tags',
     info_tag_tooltip_txt: 'Ngăn cách bởi dấu phẩy',
+    info_tac_gia_txt: 'Tác giả',
+    btn_them_tac_gia_txt:"Thêm tác giả"
   },
 }
 </script>

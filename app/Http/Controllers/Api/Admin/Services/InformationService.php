@@ -149,10 +149,11 @@ final class InformationService implements BaseModel, InformationModel
             }
             $this->model->name_slug = Str::slug($data['name'] . ' ' . $infoId);
             $this->model->save();
+            
             $data['tag'] = $this->_getTagIds($data['tag']);
             InformationDescription::insertByInfoId($infoId, $data['name'], htmlentities($data['description']),
                 $data['tag'],
-                $data['meta_title'], $data['meta_description'], $data['meta_keyword']);
+                $data['meta_title'], $data['meta_description'], $data['meta_keyword'],$data['selected_tac_gia']);
 
             if (isset($data['info_images']) && !empty($data['info_images'])) {
                 foreach ($data['info_images'] as $information_image) {
@@ -185,7 +186,7 @@ final class InformationService implements BaseModel, InformationModel
                     InformationRelated::insertByInfoId($relatedId, $infoId);
                 }
             }
-
+            
             if (isset($data['special_carousels']) && !empty($data['special_carousels'])) {
                 $carouselData = [
                     'name' => $data['name'],
