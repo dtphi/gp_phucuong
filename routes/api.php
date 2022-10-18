@@ -129,8 +129,13 @@ Route::namespace('App\Http\Controllers\Api\Admin')
   });
   Route::namespace('\App\Http\Controllers\Api\Admin')
   ->group(function () {
-  Route::get('/explorer/getlistdir','ExplorerController@getlistdir');
-  Route::post('/explorer/upload','ExplorerController@upload');
-  Route::get('/explorer/newFolder','ExplorerController@newFolder');
-  Route::get('/explorer/delFile','ExplorerController@delFile');
+    Route::get('/explorer/getlistdir','ExplorerController@getlistdir');
+    Route::post('/explorer/upload','ExplorerController@upload');
+    Route::get('/explorer/newFolder','ExplorerController@newFolder');
+    Route::get('/explorer/delFile','ExplorerController@delFile');
+    Route::get('/informations/getlisttacgias', 'TacgiasController@getlisttacgias');
+    Route::get('/informations/deltacgias', 'TacgiasController@deltacgias');
+    Route::get('/informations/addtacgias', 'TacgiasController@addtacgias');
+    Route::get('/informations/edittacgias', 'TacgiasController@edittacgias');
+    Route::get('/informations/editdatatacgias', 'TacgiasController@editdatatacgias');
   });

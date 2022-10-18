@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Models\tacgias;
+use App\Models\InformationDescription;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
@@ -18,12 +19,16 @@ class TacgiasController extends ApiController
     public function __construct(){
        $this->tacgias=tacgias::all();
     }
-    public function getlisttacgias()
-    {
+    public function getlisttacgias(Request $request)
+    {   
+        $infoID=$request->id;
         $active_tacgias=tacgias::where('deleted_at',null)->get();
         // $tacgias=$this->tacgias;
-        
-        return response()->json($active_tacgias);
+        $selected_tacgia=InformationDescription::where('information_id',$infoID)->value('tac_gia');
+        if ($infoID==null)
+            return response()->json($active_tacgias);
+        else return response()->json(['active_tacgias'=>$active_tacgias,
+                                      'selected_tacgia'=>$selected_tacgia]);
     }
     public function addtacgias(Request $request)
     {
@@ -55,6 +60,17 @@ class TacgiasController extends ApiController
         $name= $request->name;
         if($id!=null && $name!=null){
             tacgias::where('id', $id)->update(['name' => $name]);
+            return response()->json(true);
+        }
+        else return response()->json(false);
+            
+    }
+    public function editdatatacgias(Request $request)
+    {
+        $idtacgia = $request->idtacgia;
+        $infoID= $request->infoID;
+        if($idtacgia!=null && $infoID!=null){
+            InformationDescription::where('information_id', $infoID)->update(['tac_gia' => $idtacgia]);
             return response()->json(true);
         }
         else return response()->json(false);
