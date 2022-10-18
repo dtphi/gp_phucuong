@@ -21,14 +21,17 @@ class TacgiasController extends ApiController
     }
     public function getlisttacgias(Request $request)
     {   
-        $infoID=$request->id;
+        
         $active_tacgias=tacgias::where('deleted_at',null)->get();
-        // $tacgias=$this->tacgias;
-        $selected_tacgia=InformationDescription::where('information_id',$infoID)->value('tac_gia');
-        if ($infoID==null)
+        
+        if ($request->id==null)
             return response()->json($active_tacgias);
-        else return response()->json(['active_tacgias'=>$active_tacgias,
+        else {
+            $infoID=$request->id;
+            $selected_tacgia=InformationDescription::where('information_id',$infoID)->value('tac_gia');
+            return response()->json(['active_tacgias'=>$active_tacgias,
                                       'selected_tacgia'=>$selected_tacgia]);
+        }
     }
     public function addtacgias(Request $request)
     {
