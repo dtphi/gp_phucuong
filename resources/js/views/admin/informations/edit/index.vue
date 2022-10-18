@@ -57,6 +57,7 @@ import TheBtnBackListPage from '../components/TheBtnBackListPage'
 import InfoEditForm from 'com@admin/Form/Infos/EditForm'
 import Breadcrumb from 'com@admin/Breadcrumb'
 import BtnAdd from '../components/TheBtnAdd'
+import {_selected_tac_gia_edit, infoID, DOMAIN} from 'com@admin/Form/Infos/TabGeneralEdit'
 import {
   MODULE_INFO_EDIT,
   MODULE_MODULE_SPECIAL_INFO_CAROUSEL,
@@ -145,12 +146,22 @@ export default {
       this.resetNotification()
     },
     _submitInfo() {
+      var self = this
+      var _idtacgia=_selected_tac_gia_edit
+      var _infoID=infoID
+      var url = 'http://'+DOMAIN+'/api/informations/editdatatacgias?infoID='+_infoID+'&idtacgia='+_idtacgia;
       this.update_special_carousel(this.specialInfoCarousel)
       this.$refs.observerInfo.validate().then(isValid => {
         if (isValid) {
+
           this.$refs.formEditUser._submitInfo()
         }
       })
+      $.getJSON(url, function(json) {
+       if (!json)
+       alert("Sua that bai")
+      
+    });
     },
   },
   setting: {

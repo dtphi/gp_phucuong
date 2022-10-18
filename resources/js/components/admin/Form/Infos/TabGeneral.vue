@@ -262,7 +262,9 @@ const { mapFields, } = createHelpers({
   getterType: `${MODULE_INFO_ADD}/getInfoField`,
   mutationType: `${MODULE_INFO_ADD}/updateInfoField`,
 })
-
+var GLOBAL_URL=window.location.href.replace(/https?:\/\//,'')
+var SP = GLOBAL_URL.split('/')
+var DOMAIN = SP[0]
 export default {
   name: 'TabGeneralForm',
   components: {
@@ -320,7 +322,7 @@ export default {
     },
     getTacgiasList(){
       var self = this
-      var url = 'http://127.0.0.1/api/informations/getlisttacgias';
+      var url = 'http://'+DOMAIN+'/api/informations/getlisttacgias';
       $.getJSON(url, function(json) {
        self.tacgias = json
       //console.log(self.tacgias)
@@ -328,7 +330,7 @@ export default {
     },
     delTacgias(id){
       var self = this
-      var url = 'http://127.0.0.1/api/informations/deltacgias?id='+id;
+      var url = 'http://'+DOMAIN+'/api/informations/deltacgias?id='+id;
       $.getJSON(url, function(json) {
        if(json==true)
         self.getTacgiasList()
@@ -338,7 +340,7 @@ export default {
     addTacgias(){
       var self = this
       var name = self.newname
-      var url = 'http://127.0.0.1/api/informations/addtacgias?name='+name;
+      var url = 'http://'+DOMAIN+'/api/informations/addtacgias?name='+name;
       $.getJSON(url, function(json) {
        if(json==true){
         self.getTacgiasList()
@@ -358,7 +360,7 @@ export default {
       var self = this
       var name=self.edittedname
       var id=self.edittedid
-      var url = 'http://127.0.0.1/api/informations/edittacgias?id='+id+'&name='+name;
+      var url = 'http://'+DOMAIN+'/api/informations/edittacgias?id='+id+'&name='+name;
       $.getJSON(url, function(json) {
        if (json){
         self.edittedname=''
