@@ -331,7 +331,10 @@ export default {
       var url = 'http://'+DOMAIN+'/api/informations/getlisttacgias?id='+infoID;
       $.getJSON(url, function(json) {
       self.tacgias = json.active_tacgias
+      if (json.selected_tacgia)
       self.selected_tac_gia_edit=json.selected_tacgia
+      else
+      self.selected_tac_gia_edit=''
       _selected_tac_gia_edit=self.selected_tac_gia_edit
       // console.log(json.active_tacgias)
       });

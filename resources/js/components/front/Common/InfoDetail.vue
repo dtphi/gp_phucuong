@@ -11,7 +11,7 @@
     <hr />
 
     <div class="text-detail" v-html="pageLists.description"></div>
-
+    <h5 class="text-right">Tác giả: <a :href="_getHref(id_tacgia,tacgia)">{{tacgia}}</a></h5>
     <hr />
     <info-tag :info="pageLists"></info-tag>
     <hr />
@@ -40,7 +40,14 @@ import InfoTag from 'com@front/Common/InfoTag'
 import { MODULE_INFO_DETAIL, } from '@app/stores/front/types/module-types'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'viewerjs'
-
+import {
+  fn_get_href_base_url,
+} from '@app/api/utils/fn-helper'
+var GLOBAL_URL=window.location.href.replace(/https?:\/\//,'')
+var SP = GLOBAL_URL.split('/')
+var DOMAIN = SP[0]
+var info=SP.at(-1)
+var ID=info.split('-').at(-1)
 export default {
   name: 'ContentLeft',
   components: { InfoTag },
@@ -48,6 +55,8 @@ export default {
     return {
       imgFooter: ImgFooter,
       viewer: false,
+      tacgia:'',
+      id_tacgia:0,
     }
   },
   computed: {
@@ -60,6 +69,9 @@ export default {
       return albums
     },
   },
+  mounted() {
+    this._getTacgia()
+    },
   methods: {
     _showSlide() {
       if (this.viewer) {
@@ -69,6 +81,23 @@ export default {
         url: 'data-original',
       })
       this.viewer = true
+    },
+    _getHref(id,name) {
+        return fn_get_href_base_url(
+          'tin-tuc/tags/'+name+'?tacgias=' + (id)
+        )
+      
+    },
+    _getTacgia(){
+      var self = this
+      var url = 'http://'+DOMAIN+'/api/informations/getlisttacgias?id='+ID;
+      $.getJSON(url, function(json) {
+        if (json.name_tacgia){
+          self.tacgia=json.name_tacgia
+          self.id_tacgia=json.selected_tacgia
+        }
+        else self.tacgia="Khuyết Danh"
+      });
     },
   },
 }
