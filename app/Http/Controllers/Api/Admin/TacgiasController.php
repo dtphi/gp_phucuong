@@ -29,8 +29,11 @@ class TacgiasController extends ApiController
         else {
             $infoID=$request->id;
             $selected_tacgia=InformationDescription::where('information_id',$infoID)->value('tac_gia');
-            return response()->json(['active_tacgias'=>$active_tacgias,
-                                      'selected_tacgia'=>$selected_tacgia]);
+            $name_selected_tacgia=tacgias::where('id',$selected_tacgia)->value('name');
+            return response()->json([
+                                    'active_tacgias'=>$active_tacgias,
+                                    'selected_tacgia'=>$selected_tacgia,
+                                    'name_tacgia'=>$name_selected_tacgia]);
         }
     }
     public function addtacgias(Request $request)
