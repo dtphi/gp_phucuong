@@ -10,6 +10,20 @@
         text-align: left !important;
     }
 }
+.box-ho-so{
+    position: fixed;
+    width: 98%;
+    left: 0px;
+    margin: 10px;
+    bottom: 0px;
+}
+.box-grandpa {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
 #news {
     .info-post {
         img {
