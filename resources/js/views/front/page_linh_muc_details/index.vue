@@ -25,8 +25,8 @@
             <!-- Html linh mục detail -->
             <div class="col-mobile col-12">
               <div class="detail-linh-muc w-100">
-                <div class="row">
-                  <div class="col-mobile col-4">
+                <div class="box-grandpa row">
+                  <div class="col-mobile col-4" ref="leftColumn">
                     <div class="bi-tich p-3 mt-3">
                       <div
                         class="d-block avatar-img mt-3"
@@ -153,7 +153,7 @@
                   </div>
                   </div> -->
                   </div>
-                  <div class="col-mobile col-8">
+                  <div class="col-mobile col-8" ref="rightColumn">
                     <div class="info-personal mt-5" style="font-size: 0.87rem">
                       <h4 class="text-uppercase">Thông tin cá nhân</h4>
                       <p style="margin-bottom: 0.3rem" class="row">
@@ -485,6 +485,7 @@
                         icon="history"
                       />
                     </div>
+                    <div v-if="compareColumn()" v-bind:style="spaceDiv"></div>
                     <b-alert v-model="showFolderSuccessAlert" variant="success" dismissible>
                       Đã tạo thư mục thành công!
                       </b-alert>
@@ -497,7 +498,7 @@
                       <b-alert v-model="showFileFailedAlert" variant="danger" dismissible>
                       Thêm thất bại, xin thử lại!
                       </b-alert>
-                    <div class="bi-tich p-3 mt-3" style="min-height:500px;">
+                    <div class="bi-tich p-3 mt-3" :class="compareColumn()?'box-ho-so':''" ref="tableBox" style="min-height:500px;">
 
                       <h3>QUẢN LÝ HỒ SƠ</h3>
 
@@ -693,6 +694,10 @@ export default {
         delFileFailedAlert:false,
         showFileFailedAlert:false,
         root:[],
+        spaceDiv:{},
+        table_box:0,
+        right_height:0,
+        left_heihgt:0,
     }
   },
   computed: {
@@ -719,8 +724,10 @@ export default {
   mounted() {
     this.getDetail(this.$route.params)
     this.LoadData()
-  
-   
+    this.table_box=(this.$refs.tableBox.clientHeight+20)+'px';
+    this.right_height=this.$refs.rightColumn.clientHeight
+    this.left_heihgt=this.$refs.leftColumn.clientHeight
+    
   },
 
   methods: {
@@ -856,7 +863,6 @@ export default {
            })
            return newlinkpath 
         },
-        
         IconShow(namefile) {
           var icon = 'file-earmark-fill'
           var sp = namefile.split('.')
@@ -984,6 +990,16 @@ export default {
       // select option from parent component
       this.item2 = this.options2[0].value
     },
+    compareColumn(){
+          // var left_heihgt=this.$refs.leftColumn.clientHeight
+          // var right_height=this.$refs.rightColumn.clientHeight
+          if(this.right_height>this.left_heihgt){
+          //var heightString = this.$refs.tableBox.clientHeight + 'px';
+          Vue.set(this.spaceDiv,'height',this.table_box)
+          return true
+          }
+          else return false
+        },
   },
 }
 </script>
