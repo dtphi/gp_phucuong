@@ -5,6 +5,7 @@
 .hcalendarbox td {
     text-align: center;
     cursor: pointer;
+    padding: 5px;
 }
 
 .ngaylich:hover {
@@ -25,6 +26,7 @@
 
 .thutoday {
     color: #004D40;
+    font-size:20px;
 }
 
 .daytoday {
