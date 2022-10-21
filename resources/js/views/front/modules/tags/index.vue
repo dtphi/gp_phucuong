@@ -51,7 +51,7 @@ export default {
       let tags = []
       _.cloneDeep(this.infoLasteds).forEach(element => {
         if (element?.tag?.length) {
-          console.log('element-module',element)
+          //console.log('element-module',element)
           const mapObjs = _.map(element.tag, (item) => {
             const splitStr = item.split('||');
             item = {

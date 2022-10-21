@@ -7,13 +7,13 @@
         :style="{ backgroundColor: contentBgColor }"
       >
         <content-top v-if="_isContentTop">
-          <template v-if="loading">
+          <template v-if="loading&&!isSearchTacgia">
             <loading-over-lay
               :active.sync="loading"
               :is-full-page="fullPage"
             ></loading-over-lay>
           </template>
-          <div class="list-videos">
+          <div class="list-videos" v-if="!isSearchTacgia">
             <the-list-category-news-item
               class="info-list"
               v-for="(item, idx) in infoList"
@@ -21,6 +21,21 @@
               :key="idx"
             ></the-list-category-news-item>
             <template v-if="infoList.length == 0">
+              <div
+                style="text-align: center; font-size: 30px; color: #f0f8ffc7"
+              >
+                ............
+              </div>
+            </template>
+          </div>
+          <div class="list-videos" v-else>
+            <the-list-category-news-item
+              class="info-list"
+              v-for="(item, idx) in infoTacgiaList"
+              :info="item"
+              :key="idx"
+            ></the-list-category-news-item>
+            <template v-if="infoTacgiaList.length == 0">
               <div
                 style="text-align: center; font-size: 30px; color: #f0f8ffc7"
               >
@@ -73,7 +88,14 @@ import MainContent from 'com@front/Common/MainContent'
 import ContentBottom from 'com@front/Common/ContentBottom'
 import ContentTop from 'com@front/Common/ContentTop'
 import SocialNetwork from 'com@front/Common/SocialNetwork'
-
+import {
+  fn_get_href_base_url,
+  fn_change_to_slug,
+  fn_get_base_api_url,
+} from '@app/api/utils/fn-helper'
+var GLOBAL_URL=window.location.href.replace(/https?:\/\//,'')
+var SP = GLOBAL_URL.split('=')
+var tacgiaID=SP.at(-1)
 export default {
   name: 'InfoListtoCategory',
   components: {
@@ -89,6 +111,8 @@ export default {
     return {
       fullPage: false,
       isResource: false,
+      isSearchTacgia:false,
+      infoTacgiaList:[],
     }
   },
   computed: {
@@ -113,13 +137,29 @@ export default {
     this.getInfoListToCategory({
       ...this.$route.params,
       news_group_type: 'tag_type',
-      tag: this.$route.query.tag
+      tag: this.$route.query.tag,
     })
+    this.isSearchTacgia=this._checkSearchTacgia()
+    
   },
   methods: {
     ...mapActions(MODULE_INFO, {
       getInfoListToCategory: GET_INFORMATION_LIST_TO_CATEGORY,
     }),
+    _checkSearchTacgia(){
+      var self = this
+      if (GLOBAL_URL.includes('?tacgias='))
+      {
+        var url =fn_get_href_base_url('/api/informations/getInfoTacgia?tacgia='+tacgiaID)
+        
+        $.getJSON(url, function(json) {
+        self.infoTacgiaList=json
+        //console.log(self.infoTacgiaList)
+        });
+        return true
+      }
+      else return false
+    }
   },
 }
 </script>
