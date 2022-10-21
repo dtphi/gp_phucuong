@@ -50,6 +50,7 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::apiResource('/email_sub/create', 'EmailController');
     Route::get('/app/dropdown-categories', 'Base\ApiController@listDropdownCategories');
     Route::get('/app/add-thuyen-chuyen', 'Base\ApiController@addThuyenChuyen');
+    Route::get('/app/calendar/getlist', 'CalenderController@getlist');
   });
 
 Route::namespace('App\Http\Controllers\Api\Admin')
