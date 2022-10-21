@@ -139,4 +139,5 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::get('/informations/addtacgias', 'TacgiasController@addtacgias');
     Route::get('/informations/edittacgias', 'TacgiasController@edittacgias');
     Route::get('/informations/editdatatacgias', 'TacgiasController@editdatatacgias');
+    Route::get('/informations/getInfoTacgia', 'TacgiasController@getInfoTacgia');
   });
