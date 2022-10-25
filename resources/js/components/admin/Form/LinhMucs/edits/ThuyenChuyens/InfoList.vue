@@ -8,8 +8,8 @@
           <td class="text-center">TT</td>
           <td class="text-center">CHỨC VỤ</td>
           <td class="text-center">ĐỊA ĐIỂM</td>
-          <td class="text-center">THỜI GIAN ĐẾN <br> (ngày tháng năm)</td>
-          <td class="text-center">THỜI GIAN ĐI <br> (ngày tháng năm)</td>
+          <td class="text-center">THỜI GIAN ĐẾN <br> (năm tháng ngày)</td>
+          <td class="text-center">THỜI GIAN ĐI <br> (năm tháng ngày)</td>
           <td class="text-center">{{ $options.setting.info_action_title }}</td>
         </tr>
       </thead>
@@ -111,16 +111,30 @@ export default {
           this.curInfo.dong_id = 0
 				}
 
-				if(this.update_thuyen_chuyen.dia_diem_tu_nam == "" || this.update_thuyen_chuyen.dia_diem_tu_thang == "" || this.update_thuyen_chuyen.dia_diem_tu_ngay == ""){
+				if(this.update_thuyen_chuyen.dia_diem_tu_nam == "0" || this.update_thuyen_chuyen.dia_diem_tu_thang == "" || this.update_thuyen_chuyen.dia_diem_tu_ngay == ""){
 						this.curInfo.label_from_date = '';
-				} else {
-						this.curInfo.label_from_date = this.update_thuyen_chuyen.dia_diem_tu_nam + '-' + this.update_thuyen_chuyen.dia_diem_tu_thang + '-' + this.update_thuyen_chuyen.dia_diem_tu_ngay;
-				}	
-				if(this.update_thuyen_chuyen.dia_diem_den_nam == "" || this.update_thuyen_chuyen.dia_diem_den_thang == "" || this.update_thuyen_chuyen.dia_diem_den_ngay == ""){
-						this.curInfo.label_to_date = '';
-				} else {
-						this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam + '-' + this.update_thuyen_chuyen.dia_diem_den_thang + '-' + this.update_thuyen_chuyen.dia_diem_den_ngay;
+				} else if (this.update_thuyen_chuyen.dia_diem_tu_thang == "0") {
+						this.curInfo.label_from_date = this.update_thuyen_chuyen.dia_diem_tu_nam;
 				}
+				else if (this.update_thuyen_chuyen.dia_diem_tu_ngay == "0"){
+				this.curInfo.label_from_date = this.update_thuyen_chuyen.dia_diem_tu_nam +'-' + this.update_thuyen_chuyen.dia_diem_tu_thang;
+				}
+				else this.curInfo.label_from_date = this.update_thuyen_chuyen.dia_diem_tu_nam +'-' + this.update_thuyen_chuyen.dia_diem_tu_thang + '-' + this.update_thuyen_chuyen.dia_diem_tu_ngay;
+				
+				if(this.update_thuyen_chuyen.dia_diem_den_nam == "0" || this.update_thuyen_chuyen.dia_diem_den_thang == "" || this.update_thuyen_chuyen.dia_diem_den_ngay == ""){
+						this.curInfo.label_to_date = '';
+				} else if (this.update_thuyen_chuyen.dia_diem_den_thang == "0") {
+						this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam;
+				}
+				else if (this.update_thuyen_chuyen.dia_diem_den_ngay == "0"){
+				this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam +'-' + this.update_thuyen_chuyen.dia_diem_den_thang;
+				}
+				else this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam +'-' + this.update_thuyen_chuyen.dia_diem_den_thang + '-' + this.update_thuyen_chuyen.dia_diem_den_ngay;
+				// if(this.update_thuyen_chuyen.dia_diem_den_nam == "0" || this.update_thuyen_chuyen.dia_diem_den_thang == "" || this.update_thuyen_chuyen.dia_diem_den_ngay == ""){
+				// 		this.curInfo.label_to_date = '';
+				// } else {
+				// 		this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam + '-' + this.update_thuyen_chuyen.dia_diem_den_thang + '-' + this.update_thuyen_chuyen.dia_diem_den_ngay;
+				// }
 				this.$modal.hide("modal-lm-thuyen-chuyen-edit");
   	},
 		_notificationUpdate(notification) {

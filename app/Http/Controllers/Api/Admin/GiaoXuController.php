@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Exceptions\HandlerMsgCommon;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Http\Controllers\Api\Admin\Services\Contracts\GiaoXuModel as GxSv;
+use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel as LinhMucSv;
 use App\Http\Requests\GiaoXuRequest;
 use DB;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class GiaoXuController extends ApiController
      * @var null
      */
     private $gxSv = null;
+    private $linhMucSv = null;
 
     /**
      * @author: dtphi .
@@ -29,9 +31,10 @@ class GiaoXuController extends ApiController
      * @param GxSv $gxSv
      * @param array $middleware
      */
-    public function __construct(GxSv $gxSv, array $middleware = [])
+    public function __construct(GxSv $gxSv,LinhMucSv $linhMucSv, array $middleware = [])
     {
         $this->gxSv = $gxSv;
+        $this->linhMucSv=$linhMucSv;
         parent::__construct($middleware);
         $this->_initAuthor(new GiaoXuRequest);
     }
@@ -375,9 +378,9 @@ class GiaoXuController extends ApiController
 									'tenThanh' => $info->ten_thanh,
 									'fromGiaoXuName'      => $info->ten_from_giao_xu,
 									'fromchucvuName' => $info->ten_from_chuc_vu,
-									'label_from_date' => ($info->from_date)?date_format(date_create($info->from_date),"Y-m-d"):'',
+									'label_from_date' => ($info->from_date)?$this->linhMucSv->dateCheckMonthDay($info->from_date):'',
 									'ducchaName' => $info->ten_duc_cha,
-									'label_to_date' => ($info->to_date)?date_format(date_create($info->to_date),"Y-m-d"):'',
+									'label_to_date' => ($info->to_date)?$this->linhMucSv->dateCheckMonthDay($info->to_date):'',
 									'chucvuName' => $info->ten_to_chuc_vu,
 									'chuc_vu_id' => $info->chuc_vu_id,
 									'linh_muc_url' => url('admin/linh-mucs/edit/' . $info->linh_muc_id),

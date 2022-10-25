@@ -12,6 +12,24 @@ class GiaoXuCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+	public function dateCheckMonthDay($datestring)
+    {
+      $splitDateTime=explode(' ',$datestring)[0];
+      $splitDate=explode('-',$splitDateTime);
+      if ($splitDate[1]==='0'){
+        // $date=date_create($datestring);
+        // date_add($date,date_interval_create_from_date_string("1 year"));
+        return $splitDate[0];
+      }
+  
+      else if ($splitDate[2]==='0') {
+        // $date=date_create($datestring);
+        // date_add($date,date_interval_create_from_date_string("1 month"));
+        return $splitDate[1].'-'.$splitDate[0];
+      }
+      else return date_format(date_create($datestring), "d-m-Y");
+      
+    }
     public function toArray($request)
     {
 				$results = [];
@@ -26,9 +44,9 @@ class GiaoXuCollection extends ResourceCollection
 							'linh_muc_id' => $thuyenChuyen->linh_muc_id,
 							'fromGiaoXuName'      => $thuyenChuyen->ten_from_giao_xu,
 							'fromchucvuName' => $thuyenChuyen->ten_from_chuc_vu,
-							'label_from_date' => ($thuyenChuyen->from_date)?date_format(date_create($thuyenChuyen->from_date),"d-m-Y"):'',
+							'label_from_date' => ($thuyenChuyen->from_date)?$this->dateCheckMonthDay($thuyenChuyen->from_date):'',
 							'ducchaName' => $thuyenChuyen->ten_duc_cha,
-							'label_to_date' => ($thuyenChuyen->to_date)?date_format(date_create($thuyenChuyen->to_date),"d-m-Y"):'',
+							'label_to_date' => ($thuyenChuyen->to_date)?$this->dateCheckMonthDay($thuyenChuyen->to_date):'',
 							'chucvuName' => $thuyenChuyen->ten_to_chuc_vu,
 							'chuc_vu_id' => $thuyenChuyen->chuc_vu_id,
 							'giao_xu_url' => url('admin/giao-xus/edit/' . $thuyenChuyen->giao_xu_id),
