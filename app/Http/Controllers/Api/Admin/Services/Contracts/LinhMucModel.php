@@ -29,4 +29,6 @@ interface LinhMucModel
     public function apiUpdateVanThu($data = []);
 
     public function apiUpdateThuyenChuyen($data = []);
+
+    public function dateCheckMonthDay($datestring);
 }

@@ -1,7 +1,7 @@
-<template>
+<template style="width:fit-content;" >
   <div class="panel panel-default" style="height: 100%; overflow: auto">
     <div class="panel-heading cms-modal-heading">
-      <h3 class="panel-title"><i :class="icon"></i>{{ title }}</h3>
+      <h3 class="panel-title">{{ title }}</h3>
     </div>
     <div class="panel-body">
       <form class="form-horizontal cms-modal-form">
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-3 control-label">Loại địa điểm</label>
+          <label class="col-sm-3">Loại địa điểm</label>
           <div class="col-sm-9">
             <select class="form-control" v-model="dia_diem_loai">
               <option
@@ -66,83 +66,112 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-3 control-label"
-            >Thời gian đến <br />
-            (ngày tháng năm)</label
+          <label class="col-sm-4"
+            >Thời gian đến</label
           >
-          <div class="col-sm-9" style="display: inline-flex">
-            <input
+          <div class="col-sm-8" style="display: inline-flex">
+            <span style="font-size: 15px;">Năm-</span>
+            <select class="form-select form-select-lg" v-model="dia_diem_tu_nam">
+                <option selected hidden>Năm</option>
+                <option value="0" ></option>
+                <option v-for="year in 3000">{{year}}</option>
+              </select>
+            <!-- <input
               v-model="dia_diem_tu_ngay"
               type="number"
               max="2"
               min="0"
               class="form-control"
               style="max-width: 30%; text-align: right"
-            />
-            <label style="font-size: 20px">-</label>
-            <input
+            /> -->
+            <span style="font-size: 15px;">-Tháng-</span>
+            <select class="form-select form-select-lg" @change="onTuThang($event)" v-model="dia_diem_tu_thang">
+                <option selected hidden>Tháng</option>
+                <option value="0" ></option>
+                <option v-for="month in months">{{month}}</option>
+              </select>
+            <!-- <input
               v-model="dia_diem_tu_thang"
               type="number"
               max="2"
               min="0"
               class="form-control"
               style="max-width: 30%; text-align: right"
-            />
-            <label style="font-size: 20px">-</label>
-            <input
+            /> -->
+            <span style="font-size: 15px; ">-Ngày-</span>
+            <select class="form-select form-select-lg" :disabled="dia_diem_tu_thang==='0'?true:false"  v-model="dia_diem_tu_ngay">
+                <option selected hidden>Ngày</option>
+                <option value="0" ></option>
+                <option v-for="day in days">{{day}}</option>
+              </select>
+            <!-- <input
               v-model="dia_diem_tu_nam"
               type="number"
               max="4"
               min="0"
               class="form-control"
               style="max-width: 35%; text-align: right"
-            />
-            <cms-date-picker
+            /> -->
+            <!-- <cms-date-picker
               value-type="format"
               format="YYYY-MM-DD"
               v-model="from_date"
               type="date"
-            ></cms-date-picker>
+            ></cms-date-picker> -->
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-3 control-label"
-            >Thời gian đi <br />
-            (ngày tháng năm)</label
-          >
-          <div class="col-sm-9" style="display: inline-flex">
-            <input
-              v-model="dia_diem_den_ngay"
+          <label class="col-sm-4"
+            >Thời gian đi</label>
+            <div class="col-sm-8" style="display: inline-flex">
+            <span style="font-size: 15px;">Năm-</span>
+            <select class="form-select form-select-lg" v-model="dia_diem_den_nam">
+                <option selected hidden>Năm</option>
+                <option value="0" ></option>
+                <option v-for="year in 3000">{{year}}</option>
+              </select>
+            <!-- <input
+              v-model="dia_diem_tu_ngay"
               type="number"
               max="2"
               min="0"
               class="form-control"
               style="max-width: 30%; text-align: right"
-            />
-            <label style="font-size: 20px">-</label>
-            <input
-              v-model="dia_diem_den_thang"
+            /> -->
+            <span style="font-size: 15px;">-Tháng-</span>
+            <select class="form-select form-select-lg" @change="onDenThang($event)" v-model="dia_diem_den_thang">
+                <option selected hidden>Tháng</option>
+                <option value="0" ></option>
+                <option v-for="month in months">{{month}}</option>
+              </select>
+            <!-- <input
+              v-model="dia_diem_tu_thang"
               type="number"
               max="2"
               min="0"
               class="form-control"
               style="max-width: 30%; text-align: right"
-            />
-            <label style="font-size: 20px">-</label>
-            <input
-              v-model="dia_diem_den_nam"
+            /> -->
+            <span style="font-size: 15px; ">-Ngày-</span>
+            <select class="form-select form-select-lg" :disabled="dia_diem_den_thang!='0'?false:true" v-model="dia_diem_den_ngay">
+                <option selected hidden>Ngày</option>
+                <option value="0" ></option>
+                <option v-for="day in days">{{day}}</option>
+              </select>
+            <!-- <input
+              v-model="dia_diem_tu_nam"
               type="number"
               max="4"
               min="0"
               class="form-control"
-              style="max-width: 38%; text-align: right"
-            />
-            <cms-date-picker
+              style="max-width: 35%; text-align: right"
+            /> -->
+            <!-- <cms-date-picker
               value-type="format"
               format="YYYY-MM-DD"
-              v-model="to_date"
+              v-model="from_date"
               type="date"
-            ></cms-date-picker>
+            ></cms-date-picker> -->
           </div>
         </div>
       </form>
@@ -156,7 +185,7 @@
           />
           <input
             type="button"
-            value="Thêm"
+            value="Sửa"
             class="btn btn-primary"
             @click.prevent="_submitUpdate"
           />
@@ -185,13 +214,13 @@ const thuyenChuyen = {
   diaDiemName: '',
   giao_xu_id: '',
   dia_diem_loai: '',
-  dia_diem_tu_ngay: '',
-  dia_diem_tu_thang: '',
-  dia_diem_tu_nam: '',
+  dia_diem_tu_ngay: '0',
+  dia_diem_tu_thang: '0',
+  dia_diem_tu_nam: '0',
   from_date: '',
-  dia_diem_den_ngay: '',
-  dia_diem_den_thang: '',
-  dia_diem_den_nam: '',
+  dia_diem_den_ngay: '0',
+  dia_diem_den_thang: '0',
+  dia_diem_den_nam: '0',
   to_date: '',
   active: 1,
   chuc_vu_active: 1,
@@ -229,7 +258,7 @@ export default {
       default: 'fa fa-plus',
     },
     title: {
-      default: 'Tiêu Để',
+      default: 'Cập nhật Thuyên Chuyển',
     },
   },
   data() {
@@ -240,6 +269,8 @@ export default {
       isDong: 3,
       isBanChuyenTrach: 4,
       isCongDoanNgoai: 5,
+      days:['01','02','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
+      months:['01','02','04','05','06','07','08','09','10','11','12'],
     }
   },
   computed: {
@@ -302,14 +333,14 @@ export default {
     _setTuNgayThangNam(val) {
       const arrDate = this.$helper.fn_split_date_time(val)
       this.$data.dia_diem_tu_nam = arrDate[0]
-      this.$data.dia_diem_tu_thang = arrDate[1]
-      this.$data.dia_diem_tu_ngay = arrDate[2]
+      this.$data.dia_diem_tu_thang = arrDate[1]?arrDate[1]:'0'
+      this.$data.dia_diem_tu_ngay = arrDate[2]?arrDate[2]:'0'
     },
     _setDenNgayThangNam(val) {
       const arrDate = this.$helper.fn_split_date_time(val)
       this.$data.dia_diem_den_nam = arrDate[0]
-      this.$data.dia_diem_den_thang = arrDate[1]
-      this.$data.dia_diem_den_ngay = arrDate[2]
+      this.$data.dia_diem_den_thang = arrDate[1]?arrDate[1]:'0'
+      this.$data.dia_diem_den_ngay = arrDate[2]?arrDate[2]:'0'
     },
     _hideModalEdit() {
       this.$modal.hide(this.$options.setting.modal_name)
@@ -363,13 +394,13 @@ export default {
       this.$data.linh_muc_id = ''
       this.$data.dia_diem_loai = ''
       this.$data.diaDiemName = ''
-      this.$data.dia_diem_tu_ngay = ''
-      this.$data.dia_diem_tu_thang = ''
-      this.$data.dia_diem_tu_nam = ''
+      this.$data.dia_diem_tu_ngay = '0'
+      this.$data.dia_diem_tu_thang = '0'
+      this.$data.dia_diem_tu_nam = '0'
       this.$data.from_date = ''
-      this.$data.dia_diem_den_ngay = ''
-      this.$data.dia_diem_den_thang = ''
-      this.$data.dia_diem_den_nam = ''
+      this.$data.dia_diem_den_ngay = '0'
+      this.$data.dia_diem_den_thang = '0'
+      this.$data.dia_diem_den_nam = '0'
       this.$data.to_date = ''
       this.$data.active = 1
       this.$data.chuc_vu_active = 1
@@ -383,6 +414,7 @@ export default {
     },
     _submitUpdate() {
       const data = this.$data
+      console.log(this.dia_diem_tu_nam+'-'+this.dia_diem_tu_thang+'-'+this.dia_diem_tu_thang)
       if (data.chuc_vu_id) {
         this.updateThuyenChuyen({
           action: 'update.thuyen.chuyen',
@@ -404,6 +436,14 @@ export default {
       }
       this.$notify(notification)
       this.resetNotification()
+    },
+    onTuThang(event){ 
+      if(event.target.value=="0")
+      this.dia_diem_tu_ngay='0' 
+    },
+    onDenThang(event){ 
+      if(event.target.value=="0")
+      this.dia_diem_den_ngay='0' 
     },
   },
   setting: {
@@ -434,6 +474,11 @@ export default {
 
   .cms-modal-group-btn {
     padding: 10px;
+  }
+  .label-unbold {
+    font-size: 1em;
+    font-weight: unset;
+    cursor: auto;
   }
 }
 </style>

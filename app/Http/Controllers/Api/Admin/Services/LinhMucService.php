@@ -523,16 +523,35 @@ final class LinhMucService implements BaseModel, LinhMucModel
         return new LinhMucVanThuCollection(LinhMucVanThu::where('linh_muc_id', $data['linhMucId'])->get());
     }
 
+    public function dateCheckMonthDay($datestring)
+    {
+      $splitDateTime=explode(' ',$datestring)[0];
+      $splitDate=explode('-',$splitDateTime);
+      if ($splitDate[1]==='0'){
+        // $date=date_create($datestring);
+        // date_add($date,date_interval_create_from_date_string("1 year"));
+        return $splitDate[0];
+      }
+  
+      else if ($splitDate[2]==='0') {
+        // $date=date_create($datestring);
+        // date_add($date,date_interval_create_from_date_string("1 month"));
+        return $splitDate[0].'-'.$splitDate[1];
+      }
+      else return date_format(date_create($datestring), "Y-m-d");
+      
+    }
+
     public function apiUpdateThuyenChuyen($data = [])
     {
 				$this->modelThuyenChuyen = $this->modelThuyenChuyen->findOrFail($data['id_thuyen_chuyen']);
-				if($data['data']['dia_diem_tu_nam'] == null || $data['data']['dia_diem_tu_thang'] == null || $data['data']['dia_diem_tu_ngay'] == null) {
+				if($data['data']['dia_diem_tu_nam'] == '0' || $data['data']['dia_diem_tu_thang'] == null || $data['data']['dia_diem_tu_ngay'] == null) {
 						$this->modelThuyenChuyen->from_date = null;
 				}else {
 					$this->modelThuyenChuyen->from_date = $data['data']['dia_diem_tu_nam'] .'-'. $data['data']['dia_diem_tu_thang'] .'-'. $data['data']['dia_diem_tu_ngay'];
 				}
 
-				if($data['data']['dia_diem_den_nam'] == null || $data['data']['dia_diem_den_thang'] == null || $data['data']['dia_diem_den_ngay'] == null) {
+				if($data['data']['dia_diem_den_nam'] == '0' || $data['data']['dia_diem_den_thang'] == null || $data['data']['dia_diem_den_ngay'] == null) {
 						$this->modelThuyenChuyen->to_date = null;
 				}else {
 						$this->modelThuyenChuyen->to_date = $data['data']['dia_diem_den_nam'] .'-'. $data['data']['dia_diem_den_thang'] .'-'. $data['data']['dia_diem_den_ngay'];

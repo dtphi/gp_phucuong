@@ -20,6 +20,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Api\Front\Services\Service;
 use App\Http\Controllers\Api\Front\Services\SettingService;
+use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel as LinhMucSv;
 
 class ApiController extends Controller
 {
@@ -42,6 +43,7 @@ class ApiController extends Controller
 	 * @var null
 	 */
 	private $settingSv = null;
+	private $linhMucSv = null;
 
 	// Success
 	const RESPONSE_OK = 2000;
@@ -55,9 +57,10 @@ class ApiController extends Controller
 	 * ApiController constructor.
 	 * @param array $middleware
 	 */
-	public function __construct(array $middleware = [])
+	public function __construct(LinhMucSv $linhMucSv, array $middleware = [])
 	{
 		parent::__construct($middleware);
+		$this->linhMucSv=$linhMucSv;
 		$this->sv        = new Service();
 		$this->settingSv = new SettingService();
 	}
@@ -1314,8 +1317,8 @@ class ApiController extends Controller
           'from_date' => $info->from_date,
           'chuc_vu_id' => $info->chuc_vu_id,
           'chucvuName' => $info->ten_to_chuc_vu,
-          'label_from_date' => ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '',
-          'label_to_date' => ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '',
+          'label_from_date' => ($info->from_date) ? $this->linhMucSv->dateCheckMonthDay($info->from_date) : '',
+          'label_to_date' => ($info->to_date) ? $this->linhMucSv->dateCheckMonthDay($info->to_date) : '',
           'ghi_chu' => $info->ghi_chu,
           'active' => $info->active,
           'active_text' => $info->active ? 'Xảy ra' : 'Ẩn',
@@ -1349,9 +1352,9 @@ class ApiController extends Controller
           'giao_xu_id' => ($info->giao_xu_id) ? $info->giao_xu_id : 0,
           'fromGiaoXuName'      => $info->ten_from_giao_xu,
           'fromchucvuName' => $info->ten_from_chuc_vu,
-          'label_from_date' => ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '',
+          'label_from_date' => ($info->from_date) ? $this->linhMucSv->dateCheckMonthDay($info->from_date) : '',
           'ducchaName' => $info->ten_duc_cha,
-          'label_to_date' => ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '',
+          'label_to_date' => ($info->to_date) ? $this->linhMucSv->dateCheckMonthDay($info->to_date) : '',
           'chucvuName' => $info->ten_to_chuc_vu,
           'giaoxuName' => $info->ten_to_giao_xu,
           'cosogpName' => $info->ten_co_so,

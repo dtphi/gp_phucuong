@@ -3,6 +3,7 @@
 namespace App\Http\Resources\LinhMucThuyenChuyens;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel as LinhMucSv;
 
 class LinhMucThuyenChuyenCollection extends ResourceCollection
 {
@@ -12,6 +13,24 @@ class LinhMucThuyenChuyenCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+    public function dateCheckMonthDay($datestring)
+    {
+      $splitDateTime=explode(' ',$datestring)[0];
+      $splitDate=explode('-',$splitDateTime);
+      if ($splitDate[1]==='0'){
+        // $date=date_create($datestring);
+        // date_add($date,date_interval_create_from_date_string("1 year"));
+        return $splitDate[0];
+      }
+  
+      else if ($splitDate[2]==='0') {
+        // $date=date_create($datestring);
+        // date_add($date,date_interval_create_from_date_string("1 month"));
+        return $splitDate[0].'-'.$splitDate[1];
+      }
+      else return date_format(date_create($datestring), "Y-m-d");
+      
+    }
     public function toArray($request)
     {
         $results = [];
@@ -26,9 +45,9 @@ class LinhMucThuyenChuyenCollection extends ResourceCollection
               'giao_xu_id' => ($info->giao_xu_id) ? $info->giao_xu_id : 0,
               'fromGiaoXuName'      => $info->ten_from_giao_xu,
               'fromchucvuName' => $info->ten_from_chuc_vu,
-              'label_from_date' => ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '',
+              'label_from_date' => ($info->from_date) ? $this->dateCheckMonthDay($info->from_date) : '',
               'ducchaName' => $info->ten_duc_cha,
-              'label_to_date' => ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '',
+              'label_to_date' => ($info->to_date) ? $this->dateCheckMonthDay($info->to_date) : '',
               'chucvuName' => $info->ten_to_chuc_vu,
               'giao_xu_url' => url('admin/giao-xus/edit/' . $info->giao_xu_id),
               'giaoxuName' => $info->ten_to_giao_xu,
