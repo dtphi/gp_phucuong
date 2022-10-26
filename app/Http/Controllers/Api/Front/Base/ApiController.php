@@ -747,7 +747,7 @@ class ApiController extends Controller
 	}
 
 	public function getLinhMucDetail($id = null, Request $request)
-	{
+	{	
 		try {
 			$infos = $this->sv->apiGetDetailLinhMucMain($id);
 			$thuyenChuyens = $infos->arr_thuyen_chuyen_list;
@@ -770,14 +770,14 @@ class ApiController extends Controller
 				'giao_phan' => 'Giáo Phận Phú Cường',
 				'ho_ten_cha' => $infos->ho_ten_cha ?? $emptyStr,
 				'ho_ten_me' => $infos->ho_ten_me ?? $emptyStr,
-        'noi_rua_toi' => $infos->noi_rua_toi ?? '',
-        'noi_them_suc' => $infos->noi_them_suc ?? '',
+        		'noi_rua_toi' => $infos->noi_rua_toi ?? '',
+        		'noi_them_suc' => $infos->noi_them_suc ?? '',
 				'ngay_rua_toi' => ($infos->ngay_rua_toi) ? date_format(date_create($infos->ngay_rua_toi), "d-m-Y") : $emptyStr,
 				'ngay_them_suc' => ($infos->ngay_them_suc) ? date_format(date_create($infos->ngay_them_suc), "d-m-Y") : '',
 				'so_cmnd' => $infos->so_cmnd ?? $emptyStr,
 				'ngay_cap_cmnd' => $infos->ngay_cap_cmnd ?? $emptyStr,
 				'noi_cap_cmnd' => $infos->noi_cap_cmnd ?? $emptyStr,
-        'ngay_rip' => ($infos->ngay_rip) ? date_format(date_create($infos->ngay_rip), "d-m-Y") : '',
+        		'ngay_rip' => ($infos->ngay_rip) ? date_format(date_create($infos->ngay_rip), "d-m-Y") : '',
 				'cham_ngon' => $infos->cham_ngon ?? $emptyStr,
 				'cv_hien_tai' => $chucVuHienTai ?? $emptyStr,
 				'ds_chuc_vu' => $thuyenChuyens ?? "",
@@ -1335,22 +1335,22 @@ class ApiController extends Controller
   }
 
 
-  public function dateCheckMonthDay($datestring)
+  public function dateCheckMonthDay($datestring, $reverseDate=false)
     {
       $splitDateTime=explode(' ',$datestring)[0];
       $splitDate=explode('-',$splitDateTime);
       if ($splitDate[1]==='0'){
-        // $date=date_create($datestring);
-        // date_add($date,date_interval_create_from_date_string("1 year"));
         return $splitDate[0];
       }
   
       else if ($splitDate[2]==='0') {
-        // $date=date_create($datestring);
-        // date_add($date,date_interval_create_from_date_string("1 month"));
+		if ($reverseDate===true) return $splitDate[1].'-'.$splitDate[0];
         return $splitDate[0].'-'.$splitDate[1];
       }
-      else return date_format(date_create($datestring), "Y-m-d");
+      else{
+		if ($reverseDate===true) return date_format(date_create($datestring), "d-m-Y");
+		return date_format(date_create($datestring), "Y-m-d");
+	  } 
       
     }
 
@@ -1731,8 +1731,8 @@ class ApiController extends Controller
       $templateProcessor->setValue('id#' . $j, $j);
       $templateProcessor->setValue('chuc_vu#' . $j, $info->ten_to_chuc_vu);
       $templateProcessor->setValue('dia_diem#' . $j, $this->diaDiemName($info));
-      $templateProcessor->setValue('thoi_gian_den#' . $j, ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '');
-      $templateProcessor->setValue('thoi_gian_di#' . $j, ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '');
+      $templateProcessor->setValue('thoi_gian_den#' . $j, ($info->from_date) ? $this->dateCheckMonthDay($info->from_date, true) : '');
+      $templateProcessor->setValue('thoi_gian_di#' . $j, ($info->to_date) ? $this->dateCheckMonthDay($info->to_date, true) : '');
       $j++;
     }
 

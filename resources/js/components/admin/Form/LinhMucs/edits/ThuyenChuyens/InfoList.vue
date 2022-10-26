@@ -130,11 +130,6 @@ export default {
 				this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam +'-' + this.update_thuyen_chuyen.dia_diem_den_thang;
 				}
 				else this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam +'-' + this.update_thuyen_chuyen.dia_diem_den_thang + '-' + this.update_thuyen_chuyen.dia_diem_den_ngay;
-				// if(this.update_thuyen_chuyen.dia_diem_den_nam == "0" || this.update_thuyen_chuyen.dia_diem_den_thang == "" || this.update_thuyen_chuyen.dia_diem_den_ngay == ""){
-				// 		this.curInfo.label_to_date = '';
-				// } else {
-				// 		this.curInfo.label_to_date = this.update_thuyen_chuyen.dia_diem_den_nam + '-' + this.update_thuyen_chuyen.dia_diem_den_thang + '-' + this.update_thuyen_chuyen.dia_diem_den_ngay;
-				// }
 				this.$modal.hide("modal-lm-thuyen-chuyen-edit");
   	},
 		_notificationUpdate(notification) {
