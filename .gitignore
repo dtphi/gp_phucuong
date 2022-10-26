@@ -34,3 +34,7 @@ deploy*
 *html
 adminlinhmuc-production.blade.php
 administrator-otp.blade.php
+config/app.php
+storage/logs/laravel.log
+resources/views/adminlinhmuc-localx.blade.php
+
