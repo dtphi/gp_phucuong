@@ -290,7 +290,7 @@ export default {
     },
   },
   setting: {
-    modal_title: 'Thêm Lm Thuyên Chuyển',
+    modal_title: 'Thêm Linh Mục Thuyên Chuyển',
     modal_name: 'modal-linh-muc-thuyen-chuyen-add',
     keyChucVu: 'chuc_vu_thuyen_chuyen',
   },

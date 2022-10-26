@@ -15,6 +15,7 @@ use Illuminate\Http\Response as HttpResponse;
 use App\Http\Controllers\Api\Admin\Base\ApiController;
 use App\Http\Controllers\Api\Admin\Services\Contracts\LinhMucModel as LinhMucSv;
 
+
 class LinhMucController extends ApiController
 {
   /**
@@ -751,8 +752,8 @@ class LinhMucController extends ApiController
       $templateProcessor->setValue('id#' . $j, $j);
       $templateProcessor->setValue('chuc_vu#' . $j, $info->ten_to_chuc_vu);
       $templateProcessor->setValue('dia_diem#' . $j, $this->diaDiemName($info));
-      $templateProcessor->setValue('thoi_gian_den#' . $j, ($info->from_date) ? date_format(date_create($info->from_date), "Y-m-d") : '');
-      $templateProcessor->setValue('thoi_gian_di#' . $j, ($info->to_date) ? date_format(date_create($info->to_date), "Y-m-d") : '');
+      $templateProcessor->setValue('thoi_gian_den#' . $j, ($info->from_date) ? $this->linhMucSv->dateCheckMonthDay($info->from_date) : '');
+      $templateProcessor->setValue('thoi_gian_di#' . $j, ($info->to_date) ? $this->linhMucSv->dateCheckMonthDay($info->to_date) : '');
       $j++;
     }
 

@@ -74,7 +74,7 @@
             <select class="form-select form-select-lg" v-model="dia_diem_tu_nam">
                 <option selected hidden>Năm</option>
                 <option value="0" ></option>
-                <option v-for="year in 3000">{{year}}</option>
+                <option v-for="year in Array.from(new Array(151), (x, i) => i + 1900)">{{year}}</option>
               </select>
             <!-- <input
               v-model="dia_diem_tu_ngay"
@@ -128,7 +128,7 @@
             <select class="form-select form-select-lg" v-model="dia_diem_den_nam">
                 <option selected hidden>Năm</option>
                 <option value="0" ></option>
-                <option v-for="year in 3000">{{year}}</option>
+                <option v-for="year in Array.from(new Array(151), (x, i) => i + 1900)">{{year}}</option>
               </select>
             <!-- <input
               v-model="dia_diem_tu_ngay"

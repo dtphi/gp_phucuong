@@ -34,3 +34,9 @@ deploy*
 *html
 adminlinhmuc-production.blade.php
 administrator-otp.blade.php
+app/Http/Controllers/Api/Admin/Services/InformationService.php
+app/Helpers/helpers.php
+config/app.php
+storage/logs/laravel.log
+resources/views/adminlinhmuc-localx.blade.php
+resources/js/stores/front/linhmucs/detail.js

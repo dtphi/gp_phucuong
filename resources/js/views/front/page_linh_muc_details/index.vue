@@ -583,18 +583,18 @@
                           <b-button variant="transparent" size="sm" @click="$bvModal.hide('showReview')" style="position:absolute;right:0px;top:0px;z-index:1;"><b-icon icon="x-lg"></b-icon></b-button>
                           <div>
                             <div  v-if="isImg ==='img'">
-                            <a :href="'http://'+itemselect" target="_blank">
-                            <img :src="'http://'+itemselect" width="100%" />
+                            <a :href="+itemselect" target="_blank">
+                            <img :src="https_protocol+itemselect" width="100%" />
                           </a>
                           </div>
                           <div v-else-if="isImg ==='file'">
-                            <a :href="'http://'+itemselect" target="_blank">
-                            <img :src="'http://'+downloadimg" alt="Click để tải tài liệu." />
+                            <a :href="https_protocol+itemselect" target="_blank">
+                            <img :src="https_protocol+downloadimg" alt="Click để tải tài liệu." />
                           </a>
                           </div>
                           <div v-else>
                     
-                            <img :src="'http://'+defaultimg" width="100%" alt="Click để tải tài liệu." />
+                            <img :src="https_protocol+defaultimg" width="100%" alt="Click để tải tài liệu." />
                  
                           </div>
                           </div>
@@ -698,6 +698,7 @@ export default {
         table_box:0,
         right_height:0,
         left_heihgt:0,
+        https_protocol:window.location.protocol+'//'
     }
   },
   computed: {
@@ -771,7 +772,7 @@ export default {
    delFile(item){
       var self = this;
       var targetfile=self.lstlink.slice(1).join('/')+'/'+item
-      var url = 'http://'+DOMAIN+'/api/explorer/delFile?id='+DOMAIN_ID+'&name=' + targetfile
+      var url = this.https_protocol+DOMAIN+'/api/explorer/delFile?id='+DOMAIN_ID+'&name=' + targetfile
       if(confirm('Bạn muốn xóa '+item+' không ?'))
         $.get(url, function(data, status) {
           if (data == true)
@@ -783,7 +784,7 @@ export default {
    downFile(item){
     if(item.type=='file'){
       //this.$router.go(DOMAIN+item.pathreal)
-      window.open('http://'+DOMAIN+item.pathreal)
+      window.open(this.https_protocol+DOMAIN+item.pathreal)
     }
     else alert("Thư mục hiện chưa có tính năng download")
    },
@@ -791,7 +792,7 @@ export default {
           var self = this;
           var currdir= self.lstlink.slice(1).join('/')
           var nameNewFolder = self.nameNewFolder
-          var url = 'http://'+DOMAIN+'/api/explorer/newFolder?id='+DOMAIN_ID+'&name=' + currdir+'/'+ nameNewFolder
+          var url = this.https_protocol+DOMAIN+'/api/explorer/newFolder?id='+DOMAIN_ID+'&name=' + currdir+'/'+ nameNewFolder
           $.get(url, function(data, status) {
             if (data == true) {
               //alert("Đã tạo thư mục thành công! " + nameNewFolder);
@@ -889,7 +890,7 @@ export default {
             }
          });
           $.ajax({
-            url: 'http://'+DOMAIN+'/api/explorer/upload?id='+DOMAIN_ID,
+            url: this.https_protocol+DOMAIN+'/api/explorer/upload?id='+DOMAIN_ID,
             type: 'POST',
             data: formData,
             success: function(data) {
@@ -910,8 +911,8 @@ export default {
         },
         LoadData(dir1 = null) {
           var self = this
-          
-          var url = 'http://'+DOMAIN+'/api/explorer/getlistdir?id='+DOMAIN_ID;
+
+          var url = this.https_protocol+DOMAIN+'/api/explorer/getlistdir?id='+DOMAIN_ID;
           if (dir1 != null) url += '&dir=' + dir1;
           $.getJSON(url, function(json) {
             self.listfile = json
@@ -937,11 +938,20 @@ export default {
     },
     _des(item) {
       const ghi_chu = (item.ghi_chu !== null) ? item.ghi_chu : ''
-      var fromDate = item.label_from_date
-      var toDate = item.label_to_date ? ' đến ngày ' + item.label_to_date : ''
-      var des = 'Từ ngày ' + fromDate + toDate + ' ' + ghi_chu
-
+      var fromDate = this._checkTypeofDate(item.label_from_date)
+      var toDate = item.label_to_date ? ' đến' + this._checkTypeofDate(item.label_to_date) : ''
+      var des = 'Từ ' + fromDate + toDate + ' ' + ghi_chu
       return des
+    },
+    _checkTypeofDate(date){
+      var arrDate=date.split('-')
+      if (arrDate.length===3){
+        return ' ngày ' + date
+      }else if (arrDate.length===2){
+        return ' tháng ' + date
+      }else if (arrDate.length===1){
+        return ' năm ' + date
+      } else return ''
     },
     _ngThuPhong(nguoi_thu_phong) {
       return (nguoi_thu_phong !== null) ? nguoi_thu_phong : 'Chưa cập nhật'
