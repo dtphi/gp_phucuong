@@ -668,6 +668,7 @@ class LinhMucController extends ApiController
 
   public function exportLinhMuc($id = null)
   {
+    
     try {
       $json = $this->linhMucSv->apiGetDetail($id);
     } catch (HandlerMsgCommon $e) {
@@ -694,7 +695,7 @@ class LinhMucController extends ApiController
         }
     }
 
-
+    
     $templateProcessor = new TemplateProcessor((storage_path('/app/public/word-template/user.docx')));
     $staticImgThum = 'images/no-photo.jpg';
     if (!empty($json->image) && file_exists(public_path($json->image))) {
@@ -752,14 +753,33 @@ class LinhMucController extends ApiController
       $templateProcessor->setValue('id#' . $j, $j);
       $templateProcessor->setValue('chuc_vu#' . $j, $info->ten_to_chuc_vu);
       $templateProcessor->setValue('dia_diem#' . $j, $this->diaDiemName($info));
-      $templateProcessor->setValue('thoi_gian_den#' . $j, ($info->from_date) ? $this->linhMucSv->dateCheckMonthDay($info->from_date) : '');
-      $templateProcessor->setValue('thoi_gian_di#' . $j, ($info->to_date) ? $this->linhMucSv->dateCheckMonthDay($info->to_date) : '');
+      $templateProcessor->setValue('thoi_gian_den#' . $j, ($info->from_date) ? $this->dateCheckMonthDay($info->from_date) : '');
+      $templateProcessor->setValue('thoi_gian_di#' . $j, ($info->to_date) ? $this->dateCheckMonthDay($info->to_date) : '');
       $j++;
     }
 
     $templateProcessor->saveAs(storage_path('/app/public/word-template/'. $json->ten . '.docx'));
     return response()->download(storage_path('/app/public/word-template/' . $json->ten . '.docx'))->deleteFileAfterSend(true);
   }
+
+  public function dateCheckMonthDay($datestring)
+    {
+      $splitDateTime=explode(' ',$datestring)[0];
+      $splitDate=explode('-',$splitDateTime);
+      if ($splitDate[1]==='0'){
+        // $date=date_create($datestring);
+        // date_add($date,date_interval_create_from_date_string("1 year"));
+        return $splitDate[0];
+      }
+  
+      else if ($splitDate[2]==='0') {
+        // $date=date_create($datestring);
+        // date_add($date,date_interval_create_from_date_string("1 month"));
+        return $splitDate[1].'-'.$splitDate[0];
+      }
+      else return date_format(date_create($datestring), "d-m-Y");
+      
+    }
 
   public function diaDiemName($info)
   {
