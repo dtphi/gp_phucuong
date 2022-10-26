@@ -8,8 +8,8 @@
           <td class="text-center">TT</td>
           <td class="text-center">CHỨC VỤ</td>
           <td class="text-center">CÔNG VIỆC</td>
-          <td class="text-center">TỪ <br> (ngày tháng năm)</td>
-          <td class="text-center">ĐẾN <br> (ngày tháng năm)</td>
+          <td class="text-center">TỪ <br> (năm tháng ngày)</td>
+          <td class="text-center">ĐẾN <br> (năm tháng ngày)</td>
           <td class="text-center">{{ $options.setting.info_action_title }}</td>
         </tr>
       </thead>
@@ -88,20 +88,39 @@ export default {
 				this.$modal.show("modal-lm-bo-nhiem-edit");
 		},
 		_updateInfoList() {
-				console.log(this.update_bo_nhiem, 'bo_nhiem_update');
 				this.curInfo.chuc_vu_id = this.update_bo_nhiem.chuc_vu_id;
 				this.curInfo.chucvuName = this.update_bo_nhiem.chucVuName;
 				this.curInfo.ghi_chu = this.update_bo_nhiem.cong_viec;
-				if(this.update_bo_nhiem.cong_viec_tu_nam == "" || this.update_bo_nhiem.cong_viec_tu_thang == "" || this.update_bo_nhiem.cong_viec_tu_ngay == ""){
+				// if(this.update_bo_nhiem.cong_viec_tu_nam == "" || this.update_bo_nhiem.cong_viec_tu_thang == "" || this.update_bo_nhiem.cong_viec_tu_ngay == ""){
+				// 		this.curInfo.label_from_date = '';
+				// } else {
+				// 		this.curInfo.label_from_date = this.update_bo_nhiem.cong_viec_tu_nam + '-' + this.update_bo_nhiem.cong_viec_tu_thang + '-' + this.update_bo_nhiem.cong_viec_tu_ngay;
+				// }	
+				// if(this.update_bo_nhiem.cong_viec_den_nam == "" || this.update_bo_nhiem.cong_viec_den_thang == "" || this.update_bo_nhiem.cong_viec_den_ngay == ""){
+				// 		this.curInfo.label_to_date = '';
+				// } else {
+				// 		this.curInfo.label_to_date = this.update_bo_nhiem.cong_viec_den_nam + '-' + this.update_bo_nhiem.cong_viec_den_thang + '-' + this.update_bo_nhiem.cong_viec_den_ngay;
+				// }
+
+				if(this.update_bo_nhiem.cong_viec_tu_nam == "0" || this.update_bo_nhiem.cong_viec_tu_thang == "" || this.update_bo_nhiem.cong_viec_tu_ngay == ""){
 						this.curInfo.label_from_date = '';
-				} else {
-						this.curInfo.label_from_date = this.update_bo_nhiem.cong_viec_tu_nam + '-' + this.update_bo_nhiem.cong_viec_tu_thang + '-' + this.update_bo_nhiem.cong_viec_tu_ngay;
-				}	
-				if(this.update_bo_nhiem.cong_viec_den_nam == "" || this.update_bo_nhiem.cong_viec_den_thang == "" || this.update_bo_nhiem.cong_viec_den_ngay == ""){
-						this.curInfo.label_to_date = '';
-				} else {
-						this.curInfo.label_to_date = this.update_bo_nhiem.cong_viec_den_nam + '-' + this.update_bo_nhiem.cong_viec_den_thang + '-' + this.update_bo_nhiem.cong_viec_den_ngay;
+				} else if (this.update_bo_nhiem.cong_viec_tu_thang == "0") {
+						this.curInfo.label_from_date = this.update_bo_nhiem.cong_viec_tu_nam;
 				}
+				else if (this.update_bo_nhiem.cong_viec_tu_ngay == "0"){
+				this.curInfo.label_from_date = this.update_bo_nhiem.cong_viec_tu_nam +'-' + this.update_bo_nhiem.cong_viec_tu_thang;
+				}
+				else this.curInfo.label_from_date = this.update_bo_nhiem.cong_viec_tu_nam +'-' + this.update_bo_nhiem.cong_viec_tu_thang + '-' + this.update_bo_nhiem.cong_viec_tu_ngay;
+				
+				if(this.update_bo_nhiem.cong_viec_den_nam == "0" || this.update_bo_nhiem.cong_viec_den_thang == "" || this.update_bo_nhiem.cong_viec_den_ngay == ""){
+						this.curInfo.label_to_date = '';
+				} else if (this.update_bo_nhiem.cong_viec_den_thang == "0") {
+						this.curInfo.label_to_date = this.update_bo_nhiem.cong_viec_den_nam;
+				}
+				else if (this.update_bo_nhiem.cong_viec_den_ngay == "0"){
+				this.curInfo.label_to_date = this.update_bo_nhiem.cong_viec_den_nam +'-' + this.update_bo_nhiem.cong_viec_den_thang;
+				}
+				else this.curInfo.label_to_date = this.update_bo_nhiem.cong_viec_den_nam +'-' + this.update_bo_nhiem.cong_viec_den_thang + '-' + this.update_bo_nhiem.cong_viec_den_ngay;
 				this.$modal.hide("modal-lm-bo-nhiem-edit");
   	},
     _notificationUpdate(notification) {

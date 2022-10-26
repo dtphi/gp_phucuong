@@ -115,10 +115,10 @@
                       <h5 v-if="pageLists.ngay_rip">RIP: {{pageLists.ngay_rip}}</h5>
                     <button type="button" class="btn btn-primary" @click="exportFileLinhMuc(pageLists.id, pageLists.ten)">Xuất file</button>
                     <b-button variant="primary" v-b-modal.modal-1 hidden>Quản Lý Hồ Sơ</b-button>
-                    <b-modal id="modal-1" title="Files management">
+                    <!-- <b-modal id="modal-1" title="Files management">
                       <b-breadcrumb :items="items"></b-breadcrumb>
                       <p class="my-4">All files</p>
-                    </b-modal>
+                    </b-modal> -->
                   </div>
                   <!-- <div class="bi-tich p-3 mt-3">
                           <table class="table mb-0 tbl-server-info">
@@ -663,20 +663,6 @@ export default {
       lstlink:[
           'All files'
       ],
-      items: [
-          {
-            text: 'All files',
-            href: '#',
-          },
-          {
-            text: 'Huy',
-            href: '#'
-          },
-          {
-            text: 'Grandchildren',
-            active: true
-          }
-        ],
         isImg:'none',
         filedeleted:'',
         targetdir:'',
