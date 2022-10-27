@@ -27,11 +27,15 @@
       <breadcrumb></breadcrumb>
       <ul class="cms-breadcrumb">
         <li v-if="giaoHatLists">
-            <model-select
+          <select class="form-control" v-model="giaoHat">
+            <option value="" style="color:gray" :selected="giaoHat === ''">Chọn Giáo Hạt</option>
+            <option v-for="giaohat in giaoHatLists" v-bind:value="giaohat.value" >{{giaohat.text}}</option>
+          </select>
+            <!-- <model-select
               :options="giaoHatLists"
               v-model="giaoHat"
               placeholder="Chọn Giáo Hạt"
-            ></model-select>
+            ></model-select> -->
         </li>
         <li>
           <list-search></list-search>
