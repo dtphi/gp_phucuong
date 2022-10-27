@@ -1,6 +1,6 @@
 <template>
   <div class="tab-content">
-    <div class="form-group">
+    <div class="form-group hide">
       <div class="col-sm-12">
         <div>
           <button class="btn btn-primary" type="button" @click="_showModalAdd">Thêm thư mục +</button>
@@ -10,15 +10,41 @@
                     v-on:submit.prevent="_onSubmit"
                 >
                 <label v-bind:for="fileInputId"><strong>Tải tập tin lên.</strong></label>
-          <input v-on:change="_onSubmit" v-bind:id="fileInputId" ref="fileInput" type="file" name="fileHoSos[]" multiple/>
+          <input id="fileInput" v-on:change="_onSubmit" v-bind:id="fileInputId" ref="fileInput" type="file" name="fileHoSos[]" multiple/>
           </form>
         </div>
       </div>
     </div>
     <div class="form-group">
-      <div class="col-sm-12">
+      <div class="col-sm-8">
         <ul class="breadcrumb" v-html="breadbrum">
         </ul>
+      </div>
+      <div class="col-sm-4 text-right">
+        <div class="btn-group">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+              <li>
+                  <a @click.stop.prevent="_showModalAdd">
+                      <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                      Thư mục mới</a>
+              </li>
+              <li>
+                  <a href="#" @click.prevent="fileInputAction" v-bind:for="fileInputId">
+                      <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+                      Tải tập tin lên</a>
+              </li>
+              <!-- <li>
+                  <a href="#">
+                      <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                      Downloads
+                  </a>
+              </li> -->
+          </ul>
+      </div>
       </div>
     </div>
     <div class="form-group">
@@ -68,6 +94,7 @@ export default {
       dirQuery: 'AllFiles',
       loading: false,
       errors: [],
+      lstTypeFile:[],
     }
   },
   computed: {
@@ -82,6 +109,9 @@ export default {
     this._loadHoSo()
   },
   methods: {
+    fileInputAction(){
+      $('#ho-so-file-input').click()
+    },
     _loadHoSo() {
       let loadUrl = fn_get_base_api_detail_url('/api/linh-mucs', this.linhmucId + '?_type=hoso&_dir=' + this.dirQuery)
       axios.get(loadUrl)
@@ -179,5 +209,10 @@ export default {
 
     input[type="file"] {
         display: none;
+    }
+
+    .breadcrumb a {
+      font-size: 22px !important;
+      font-weight: bold !important;
     }
 </style>
