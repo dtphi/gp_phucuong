@@ -14,6 +14,31 @@ class CalenderController extends Controller
   {
   }
 
+  public function getpam(Request $request)
+  {
+    
+    $sach = $request->sach;
+    $chuong = $request->chuong;
+    $lstcau = $request->lstcau;
+ 
+    $strwherels = [];
+    foreach ($lstcau as $item) {
+      if (count($item) > 1) {
+        $strwherels[] = "(cau BETWEEN $item[0] and $item[1])";
+      } else if (!empty($item[0])) {
+        $strwherels[] = "(cau = $item[0])";
+      }
+    }
+    $strwhere = join(' or ', $strwherels);
+
+    $sql = sprintf("ten='%s' and chuong='%s' and ($strwhere) ORDER BY cau", $sach, $chuong);
+
+    $res = \DB::table('kinh_thanhs')
+      ->whereRaw($sql)
+      ->get();
+    return $res;
+  }
+
   public function getlist(Request $request)
   {
     $month = empty($request->month) ? date('m') : $request->month;
@@ -24,7 +49,6 @@ class CalenderController extends Controller
   public function GetFullLichAndLe($month, $year)
   {
     $NgayLe = $this->getCacNgayLeTrongNam($year);
-
     $NgayLeThang = array_filter(
       $NgayLe,
       function ($item) use ($month) {
@@ -344,25 +368,12 @@ class CalenderController extends Controller
 
   public function getCacNgayLeTrongNam($year)
   {
+    $colpm = $this->TinhNam2ColDB($year);
     $NgayLeDB = \DB::table('pc_ngay_les')
-      ->selectRaw('id,code,solar_day,solar_month,lunar_day,lunar_month,ten_le');
-    //->whereRaw('lunar_day > 0');
-    //->get();
+      ->selectRaw("id,code,solar_day,solar_month,lunar_day,lunar_month,ten_le,$colpm as phucam");
     $NgayLeDL = $NgayLeDB->clone()->whereRaw('solar_day > 0')->get();
     $NgayLeAL = $NgayLeDB->clone()->whereRaw('lunar_day > 0')->get();
     $lstleBonMang = [];
-    // foreach ($Thanh as $item) {
-    //     $m = new stdClass();
-    //     if ($item['bon_mang_ngay'] == '' || $item['bon_mang_ngay'] == null) continue;
-    //     $m->day = $item['bon_mang_ngay'];
-    //     $m->month = $item['bon_mang_thang'];
-    //     $m->year = $year;
-    //     $m->date = "$year-$item[bon_mang_thang]-$item[bon_mang_ngay]";
-    //     $m->name = $item['name'];
-    //     $m->idthanh = $item['id'];
-    //     $m->type = 1;
-    //     $lstleBonMang[] = $m;
-    // }
     $lstNgayLeDL = [];
     foreach ($NgayLeDL as $item) {
       $m = new stdClass();
@@ -374,6 +385,7 @@ class CalenderController extends Controller
       $m->idngayle = $item->id;
       $m->name = $item->ten_le;
       $m->type = 2;
+      $m->phucam = html_entity_decode($item->phucam);
       $lstNgayLeDL[] =  $m;
     }
 
@@ -389,6 +401,7 @@ class CalenderController extends Controller
       $m->date = $dl[0] . "-" . $dl[1] . "-" . $dl[2];
       $m->name = $item->ten_le;
       $m->idngayle = $item->id;
+      $m->phucam = html_entity_decode($item->phucam);
       $m->type = 3;
       $lstNgayLeAL[] = $m;
     }
@@ -408,15 +421,10 @@ class CalenderController extends Controller
         $m->code = $item;
         $m->type = 4;
         $ls = $NgayLeDB->clone()->where(['code' => $item])->first();
-        // $ls = array_filter(
-        //   $NgayLe,
-        //   function ($itemle) use ($item) {
-        //     return $itemle->code == $item;
-        //   }
-        // );
         if (!empty($ls)) {
           $m->name = $ls->ten_le;
           $m->idngayle = $ls->id;
+          $m->phucam = html_entity_decode($ls->phucam);
         }
         $lstLeTinh[] = $m;
       }
@@ -425,21 +433,30 @@ class CalenderController extends Controller
     return $res;
   }
 
-  public function TinhNam($year)
-  {
+  function TinhNam($year){
     $stry = strval($year);
     $sum = 0;
-    for ($i = 0; $i < strlen($stry); $i++) {
-      $sum += $stry[$i];
+    for($i=0;$i<strlen($stry);$i++){
+        $sum+=$stry[$i];
     }
+    
+    if($sum%3 == 0)
+        return "C";
+    else if($sum%3 == 1)
+        return "A";
+    else if($sum%3 == 2)
+        return "B";
+    
+}
 
-    if ($sum % 3 == 0)
-      return "C";
-    else if ($sum % 3 == 1)
-      return "A";
-    else if ($sum % 3 == 2)
-      return "B";
-  }
+function TinhNam2ColDB($year){
+    $type = $this->TinhNam($year);
+    $chanle = "ii";
+    if($year%2==0){
+        $chanle = "i";
+    }
+    return strtolower("nam_".$type."$chanle");
+}
 
   public function lookupEaster($y = 2000)
   {

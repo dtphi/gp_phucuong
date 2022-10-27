@@ -5,7 +5,9 @@
 .hcalendarbox td {
     text-align: center;
     cursor: pointer;
-    padding: 5px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .ngaylich:hover {
@@ -78,4 +80,28 @@
 
 .othermonth {
     color: darkgray;
+}
+
+.lichThu td {
+    padding: 0px !important;
+    margin: 0 !important;
+}
+
+.pam {
+    font-weight: bold;
+    ;
+}
+
+.pam:hover {
+    color: red;
+}
+
+.PhucAmLine i {
+font-size: 10px;
+color: gray;
+}
+
+.todayphucam {
+    font-size: 11px;
+    color: brown;
 }

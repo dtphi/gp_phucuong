@@ -1,31 +1,33 @@
 <template>
   <div id="lich-cong-giao-module" class="calendar mt-4">
-
-    <!-- <h4 class="title"><span>Lịch</span></h4> -->
-    <!-- <b-calendar class="w-100" locale="vi-VN"></b-calendar> -->
-
     <div class="hcalendarbox" id="hcalendarbox">
       <div class="pleft"></div>
       <div class="pright">
         <table class="table table-bordered">
           <tr class="todaybox">
-            <td colspan="7" v-if="dayselect!=null">
+            <td colspan="7" v-if="dayselect != null">
               <p class="thutoday">
-                {{dayselect.l}}
+                {{ dayselect.l }}
               </p>
               <p class="daytoday">
-                {{dayselect.day}}
+                {{ dayselect.day }}
               </p>
               <p class="monthyeartoday">
-                Tháng {{dayselect.month}} năm {{dayselect.year}}
+                Tháng {{ dayselect.month }} năm {{ dayselect.year }}
               </p>
 
-              <p class="todayle" v-for="itemle in dayselect.le">
-                {{itemle.name}}
-              </p>
+              <div v-for="itemle in dayselect.le">
+                <p class="todayle">{{ itemle.name }}</p>
+
+                <p class="todayphucam">
+                  <span :class="itemphucam.match(regex)!=null?'pam':''"  @click="showPAM(itemphucam)" v-for="itemphucam in PhucAmHover(itemle.phucam).split('|')">{{itemphucam}}</span>
+                  
+                </p>
+              </div>
 
               <p class="todayal">
-                Âm Lịch: Ngày {{dayselect.amlich.day}} tháng {{dayselect.amlich.month}} năm {{dayselect.amlich.year}}
+                Âm Lịch: Ngày {{ dayselect.amlich.day }} tháng {{ dayselect.amlich.month }} năm {{ dayselect.amlich.year
+                }}
               </p>
             </td>
           </tr>
@@ -33,32 +35,43 @@
             <td @click="prevMonth()">
               &#60; </td>
             <td colspan="5">
-              Tháng {{thismonth}} năm {{thisyear}}
+              Tháng {{ thismonth }} năm {{ thisyear }}
             </td>
             <td @click="nextMonth()"> &#62; </td>
           </tr>
           <tr class="lichThu">
             <td v-for="item in lstThu">
-              {{item}}
+              {{ item }}
             </td>
           </tr>
           <tr v-for="lstitem in lstCalTab">
-            <td class="ngaylich" :class="'indexNgay'+item.n" v-for="item in lstitem" @click="selectDay(item)">
-              <span class="dl" :class="item.isToday ? 'istoday' : item.month!=thismonth ? 'othermonth' : '' ">{{item.day
-              < 10 ? '0' + parseInt(item.day) : item.day}}</span>
+            <td class="ngaylich" :class="'indexNgay' + item.n" v-for="item in lstitem" @click="selectDay(item)">
+              <span class="dl" :class="item.isToday ? 'istoday' : item.month != thismonth ? 'othermonth' : ''">{{
+                  item.day
+                    < 10 ? '0' + parseInt(item.day) : item.day
+              }}</span>
                   <span class="al">
-                    {{item.amlich.day < 10 ? '0' + parseInt(item.amlich.day) : item.amlich.day}} </span>
+                    {{ item.amlich.day < 10 ? '0' + parseInt(item.amlich.day) : item.amlich.day }} </span>
             </td>
           </tr>
         </table>
       </div>
     </div>
+      <b-modal ref="PhucAmModal" hide-footer :title="phucamtite">
+        <div class="PhucAm">
+          <span class="PhucAmLine" v-for="item in phucam" :sach="item.ten" :chuong="item.chuong" :cau="item.cau"
+            v-html="'<i>[' + item.cau + ']</i>' + item.noidung">
+          </span>
+        </div>
+      </b-modal>
+    
 
   </div>
 </template>
 
 <script>
 var lstThu = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+
 export default {
   name: 'ModuleLichCongGiao',
   components: {},
@@ -73,12 +86,51 @@ export default {
       dayselect: null,
       dayselecttmp: null,
       lstThu: lstThu,
+      phucam:[],
+      regex: /[1-9a-zA-ZĐđ]+ \d+,(.?\d+\S?- ?\d+[a-z]?|\d+)+/g,
+      phucamtite:''
     }
   },
   methods: {
+    showPAM(code) {
+      var self = this
+      var url = window.location.origin + '/api/app/calendar/getpam';
+      var data = this.codeToAtt(code)
+      // $.ajaxSetup({
+      //       headers: {
+      //          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      //       }
+      //    });
+      $.ajax({
+        type: 'GET',
+        url: url,
+        data: data,
+        success: function (json) {
+          self.phucam = json;
+          self.phucamtite = code;
+          self.$refs['PhucAmModal'].show()
+        }
+      })
+    },
+    codeToAtt(s) {
+      var sach = s.match(/^\S+ /)[0].trim();
+      var chuong = s.match(/^\S+ (.*),/)[1].trim();
+      var caus = s.match(/^\S+ \d+,(.*)/)[1].trim();
+      var causp = caus.split('.')
+      var lstcau = [];
+      for (var i = 0; i < causp.length; i++) {
+        var cauitem = causp[i]
+        var cas = cauitem.split('-')
+        for (var j = 0; j < cas.length; j++) {
+          cas[j] = cas[j].replace(/\D/g, '')
+        }
+        lstcau.push(cas);
+      }
+      return { sach: sach, chuong: chuong, caus: caus, lstcau: lstcau }
+    },
     LoadCal(month, year) {
       var self = this
-      var url = window.location.origin + '/api/app/calendar/getlist' + '?month=' + month + '&year=' + year;
+      var url = window.location.origin + '/api/app/calendar/getlist' + '?month=' + month + '&year=' + year + '&firebasephone=1';
       $.getJSON(url, function (json) {
         self.lstCal = json
         self.CalToTable()
@@ -120,6 +172,15 @@ export default {
       var self = this
       self.dayselect = item;
     },
+    PhucAmHover(str) {
+      
+      const regex = /[1-9a-zA-ZĐđ]+ \d+,(.?\d+\S?- ?\d+[a-z]?|\d+)+/g;
+      if (str == undefined || str == null || str == '') return '';
+      var res = str.replace(regex, "|$&|")
+      // var res = str.replace(regex, "<span id='phucamspan' class='pam'>$&</span>")
+      // //document.getElementById ("phucamspan").addEventListener ("click", showPAM(`$&`), false)
+      return res.replace(/#/gi, '').replace('<p>','').replace('</p>','');
+    },
   },
   mounted() {
     var now = new Date();
@@ -128,6 +189,8 @@ export default {
     self.thismonth = now.getMonth() + 1;
     self.thisyear = now.getFullYear();
     self.LoadCal(self.thismonth, self.thisyear);
+
+    
 
   },
   setting: {
