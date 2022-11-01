@@ -45,7 +45,7 @@
             </td>
           </tr>
           <tr v-for="lstitem in lstCalTab">
-            <td class="ngaylich" :class="'indexNgay' + item.n" v-for="item in lstitem" @click="selectDay(item)">
+            <td class="ngaylich" :class="dayselect===item?'selectedDay indexNgay' + item.n:'indexNgay' + item.n" v-for="item in lstitem" @click="selectDay(item)">
               <span class="dl" :class="item.isToday ? 'istoday' : item.month != thismonth ? 'othermonth' : ''">{{
                   item.day
                     < 10 ? '0' + parseInt(item.day) : item.day
@@ -87,15 +87,16 @@ export default {
       dayselecttmp: null,
       lstThu: lstThu,
       phucam:[],
-      regex: /[1-9a-zA-ZĐđ]+ \d+,(.?\d+\S?- ?\d+[a-z]?|\d+)+/g,
-      phucamtite:''
+      regex: /[1-9a-zA-ZĐđ]+ \d+,?(\d+)?.?(\d+)?(\w+)?-?(\d+)?,?(\d+)?.?(\d+)?(\w+)?-?(\d+),?(\d+)?.?(\d+)(\w)?/g,
+      phucamtite:'',
     }
   },
   methods: {
     showPAM(code) {
+      //console.log(code)
       var self = this
       var url = window.location.origin + '/api/app/calendar/getpam';
-      var data = this.codeToAtt(code)
+      var data = code
       // $.ajaxSetup({
       //       headers: {
       //          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -104,7 +105,7 @@ export default {
       $.ajax({
         type: 'GET',
         url: url,
-        data: data,
+        data: {data:data},
         success: function (json) {
           self.phucam = json;
           self.phucamtite = code;
@@ -112,22 +113,7 @@ export default {
         }
       })
     },
-    codeToAtt(s) {
-      var sach = s.match(/^\S+ /)[0].trim();
-      var chuong = s.match(/^\S+ (.*),/)[1].trim();
-      var caus = s.match(/^\S+ \d+,(.*)/)[1].trim();
-      var causp = caus.split('.')
-      var lstcau = [];
-      for (var i = 0; i < causp.length; i++) {
-        var cauitem = causp[i]
-        var cas = cauitem.split('-')
-        for (var j = 0; j < cas.length; j++) {
-          cas[j] = cas[j].replace(/\D/g, '')
-        }
-        lstcau.push(cas);
-      }
-      return { sach: sach, chuong: chuong, caus: caus, lstcau: lstcau }
-    },
+    
     LoadCal(month, year) {
       var self = this
       var url = window.location.origin + '/api/app/calendar/getlist' + '?month=' + month + '&year=' + year + '&firebasephone=1';
@@ -171,15 +157,17 @@ export default {
     selectDay(item) {
       var self = this
       self.dayselect = item;
+
     },
     PhucAmHover(str) {
-      
-      const regex = /[1-9a-zA-ZĐđ]+ \d+,(.?\d+\S?- ?\d+[a-z]?|\d+)+/g;
+      //console.log(str)
+      const regex = this.regex;
       if (str == undefined || str == null || str == '') return '';
       var res = str.replace(regex, "|$&|")
       // var res = str.replace(regex, "<span id='phucamspan' class='pam'>$&</span>")
       // //document.getElementById ("phucamspan").addEventListener ("click", showPAM(`$&`), false)
-      return res.replace(/#/gi, '').replace('<p>','').replace('</p>','');
+      //console.log(res.replace(/#/gi, '').replaceAll('<p>','').replaceAll('</p>',''))
+      return res.replace(/#/gi, '').replaceAll('<p>','').replaceAll('</p>','');
     },
   },
   mounted() {

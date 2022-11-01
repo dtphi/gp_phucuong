@@ -6,7 +6,10 @@ use App\Http\Controllers\Api\Admin\Services\Contracts\NgayLeModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Arr;
 use stdClass;
+
+use function PHPUnit\Framework\matches;
 
 class CalenderController extends Controller
 {
@@ -16,29 +19,143 @@ class CalenderController extends Controller
 
   public function getpam(Request $request)
   {
-    
-    $sach = $request->sach;
-    $chuong = $request->chuong;
-    $lstcau = $request->lstcau;
- 
-    $strwherels = [];
-    foreach ($lstcau as $item) {
-      if (count($item) > 1) {
-        $strwherels[] = "(cau BETWEEN $item[0] and $item[1])";
-      } else if (!empty($item[0])) {
-        $strwherels[] = "(cau = $item[0])";
+    //$data = $request->data;Gn 1,1–2,1.11
+    $data = $request->data;
+    $data=$this->codeToAtt($data);
+    //dd($data);
+    if (count($data)<=1){
+      $sach = $data[0]->sach;
+      $chuong = $data[0]->chuong;
+      $lstcau = $data[0]->lstcau;
+      
+      $strwherels = [];
+      foreach ($lstcau as $item) {
+        if (count($item) > 1) {
+          $strwherels[] = "(cau BETWEEN $item[0] and $item[1])";
+        } else if (!empty($item[0])) {
+          $strwherels[] = "(cau = $item[0])";
+        }
       }
+      $strwhere = join(' or ', $strwherels);
+  
+      $sql = sprintf("ten='%s' and chuong='%s' and ($strwhere) ORDER BY cau", $sach, $chuong);
+  
+      $res = \DB::table('kinh_thanhs')
+        ->whereRaw($sql)
+        ->get();
+      return $res;
     }
-    $strwhere = join(' or ', $strwherels);
+    else {
+      //dd($data);
+      $sach = $data[0]->sach;
+      $codecaulst=array();
+      foreach($data as $key=>$value){
+        $chuong=$value->chuong;
+        $lstcau=$value->lstcau;
+        foreach($lstcau as $cau){
+          if (substr_count($cau,'-')<1){
+            array_push($codecaulst,str_pad($chuong, 3, '0', STR_PAD_LEFT).str_pad($cau, 3, '0', STR_PAD_LEFT));
+          }
+        }
+      }
+      if (count($codecaulst)>2){
+        $caucodecaulstOR=array_slice($codecaulst,2);
+        $strwherels = [];
+        foreach($caucodecaulstOR as $item){
+          $strwhere[]="CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) = '$item'";
+        }
+        $strwheresql=join(' or ', $strwhere);
+        $sql = sprintf("ten='%s' 
+        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) >= '%s' 
+        and (CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) <= '%s'
+        or $strwheresql)",$sach,$codecaulst[0],$codecaulst[1]);
+      }
+      else{
+        $sql = sprintf("ten='%s' 
+        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) >= '%s' 
+        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) <= '%s'",$sach,$codecaulst[0],$codecaulst[1]);
+      }
 
-    $sql = sprintf("ten='%s' and chuong='%s' and ($strwhere) ORDER BY cau", $sach, $chuong);
-
-    $res = \DB::table('kinh_thanhs')
+      $res = \DB::table('kinh_thanhs')
       ->whereRaw($sql)
       ->get();
-    return $res;
-  }
+      return $res;
+    }
 
+  }
+  public function codeToAtt($str_phucam){
+    $so_chuong=substr_count($str_phucam,',');
+    
+    if ($so_chuong<=1){
+      $matches = array();
+      preg_match('/^\S+ /',$str_phucam, $matches);
+      $sach=trim($matches[0],' ');
+      preg_match('/^\S+ (.*),/',$str_phucam,$matches);
+      $chuong = $matches[1].trim(' ');
+      preg_match('/^\S+ \d+,(.*)/',$str_phucam,$matches);
+      $caus =$matches[1].trim(' ');
+      //dd($sach.'/'.$chuong.'/'.$caus);
+      $causp = explode(".", $caus);
+
+      $lstcau =array();
+      foreach( $causp as $cauitem){
+        $cas = explode("-", $cauitem);
+        foreach($cas as $key=>$value){
+          $cas[$key]=preg_replace('/\D/','',$value);
+        }
+        array_push($lstcau,$cas);
+      }
+      
+      $phucs_am_object = (object) [
+        'sach' => $sach,
+        'chuong' => $chuong,
+        'lstcau' => $lstcau,
+        'so_chuong' => $so_chuong
+      ];
+      //dd( $phucs_am_object);
+      return array($phucs_am_object);
+    }
+    else {
+      $str_phucam_replace=str_replace('–','-',$str_phucam);
+      $chuongsp = explode("-", $str_phucam_replace);
+      $matches = array();
+      preg_match('/^\S+ /',$str_phucam_replace, $matches);
+      $sach=trim($matches[0],' ');
+      $lstchuong= array();
+      //dd($chuongsp);
+      foreach($chuongsp as $chuongitem){
+        $lstcau=array();
+        if(substr_count($chuongitem,',')===0)
+        {
+        $current_lstcau=$lstchuong[array_key_last($lstchuong)]->lstcau;
+        $current_cau=$current_lstcau[array_key_last($current_lstcau)];
+        $lstchuong[array_key_last($lstchuong)]->lstcau[array_key_last($current_lstcau)].='-'.$chuongitem;
+        } else
+        {preg_match('/\d+,/',$chuongitem, $matches);
+        $chuong=str_replace(',','',$matches[0]);
+        preg_match('/,\d+((\.)?(\d+)?)+/',$chuongitem, $matches);
+        $caus=str_replace(',','',$matches[0]);
+        $causp = explode(".", $caus);
+        foreach( $causp as $cauitem){
+          //$cas = explode("-", $cauitem);
+          preg_replace('/\D/','',$cauitem);
+          array_push($lstcau,$cauitem);
+        }
+    
+        $phucs_am_object = (object) [
+          'sach' => $sach,
+          'chuong' => $chuong,
+          'lstcau' => $lstcau,
+          'so_chuong' => $so_chuong
+        ];
+
+        array_push($lstchuong,$phucs_am_object);
+      }
+      }
+      //dd($lstchuong);
+      return $lstchuong;
+    }
+  }
   public function getlist(Request $request)
   {
     $month = empty($request->month) ? date('m') : $request->month;
