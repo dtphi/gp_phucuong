@@ -3,25 +3,25 @@
     <div class="hcalendarbox" id="hcalendarbox">
       <div class="pleft"></div>
       <div class="pright">
-        <table class="table table-bordered">
-          <tr class="todaybox">
-            <td colspan="7" v-if="dayselect != null">
-              <p class="thutoday">
+        <table class="table table-bordered" v-if="dayselect != null">
+          <tr class="todaybox" :class="dayselect.n==='7'?'text-danger':''">
+            <td colspan="7" >
+              <p class="thutoday" :class="dayselect.n==='7'?'text-danger':''">
                 {{ dayselect.l }}
               </p>
-              <p class="daytoday">
+              <p class="daytoday" :class="dayselect.n==='7'?'text-danger':''">
                 {{ dayselect.day }}
               </p>
               <p class="monthyeartoday">
-                Tháng {{ dayselect.month }} năm {{ dayselect.year }}
+                Tháng {{ dayselect.month }} năm {{ dayselect.year }} (năm {{dayselect.namthanh}})
               </p>
 
               <div v-for="itemle in dayselect.le">
-                <a v-if="itemle.code==='HANHCACTHANH'" class="todayle todayHanhCacThanh" :href="gethref(itemle)" target="_blank">{{ itemle.name }}</a>
+                <a v-if="itemle.code==='HANHCACTHANH'" class="todayle todayHanhCacThanh" :href="gethref(itemle)">{{ itemle.name }}</a>
                 <p v-else class="todayle">{{ itemle.name }}</p>
 
                 <p class="todayphucam">
-                  <span :class="itemphucam.match(regex)!=null?'pam':''"  @click="showPAM(itemphucam)" v-for="itemphucam in PhucAmHover(itemle.phucam).split('|')">{{itemphucam}}</span>
+                  <span :class="itemphucam.match(regex)!=null?'pam':''"  @click="showPAM(itemphucam)" v-for="itemphucam in PhucAmHover(itemle.phucam).split('|')" v-html="itemphucam"></span>
                   
                 </p>
               </div>
@@ -41,7 +41,7 @@
             <td @click="nextMonth()"> &#62; </td>
           </tr>
           <tr class="lichThu">
-            <td v-for="item in lstThu">
+            <td v-for="item in lstThu" :class="item==='CN'?'table-warning':''">
               {{ item }}
             </td>
           </tr>
@@ -91,7 +91,7 @@ export default {
       dayselecttmp: null,
       lstThu: lstThu,
       phucam:[],
-      regex: /[1-9a-zA-ZĐđ]+ \d+,?(\d+)?.?(\d+)?(\w+)?-?(\d+)?,?(\d+)?.?(\d+)?(\w+)?-?(\d+),?(\d+)?.?(\d+)(\w)?/g,
+      regex: /[1-9a-zA-ZĐđ]+ \d+,?(\d+)?.?(\d+)?(\w+)?-?(\d+)?,?(\d+)?.?(\d+)?(\w+)?-?(\d+),?(\d+)?.?(\d+)(\w)?(-\d+)?/g,
       phucamtite:'',
       hrefHanhCacThanh:'',
     }
