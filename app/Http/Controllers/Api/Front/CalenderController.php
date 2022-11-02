@@ -237,6 +237,7 @@ class CalenderController extends Controller
     $item->day = $day;
     $item->month = $month;
     $item->year = $year;
+    $item->namthanh = $this->TinhNam($year);
     $item->isToday = $day == $todayd && $month == $todaym && $year == $todayy;
     $item->amlich = $this->getAL($day, $month, $year);
     $item->l = $this->WeekdayVi($day, $month, $year);
@@ -556,21 +557,19 @@ class CalenderController extends Controller
     for($i=0;$i<strlen($stry);$i++){
         $sum+=$stry[$i];
     }
-    
     if($sum%3 == 0)
         return "C";
     else if($sum%3 == 1)
         return "A";
     else if($sum%3 == 2)
         return "B";
-    
 }
 
 function TinhNam2ColDB($year){
     $type = $this->TinhNam($year);
-    $chanle = "ii";
+    $chanle = "i";
     if($year%2==0){
-        $chanle = "i";
+        $chanle = "ii";
     }
     return strtolower("nam_".$type."$chanle");
 }
