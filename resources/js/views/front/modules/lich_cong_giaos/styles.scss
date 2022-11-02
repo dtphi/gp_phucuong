@@ -4,10 +4,11 @@
 
 .hcalendarbox td {
     text-align: center;
-    cursor: pointer;
+    cursor: default;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    
 }
 
 .ngaylich:hover {
@@ -66,9 +67,11 @@
 
 .todaybox {
     background: #FFF;
+    pointer-events: none;
 }
 .todaybox p {
     margin-bottom: 8px;
+
 }
 
 .ngaylich {
@@ -90,8 +93,9 @@
 }
 
 .pam {
+    pointer-events: auto;
     font-weight: bold;
-    ;
+    cursor: pointer;
 }
 
 .pam:hover {
@@ -106,4 +110,12 @@ color: gray;
 .todayphucam {
     font-size: 11px;
     color: brown;
+}
+.todayHanhCacThanh{
+    pointer-events: auto;
+    font-weight: bold;
+    cursor: pointer;
+}
+.todayHanhCacThanh:hover{
+    color: blue;
 }
