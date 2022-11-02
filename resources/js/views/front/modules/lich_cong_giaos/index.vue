@@ -17,7 +17,8 @@
               </p>
 
               <div v-for="itemle in dayselect.le">
-                <p class="todayle">{{ itemle.name }}</p>
+                <a v-if="itemle.code==='HANHCACTHANH'" class="todayle todayHanhCacThanh" :href="gethref(itemle)" target="_blank">{{ itemle.name }}</a>
+                <p v-else class="todayle">{{ itemle.name }}</p>
 
                 <p class="todayphucam">
                   <span :class="itemphucam.match(regex)!=null?'pam':''"  @click="showPAM(itemphucam)" v-for="itemphucam in PhucAmHover(itemle.phucam).split('|')">{{itemphucam}}</span>
@@ -71,7 +72,10 @@
 
 <script>
 var lstThu = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
-
+import {
+  fn_get_href_base_url,
+  fn_change_to_slug,
+} from '@app/api/utils/fn-helper'
 export default {
   name: 'ModuleLichCongGiao',
   components: {},
@@ -89,6 +93,7 @@ export default {
       phucam:[],
       regex: /[1-9a-zA-ZĐđ]+ \d+,?(\d+)?.?(\d+)?(\w+)?-?(\d+)?,?(\d+)?.?(\d+)?(\w+)?-?(\d+),?(\d+)?.?(\d+)(\w)?/g,
       phucamtite:'',
+      hrefHanhCacThanh:'',
     }
   },
   methods: {
@@ -157,7 +162,11 @@ export default {
     selectDay(item) {
       var self = this
       self.dayselect = item;
-
+    },
+    gethref(item){
+      //console.log(item)
+      const regex=/[\/\#\?\&\\\%]/g;
+      return fn_get_href_base_url(`/hanh-cac-thanh/chi-tiet/${fn_change_to_slug(item.name).replace(regex,'')}-${item.idngayle}`)
     },
     PhucAmHover(str) {
       //console.log(str)
