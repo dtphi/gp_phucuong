@@ -33,12 +33,14 @@
             </td>
           </tr>
           <tr class="chonlich">
+            <td @click="prevYear()"> &#60;&#60; </td>
             <td @click="prevMonth()">
               &#60; </td>
-            <td colspan="5">
-              Tháng {{ thismonth }} năm {{ thisyear }}
+            <td colspan="3">
+              {{ thismonth }}/{{ thisyear }}
             </td>
             <td @click="nextMonth()"> &#62; </td>
+            <td @click="nextYear()"> &#62;&#62; </td>
           </tr>
           <tr class="lichThu">
             <td v-for="item in lstThu" :class="item==='CN'?'table-warning':''">
@@ -137,6 +139,11 @@ export default {
         self.lstCalTab.push(self.lstCal.slice(i * 7, i * 7 + 7));
       }
     },
+    prevYear(){
+      var self = this
+      self.thisyear-=1
+      self.LoadCal(self.thismonth, self.thisyear)
+    },
     prevMonth() {
       var self = this
       if (self.thismonth > 1) {
@@ -157,6 +164,11 @@ export default {
         self.thismonth = 1;
         self.thisyear += 1;
       }
+      self.LoadCal(self.thismonth, self.thisyear)
+    },
+    nextYear(){
+      var self = this
+      self.thisyear+=1
       self.LoadCal(self.thismonth, self.thisyear)
     },
     selectDay(item) {
