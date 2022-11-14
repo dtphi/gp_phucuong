@@ -173,6 +173,11 @@ export default {
         self.thisyear -= 1
         self.LoadCal(self.thismonth, self.thisyear)
       },
+      nextYear() {
+        var self = this
+        self.thisyear += 1
+        self.LoadCal(self.thismonth, self.thisyear)
+      },
       prevMonth() {
         var self = this
         if (self.thismonth > 1) {

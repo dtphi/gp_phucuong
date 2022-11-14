@@ -14,6 +14,9 @@ use function PHPUnit\Framework\matches;
 
 class CalenderController extends Controller
 {
+  public function __construct()
+  {
+  }
 
   public function getCalendarExcept($month){
     return \DB::table('le_thaydoi')
