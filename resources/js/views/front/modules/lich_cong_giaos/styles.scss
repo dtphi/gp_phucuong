@@ -1,121 +1,173 @@
-.hcalendarbox{
+.hcalendarbox {
     display: none;
-}
+  }
 
-.hcalendarbox td {
+  .hcalendarbox td {
     text-align: center;
     cursor: default;
-    -webkit-user-select: none;
+    /* -webkit-user-select: none;
     -ms-user-select: none;
-    user-select: none;
-    
-}
+    user-select: none; */
+  }
 
-.ngaylich:hover {
+  .ngaylich:hover {
     background: #E1F5FE !important;
-}
+  }
 
-.hcalendarbox .dl {
+  .hcalendarbox .dl {
     font-size: 15px;
     word-break: keep-all;
-}
+  }
 
-.hcalendarbox .al {
+  .hcalendarbox .al {
     font-size: 10px;
     text-align: right;
     display: block;
     word-break: keep-all;
-}
+  }
 
-.thutoday {
+  .thutoday {
     color: #004D40;
-    font-size:20px;
-}
+    font-size: 20px;
+  }
 
-.daytoday {
+  .daytoday {
     font-size: 40px;
     font-weight: bold;
     color: #004D40;
-}
+  }
 
-.todayal {
+  .todayal {
     font-size: 11px;
     color: #880E4F;
-}
+  }
 
-.todayle {
+  .todayle {
     font-size: 11px;
     color: #1976D2;
-}
+  }
 
-.indexNgay7 {
+  .indexNgay7 {
     background: #FFEBEE !important;
     color: red !important;
-}
-.selectedDay{
+  }
+
+  .selectedDay {
     background: #70cad6 !important;
-}
-.lichThu {
+  }
+
+  .lichThu {
     background: #B2EBF2;
     font-size: 11px;
-}
+  }
 
-.chonlich {
+  .chonlich {
     background: #880E4F;
     color: #FFF;
-}
+  }
 
-.todaybox {
+  .todaybox {
     background: #FFF;
     pointer-events: none;
-}
-.todaybox p {
+  }
+
+  .todaybox p {
     margin-bottom: 8px;
+  }
 
-}
-
-.ngaylich {
+  .ngaylich {
     background: #FFFDE7;
-}
+  }
 
-.istoday {
+  .istoday {
     font-weight: bold;
     color: #880E4F;
-}
+  }
 
-.othermonth {
+  .othermonth {
     color: darkgray;
-}
+  }
 
-.lichThu td {
+  .lichThu td {
     padding: 0px !important;
     margin: 0 !important;
-}
+  }
 
-.pam {
+  .pam {
     pointer-events: auto;
     font-weight: bold;
     cursor: pointer;
-}
+  }
 
-.pam:hover {
+  .pam:hover {
     color: red;
-}
+  }
 
-.PhucAmLine i {
-font-size: 10px;
-color: gray;
-}
+  .PhucAmLine i {
+    font-size: 10px;
+    color: gray;
+  }
 
-.todayphucam {
+  .todayphucam {
     font-size: 11px;
     color: brown;
-}
-.todayHanhCacThanh{
+  }
+
+  .todayHanhCacThanh {
     pointer-events: auto;
     font-weight: bold;
     cursor: pointer;
-}
-.todayHanhCacThanh:hover{
+  }
+
+  .todayHanhCacThanh:hover {
     color: blue;
-}
+  }
+
+  .hand {
+    cursor: pointer !important;
+  }
+
+  .title {
+    background: #004D40;
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+  }
+
+  p.lmInfo {
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+
+  .itemLm {
+    border-bottom: 1px dashed #90aedd;
+    margin-bottom: 10px;
+  }
+
+  span.lmTen {
+    font-weight: bold;
+  }
+
+  span.lmTenThanh {
+    color: #286090;
+  }
+
+  .lmAge {
+    font-size: 11px;
+  }
+
+  .BonMangChiuChuc {
+    font-size: 11px;
+    cursor: pointer !important;
+    pointer-events: auto;
+  }
+
+  .BonMangChiuChuc:hover {
+    font-weight: bold;
+    color: red;
+  }
+  p.lmName {
+      padding: 0;
+      margin: 0;
+  }
