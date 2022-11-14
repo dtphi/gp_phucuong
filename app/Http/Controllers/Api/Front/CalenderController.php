@@ -7,14 +7,82 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Arr;
+use App\Http\Common\Tables;
 use stdClass;
 
 use function PHPUnit\Framework\matches;
 
 class CalenderController extends Controller
 {
-  public function __construct()
-  {
+
+  public function getCalendarExcept($month){
+    return \DB::table('le_thaydoi')
+    ->whereNull('deleted_at')
+    ->whereRaw("month(date) = $month")
+    ->selectRaw("
+    date,
+    month(date) as month,
+    day(date) as day,
+    year(date) as year, 
+    data
+    ")
+    ->get()
+    ->toArray();
+  }
+
+  public function saveCalendar(Request $request){
+    $date = $request->date;
+    $lstle = $request->lstle;
+  }
+  public function getNgayBonMang($month=1){
+    $result = \DB::table('pc_thanhs as thanh')
+    ->join('pc_linhmucs as lm','lm.ten_thanh_id', '=', 'thanh.id')
+    ->whereRaw("thanh.bon_mang_thang = $month")
+    ->selectRaw("
+    thanh.id as holyid,
+    thanh.name as holyname,
+    lm.ten as fullname,
+    lm.ngay_rip as rip,
+    thanh.bon_mang_ngay as day,
+    thanh.bon_mang_thang as month
+    ")
+    ->orderBy('lm.ngay_rip')
+    ->get()
+    ->toArray();
+
+    return $result;
+  }
+
+  public function getNgayChiuChuc($month=1){
+    $result = \DB::table('pc_linhmucs as lm')
+    ->join('pc_linhmuc_chucthanhs as chuc','lm.id', '=', 'chuc.linh_muc_id')
+    ->join('pc_thanhs as thanh','lm.ten_thanh_id', '=', 'thanh.id')
+    ->whereRaw("DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%m') = $month")
+    ->selectRaw("
+    thanh.name as holyname,
+    lm.ten as fullname,
+    DATE_FORMAT(lm.ngay_thang_nam_sinh,'%Y-%m-%d') as birthday,
+    lm.noi_sinh as placebirth,
+    DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%Y-%m-%d') as ordinationdate,
+    chuc.nguoi_thu_phong as ordinationuser,
+    chuc.noi_thu_phong as ordinationplace,
+    chuc.chuc_thanh_id holyid,
+    lm.ngay_rip as rip,
+    lm.image as image,
+    DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%d') as day,
+    DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%m') as month,
+    DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%Y') as year
+    ")
+    ->groupBy(['lm.id','chuc.ngay_thang_nam_chuc_thanh'])
+    ->orderBy('lm.ngay_rip')
+    ->get()
+    ->toArray();
+
+    foreach($result as &$item){
+      $item->position = Tables::$chucThanhs[$item->holyid];
+    }
+
+    return $result;
   }
 
   public function getpam(Request $request)
@@ -160,10 +228,11 @@ class CalenderController extends Controller
   {
     $month = empty($request->month) ? date('m') : $request->month;
     $year = empty($request->year) ? date('Y') : $request->year;
-    return $this->GetFullLichAndLe($month, $year);
+    $onlyMonth = empty($request->onlyMonth) ? false : $request->onlyMonth;
+    return $this->GetFullLichAndLe($month, $year, $onlyMonth);
   }
 
-  public function GetFullLichAndLe($month, $year)
+  public function GetFullLichAndLe($month, $year, $onlyMonth = false)
   {
     $NgayLe = $this->getCacNgayLeTrongNam($year);
     $NgayLeThang = array_filter(
@@ -172,15 +241,43 @@ class CalenderController extends Controller
         return $item->month == $month;
       }
     );
-
-    $lich = $this->getFullCal($month, $year);
-
+    $lich = !$onlyMonth ? $this->getFullCal($month, $year) : $this->getListCal($month, $year);
+    $NgayBonMang = $this->getNgayBonMang($month);
+    $NgayChiuChuc = $this->getNgayChiuChuc($month);
+    $DateExcept = $this->getCalendarExcept($month);
+   
     foreach ($lich as $item) {
-
-      $mm = array_filter($NgayLeThang, function ($itemfilter) use ($item) {
+      $lstexcepts = array_filter($DateExcept, function ($itemfilter) use ($item) {
         return $itemfilter->day == $item->day && $itemfilter->month == $item->month && $itemfilter->year == $item->year;
       });
-      $item->le =  $mm;
+
+      if(count($lstexcepts)>0){
+        $lstexcept = current($lstexcepts);
+        $dataexcept = $lstexcept->data;
+        $obj = json_decode($dataexcept);
+        $item->le = $obj->le;
+        $item->bonmang = $obj->bonmang;
+        $item->ngaychiuchuc = $obj->ngaychiuchuc;
+        continue;
+      }
+
+      $lstle = array_filter($NgayLeThang, function ($itemfilter) use ($item) {
+        return $itemfilter->day == $item->day && $itemfilter->month == $item->month && $itemfilter->year == $item->year;
+      });
+      $item->le = [];
+      $item->le =  $lstle;
+
+      $lstBonMang = array_filter($NgayBonMang, function ($itemfilter) use ($item) {
+        return $itemfilter->day == $item->day && $itemfilter->month == $item->month;
+      });
+      $item->bonmang = [];
+      $item->bonmang = $lstBonMang;
+
+      $lstNgayChiuChuc = array_filter($NgayChiuChuc, function ($itemfilter) use ($item) {
+        return $itemfilter->day == $item->day && $itemfilter->month == $item->month;
+      });
+      $item->ngaychiuchuc = [];
+      $item->ngaychiuchuc = $lstNgayChiuChuc;
     }
 
     return $lich;
