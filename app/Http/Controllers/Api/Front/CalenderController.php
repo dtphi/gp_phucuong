@@ -16,6 +16,7 @@ class CalenderController extends Controller
 {
   public function __construct()
   {
+
   }
 
   public function getCalendarExcept($month){
@@ -36,6 +37,21 @@ class CalenderController extends Controller
   public function saveCalendar(Request $request){
     $date = $request->date;
     $lstle = $request->lstle;
+    $dapts = \DB::table('le_thaydoi')->where('date', '=', $date)->get();
+    if ($dapts->isEmpty()) {
+      $res = \DB::table('le_thaydoi')->insert([
+        'date' => $date,
+        'data' => json_encode($lstle)
+      ]);
+    } else {
+      $res = \DB::table('le_thaydoi')
+        ->where('date', '=', $date)
+        ->update(
+          ['data' => json_encode($lstle)]
+        );
+    }
+    
+    return $res;
   }
   public function getNgayBonMang($month=1){
     $result = \DB::table('pc_thanhs as thanh')
@@ -57,6 +73,7 @@ class CalenderController extends Controller
   }
 
   public function getNgayChiuChuc($month=1){
+   
     $result = \DB::table('pc_linhmucs as lm')
     ->join('pc_linhmuc_chucthanhs as chuc','lm.id', '=', 'chuc.linh_muc_id')
     ->join('pc_thanhs as thanh','lm.ten_thanh_id', '=', 'thanh.id')
@@ -250,19 +267,7 @@ class CalenderController extends Controller
     $DateExcept = $this->getCalendarExcept($month);
    
     foreach ($lich as $item) {
-      $lstexcepts = array_filter($DateExcept, function ($itemfilter) use ($item) {
-        return $itemfilter->day == $item->day && $itemfilter->month == $item->month && $itemfilter->year == $item->year;
-      });
-
-      if(count($lstexcepts)>0){
-        $lstexcept = current($lstexcepts);
-        $dataexcept = $lstexcept->data;
-        $obj = json_decode($dataexcept);
-        $item->le = $obj->le;
-        $item->bonmang = $obj->bonmang;
-        $item->ngaychiuchuc = $obj->ngaychiuchuc;
-        continue;
-      }
+      
 
       $lstle = array_filter($NgayLeThang, function ($itemfilter) use ($item) {
         return $itemfilter->day == $item->day && $itemfilter->month == $item->month && $itemfilter->year == $item->year;
@@ -281,6 +286,18 @@ class CalenderController extends Controller
       });
       $item->ngaychiuchuc = [];
       $item->ngaychiuchuc = $lstNgayChiuChuc;
+
+      $lstexcepts = array_filter($DateExcept, function ($itemfilter) use ($item) {
+        return $itemfilter->day == $item->day && $itemfilter->month == $item->month && $itemfilter->year == $item->year;
+      });
+
+      if(count($lstexcepts)>0){
+        $lstexcept = current($lstexcepts);
+        $dataexcept = $lstexcept->data;
+        $item->lehistory = $item->le;
+        $objle = json_decode($dataexcept);
+        $item->le = $objle;
+      }
     }
 
     return $lich;

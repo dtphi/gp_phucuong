@@ -74,7 +74,7 @@
       <b-modal ref="LinhMucDetailModal" hide-footer title="Ngày bổn mạng và ngày chịu chức">
         <div class="dayDetailLm" v-if="dayselect != null">
             <div class="chiuChucBox" v-if="dayselect.ngaychiuchuc.length == undefined">
-              <p class="title">Ngày chịu chức</p>
+              <p class="titlelmdetail">Ngày chịu chức</p>
               <div class="itemLm" v-for="item in dayselect.ngaychiuchuc">
                 <p class="lmName">
                   Cha:
@@ -108,7 +108,7 @@
               </div>
             </div>
             <div class="bonMangBox" v-if="dayselect.bonmang.length == undefined">
-              <p class="title">Ngày bổn mạng</p>
+              <p class="titlelmdetail">Ngày bổn mạng</p>
               <div class="itemLm" v-for="item in dayselect.bonmang">
                 <p class="itemBonMang">
                   <span class="lmTenThanh">{{item.holyname}}</span>
@@ -233,8 +233,8 @@ export default {
         self.dayselect = item;
       },
       gethref(item) {
-        const regex = /[\/\#\?\&\\\%]/g;
-        return window.location.origin + `/hanh-cac-thanh/chi-tiet/test-${item.idngayle}`;
+        const regex=/[\/\#\?\&\\\%]/g;
+        return fn_get_href_base_url(`/hanh-cac-thanh/chi-tiet/${fn_change_to_slug(item.name).replace(regex,'')}-${item.idngayle}`)
       },
       PhucAmHover(str) {
         const regex = this.regex;
