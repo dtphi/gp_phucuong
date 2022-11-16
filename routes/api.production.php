@@ -49,8 +49,9 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::get('/app/get-bo-nhiem-khac/{id}', 'Base\ApiController@getBoNhiemKhac');
     Route::post('/app/update-linh-muc-temp', 'Base\ApiController@updateLinhMucTemp');
     Route::get('/app/export-linh-muc/{id}', 'Base\ApiController@exportLinhMuc');
-	Route::get('/app/calendar/getlist', 'CalenderController@getlist');
-	Route::get('/app/calendar/getpam', 'CalenderController@getpam');
+    Route::get('/app/calendar/getlist', 'CalenderController@getlist');
+    Route::get('/app/calendar/getpam', 'CalenderController@getpam');
+    Route::post('/app/calendar/saveCalendar', 'CalenderController@saveCalendar');
 });
 
 Route::namespace('App\Http\Controllers\Api\Admin')

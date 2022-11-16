@@ -28,6 +28,12 @@ import RestrictIpsPage from 'v@admin/restrictips'
 import AlbumsPage from 'v@admin/albums'
 import GroupAlbumsPage from 'v@admin/groupalbums'
 import NgayLePage from 'v@admin/ngayles';
+import LichCongGiaoPage from 'v@admin/lichconggiao';
+
+import BootstrapVue from "bootstrap-vue"
+
+import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap-vue/dist/bootstrap-vue.css"
 
 import {
   config,
@@ -1426,5 +1432,34 @@ export default [{
         }
       }
     },]
-  },],
+  },
+  {
+    path: 'lich-cong-giao',
+    component: {
+      render: c => c('router-view')
+    },
+    children: [{
+      path: '',
+      component: LichCongGiaoPage,
+      name: 'admin.lichconggiao.list',
+      meta: {
+        layout: DefaultLayout,
+        auth: true,
+        breadcrumbs: [{ 
+          name: 'Quản trị',
+          linkName: 'admin.dashboards',
+          linkPath: '/dashboards'
+        }, {
+          name: 'Lịch công giáo'
+        }],
+        header: 'Lịch công giáo',
+        role: 'admin',
+        title: 'Lịch công giáo',
+        show: {
+          footer: true
+        }
+      }
+    },]
+  },
+],
 }]
