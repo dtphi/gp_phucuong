@@ -126,6 +126,8 @@
 
 <script>
 var lstThu = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+var urlapi = window.location.origin + '/api/app/calendar/';
+var filterPhucAm = /[1-9a-zA-ZĐđ]+ \d+,?(\d+)?.?(\d+)?(\w+)?-?(\d+)?,?(\d+)?.?(\d+)?(\w+)?-?(\d+),?(\d+)?.?(\d+)(\w)?(-\d+)?/g;
 import {
   fn_get_href_base_url,
   fn_change_to_slug,
@@ -145,7 +147,7 @@ export default {
       dayselecttmp: null,
       lstThu: lstThu,
       phucam:[],
-      regex: /[1-9a-zA-ZĐđ]+ \d+,?(\d+)?.?(\d+)?(\w+)?-?(\d+)?,?(\d+)?.?(\d+)?(\w+)?-?(\d+),?(\d+)?.?(\d+)(\w)?(-\d+)?/g,
+      regex: filterPhucAm,
       phucamtite:'',
       hrefHanhCacThanh:'',
     }
@@ -153,7 +155,7 @@ export default {
   methods: {
       showPAM(code) {
         var self = this
-        var url = window.location.origin + '/api/app/calendar/getpam';
+        var url = urlapi+'getpam';
         var data = code
         $.ajax({
           type: 'GET',
@@ -190,7 +192,7 @@ export default {
       },
       LoadCal(month, year) {
         var self = this
-        var url = window.location.origin + '/api/app/calendar/getlist' + '?month=' + month + '&year=' + year + '&firebasephone=1';
+        var url = urlapi + 'getlist' + '?month=' + month + '&year=' + year + '&firebasephone=1';
         $.getJSON(url, function(json) {
           self.lstCal = json
           self.CalToTable()
@@ -286,12 +288,7 @@ export default {
       self.thismonth = now.getMonth() + 1;
       self.thisyear = now.getFullYear();
       self.LoadCal(self.thismonth, self.thisyear);
-    },
-  setting: {
-    panel_title: 'Module Danh Mục Icon',
-    frm_title: 'Thêm danh mục Icon',
-    btn_save_txt: 'Lưu',
-  },
+    }
 }
 </script>
 

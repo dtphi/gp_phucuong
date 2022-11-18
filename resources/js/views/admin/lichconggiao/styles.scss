@@ -1,8 +1,6 @@
 .hgencalendar {
-    max-width: 1000px;
     width: 100%;
     margin: 10px auto;
-    border: 1px solid #ddd;
     padding: 10px;
   }
 
@@ -37,13 +35,13 @@
   }
 
   .leboxname {
-    color: #C0392B;
-    font-weight: bold;
+    color: #C0392B !important;
+    font-weight: bold !important;
   }
 
   .leboxpam {
-    color: #2F4F4F;
-    font-size: 11px;
+    color: #2F4F4F !important;
+    font-size: 11px !important; 
   }
 
   .lebox {
@@ -55,3 +53,7 @@
     color: #8B4513;
     cursor: pointer;
   }
+
+  .inputww {
+    padding-right: 25px !important;
+}

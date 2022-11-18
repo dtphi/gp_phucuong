@@ -14,11 +14,12 @@
               năm
             </td>
             <td>
-              <input type="number" class="dt form-control" v-model="fromyear">
+              <input type="number" class="dt form-control" max="9999" v-model="fromyear">
             </td>
             <td>
-              <input type="button" value="Tìm" class="dt btn btn-info" @click="searchCalendar()" />
-
+              <button type="button" value="Tìm" class="dt btn btn-primary" @click="searchCalendar()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
             </td>
           </tr>
         </table>
@@ -30,8 +31,6 @@
             <tr>
               <th scope="col">Ngày</th>
               <th scope="col">Tên lễ</th>
-              <th scope="col">Trạng thái</th>
-              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -43,66 +42,79 @@
                 </p>
               </td>
               <td>
-                <div class="lebox itemLe" v-for="itemle in item.le">
-                  <p class="leboxname" v-html="itemle.name"></p>
-                  <p class="leboxpam" v-if="itemle.phucam != null">
-                    <span :class="item.match(regexPam) != null ? 'pamhover' : ''" @click="showPAM(item)"
-                      v-for="item in PhucAmHover(itemle.phucam)">
-                      {{ item }}
-                    </span>
-                  </p>
+                <div class="lstLe" v-if="itemSelect == null || itemSelect.uuid != item.uuid">
+                  <div class="lebox itemLe" v-for="itemle in item.le">
+                    <p class="leboxname" v-html="itemle.name"></p>
+                    <p class="leboxpam" v-if="itemle.phucam != null">
+                      <span :class="item.match(regexPam) != null ? 'pamhover' : ''" @click="showPAM(item)"
+                        v-for="item in PhucAmHover(itemle.phucam)">
+                        {{ item }}
+                      </span>
+                    </p>
+                  </div>
                 </div>
-              </td>
-              <td>
+                <div class="bgDayDetail" v-if="itemSelect != null && itemSelect.uuid == item.uuid">
+                  <div
+                    :title="itemSelect.l + ' ngày ' + itemSelect.day + ' tháng ' + itemSelect.month + ' năm ' + itemSelect.year">
+                    <div class="itemLeDetail mb2" v-for="itemle in itemSelect.le">
+                      <div class="input-group inputww">
+                        <input type="text" class="form-control leboxname" v-model="itemle.name" placeholder="Tên lễ">
+                        <div class="input-group-btn">
+                          <button class="btn btn-danger" type="submit" @click="DelItemLeClick(itemSelect, itemle.uuid)">
+                            <i class="glyphicon glyphicon-remove"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <textarea class="form-control mt1 leboxpam" rows="3" v-model="itemle.phucam"
+                        placeholder="Thánh vịnh, phúc âm..."></textarea>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <small class="text-muted" v-if="item.leDateUpdate!=undefined || item.leDateUpdate!=null">
+                      <i class="fa fa-database text-success" aria-hidden="true"></i>
+                      Chỉnh sửa: {{date2datevn(item.leDateUpdate)}}
+                    </small>
+                    <small class="text-muted" v-else>
+                      <i class="fa fa-connectdevelop text-secondary" aria-hidden="true"></i>
+                      Công thức
+                    </small>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="text-right">
+                      <button value="Sửa" v-if="itemSelect == null || itemSelect.uuid != item.uuid" type="button" class="dt btn btn-info"
+                        @click="editClick(item)">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                      </button>
+                      <div v-else class="savett">
+                        <button data-toggle="tooltip" data-placement="bottom" title="Thêm dòng" type="button" class="dt btn btn-secondary text-right" @click="AddClick(itemSelect)">
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
 
-              </td>
-              <td>
-                <input type="button" value="Sửa" class="dt btn btn-info" @click="editClick(item)" />
+                        <button data-toggle="tooltip" data-placement="bottom" title="Quay Lại" type="button" class="dt btn btn-success text-right" @click="BackClick(itemSelect)">
+                          <i class="fa fa-reply" aria-hidden="true"></i>
+                        </button>
+
+                        <button v-if="item.leDateUpdate!=undefined || item.leDateUpdate!=null" data-toggle="tooltip" data-placement="bottom" title="Reset" type="button" value="Reset" class="dt btn btn-danger text-right" @click="ResetClick(itemSelect)">
+                          <i class="fa fa-reply-all" aria-hidden="true"></i>
+                        </button>
+
+                        <button data-toggle="tooltip" data-placement="bottom" title="Lưu" value="Lưu" type="button" class="dt btn btn-primary" @click="saveItemLe()">
+                          <i class="fa fa-save" aria-hidden="true"></i>
+                        </button>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
 
-
-      <div>
-  <!-- Using modifiers -->
-  <b-button v-b-modal.my-modal>Show Modal</b-button>
-
-  <!-- Using value -->
-  <b-button v-b-modal="'my-modal'">Show Modal</b-button>
-
-  <!-- The modal -->
-  <b-modal id="my-modal">Hello From My Modal!</b-modal>
-</div>
-
-      
-
-      <b-modal ref="DayDetailModal">
-        
-        <div class="bgDayDetail">
-        <div  hide-footer v-if="itemSelect != null"
-          :title="itemSelect.l + ' ngày ' + itemSelect.day + ' tháng ' + itemSelect.month + ' năm ' + itemSelect.year">
-          <div class="itemLeDetail mb2" v-for="itemle in itemSelect.le">
-            <div class="input-group">
-              <input type="text" class="form-control" v-model="itemle.name" placeholder="Tên lễ">
-              <div class="input-group-btn">
-                <button class="btn btn-danger" type="submit" @click="DelItemLeClick(itemSelect, itemle.uuid)">
-                  <i class="glyphicon glyphicon-remove"></i>
-                </button>
-              </div>
-            </div>
-            <textarea class="form-control mt1" rows="3" v-model="itemle.phucam"
-              placeholder="Thánh vịnh, phúc âm..."></textarea>
-          </div>
-          <div class="text-right">
-            <input type="button" value="Thêm" class="dt btn btn-primary text-right" @click="AddClick(itemSelect)" />
-          </div>
-
-          <button type="button" class="btn btn-primary" @click="saveItemLe()">Lưu lại</button>
-        </div>
-      </div>
-      </b-modal>
 
 
     </div>
@@ -111,13 +123,11 @@
 
 <script>
 var now = (new Date())
-import {
-  fn_get_href_base_url,
-  fn_change_to_slug,
-} from '@app/api/utils/fn-helper'
+var urlapi = window.location.origin + '/api/app/calendar/';
+var filterPhucAm = /[1-9a-zA-ZĐđ]+ \d+,?(\d+)?.?(\d+)?(\w+)?-?(\d+)?,?(\d+)?.?(\d+)?(\w+)?-?(\d+),?(\d+)?.?(\d+)(\w)?(-\d+)?/g;
+
 export default {
   name: 'LichCongGiaoPage',
-  components: { },
   data() {
     return {
       overight: true,
@@ -127,43 +137,27 @@ export default {
       toyear: 2022,
       lstCal: [],
       itemSelect: null,
-      regexPam: /[1-9a-zA-ZĐđ]+ \d+,?(\d+)?.?(\d+)?(\w+)?-?(\d+)?,?(\d+)?.?(\d+)?(\w+)?-?(\d+),?(\d+)?.?(\d+)(\w)?(-\d+)?/g,
+      itemRoot: null,
+      regexPam: filterPhucAm,
     }
-  },
-  watch: {
-
-  },
-  computed: {
-
   },
   methods: {
     searchCalendar() {
       var self = this
-      // check = (self.frommonth < 1 || self.tomonth < 1) ||
-      //   (self.toyear < self.frommonth) ||
-      //   (self.toyear < 1 || self.frommonth < 1)
-
-      // if (check) {
-      //   alert('Ngày tháng không đúng')
-      //   return 0;
-      // }
-      //self.showLoading = true;
-      // var lst = self.getListMonth(self.frommonth, self.fromyear, self.tomonth, self.toyear)
+      self.frommonth = self.frommonth > 12 ||  self.frommonth < 1 ? now.getMonth()+1 : self.frommonth
+      self.fromyear = self.fromyear < 1 || self.fromyear > 9999 ? now.getFullYear() : self.fromyear;
       var lstCal = []
-      //for (i = 0; i < lst.length; i++) {
-      // item = lst[i]
-      // console.log([month,year])
-      var url = window.location.origin + '/api/app/calendar/getlist' + '?month=' + self.frommonth + '&year=' + self.fromyear + '&onlyMonth=true';
-      // $.getJSON(url, function (json) {
-      //   console.log(json)
-      //   self.lstCal.push(json);
-      // });
-
+      var url = urlapi + 'getlist' + '?month=' + self.frommonth + '&year=' + self.fromyear + '&onlyMonth=true';
       jQuery.ajax({
         url: url,
-        async: true,
+        async: false,
         success: function (json) {
-          self.lstCal = json;
+          var lstCal = json;
+          for (var i = 0; i < lstCal.length; i++) {
+            var im = lstCal[i]
+            im.uuid = self.uuid()
+          }
+          self.lstCal = lstCal;
         }
       });
 
@@ -171,6 +165,13 @@ export default {
     strvn2Date(strvn) {
       sp = strvn.split('/');
       return new Date(sp[2] + '-' + sp[1] + '-' + sp[0])
+    },
+    date2datevn(str){
+      var s1 = str.split(' ');
+      var strdate = s1[0]
+      var strtime = s1[1]
+      var sdate = strdate.split('-');
+      return sdate[2] + '/' + sdate[1] + '/' + sdate[0] + ' '+strtime;
     },
     getListMonth(startmonth, startyear, endmonth, endyear) {
       var lst = []
@@ -208,17 +209,18 @@ export default {
     },
     editClick(item) {
       var self = this
+      if(item.le == null) item.le = [];
+      self.itemRoot = item
       var itemSelect = JSON.parse(JSON.stringify(item))
-      itemSelect.le = this.obserToArray(itemSelect.le)
+      itemSelect.le = self.obserToArray(itemSelect.le)
       if (Array.isArray(itemSelect.le)) {
         for (var i = 0; i < itemSelect.le.length; i++) {
           var m = itemSelect.le[i]
-          m.phucam = m.phucam == null ? '' : this.strip(m.phucam)
-          m.uuid = this.uuid();
+          m.phucam = m.phucam == null ? '' : self.strip(m.phucam)
+          m.uuid = self.uuid();
         }
       }
-      this.itemSelect = itemSelect
-      self.$refs['DayDetailModal'].show()
+      self.itemSelect = itemSelect
     },
     AddClick() {
       this.itemSelect.le.push({
@@ -253,52 +255,75 @@ export default {
       );
     },
     saveItemLe() {
-      var lstle = []
-      this.itemSelect.le.forEach(item => {
-        lstle.push({
-          name: item.name,
-          phucam: item.phucam
-        })
-      });
-
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-
-      var data = {
-        date: this.itemSelect.year + '-' + this.itemSelect.month + '-' + this.itemSelect.day,
-        lstle: lstle,
-      }
-
-      var url = window.location.origin + '/api/app/calendar/saveCalendar';
-
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        success: function (res) {
-          if (res == true) {
-            alert('Đã lưu thành công')
+      if (confirm('Bạn có chắc chắn muốn lưu dữ liệu vừa chỉnh sửa?')) {
+        var lstle = []
+        this.itemSelect.le.forEach(item => {
+          lstle.push({
+            name: item.name,
+            phucam: item.phucam
+          })
+        });
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
+        });
+        var data = {
+          date: this.itemSelect.year + '-' + this.itemSelect.month + '-' + this.itemSelect.day,
+          lstle: lstle,
         }
-      })
 
-
-    }
-  },
-  mounted() {
-
-  },
-  setting: {
-    panel_title: 'Module Danh Mục Icon',
-    frm_title: 'Thêm danh mục Icon',
-    btn_save_txt: 'Lưu',
-  },
+        var url = urlapi + 'saveCalendar';
+        var self = this
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          async:false,
+          success: function (res) {
+            if (res > 0) {
+              alert('Đã lưu thành công')
+              self.itemRoot.le = self.itemSelect.le
+              var now = new Date()
+              self.itemRoot.leDateUpdate = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDay() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+            }
+            else{
+              alert('Lưu thất bại')
+            }
+            self.itemSelect = null;
+          }
+        })
+      }
+    },
+    BackClick() {
+      if (confirm('Bạn có chắc chắn muốn quay lại, sẽ không lưu dữ liệu vừa chỉnh sửa')) {
+        var self = this
+        self.itemSelect = null;
+      }
+    },
+    ResetClick() { 
+      if (confirm('Bạn có chắc chắn muốn reset lại ngày lễ này, xóa dữ liệu đã lưu và quay lại mặc định tự tính bằng công thức?')) {
+        var self = this
+        var lstCal = []
+        var date = self.itemSelect.year + '-' + self.itemSelect.month + '-' + self.itemSelect.day;
+        var url = urlapi + 'deleteCalendar' + '?date=' + date;
+        jQuery.ajax({
+          url: url,
+          async: false,
+          success: function (json) {
+            if(json > 0){
+              self.searchCalendar();
+            }
+            self.itemSelect = null;
+          }
+        });
+      }
+    },
+  }
 }
 </script>
 
 <style lang="scss">
+@import '~bootstrap/scss/bootstrap';
 @import "./styles.scss";
 </style>
