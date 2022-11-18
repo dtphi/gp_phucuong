@@ -81,7 +81,7 @@
               <i class="fa fa-calendar"></i>
             </div>
             <div class="tile-footer">
-              <a :href="_gettUrl('lich-cong-giao')">Xem Linh Mục...</a>
+              <a :href="_gettUrl('lich-cong-giao')">Xem Lịch công giáo...</a>
             </div>
           </div>
         </div>
