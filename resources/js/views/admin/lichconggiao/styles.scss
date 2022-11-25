@@ -1,0 +1,59 @@
+.hgencalendar {
+    width: 100%;
+    margin: 10px auto;
+    padding: 10px;
+  }
+
+  .hgencalendar td {
+    padding: 3px;
+  }
+
+  .dt {
+    display: initial;
+    max-width: 100px;
+  }
+
+  .itemLe {
+    cursor: pointer;
+  }
+
+  .itemLe:hover {
+    color: red;
+  }
+
+  .alline {
+    font-size: 9px;
+    color: rgb(36, 35, 35);
+  }
+
+  .mb2 {
+    margin-bottom: 15px;
+  }
+
+  .mt1 {
+    margin-top: 5px;
+  }
+
+  .leboxname {
+    color: #C0392B !important;
+    font-weight: bold !important;
+  }
+
+  .leboxpam {
+    color: #2F4F4F !important;
+    font-size: 11px !important; 
+  }
+
+  .lebox {
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 10px;
+  }
+
+  .pamhover {
+    color: #8B4513;
+    cursor: pointer;
+  }
+
+  .inputww {
+    padding-right: 25px !important;
+}

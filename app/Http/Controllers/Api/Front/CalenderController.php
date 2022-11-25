@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Api\Front;
 
-use App\Http\Controllers\Api\Admin\Services\Contracts\NgayLeModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Front\Base\ApiController as Controller;
-use Illuminate\Http\Response as HttpResponse;
-use Illuminate\Support\Arr;
+use App\Http\Common\Tables;
 use stdClass;
-
-use function PHPUnit\Framework\matches;
 
 class CalenderController extends Controller
 {
@@ -17,17 +13,117 @@ class CalenderController extends Controller
   {
   }
 
+  public function deleteCalendar(Request $request)
+  {
+    $date = $request->date;
+    return \DB::table('le_thaydoi')
+      ->where('date', '=', $date)
+      ->whereNull('deleted_at')
+      ->update(
+        ['deleted_at' => date("Y-m-d h:i:s")]
+      );
+  }
+
+  public function getCalendarExcept($month)
+  {
+    return \DB::table('le_thaydoi')
+      ->whereNull('deleted_at')
+      ->whereRaw("month(date) = $month")
+      ->selectRaw("
+    date,
+    month(date) as month,
+    day(date) as day,
+    year(date) as year, 
+    data,
+    updated_at
+    ")
+      ->get()
+      ->toArray();
+  }
+
+  public function saveCalendar(Request $request)
+  {
+    $date = $request->date;
+    $lstle = $request->lstle;
+    $dapts = \DB::table('le_thaydoi')->where('date', '=', $date)->whereNull('deleted_at')->get();
+    if ($dapts->isEmpty()) {
+      $res = \DB::table('le_thaydoi')->insert([
+        'date' => $date,
+        'data' => json_encode($lstle)
+      ]);
+    } else {
+      $res = \DB::table('le_thaydoi')
+        ->where('date', '=', $date)
+        ->update(
+          ['data' => json_encode($lstle)]
+        );
+    }
+
+    return $res;
+  }
+  public function getNgayBonMang($month = 1)
+  {
+    $result = \DB::table('pc_thanhs as thanh')
+      ->join('pc_linhmucs as lm', 'lm.ten_thanh_id', '=', 'thanh.id')
+      ->whereRaw("thanh.bon_mang_thang = $month")
+      ->selectRaw("
+    thanh.id as holyid,
+    thanh.name as holyname,
+    lm.ten as fullname,
+    lm.ngay_rip as rip,
+    thanh.bon_mang_ngay as day,
+    thanh.bon_mang_thang as month
+    ")
+      ->orderBy('lm.ngay_rip')
+      ->get()
+      ->toArray();
+
+    return $result;
+  }
+
+  public function getNgayChiuChuc($month = 1)
+  {
+
+    $result = \DB::table('pc_linhmucs as lm')
+      ->join('pc_linhmuc_chucthanhs as chuc', 'lm.id', '=', 'chuc.linh_muc_id')
+      ->join('pc_thanhs as thanh', 'lm.ten_thanh_id', '=', 'thanh.id')
+      ->whereRaw("DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%m') = $month")
+      ->selectRaw("
+    thanh.name as holyname,
+    lm.ten as fullname,
+    DATE_FORMAT(lm.ngay_thang_nam_sinh,'%Y-%m-%d') as birthday,
+    lm.noi_sinh as placebirth,
+    DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%Y-%m-%d') as ordinationdate,
+    chuc.nguoi_thu_phong as ordinationuser,
+    chuc.noi_thu_phong as ordinationplace,
+    chuc.chuc_thanh_id holyid,
+    lm.ngay_rip as rip,
+    lm.image as image,
+    DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%d') as day,
+    DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%m') as month,
+    DATE_FORMAT(chuc.ngay_thang_nam_chuc_thanh,'%Y') as year
+    ")
+      ->groupBy(['lm.id', 'chuc.ngay_thang_nam_chuc_thanh'])
+      ->orderBy('lm.ngay_rip')
+      ->get()
+      ->toArray();
+
+    foreach ($result as &$item) {
+      $item->position = Tables::$chucThanhs[$item->holyid];
+    }
+
+    return $result;
+  }
+
   public function getpam(Request $request)
   {
-    //$data = $request->data;Gn 1,1–2,1.11
     $data = $request->data;
-    $data=$this->codeToAtt($data);
-    //dd($data);
-    if (count($data)<=1){
+    $data = $this->codeToAtt($data);
+    if (count($data) <= 1) {
       $sach = $data[0]->sach;
       $chuong = $data[0]->chuong;
       $lstcau = $data[0]->lstcau;
-      
+
       $strwherels = [];
       foreach ($lstcau as $item) {
         if (count($item) > 1) {
@@ -37,122 +133,112 @@ class CalenderController extends Controller
         }
       }
       $strwhere = join(' or ', $strwherels);
-  
+
       $sql = sprintf("ten='%s' and chuong='%s' and ($strwhere) ORDER BY cau", $sach, $chuong);
-  
+
+      $res = \DB::table('kinh_thanhs')
+        ->whereRaw($sql)
+        ->get();
+      return $res;
+    } else {
+      $sach = $data[0]->sach;
+      $codecaulst = array();
+      foreach ($data as $key => $value) {
+        $chuong = $value->chuong;
+        $lstcau = $value->lstcau;
+        foreach ($lstcau as $cau) {
+          if (substr_count($cau, '-') < 1) {
+            array_push($codecaulst, str_pad($chuong, 3, '0', STR_PAD_LEFT) . str_pad($cau, 3, '0', STR_PAD_LEFT));
+          }
+        }
+      }
+      if (count($codecaulst) > 2) {
+        $caucodecaulstOR = array_slice($codecaulst, 2);
+        $strwherels = [];
+        foreach ($caucodecaulstOR as $item) {
+          $strwhere[] = "CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) = '$item'";
+        }
+        $strwheresql = join(' or ', $strwhere);
+        $sql = sprintf("ten='%s' 
+        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) >= '%s' 
+        and (CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) <= '%s'
+        or $strwheresql)", $sach, $codecaulst[0], $codecaulst[1]);
+      } else {
+        $sql = sprintf("ten='%s' 
+        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) >= '%s' 
+        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) <= '%s'", $sach, $codecaulst[0], $codecaulst[1]);
+      }
+
       $res = \DB::table('kinh_thanhs')
         ->whereRaw($sql)
         ->get();
       return $res;
     }
-    else {
-      //dd($data);
-      $sach = $data[0]->sach;
-      $codecaulst=array();
-      foreach($data as $key=>$value){
-        $chuong=$value->chuong;
-        $lstcau=$value->lstcau;
-        foreach($lstcau as $cau){
-          if (substr_count($cau,'-')<1){
-            array_push($codecaulst,str_pad($chuong, 3, '0', STR_PAD_LEFT).str_pad($cau, 3, '0', STR_PAD_LEFT));
-          }
-        }
-      }
-      if (count($codecaulst)>2){
-        $caucodecaulstOR=array_slice($codecaulst,2);
-        $strwherels = [];
-        foreach($caucodecaulstOR as $item){
-          $strwhere[]="CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) = '$item'";
-        }
-        $strwheresql=join(' or ', $strwhere);
-        $sql = sprintf("ten='%s' 
-        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) >= '%s' 
-        and (CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) <= '%s'
-        or $strwheresql)",$sach,$codecaulst[0],$codecaulst[1]);
-      }
-      else{
-        $sql = sprintf("ten='%s' 
-        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) >= '%s' 
-        and CONCAT(LPAD(chuong, 3, '0'), LPAD(cau, 3, '0')) <= '%s'",$sach,$codecaulst[0],$codecaulst[1]);
-      }
-
-      $res = \DB::table('kinh_thanhs')
-      ->whereRaw($sql)
-      ->get();
-      return $res;
-    }
-
   }
-  public function codeToAtt($str_phucam){
-    $so_chuong=substr_count($str_phucam,',');
-    
-    if ($so_chuong<=1){
+  public function codeToAtt($str_phucam)
+  {
+    $so_chuong = substr_count($str_phucam, ',');
+
+    if ($so_chuong <= 1) {
       $matches = array();
-      preg_match('/^\S+ /',$str_phucam, $matches);
-      $sach=trim($matches[0],' ');
-      preg_match('/^\S+ (.*),/',$str_phucam,$matches);
-      $chuong = $matches[1].trim(' ');
-      preg_match('/^\S+ \d+,(.*)/',$str_phucam,$matches);
-      $caus =$matches[1].trim(' ');
-      //dd($sach.'/'.$chuong.'/'.$caus);
+      preg_match('/^\S+ /', $str_phucam, $matches);
+      $sach = trim($matches[0], ' ');
+      preg_match('/^\S+ (.*),/', $str_phucam, $matches);
+      $chuong = $matches[1] . trim(' ');
+      preg_match('/^\S+ \d+,(.*)/', $str_phucam, $matches);
+      $caus = $matches[1] . trim(' ');
       $causp = explode(".", $caus);
 
-      $lstcau =array();
-      foreach( $causp as $cauitem){
+      $lstcau = array();
+      foreach ($causp as $cauitem) {
         $cas = explode("-", $cauitem);
-        foreach($cas as $key=>$value){
-          $cas[$key]=preg_replace('/\D/','',$value);
+        foreach ($cas as $key => $value) {
+          $cas[$key] = preg_replace('/\D/', '', $value);
         }
-        array_push($lstcau,$cas);
+        array_push($lstcau, $cas);
       }
-      
+
       $phucs_am_object = (object) [
         'sach' => $sach,
         'chuong' => $chuong,
         'lstcau' => $lstcau,
         'so_chuong' => $so_chuong
       ];
-      //dd( $phucs_am_object);
       return array($phucs_am_object);
-    }
-    else {
-      $str_phucam_replace=str_replace('–','-',$str_phucam);
+    } else {
+      $str_phucam_replace = str_replace('–', '-', $str_phucam);
       $chuongsp = explode("-", $str_phucam_replace);
       $matches = array();
-      preg_match('/^\S+ /',$str_phucam_replace, $matches);
-      $sach=trim($matches[0],' ');
-      $lstchuong= array();
-      //dd($chuongsp);
-      foreach($chuongsp as $chuongitem){
-        $lstcau=array();
-        if(substr_count($chuongitem,',')===0)
-        {
-        $current_lstcau=$lstchuong[array_key_last($lstchuong)]->lstcau;
-        $current_cau=$current_lstcau[array_key_last($current_lstcau)];
-        $lstchuong[array_key_last($lstchuong)]->lstcau[array_key_last($current_lstcau)].='-'.$chuongitem;
-        } else
-        {preg_match('/\d+,/',$chuongitem, $matches);
-        $chuong=str_replace(',','',$matches[0]);
-        preg_match('/,\d+((\.)?(\d+)?)+/',$chuongitem, $matches);
-        $caus=str_replace(',','',$matches[0]);
-        $causp = explode(".", $caus);
-        foreach( $causp as $cauitem){
-          //$cas = explode("-", $cauitem);
-          preg_replace('/\D/','',$cauitem);
-          array_push($lstcau,$cauitem);
-        }
-    
-        $phucs_am_object = (object) [
-          'sach' => $sach,
-          'chuong' => $chuong,
-          'lstcau' => $lstcau,
-          'so_chuong' => $so_chuong
-        ];
+      preg_match('/^\S+ /', $str_phucam_replace, $matches);
+      $sach = trim($matches[0], ' ');
+      $lstchuong = array();
+      foreach ($chuongsp as $chuongitem) {
+        $lstcau = array();
+        if (substr_count($chuongitem, ',') === 0) {
+          $current_lstcau = $lstchuong[array_key_last($lstchuong)]->lstcau;
+          $current_cau = $current_lstcau[array_key_last($current_lstcau)];
+          $lstchuong[array_key_last($lstchuong)]->lstcau[array_key_last($current_lstcau)] .= '-' . $chuongitem;
+        } else {
+          preg_match('/\d+,/', $chuongitem, $matches);
+          $chuong = str_replace(',', '', $matches[0]);
+          preg_match('/,\d+((\.)?(\d+)?)+/', $chuongitem, $matches);
+          $caus = str_replace(',', '', $matches[0]);
+          $causp = explode(".", $caus);
+          foreach ($causp as $cauitem) {
+            preg_replace('/\D/', '', $cauitem);
+            array_push($lstcau, $cauitem);
+          }
 
-        array_push($lstchuong,$phucs_am_object);
+          $phucs_am_object = (object) [
+            'sach' => $sach,
+            'chuong' => $chuong,
+            'lstcau' => $lstcau,
+            'so_chuong' => $so_chuong
+          ];
+
+          array_push($lstchuong, $phucs_am_object);
+        }
       }
-      }
-      //dd($lstchuong);
       return $lstchuong;
     }
   }
@@ -160,10 +246,11 @@ class CalenderController extends Controller
   {
     $month = empty($request->month) ? date('m') : $request->month;
     $year = empty($request->year) ? date('Y') : $request->year;
-    return $this->GetFullLichAndLe($month, $year);
+    $onlyMonth = empty($request->onlyMonth) ? false : $request->onlyMonth;
+    return $this->GetFullLichAndLe($month, $year, $onlyMonth);
   }
 
-  public function GetFullLichAndLe($month, $year)
+  public function GetFullLichAndLe($month, $year, $onlyMonth = false)
   {
     $NgayLe = $this->getCacNgayLeTrongNam($year);
     $NgayLeThang = array_filter(
@@ -172,15 +259,43 @@ class CalenderController extends Controller
         return $item->month == $month;
       }
     );
-
-    $lich = $this->getFullCal($month, $year);
+    $lich = !$onlyMonth ? $this->getFullCal($month, $year) : $this->getListCal($month, $year);
+    $NgayBonMang = $this->getNgayBonMang($month);
+    $NgayChiuChuc = $this->getNgayChiuChuc($month);
+    $DateExcept = $this->getCalendarExcept($month);
 
     foreach ($lich as $item) {
 
-      $mm = array_filter($NgayLeThang, function ($itemfilter) use ($item) {
+      $lstle = array_filter($NgayLeThang, function ($itemfilter) use ($item) {
         return $itemfilter->day == $item->day && $itemfilter->month == $item->month && $itemfilter->year == $item->year;
       });
-      $item->le =  $mm;
+      $item->le = [];
+      $item->le =  $lstle;
+
+      $lstBonMang = array_filter($NgayBonMang, function ($itemfilter) use ($item) {
+        return $itemfilter->day == $item->day && $itemfilter->month == $item->month;
+      });
+      $item->bonmang = [];
+      $item->bonmang = $lstBonMang;
+
+      $lstNgayChiuChuc = array_filter($NgayChiuChuc, function ($itemfilter) use ($item) {
+        return $itemfilter->day == $item->day && $itemfilter->month == $item->month;
+      });
+      $item->ngaychiuchuc = [];
+      $item->ngaychiuchuc = $lstNgayChiuChuc;
+
+      $lstexcepts = array_filter($DateExcept, function ($itemfilter) use ($item) {
+        return $itemfilter->day == $item->day && $itemfilter->month == $item->month && $itemfilter->year == $item->year;
+      });
+
+      if (count($lstexcepts) > 0) {
+        $lstexcept = current($lstexcepts);
+        $dataexcept = $lstexcept->data;
+        $item->lehistory = $item->le;
+        $objle = json_decode($dataexcept);
+        $item->le = $objle;
+        $item->leDateUpdate = $lstexcept->updated_at;
+      }
     }
 
     return $lich;
@@ -551,28 +666,30 @@ class CalenderController extends Controller
     return $res;
   }
 
-  function TinhNam($year){
+  function TinhNam($year)
+  {
     $stry = strval($year);
     $sum = 0;
-    for($i=0;$i<strlen($stry);$i++){
-        $sum+=$stry[$i];
+    for ($i = 0; $i < strlen($stry); $i++) {
+      $sum += $stry[$i];
     }
-    if($sum%3 == 0)
-        return "C";
-    else if($sum%3 == 1)
-        return "A";
-    else if($sum%3 == 2)
-        return "B";
-}
+    if ($sum % 3 == 0)
+      return "C";
+    else if ($sum % 3 == 1)
+      return "A";
+    else if ($sum % 3 == 2)
+      return "B";
+  }
 
-function TinhNam2ColDB($year){
+  function TinhNam2ColDB($year)
+  {
     $type = $this->TinhNam($year);
     $chanle = "i";
-    if($year%2==0){
-        $chanle = "ii";
+    if ($year % 2 == 0) {
+      $chanle = "ii";
     }
-    return strtolower("nam_".$type."$chanle");
-}
+    return strtolower("nam_" . $type . "$chanle");
+  }
 
   public function lookupEaster($y = 2000)
   {

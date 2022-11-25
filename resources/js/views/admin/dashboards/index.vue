@@ -72,6 +72,19 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="tile">
+            <div class="tile-heading">
+              Lịch công giáo
+            </div>
+            <div class="tile-body">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <div class="tile-footer">
+              <a :href="_gettUrl('lich-cong-giao')">Xem Lịch công giáo...</a>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-sx-12">

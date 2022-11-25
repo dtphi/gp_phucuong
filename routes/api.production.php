@@ -49,8 +49,8 @@ Route::namespace('App\Http\Controllers\Api\Front')
     Route::get('/app/get-bo-nhiem-khac/{id}', 'Base\ApiController@getBoNhiemKhac');
     Route::post('/app/update-linh-muc-temp', 'Base\ApiController@updateLinhMucTemp');
     Route::get('/app/export-linh-muc/{id}', 'Base\ApiController@exportLinhMuc');
-	Route::get('/app/calendar/getlist', 'CalenderController@getlist');
-	Route::get('/app/calendar/getpam', 'CalenderController@getpam');
+    Route::get('/app/calendar/getlist', 'CalenderController@getlist');
+    Route::get('/app/calendar/getpam', 'CalenderController@getpam');
 });
 
 Route::namespace('App\Http\Controllers\Api\Admin')
@@ -133,6 +133,9 @@ Route::namespace('App\Http\Controllers\Api\Admin')
     Route::apiResource('group-albums', 'GroupAlbumsController'); //GroupAlbumsController
     Route::get('search-group-albums','GroupAlbumsController@search');
     Route::post('change-status-group-albums','GroupAlbumsController@changeStatus');
+
+    Route::post('/app/calendar/saveCalendar', 'CalenderController@saveCalendar');
+    Route::get('/app/calendar/deleteCalendar', 'CalenderController@deleteCalendar');
 
     Route::any('/mmedia/{any}', function () {
     });
