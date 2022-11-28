@@ -24,9 +24,10 @@
                   <span :class="itemphucam.match(regex)!=null?'pam':''"  @click="showPAM(itemphucam)" v-for="itemphucam in PhucAmHover(itemle.phucam).split('|')" v-html="itemphucam"></span>
                 </p>
               </div>
-              <p class="BonMangChiuChuc" @click="showLmDetail()"
-                v-if="dayselect!=null && (dayselect.ngaychiuchuc.length == undefined || dayselect.bonmang.length == undefined)">
-                Ngày bổn mạng & ngày chịu chức
+              <p>
+                <a class="BonMangChiuChuc" @click="showLmDetail('bonmang')" v-if="dayselect!=null && (dayselect.bonmang.length == undefined)">Ngày bổn mạng</a>
+                <span v-if="dayselect!=null && (dayselect.bonmang.length == undefined &&dayselect.ngaychiuchuc.length == undefined)">|</span>
+                <a class="BonMangChiuChuc" @click="showLmDetail('chiuchuc')" v-if="dayselect!=null && (dayselect.ngaychiuchuc.length == undefined)">Ngày chịu chức</a>
               </p>
 
               <p class="todayal">
@@ -71,9 +72,9 @@
         </div>
       </b-modal>
 
-      <b-modal ref="LinhMucDetailModal" hide-footer title="Ngày bổn mạng và ngày chịu chức">
+      <b-modal ref="LinhMucDetailModal" hide-footer hide-header>
         <div class="dayDetailLm" v-if="dayselect != null">
-            <div class="chiuChucBox" v-if="dayselect.ngaychiuchuc.length == undefined">
+            <div class="chiuChucBox" v-if="IsChiuChucBonMang == 'chiuchuc'">
               <p class="titlelmdetail">Ngày chịu chức</p>
               <div class="itemLm" v-for="item in dayselect.ngaychiuchuc">
                 <p class="lmName">
@@ -107,7 +108,7 @@
 
               </div>
             </div>
-            <div class="bonMangBox" v-if="dayselect.bonmang.length == undefined">
+            <div class="bonMangBox" v-else>
               <p class="titlelmdetail">Ngày bổn mạng</p>
               <div class="itemLm" v-for="item in dayselect.bonmang">
                 <p class="itemBonMang">
@@ -150,6 +151,7 @@ export default {
       regex: filterPhucAm,
       phucamtite:'',
       hrefHanhCacThanh:'',
+      IsChiuChucBonMang:'',
     }
   },
   methods: {
@@ -272,8 +274,9 @@ export default {
         }
         return str;
       },
-      showLmDetail() {
+      showLmDetail(loaingay) {
         var self = this
+        self.IsChiuChucBonMang=loaingay
         self.$refs['LinhMucDetailModal'].show()
       },
       strSpace(str){

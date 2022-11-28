@@ -53,7 +53,7 @@
                 </b-col>
               </b-row>
             </div>
-          </template>
+          </template >  
         </content-top>
         <main-content v-if="_isContentMain"></main-content>
         <content-bottom v-if="_isContentBottom"></content-bottom>
