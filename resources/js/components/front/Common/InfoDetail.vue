@@ -1,6 +1,6 @@
 <template>
   <div class="new-detail">
-    <h4 class="tit-detail">{{ pageLists.name }}</h4>
+    <h1 class="tit-detail">{{ pageLists.name }}</h1>
     <p>
       <b-icon class="alarm" icon="alarm"></b-icon>
       <span>{{ pageLists.date_available }}</span>
@@ -128,4 +128,5 @@ export default {
 .new-detail .text-detail iframe {
   max-width: 100%;
 }
+
 </style>

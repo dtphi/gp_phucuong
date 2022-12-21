@@ -4,10 +4,10 @@
       <img :src="info.imgThumUrl" class="rounded img" :alt="_getHref()" />
     </a>
     <figcaption class="figure-caption">
-      <h4 class="title mt-2">
+      <h2 class="title mt-2">
         <img :src="iconBook" alt="Icon" />
         <a :href="_getHref()">{{ info.sort_name }}...</a>
-      </h4>
+      </h2>
       <span class="d-block mb-1">
         <div v-html="info.sort_description"></div>
         <a :href="_getHref()">...</a></span

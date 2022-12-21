@@ -1,8 +1,8 @@
 <template>
   <figcaption class="figure-caption">
-    <h4 class="title mt-2 ellipsis-two-lines">
+    <h2 class="title mt-2 ellipsis-two-lines">
       <a :href="_getHref()">{{ info.ten_le }} ( Ngày {{ info.solar_day }} Tháng {{ info.solar_month }})</a>
-    </h4>
+    </h2>
     <!-- <span class="d-block view-date"
       >{{ info.solar_day }}-{{ info.solar_month }}</span
     > -->

@@ -1,6 +1,6 @@
 <template>
   <div id="album-module" v-if="Object.keys(_getAlbums).length">
-    <h4 class="tit-detail">ALBUM HÌNH</h4>
+    <h1 class="tit-detail">ALBUM HÌNH</h1>
     <b-row cols="1" cols-sm="2" cols-md="2" cols-lg="3">
       <b-col v-for="(album, idx) in _getAlbums" :key="idx">
         <img
