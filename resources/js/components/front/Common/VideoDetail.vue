@@ -1,6 +1,6 @@
 <template>
   <div class="new-detail">
-    <h4 class="tit-detail">{{ pageLists.name }}</h4>
+    <h1 class="tit-detail">{{ pageLists.name }}</h1>
     <p>
       <b-icon class="alarm" icon="alarm"></b-icon>
       <span>{{ pageLists.date_available }}</span>

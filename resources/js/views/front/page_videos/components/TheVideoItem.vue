@@ -4,10 +4,10 @@
       <img :src="info.imgThumUrl" class="rounded img" :alt="_getHref()" />
     </a>
     <figcaption class="figure-caption">
-      <h4 class="title mt-2">
+      <h2 class="title mt-2">
         <img :src="iconBook" alt="Icon" />
         <a :href="_getHref()">{{ info.name }}</a>
-      </h4>
+      </h2>
     </figcaption>
   </figure>
 </template>
