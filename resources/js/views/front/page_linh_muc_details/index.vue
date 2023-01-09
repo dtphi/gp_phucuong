@@ -470,10 +470,6 @@
                     </div>
                     <div>
                       <h3>HOẠT ĐỘNG SỨ VỤ</h3>
-                      <a
-                        :href="`/linhmucadmin/dashboard?linhmucId=${pageLists.id}`"
-                        >Đến trang quản trị</a
-                      >
                       <vue-timeline-update
                         v-for="item in pageLists.ds_chuc_vu"
                         :key="item.id + 'A'"
