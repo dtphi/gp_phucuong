@@ -43,7 +43,7 @@ export default {
   .figure-caption {
     .title {
       a {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: bold;
       }
     }
@@ -52,6 +52,7 @@ export default {
       font-style: italic;
       font-weight: 600;
       margin-bottom: 5px;
+      font-size: 80%;
     }
   }
 }
