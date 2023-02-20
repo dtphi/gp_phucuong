@@ -5,6 +5,7 @@
   .hcalendarbox td {
     text-align: center;
     cursor: default;
+    padding: 0.5rem;
     /* -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none; */
@@ -15,7 +16,7 @@
   }
 
   .hcalendarbox .dl {
-    font-size: 15px;
+    font-size: 14px;
     word-break: keep-all;
   }
 
@@ -24,6 +25,10 @@
     text-align: right;
     display: block;
     word-break: keep-all;
+  }
+
+  .hcalendarbox .pright {
+    overflow: hidden;
   }
 
   .thutoday {
