@@ -1032,7 +1032,7 @@ class ApiController extends Controller
 			foreach ($collections as $key => $info) {
 				$giaoHatHienTai = '';
 				$chucVuHienTai = '';
-				$giaoXuHienTai = !empty($info->arr_thuyen_chuyen_list) ? $info->arr_thuyen_chuyen_list : '';
+				$giaoXuHienTai = !empty($info->arr_thuyen_chuyen_list) ? $info->arr_thuyen_chuyen_list : [];
         $giaoXu = end($giaoXuHienTai);
         $chucThanhs = !empty($info->arr_chuc_thanh_list) ? $info->arr_chuc_thanh_list : '';
 
