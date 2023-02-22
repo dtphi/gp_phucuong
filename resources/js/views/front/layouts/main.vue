@@ -187,7 +187,7 @@ export default {
     padding-bottom: 4px;
 
     span {
-      font-size: 13px;
+      font-size: 15px;
       display: inline-block;
       vertical-align: middle;
 
@@ -242,7 +242,7 @@ export default {
     padding: 5px 0;
 
     span {
-      font-size: 13px;
+      font-size: 15px;
       display: inline-block;
       vertical-align: middle;
 
@@ -258,7 +258,7 @@ export default {
           background-color: #f4f4f4;
           padding: 2px 10px;
           border-radius: 6px;
-          font-size: 12px;
+          font-size: 14px;
           font-style: normal;
         }
 
@@ -355,7 +355,10 @@ a {
   -o-transition: color 0.4s linear;
 }
 a:hover {
-  text-decoration: none;
-  color: #FFA204;
+  text-decoration: none!important;
+  color: #FFA204!important;
+}
+.fs-16 {
+  font-size: 16px!important;
 }
 </style>
