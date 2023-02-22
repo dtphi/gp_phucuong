@@ -247,12 +247,11 @@ export default {
       vertical-align: middle;
 
       &:first-child {
-        width: 65%;
+        width: 100%;
       }
 
       &:last-child {
-        width: 35%;
-        text-align: right;
+        width: 100%;
 
         i {
           background-color: #f4f4f4;
