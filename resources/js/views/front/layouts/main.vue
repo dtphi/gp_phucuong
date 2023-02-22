@@ -344,4 +344,18 @@ export default {
     }
   }
 }
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+}
+a {
+  color: #333;
+  transition: color 0.4s linear;
+  -moz-transition: color 0.4s linear;
+  -webkit-transition: color 0.4s linear;
+  -o-transition: color 0.4s linear;
+}
+a:hover {
+  text-decoration: none;
+  color: #FFA204;
+}
 </style>
