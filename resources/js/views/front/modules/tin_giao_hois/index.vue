@@ -29,7 +29,7 @@
               alt=""
             />
           </a>
-          <p class="mt-2">
+          <p class="mt-2 fs-16">
             <em>{{ _getLastedModuleInfo.sort_description }}</em>
             <a class="font-weight-bold" :href="_getHref(_getLastedModuleInfo)"
               >Xem thêm</a

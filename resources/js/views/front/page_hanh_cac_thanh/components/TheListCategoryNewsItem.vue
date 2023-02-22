@@ -43,7 +43,7 @@ export default {
   .figure-caption {
     .title {
       a {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
       }
     }

@@ -16,7 +16,7 @@
             _getLastedModuleInfo.name
           }}</a>
         </h4>
-        <p>
+        <p class="fs-16">
           <em>{{ _getLastedModuleInfo.sort_description }} </em>
         </p>
         <p class="info-post text-right">
@@ -39,7 +39,7 @@
             }}</a>
           </h4>
           <p class="name-post font-weight-bold mb-2">Posted by Admin</p>
-          <p class="mb-2">
+          <p class="mb-2 fs-16">
             <em>{{ _getSecondInfoModuleList.sort_description }} </em>
           </p>
           <a class="font-weight-bold" :href="_getHref(_getSecondInfoModuleList)"
